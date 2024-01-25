@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dppuj353ygyod"]
+[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
 
-[ext_resource type="Script" path="res://scripts/click_to_move.gd" id="1_6smy8"]
+[ext_resource type="Script" path="res://scripts/click_to_move.cs" id="1_hitvg"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3bfd5"]
 vertices = PackedVector3Array(-19.3001, 0.0219057, -15.1712, -19.3001, 0.0219057, 15.0788, 19.1999, 0.0219057, 15.0788, 19.1999, 0.0219057, -15.1712)
@@ -41,7 +41,7 @@ mesh = SubResource("BoxMesh_sc8uj")
 shape = SubResource("BoxShape3D_hhky2")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-script = ExtResource("1_6smy8")
+script = ExtResource("1_hitvg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20849, 0)
