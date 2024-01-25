@@ -60,15 +60,15 @@ transform = Transform3D(0.571934, 0, 0, 0, -1.17409e-08, -1.13077, 0, 0.268601, 
 mesh = SubResource("CapsuleMesh_511vs")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CharacterBody3D"]
-remote_path = NodePath("../../cameraRig")
+remote_path = NodePath("../../CameraRig3D")
 update_rotation = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
 
-[node name="cameraRig" type="Node3D" parent="."]
+[node name="CameraRig3D" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="cameraRig" groups=["Camera"]]
+[node name="Camera3D" type="Camera3D" parent="CameraRig3D" groups=["Camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.816138, 0.577858, 0, -0.577858, 0.816138, 0, 20, 25)
 projection = 1
 size = 10.0
