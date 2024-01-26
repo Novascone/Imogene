@@ -69,7 +69,7 @@ environment = SubResource("Environment_sd3p5")
 [node name="CameraRig3D" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig3D" groups=["Camera"]]
-transform = Transform3D(1, 0, 0, 0, 0.816138, 0.577858, 0, -0.577858, 0.816138, 0, 20, 25)
+transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577858, -0.5, 0.500439, -0.706796, 14, 21, -25)
 projection = 1
-size = 10.0
+size = 17.0
 far = 100.0
