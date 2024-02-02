@@ -18,6 +18,11 @@ public partial class click_to_move : CharacterBody3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if(Input.IsActionPressed("Attack"))
+		{
+			animation_player.Play("attack");
+		}
+
 		if(navigation_agent.IsNavigationFinished())
 		{
 			return;
@@ -25,9 +30,7 @@ public partial class click_to_move : CharacterBody3D
 		
 		move_to_point(delta, speed);
 
-		if(Input.IsActionPressed("Attack")) {
-			animation_player.Play("attack");
-		}
+		
 	}
 
 	public void move_to_point(double delta, float speed)
