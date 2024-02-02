@@ -7,10 +7,12 @@ public partial class click_to_move : CharacterBody3D
 	private float speed = 5.0f;
 
 	private NavigationAgent3D navigation_agent;
+	private AnimationPlayer animation_player;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		navigation_agent = (NavigationAgent3D)GetNode("NavigationAgent3D");
+		animation_player = (AnimationPlayer)GetNode("AnimationPlayer");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,6 +24,10 @@ public partial class click_to_move : CharacterBody3D
 		}
 		
 		move_to_point(delta, speed);
+
+		if(Input.IsActionPressed("Attack")) {
+			animation_player.Play("attack");
+		}
 	}
 
 	public void move_to_point(double delta, float speed)
