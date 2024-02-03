@@ -1,6 +1,7 @@
 brushes/
 reference_art/
 Videos/
+.godot/
 *.aux
 *.fdb_latexmk
 *.fls
