@@ -1,27 +1,46 @@
 using Godot;
 using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
-public partial class click_to_move : CharacterBody3D
+public partial class player : CharacterBody3D
 {
 	
 	private float speed = 5.0f;
 
 	private NavigationAgent3D navigation_agent;
 	private AnimationPlayer animation_player;
+	private Area3D hitbox;
+	private Area3D area_hit;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		navigation_agent = (NavigationAgent3D)GetNode("NavigationAgent3D");
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer");
+		hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/Hitbox");
+			
+		hitbox.AreaEntered += OnHitboxAreaEntered;
+		
+		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+
+    public override void _Process(double delta)
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
 			animation_player.Play("attack");
+			hitbox.Monitoring = true;
+
 		}
+		
+		if(Input.IsActionJustReleased("Attack"))
+		{
+			hitbox.Monitoring = false;
+
+		}
+
 
 		if(navigation_agent.IsNavigationFinished())
 		{
@@ -41,6 +60,8 @@ public partial class click_to_move : CharacterBody3D
 		Velocity = direction * speed;
 		MoveAndSlide();
 	}
+
+	
 
 	public void face_direction(Vector3 direction)
 	{
@@ -63,12 +84,21 @@ public partial class click_to_move : CharacterBody3D
 			ray_query.To = to;
 			ray_query.CollideWithAreas = true;
 			var result = space.IntersectRay(ray_query);
-			Console.WriteLine(result);
+			// GD.Print(result);
 
 			navigation_agent.TargetPosition = result["position"].AsVector3();
 
 		}
 		
 	}
+
+	private void OnHitboxAreaEntered(Area3D area_hit)
+	{
+		if(area_hit.IsInGroup("enemy"))
+		{
+			GD.Print("enemy hit");
+		}
+	}
+
 
 }
