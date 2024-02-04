@@ -127,6 +127,7 @@ transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 31.3423, 0, 0, 0)
 mesh = SubResource("BoxMesh_sc8uj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_hhky2")
@@ -185,5 +186,3 @@ far = 100.0
 
 [node name="Enemy" parent="." instance=ExtResource("2_juq6f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
-
-[connection signal="area_entered" from="Player/WeaponPivot/WeaponMesh/Hitbox" to="Player" method="_on_hitbox_area_entered"]
