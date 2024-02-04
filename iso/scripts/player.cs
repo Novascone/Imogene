@@ -35,9 +35,6 @@ public partial class player : CharacterBody3D
 		}
 		
 		move_to_point(delta, speed); // moves character to point
-		
-		
-
 	}
 
 	public void move_to_point(double delta, float speed) // moves character to point
@@ -70,7 +67,7 @@ public partial class player : CharacterBody3D
 	public override void _Input(InputEvent @event) // function to move character
 	{
 		
-		if ((Input.IsActionPressed("LeftMouse")) | (Input.IsActionJustPressed("Attack")))
+		if ((Input.IsActionPressed("LeftMouse")) | (Input.IsActionPressed("Attack"))) // makes attack move to point also ***need to refine***
 		{
 			Camera3D camera = (Camera3D)GetTree().GetNodesInGroup("Camera")[0]; // get reference to camera
 			Vector2 mouse_pos = GetViewport().GetMousePosition(); // get 2d mouse position
@@ -90,7 +87,6 @@ public partial class player : CharacterBody3D
 			GodotObject obj = result["collider"].AsGodotObject();
 			// GD.Print(result["collider"]);
 			check_obj_clicked(obj); // check object collided with
-			
 		}
 	
 	}
@@ -133,6 +129,5 @@ public partial class player : CharacterBody3D
 				}
 			}
 	}
-
 
 }
