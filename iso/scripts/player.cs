@@ -67,7 +67,7 @@ public partial class player : CharacterBody3D
 	public override void _Input(InputEvent @event) // function to move character
 	{
 		
-		if ((Input.IsActionPressed("LeftMouse")) | (Input.IsActionPressed("Attack"))) // makes attack move to point also ***need to refine***
+		if ((Input.IsActionPressed("LeftMouse")))
 		{
 			Camera3D camera = (Camera3D)GetTree().GetNodesInGroup("Camera")[0]; // get reference to camera
 			Vector2 mouse_pos = GetViewport().GetMousePosition(); // get 2d mouse position
