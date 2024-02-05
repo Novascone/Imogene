@@ -8,3 +8,5 @@ Videos/
 *.log
 *.synctex.gz
 *.tex
+*.synctex
+DevLog/Log/log.synctex(busy)
