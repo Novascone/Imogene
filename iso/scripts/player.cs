@@ -9,15 +9,18 @@ public partial class player : CharacterBody3D
 
 	private NavigationAgent3D navigation_agent; // navigation agent 
 	private AnimationPlayer animation_player; // animation player
-	private Area3D hitbox; // weapon hitbox
+	private Area3D weapon_hitbox; // weapon hitbox
+	private Area3D player_hitbox;
 	// Called when the node enters the scene tree for the first time.
 	private Area3D target;
 	public override void _Ready()
 	{
 		navigation_agent = (NavigationAgent3D)GetNode("NavigationAgent3D"); // get reference to NavigationAgent3D
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer"); // get reference to AnimationPlater
-		hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/Hitbox"); // get reference to Hitbox
-		hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
+		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/Hitbox"); // get reference to Hitbox
+		weapon_hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
+		player_hitbox = (Area3D)GetNode("Hitbox");
+		player_hitbox.AreaEntered += OnHitboxAreaEntered;
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -102,13 +105,13 @@ public partial class player : CharacterBody3D
 		if(Input.IsActionPressed("Attack"))
 		{
 			animation_player.Play("attack");
-			hitbox.Monitoring = true;
+			weapon_hitbox.Monitoring = true;
 			return true;
 		}
 		
 		else if(Input.IsActionJustReleased("Attack"))
 		{
-			hitbox.Monitoring = false;
+			weapon_hitbox.Monitoring = false;
 			return false;
 		}
 
@@ -118,9 +121,14 @@ public partial class player : CharacterBody3D
 
 	private void OnHitboxAreaEntered(Area3D area_hit) // handler for area entered signal
 	{
+		// if(area_hit.IsInGroup("attack_area"))
 		if(area_hit.IsInGroup("enemy")) // checks if the area entered is in the enemy group
 		{
 			GD.Print("enemy hit");
+		}
+		if(area_hit.IsInGroup("attack_area"))
+		{
+			GD.Print("attack area entered");
 		}
 		
 	}
