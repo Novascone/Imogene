@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=12 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://cfojmnv5gsi7k" path="res://scenes/player.tscn" id="1_atgff"]
 [ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="2_oqvwd"]
@@ -21,6 +21,13 @@ sky_material = SubResource("ProceduralSkyMaterial_iphw8")
 background_mode = 2
 sky = SubResource("Sky_dd0x7")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1h8ub"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qq1d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prx8h"]
+albedo_color = Color(0, 1, 1, 1)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -35,10 +42,20 @@ mesh = SubResource("BoxMesh_sc8uj")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_hhky2")
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_atgff")]
+[node name="Player" parent="." instance=ExtResource("1_atgff")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
 
 [node name="Enemy" parent="." instance=ExtResource("2_oqvwd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
+
+[node name="Box" type="Area3D" parent="." groups=["interactive"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_1h8ub")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+mesh = SubResource("BoxMesh_8qq1d")
+surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")

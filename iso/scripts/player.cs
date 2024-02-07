@@ -24,17 +24,23 @@ public partial class player : CharacterBody3D
 
     public override void _Process(double delta)
 	{
-		if(attack_check())
-		{
-			look_at_point(delta);
-		}
+		
 
 		if(navigation_agent.IsNavigationFinished())
 		{
 			return;
 		}
 		
-		move_to_point(delta, speed); // moves character to point
+		if(attack_check())
+		{
+			look_at_point();
+		}
+		else
+		{
+			move_to_point(delta, speed); // moves character to point
+		}
+		
+		
 	}
 
 	public void move_to_point(double delta, float speed) // moves character to point
@@ -46,11 +52,10 @@ public partial class player : CharacterBody3D
 		MoveAndSlide(); // Godot physics
 	}
 
-	public void look_at_point(double delta)
+	public void look_at_point() // moves character to point
 	{
 		var target_position = navigation_agent.GetNextPathPosition(); // use the information taken from the _Input function to set the target position
 		face_direction(target_position); // face direction moving
-		// GD.Print("look");
 	}
 
 	
@@ -58,6 +63,7 @@ public partial class player : CharacterBody3D
 	public void face_direction(Vector3 direction)
 	{
 		LookAt(direction with { Y = GlobalPosition.Y }, Vector3.Up); // rotates character to face direction moving
+		
 	}
 
 	
@@ -67,7 +73,7 @@ public partial class player : CharacterBody3D
 	public override void _Input(InputEvent @event) // function to move character
 	{
 		
-		if (Input.IsActionPressed("LeftMouse")) // | (Input.IsActionPressed("Attack"))) <-- to be added when resource for abilities is added
+		if (Input.IsActionPressed("LeftMouse") | (Input.IsActionPressed("Attack"))) //<-- to be added when resource for abilities is added
 		{
 			Camera3D camera = (Camera3D)GetTree().GetNodesInGroup("Camera")[0]; // get reference to camera
 			Vector2 mouse_pos = GetViewport().GetMousePosition(); // get 2d mouse position
@@ -116,6 +122,7 @@ public partial class player : CharacterBody3D
 		{
 			GD.Print("enemy hit");
 		}
+		
 	}
 
 	private void check_obj_clicked(GodotObject obj) // checks to see what group the object click on is, needs ray cast results dictionary results["collider"]
@@ -126,6 +133,10 @@ public partial class player : CharacterBody3D
 				if(area.IsInGroup("enemy")) // checks group
 				{
 					GD.Print("enemy");
+				}
+				else if(area.IsInGroup("interactive"))
+				{
+					GD.Print("interactive");
 				}
 			}
 	}
