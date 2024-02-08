@@ -11,6 +11,7 @@ public partial class enemy : Interactive
 	{
 		item = (Area3D)GetNode(GetPath());
 	}
+	
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -28,6 +29,7 @@ public partial class enemy : Interactive
 
 	}
 
+
 	public override void _MouseEnter()
     {
 		mouse_over = true;
@@ -39,5 +41,6 @@ public partial class enemy : Interactive
 		mouse_over = false;
         base._MouseExit();
     }
+
 
 }

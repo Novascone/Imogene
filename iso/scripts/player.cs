@@ -6,13 +6,13 @@ using System.Runtime.CompilerServices;
 public partial class player : CharacterBody3D
 {
 	private float speed = 5.0f; // speed of character
-
 	private NavigationAgent3D navigation_agent; // navigation agent 
 	private AnimationPlayer animation_player; // animation player
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D player_hitbox;
-	// Called when the node enters the scene tree for the first time.
 	private Area3D target;
+
+	
 	public override void _Ready()
 	{
 		
@@ -56,22 +56,19 @@ public partial class player : CharacterBody3D
 		MoveAndSlide(); // Godot physics
 	}
 
+
 	public void look_at_point() // moves character to point
 	{
 		var target_position = navigation_agent.GetNextPathPosition(); // use the information taken from the _Input function to set the target position
 		face_direction(target_position); // face direction moving
 	}
 
-	
 
 	public void face_direction(Vector3 direction)
 	{
 		LookAt(direction with { Y = GlobalPosition.Y }, Vector3.Up); // rotates character to face direction moving
 		
 	}
-
-	
-
 
 
 	public override void _Input(InputEvent @event) // function to move character
@@ -100,6 +97,7 @@ public partial class player : CharacterBody3D
 		}
 	
 	}
+
 
 	public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
@@ -134,6 +132,7 @@ public partial class player : CharacterBody3D
 		
 	}
 
+
 	private void check_obj_clicked(GodotObject obj) // checks to see what group the object click on is, needs ray cast results dictionary results["collider"]
 	{
 		if(obj is Area3D) // checks if object from results["collider"] is an Area3D
@@ -149,7 +148,5 @@ public partial class player : CharacterBody3D
 					}
 			}
 	}
-
-    
 
 }
