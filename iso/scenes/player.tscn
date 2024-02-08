@@ -102,56 +102,56 @@ _data = {
 
 [node name="Player" type="Node3D"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="PlayerBody" type="CharacterBody3D" parent="."]
 script = ExtResource("1_oedf3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="PlayerMesh" type="MeshInstance3D" parent="PlayerBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20849, 0)
 mesh = SubResource("CapsuleMesh_3gmgr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="PlayerCollision" type="CollisionShape3D" parent="PlayerBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20734, 0)
 shape = SubResource("CapsuleShape3D_uff4n")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+[node name="PlayerNavigationAgent" type="NavigationAgent3D" parent="PlayerBody"]
 path_desired_distance = 0.2
 target_desired_distance = 0.2
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="FrontMesh" type="MeshInstance3D" parent="PlayerBody"]
 transform = Transform3D(0.571934, 0, 0, 0, -1.17409e-08, -1.13077, 0, 0.268601, -4.94275e-08, 0, 1.21626, -0.283311)
 mesh = SubResource("CapsuleMesh_511vs")
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="CharacterBody3D"]
-remote_path = NodePath("../../CameraRig3D")
+[node name="CameraTransform" type="RemoteTransform3D" parent="PlayerBody"]
+remote_path = NodePath("../../CameraRig")
 update_rotation = false
 
-[node name="WeaponPivot" type="Node3D" parent="CharacterBody3D"]
+[node name="WeaponPivot" type="Node3D" parent="PlayerBody"]
 
-[node name="WeaponMesh" type="MeshInstance3D" parent="CharacterBody3D/WeaponPivot"]
+[node name="WeaponMesh" type="MeshInstance3D" parent="PlayerBody/WeaponPivot"]
 transform = Transform3D(0.1, 0, 0, 0, 0.966398, 0.0257049, 0, -0.257048, 0.0966399, 0.520093, 1.16537, -0.376214)
 mesh = SubResource("BoxMesh_yutt1")
 
-[node name="Hitbox" type="Area3D" parent="CharacterBody3D/WeaponPivot/WeaponMesh"]
+[node name="WeaponHitbox" type="Area3D" parent="PlayerBody/WeaponPivot/WeaponMesh"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/WeaponPivot/WeaponMesh/Hitbox"]
+[node name="WeaponHitboxCollision" type="CollisionShape3D" parent="PlayerBody/WeaponPivot/WeaponMesh/WeaponHitbox"]
 shape = SubResource("ConvexPolygonShape3D_ifope")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBody"]
 libraries = {
 "": SubResource("AnimationLibrary_0j4mj")
 }
 
-[node name="Hitbox" type="Area3D" parent="CharacterBody3D"]
+[node name="PlayerHitbox" type="Area3D" parent="PlayerBody"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Hitbox"]
+[node name="PlayerHitboxCollision" type="CollisionShape3D" parent="PlayerBody/PlayerHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19467, 0)
 shape = SubResource("CapsuleShape3D_k2gbw")
 
-[node name="CameraRig3D" type="Node3D" parent="."]
+[node name="CameraRig" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig3D" groups=["Camera"]]
+[node name="Camera" type="Camera3D" parent="CameraRig" groups=["Camera"]]
 transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577858, -0.5, 0.500439, -0.706796, 14, 21, -25)
 projection = 1
 size = 17.0

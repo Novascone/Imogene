@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpalewpsip4oc"]
+[gd_scene load_steps=7 format=3 uid="uid://bpalewpsip4oc"]
+
+[ext_resource type="Script" path="res://scripts/enemy.cs" id="1_gwypp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2g0yo"]
 albedo_color = Color(1, 0, 0, 0)
@@ -16,20 +18,20 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [node name="Enemy" type="Area3D" groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="HitboxMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_tf5lu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="HitboxCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_olcah")
 
-[node name="AttackAreaPivot" type="Node3D" parent="."]
-
-[node name="AttackAreaMesh" type="MeshInstance3D" parent="AttackAreaPivot"]
+[node name="AttackAreaMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.9, 0, 0, 0, 0.5, 0, 0, 0, 0.9, 0, 0, 0)
 mesh = SubResource("CylinderMesh_3b5f2")
+skeleton = NodePath("")
 
-[node name="Area3D" type="Area3D" parent="AttackAreaPivot/AttackAreaMesh" groups=["attack_area", "interactive"]]
+[node name="AttackArea" type="Area3D" parent="AttackAreaMesh" groups=["attack_area", "interactive"]]
+script = ExtResource("1_gwypp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackAreaPivot/AttackAreaMesh/Area3D"]
+[node name="AttackAreaCollision" type="CollisionShape3D" parent="AttackAreaMesh/AttackArea"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 shape = SubResource("CylinderShape3D_b23qw")

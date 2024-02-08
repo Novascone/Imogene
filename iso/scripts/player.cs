@@ -16,11 +16,11 @@ public partial class player : CharacterBody3D
 	public override void _Ready()
 	{
 		
-		navigation_agent = (NavigationAgent3D)GetNode("NavigationAgent3D"); // get reference to NavigationAgent3D
+		navigation_agent = (NavigationAgent3D)GetNode("PlayerNavigationAgent"); // get reference to NavigationAgent3D
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer"); // get reference to AnimationPlater
-		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/Hitbox"); // get reference to Hitbox
+		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/WeaponHitbox"); // get reference to Hitbox
 		weapon_hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
-		player_hitbox = (Area3D)GetNode("Hitbox");
+		player_hitbox = (Area3D)GetNode("PlayerHitbox");
 		player_hitbox.AreaEntered += OnHitboxAreaEntered;
 	}
 

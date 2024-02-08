@@ -55,9 +55,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
 script = ExtResource("3_5peeu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+[node name="BoxCollision" type="CollisionShape3D" parent="Box"]
 shape = SubResource("BoxShape3D_1h8ub")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+[node name="BoxMesh" type="MeshInstance3D" parent="Box"]
 mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")

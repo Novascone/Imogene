@@ -1,10 +1,8 @@
 using Godot;
 using System;
 
-
-public partial class box : Interactive
+public partial class enemy : Interactive
 {
-
 	private Area3D item;
 	public bool mouse_over = false;
 	
@@ -20,7 +18,12 @@ public partial class box : Interactive
 		if(mouse_over)
 		{
 			if(item.IsInGroup("interactive"))
-			GD.Print("over interactive");
+			{
+				if(item.IsInGroup("attack_area"))
+				{
+					GD.Print("over enemy");
+				}
+			}
 		}
 
 	}
@@ -37,6 +40,4 @@ public partial class box : Interactive
         base._MouseExit();
     }
 
-
-	
 }
