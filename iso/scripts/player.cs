@@ -15,6 +15,7 @@ public partial class player : CharacterBody3D
 	private Area3D target;
 	public override void _Ready()
 	{
+		
 		navigation_agent = (NavigationAgent3D)GetNode("NavigationAgent3D"); // get reference to NavigationAgent3D
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer"); // get reference to AnimationPlater
 		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/Hitbox"); // get reference to Hitbox
@@ -138,15 +139,17 @@ public partial class player : CharacterBody3D
 		if(obj is Area3D) // checks if object from results["collider"] is an Area3D
 			{
 				Area3D area = (Area3D)obj; // casts it as an Area3D
-				if(area.IsInGroup("enemy")) // checks group
-				{
-					GD.Print("enemy");
-				}
-				else if(area.IsInGroup("interactive"))
-				{
-					GD.Print("interactive");
-				}
+				if(area.IsInGroup("interactive"))
+					{
+						// GD.Print("interactive");
+						if(area.IsInGroup("attack_area")) // checks group
+							{
+								GD.Print("enemy");
+							}
+					}
 			}
 	}
+
+    
 
 }

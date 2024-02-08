@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=13 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://cfojmnv5gsi7k" path="res://scenes/player.tscn" id="1_atgff"]
 [ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="2_oqvwd"]
+[ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3bfd5"]
 vertices = PackedVector3Array(-19.3001, 0.0219057, -15.1712, -19.3001, 0.0219057, 15.0788, 19.1999, 0.0219057, 15.0788, 19.1999, 0.0219057, -15.1712)
@@ -52,6 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
 
 [node name="Box" type="Area3D" parent="." groups=["interactive"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
+script = ExtResource("3_5peeu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
 shape = SubResource("BoxShape3D_1h8ub")
