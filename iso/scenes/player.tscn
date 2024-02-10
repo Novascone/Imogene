@@ -54,7 +54,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_ytjl5"]
 resource_name = "attack"
-length = 0.5
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -74,10 +74,10 @@ tracks/1/path = NodePath("WeaponPivot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.520093, 1.16537, -0.376214), Vector3(0.520093, 0.987641, -0.376214), Vector3(0.520093, 1.16537, -0.376214)]
+"values": [Vector3(0.520093, 1.16537, -0.376214), Vector3(0.909493, 1.16537, -0.376214), Vector3(0.909493, 1.16537, -0.932759), Vector3(0.470764, 1.16537, -0.932759), Vector3(0.424394, 1.16537, -0.932759), Vector3(0.24486, 1.16537, -0.932759), Vector3(0.485155, 1.16537, -0.932759), Vector3(0.520093, 1.16537, -0.376214)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -86,10 +86,10 @@ tracks/2/path = NodePath("WeaponPivot/WeaponMesh:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.259967, 0, 0), Vector3(-1.37415, 0, 0), Vector3(-0.259967, 0, 0)]
+"values": [Vector3(-0.259967, 0, 0), Vector3(-0.13335, 0.223828, -1.04219), Vector3(-0.13335, 0.735751, -1.04219), Vector3(-0.13335, 1.10143, -1.04219), Vector3(-0.13335, 1.69326, -1.04219), Vector3(-0.13335, 1.81243, -1.04219), Vector3(-0.13335, 1.37719, -1.04219), Vector3(-0.259967, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0j4mj"]
