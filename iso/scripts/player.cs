@@ -15,13 +15,14 @@ public partial class player : CharacterBody3D
 	
 	public override void _Ready()
 	{
-		
+		var cursor = ResourceLoader.Load("res://Images/custom_prelim_cursor.png");
 		navigation_agent = (NavigationAgent3D)GetNode("PlayerNavigationAgent"); // get reference to NavigationAgent3D
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer"); // get reference to AnimationPlater
 		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/WeaponHitbox"); // get reference to Hitbox
 		weapon_hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
 		player_hitbox = (Area3D)GetNode("PlayerHitbox");
 		player_hitbox.AreaEntered += OnHitboxAreaEntered;
+		Input.SetCustomMouseCursor(cursor);
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -114,8 +114,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20734, 0)
 shape = SubResource("CapsuleShape3D_uff4n")
 
 [node name="PlayerNavigationAgent" type="NavigationAgent3D" parent="PlayerBody"]
-path_desired_distance = 0.2
-target_desired_distance = 0.2
+path_desired_distance = 0.1
+target_desired_distance = 0.1
 
 [node name="FrontMesh" type="MeshInstance3D" parent="PlayerBody"]
 transform = Transform3D(0.571934, 0, 0, 0, -1.17409e-08, -1.13077, 0, 0.268601, -4.94275e-08, 0, 1.21626, -0.283311)

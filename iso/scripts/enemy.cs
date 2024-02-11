@@ -16,29 +16,22 @@ public partial class enemy : Interactive
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(mouse_over)
-		{
-			if(item.IsInGroup("interactive"))
-			{
-				if(item.IsInGroup("attack_area"))
-				{
-					GD.Print("over enemy");
-				}
-			}
-		}
-
 	}
 
 
 	public override void _MouseEnter()
     {
-		mouse_over = true;
+		change_cursor(item);
+			if(item.IsInGroup("attack_area"))
+			{
+				GD.Print("over enemy");
+			}
         base._MouseEnter();
     }
 
     public override void _MouseExit()
     {
-		mouse_over = false;
+		reset_cursor();
         base._MouseExit();
     }
 

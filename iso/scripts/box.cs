@@ -18,25 +18,26 @@ public partial class box : Interactive
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(mouse_over)
-		{
-			if(item.IsInGroup("interactive"))
-			GD.Print("over interactive");
-		}
+		
 
 	}
 
 
 	public override void _MouseEnter()
     {
-		mouse_over = true;
+		change_cursor(item);
+		if(item.IsInGroup("interactive"))
+		{
+			GD.Print("over interactive");
+		}
+
         base._MouseEnter();
     }
 
 
     public override void _MouseExit()
     {
-		mouse_over = false;
+		reset_cursor();
         base._MouseExit();
     }
 

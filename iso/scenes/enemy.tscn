@@ -15,7 +15,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_b23qw"]
 
-[node name="Enemy" type="Area3D" groups=["enemy"]]
+[node name="Enemy" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="HitboxMesh" type="MeshInstance3D" parent="."]
