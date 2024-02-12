@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 public partial class player : CharacterBody3D
 {
 	private float speed = 5.0f; // speed of character
+	private bool can_move = true;
 	private NavigationAgent3D navigation_agent; // navigation agent 
 	private AnimationPlayer animation_player; // animation player
 	private Area3D weapon_hitbox; // weapon hitbox
@@ -15,14 +16,14 @@ public partial class player : CharacterBody3D
 	
 	public override void _Ready()
 	{
-		var cursor = ResourceLoader.Load("res://Images/custom_prelim_cursor.png");
+		var cursor = ResourceLoader.Load("res://images/custom_prelim_cursor.png");
 		navigation_agent = (NavigationAgent3D)GetNode("PlayerNavigationAgent"); // get reference to NavigationAgent3D
 		animation_player = (AnimationPlayer)GetNode("AnimationPlayer"); // get reference to AnimationPlater
 		weapon_hitbox = (Area3D)GetNode("WeaponPivot/WeaponMesh/WeaponHitbox"); // get reference to Hitbox
 		weapon_hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
 		player_hitbox = (Area3D)GetNode("PlayerHitbox");
 		player_hitbox.AreaEntered += OnHitboxAreaEntered;
-		Input.SetCustomMouseCursor(cursor);
+		
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,8 +43,13 @@ public partial class player : CharacterBody3D
 		}
 		else
 		{
-			move_to_point(delta, speed); // moves character to point
+			if(can_move)
+			{
+				move_to_point(delta, speed);
+			}
+			 // moves character to point
 		}
+		
 		
 		
 	}
@@ -102,7 +108,7 @@ public partial class player : CharacterBody3D
 
 	public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
-		if(Input.IsActionPressed("Attack"))
+		if(Input.IsActionPressed("Attack") && !can_move)
 		{
 			animation_player.Play("attack");
 			weapon_hitbox.Monitoring = true;
@@ -128,6 +134,7 @@ public partial class player : CharacterBody3D
 		}
 		if(area_hit.IsInGroup("attack_area"))
 		{
+			can_move = false;
 			GD.Print("attack area entered");
 		}
 		
@@ -146,8 +153,18 @@ public partial class player : CharacterBody3D
 							{
 								GD.Print("enemy");
 							}
+						else
+						{
+							GD.Print("interactive");
+						}
 					}
+				
 			}
+			else if(obj is Node)
+			{
+				can_move = true;
+			}
+		
 	}
 
 }

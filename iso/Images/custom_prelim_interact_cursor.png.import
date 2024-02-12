@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bmdye1dvplja7"
-path="res://.godot/imported/custom_prelim_interact_cursor.png-b9d88655e73a7363de55a18a00f0bf05.ctex"
+path="res://.godot/imported/custom_prelim_interact_cursor.png-510bc031c58bbd594091241febd0cc55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/custom_prelim_interact_cursor.png"
-dest_files=["res://.godot/imported/custom_prelim_interact_cursor.png-b9d88655e73a7363de55a18a00f0bf05.ctex"]
+source_file="res://images/custom_prelim_interact_cursor.png"
+dest_files=["res://.godot/imported/custom_prelim_interact_cursor.png-510bc031c58bbd594091241febd0cc55.ctex"]
 
 [params]
 

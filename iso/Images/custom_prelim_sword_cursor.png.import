@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://coh1ylw0w4c7s"
-path="res://.godot/imported/custom_prelim_sword_cursor.png-97dcac54d754f41da0caca1a77241d2f.ctex"
+path="res://.godot/imported/custom_prelim_sword_cursor.png-53bc7027f312785af38692a8fed91957.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/custom_prelim_sword_cursor.png"
-dest_files=["res://.godot/imported/custom_prelim_sword_cursor.png-97dcac54d754f41da0caca1a77241d2f.ctex"]
+source_file="res://images/custom_prelim_sword_cursor.png"
+dest_files=["res://.godot/imported/custom_prelim_sword_cursor.png-53bc7027f312785af38692a8fed91957.ctex"]
 
 [params]
 
