@@ -27,13 +27,13 @@ sky = SubResource("Sky_dd0x7")
 
 [sub_resource type="BoxMesh" id="BoxMesh_8qq1d"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wefl0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4tslu"]
 render_priority = 0
 shader = ExtResource("4_upixs")
 shader_parameter/strength = null
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prx8h"]
-next_pass = SubResource("ShaderMaterial_wefl0")
+next_pass = SubResource("ShaderMaterial_4tslu")
 albedo_color = Color(0, 1, 1, 1)
 
 [node name="Node3D" type="Node3D" groups=["terrain"]]
@@ -65,6 +65,6 @@ script = ExtResource("3_5peeu")
 [node name="BoxCollision" type="CollisionShape3D" parent="Box"]
 shape = SubResource("BoxShape3D_1h8ub")
 
-[node name="BoxMesh" type="MeshInstance3D" parent="Box"]
+[node name="Mesh" type="MeshInstance3D" parent="Box"]
 mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")

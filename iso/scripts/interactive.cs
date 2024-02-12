@@ -13,44 +13,54 @@ public partial class Interactive : Area3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		item = (Area3D)GetNode(GetPath());
-		shader = (MeshInstance3D)item.GetChild(0);
-		selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
-		reset_cursor();
-		change_cursor(item);
-		
+	
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		reset_cursor();
+		change_cursor(item);
 	}
 
 	public void change_cursor(Area3D item)
 	{
+		item = (Area3D)GetNode(GetPath());
 		if(item.IsInGroup("interactive"))
 		{
-				// selected_shader.SetShaderParameter("Strength", 0.2);
-				if(item.IsInGroup("attack_area"))
-				{
-					
-				}
-				else
-				{
-					Input.SetCustomMouseCursor(cursor_interact);
-				}
-		}
+			
+			Input.SetCustomMouseCursor(cursor_interact);
+			shader = (MeshInstance3D)item.GetNode("Mesh");
+			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
+			selected_shader.SetShaderParameter("Strength", 0.2);
+			GD.Print(selected_shader.GetShaderParameter("Strength"));
 		
-		else
+		}
+
+		else if(item.IsInGroup("attack_area"))
 		{
-			// selected_shader.SetShaderParameter("Strength", 0.0);
+			item = (Area3D)item.GetParent().GetParent();
+			shader = (MeshInstance3D)item.GetNode("Mesh");
+			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
+			selected_shader.SetShaderParameter("Strength", 0.2);
+			GD.Print(selected_shader.GetShaderParameter("Strength"));
+			
+			// shader = (MeshInstance3D)item.GetParent();
+			// selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
+			// selected_shader.SetShaderParameter("Strength", 0.2);
+			// GD.Print(selected_shader.GetShaderParameter("Strength"));
 		}
-		
 		
 	}
 	public void reset_cursor()
 	{
 			Input.SetCustomMouseCursor(cursor);
+			if(selected_shader != null)
+			{
+				selected_shader.SetShaderParameter("Strength", 0);
+				GD.Print(selected_shader.GetShaderParameter("Strength"));
+			}
+
 	}
 
 }

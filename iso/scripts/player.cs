@@ -23,6 +23,7 @@ public partial class player : CharacterBody3D
 		weapon_hitbox.AreaEntered += OnHitboxAreaEntered; // subscribe hitbox to OnHitboxAreaEntered signal
 		player_hitbox = (Area3D)GetNode("PlayerHitbox");
 		player_hitbox.AreaEntered += OnHitboxAreaEntered;
+		Input.SetCustomMouseCursor(cursor);
 		
 	}
 
