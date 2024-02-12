@@ -40,5 +40,5 @@ skeleton = NodePath("")
 script = ExtResource("1_gwypp")
 
 [node name="AttackAreaCollision" type="CollisionShape3D" parent="AttackAreaMesh/AttackArea"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 shape = SubResource("CylinderShape3D_b23qw")
