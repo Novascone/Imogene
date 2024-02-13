@@ -70,9 +70,9 @@ public partial class Interactive : Area3D
 			
 			shader = (MeshInstance3D)game_object.GetNode("Mesh");
 			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
-			selected_shader.SetShaderParameter("Strength", 1.0f);
+			selected_shader.SetShaderParameter("strength", 0.3f);
 			GD.Print(selected_shader.ResourceName);
-			GD.Print(selected_shader.GetShaderParameter("Strength"));
+			GD.Print(selected_shader.GetShaderParameter("strength"));
 		
 		}
 
@@ -82,9 +82,9 @@ public partial class Interactive : Area3D
 			game_object = (Area3D)game_object.GetParent().GetParent();
 			shader = (MeshInstance3D)game_object.GetNode("Mesh");
 			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
-			selected_shader.SetShaderParameter("Strength", 1.0f);
+			selected_shader.SetShaderParameter("strength", 0.4f);
 			GD.Print(selected_shader.ResourceName);
-			GD.Print(selected_shader.GetShaderParameter("Strength"));
+			GD.Print(selected_shader.GetShaderParameter("strength"));
 		
 		}
 		
@@ -96,9 +96,9 @@ public partial class Interactive : Area3D
 		if(selected_shader != null)
 			{
 
-				selected_shader.SetShaderParameter("Strength", 0);
+				selected_shader.SetShaderParameter("strength", 0);
 				GD.Print(selected_shader.ResourceName);
-				GD.Print(selected_shader.GetShaderParameter("Strength"));
+				GD.Print(selected_shader.GetShaderParameter("strength"));
 				
 			}
 	}
