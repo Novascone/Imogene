@@ -148,17 +148,13 @@ public partial class player : CharacterBody3D
 			{
 				Area3D area = (Area3D)obj; // casts it as an Area3D
 				if(area.IsInGroup("interactive"))
-					{
-						// GD.Print("interactive");
-						if(area.IsInGroup("attack_area")) // checks group
-							{
-								GD.Print("enemy");
-							}
-						else
-						{
-							GD.Print("interactive");
-						}
-					}
+				{
+					GD.Print("interactive");
+				}
+				else if(area.IsInGroup("attack_area"))
+				{
+					GD.Print("enemy");
+				}
 				
 			}
 			else if(obj is Node)
