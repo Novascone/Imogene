@@ -3,13 +3,13 @@ using System;
 
 public partial class enemy : Interactive
 {
-	private Area3D item;
+	private Area3D game_object;
 	public bool mouse_over = false;
 	
 	
 	public override void _Ready()
 	{
-		item = (Area3D)GetNode(GetPath());
+		this.game_object = (Area3D)GetNode(GetPath());
 	}
 	
 
@@ -21,8 +21,9 @@ public partial class enemy : Interactive
 
 	public override void _MouseEnter()
     {
-		change_cursor(item);
-			if(item.IsInGroup("attack_area"))
+		change_cursor(game_object);
+		highlight(game_object);
+			if(game_object.IsInGroup("attack_area"))
 			{
 				GD.Print("over enemy");
 			}
@@ -32,8 +33,10 @@ public partial class enemy : Interactive
     public override void _MouseExit()
     {
 		reset_cursor();
+		unhighlight(game_object);
         base._MouseExit();
     }
 
 
 }
+

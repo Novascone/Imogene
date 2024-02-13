@@ -28,9 +28,11 @@ sky = SubResource("Sky_dd0x7")
 [sub_resource type="BoxMesh" id="BoxMesh_8qq1d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4tslu"]
+resource_local_to_scene = true
+resource_name = "highlight_interactive"
 render_priority = 0
 shader = ExtResource("4_upixs")
-shader_parameter/strength = null
+shader_parameter/strength = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prx8h"]
 next_pass = SubResource("ShaderMaterial_4tslu")
