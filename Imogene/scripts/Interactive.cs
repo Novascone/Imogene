@@ -64,31 +64,14 @@ public partial class Interactive : Area3D
 
 	public void highlight(Area3D game_object)
 	{
-		game_object = (Area3D)GetNode(GetPath());
-		if(game_object.IsInGroup("interactive"))
-		{
-			
-			shader = (MeshInstance3D)game_object.GetNode("Mesh");
-			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
-			selected_shader.SetShaderParameter("strength", 0.3f);
-			GD.Print(selected_shader.ResourceName);
-			GD.Print(selected_shader.GetShaderParameter("strength"));
-		
-		}
 
-		else if(game_object.IsInGroup("attack_area"))
-		{
-
-			game_object = (Area3D)game_object.GetParent().GetParent();
-			shader = (MeshInstance3D)game_object.GetNode("Mesh");
-			selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
-			selected_shader.SetShaderParameter("strength", 0.4f);
-			GD.Print(selected_shader.ResourceName);
-			GD.Print(selected_shader.GetShaderParameter("strength"));
+		game_object = (Area3D)game_object.GetParent().GetParent();
+		shader = (MeshInstance3D)game_object.GetNode("Mesh");
+		selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
+		selected_shader.SetShaderParameter("strength", 0.4f);
+		GD.Print(selected_shader.ResourceName);
+		GD.Print(selected_shader.GetShaderParameter("strength"));
 		
-		}
-		
-
 	}
 
 	public void unhighlight(Area3D game_object)

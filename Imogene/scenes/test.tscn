@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://cfojmnv5gsi7k" path="res://scenes/player.tscn" id="1_atgff"]
 [ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="2_oqvwd"]
@@ -38,6 +38,10 @@ shader_parameter/strength = 0.0
 next_pass = SubResource("ShaderMaterial_4tslu")
 albedo_color = Color(0, 1, 1, 1)
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_k1bjr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nt1yn"]
+
 [node name="Node3D" type="Node3D" groups=["terrain"]]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." groups=["terrain"]]
@@ -62,7 +66,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
 
 [node name="Box" type="Area3D" parent="." groups=["interactive"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
-script = ExtResource("3_5peeu")
 
 [node name="BoxCollision" type="CollisionShape3D" parent="Box"]
 shape = SubResource("BoxShape3D_1h8ub")
@@ -70,3 +73,14 @@ shape = SubResource("BoxShape3D_1h8ub")
 [node name="Mesh" type="MeshInstance3D" parent="Box"]
 mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
+
+[node name="InteractAreaMesh" type="MeshInstance3D" parent="Box"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("CylinderMesh_k1bjr")
+
+[node name="InteractArea" type="Area3D" parent="Box/InteractAreaMesh" groups=["interactive"]]
+script = ExtResource("3_5peeu")
+
+[node name="InteractAreaCollision" type="CollisionShape3D" parent="Box/InteractAreaMesh/InteractArea"]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+shape = SubResource("BoxShape3D_nt1yn")
