@@ -138,6 +138,11 @@ public partial class player : CharacterBody3D
 			can_move = false;
 			GD.Print("attack area entered");
 		}
+		else if(area_hit.IsInGroup("interactive"))
+		{
+			can_move = false;
+			GD.Print("interact area entered");
+		}
 		
 	}
 
