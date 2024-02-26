@@ -109,7 +109,7 @@ public partial class player : CharacterBody3D
 
 	public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
-		if(Input.IsActionPressed("Attack") && !can_move)
+		if(Input.IsActionPressed("Attack"))
 		{
 			animation_player.Play("attack");
 			weapon_hitbox.Monitoring = true;
@@ -119,6 +119,7 @@ public partial class player : CharacterBody3D
 		else if(Input.IsActionJustReleased("Attack"))
 		{
 			weapon_hitbox.Monitoring = false;
+			can_move = false;
 			return false;
 		}
 
