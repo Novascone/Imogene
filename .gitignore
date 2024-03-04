@@ -7,7 +7,6 @@ Videos/
 *.fls
 *.log
 *.synctex.gz
-*.tex
 *.synctex
 *.DS_Store
 DevLog/Log/log.synctex(busy)
