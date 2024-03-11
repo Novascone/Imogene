@@ -19,24 +19,9 @@ public partial class enemy : Interactive
 	}
 
 
-	public override void _MouseEnter()
-    {
-		change_cursor(game_object);
-		highlight(game_object);
-			if(game_object.IsInGroup("attack_area"))
-			{
-				GD.Print("over enemy");
-			}
-        base._MouseEnter();
-    }
+	
 
-    public override void _MouseExit()
-    {
-		reset_cursor();
-		unhighlight(game_object);
-        base._MouseExit();
-    }
-
+   
 
 }
 

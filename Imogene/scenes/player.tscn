@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfojmnv5gsi7k"]
+[gd_scene load_steps=12 format=3 uid="uid://cfojmnv5gsi7k"]
 
 [ext_resource type="Script" path="res://scripts/player.cs" id="1_oedf3"]
 
@@ -100,6 +100,8 @@ _data = {
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k2gbw"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ryxf"]
+
 [node name="Player" type="Node3D"]
 
 [node name="PlayerBody" type="CharacterBody3D" parent="."]
@@ -148,6 +150,12 @@ libraries = {
 [node name="PlayerHitboxCollision" type="CollisionShape3D" parent="PlayerBody/PlayerHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19467, 0)
 shape = SubResource("CapsuleShape3D_k2gbw")
+
+[node name="Vision" type="Area3D" parent="PlayerBody"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2, -5)
+
+[node name="VisionHitBoxCollison" type="CollisionShape3D" parent="PlayerBody/Vision"]
+shape = SubResource("BoxShape3D_4ryxf")
 
 [node name="CameraRig" type="Node3D" parent="."]
 

@@ -21,25 +21,9 @@ public partial class box : Interactive
 	}
 
 
-	public override void _MouseEnter()
-    {
-		change_cursor(game_object);
-		highlight(game_object);
-		if(game_object.IsInGroup("interactive"))
-		{
-			GD.Print("over interactive");
-		}
-
-        base._MouseEnter();
-    }
 
 
-    public override void _MouseExit()
-    {
-		reset_cursor();
-		unhighlight(game_object);
-        base._MouseExit();
-    }
+  
 
 
 }

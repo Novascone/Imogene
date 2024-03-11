@@ -6,10 +6,7 @@ public partial class Interactive : Area3D
 {
 	private MeshInstance3D shader;
 	private ShaderMaterial selected_shader;
-	public Resource cursor_sword = ResourceLoader.Load("res://images/custom_prelim_sword_cursor.png");
-	public Resource cursor_interact = ResourceLoader.Load("res://images/custom_prelim_interact_cursor.png");
-	public Resource cursor = ResourceLoader.Load("res://images/custom_prelim_cursor.png");
-	// Called when the node enters the scene tree for the first time.
+	
 	public override void _Ready()
 	{
 	}
@@ -25,7 +22,6 @@ public partial class Interactive : Area3D
 		if(game_object.IsInGroup("interactive"))
 		{
 			
-			Input.SetCustomMouseCursor(cursor_interact);
 			// shader = (MeshInstance3D)game_object.GetNode("Mesh");
 			// selected_shader = (ShaderMaterial)shader.GetActiveMaterial(0).NextPass;
 			// selected_shader.SetShaderParameter("Strength", 1.0f);
@@ -47,20 +43,7 @@ public partial class Interactive : Area3D
 		}
 		
 	}
-	public void reset_cursor()
-	{
 
-			Input.SetCustomMouseCursor(cursor);
-			if(selected_shader != null)
-			{
-
-				// selected_shader.SetShaderParameter("Strength", 0);
-				// GD.Print(selected_shader.ResourceName);
-				// GD.Print(selected_shader.GetShaderParameter("Strength"));
-				
-			}
-
-	}
 
 	public void highlight(Area3D game_object)
 	{
