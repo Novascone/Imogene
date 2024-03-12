@@ -74,17 +74,6 @@ public partial class player : CharacterBody3D
 	}
 
 
-    public void rotate()
-
-	{
-		if (Input.IsActionPressed("RotateCharacterLeft"))
-		{
-			GD.Print("RotateCharacterLeft");
-		RotationDegrees = RotationDegrees with { X = 90 };
-		}
-	}
-
-
 
     public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
