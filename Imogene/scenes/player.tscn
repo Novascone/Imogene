@@ -36,7 +36,8 @@ remote_path = NodePath("../../CameraRig")
 update_rotation = false
 
 [node name="Vision" type="Area3D" parent="PlayerBody"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2, -5)
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 2, -10)
+visible = false
 
 [node name="VisionHitBoxCollison" type="CollisionShape3D" parent="PlayerBody/Vision"]
 shape = SubResource("BoxShape3D_4ryxf")

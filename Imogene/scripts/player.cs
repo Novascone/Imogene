@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Runtime.CompilerServices;
 
 public partial class player : CharacterBody3D
@@ -10,11 +11,13 @@ public partial class player : CharacterBody3D
 
 	private Vector3 _targetVelocity = Vector3.Zero;
 	private bool can_move = true;
-
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D player_hitbox;
 	private Area3D vision;
 	private Area3D target;
+	private bool enemy_in_vision = false;
+	private Vector3 enemy_position;
+	private bool targeting = false;
 
 	
 	public override void _Ready()
@@ -29,6 +32,12 @@ public partial class player : CharacterBody3D
 
     public override void _Process(double delta)
 	{
+		if(enemy_in_vision)
+			{
+				GD.Print(enemy_position);
+				lock_on(enemy_position);
+			}
+
 		move();
 	}
 
@@ -94,13 +103,35 @@ public partial class player : CharacterBody3D
 	}
 
 
-	private void OnAreaEntered(Area3D area_hit) // handler for area entered signal
+	private void OnAreaEntered(Area3D interactable) // handler for area entered signal
 	{
-		if(area_hit.IsInGroup("enemy"))
+		if(interactable.IsInGroup("enemy"))
 		{
+			enemy_in_vision = true;
+			enemy_position = interactable.GlobalPosition ;
 			GD.Print("Enemy Seen");
+			GD.Print(enemy_position);
+			get_enemy_position(interactable);
+	
 		}
 		
+	}
+
+	private Vector3 get_enemy_position(Area3D interactable)
+	{
+		return interactable.GlobalPosition;
+	}
+
+	private void lock_on(Vector3 enemy_position)
+	{
+		
+		if(Input.IsActionJustPressed("Target"))
+		{
+			targeting = true;
+			GD.Print("Targeting");
+			LookAt(enemy_position with { Y = 0.0f });
+		}
+
 	}
 
 
