@@ -74,10 +74,21 @@ public partial class player : CharacterBody3D
         _targetVelocity.Z = direction.Z * speed;
 
 		Velocity = _targetVelocity;
-		if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
+		if(!targeting)
 		{
-			LookAt(GlobalPosition + direction);
+			// GD.Print("Not Targeting");
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
+			{
+				LookAt(GlobalPosition + direction);
+			}
+
 		}
+		else
+		{
+			// GD.Print("Targeting");
+			LookAt(enemy_position with {Y = 0.0f});
+		}
+		
 		
         MoveAndSlide();
 	}
@@ -110,7 +121,7 @@ public partial class player : CharacterBody3D
 			enemy_in_vision = true;
 			enemy_position = interactable.GlobalPosition ;
 			GD.Print("Enemy Seen");
-			GD.Print(enemy_position);
+			// GD.Print(enemy_position);
 			get_enemy_position(interactable);
 	
 		}
@@ -127,9 +138,17 @@ public partial class player : CharacterBody3D
 		
 		if(Input.IsActionJustPressed("Target"))
 		{
-			targeting = true;
+			if(!targeting)
+			{
+				targeting = true;
+			}
+			else
+			{
+				targeting = false;
+			}
+			
 			GD.Print("Targeting");
-			LookAt(enemy_position with { Y = 0.0f });
+			
 		}
 
 	}
