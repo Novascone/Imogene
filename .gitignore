@@ -9,4 +9,6 @@ Videos/
 *.synctex.gz
 *.synctex
 *.DS_Store
+*.blend
+*.blend1
 DevLog/Log/log.synctex(busy)

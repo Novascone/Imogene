@@ -28,9 +28,9 @@ public partial class player : CharacterBody3D
 		
 	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		if(enemy_in_vision)
 			{
@@ -47,31 +47,31 @@ public partial class player : CharacterBody3D
 	{
 		var direction = Vector3.Zero;
 
-        if (Input.IsActionPressed("Right"))
-        {
-            direction.X -= 1.0f;
-        }
-        if (Input.IsActionPressed("Left"))
-        {
-            direction.X += 1.0f;
-        }
-        if (Input.IsActionPressed("Backward"))
-        {
-            direction.Z -= 1.0f;
-        }
-        if (Input.IsActionPressed("Forward"))
-        {
-            direction.Z += 1.0f;
-        }
+		if (Input.IsActionPressed("Right"))
+		{
+			direction.X -= 1.0f;
+		}
+		if (Input.IsActionPressed("Left"))
+		{
+			direction.X += 1.0f;
+		}
+		if (Input.IsActionPressed("Backward"))
+		{
+			direction.Z -= 1.0f;
+		}
+		if (Input.IsActionPressed("Forward"))
+		{
+			direction.Z += 1.0f;
+		}
 
-        if (direction != Vector3.Zero)
-        {
-            direction = direction.Normalized();
-            GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
-        }
+		if (direction != Vector3.Zero)
+		{
+			direction = direction.Normalized();
+			GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
+		}
 
 		_targetVelocity.X = direction.X * speed;
-        _targetVelocity.Z = direction.Z * speed;
+		_targetVelocity.Z = direction.Z * speed;
 
 		Velocity = _targetVelocity;
 		if(!targeting)
@@ -86,16 +86,16 @@ public partial class player : CharacterBody3D
 		else
 		{
 			// GD.Print("Targeting");
-			LookAt(enemy_position with {Y = 0.0f});
+			LookAt(enemy_position with {Y = 2.5f});
 		}
 		
 		
-        MoveAndSlide();
+		MoveAndSlide();
 	}
 
 
 
-    public bool attack_check() // changes weapon hitbox monitoring based on animation
+	public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
