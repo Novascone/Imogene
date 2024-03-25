@@ -1,7 +1,0 @@
-:::mermaid
-
-graph TD;
-   
-    
-    
-:::
