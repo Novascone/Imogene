@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://bg4p1yt5lgpfd" path="res://scenes/player.tscn" id="1_ae3mu"]
-[ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="2_oqvwd"]
+[ext_resource type="PackedScene" uid="uid://v5us73vb1bi0" path="res://scenes/prelim_zombie.tscn" id="2_heqyb"]
 [ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="4_upixs"]
 
@@ -61,8 +61,8 @@ environment = SubResource("Environment_sd3p5")
 
 [node name="prelim_pc_in_game" parent="." instance=ExtResource("1_ae3mu")]
 
-[node name="Enemy" parent="." instance=ExtResource("2_oqvwd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8465, 1.33321, -12.1768)
+[node name="prelim_zombie" parent="." instance=ExtResource("2_heqyb")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -12.9755, 0, -11.6588)
 
 [node name="Box" type="Area3D" parent="." groups=["interactive"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
