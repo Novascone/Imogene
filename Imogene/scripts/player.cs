@@ -93,8 +93,26 @@ public partial class player : CharacterBody3D
 		Vector2 blend_direction;
 		if(targeting)
 		{
+			
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
+			if(enemy_position.X <= 0 && enemy_position.Z <= 0)
+			{
+				blend_direction.X *= -1;
+				blend_direction.Y *= -1;
+				GD.Print("Invert Both : ", blend_direction);
+			}
+			else if(enemy_position.X <= 0)
+			{
+				blend_direction.X *= -1;
+				GD.Print("Invert X : ", blend_direction.X);
+			}
+			else if(enemy_position.Z <= 0)
+			{
+				blend_direction.Y *= -1;
+				GD.Print("Invert Y : ", blend_direction.Y);
+			}
+			
 		}
 		
 		else
@@ -103,6 +121,7 @@ public partial class player : CharacterBody3D
 			{
 				blend_direction.X = 0;
 				blend_direction.Y = 1;
+				GD.Print("Normal: ", blend_direction);
 			}
 			else
 			{
@@ -143,7 +162,7 @@ public partial class player : CharacterBody3D
 		{
 			enemy_in_vision = true;
 			enemy_position = interactable.GlobalPosition ;
-			GD.Print("Enemy Seen");
+			// GD.Print("Enemy Seen");
 			// GD.Print(enemy_position);
 			get_enemy_position(interactable);
 	

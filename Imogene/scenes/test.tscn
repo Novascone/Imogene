@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bg4p1yt5lgpfd" path="res://scenes/player.tscn" id="1_ae3mu"]
 [ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
-[ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="4_qhtnc"]
+[ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy_in_place.tscn" id="4_hta75"]
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="4_upixs"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3bfd5"]
@@ -82,5 +82,5 @@ script = ExtResource("3_5peeu")
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nt1yn")
 
-[node name="prelim_zombie" parent="." instance=ExtResource("4_qhtnc")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -14.6399, 0.0080943, -12.9693)
+[node name="enemy" parent="." instance=ExtResource("4_hta75")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -13.7175, 0.0080943, -12.9218)
