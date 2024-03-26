@@ -11,6 +11,7 @@ public partial class player : CharacterBody3D
 
 	private Vector3 _targetVelocity = Vector3.Zero;
 	private bool can_move = true;
+	AnimationTree tree;
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D player_hitbox;
 	private Area3D vision;
@@ -23,6 +24,7 @@ public partial class player : CharacterBody3D
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		tree = GetNode<AnimationTree>("AnimationTree");
 		vision  = (Area3D)GetNode("Vision");
 		vision.AreaEntered += OnAreaEntered;
 		
@@ -34,7 +36,7 @@ public partial class player : CharacterBody3D
 	{
 		if(enemy_in_vision)
 			{
-				GD.Print(enemy_position);
+				// GD.Print(enemy_position);
 				lock_on(enemy_position);
 			}
 
@@ -88,8 +90,29 @@ public partial class player : CharacterBody3D
 			// GD.Print("Targeting");
 			LookAt(enemy_position with {Y = 2.5f});
 		}
+		Vector2 blend_direction;
+		if(targeting)
+		{
+			blend_direction.X = direction.X;
+			blend_direction.Y = direction.Z;
+		}
 		
-		
+		else
+		{
+			if(direction != Vector3.Zero)
+			{
+				blend_direction.X = 0;
+				blend_direction.Y = 1;
+			}
+			else
+			{
+				blend_direction.X = 0;
+				blend_direction.Y = 0;
+			}
+		}
+
+		tree.Set("parameters/IW/blend_position", blend_direction);
+		GD.Print(direction);
 		MoveAndSlide();
 	}
 
