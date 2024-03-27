@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
 
-[ext_resource type="PackedScene" uid="uid://bg4p1yt5lgpfd" path="res://scenes/player.tscn" id="1_ae3mu"]
 [ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
-[ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy_in_place.tscn" id="4_hta75"]
+[ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="4_0ec7p"]
+[ext_resource type="PackedScene" uid="uid://btvadqb6mulra" path="res://scenes/player.tscn" id="4_kx8ge"]
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="4_upixs"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3bfd5"]
@@ -59,8 +59,6 @@ shape = SubResource("BoxShape3D_hhky2")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
 
-[node name="player" parent="." instance=ExtResource("1_ae3mu")]
-
 [node name="Box" type="Area3D" parent="." groups=["interactive"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
 
@@ -82,5 +80,8 @@ script = ExtResource("3_5peeu")
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nt1yn")
 
-[node name="enemy" parent="." instance=ExtResource("4_hta75")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -13.7175, 0.0080943, -12.9218)
+[node name="enemy" parent="." instance=ExtResource("4_0ec7p")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -13.5616, 0.0080943, -12.7128)
+
+[node name="player" parent="." instance=ExtResource("4_kx8ge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.595919, 0.0080943, -3.59232)

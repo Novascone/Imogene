@@ -100,17 +100,17 @@ public partial class player : CharacterBody3D
 			{
 				blend_direction.X *= -1;
 				blend_direction.Y *= -1;
-				GD.Print("Invert Both : ", blend_direction);
+				// GD.Print("Invert Both : ", blend_direction);
 			}
 			else if(enemy_position.X <= 0)
 			{
 				blend_direction.X *= -1;
-				GD.Print("Invert X : ", blend_direction.X);
+				// GD.Print("Invert X : ", blend_direction.X);
 			}
 			else if(enemy_position.Z <= 0)
 			{
 				blend_direction.Y *= -1;
-				GD.Print("Invert Y : ", blend_direction.Y);
+				// GD.Print("Invert Y : ", blend_direction.Y);
 			}
 			
 		}
@@ -121,7 +121,7 @@ public partial class player : CharacterBody3D
 			{
 				blend_direction.X = 0;
 				blend_direction.Y = 1;
-				GD.Print("Normal: ", blend_direction);
+				// GD.Print("Normal: ", blend_direction);
 			}
 			else
 			{
@@ -131,7 +131,7 @@ public partial class player : CharacterBody3D
 		}
 
 		tree.Set("parameters/IW/blend_position", blend_direction);
-		GD.Print(direction);
+		// GD.Print(direction);
 		MoveAndSlide();
 	}
 
@@ -162,7 +162,7 @@ public partial class player : CharacterBody3D
 		{
 			enemy_in_vision = true;
 			enemy_position = interactable.GlobalPosition ;
-			// GD.Print("Enemy Seen");
+			GD.Print("Enemy Seen");
 			// GD.Print(enemy_position);
 			get_enemy_position(interactable);
 	
@@ -189,7 +189,7 @@ public partial class player : CharacterBody3D
 				targeting = false;
 			}
 			
-			GD.Print("Targeting");
+			// GD.Print("Targeting");
 			
 		}
 
