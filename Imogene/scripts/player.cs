@@ -8,9 +8,12 @@ public partial class player : CharacterBody3D
 {
 	
 	private float speed = 5.0f; // speed of character
-
+	private float dash_speed = 10.0f;
 	private Vector3 _targetVelocity = Vector3.Zero;
+	private Vector3 dash_velocity = Vector3.Zero;
 	private bool can_move = true;
+	bool dashing;
+	private int dash_time = 0;
 	AnimationTree tree;
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D player_hitbox;
@@ -40,30 +43,173 @@ public partial class player : CharacterBody3D
 				lock_on(enemy_position);
 			}
 
-		move();
+		
+		
 	}
 
 
 
-	public void move()
-	{
+	// public void move()
+	// {
+	// 	var direction = Vector3.Zero;
+	// 	bool dash = false;
+		
+		
+	// 	if (Input.IsActionPressed("Right"))
+	// 	{
+	// 		direction.X -= 1.0f;
+			
+	// 		if (Input.IsActionJustPressed("Dash"))
+	// 		{
+	// 			GD.Print("Dash Right");
+	// 			dash= true;
+	// 		}
+	// 	}
+	// 	if (Input.IsActionPressed("Left"))
+	// 	{
+	// 		direction.X += 1.0f;
+
+	// 		if (Input.IsActionJustPressed("Dash"))
+	// 		{
+	// 			GD.Print("Dash Left");
+	// 			dash = true;
+	// 		}
+	// 	}
+	// 	if (Input.IsActionPressed("Backward"))
+	// 	{
+	// 		direction.Z -= 1.0f;
+
+	// 		if (Input.IsActionJustPressed("Dash"))
+	// 		{
+	// 			GD.Print("Dash Back");
+	// 			dash = true;
+	// 		}
+	// 	}
+	// 	if (Input.IsActionPressed("Forward"))
+	// 	{
+	// 		direction.Z += 1.0f;
+
+	// 		if (Input.IsActionJustPressed("Dash"))
+	// 		{
+	// 			GD.Print("Dash Forward");
+	// 			dash = true;
+	// 		}
+	// 	}
+
+	// 	if (direction != Vector3.Zero)
+	// 	{
+	// 		direction = direction.Normalized();
+	// 		GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
+	// 	}
+
+	// 	if (dash)
+	// 	{
+	// 		_targetVelocity.X = direction.X * dash_speed;
+	// 		_targetVelocity.Z = direction.Z * dash_speed;
+	// 	}
+	// 	else 
+	// 	{
+	// 		_targetVelocity.X = direction.X * speed;
+	// 		_targetVelocity.Z = direction.Z * speed;
+	// 	}
+		
+
+	// 	Velocity = _targetVelocity;
+	// 	if(!targeting)
+	// 	{
+	// 		// GD.Print("Not Targeting");
+	// 		if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
+	// 		{
+	// 			LookAt(GlobalPosition + direction);
+	// 		}
+
+	// 	}
+	// 	else
+	// 	{
+	// 		// GD.Print("Targeting");
+	// 		LookAt(enemy_position with {Y = 2.5f});
+	// 	}
+	// 	Vector2 blend_direction;
+	// 	if(targeting)
+	// 	{
+			
+	// 		blend_direction.X = direction.X;
+	// 		blend_direction.Y = direction.Z;
+	// 		if(enemy_position.X <= 0 && enemy_position.Z <= 0)
+	// 		{
+	// 			blend_direction.X *= -1;
+	// 			blend_direction.Y *= -1;
+	// 			// GD.Print("Invert Both : ", blend_direction);
+	// 		}
+	// 		else if(enemy_position.X <= 0)
+	// 		{
+	// 			blend_direction.X *= -1;
+	// 			// GD.Print("Invert X : ", blend_direction.X);
+	// 		}
+	// 		else if(enemy_position.Z <= 0)
+	// 		{
+	// 			blend_direction.Y *= -1;
+	// 			// GD.Print("Invert Y : ", blend_direction.Y);
+	// 		}
+			
+	// 	}
+		
+	// 	else
+	// 	{
+	// 		if(direction != Vector3.Zero)
+	// 		{
+	// 			blend_direction.X = 0;
+	// 			blend_direction.Y = 1;
+	// 			// GD.Print("Normal: ", blend_direction);
+	// 		}
+	// 		else
+	// 		{
+	// 			blend_direction.X = 0;
+	// 			blend_direction.Y = 0;
+	// 		}
+	// 	}
+
+	// 	tree.Set("parameters/IW/blend_position", blend_direction);
+	// 	tree.Set("parameters/conditions/attacking", attack_check());
+	// 	// GD.Print(direction);
+	// 	MoveAndSlide();
+	// }
+
+    public override void _PhysicsProcess(double delta)
+    {
 		var direction = Vector3.Zero;
+        Vector3 velocity = Velocity;
+		
+		
 
 		if (Input.IsActionPressed("Right"))
 		{
 			direction.X -= 1.0f;
+			
 		}
 		if (Input.IsActionPressed("Left"))
 		{
 			direction.X += 1.0f;
+
 		}
 		if (Input.IsActionPressed("Backward"))
 		{
 			direction.Z -= 1.0f;
+
 		}
 		if (Input.IsActionPressed("Forward"))
 		{
 			direction.Z += 1.0f;
+
+		}
+		
+
+		
+		if (Input.IsActionJustPressed("Dash"))
+		{
+			dash();
+			dashing = true;
+			dash_time = 10;
 		}
 
 		if (direction != Vector3.Zero)
@@ -72,10 +218,6 @@ public partial class player : CharacterBody3D
 			GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
 		}
 
-		_targetVelocity.X = direction.X * speed;
-		_targetVelocity.Z = direction.Z * speed;
-
-		Velocity = _targetVelocity;
 		if(!targeting)
 		{
 			// GD.Print("Not Targeting");
@@ -130,30 +272,54 @@ public partial class player : CharacterBody3D
 			}
 		}
 
+		
+		velocity.X = direction.X * speed;
+		velocity.Z = direction.Z * speed;
+		
+
+		if(dash_time != 0)
+		{
+			GD.Print(dash_time);
+			velocity += dash_velocity;
+			dash_time -= 1;
+		}
+		if(dash_time == 1)
+		{
+			velocity = Vector3.Zero;
+		}
+		
+		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
-		// GD.Print(direction);
+		tree.Set("parameters/conditions/attacking", attack_check());
 		MoveAndSlide();
+
+    }
+
+
+	public void dash()
+	{
+		dash_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
+		dash_velocity += Velocity * 4;
 	}
 
-
-
-	public bool attack_check() // changes weapon hitbox monitoring based on animation
+    public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
-			weapon_hitbox.Monitoring = true;
+			// weapon_hitbox.Monitoring = true;
 			return true;
 		}
 		
 		else if(Input.IsActionJustReleased("Attack"))
 		{
-			weapon_hitbox.Monitoring = false;
+			// weapon_hitbox.Monitoring = false;
 			can_move = false;
 			return false;
 		}
 
 		return false;
 	}
+
 
 
 	private void OnAreaEntered(Area3D interactable) // handler for area entered signal
