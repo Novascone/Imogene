@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Runtime.CompilerServices;
@@ -23,9 +24,12 @@ public partial class player : CharacterBody3D
 	private bool enemy_in_vision = false;
 	private Vector3 player_position;
 	private Vector3 enemy_position;
+	private Vector3 vision_position;
 	private bool targeting = false;
-	private bool above;
-	private bool below;
+	private bool player_Z_more_than_target_Z; // relative to camera 
+	private bool player_Z_less_than_target_Z; // relative to camera 
+	private bool player_X_more_than_target_X; // relative to camera 
+	private bool player_X_less_than_target_X; // relative to camera 
 	
 
 	
@@ -33,23 +37,27 @@ public partial class player : CharacterBody3D
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		tree = GetNode<AnimationTree>("AnimationTree");
-		player_body = GetNode<Node3D>("PlayerCollision");
+		player_body = GetNode<Node3D>("PlayerHitbox");
 		vision  = (Area3D)GetNode("Vision");
 		vision.AreaEntered += OnAreaEntered;
+		vision.AreaExited += OnAreaExited;
+		tree.AnimationFinished += OnAnimationFinsihed;
+		weapon_hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/weapon_area");
+		weapon_hitbox.AreaEntered += OnHitboxEntered;
 		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+    
 
-	public override void _Process(double delta)
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+
+    public override void _Process(double delta)
 	{
 		if(enemy_in_vision)
 			{
 				// GD.Print(enemy_position);
 				lock_on(enemy_position);
 			}
-
-		
 		
 	}
 
@@ -94,6 +102,7 @@ public partial class player : CharacterBody3D
 			dash_time = 10;
 		}
 
+
 		if(!targeting)
 		{
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
@@ -107,7 +116,7 @@ public partial class player : CharacterBody3D
 		if(targeting)
 		{
 			// GD.Print("Targeting");
-			LookAt(enemy_position with {Y = 2.5f});
+			LookAt(enemy_position with {Y = 2.2f});
 		}
 		Vector2 blend_direction;
 		if(targeting)
@@ -116,27 +125,237 @@ public partial class player : CharacterBody3D
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
 			
-			if((Math.Abs(player_position.Z) - Math.Abs(enemy_position.Z)) < 0)
+			if(player_position.Z - enemy_position.Z > 0)
 			{
-				above = true;
-				below = false;
+				player_Z_more_than_target_Z = true;
+				player_Z_less_than_target_Z = false;
+				// GD.Print("player_Z_more_than_target_Z");
 			}
-			if((Math.Abs(player_position.Z) - Math.Abs(enemy_position.Z)) > 0)
+			if(player_position.Z - enemy_position.Z < 0)
 			{
-				below = true;
-				above = false;
+				player_Z_less_than_target_Z = true;
+				player_Z_more_than_target_Z = false;
+				// GD.Print("player_Z_less_than_target_Z ");
+			}
+			if((player_position.X - enemy_position.X) > 0)
+			{
+				player_X_more_than_target_X = true;
+				player_X_less_than_target_X = false;
+				// GD.Print("player_X_more_than_target_X");
+				
+			}
+			if((player_position.X - enemy_position.X) < 0)
+			{
+				player_X_less_than_target_X = true;
+				player_X_more_than_target_X = false;
+				// GD.Print("player_X_less_than_target_X");
 			}
 
-			if(below)
+			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
-				above = false;
-				blend_direction.X *= -1;
+				if (direction.Z > 0 && direction.X > 0) // +Z +X 
+				{
+					blend_direction.Y = -1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk away");
+				}
+				if (direction.Z < 0 && direction.X < 0) // -Z -X 
+				{
+					blend_direction.Y = 1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk toward");
+				}
+				if (direction.Z < 0 && direction.X > 0) // -Z +X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe right");
+				}
+				if (direction.Z > 0 && direction.X < 0) // +Z -X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
+				{
+					blend_direction.Y = -0.25f;
+					blend_direction.X = -0.75f;
+					// GD.Print("strafe left 75 ");
+				}
+				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
+				{
+					blend_direction.Y = 0.25f;
+					blend_direction.X = 0.75f;
+					// GD.Print("strafe right 75");
+				}
+				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
+				{
+					blend_direction.Y = -0.5f;
+					blend_direction.X = -0.5f;
+					// GD.Print("split");
+				}
+				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
+				{
+					blend_direction.Y = 0.5f;
+					blend_direction.X = 0.5f;
+					// GD.Print("split");
+				}
 			}
-			if(above)
+			if(player_Z_more_than_target_Z && player_X_less_than_target_X)
 			{
-				below = false;
-				blend_direction.Y *= -1;
+				if (direction.Z > 0 && direction.X > 0) // +Z +X 
+				{
+					blend_direction.Y = -0.25f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe right");
+				}
+				if (direction.Z < 0 && direction.X < 0) // -Z -X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z < 0 && direction.X > 0) // -Z +X 
+				{
+					blend_direction.Y = 1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk toward");
+				}
+				if (direction.Z > 0 && direction.X < 0) // +Z -X 
+				{
+					blend_direction.Y = -1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk away");
+				}
+				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
+				{
+					blend_direction.Y = -0.25f;
+					blend_direction.X = 0.75f;
+					// GD.Print("strafe right 75");
+				}
+				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
+				{
+					blend_direction.Y = 0.25f;
+					blend_direction.X = -0.75f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
+				{
+					blend_direction.Y = 0.5f;
+					blend_direction.X = 0.5f;
+					// GD.Print("split");
+				}
+				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
+				{
+					blend_direction.Y = -0.5f;
+					blend_direction.X = -0.5f;
+					// GD.Print("split");
+				}
 			}
+			if(player_Z_less_than_target_Z && player_X_less_than_target_X)
+			{
+				if (direction.Z > 0 && direction.X > 0) // +Z +X 
+				{
+					blend_direction.Y = 1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk toward");
+				}
+				if (direction.Z < 0 && direction.X < 0) // -Z -X 
+				{
+					blend_direction.Y = -1.0f;
+					blend_direction.X =  0.0f;
+					// GD.Print("walk away");
+				}
+				if (direction.Z < 0 && direction.X > 0) // -Z +X 
+				{
+					blend_direction.Y = -0.0f;
+					blend_direction.X = -1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z > 0 && direction.X < 0) // +Z -X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe right 75");
+				}
+				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe right");
+				}
+				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = -1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
+				{
+					blend_direction.Y = 0.5f;
+					blend_direction.X = -0.5f;
+					// GD.Print("split");
+				}
+				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
+				{
+					blend_direction.Y = -0.5f;
+					blend_direction.X = 0.5f;
+					// GD.Print("split");
+				}
+			}
+			if(player_Z_less_than_target_Z && player_X_more_than_target_X)
+			{
+				if (direction.Z > 0 && direction.X > 0) // +Z +X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = -1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z < 0 && direction.X < 0) // -Z -X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X =  1.0f;
+					// GD.Print("strafe right");
+				}
+				if (direction.Z < 0 && direction.X > 0) // -Z +X 
+				{
+					blend_direction.Y = -1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk away");
+				}
+				if (direction.Z > 0 && direction.X < 0) // +Z -X 
+				{
+					blend_direction.Y = 1.0f;
+					blend_direction.X = 0.0f;
+					// GD.Print("walk toward");
+				}
+				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = -1.0f;
+					// GD.Print("strafe left");
+				}
+				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
+				{
+					blend_direction.Y = 0.0f;
+					blend_direction.X = 1.0f;
+					// GD.Print("strafe right");
+				}
+				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
+				{
+					blend_direction.Y = -0.5f;
+					blend_direction.X = 0.5f;
+					// GD.Print("split");
+				}
+				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
+				{
+					blend_direction.Y = 0.5f;
+					blend_direction.X = -0.5f;
+					// GD.Print("split");
+				}
+			}
+	
 		}
 		
 		else
@@ -197,9 +416,7 @@ public partial class player : CharacterBody3D
 		velocity.X = direction.X * speed;
 		velocity.Z = direction.Z * speed;
 		
-		
-		
-
+	
 		if(dash_time != 0)
 		{
 			velocity.X += Mathf.Lerp(dash_velocity.X, 0, 0.1f);
@@ -210,6 +427,7 @@ public partial class player : CharacterBody3D
 		{
 			velocity = Vector3.Zero;
 		}
+	
 		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
@@ -232,18 +450,17 @@ public partial class player : CharacterBody3D
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
-			// weapon_hitbox.Monitoring = true;
+			weapon_hitbox.AddToGroup("attacking");
+			weapon_hitbox.Monitoring = true;
 			return true;
-		}
-		
-		else if(Input.IsActionJustReleased("Attack"))
-		{
-			// weapon_hitbox.Monitoring = false;
-			can_move = false;
-			return false;
 		}
 
 		return false;
+	}
+
+	public void AnimationDirection()
+	{
+		
 	}
 
 
@@ -260,6 +477,38 @@ public partial class player : CharacterBody3D
 		}
 		
 	}
+
+	private void OnAreaExited(Area3D interactable) // handler for area exited signal
+	{
+		if(interactable.IsInGroup("enemy"))
+		{
+			enemy_in_vision = false;
+	
+		}
+		
+	}
+
+	private void OnHitboxEntered(Area3D hitbox) // handler for area entered signal
+	{
+		if(hitbox.IsInGroup("enemy"))
+		{
+			
+			GD.Print("enemy hit");
+		
+		}
+		
+	}
+
+	private void OnAnimationFinsihed(StringName animName)
+    {
+	
+		if(animName == "Attack")
+		{
+			weapon_hitbox.Monitoring = false;
+			weapon_hitbox.RemoveFromGroup("attacking");
+		}
+        
+    }
 
 	private Vector3 get_enemy_position(Area3D interactable)
 	{
@@ -279,8 +528,6 @@ public partial class player : CharacterBody3D
 			{
 				targeting = false;
 			}
-			
-			// GD.Print("Targeting");
 			
 		}
 
