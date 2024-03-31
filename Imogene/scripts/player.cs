@@ -153,6 +153,7 @@ public partial class player : CharacterBody3D
 
 			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
+				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
 				if (direction.Z > 0 && direction.X > 0) // +Z +X 
 				{
 					blend_direction.Y = -1.0f;
@@ -174,36 +175,73 @@ public partial class player : CharacterBody3D
 				if (direction.Z > 0 && direction.X < 0) // +Z -X 
 				{
 					blend_direction.Y = 0.0f;
-					blend_direction.X = 1.0f;
+					blend_direction.X = -1.0f;
 					// GD.Print("strafe left");
 				}
 				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
 				{
-					blend_direction.Y = -0.25f;
-					blend_direction.X = -0.75f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.25f;
+						blend_direction.X = -0.75f;
+					}
+					
 					// GD.Print("strafe left 75 ");
 				}
 				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
 				{
-					blend_direction.Y = 0.25f;
-					blend_direction.X = 0.75f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.25f;
+						blend_direction.X = 0.75f;
+					}
+					
 					// GD.Print("strafe right 75");
 				}
 				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
 				{
-					blend_direction.Y = -0.5f;
-					blend_direction.X = -0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.75f;
+						blend_direction.X = 0.25f;
+					}
+					
 					// GD.Print("split");
 				}
 				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
 				{
-					blend_direction.Y = 0.5f;
-					blend_direction.X = 0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.75f;
+						blend_direction.X = -0.250f;
+					}
+					
 					// GD.Print("split");
 				}
 			}
 			if(player_Z_more_than_target_Z && player_X_less_than_target_X)
 			{
+				// GD.Print("player_Z_more_than_target_Z && player_X_less_than_target_X");
 				if (direction.Z > 0 && direction.X > 0) // +Z +X 
 				{
 					blend_direction.Y = -0.25f;
@@ -213,7 +251,7 @@ public partial class player : CharacterBody3D
 				if (direction.Z < 0 && direction.X < 0) // -Z -X 
 				{
 					blend_direction.Y = 0.0f;
-					blend_direction.X = 1.0f;
+					blend_direction.X = -1.0f;
 					// GD.Print("strafe left");
 				}
 				if (direction.Z < 0 && direction.X > 0) // -Z +X 
@@ -230,31 +268,67 @@ public partial class player : CharacterBody3D
 				}
 				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
 				{
-					blend_direction.Y = -0.25f;
-					blend_direction.X = 0.75f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.25f;
+						blend_direction.X = 0.75f;
+					}
+		
 					// GD.Print("strafe right 75");
 				}
 				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
 				{
-					blend_direction.Y = 0.25f;
-					blend_direction.X = -0.75f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.25f;
+						blend_direction.X = -0.75f;
+					}
 					// GD.Print("strafe left");
 				}
 				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
 				{
-					blend_direction.Y = 0.5f;
-					blend_direction.X = 0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.5f;
+						blend_direction.X = -0.5f;
+					}
+					
 					// GD.Print("split");
 				}
 				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
 				{
-					blend_direction.Y = -0.5f;
-					blend_direction.X = -0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.5f;
+						blend_direction.X = 0.5f;
+					}
+					
 					// GD.Print("split");
 				}
 			}
 			if(player_Z_less_than_target_Z && player_X_less_than_target_X)
 			{
+				// GD.Print("player_Z_less_than_target_Z && player_X_less_than_target_X");
 				if (direction.Z > 0 && direction.X > 0) // +Z +X 
 				{
 					blend_direction.Y = 1.0f;
@@ -281,31 +355,68 @@ public partial class player : CharacterBody3D
 				}
 				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
 				{
-					blend_direction.Y = 0.0f;
-					blend_direction.X = 1.0f;
+					
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.75f;
+						blend_direction.X = -0.25f;
+					}
+					
 					// GD.Print("strafe right");
 				}
 				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
 				{
-					blend_direction.Y = 0.0f;
-					blend_direction.X = -1.0f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.75f;
+						blend_direction.X = 0.25f;
+					}
+					
 					// GD.Print("strafe left");
 				}
 				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
 				{
-					blend_direction.Y = 0.5f;
-					blend_direction.X = -0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.5f;
+						blend_direction.X = -0.5f;
+					}
+				
 					// GD.Print("split");
 				}
 				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
 				{
-					blend_direction.Y = -0.5f;
-					blend_direction.X = 0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.5f;
+						blend_direction.X = 0.5f;
+					}
 					// GD.Print("split");
 				}
 			}
 			if(player_Z_less_than_target_Z && player_X_more_than_target_X)
 			{
+				// GD.Print("player_Z_less_than_target_Z && player_X_more_than_target_X");
 				if (direction.Z > 0 && direction.X > 0) // +Z +X 
 				{
 					blend_direction.Y = 0.0f;
@@ -332,26 +443,61 @@ public partial class player : CharacterBody3D
 				}
 				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
 				{
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.75f;
+						blend_direction.X = -0.25f;
+					}
 					blend_direction.Y = 0.0f;
 					blend_direction.X = -1.0f;
 					// GD.Print("strafe left");
 				}
 				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
 				{
-					blend_direction.Y = 0.0f;
-					blend_direction.X = 1.0f;
+					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.75f;
+						blend_direction.X = 0.25f;
+					}
 					// GD.Print("strafe right");
 				}
 				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
 				{
-					blend_direction.Y = -0.5f;
-					blend_direction.X = 0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = -1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = -0.5f;
+						blend_direction.X = 0.0f;
+					}
 					// GD.Print("split");
 				}
 				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
 				{
-					blend_direction.Y = 0.5f;
-					blend_direction.X = -0.5f;
+					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
+					{
+						blend_direction.Y = 1.0f;
+						blend_direction.X = 0f;
+					}
+					else
+					{
+						blend_direction.Y = 0.5f;
+						blend_direction.X = 0.0f;
+					}
+					
 					// GD.Print("split");
 				}
 			}
