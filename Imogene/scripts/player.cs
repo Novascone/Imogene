@@ -3,6 +3,7 @@ using System;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
 public partial class player : CharacterBody3D
@@ -10,12 +11,15 @@ public partial class player : CharacterBody3D
 	
 	private float speed = 5.0f; // speed of character
 	private float dash_speed = 10.0f;
+	private int damage = 10;
+	private int health;
 	private Vector3 _targetVelocity = Vector3.Zero;
 	private Vector3 dash_velocity = Vector3.Zero;
 	private Node3D player_body;
 	private bool can_move = true;
 	bool dashing;
 	private int dash_time = 0;
+	private int attack_freeze = 0;
 	private AnimationTree tree;
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D player_hitbox;
@@ -26,10 +30,11 @@ public partial class player : CharacterBody3D
 	private Vector3 enemy_position;
 	private Vector3 vision_position;
 	private bool targeting = false;
-	private bool player_Z_more_than_target_Z; // relative to camera 
-	private bool player_Z_less_than_target_Z; // relative to camera 
-	private bool player_X_more_than_target_X; // relative to camera 
-	private bool player_X_less_than_target_X; // relative to camera 
+	private bool player_Z_more_than_target_Z; 
+	private bool player_Z_less_than_target_Z; 
+	private bool player_X_more_than_target_X; 
+	private bool player_X_less_than_target_X; 
+	private CustomSignals _customSignals;
 	
 
 	
@@ -44,10 +49,11 @@ public partial class player : CharacterBody3D
 		tree.AnimationFinished += OnAnimationFinsihed;
 		weapon_hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/weapon_area");
 		weapon_hitbox.AreaEntered += OnHitboxEntered;
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.PlayerDamage += HandlePlayerDamage;
 		
 	}
 
-    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -74,24 +80,28 @@ public partial class player : CharacterBody3D
 		bool dash_forward = false;
 		
 		
+		if(can_move)
+		{
+			if (Input.IsActionPressed("Right"))
+			{
+				direction.X -= 1.0f;		
+			}
+			if (Input.IsActionPressed("Left"))
+			{
+				direction.X += 1.0f;
+			}
+			if (Input.IsActionPressed("Backward"))
+			{
+				direction.Z -= 1.0f;
 
-		if (Input.IsActionPressed("Right"))
-		{
-			direction.X -= 1.0f;		
+			}
+			if (Input.IsActionPressed("Forward"))
+			{
+				direction.Z += 1.0f;
+			}
 		}
-		if (Input.IsActionPressed("Left"))
-		{
-			direction.X += 1.0f;
-		}
-		if (Input.IsActionPressed("Backward"))
-		{
-			direction.Z -= 1.0f;
 
-		}
-		if (Input.IsActionPressed("Forward"))
-		{
-			direction.Z += 1.0f;
-		}
+		
 		
 
 		
@@ -573,7 +583,17 @@ public partial class player : CharacterBody3D
 		{
 			velocity = Vector3.Zero;
 		}
-	
+		if(attack_freeze != 0)
+		{
+			can_move = false;
+			attack_freeze -= 1;
+		}
+		else
+		{
+			can_move = true;
+		}
+		
+		
 		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
@@ -596,19 +616,16 @@ public partial class player : CharacterBody3D
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
+			
 			weapon_hitbox.AddToGroup("attacking");
 			weapon_hitbox.Monitoring = true;
+			can_move = false;
+			attack_freeze = 13;
 			return true;
 		}
-
+		
 		return false;
 	}
-
-	public void AnimationDirection()
-	{
-		
-	}
-
 
 
 	private void OnAreaEntered(Area3D interactable) // handler for area entered signal
@@ -638,8 +655,9 @@ public partial class player : CharacterBody3D
 	{
 		if(hitbox.IsInGroup("enemy"))
 		{
-			
-			GD.Print("enemy hit");
+			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage);
+			weapon_hitbox.RemoveFromGroup("attacking");
+			// GD.Print("enemy hit");
 		
 		}
 		
@@ -651,6 +669,8 @@ public partial class player : CharacterBody3D
 		if(animName == "Attack")
 		{
 			weapon_hitbox.Monitoring = false;
+			can_move = true;
+			attack_freeze = 0;
 			weapon_hitbox.RemoveFromGroup("attacking");
 		}
         
@@ -679,6 +699,12 @@ public partial class player : CharacterBody3D
 
 	}
 
+private void HandlePlayerDamage(int DamageAmount)
+	{
+		DamageAmount += damage;
+	}
+
+	
 
 
 }

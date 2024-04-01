@@ -1,14 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=16 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
 [ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="4_0ec7p"]
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="4_upixs"]
 [ext_resource type="PackedScene" uid="uid://bucbdn57qvj3s" path="res://scenes/player.tscn" id="4_xodl3"]
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_3bfd5"]
-vertices = PackedVector3Array(-19.3001, 0.0219057, -15.1712, -19.3001, 0.0219057, 15.0788, 19.1999, 0.0219057, 15.0788, 19.1999, 0.0219057, -15.1712)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-cell_height = 0.01
 
 [sub_resource type="BoxMesh" id="BoxMesh_sc8uj"]
 
@@ -44,16 +39,14 @@ albedo_color = Color(0, 1, 1, 1)
 
 [node name="Node3D" type="Node3D" groups=["terrain"]]
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." groups=["terrain"]]
-navigation_mesh = SubResource("NavigationMesh_3bfd5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 31.3423, 0, 0, 0)
 mesh = SubResource("BoxMesh_sc8uj")
+skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_hhky2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
