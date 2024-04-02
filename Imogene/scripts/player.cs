@@ -51,8 +51,11 @@ public partial class player : CharacterBody3D
 		weapon_hitbox.AreaEntered += OnHitboxEntered;
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
+		_customSignals.EnemyTargeted += HandleEnemyTargeted;
+		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		
 	}
+
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -63,6 +66,7 @@ public partial class player : CharacterBody3D
 			{
 				// GD.Print(enemy_position);
 				lock_on(enemy_position);
+				
 			}
 		
 	}
@@ -646,7 +650,6 @@ public partial class player : CharacterBody3D
 		if(interactable.IsInGroup("enemy"))
 		{
 			enemy_in_vision = false;
-	
 		}
 		
 	}
@@ -688,10 +691,12 @@ public partial class player : CharacterBody3D
 		{
 			if(!targeting)
 			{
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted));
 				targeting = true;
 			}
 			else
 			{
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
 			}
 			
@@ -699,12 +704,14 @@ public partial class player : CharacterBody3D
 
 	}
 
-private void HandlePlayerDamage(int DamageAmount)
-	{
-		DamageAmount += damage;
-	}
+	private void HandlePlayerDamage(int DamageAmount)
+		{
+			DamageAmount += damage;
+		}
 
-	
+	private void HandleEnemyTargeted(){}	
+
+	private void HandleEnemyUnTargeted(){}
 
 
 }

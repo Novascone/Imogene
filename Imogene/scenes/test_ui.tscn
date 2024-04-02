@@ -1,0 +1,185 @@
+[gd_scene load_steps=5 format=3 uid="uid://bouwfue3nlbbe"]
+
+[ext_resource type="Theme" uid="uid://b6v4kp5k26en1" path="res://themes/prelim_theme.tres" id="1_7uuv8"]
+[ext_resource type="Texture2D" uid="uid://b8bosrbeatrrs" path="res://images/health_ref.png" id="2_g0w5e"]
+[ext_resource type="Texture2D" uid="uid://d12y62eaqo12e" path="res://images/resource_ui.png" id="3_0aqsw"]
+[ext_resource type="Texture2D" uid="uid://41j8hcapqs2h" path="res://images/ability_ui_ref.png" id="3_ejnae"]
+
+[node name="Node" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(958, 542)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BottomUIContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -402.0
+offset_top = -270.0
+offset_right = 403.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomUIContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 34
+columns = 10
+
+[node name="HealthContainer" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="health" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/HealthContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "100/100
+"
+horizontal_alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/HealthContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_g0w5e")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Ability1Container" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Ability" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability1Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Ability 1
+"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability1Container"]
+layout_mode = 2
+texture = ExtResource("3_ejnae")
+expand_mode = 4
+
+[node name="Ability2Container" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Ability" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability2Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Ability 2
+"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability2Container"]
+layout_mode = 2
+texture = ExtResource("3_ejnae")
+expand_mode = 4
+
+[node name="Ability3Container" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Ability" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability3Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Ability 3"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability3Container"]
+layout_mode = 2
+texture = ExtResource("3_ejnae")
+expand_mode = 4
+
+[node name="Ability4Container" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Ability" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability4Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Ability 4
+"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/Ability4Container"]
+layout_mode = 2
+texture = ExtResource("3_ejnae")
+expand_mode = 4
+
+[node name="ManaContainer" type="GridContainer" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="mana" type="Label" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/ManaContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "100/100
+"
+horizontal_alignment = 1
+
+[node name="ManaIcon" type="TextureRect" parent="CanvasLayer/BottomUIContainer/MarginContainer/GridContainer/ManaContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_0aqsw")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 456.0
+offset_top = 53.0
+offset_right = 1510.0
+offset_bottom = 725.0
+theme_type_variation = &"BigPanelContainer"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("1_7uuv8")
+
+[node name="Title" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Quest
+"
+horizontal_alignment = 1
+
+[node name="Text" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+text = "
+
+Nostrum aspernatur quod ad et. Possimus ut eum tenetur. Reprehenderit incidunt reprehenderit molestias ipsam voluptatem. Accusantium id aut enim commodi. Blanditiis vitae dolorum cumque delectus quos minus placeat perspiciatis. Assumenda modi distinctio praesentium excepturi.
+
+Aliquid saepe quod voluptate. Perferendis quasi provident impedit earum eius. Eligendi quis ea sint aut eveniet. Nulla iusto dolor quae officia harum ea.
+
+Deserunt cum fuga debitis officiis iure quis provident. Voluptas est nisi distinctio. Qui sunt in beatae molestiae doloribus adipisci soluta nobis. Distinctio fugit unde voluptatum dignissimos distinctio sit.
+
+Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neque quam exercitationem itaque enim doloribus adipisci. Et distinctio at repellat quo.
+
+"
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Decince" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Decline
+"
+
+[node name="Accept" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept
+"

@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://dautec5o141yy"]
+
+[ext_resource type="Texture2D" uid="uid://chsgjfrjtjbc3" path="res://images/heart_custom.png" id="1_com30"]
+[ext_resource type="Texture2D" uid="uid://b686mpyhjcpk6" path="res://images/flask_custom.png" id="2_n2mne"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 473.0
+offset_top = 875.0
+offset_right = 513.0
+offset_bottom = 915.0
+scale = Vector2(26.68, 4.96)
+
+[node name="HeartCustom" type="Sprite2D" parent="."]
+position = Vector2(578, 973)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_com30")
+
+[node name="FlaskCustom" type="Sprite2D" parent="."]
+position = Vector2(1412, 979)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_n2mne")
+
+[node name="health" type="Label" parent="."]
+offset_left = 553.0
+offset_top = 881.0
+offset_right = 605.0
+offset_bottom = 904.0
+text = "Health
+"
+
+[node name="mana" type="Label" parent="."]
+offset_left = 1392.0
+offset_top = 880.0
+offset_right = 1436.0
+offset_bottom = 903.0
+text = "Mana
+"

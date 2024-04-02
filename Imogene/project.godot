@@ -19,9 +19,18 @@ config/icon="res://icon.svg"
 
 CustomSignals="*res://scripts/custom_signals/CustomSignals.cs"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [dotnet]
 
 project/assembly_name="Imogene"
+
+[gui]
+
+theme/custom="res://themes/prelim_theme.tres"
 
 [input]
 

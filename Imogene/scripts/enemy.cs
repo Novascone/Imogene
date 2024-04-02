@@ -7,7 +7,7 @@ public partial class enemy : CharacterBody3D
 	private AnimationPlayer damage_numbers;
 	private Label3D damage_label;
 	private int health = 20;
-
+	private MeshInstance3D targeting_icon;
 	private CustomSignals _customSignals;
 
 
@@ -18,20 +18,17 @@ public partial class enemy : CharacterBody3D
 		enemy_hitbox.AreaEntered += OnHitboxEntered;
 		damage_numbers = GetNode<AnimationPlayer>("Damage_Number_3D/AnimationPlayer");
 		damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
+		targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.PlayerDamage += HangleDamageEnemy;
+		_customSignals.PlayerDamage += HandleDamageEnemy;
+		_customSignals.EnemyTargeted += HandleEnemyTargeted;
+		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 	}
 
-	private void HangleDamageEnemy(int damage_amount)
-	{
-		health -= damage_amount;
-		damage_label.Text = Convert.ToString(damage_amount);
-	}
+    
 
-	
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 	}
 
@@ -47,4 +44,19 @@ public partial class enemy : CharacterBody3D
 		}
 		
 	}
+
+	private void HandleDamageEnemy(int damage_amount)
+	{
+		health -= damage_amount;
+		damage_label.Text = Convert.ToString(damage_amount);
+	}
+
+	 private void HandleEnemyTargeted()
+    {
+		targeting_icon.Visible = true;
+    }
+	private void HandleEnemyUnTargeted()
+    {
+        targeting_icon.Visible = false;
+    }
 }
