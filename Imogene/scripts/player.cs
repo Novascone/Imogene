@@ -12,7 +12,8 @@ public partial class player : CharacterBody3D
 	private float speed = 5.0f; // speed of character
 	private float dash_speed = 10.0f;
 	private int damage = 10;
-	private int health;
+	private int health = 20;
+	private TextureProgressBar health_icon;
 	private Vector3 _targetVelocity = Vector3.Zero;
 	private Vector3 dash_velocity = Vector3.Zero;
 	private Node3D player_body;
@@ -35,12 +36,15 @@ public partial class player : CharacterBody3D
 	private bool player_X_more_than_target_X; 
 	private bool player_X_less_than_target_X; 
 	private CustomSignals _customSignals;
+
 	
 
 	
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
+		health_icon.MaxValue = health;
 		tree = GetNode<AnimationTree>("AnimationTree");
 		player_body = GetNode<Node3D>("PlayerHitbox");
 		vision  = (Area3D)GetNode("Vision");
@@ -62,6 +66,7 @@ public partial class player : CharacterBody3D
 
     public override void _Process(double delta)
 	{
+
 		if(enemy_in_vision)
 			{
 				// GD.Print(enemy_position);
@@ -702,6 +707,11 @@ public partial class player : CharacterBody3D
 			
 		}
 
+	}
+
+	private void UpdateHealth()
+	{
+		health_icon.Value = health;
 	}
 
 	private void HandlePlayerDamage(int DamageAmount)

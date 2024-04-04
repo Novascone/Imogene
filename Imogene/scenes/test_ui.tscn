@@ -1,6 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://bouwfue3nlbbe"]
+[gd_scene load_steps=5 format=3 uid="uid://bouwfue3nlbbe"]
 
+[ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="1_hudwi"]
+[ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="3_3beh1"]
 [ext_resource type="Texture2D" uid="uid://41j8hcapqs2h" path="res://images/UI/ability_ui_ref.png" id="3_ejnae"]
+
+[sub_resource type="GDScript" id="GDScript_g4lbl"]
+script/source = "extends TextureProgressBar
+
+
+var health = 0.0 : set = _set_health
+
+
+func _set_health(new_health):
+	if health <= 0:
+		queue_free()
+
+	value = new_health
+
+
+func init_health(_health):
+
+	health = _health
+
+"
 
 [node name="Node" type="Node"]
 
@@ -23,10 +45,11 @@ grow_vertical = 0
 theme_override_constants/separation = -1
 
 [node name="PanelHealthContainer" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(400, 190)
+custom_minimum_size = Vector2(415, 190)
 layout_mode = 2
 size_flags_vertical = 8
 theme_type_variation = &"Health_Art"
+script = SubResource("GDScript_g4lbl")
 
 [node name="HealthContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/PanelHealthContainer"]
 show_behind_parent = true
@@ -37,154 +60,148 @@ theme_type_variation = &"Health_and_Resource"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HealthIcon" type="TextureRect" parent="CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer"]
+[node name="HealthIcon" type="TextureProgressBar" parent="CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer"]
 show_behind_parent = true
 layout_mode = 2
-size_flags_horizontal = 3
-expand_mode = 2
-stretch_mode = 4
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("1_hudwi")
 
-[node name="AbilityContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_type_variation = &"blank_border"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"BlackBorder"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Ability1Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability1Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   A   "
 
-[node name="Ability2Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability2Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability2Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability2Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   B   "
 
-[node name="Ability3Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability3Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability3Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability3Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   X   "
 
-[node name="Ability4Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability4Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability4Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability4Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   Y   "
 
-[node name="Ability5Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability5Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability5Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability5Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " RB  "
 
-[node name="Ability6Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability6Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability6Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability6Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "  LB "
 
-[node name="Ability7Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability7Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability7Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability7Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   RT"
 
-[node name="Ability8Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability8Container" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability8Container"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
 layout_mode = 2
 texture = ExtResource("3_ejnae")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/AbilityContainer/VBoxContainer/HBoxContainer/Ability8Container"]
+[node name="Ability" type="Label" parent="CanvasLayer/HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   LT "
 
 [node name="PanelResourceContainer" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(400, 190)
+custom_minimum_size = Vector2(415, 190)
 layout_mode = 2
 size_flags_vertical = 8
 theme_type_variation = &"Resource_Art"
@@ -194,18 +211,20 @@ show_behind_parent = true
 layout_mode = 2
 theme_type_variation = &"Health_and_Resource"
 
-[node name="ResourceIcon" type="TextureRect" parent="CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer"]
+[node name="ResourceIcon" type="TextureProgressBar" parent="CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer"]
 show_behind_parent = true
 layout_mode = 2
 size_flags_horizontal = 3
-expand_mode = 2
-stretch_mode = 4
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("3_3beh1")
 
 [node name="Control" type="Control" parent="CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+visible = false
 offset_right = 1054.0
 offset_bottom = 672.0
 
