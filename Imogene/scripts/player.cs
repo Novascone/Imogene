@@ -8,12 +8,15 @@ using System.Runtime.CompilerServices;
 
 public partial class player : CharacterBody3D
 {
-	
+
+	private float _t = 0.0f;
 	private float speed = 5.0f; // speed of character
 	private float dash_speed = 10.0f;
 	private int damage = 10;
 	private int health = 20;
+	private int resource = 20;
 	private TextureProgressBar health_icon;
+	private TextureProgressBar resource_icon;
 	private Vector3 _targetVelocity = Vector3.Zero;
 	private Vector3 dash_velocity = Vector3.Zero;
 	private Node3D player_body;
@@ -44,7 +47,9 @@ public partial class player : CharacterBody3D
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
+		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		health_icon.MaxValue = health;
+		resource_icon.MaxValue = resource;
 		tree = GetNode<AnimationTree>("AnimationTree");
 		player_body = GetNode<Node3D>("PlayerHitbox");
 		vision  = (Area3D)GetNode("Vision");
@@ -57,31 +62,25 @@ public partial class player : CharacterBody3D
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyTargeted += HandleEnemyTargeted;
 		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
+		_customSignals.EnemyPosition += HandleEnemyPosition;
 		
 	}
-
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
-    public override void _Process(double delta)
-	{
-
-		if(enemy_in_vision)
-			{
-				// GD.Print(enemy_position);
-				lock_on(enemy_position);
-				
-			}
-		
-	}
-
     public override void _PhysicsProcess(double delta)
     {
-		
 		var direction = Vector3.Zero;
         Vector3 velocity = Velocity;
 		Vector3 player_position = player_body.GlobalPosition;
+		// float current_y_rotation;
+		// float target_y_rotation;
+		resource = 0;
+		Vector2 blend_direction;
+		GD.Print("Enemy Position", enemy_position);
+		
+		
 		bool dashing = false;
 		bool dash_right = false;
 		bool dash_left = false;
@@ -111,7 +110,15 @@ public partial class player : CharacterBody3D
 		}
 
 		
-		
+		UpdateHealth();
+		UpdateResource();
+
+		if(enemy_in_vision)
+			{
+				// GD.Print(enemy_position);
+				lock_on(enemy_position);
+				
+			}
 
 		
 		if (Input.IsActionJustPressed("Dash"))
@@ -119,28 +126,43 @@ public partial class player : CharacterBody3D
 			dash();
 			dashing = true;
 			dash_time = 10;
+		
 		}
 
-
+		
+		
 		if(!targeting)
 		{
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
-
-    		{
+			{
 				LookAt(GlobalPosition + direction);
-				
-    		}
+			}
+
+    		
+			// current_y_rotation = GlobalRotation.Y;
+			// target_y_rotation  = Basis.LookingAt(GlobalPosition + direction).GetEuler().Y;
+			
+			// if(current_y_rotation - target_y_rotation > 1.5 || current_y_rotation - target_y_rotation < -1.5)
+			// {
+			// 	_t = 0.9f;
+			// 	GD.Print("Over 180");
+			// }
+			// else
+			// {
+			// 	_t = 0.6f;
+			// 	GD.Print(current_y_rotation - target_y_rotation);
+			// }
+			// GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(current_y_rotation, target_y_rotation, _t)};
+		
 	
 		}
+		
 		if(targeting)
 		{
 			// GD.Print("Targeting");
-			LookAt(enemy_position with {Y = 2.2f});
-		}
-		Vector2 blend_direction;
-		if(targeting)
-		{
 			
+			LookAt(enemy_position with {Y = GlobalPosition.Y});
+						
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
 			
@@ -520,9 +542,7 @@ public partial class player : CharacterBody3D
 					// GD.Print("split");
 				}
 			}
-	
 		}
-		
 		else
 		{
 			if(direction != Vector3.Zero)
@@ -714,10 +734,20 @@ public partial class player : CharacterBody3D
 		health_icon.Value = health;
 	}
 
+	private void UpdateResource()
+	{
+		resource_icon.Value = resource;
+	}
+
 	private void HandlePlayerDamage(int DamageAmount)
 		{
 			DamageAmount += damage;
 		}
+
+	private void HandleEnemyPosition(Vector3 position)
+    {
+        enemy_position = position;
+    }
 
 	private void HandleEnemyTargeted(){}	
 
