@@ -13,5 +13,7 @@ public partial class CustomSignals : Node
 	public delegate void EnemyPositionEventHandler(Vector3 position);
 	[Signal]
 	public delegate void PlayerPositionEventHandler(Vector3 position);
+	[Signal]
+	public delegate void CameraPositionEventHandler(Vector3 position);
 
 }

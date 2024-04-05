@@ -63,14 +63,20 @@ public partial class player : CharacterBody3D
 		_customSignals.EnemyTargeted += HandleEnemyTargeted;
 		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
+		_customSignals.PlayerPosition += HandlePlayerPositon;
 		
 	}
+
+   
+
+
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
+		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition);
 		var direction = Vector3.Zero;
         Vector3 velocity = Velocity;
 		Vector3 player_position = player_body.GlobalPosition;
@@ -78,7 +84,6 @@ public partial class player : CharacterBody3D
 		// float target_y_rotation;
 		resource = 0;
 		Vector2 blend_direction;
-		GD.Print("Enemy Position", enemy_position);
 		
 		
 		bool dashing = false;
@@ -748,6 +753,9 @@ public partial class player : CharacterBody3D
     {
         enemy_position = position;
     }
+
+	private void HandlePlayerPositon(Vector3 position){}
+
 
 	private void HandleEnemyTargeted(){}	
 
