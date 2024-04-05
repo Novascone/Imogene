@@ -9,49 +9,46 @@ using System.Runtime.CompilerServices;
 public partial class player : CharacterBody3D
 {
 
-	private float _t = 0.0f;
-	private float speed = 5.0f; // speed of character
-	private float dash_speed = 10.0f;
-	private int damage = 10;
-	private int health = 20;
-	private int resource = 20;
-	private TextureProgressBar health_icon;
-	private TextureProgressBar resource_icon;
-	private Vector3 _targetVelocity = Vector3.Zero;
-	private Vector3 dash_velocity = Vector3.Zero;
-	private Node3D player_body;
-	private bool can_move = true;
-	bool dashing;
-	private int dash_time = 0;
-	private int attack_freeze = 0;
-	private AnimationTree tree;
+	private float speed = 5.0f; // Speed of character
+	private float dash_speed = 10.0f; // Speed character moves when dashing
+	private int damage = 10; // Prelim damage number
+	private int health = 20; // Prelim health number
+	private int resource = 20; // Relim resource number
+	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
+	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
+	private Vector3 dash_velocity = Vector3.Zero; // Velocity of dash, allows dash to scale up current velocity and be reset without affecting current velocity
+	private Area3D player_hurtbox; // Player hurbox
+	private bool can_move = true; // Boolean to keep track of if the play is allowed to move
+	bool dashing; // Boolean to keep track of if the player is dashing
+	private int dash_time = 0; // How many frames the player can dash for.
+	private int attack_freeze = 0; // How many frames the player has to wait when attacking. Should probably make this a timer
+	private AnimationTree tree; // Animation Tree of the player
 	private Area3D weapon_hitbox; // weapon hitbox
-	private Area3D player_hitbox;
-	private Area3D vision;
-	private Area3D target;
-	private bool enemy_in_vision = false;
-	private Vector3 player_position;
-	private Vector3 enemy_position;
-	private Vector3 vision_position;
-	private bool targeting = false;
-	private bool player_Z_more_than_target_Z; 
+	private Area3D vision; // Area in which the player can detect an enemy
+	private Area3D target; // Targets that enter the vision area
+	private bool enemy_in_vision = false; // Boolean to track if enemy is in vision
+	private Vector3 player_position; // Position of the player
+	private Vector3 enemy_position; // Position of enemy
+	private bool targeting = false; // Boolean to track if the player is targeting an enemy
+	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
 	private bool player_Z_less_than_target_Z; 
 	private bool player_X_more_than_target_X; 
 	private bool player_X_less_than_target_X; 
-	private CustomSignals _customSignals;
+	private CustomSignals _customSignals; // Instance of CustomSignals
 
 	
 
 	
 	public override void _Ready()
 	{
+		// Setting instances of nodes and subscribing to events
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		health_icon.MaxValue = health;
 		resource_icon.MaxValue = resource;
 		tree = GetNode<AnimationTree>("AnimationTree");
-		player_body = GetNode<Node3D>("PlayerHitbox");
+		player_hurtbox = GetNode<Area3D>("PlayerHitbox");
 		vision  = (Area3D)GetNode("Vision");
 		vision.AreaEntered += OnAreaEntered;
 		vision.AreaExited += OnAreaExited;
@@ -76,10 +73,10 @@ public partial class player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition);
+		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		var direction = Vector3.Zero;
+		player_position = GlobalPosition;
         Vector3 velocity = Velocity;
-		Vector3 player_position = player_body.GlobalPosition;
 		// float current_y_rotation;
 		// float target_y_rotation;
 		resource = 0;
@@ -93,7 +90,7 @@ public partial class player : CharacterBody3D
 		bool dash_forward = false;
 		
 		
-		if(can_move)
+		if(can_move) // Basic movement controller
 		{
 			if (Input.IsActionPressed("Right"))
 			{
@@ -114,15 +111,42 @@ public partial class player : CharacterBody3D
 			}
 		}
 
-		
+		if(player_position.Z - enemy_position.Z > 0)
+			{
+				player_Z_more_than_target_Z = true;
+				player_Z_less_than_target_Z = false;
+				// GD.Print("player_Z_more_than_target_Z");
+				
+			}
+			if(player_position.Z - enemy_position.Z < 0)
+			{
+				player_Z_less_than_target_Z = true;
+				player_Z_more_than_target_Z = false;
+				// GD.Print("player_Z_less_than_target_Z ");
+			}
+			if((player_position.X - enemy_position.X) > 0)
+			{
+				player_X_more_than_target_X = true;
+				player_X_less_than_target_X = false;
+				// GD.Print("player_X_more_than_target_X");
+				
+			}
+			if((player_position.X - enemy_position.X) < 0)
+			{
+				player_X_less_than_target_X = true;
+				player_X_more_than_target_X = false;
+				// GD.Print("player_X_less_than_target_X");
+			}
+
+
 		UpdateHealth();
 		UpdateResource();
 
 		if(enemy_in_vision)
 			{
 				// GD.Print(enemy_position);
-				lock_on(enemy_position);
-				
+				EnemyInVision();
+
 			}
 
 		
@@ -171,32 +195,10 @@ public partial class player : CharacterBody3D
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
 			
-			if(player_position.Z - enemy_position.Z > 0)
-			{
-				player_Z_more_than_target_Z = true;
-				player_Z_less_than_target_Z = false;
-				// GD.Print("player_Z_more_than_target_Z");
-			}
-			if(player_position.Z - enemy_position.Z < 0)
-			{
-				player_Z_less_than_target_Z = true;
-				player_Z_more_than_target_Z = false;
-				// GD.Print("player_Z_less_than_target_Z ");
-			}
-			if((player_position.X - enemy_position.X) > 0)
-			{
-				player_X_more_than_target_X = true;
-				player_X_less_than_target_X = false;
-				// GD.Print("player_X_more_than_target_X");
-				
-			}
-			if((player_position.X - enemy_position.X) < 0)
-			{
-				player_X_less_than_target_X = true;
-				player_X_more_than_target_X = false;
-				// GD.Print("player_X_less_than_target_X");
-			}
+			// Checks player position relative to enemy
+			
 
+			// Changes the animation based on where the player is relative to the enemy, I'm sure there is a better way to handle this tho
 			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
 				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
@@ -550,6 +552,7 @@ public partial class player : CharacterBody3D
 		}
 		else
 		{
+			// Sets the animation to walk forward when not targeting
 			if(direction != Vector3.Zero)
 			{
 				blend_direction.X = 0;
@@ -565,6 +568,7 @@ public partial class player : CharacterBody3D
 
 		if(dashing)
 		{
+			// Matches dash animations to the direction of the player
 			if(blend_direction.X > 0 && blend_direction.Y > 0)
 			{
 				dash_right = true;
@@ -602,23 +606,26 @@ public partial class player : CharacterBody3D
 		
 		
 
-		
+		// Set Velocity
 		velocity.X = direction.X * speed;
 		velocity.Z = direction.Z * speed;
 		
 	
 		if(dash_time != 0)
 		{
+			// Lerps to zero
 			velocity.X += Mathf.Lerp(dash_velocity.X, 0, 0.1f);
 			velocity.Z += Mathf.Lerp(dash_velocity.Z, 0, 0.1f);
 			dash_time -= 1;
 		}
 		if(dash_time == 1)
 		{
+			// Sets velocity to 0 after dash
 			velocity = Vector3.Zero;
 		}
 		if(attack_freeze != 0)
 		{
+			// Stops player from moving when attacking
 			can_move = false;
 			attack_freeze -= 1;
 		}
@@ -627,8 +634,9 @@ public partial class player : CharacterBody3D
 			can_move = true;
 		}
 		
-		
+		// Set global velocity
 		Velocity = velocity;
+		// Set animations
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
 		tree.Set("parameters/conditions/dash_forward", dash_forward);
@@ -640,7 +648,7 @@ public partial class player : CharacterBody3D
     }
 
 
-	public void dash()
+	public void dash()	// Increases velocity
 	{
 		dash_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
 		dash_velocity += Velocity * 4;
@@ -651,7 +659,7 @@ public partial class player : CharacterBody3D
 		if(Input.IsActionPressed("Attack"))
 		{
 			
-			weapon_hitbox.AddToGroup("attacking");
+			weapon_hitbox.AddToGroup("attacking"); // Adds weapon to attacking group
 			weapon_hitbox.Monitoring = true;
 			can_move = false;
 			attack_freeze = 13;
@@ -664,12 +672,10 @@ public partial class player : CharacterBody3D
 
 	private void OnAreaEntered(Area3D interactable) // handler for area entered signal
 	{
-		if(interactable.IsInGroup("enemy"))
+		if(interactable.IsInGroup("enemy")) 
 		{
 			enemy_in_vision = true;
-			enemy_position = interactable.GlobalPosition ;
 			// GD.Print(enemy_position);
-			get_enemy_position(interactable);
 	
 		}
 		
@@ -677,7 +683,7 @@ public partial class player : CharacterBody3D
 
 	private void OnAreaExited(Area3D interactable) // handler for area exited signal
 	{
-		if(interactable.IsInGroup("enemy"))
+		if(interactable.IsInGroup("enemy")) 
 		{
 			enemy_in_vision = false;
 		}
@@ -688,15 +694,15 @@ public partial class player : CharacterBody3D
 	{
 		if(hitbox.IsInGroup("enemy"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage);
-			weapon_hitbox.RemoveFromGroup("attacking");
+			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage); // Sends how much damage the player does to the enemy
+			weapon_hitbox.RemoveFromGroup("attacking"); // Removes weapon from attacking group
 			// GD.Print("enemy hit");
 		
 		}
 		
 	}
 
-	private void OnAnimationFinsihed(StringName animName)
+	private void OnAnimationFinsihed(StringName animName) // when animation is finished
     {
 	
 		if(animName == "Attack")
@@ -709,12 +715,7 @@ public partial class player : CharacterBody3D
         
     }
 
-	private Vector3 get_enemy_position(Area3D interactable)
-	{
-		return interactable.GlobalPosition;
-	}
-
-	private void lock_on(Vector3 enemy_position)
+	private void EnemyInVision() // Emits signal when enemy is targeted/ untargeted
 	{
 		
 		if(Input.IsActionJustPressed("Target"))
@@ -734,27 +735,27 @@ public partial class player : CharacterBody3D
 
 	}
 
-	private void UpdateHealth()
+	private void UpdateHealth() // Updates UI health
 	{
 		health_icon.Value = health;
 	}
 
-	private void UpdateResource()
+	private void UpdateResource() // Updates UI resource
 	{
 		resource_icon.Value = resource;
 	}
 
-	private void HandlePlayerDamage(int DamageAmount)
+	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
 		{
 			DamageAmount += damage;
 		}
 
-	private void HandleEnemyPosition(Vector3 position)
+	private void HandleEnemyPosition(Vector3 position) // Gets enemy position from enemy
     {
         enemy_position = position;
     }
 
-	private void HandlePlayerPositon(Vector3 position){}
+	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
 
 
 	private void HandleEnemyTargeted(){}	
