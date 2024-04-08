@@ -4,7 +4,7 @@ using System;
 public partial class CameraRig : Node3D
 {
 	// Called when the node enters the scene tree for the first time.
-	private Camera3D camera;
+	private Camera3D camera; // Gets camera node
 	private CustomSignals _customSignals;
 	public override void _Ready()
 	{
@@ -19,7 +19,7 @@ public partial class CameraRig : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		_customSignals.EmitSignal(nameof(CustomSignals.CameraPosition), camera.GlobalTransform.Origin);
+		_customSignals.EmitSignal(nameof(CustomSignals.CameraPosition), camera.GlobalTransform.Origin); // Sends camera position
 	}
 
 	private void HandleCameraPosition(Vector3 position){}

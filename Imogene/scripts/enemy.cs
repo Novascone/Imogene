@@ -47,8 +47,8 @@ public partial class enemy : CharacterBody3D
 		targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandleDamageEnemy;
-		_customSignals.EnemyTargeted += HandleEnemyTargeted;
-		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
+		// _customSignals.EnemyTargeted += HandleEnemyTargeted;
+		// _customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.CameraPosition += HandleCameraPosition;
@@ -138,14 +138,15 @@ public partial class enemy : CharacterBody3D
         
     }
 
-	 private void HandleEnemyTargeted() // Changes target icon from invisible to visible
-    {
-		targeting_icon.Visible = true;
-    }
-	private void HandleEnemyUnTargeted()
-    {
-        targeting_icon.Visible = false;
-    }
+	//  private void HandleEnemyTargeted(Area3D targeted) // Changes target icon from invisible to visible
+    // {
+	// 	// GD.Print(targeted);
+	// 	// targeting_icon.Visible = true;
+    // }
+	// private void HandleEnemyUnTargeted()
+    // {
+    //     // targeting_icon.Visible = false;
+    // }
 
 	private void HandleEnemyPosition(Vector3 position){}
 

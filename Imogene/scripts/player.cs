@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Dynamic;
@@ -28,13 +29,16 @@ public partial class player : CharacterBody3D
 	private Area3D target; // Targets that enter the vision area
 	private bool enemy_in_vision = false; // Boolean to track if enemy is in vision
 	private Vector3 player_position; // Position of the player
-	private Vector3 enemy_position; // Position of enemy
+	private Vector3 enemy_position;
 	private bool targeting = false; // Boolean to track if the player is targeting an enemy
 	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
 	private bool player_Z_less_than_target_Z; 
 	private bool player_X_more_than_target_X; 
 	private bool player_X_less_than_target_X; 
 	private CustomSignals _customSignals; // Instance of CustomSignals
+	private List<Area3D> mobs_in_vision;
+	private List<Vector3> mob_distance_from_player;
+	private MeshInstance3D targeting_icon;
 
 	
 
@@ -43,22 +47,34 @@ public partial class player : CharacterBody3D
 	{
 		// Setting instances of nodes and subscribing to events
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		health_icon.MaxValue = health;
 		resource_icon.MaxValue = resource;
-		tree = GetNode<AnimationTree>("AnimationTree");
+		targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
+
+		
+
 		player_hurtbox = GetNode<Area3D>("PlayerHitbox");
+
 		vision  = (Area3D)GetNode("Vision");
 		vision.AreaEntered += OnAreaEntered;
 		vision.AreaExited += OnAreaExited;
+
+		tree = GetNode<AnimationTree>("AnimationTree");
 		tree.AnimationFinished += OnAnimationFinsihed;
+
 		weapon_hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/weapon_area");
 		weapon_hitbox.AreaEntered += OnHitboxEntered;
+
+		mobs_in_vision = new List<Area3D>();
+		mob_distance_from_player = new List<Vector3>();
+		
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
-		_customSignals.EnemyTargeted += HandleEnemyTargeted;
-		_customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
+		// _customSignals.EnemyTargeted += HandleEnemyTargeted;
+		// _customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPositon;
 		
@@ -75,6 +91,7 @@ public partial class player : CharacterBody3D
     {
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		var direction = Vector3.Zero;
+		Vector3 mob_to_LookAt_pos = Vector3.Zero;
 		player_position = GlobalPosition;
         Vector3 velocity = Velocity;
 		// float current_y_rotation;
@@ -142,6 +159,7 @@ public partial class player : CharacterBody3D
 		UpdateHealth();
 		UpdateResource();
 
+
 		if(enemy_in_vision)
 			{
 				// GD.Print(enemy_position);
@@ -185,12 +203,56 @@ public partial class player : CharacterBody3D
 		
 	
 		}
-		
+		if(enemy_in_vision)
+		{
+			
+		}
 		if(targeting)
 		{
 			// GD.Print("Targeting");
+			// if(targeting && Input.IsActionJustPressed("Target"))
+			// {
+			// 	targeting = false;
+			// }
 			
-			LookAt(enemy_position with {Y = GlobalPosition.Y});
+			// GD.Print("mob 1", mob_distance_from_player[0]);
+			// GD.Print("mob 2", mob_distance_from_player[1]);
+
+			Vector3 minima = Vector3.Zero;
+			int mindex = 0;
+			if (mobs_in_vision.Count > 0)
+			{
+				for ( int i = 0; i < mob_distance_from_player.Count; i++)
+				{
+					if (mob_distance_from_player[i] < minima)
+					{
+						minima = mob_distance_from_player[i];
+						mindex = i;
+						
+					}
+				}
+				mob_to_LookAt_pos = mobs_in_vision[mindex].GlobalPosition;
+			}
+			else
+			{
+				mob_to_LookAt_pos = Vector3.Zero;
+				targeting_icon.Visible = false;
+			}
+			
+			
+	
+			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
+			targeting_icon.GlobalPosition = mob_to_LookAt_pos with {Y = 4};
+			if(mobs_in_vision.Count >= 1)
+			{
+				targeting_icon.Visible = true;
+			}
+			else
+			{
+				targeting_icon.Visible = false;
+			}
+			
+
 						
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
@@ -675,6 +737,14 @@ public partial class player : CharacterBody3D
 		if(interactable.IsInGroup("enemy")) 
 		{
 			enemy_in_vision = true;
+			mobs_in_vision.Add(interactable);
+			GD.Print("Mobs in vision ",mobs_in_vision.Count);
+			foreach( Area3D mob in mobs_in_vision)
+			{
+				mob_distance_from_player.Add(player_position - mob.GlobalPosition);
+			}
+			GD.Print(mobs_in_vision);
+			
 			// GD.Print(enemy_position);
 	
 		}
@@ -685,8 +755,22 @@ public partial class player : CharacterBody3D
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
-			enemy_in_vision = false;
+			if(mobs_in_vision.Count >= 1)
+			{
+				mobs_in_vision.Remove(interactable);
+				GD.Print("Mobs in vision ",mobs_in_vision.Count);
+				GD.Print("removed", interactable);
+			}
+			else
+			{
+				GD.Print("Mobs in vision ",mobs_in_vision.Count);
+				enemy_in_vision = false;
+			}
+			
+			
+			// GD.Print(mobs_in_vision);
 		}
+		
 		
 	}
 
@@ -722,13 +806,17 @@ public partial class player : CharacterBody3D
 		{
 			if(!targeting)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted));
+				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted), targeted_mob);
 				targeting = true;
+				targeting_icon.Visible = true;
+				GD.Print("Targeted");
 			}
 			else
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
+				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
+				targeting_icon.Visible = false;
+				GD.Print("Untargeted");
 			}
 			
 		}
@@ -758,9 +846,9 @@ public partial class player : CharacterBody3D
 	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
 
 
-	private void HandleEnemyTargeted(){}	
+	// private void HandleEnemyTargeted(Area3D targeted_mob){}	
 
-	private void HandleEnemyUnTargeted(){}
+	// private void HandleEnemyUnTargeted(){}
 
 
 }
