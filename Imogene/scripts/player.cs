@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
@@ -39,6 +40,11 @@ public partial class player : CharacterBody3D
 	private List<Area3D> mobs_in_vision;
 	private List<Vector3> mob_distance_from_player;
 	private MeshInstance3D targeting_icon;
+	private	Dictionary<Area3D, Vector3> mob_pos; // Gets mob and the distance from the player 
+	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Calls  SortByDistance from Vector3DictionarySorter and sorts the mobs based on how far away they are from the player
+	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
+	private int mob_index = 0;
+
 
 	
 
@@ -70,6 +76,8 @@ public partial class player : CharacterBody3D
 
 		mobs_in_vision = new List<Area3D>();
 		mob_distance_from_player = new List<Vector3>();
+		mob_pos = new Dictionary<Area3D, Vector3>();
+		
 		
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
@@ -203,49 +211,61 @@ public partial class player : CharacterBody3D
 		
 	
 		}
-		if(enemy_in_vision)
-		{
-			
-		}
+		
 		if(targeting)
 		{
-			// GD.Print("Targeting");
-			// if(targeting && Input.IsActionJustPressed("Target"))
-			// {
-			// 	targeting = false;
-			// }
 			
-			// GD.Print("mob 1", mob_distance_from_player[0]);
-			// GD.Print("mob 2", mob_distance_from_player[1]);
-
-			Vector3 minima = Vector3.Zero;
-			int mindex = 0;
-			if (mobs_in_vision.Count > 0)
+			
+			sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
+			mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+			if (mobs_in_vision.Count > 0) 
 			{
-				for ( int i = 0; i < mob_distance_from_player.Count; i++)
+				if(Input.IsActionJustPressed("TargetNext"))
 				{
-					if (mob_distance_from_player[i] < minima)
+					if(mob_index < mobs_in_order.Count - 1)
 					{
-						minima = mob_distance_from_player[i];
-						mindex = i;
-						
+						GD.Print("mobs in order.count",mobs_in_order.Count);
+						GD.Print("Target Next");
+						mob_index += 1;
 					}
 				}
-				mob_to_LookAt_pos = mobs_in_vision[mindex].GlobalPosition;
+				else if (Input.IsActionJustPressed("TargetLast"))
+				{
+					if(mob_index >= 1)
+					{
+						GD.Print("Target Last");
+						mob_index -= 1;
+					}
+				}
+				
+				if(mobs_in_order.Count - 1 > 0 && enemy_in_vision)
+				{
+					mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
+				}
+				
 			}
 			else
 			{
-				mob_to_LookAt_pos = Vector3.Zero;
+				mob_pos.Clear();
+				sorted_mob_pos.Clear();
+				mobs_in_order.Clear();
 				targeting_icon.Visible = false;
 			}
 			
-			
-	
-			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
-			targeting_icon.GlobalPosition = mob_to_LookAt_pos with {Y = 4};
+		
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
+			{
+				LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
+			}
+			if(enemy_in_vision)
+			{
+				targeting_icon.GlobalPosition = mob_to_LookAt_pos with {Y = 4}; 
+			}
+			// sets targeting icon location above enemy head
+			// sets visibility of targeting icon
 			if(mobs_in_vision.Count >= 1)
 			{
-				targeting_icon.Visible = true;
+				targeting_icon.Visible = true; 
 			}
 			else
 			{
@@ -736,15 +756,24 @@ public partial class player : CharacterBody3D
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
+			
 			enemy_in_vision = true;
-			mobs_in_vision.Add(interactable);
-			GD.Print("Mobs in vision ",mobs_in_vision.Count);
+			
+			mobs_in_vision.Add(interactable); // adds mob to lish
+			GD.Print("Mobs in vision ", mobs_in_vision.Count);
 			foreach( Area3D mob in mobs_in_vision)
 			{
-				mob_distance_from_player.Add(player_position - mob.GlobalPosition);
+
+				if(!mob_pos.ContainsKey(mob))
+				{
+					mob_pos.Add(mob, player_position - mob.GlobalPosition); // adds mob to list and how close it is to the player
+					// adds mob to list and how close it is to the player
+				}
+				
+				mob_distance_from_player.Add(player_position - mob.GlobalPosition); // adds distance from player to list
 			}
-			GD.Print(mobs_in_vision);
-			
+			// GD.Print("Mobs in vision ",mobs_in_vision.Count);
+			GD.Print("Added", interactable);
 			// GD.Print(enemy_position);
 	
 		}
@@ -758,12 +787,11 @@ public partial class player : CharacterBody3D
 			if(mobs_in_vision.Count >= 1)
 			{
 				mobs_in_vision.Remove(interactable);
-				GD.Print("Mobs in vision ",mobs_in_vision.Count);
+				// GD.Print("Mobs in vision ",mobs_in_vision.Count);
 				GD.Print("removed", interactable);
 			}
 			else
 			{
-				GD.Print("Mobs in vision ",mobs_in_vision.Count);
 				enemy_in_vision = false;
 			}
 			
@@ -811,12 +839,18 @@ public partial class player : CharacterBody3D
 				targeting_icon.Visible = true;
 				GD.Print("Targeted");
 			}
-			else
+			else if(targeting)
 			{
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
 				targeting_icon.Visible = false;
-				GD.Print("Untargeted");
+				mob_pos.Clear();
+				// GD.Print("Mob pos cleared");
+				sorted_mob_pos.Clear();
+				// GD.Print("sorted_mob_pos cleared");
+				mobs_in_order.Clear();
+				// GD.Print("mobs in order cleared");
+				// GD.Print("Untargeted");
 			}
 			
 		}
@@ -845,10 +879,24 @@ public partial class player : CharacterBody3D
 
 	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
 
+	
+
 
 	// private void HandleEnemyTargeted(Area3D targeted_mob){}	
 
 	// private void HandleEnemyUnTargeted(){}
+
+	public static class Vector3DictionarySorter 
+	{
+		public static Dictionary<Area3D, Vector3> SortByDistance(Dictionary<Area3D, Vector3> dict, Vector3 point)
+		{
+			var sortedList = dict.ToList();
+
+			sortedList.Sort((pair1, pair2) => pair1.Value.DistanceTo(point).CompareTo(pair2.Value.DistanceTo(point)));
+
+			return sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
+		}
+	}
 
 
 }

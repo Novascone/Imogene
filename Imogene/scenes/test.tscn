@@ -82,10 +82,10 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nt1yn")
 
 [node name="mob" parent="." instance=ExtResource("4_0ec7p")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -18.7904, 0.0080943, -10.6845)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -12.7465, 0.0080943, -9.07695)
 
 [node name="mob2" parent="." instance=ExtResource("4_0ec7p")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -17.0432, 0, 0.842053)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -18.4572, 0, 0.842053)
 
 [node name="player" parent="." instance=ExtResource("4_xodl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.340031, 0.0080943, -1.36586)
