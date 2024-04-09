@@ -37,13 +37,14 @@ public partial class player : CharacterBody3D
 	private bool player_X_more_than_target_X; 
 	private bool player_X_less_than_target_X; 
 	private CustomSignals _customSignals; // Instance of CustomSignals
-	private List<Area3D> mobs_in_vision;
+	private Vector3 mob_to_LookAt_pos;
 	private List<Vector3> mob_distance_from_player;
 	private MeshInstance3D targeting_icon;
 	private	Dictionary<Area3D, Vector3> mob_pos; // Gets mob and the distance from the player 
 	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Calls  SortByDistance from Vector3DictionarySorter and sorts the mobs based on how far away they are from the player
 	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
-	private int mob_index = 0;
+	private int mob_index = 0; // Index of mob that we want to look at
+	
 
 
 	
@@ -74,7 +75,7 @@ public partial class player : CharacterBody3D
 		weapon_hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/weapon_area");
 		weapon_hitbox.AreaEntered += OnHitboxEntered;
 
-		mobs_in_vision = new List<Area3D>();
+		
 		mob_distance_from_player = new List<Vector3>();
 		mob_pos = new Dictionary<Area3D, Vector3>();
 		
@@ -99,7 +100,6 @@ public partial class player : CharacterBody3D
     {
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		var direction = Vector3.Zero;
-		Vector3 mob_to_LookAt_pos = Vector3.Zero;
 		player_position = GlobalPosition;
         Vector3 velocity = Velocity;
 		// float current_y_rotation;
@@ -212,65 +212,45 @@ public partial class player : CharacterBody3D
 	
 		}
 		
-		if(targeting)
+		
+		GD.Print("Enemies in sight: ",mob_pos.Count);
+		
+		if(mob_pos.Count == 0)
+		{	
+			GD.Print("no enemy in sight");
+			enemy_in_vision = false;
+			mob_index = 0;
+		}
+		// GD.Print("mob pos: ", mob_pos.Count);
+		// GD.Print("mobs in order: ", mobs_in_order.Count);
+		// GD.Print("mob index: ", mob_index);
+		GD.Print("mob index: ",mob_index);
+		if(targeting && enemy_in_vision)
 		{
 			
-			
-			sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
-			mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
-			if (mobs_in_vision.Count > 0) 
-			{
-				if(Input.IsActionJustPressed("TargetNext"))
-				{
-					if(mob_index < mobs_in_order.Count - 1)
-					{
-						GD.Print("mobs in order.count",mobs_in_order.Count);
-						GD.Print("Target Next");
-						mob_index += 1;
-					}
-				}
-				else if (Input.IsActionJustPressed("TargetLast"))
-				{
-					if(mob_index >= 1)
-					{
-						GD.Print("Target Last");
-						mob_index -= 1;
-					}
-				}
 				
-				if(mobs_in_order.Count - 1 > 0 && enemy_in_vision)
+			if(Input.IsActionJustPressed("TargetNext"))
+			{
+				if(mob_index < mob_pos.Count - 1)
 				{
-					mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
+					mob_index += 1;
 				}
 				
 			}
-			else
+			else if (Input.IsActionJustPressed("TargetLast"))
 			{
-				mob_pos.Clear();
-				sorted_mob_pos.Clear();
-				mobs_in_order.Clear();
-				targeting_icon.Visible = false;
+				if(mob_index > 0)
+				{
+					mob_index -= 1;
+				}
+				
 			}
 			
+			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
+			targeting_icon.GlobalPosition = mob_to_LookAt_pos with	{Y = 4};
+			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
 		
-			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
-			{
-				LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
-			}
-			if(enemy_in_vision)
-			{
-				targeting_icon.GlobalPosition = mob_to_LookAt_pos with {Y = 4}; 
-			}
-			// sets targeting icon location above enemy head
-			// sets visibility of targeting icon
-			if(mobs_in_vision.Count >= 1)
-			{
-				targeting_icon.Visible = true; 
-			}
-			else
-			{
-				targeting_icon.Visible = false;
-			}
+			
 			
 
 						
@@ -756,24 +736,30 @@ public partial class player : CharacterBody3D
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
+
 			
 			enemy_in_vision = true;
-			
-			mobs_in_vision.Add(interactable); // adds mob to lish
-			GD.Print("Mobs in vision ", mobs_in_vision.Count);
-			foreach( Area3D mob in mobs_in_vision)
+			Vector3 dist_vec = player_position - interactable.GlobalPosition;
+			// if(mob_index >= mob_pos.Count - 1)
+			// {
+			// 	mob_index += 1;
+			// }
+			if(targeting && mob_pos.Count > 0)
 			{
-
-				if(!mob_pos.ContainsKey(mob))
-				{
-					mob_pos.Add(mob, player_position - mob.GlobalPosition); // adds mob to list and how close it is to the player
-					// adds mob to list and how close it is to the player
-				}
-				
-				mob_distance_from_player.Add(player_position - mob.GlobalPosition); // adds distance from player to list
+				mob_index += 1; // increments index when enemy enters so the player stays looking at the current enemy
 			}
-			// GD.Print("Mobs in vision ",mobs_in_vision.Count);
-			GD.Print("Added", interactable);
+			if(!mob_pos.ContainsKey(interactable))
+			{
+				mob_pos.Add(interactable, dist_vec); // adds mob to list and how close it is to the player
+				Sort(); // sorts the enemies by position
+			}
+		
+			
+			
+			
+			// GD.Print("enemy entered");
+			// GD.Print("Added", interactable);
+			// GD.Print("mob count: ", mob_pos.Count);
 			// GD.Print(enemy_position);
 	
 		}
@@ -784,19 +770,34 @@ public partial class player : CharacterBody3D
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
-			if(mobs_in_vision.Count >= 1)
+			if (mob_pos.Count == 1)
 			{
-				mobs_in_vision.Remove(interactable);
-				// GD.Print("Mobs in vision ",mobs_in_vision.Count);
-				GD.Print("removed", interactable);
+				mob_index = 0; // resets index when all enemies leave
+				mob_pos.Remove(interactable);
+				// sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
+				// mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+				sorted_mob_pos.Clear();
+				mobs_in_order.Clear();
 			}
-			else
+			else if(mob_pos.Count > 0)
 			{
-				enemy_in_vision = false;
+				if(mob_index > 0) 
+				{
+					mob_index -= 1; // decrements index when enemy leaves so the player keeps looking at the current enemy
+				}
+				
+				mob_pos.Remove(interactable);
+				// sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
+				// mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+				// GD.Print("mob count: ", mob_pos.Count);
+				// GD.Print("removed", interactable);
+				// GD.Print("enemy exited");
 			}
 			
 			
-			// GD.Print(mobs_in_vision);
+			
+			
+			
 		}
 		
 		
@@ -844,17 +845,19 @@ public partial class player : CharacterBody3D
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
 				targeting_icon.Visible = false;
-				mob_pos.Clear();
-				// GD.Print("Mob pos cleared");
-				sorted_mob_pos.Clear();
-				// GD.Print("sorted_mob_pos cleared");
-				mobs_in_order.Clear();
-				// GD.Print("mobs in order cleared");
-				// GD.Print("Untargeted");
+				GD.Print("Untargeted");
+				
 			}
 			
 		}
 
+	}
+
+	private void Sort()
+	{
+		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
+		mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+		
 	}
 
 	private void UpdateHealth() // Updates UI health
