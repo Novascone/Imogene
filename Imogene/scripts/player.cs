@@ -53,7 +53,8 @@ public partial class player : CharacterBody3D
 	public override void _Ready()
 	{
 		// Setting instances of nodes and subscribing to events
-		Input.MouseMode = Input.MouseModeEnum.Captured;
+		// Input.MouseMode = Input.MouseModeEnum.Captured;
+		// Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
 
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
