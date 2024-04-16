@@ -12,17 +12,17 @@ public partial class player : CharacterBody3D
 {
 
 	private float speed = 5.0f; // Speed of character
-	private float dash_speed = 10.0f; // Speed character moves when dashing
+	private float roll_speed = 10.0f; // Speed character moves when rolling
 	private int damage = 10; // Prelim damage number
 	private int health = 20; // Prelim health number
 	private int resource = 20; // Relim resource number
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
-	private Vector3 dash_velocity = Vector3.Zero; // Velocity of dash, allows dash to scale up current velocity and be reset without affecting current velocity
+	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
 	private Area3D player_hurtbox; // Player hurbox
 	private bool can_move = true; // Boolean to keep track of if the play is allowed to move
-	bool dashing; // Boolean to keep track of if the player is dashing
-	private int dash_time = 0; // How many frames the player can dash for.
+	bool rolling; // Boolean to keep track of if the player is rolling
+	private int roll_time = 0; // How many frames the player can roll for.
 	private int attack_freeze = 0; // How many frames the player has to wait when attacking. Should probably make this a timer
 	private AnimationTree tree; // Animation Tree of the player
 	private Area3D weapon_hitbox; // weapon hitbox
@@ -106,11 +106,11 @@ public partial class player : CharacterBody3D
 		Vector2 blend_direction;
 		
 		
-		bool dashing = false;
-		bool dash_right = false;
-		bool dash_left = false;
-		bool dash_back = false;
-		bool dash_forward = false;
+		
+		bool roll_right = false;
+		bool roll_left = false;
+		bool roll_back = false;
+		bool roll_forward = false;
 		
 		
 		if(can_move) // Basic movement controller
@@ -144,16 +144,16 @@ public partial class player : CharacterBody3D
 		if(enemy_in_vision)
 			{
 				// GD.Print(enemy_position);
-				EnemyInVision();
+				Targeting();
 
 			}
 
 		
-		if (Input.IsActionJustPressed("Roll"))
+		if (Input.IsActionJustPressed("Roll") && !rolling)
 		{
-			dash();
-			dashing = true;
-			dash_time = 10;
+			roll();
+			rolling = true;
+			roll_time = 13;
 		
 		}
 
@@ -431,40 +431,40 @@ public partial class player : CharacterBody3D
 			}
 		}
 
-		if(dashing)
+		if(rolling)
 		{
-			// Matches dash animations to the direction of the player
+			// Matches roll animations to the direction of the player
 			if(blend_direction.X > 0 && blend_direction.Y > 0)
 			{
-				dash_right = true;
+				roll_right = true;
 			}
 			if(blend_direction.X < 0 && blend_direction.Y < 0)
 			{
-				dash_left = true;
+				roll_left = true;
 			}
 			if(blend_direction.X > 0 && blend_direction.Y < 0)
 			{
-				dash_right = true;
+				roll_right = true;
 			}
 			if(blend_direction.X < 0 && blend_direction.Y > 0)
 			{
-				dash_left = true;
+				roll_left = true;
 			}
 			if(blend_direction.X > 0 && blend_direction.Y == 0)
 			{
-				dash_right = true;
+				roll_right = true;
 			}
 			if(blend_direction.X < 0 && blend_direction.Y == 0)
 			{
-				dash_left = true;
+				roll_left = true;
 			}
 			if(blend_direction.X == 0 && blend_direction.Y > 0)
 			{
-				dash_forward = true;
+				roll_forward = true;
 			}
 			if(blend_direction.X == 0 && blend_direction.Y < 0)
 			{
-				dash_back = true;
+				roll_back = true;
 			}
 		}
 
@@ -476,28 +476,33 @@ public partial class player : CharacterBody3D
 		velocity.Z = direction.Z * speed;
 		
 	
-		if(dash_time != 0)
+		if(roll_time != 0)
 		{
 			// Lerps to zero
-			velocity.X += Mathf.Lerp(dash_velocity.X, 0, 0.1f);
-			velocity.Z += Mathf.Lerp(dash_velocity.Z, 0, 0.1f);
-			dash_time -= 1;
+			if(roll_time < 10)
+			{
+				velocity.X += Mathf.Lerp(roll_velocity.X, 0, 0.1f);
+				velocity.Z += Mathf.Lerp(roll_velocity.Z, 0, 0.1f);
+			}
+			else if(roll_time > 10)
+			{
+				velocity.X += Mathf.Lerp(0, roll_velocity.X, 0.7f);
+				velocity.Z += Mathf.Lerp(0, roll_velocity.Z, 0.7f);
+			}
+			
+			roll_time -= 1;
 		}
-		if(dash_time == 1)
+		if(roll_time == 1)
 		{
-			// Sets velocity to 0 after dash
+			// Sets velocity to 0 after roll
 			velocity = Vector3.Zero;
 		}
-		if(attack_freeze != 0)
+		if(roll_time == 0)
 		{
-			// Stops player from moving when attacking
-			can_move = false;
-			attack_freeze -= 1;
+			rolling = false;
 		}
-		else
-		{
-			can_move = true;
-		}
+		
+		
 
 		if(player_position.Z - mob_to_LookAt_pos.Z > 0)
 			{
@@ -536,20 +541,21 @@ public partial class player : CharacterBody3D
 		// GD.Print("direction Z ", direction.Z);
 	
 		tree.Set("parameters/IW/blend_position", blend_direction);
-		tree.Set("parameters/conditions/dash_back", dash_back);
-		tree.Set("parameters/conditions/dash_forward", dash_forward);
-		tree.Set("parameters/conditions/dash_left", dash_left);
-		tree.Set("parameters/conditions/dash_right", dash_right);
+		tree.Set("parameters/conditions/roll_back", roll_back);
+		tree.Set("parameters/conditions/roll_forward", roll_forward);
+		tree.Set("parameters/conditions/roll_left", roll_left);
+		tree.Set("parameters/conditions/roll_right", roll_right);
 		tree.Set("parameters/conditions/attacking", attack_check());
 		MoveAndSlide();
 
     }
 
 
-	public void dash()	// Increases velocity
+	public void roll()	// Increases velocity
 	{
-		dash_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
-		dash_velocity += Velocity * 4;
+		roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
+		roll_velocity += Velocity * 4;
+		GD.Print("roll");
 	}
 
     public bool attack_check() // changes weapon hitbox monitoring based on animation
@@ -560,7 +566,6 @@ public partial class player : CharacterBody3D
 			weapon_hitbox.AddToGroup("attacking"); // Adds weapon to attacking group
 			weapon_hitbox.Monitoring = true;
 			can_move = false;
-			attack_freeze = 13;
 			return true;
 		}
 		
@@ -658,30 +663,39 @@ public partial class player : CharacterBody3D
 		{
 			weapon_hitbox.Monitoring = false;
 			can_move = true;
-			attack_freeze = 0;
 			weapon_hitbox.RemoveFromGroup("attacking");
 		}
+		// if(animName == "Roll_Back")
+		// {
+		// 	rolling = false;
+		// }
+		// if(animName == "Roll_Forward")
+		// {
+		// 	rolling = false;
+		// }
+		// if(animName == "Roll_Left")
+		// {
+		// 	rolling = false;
+		// }
+		// if(animName == "Roll_Right")
+		// {
+		// 	rolling = false;
+		// }
         
     }
 
-	private void EnemyInVision() // Emits signal when enemy is targeted/ untargeted
+	private void Targeting() // Emits signal when enemy is targeted/ untargeted
 	{
 		
 		if(Input.IsActionJustPressed("Target"))
 		{
 			if(!targeting)
 			{
-				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted), targeted_mob);
-				
 				targeting = true;
-				
-				// GD.Print("Targeted");
 			}
 			else if(targeting)
 			{
 				targeting = false;
-				// GD.Print("Untargeted");
-				
 			}
 			
 		}
