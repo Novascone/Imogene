@@ -137,32 +137,7 @@ public partial class player : CharacterBody3D
 			}
 		}
 
-		if(player_position.Z - enemy_position.Z > 0)
-			{
-				player_Z_more_than_target_Z = true;
-				player_Z_less_than_target_Z = false;
-				// GD.Print("player_Z_more_than_target_Z");
-				
-			}
-			if(player_position.Z - enemy_position.Z < 0)
-			{
-				player_Z_less_than_target_Z = true;
-				player_Z_more_than_target_Z = false;
-				// GD.Print("player_Z_less_than_target_Z ");
-			}
-			if((player_position.X - enemy_position.X) > 0)
-			{
-				player_X_more_than_target_X = true;
-				player_X_less_than_target_X = false;
-				// GD.Print("player_X_more_than_target_X");
-				
-			}
-			if((player_position.X - enemy_position.X) < 0)
-			{
-				player_X_less_than_target_X = true;
-				player_X_more_than_target_X = false;
-				// GD.Print("player_X_less_than_target_X");
-			}
+		
 
 
 		UpdateHealth();
@@ -214,20 +189,31 @@ public partial class player : CharacterBody3D
 		}
 		
 		
-		GD.Print("Enemies in sight: ",mob_pos.Count);
+		// GD.Print("Enemies in sight: ",mob_pos.Count);
 		
 		if(mob_pos.Count == 0)
 		{	
-			GD.Print("no enemy in sight");
+			// GD.Print("no enemy in sight");
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
 		// GD.Print("mob pos: ", mob_pos.Count);
 		// GD.Print("mobs in order: ", mobs_in_order.Count);
 		// GD.Print("mob index: ", mob_index);
-		GD.Print("mob index: ",mob_index);
+		// GD.Print("mob index: ",mob_index);
 		if(targeting && enemy_in_vision)
 		{
+
+			blend_direction.X = direction.X;
+			blend_direction.Y = direction.Z;
+			if(player_Z_less_than_target_Z)
+			{
+				blend_direction.X *= -1;
+			}
+			else if(player_Z_more_than_target_Z)
+			{
+				blend_direction.Y *= -1;
+			}
 			
 				
 			if(Input.IsActionJustPressed("TargetNext"))
@@ -255,99 +241,12 @@ public partial class player : CharacterBody3D
 			
 
 						
-			blend_direction.X = direction.X;
-			blend_direction.Y = direction.Z;
+			
 			
 			// Checks player position relative to enemy
 			
 
 			// Changes the animation based on where the player is relative to the enemy, I'm sure there is a better way to handle this tho
-			{
-				// GD.Print("player_Z_less_than_target_Z && player_X_more_than_target_X");
-				if (direction.Z > 0 && direction.X > 0) // +Z +X 
-				{
-					blend_direction.Y = 0.0f;
-					blend_direction.X = -1.0f;
-					// GD.Print("strafe left");
-				}
-				if (direction.Z < 0 && direction.X < 0) // -Z -X 
-				{
-					blend_direction.Y = 0.0f;
-					blend_direction.X =  1.0f;
-					// GD.Print("strafe right");
-				}
-				if (direction.Z < 0 && direction.X > 0) // -Z +X 
-				{
-					blend_direction.Y = -1.0f;
-					blend_direction.X = 0.0f;
-					// GD.Print("walk away");
-				}
-				if (direction.Z > 0 && direction.X < 0) // +Z -X 
-				{
-					blend_direction.Y = 1.0f;
-					blend_direction.X = 0.0f;
-					// GD.Print("walk toward");
-				}
-				if (direction.Z > 0 && direction.X == 0) // +Z 0X 
-				{
-					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
-					{
-						blend_direction.Y = 1.0f;
-						blend_direction.X = 0f;
-					}
-					else
-					{
-						blend_direction.Y = 0.75f;
-						blend_direction.X = -0.25f;
-					}
-					blend_direction.Y = 0.0f;
-					blend_direction.X = -1.0f;
-					// GD.Print("strafe left");
-				}
-				if (direction.Z < 0 && direction.X == 0) // -Z 0X 
-				{
-					if(MathF.Abs(MathF.Abs(player_position.X) - MathF.Abs(enemy_position.X)) < 0.5)
-					{
-						blend_direction.Y = -1.0f;
-						blend_direction.X = 0f;
-					}
-					else
-					{
-						blend_direction.Y = -0.75f;
-						blend_direction.X = 0.25f;
-					}
-					// GD.Print("strafe right");
-				}
-				if (direction.Z == 0 && direction.X > 0) // 0Z +X 
-				{
-					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
-					{
-						blend_direction.Y = -1.0f;
-						blend_direction.X = 0f;
-					}
-					else
-					{
-						blend_direction.Y = -0.5f;
-						blend_direction.X = 0.0f;
-					}
-					// GD.Print("split");
-				}
-				if (direction.Z == 0 && direction.X < 0) // 0Z -X 
-				{
-					if(MathF.Abs(MathF.Abs(player_position.Z) - MathF.Abs(enemy_position.Z)) < 0.5)
-					{
-						blend_direction.Y = 1.0f;
-						blend_direction.X = 0f;
-					}
-					else
-					{
-						blend_direction.Y = 0.5f;
-						blend_direction.X = 0.0f;
-					}
-					
-					// GD.Print("split");
-				}
-			}
 		}
 		else
 		{
@@ -432,10 +331,42 @@ public partial class player : CharacterBody3D
 		{
 			can_move = true;
 		}
+
+		if(player_position.Z - mob_to_LookAt_pos.Z > 0)
+			{
+				player_Z_more_than_target_Z = true;
+				player_Z_less_than_target_Z = false;
+				// GD.Print("player_Z_more_than_target_Z");
+				
+			}
+			if(player_position.Z - mob_to_LookAt_pos.Z < 0)
+			{
+				player_Z_less_than_target_Z = true;
+				player_Z_more_than_target_Z = false;
+				// GD.Print("player_Z_less_than_target_Z ");
+			}
+			if((player_position.X - mob_to_LookAt_pos.X) > 0)
+			{
+				player_X_more_than_target_X = true;
+				player_X_less_than_target_X = false;
+				// GD.Print("player_X_more_than_target_X");
+				
+			}
+			if((player_position.X - mob_to_LookAt_pos.X) < 0)
+			{
+				player_X_less_than_target_X = true;
+				player_X_more_than_target_X = false;
+				// GD.Print("player_X_less_than_target_X");
+			}
 		
 		// Set global velocity
 		Velocity = velocity;
+
 		// Set animations
+		// GD.Print("blend direction X ", blend_direction.X);
+		// GD.Print("blend direction Y ", blend_direction.Y);
+		// GD.Print("direction X ", direction.X);
+		// GD.Print("direction Y ", direction.Z);
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
 		tree.Set("parameters/conditions/dash_forward", dash_forward);
@@ -575,14 +506,14 @@ public partial class player : CharacterBody3D
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted), targeted_mob);
 				targeting = true;
 				targeting_icon.Visible = true;
-				GD.Print("Targeted");
+				// GD.Print("Targeted");
 			}
 			else if(targeting)
 			{
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
 				targeting_icon.Visible = false;
-				GD.Print("Untargeted");
+				// GD.Print("Untargeted");
 				
 			}
 			
