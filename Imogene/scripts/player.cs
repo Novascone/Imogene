@@ -206,14 +206,184 @@ public partial class player : CharacterBody3D
 
 			blend_direction.X = direction.X;
 			blend_direction.Y = direction.Z;
-			if(player_Z_less_than_target_Z)
+
+			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
-				blend_direction.X *= -1;
+				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
+				if(direction.X == 1 && direction.Z == 1) // walk away
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = -1;
+				}
+				if(direction.X == -1 && direction.Z == -1) // walk toward
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = 1;
+				}
+				if(direction.Z == -1 && direction.X == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == 1 && direction.X == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 0) // strafe left 
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == -1) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 1) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+			
 			}
-			else if(player_Z_more_than_target_Z)
+			if(player_Z_less_than_target_Z && player_X_more_than_target_X)
 			{
-				blend_direction.Y *= -1;
+				if(direction.X == 1 && direction.Z == -1) // walk away
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = -1;
+				}
+				if(direction.X == -1 && direction.Z == 1) // walk toward
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = 1;
+				}
+				if(direction.X == 1 && direction.Z == 1) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == -1) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == 1 && direction.X == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == -1 && direction.X == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				
 			}
+			if(player_Z_less_than_target_Z && player_X_less_than_target_X)
+			{
+				if(direction.X == 1 && direction.Z == 1) // walk toward
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = 1;
+				}
+				if(direction.X == -1 && direction.Z == -1) // walk away
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = -1;
+				}
+				if(direction.Z == -1 && direction.X == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == 1 && direction.X == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == -1) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 1) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+			}
+			if(player_Z_more_than_target_Z && player_X_less_than_target_X)
+			{
+				
+				if(direction.X == 1 && direction.Z == -1) // walk toward
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = 1;
+				}
+				if(direction.X == -1 && direction.Z == 1) // walk away
+				{
+					blend_direction.X = 0;
+					blend_direction.Y = -1;
+				}
+				if(direction.X == 1 && direction.Z == 1) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == -1) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == 1 && direction.X == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.Z == -1 && direction.X == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == 1 && direction.Z == 0) // strafe right
+				{
+					blend_direction.X = 1;
+					blend_direction.Y = 0;
+				}
+				if(direction.X == -1 && direction.Z == 0) // strafe left
+				{
+					blend_direction.X = -1;
+					blend_direction.Y = 0;
+				}
+			}
+		
 			
 				
 			if(Input.IsActionJustPressed("TargetNext"))
@@ -365,8 +535,9 @@ public partial class player : CharacterBody3D
 		// Set animations
 		// GD.Print("blend direction X ", blend_direction.X);
 		// GD.Print("blend direction Y ", blend_direction.Y);
-		// GD.Print("direction X ", direction.X);
-		// GD.Print("direction Y ", direction.Z);
+		GD.Print("direction X ", direction.X);
+		GD.Print("direction Z ", direction.Z);
+	
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
 		tree.Set("parameters/conditions/dash_forward", dash_forward);

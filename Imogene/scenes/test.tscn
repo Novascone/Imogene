@@ -86,3 +86,6 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -12.7465, 0.0080943, -9
 
 [node name="player" parent="." instance=ExtResource("4_1pb7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.153255, 0.00809479, -0.25248)
+
+[node name="mob2" parent="." instance=ExtResource("4_0ec7p")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -17.4777, 0.0080943, 4.61835)
