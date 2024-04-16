@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=18 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="Script" path="res://scripts/box.cs" id="3_5peeu"]
 [ext_resource type="PackedScene" uid="uid://bpalewpsip4oc" path="res://scenes/enemy.tscn" id="4_0ec7p"]
 [ext_resource type="PackedScene" uid="uid://g7r1svs3uder" path="res://scenes/player.tscn" id="4_1pb7j"]
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="4_upixs"]
+[ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/targeting_icon.tscn" id="5_klkw1"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
@@ -89,3 +90,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.153255, 0.00809479, -0.2524
 
 [node name="mob2" parent="." instance=ExtResource("4_0ec7p")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -17.4777, 0.0080943, 4.61835)
+
+[node name="Target" parent="." instance=ExtResource("5_klkw1")]

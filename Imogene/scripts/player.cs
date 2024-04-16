@@ -87,19 +87,16 @@ public partial class player : CharacterBody3D
 		// _customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPositon;
+		_customSignals.Targeting += HandleTargeting;
 		
 	}
-
-   
-
-
-
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
+		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 		var direction = Vector3.Zero;
 		player_position = GlobalPosition;
         Vector3 velocity = Velocity;
@@ -404,7 +401,7 @@ public partial class player : CharacterBody3D
 			}
 			
 			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
-			targeting_icon.GlobalPosition = mob_to_LookAt_pos with	{Y = 4};
+			
 			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
 		
 			
@@ -535,8 +532,8 @@ public partial class player : CharacterBody3D
 		// Set animations
 		// GD.Print("blend direction X ", blend_direction.X);
 		// GD.Print("blend direction Y ", blend_direction.Y);
-		GD.Print("direction X ", direction.X);
-		GD.Print("direction Z ", direction.Z);
+		// GD.Print("direction X ", direction.X);
+		// GD.Print("direction Z ", direction.Z);
 	
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/dash_back", dash_back);
@@ -675,15 +672,14 @@ public partial class player : CharacterBody3D
 			if(!targeting)
 			{
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyTargeted), targeted_mob);
+				
 				targeting = true;
-				targeting_icon.Visible = true;
+				
 				// GD.Print("Targeted");
 			}
 			else if(targeting)
 			{
-				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUnTargeted));
 				targeting = false;
-				targeting_icon.Visible = false;
 				// GD.Print("Untargeted");
 				
 			}
@@ -721,7 +717,8 @@ public partial class player : CharacterBody3D
 
 	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
 
-	
+	 private void HandleTargeting(bool targeting, Vector3 position){}
+
 
 
 	// private void HandleEnemyTargeted(Area3D targeted_mob){}	
