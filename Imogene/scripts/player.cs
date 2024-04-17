@@ -207,6 +207,8 @@ public partial class player : CharacterBody3D
 			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
 				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
+				if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+				
 				if(direction.X == 1 && direction.Z == 1) // walk away
 				{
 					blend_direction.X = 0;
@@ -217,25 +219,61 @@ public partial class player : CharacterBody3D
 					blend_direction.X = 0;
 					blend_direction.Y = 1;
 				}
-				if(direction.Z == -1 && direction.X == 0) // strafe right
+				if(direction.Z == -1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					}
 				}
-				if(direction.Z == 1 && direction.X == 0) // strafe left
+				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5) 
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					}
 				}
-				if(direction.X == 1 && direction.Z == 0) // strafe right
+				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					}
+					
 				}
-				if(direction.X == -1 && direction.Z == 0) // strafe left 
+				if(direction.X == -1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					}
+					
 				}
 				if(direction.X == 1 && direction.Z == -1) // strafe right
 				{
@@ -244,13 +282,16 @@ public partial class player : CharacterBody3D
 				}
 				if(direction.X == -1 && direction.Z == 1) // strafe left
 				{
+					
 					blend_direction.X = -1;
 					blend_direction.Y = 0;
+					
 				}
 			
 			}
 			if(player_Z_less_than_target_Z && player_X_more_than_target_X)
 			{
+				// GD.Print("here");
 				if(direction.X == 1 && direction.Z == -1) // walk away
 				{
 					blend_direction.X = 0;
@@ -271,25 +312,58 @@ public partial class player : CharacterBody3D
 					blend_direction.X = 1;
 					blend_direction.Y = 0;
 				}
-				if(direction.Z == 1 && direction.X == 0) // strafe left
+				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					}
+					
 				}
-				if(direction.Z == -1 && direction.X == 0) // strafe right
+				if(direction.Z == -1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					}
 				}
-				if(direction.X == 1 && direction.Z == 0) // strafe left
+				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					}
 				}
-				if(direction.X == -1 && direction.Z == 0) // strafe right
+				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					}
 				}
 				
 			}
@@ -305,25 +379,57 @@ public partial class player : CharacterBody3D
 					blend_direction.X = 0;
 					blend_direction.Y = -1;
 				}
-				if(direction.Z == -1 && direction.X == 0) // strafe left
+				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.Z == 1 && direction.X == 0) // strafe right
+				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.X == 1 && direction.Z == 0) // strafe left
+				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.X == -1 && direction.Z == 0) // strafe right
+				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					} 
 				}
 				if(direction.X == 1 && direction.Z == -1) // strafe left
 				{
@@ -359,25 +465,58 @@ public partial class player : CharacterBody3D
 					blend_direction.X = -1;
 					blend_direction.Y = 0;
 				}
-				if(direction.Z == 1 && direction.X == 0) // strafe right
+				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.Z == -1 && direction.X == 0) // strafe left
+				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
+					{
+						
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.X == 1 && direction.Z == 0) // strafe right
+				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = 1;
+					}
+					else
+					{
+						blend_direction.X = 1;
+						blend_direction.Y = 0;
+					} 
 				}
-				if(direction.X == -1 && direction.Z == 0) // strafe left
+				if(direction.X == -1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
+					{
+						blend_direction.X = 0;
+						blend_direction.Y = -1;
+					}
+					else
+					{
+						blend_direction.X = -1;
+						blend_direction.Y = 0;
+					} 
 				}
 			}
 		
