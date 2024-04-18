@@ -5,10 +5,8 @@ public partial class CustomSignals : Node
 {
 	[Signal]
 	public delegate void PlayerDamageEventHandler(int DamageAmount);
-	// [Signal]
-	// public delegate void EnemyTargetedEventHandler(Area3D mob);
-	// [Signal]
-	// public delegate void EnemyUnTargetedEventHandler();
+	[Signal]
+	public delegate void EnemyDamageEventHandler(int DamageAmount);
 	[Signal]
 	public delegate void EnemyPositionEventHandler(Vector3 position);
 	[Signal]

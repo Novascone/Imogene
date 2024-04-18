@@ -24,7 +24,7 @@ public partial class targeting_icon : Node3D
 		if(visible)
 		{
 			icon.Visible = true;
-			icon.GlobalPosition = icon_position with {Y = 4};
+			icon.GlobalPosition = icon_position with {Y = 6};
 		}
 		else
 		{

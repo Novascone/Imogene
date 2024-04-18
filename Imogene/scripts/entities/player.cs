@@ -17,11 +17,11 @@ public partial class player : Entity
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
-	private Area3D player_hurtbox; // Player hurbox
+	private Area3D hurtbox; // Player hurbox
 	bool rolling; // Boolean to keep track of if the player is rolling
 	private int roll_time = 0; // How many frames the player can roll for.
 	private AnimationTree tree; // Animation Tree of the player
-	private Area3D weapon_hitbox; // weapon hitbox
+	private Area3D hitbox; // weapon hitbox
 	private Area3D vision; // Area in which the player can detect an enemy
 	private Area3D target; // Targets that enter the vision area
 	private bool enemy_in_vision = false; // Boolean to track if enemy is in vision
@@ -46,6 +46,7 @@ public partial class player : Entity
 		// Setting instances of nodes and subscribing to events
 		// Input.MouseMode = Input.MouseModeEnum.Captured;
 		// Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
+		damage = 2;
 
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
@@ -55,17 +56,18 @@ public partial class player : Entity
 
 		
 
-		player_hurtbox = GetNode<Area3D>("PlayerHitbox");
+		hurtbox = GetNode<Area3D>("Hurtbox");
+		hurtbox.AreaEntered += OnHurtboxEntered;
 
 		vision  = (Area3D)GetNode("Vision");
-		vision.AreaEntered += OnAreaEntered;
-		vision.AreaExited += OnAreaExited;
+		vision.AreaEntered += OnVisionEntered;
+		vision.AreaExited += OnVisionExited;
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 		tree.AnimationFinished += OnAnimationFinsihed;
 
-		weapon_hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/weapon_area");
-		weapon_hitbox.AreaEntered += OnHitboxEntered;
+		hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/Hitbox");
+		hitbox.AreaEntered += OnHitboxEntered;
 
 		
 		mob_distance_from_player = new List<Vector3>();
@@ -81,6 +83,7 @@ public partial class player : Entity
 		_customSignals.Targeting += HandleTargeting;
 		
 	}
+
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -184,10 +187,6 @@ public partial class player : Entity
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
-		// GD.Print("mob pos: ", mob_pos.Count);
-		// GD.Print("mobs in order: ", mobs_in_order.Count);
-		// GD.Print("mob index: ", mob_index);
-		// GD.Print("mob index: ",mob_index);
 		if(targeting && enemy_in_vision)
 		{
 
@@ -625,7 +624,6 @@ public partial class player : Entity
 		}
 		
 		
-
 		if(player_position.Z - mob_to_LookAt_pos.Z > 0)
 			{
 				player_Z_more_than_target_Z = true;
@@ -657,11 +655,6 @@ public partial class player : Entity
 		Velocity = velocity;
 
 		// Set animations
-		// GD.Print("blend direction X ", blend_direction.X);
-		// GD.Print("blend direction Y ", blend_direction.Y);
-		// GD.Print("direction X ", direction.X);
-		// GD.Print("direction Z ", direction.Z);
-	
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/roll_back", roll_back);
 		tree.Set("parameters/conditions/roll_forward", roll_forward);
@@ -684,9 +677,8 @@ public partial class player : Entity
 	{
 		if(Input.IsActionPressed("Attack"))
 		{
-			
-			weapon_hitbox.AddToGroup("attacking"); // Adds weapon to attacking group
-			weapon_hitbox.Monitoring = true;
+			hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
+			hitbox.Monitoring = true;
 			can_move = false;
 			return true;
 		}
@@ -695,7 +687,7 @@ public partial class player : Entity
 	}
 
 
-	private void OnAreaEntered(Area3D interactable) // handler for area entered signal
+	private void OnVisionEntered(Area3D interactable) // handler for area entered signal
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
@@ -716,20 +708,12 @@ public partial class player : Entity
 				mob_pos.Add(interactable, dist_vec); // adds mob to list and how close it is to the player
 				Sort(); // sorts the enemies by position
 			}
-		
-			
-			
-			
-			// GD.Print("enemy entered");
-			// GD.Print("Added", interactable);
-			// GD.Print("mob count: ", mob_pos.Count);
-			// GD.Print(enemy_position);
 	
 		}
 		
 	}
 
-	private void OnAreaExited(Area3D interactable) // handler for area exited signal
+	private void OnVisionExited(Area3D interactable) // handler for area exited signal
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
@@ -737,8 +721,6 @@ public partial class player : Entity
 			{
 				mob_index = 0; // resets index when all enemies leave
 				mob_pos.Remove(interactable);
-				// sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
-				// mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
 				sorted_mob_pos.Clear();
 				mobs_in_order.Clear();
 			}
@@ -750,19 +732,10 @@ public partial class player : Entity
 				}
 				
 				mob_pos.Remove(interactable);
-				// sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
-				// mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
-				// GD.Print("mob count: ", mob_pos.Count);
-				// GD.Print("removed", interactable);
-				// GD.Print("enemy exited");
+				
 			}
 			
-			
-			
-			
-			
 		}
-		
 		
 	}
 
@@ -771,9 +744,8 @@ public partial class player : Entity
 		if(hitbox.IsInGroup("enemy"))
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage); // Sends how much damage the player does to the enemy
-			weapon_hitbox.RemoveFromGroup("attacking"); // Removes weapon from attacking group
+			hitbox.RemoveFromGroup("player_hitbox"); // Removes weapon from attacking group
 			// GD.Print("enemy hit");
-		
 		}
 		
 	}
@@ -783,28 +755,23 @@ public partial class player : Entity
 	
 		if(animName == "Attack")
 		{
-			weapon_hitbox.Monitoring = false;
+			hitbox.Monitoring = false;
 			can_move = true;
-			weapon_hitbox.RemoveFromGroup("attacking");
+			hitbox.RemoveFromGroup("player_attacking");
 		}
-		// if(animName == "Roll_Back")
-		// {
-		// 	rolling = false;
-		// }
-		// if(animName == "Roll_Forward")
-		// {
-		// 	rolling = false;
-		// }
-		// if(animName == "Roll_Left")
-		// {
-		// 	rolling = false;
-		// }
-		// if(animName == "Roll_Right")
-		// {
-		// 	rolling = false;
-		// }
-        
+
     }
+
+	private void OnHurtboxEntered(Area3D hitbox) // handler for area entered signal
+	{
+		if(hitbox.IsInGroup("enemy_hitbox"))
+		{
+			GD.Print("player hit");
+			TakeDamage(1);
+			GD.Print(health);
+		}
+		
+	}
 
 	private void Targeting() // Emits signal when enemy is targeted/ untargeted
 	{
