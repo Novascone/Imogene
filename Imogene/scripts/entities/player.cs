@@ -12,26 +12,20 @@ using System.Runtime.CompilerServices;
 public partial class player : Entity
 {
 
-	private float speed = 5.0f; // Speed of character
+	 // Speed of character
 	private float roll_speed = 10.0f; // Speed character moves when rolling
-	private int damage = 10; // Prelim damage number
-	private int health = 20; // Prelim health number
-	private int resource = 20; // Relim resource number
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
 	private Area3D player_hurtbox; // Player hurbox
-	private bool can_move = true; // Boolean to keep track of if the play is allowed to move
 	bool rolling; // Boolean to keep track of if the player is rolling
 	private int roll_time = 0; // How many frames the player can roll for.
-	private int attack_freeze = 0; // How many frames the player has to wait when attacking. Should probably make this a timer
 	private AnimationTree tree; // Animation Tree of the player
 	private Area3D weapon_hitbox; // weapon hitbox
 	private Area3D vision; // Area in which the player can detect an enemy
 	private Area3D target; // Targets that enter the vision area
 	private bool enemy_in_vision = false; // Boolean to track if enemy is in vision
 	private Vector3 player_position; // Position of the player
-	private Vector3 enemy_position;
 	private bool targeting = false; // Boolean to track if the player is targeting an enemy
 	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
 	private bool player_Z_less_than_target_Z; 
@@ -47,10 +41,6 @@ public partial class player : Entity
 	private int mob_index = 0; // Index of mob that we want to look at
 	
 
-
-	
-
-	
 	public override void _Ready()
 	{
 		// Setting instances of nodes and subscribing to events
@@ -127,7 +117,6 @@ public partial class player : Entity
 			if (Input.IsActionPressed("Backward"))
 			{
 				direction.Z -= 1.0f;
-
 			}
 			if (Input.IsActionPressed("Forward"))
 			{
@@ -152,7 +141,7 @@ public partial class player : Entity
 		
 		if (Input.IsActionJustPressed("Roll") && !rolling)
 		{
-			roll();
+			Roll();
 			rolling = true;
 			roll_time = 13;
 		
@@ -543,15 +532,8 @@ public partial class player : Entity
 			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
 			
 			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
-		
-			
-			
 
-						
-			
-			
 			// Checks player position relative to enemy
-			
 
 			// Changes the animation based on where the player is relative to the enemy, I'm sure there is a better way to handle this tho
 		}
@@ -691,7 +673,7 @@ public partial class player : Entity
     }
 
 
-	public void roll()	// Increases velocity
+	public void Roll()	// Increases velocity
 	{
 		roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
 		roll_velocity += Velocity * 4;

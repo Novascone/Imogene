@@ -13,8 +13,6 @@ public partial class enemy : Entity
 
 	public States currentState; // Current State
 	public NavigationAgent3D NavigationAgent; // Navigation agent for the enemy
-	
-	private int speed = 2; // Speed of the enemy 
 	private List<Marker3D> waypoints = new List<Marker3D>(); // Waypoints for a possible patrol
 	private int waypointIndex; 
 	private Area3D enemy_hurtbox; // Enemy hurtbox 
@@ -22,8 +20,6 @@ public partial class enemy : Entity
 	private Vector3 camera_position; // Position of camera
 	private AnimationPlayer damage_numbers;
 	private Label3D damage_label; // Damage numbers displayed above enemy when hit
-	private int health = 20; // Enemy Health
-	private MeshInstance3D targeting_icon; // Icon that is displayed when enemy is targeted
 	private AnimationTree tree;
 	private CustomSignals _customSignals;
 	private Area3D alert; // Area where the enemy will be alerted if the player walks into it
@@ -34,17 +30,24 @@ public partial class enemy : Entity
 	public override void _Ready()
 	{
 		// Setting Node locations, and subscribing to events
+		speed = 2;
+
 		enemy_hurtbox = (Area3D)GetNode("EnemyHitbox");
 		enemy_hurtbox.AreaEntered += OnHitboxEntered;
+
 		NavigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+
 		alert = (Area3D)GetNode("Alert");
 		alert.AreaEntered += OnAlertEntered;
 		alert.AreaExited += OnAlertExited;
+
 		currentState = States.Waiting;
+
 		tree = GetNode<AnimationTree>("AnimationTree");
+
 		damage_numbers = GetNode<AnimationPlayer>("Damage_Number_3D/AnimationPlayer");
 		damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
-		targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
+
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandleDamageEnemy;
 		// _customSignals.EnemyTargeted += HandleEnemyTargeted;
@@ -137,16 +140,6 @@ public partial class enemy : Entity
 		}
         
     }
-
-	//  private void HandleEnemyTargeted(Area3D targeted) // Changes target icon from invisible to visible
-    // {
-	// 	// GD.Print(targeted);
-	// 	// targeting_icon.Visible = true;
-    // }
-	// private void HandleEnemyUnTargeted()
-    // {
-    //     // targeting_icon.Visible = false;
-    // }
 
 	private void HandleEnemyPosition(Vector3 position){}
 
