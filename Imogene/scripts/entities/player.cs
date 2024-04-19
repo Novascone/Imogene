@@ -39,6 +39,7 @@ public partial class player : Entity
 	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Calls  SortByDistance from Vector3DictionarySorter and sorts the mobs based on how far away they are from the player
 	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
 	private int mob_index = 0; // Index of mob that we want to look at
+	private float _t = 0.0f;
 	
 
 	public override void _Ready()
@@ -46,6 +47,7 @@ public partial class player : Entity
 		// Setting instances of nodes and subscribing to events
 		// Input.MouseMode = Input.MouseModeEnum.Captured;
 		// Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
+
 		damage = 2;
 
 		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
@@ -94,8 +96,8 @@ public partial class player : Entity
 		var direction = Vector3.Zero;
 		player_position = GlobalPosition;
         Vector3 velocity = Velocity;
-		// float current_y_rotation;
-		// float target_y_rotation;
+		float prev_y_rotation;
+		float current_y_rotation;
 		resource = 0;
 		Vector2 blend_direction;
 		
@@ -154,27 +156,18 @@ public partial class player : Entity
 		
 		if(!targeting)
 		{
-			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction))
+			
+			prev_y_rotation = GlobalRotation.Y;
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
 			{
 				LookAt(GlobalPosition + direction);
 			}
-
-    		
-			// current_y_rotation = GlobalRotation.Y;
-			// target_y_rotation  = Basis.LookingAt(GlobalPosition + direction).GetEuler().Y;
+			current_y_rotation = GlobalRotation.Y;
+			if(prev_y_rotation != current_y_rotation)
+			{
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+			}
 			
-			// if(current_y_rotation - target_y_rotation > 1.5 || current_y_rotation - target_y_rotation < -1.5)
-			// {
-			// 	_t = 0.9f;
-			// 	GD.Print("Over 180");
-			// }
-			// else
-			// {
-			// 	_t = 0.6f;
-			// 	GD.Print(current_y_rotation - target_y_rotation);
-			// }
-			// GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(current_y_rotation, target_y_rotation, _t)};
-		
 	
 		}
 		
