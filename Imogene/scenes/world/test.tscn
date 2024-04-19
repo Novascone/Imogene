@@ -1,9 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=19 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="1_hgciw"]
 [ext_resource type="Script" path="res://scripts/box.cs" id="2_uy77v"]
 [ext_resource type="PackedScene" uid="uid://g7r1svs3uder" path="res://scenes/entities/player.tscn" id="4_nj82x"]
+[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="5_il5k7"]
 [ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/objects/targeting_icon.tscn" id="5_non4s"]
+[ext_resource type="PackedScene" uid="uid://dc1t0efid7178" path="res://scenes/UI/user_interface_new.tscn" id="5_w2tnr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
@@ -85,3 +87,8 @@ shape = SubResource("BoxShape3D_nt1yn")
 
 [node name="player" parent="." instance=ExtResource("4_nj82x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.444608, 0.0080943, -0.0930388)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("5_w2tnr")]
+
+[node name="enemy" parent="." instance=ExtResource("5_il5k7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9815, 0.0080943, -4.31394)

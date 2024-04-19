@@ -12,11 +12,11 @@ public partial class Entity : CharacterBody3D
     public bool dead = false;
     public Vector3 enemy_position;
     
-    public void TakeDamage(int ammount)
+    public void TakeDamage(int amount)
     {
-        if(health - ammount > 0)
+        if(health - amount > 0)
         {
-            health -= ammount;
+            health -= amount;
         }
         else
         {

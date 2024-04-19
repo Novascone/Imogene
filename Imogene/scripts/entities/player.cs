@@ -14,8 +14,8 @@ public partial class player : Entity
 
 	 // Speed of character
 	private float roll_speed = 10.0f; // Speed character moves when rolling
-	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
-	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
+	// private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
+	// private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
 	private Area3D hurtbox; // Player hurbox
 	bool rolling; // Boolean to keep track of if the player is rolling
@@ -39,7 +39,7 @@ public partial class player : Entity
 	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Calls  SortByDistance from Vector3DictionarySorter and sorts the mobs based on how far away they are from the player
 	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
 	private int mob_index = 0; // Index of mob that we want to look at
-	private float _t = 0.0f;
+	private bool max_health_changed = true;
 	
 
 	public override void _Ready()
@@ -49,12 +49,12 @@ public partial class player : Entity
 		// Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
 
 		damage = 2;
-
-		health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
-		resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
-		health_icon.MaxValue = health;
-		resource_icon.MaxValue = resource;
-		targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
+		health = 20;
+		// health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
+		// resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		// health_icon.MaxValue = health;
+		// resource_icon.MaxValue = resource;
+		// targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
 
 		
 
@@ -78,19 +78,31 @@ public partial class player : Entity
 		
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
-		// _customSignals.EnemyTargeted += HandleEnemyTargeted;
-		// _customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPositon;
 		_customSignals.Targeting += HandleTargeting;
+		_customSignals.UIHealthUpdate += HandleUIHealth;
+		_customSignals.UIHealthUpdate += HandleUIResource;
+		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
+		_customSignals.UIHealthUpdate += HandleUIResourceUpdate;
+		
+
 		
 	}
+
+    
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
+		if(max_health_changed)
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
+			max_health_changed = false;
+		}
+		
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 		var direction = Vector3.Zero;
@@ -132,8 +144,8 @@ public partial class player : Entity
 		
 
 
-		UpdateHealth();
-		UpdateResource();
+		// UpdateHealth();
+		// UpdateResource();
 
 
 		if(enemy_in_vision)
@@ -762,6 +774,7 @@ public partial class player : Entity
 			GD.Print("player hit");
 			TakeDamage(1);
 			GD.Print(health);
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), damage);
 		}
 		
 	}
@@ -791,15 +804,15 @@ public partial class player : Entity
 		
 	}
 
-	private void UpdateHealth() // Updates UI health
-	{
-		health_icon.Value = health;
-	}
+	// private void UpdateHealth() // Updates UI health
+	// {
+	// 	health_icon.Value = health;
+	// }
 
-	private void UpdateResource() // Updates UI resource
-	{
-		resource_icon.Value = resource;
-	}
+	// private void UpdateResource() // Updates UI resource
+	// {
+	// 	resource_icon.Value = resource;
+	// }
 
 	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
 	{
@@ -812,8 +825,13 @@ public partial class player : Entity
     }
 
 	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
-
 	private void HandleTargeting(bool targeting, Vector3 position){}
+	private void HandleUIResource(int ammount){}
+    private void HandleUIHealth(int ammount){}
+	private void HandleUIHealthUpdate(int ammount){}
+	private void HandleUIResourceUpdate(int ammount){}
+
+    
 
 
 

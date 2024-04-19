@@ -15,5 +15,14 @@ public partial class CustomSignals : Node
 	public delegate void CameraPositionEventHandler(Vector3 position);
 	[Signal]
 	public delegate void TargetingEventHandler(bool targeting, Vector3 position);
+	[Signal]
+	public delegate void UIHealthEventHandler(int ammount);
+	[Signal]
+	public delegate void UIResourceEventHandler(int ammount);
+	[Signal]
+	public delegate void UIHealthUpdateEventHandler(int ammount);
+	[Signal]
+	public delegate void UIResourceUpdateEventHandler(int ammount);
+
 
 }
