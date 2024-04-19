@@ -26,7 +26,7 @@ public partial class UI : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		// GD.Print("health from UI: ",health_icon.Value);
+		
 		UpdateHealth();
 		UpdateResource();
 	}
@@ -39,16 +39,16 @@ public partial class UI : CanvasLayer
 	}
 
 
-    private void HandleUIHealth(int ammount)
+    private void HandleUIHealth(int amount)
     {
-		GD.Print(ammount);
-		health = ammount;
-        health_icon.MaxValue = ammount;
+		GD.Print("here");
+		health = amount;
+        health_icon.MaxValue = amount;
 
     }
-	   private void HandleUIResource(int ammount)
+	   private void HandleUIResource(int amount)
     {
-        resource_icon.MaxValue = ammount;
+        resource_icon.MaxValue = amount;
     }
 
 	private void UpdateResource() // Updates UI resource
@@ -62,8 +62,8 @@ public partial class UI : CanvasLayer
         health -= health_update;
 		
     }
-    private void HandleUIResourceUpdate(int resource_ammount)
+    private void HandleUIResourceUpdate(int resource_amount)
     {
-        resource -= resource_ammount;
+        resource -= resource_amount;
     }
 }

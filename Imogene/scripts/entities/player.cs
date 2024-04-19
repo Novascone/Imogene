@@ -40,7 +40,8 @@ public partial class player : Entity
 	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
 	private int mob_index = 0; // Index of mob that we want to look at
 	private bool max_health_changed = true;
-	
+	Vector2 blend_direction = Vector2.Zero;
+	float _t = 0.4f;
 
 	public override void _Ready()
 	{
@@ -79,7 +80,7 @@ public partial class player : Entity
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
-		_customSignals.PlayerPosition += HandlePlayerPositon;
+		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.Targeting += HandleTargeting;
 		_customSignals.UIHealthUpdate += HandleUIHealth;
 		_customSignals.UIHealthUpdate += HandleUIResource;
@@ -111,8 +112,6 @@ public partial class player : Entity
 		float prev_y_rotation;
 		float current_y_rotation;
 		resource = 0;
-		Vector2 blend_direction;
-		
 		
 		
 		bool roll_right = false;
@@ -120,6 +119,11 @@ public partial class player : Entity
 		bool roll_back = false;
 		bool roll_forward = false;
 		
+		if(velocity == Vector3.Zero)
+			{
+				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+			}
 		
 		if(can_move) // Basic movement controller
 		{
@@ -192,51 +196,48 @@ public partial class player : Entity
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
+		
 		if(targeting && enemy_in_vision)
 		{
-
-			blend_direction.X = direction.X;
-			blend_direction.Y = direction.Z;
-
+			
 			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
 			{
 				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
-				if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 				
 				if(direction.X == 1 && direction.Z == 1) // walk away
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = -1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 				}
 				if(direction.X == -1 && direction.Z == -1) // walk toward
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = 1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 				}
 				if(direction.Z == -1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.X, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 				}
 				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5) 
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 				}
 				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
@@ -244,13 +245,13 @@ public partial class player : Entity
 					
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 					
 				}
@@ -259,27 +260,26 @@ public partial class player : Entity
 					
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 					
 				}
 				if(direction.X == 1 && direction.Z == -1) // strafe right
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.X == -1 && direction.Z == 1) // strafe left
 				{
 					
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
-					
+					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 			
 			}
@@ -288,35 +288,35 @@ public partial class player : Entity
 				// GD.Print("here");
 				if(direction.X == 1 && direction.Z == -1) // walk away
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = -1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 				}
 				if(direction.X == -1 && direction.Z == 1) // walk toward
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = 1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 				}
 				if(direction.X == 1 && direction.Z == 1) // strafe left
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.X == -1 && direction.Z == -1) // strafe right
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 					
 				}
@@ -324,39 +324,39 @@ public partial class player : Entity
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 				}
 				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
-					}
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
+					} 
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 				}
 				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					}
 				}
 				
@@ -365,75 +365,75 @@ public partial class player : Entity
 			{
 				if(direction.X == 1 && direction.Z == 1) // walk toward
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = 1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 				}
 				if(direction.X == -1 && direction.Z == -1) // walk away
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = -1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 				}
 				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = -1; Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = 0; Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.X == 1 && direction.Z == -1) // strafe left
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.X == -1 && direction.Z == 1) // strafe right
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 			}
 			if(player_Z_more_than_target_Z && player_X_less_than_target_X)
@@ -441,35 +441,35 @@ public partial class player : Entity
 				
 				if(direction.X == 1 && direction.Z == -1) // walk toward
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = 1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 				}
 				if(direction.X == -1 && direction.Z == 1) // walk away
 				{
-					blend_direction.X = 0;
-					blend_direction.Y = -1;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 				}
 				if(direction.X == 1 && direction.Z == 1) // strafe right
 				{
-					blend_direction.X = 1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.X == -1 && direction.Z == -1) // strafe left
 				{
-					blend_direction.X = -1;
-					blend_direction.Y = 0;
+					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 				}
 				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
@@ -477,39 +477,39 @@ public partial class player : Entity
 					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
 					{
 						
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = 1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
 					}
 					else
 					{
-						blend_direction.X = 1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 				if(direction.X == -1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
 					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
 					{
-						blend_direction.X = 0;
-						blend_direction.Y = -1;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
 					}
 					else
 					{
-						blend_direction.X = -1;
-						blend_direction.Y = 0;
+						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
+						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
 					} 
 				}
 			}
@@ -552,8 +552,8 @@ public partial class player : Entity
 			}
 			else
 			{
-				blend_direction.X = 0;
-				blend_direction.Y = 0;
+				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
 			}
 		}
 
@@ -593,10 +593,7 @@ public partial class player : Entity
 				roll_back = true;
 			}
 		}
-
 		
-		
-
 		// Set Velocity
 		velocity.X = direction.X * speed;
 		velocity.Z = direction.Z * speed;
@@ -762,7 +759,7 @@ public partial class player : Entity
 		{
 			hitbox.Monitoring = false;
 			can_move = true;
-			hitbox.RemoveFromGroup("player_attacking");
+			hitbox.RemoveFromGroup("player_hitbox");
 		}
 
     }
@@ -774,7 +771,7 @@ public partial class player : Entity
 			GD.Print("player hit");
 			TakeDamage(1);
 			GD.Print(health);
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), damage);
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
 		}
 		
 	}
@@ -804,16 +801,6 @@ public partial class player : Entity
 		
 	}
 
-	// private void UpdateHealth() // Updates UI health
-	// {
-	// 	health_icon.Value = health;
-	// }
-
-	// private void UpdateResource() // Updates UI resource
-	// {
-	// 	resource_icon.Value = resource;
-	// }
-
 	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
 	{
 			DamageAmount += damage;
@@ -824,20 +811,12 @@ public partial class player : Entity
         enemy_position = position;
     }
 
-	private void HandlePlayerPositon(Vector3 position){} // Sends player position to enemy
+	private void HandlePlayerPosition(Vector3 position){} // Sends player position to enemy
 	private void HandleTargeting(bool targeting, Vector3 position){}
-	private void HandleUIResource(int ammount){}
-    private void HandleUIHealth(int ammount){}
-	private void HandleUIHealthUpdate(int ammount){}
-	private void HandleUIResourceUpdate(int ammount){}
-
-    
-
-
-
-	// private void HandleEnemyTargeted(Area3D targeted_mob){}	
-
-	// private void HandleEnemyUnTargeted(){}
+	private void HandleUIResource(int amount){}
+    private void HandleUIHealth(int amount){}
+	private void HandleUIHealthUpdate(int amount){}
+	private void HandleUIResourceUpdate(int amount){}
 
 	public static class Vector3DictionarySorter 
 	{
