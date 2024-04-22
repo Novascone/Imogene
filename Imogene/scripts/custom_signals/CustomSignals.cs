@@ -16,13 +16,13 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void TargetingEventHandler(bool targeting, Vector3 position);
 	[Signal]
-	public delegate void UIHealthEventHandler(int ammount);
+	public delegate void UIHealthEventHandler(int amount);
 	[Signal]
-	public delegate void UIResourceEventHandler(int ammount);
+	public delegate void UIResourceEventHandler(int amount);
 	[Signal]
-	public delegate void UIHealthUpdateEventHandler(int ammount);
+	public delegate void UIHealthUpdateEventHandler(int amount);
 	[Signal]
-	public delegate void UIResourceUpdateEventHandler(int ammount);
+	public delegate void UIResourceUpdateEventHandler(int amount);
 
 
 }

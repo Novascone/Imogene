@@ -41,7 +41,6 @@ public partial class UI : CanvasLayer
 
     private void HandleUIHealth(int amount)
     {
-		GD.Print("here");
 		health = amount;
         health_icon.MaxValue = amount;
 

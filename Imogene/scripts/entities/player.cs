@@ -11,43 +11,55 @@ using System.Runtime.CompilerServices;
 
 public partial class player : Entity
 {
+	// Abilities - Functionalities
 	Roll roll;
-	 // Speed of character
-	private float roll_speed = 10.0f; // Speed character moves when rolling
-	// private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
-	// private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
-	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
-	private Area3D hurtbox; // Player hurbox
-	public bool rolling; // Boolean to keep track of if the player is rolling
-	// public int roll_time = 13; // How many frames the player can roll for.
-	public AnimationTree tree; // Animation Tree of the player
-	private Area3D hitbox; // weapon hitbox
-	private Area3D vision; // Area in which the player can detect an enemy
-	private Area3D target; // Targets that enter the vision area
-	private bool enemy_in_vision = false; // Boolean to track if enemy is in vision
-	private Vector3 player_position; // Position of the player
-	private bool targeting = false; // Boolean to track if the player is targeting an enemy
-	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
-	private bool player_Z_less_than_target_Z; 
-	private bool player_X_more_than_target_X; 
-	private bool player_X_less_than_target_X; 
-	private CustomSignals _customSignals; // Instance of CustomSignals
-	private Vector3 mob_to_LookAt_pos;
-	private List<Vector3> mob_distance_from_player;
-	private MeshInstance3D targeting_icon;
-	private	Dictionary<Area3D, Vector3> mob_pos; // Gets mob and the distance from the player 
-	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Calls  SortByDistance from Vector3DictionarySorter and sorts the mobs based on how far away they are from the player
-	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
-	private int mob_index = 0; // Index of mob that we want to look at
-	private bool max_health_changed = true;
-	public Vector2 blend_direction = Vector2.Zero;
-	float _t = 0.4f;
-	
+	Target target_ability;
+
+	// Player Direction and animation variables
+	public Vector3 player_position; // Position of the player
 	public Vector3 velocity;
+	public Vector3 direction;
+	public float prev_y_rotation;
+	public float current_y_rotation;
+	public Vector2 blend_direction = Vector2.Zero;
+
+	// Player bools
+	public bool rolling; 
+	private bool enemy_in_vision = false;
+	public bool targeting = false;
+	private bool max_health_changed = true;
+
+	// Player attached areas
+	private Area3D hurtbox;
+	private Area3D hitbox;
+	private Area3D vision;
+
+	// Player animation
+	public AnimationTree tree;
+
+	// Mob variables
+	public Vector3 mob_to_LookAt_pos;
+	private List<Vector3> mob_distance_from_player;
+
+	// Mob sorting variables
+	private	Dictionary<Area3D, Vector3> mob_pos; 
+	private Dictionary<Area3D,Vector3> sorted_mob_pos; 
+	private List<Area3D> mobs_in_order;
+	private int mob_index = 0; 
+
+	// Signal Variables
+	private CustomSignals _customSignals;
+	private Area3D target; 
+	private MeshInstance3D targeting_icon;
+	
+	
+	
+	
 
 	public override void _Ready()
 	{
 		roll = (Roll)LoadAbility("Roll");
+		target_ability = (Target)LoadAbility("Target");
 
 		damage = 2;
 		health = 20;
@@ -83,10 +95,6 @@ public partial class player : Entity
 
 		
 	}
-
-    
-
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
@@ -99,11 +107,10 @@ public partial class player : Entity
 		
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
-		var direction = Vector3.Zero;
+		direction = Vector3.Zero;
 		player_position = GlobalPosition;
         // Vector3 velocity = Velocity;
-		float prev_y_rotation;
-		float current_y_rotation;
+		
 		resource = 0;
 		
 		if(velocity == Vector3.Zero)
@@ -132,15 +139,6 @@ public partial class player : Entity
 			}
 		}
 
-
-		if(enemy_in_vision)
-			{
-				// GD.Print(enemy_position);
-				Targeting();
-
-			}
-
-		
 		if (Input.IsActionPressed("Roll"))
 		{
 			rolling = true;
@@ -154,433 +152,24 @@ public partial class player : Entity
 			velocity.X = direction.X * speed;
 			velocity.Z = direction.Z * speed;
 		}
+		SmoothRotation();
 
-		
-		
-		if(!targeting)
+
+		if(enemy_in_vision)
 		{
-			
-			prev_y_rotation = GlobalRotation.Y;
-			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
-			{
-				LookAt(GlobalPosition + direction);
-			}
-			current_y_rotation = GlobalRotation.Y;
-			if(prev_y_rotation != current_y_rotation)
-			{
-				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
-			}
-			
-	
+			Targeting();
 		}
-		
-		
-		// GD.Print("Enemies in sight: ",mob_pos.Count);
-		
+		LookAtOver();
+
 		if(mob_pos.Count == 0)
 		{	
 			// GD.Print("no enemy in sight");
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
-		
-		if(targeting && enemy_in_vision)
-		{
-			
-			if(player_Z_more_than_target_Z && player_X_more_than_target_X)
-			{
-				// GD.Print("player_Z_more_than_target_Z && player_X_more_than_target_X");
-				
-				if(direction.X == 1 && direction.Z == 1) // walk away
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-				}
-				if(direction.X == -1 && direction.Z == -1) // walk toward
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-				}
-				if(direction.Z == -1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.X, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-				}
-				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5) 
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-				}
-				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
-				{
-					
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-					
-				}
-				if(direction.X == -1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
-				{
-					
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-					
-				}
-				if(direction.X == 1 && direction.Z == -1) // strafe right
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.X == -1 && direction.Z == 1) // strafe left
-				{
-					
-					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-			
-			}
-			if(player_Z_less_than_target_Z && player_X_more_than_target_X)
-			{
-				// GD.Print("here");
-				if(direction.X == 1 && direction.Z == -1) // walk away
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-				}
-				if(direction.X == -1 && direction.Z == 1) // walk toward
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-				}
-				if(direction.X == 1 && direction.Z == 1) // strafe left
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.X == -1 && direction.Z == -1) // strafe right
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.Z == 1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-					
-				}
-				if(direction.Z == -1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-				}
-				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					} 
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-				}
-				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					}
-				}
-				
-			}
-			if(player_Z_less_than_target_Z && player_X_less_than_target_X)
-			{
-				if(direction.X == 1 && direction.Z == 1) // walk toward
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-				}
-				if(direction.X == -1 && direction.Z == -1) // walk away
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-				}
-				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.X == 1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.X == -1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = -1; Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = 0; Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.X == 1 && direction.Z == -1) // strafe left
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.X == -1 && direction.Z == 1) // strafe right
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-			}
-			if(player_Z_more_than_target_Z && player_X_less_than_target_X)
-			{
-				
-				if(direction.X == 1 && direction.Z == -1) // walk toward
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-				}
-				if(direction.X == -1 && direction.Z == 1) // walk away
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-				}
-				if(direction.X == 1 && direction.Z == 1) // strafe right
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.X == -1 && direction.Z == -1) // strafe left
-				{
-					blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-					blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-				}
-				if(direction.Z == 1 && direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.Z == -1 && direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
-				{
-					if(player_position.X - mob_to_LookAt_pos.X < 0.5)
-					{
-						
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.X == 1 && direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-				if(direction.X == -1 && direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
-				{
-					if(player_position.Z - mob_to_LookAt_pos.Z < 0.5)
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
-					}
-					else
-					{
-						blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
-						blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
-					} 
-				}
-			}
-		
-			
-				
-			if(Input.IsActionJustPressed("TargetNext"))
-			{
-				if(mob_index < mob_pos.Count - 1)
-				{
-					mob_index += 1;
-				}
-				
-			}
-			else if (Input.IsActionJustPressed("TargetLast"))
-			{
-				if(mob_index > 0)
-				{
-					mob_index -= 1;
-				}
-				
-			}
-			
-			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition; // assigns the mob to look at
-			
-			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
-
-			// Checks player position relative to enemy
-			// Changes the animation based on where the player is relative to the enemy, I'm sure there is a better way to handle this tho
-		}
-		else
-		{
-			// Sets the animation to walk forward when not targeting
-			if(direction != Vector3.Zero)
-			{
-				blend_direction.X = 0;
-				blend_direction.Y = 1;
-				// GD.Print("Normal: ", blend_direction);
-			}
-			else
-			{
-				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
-				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
-			}
-		}
-
-		
-		
-		// Set Velocity
-		
-		
-		if(player_position.Z - mob_to_LookAt_pos.Z > 0)
-			{
-				player_Z_more_than_target_Z = true;
-				player_Z_less_than_target_Z = false;
-				// GD.Print("player_Z_more_than_target_Z");
-				
-			}
-			if(player_position.Z - mob_to_LookAt_pos.Z < 0)
-			{
-				player_Z_less_than_target_Z = true;
-				player_Z_more_than_target_Z = false;
-				// GD.Print("player_Z_less_than_target_Z ");
-			}
-			if((player_position.X - mob_to_LookAt_pos.X) > 0)
-			{
-				player_X_more_than_target_X = true;
-				player_X_less_than_target_X = false;
-				// GD.Print("player_X_more_than_target_X");
-				
-			}
-			if((player_position.X - mob_to_LookAt_pos.X) < 0)
-			{
-				player_X_less_than_target_X = true;
-				player_X_more_than_target_X = false;
-				// GD.Print("player_X_less_than_target_X");
-			}
-		
-		// Set global velocity
+	
 		Velocity = velocity;
-		// GD.Print("velocity ", velocity);
-		// GD.Print("Velocity ", Velocity);
 
-		// Set animations
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		tree.Set("parameters/conditions/attacking", attack_check());
 		MoveAndSlide();
@@ -599,18 +188,77 @@ public partial class player : Entity
 		return false;
 	}
 
+	public void SmoothRotation()
+	{
+		if(!targeting)
+		{
+			prev_y_rotation = GlobalRotation.Y;
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
+			{
+				LookAt(GlobalPosition + direction);
+			}
+			current_y_rotation = GlobalRotation.Y;
+			if(prev_y_rotation != current_y_rotation)
+			{
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+			}
+		}
+	}
+
+	public void LookAtOver()
+	{
+		if(targeting && enemy_in_vision && (mobs_in_order.Count > 0))
+		{
+			
+			target_ability.Execute(this);
+			if(Input.IsActionJustPressed("TargetNext"))
+			{
+				if(mob_index < mob_pos.Count - 1)
+				{
+					mob_index += 1;
+				}
+				
+			}
+			else if (Input.IsActionJustPressed("TargetLast"))
+			{
+				if(mob_index > 0)
+				{
+					mob_index -= 1;
+				}
+				
+			}
+			
+			
+			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition;
+			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
+			
+			
+		}
+		else
+		{
+			
+			targeting = false;
+			// Sets the animation to walk forward when not targeting
+			if(direction != Vector3.Zero)
+			{
+				blend_direction.X = 0;
+				blend_direction.Y = 1;
+				// GD.Print("Normal: ", blend_direction);
+			}
+			else
+			{
+				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+			}
+		}
+	}
+
 	private void OnVisionEntered(Area3D interactable) // handler for area entered signal
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
-
-			
 			enemy_in_vision = true;
 			Vector3 dist_vec = player_position - interactable.GlobalPosition;
-			// if(mob_index >= mob_pos.Count - 1)
-			// {
-			// 	mob_index += 1;
-			// }
 			if(targeting && mob_pos.Count > 0)
 			{
 				mob_index += 1; // increments index when enemy enters so the player stays looking at the current enemy

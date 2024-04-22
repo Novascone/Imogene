@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class enemy : Entity
 {
-	public enum States // States that the enemy can be in
+	public enum States 
 	{
 		Chasing,
 		Attacking,
@@ -12,29 +12,43 @@ public partial class enemy : Entity
 		Dead
 	}
 
-	public States currentState; // Current State
-	public NavigationAgent3D NavigationAgent; // Navigation agent for the enemy
-	private List<Marker3D> waypoints = new List<Marker3D>(); // Waypoints for a possible patrol
-	private int waypointIndex; 
-	private Area3D hurtbox; // Enemy hurtbox 
+	public States currentState;
+	
+	// Enemy attached areas
+	private Area3D hurtbox; 
 	private Area3D hitbox;
-	private Vector3 player_position; // Position of player
-	private Vector3 camera_position; // Position of camera
-	private AnimationPlayer damage_numbers;
-	private int incoming_damage;
-	private Label3D damage_label; // Damage numbers displayed above enemy when hit
-	private AnimationTree tree;
-	private CustomSignals _customSignals;
-	private Area3D alert; // Area where the enemy will be alerted if the player walks into it
-	private bool playerInAlert = false; // Boolean to keep track of if player has entered the alert area
+
+	// Mob variables
+	private bool playerInAlert = false; 
 	private float attack_dist = 2.5f;
+	private Label3D damage_label; 
+	private AnimationPlayer damage_numbers;
+	private Area3D alert;
+
+	// Enemy animation
+	private AnimationTree tree;
+
+	// Navigation variables
+	public NavigationAgent3D NavigationAgent; 
+	private List<Marker3D> waypoints = new List<Marker3D>(); 
+	private int waypointIndex; 
+
+	//Player variables
+	private Vector3 player_position; // Position of player
+	private int incoming_damage;
+	
+	// Signal variables
+	private CustomSignals _customSignals;
+	private Vector3 camera_position; // Position of camera
+	
+	
 
 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		// Setting Node locations, and subscribing to events
+		
 		speed = 2;
 		attacking = false;
 
@@ -58,8 +72,6 @@ public partial class enemy : Entity
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandleDamageEnemy;
-		// _customSignals.EnemyTargeted += HandleEnemyTargeted;
-		// _customSignals.EnemyUnTargeted += HandleEnemyUnTargeted;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.CameraPosition += HandleCameraPosition;
@@ -70,9 +82,9 @@ public partial class enemy : Entity
     {
         if(hitbox.IsInGroup("player"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.EnemyDamage), damage); // Sends how much damage the player does to the enemy
-			hitbox.RemoveFromGroup("enemy_hitbox"); // Removes weapon from attacking group
-			// GD.Print("enemy hit");
+			_customSignals.EmitSignal(nameof(CustomSignals.EnemyDamage), damage);
+			hitbox.RemoveFromGroup("enemy_hitbox"); 
+			
 		}
     }
 
@@ -88,10 +100,10 @@ public partial class enemy : Entity
 	{
 		
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
-		Vector2 blend_direction = Vector2.Zero; // Blend direction for animations
-		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition); // Emits enemy position
+		Vector2 blend_direction = Vector2.Zero;
+		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
 		// GD.Print(currentState);
-		damage_label.LookAt(camera_position,Vector3.Up,true); // Gets damage numbers to face camera, use model front is true\
+		damage_label.LookAt(camera_position,Vector3.Up,true); 
 		if(dead)
 		{
 			currentState = States.Dead;
@@ -103,19 +115,19 @@ public partial class enemy : Entity
 
 				attacking = false;
 				hitbox.Monitoring = false;
-				NavigationAgent.TargetPosition = player_position; // Sets navigation to player position
+				NavigationAgent.TargetPosition = player_position; 
 				var targetPos = NavigationAgent.GetNextPathPosition();
 				var direction = GlobalPosition.DirectionTo(targetPos);
 				blend_direction.Y = 1; // Sets animation to walk
 				Velocity = direction * speed;
 				if (!GlobalTransform.Origin.IsEqualApprox(player_position))
 				{
-					LookAt(player_position with {Y = GlobalPosition.Y}); // Looks at player
+					LookAt(player_position with {Y = GlobalPosition.Y}); 
 				}
 				tree.Set("parameters/IW/blend_position", blend_direction);
 				tree.Set("parameters/conditions/attacking", attacking);
 				MoveAndSlide();
-				if(distance_to_player < attack_dist && playerInAlert) // 	Change states
+				if(distance_to_player < attack_dist && playerInAlert)
 				{
 					currentState = States.Attacking;
 					return;
@@ -149,7 +161,7 @@ public partial class enemy : Entity
 		
 	}
 
-	private void OnHurtboxEntered(Area3D hitbox) // Displays damage numbers when hurt
+	private void OnHurtboxEntered(Area3D hitbox)
 	{
 		if(hitbox.IsInGroup("player_hitbox"))
 		{
@@ -164,14 +176,14 @@ public partial class enemy : Entity
 		
 	}
 
-	private void HandleDamageEnemy(int damage_amount) // Reduced enemy health when hit
+	private void HandleDamageEnemy(int damage_amount)
 	{
 		incoming_damage = damage_amount;
 	}
 
 	 private void OnAlertEntered(Area3D area) 
     {
-		if(area.IsInGroup("player")) // If player enters alert Change states
+		if(area.IsInGroup("player")) 
 		{
 			currentState = States.Chasing;
 			playerInAlert = true;
@@ -190,12 +202,12 @@ public partial class enemy : Entity
 
 	private void HandleEnemyPosition(Vector3 position){}
 
-	private void HandlePlayerPosition(Vector3 position) // Get player position
+	private void HandlePlayerPosition(Vector3 position) 
 	{
        player_position = position;
     }
 
-	private void HandleCameraPosition(Vector3 position) // Get Camera position
+	private void HandleCameraPosition(Vector3 position)
     {
 		camera_position = position;
     }
