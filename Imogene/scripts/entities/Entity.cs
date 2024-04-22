@@ -23,12 +23,11 @@ public partial class Entity : CharacterBody3D
             dead = true;
             GD.Print("dead");
         }
-        
     }
-    public TNode LoadAbility<TNode>(PackedScene name) where TNode : Node
+    public  Node LoadAbility(String name)
     {
         var scene = GD.Load<PackedScene>("res://scenes/abilities/" + name + "/" + name + ".tscn");
         var sceneNode = scene.Instantiate();
-        return (TNode)sceneNode;
+        return sceneNode;
     }
 }

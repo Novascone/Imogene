@@ -11,16 +11,16 @@ using System.Runtime.CompilerServices;
 
 public partial class player : Entity
 {
-
+	Roll roll;
 	 // Speed of character
 	private float roll_speed = 10.0f; // Speed character moves when rolling
 	// private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	// private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	private Vector3 roll_velocity = Vector3.Zero; // Velocity of roll, allows roll to scale up current velocity and be reset without affecting current velocity
 	private Area3D hurtbox; // Player hurbox
-	bool rolling; // Boolean to keep track of if the player is rolling
-	private int roll_time = 0; // How many frames the player can roll for.
-	private AnimationTree tree; // Animation Tree of the player
+	public bool rolling; // Boolean to keep track of if the player is rolling
+	// public int roll_time = 13; // How many frames the player can roll for.
+	public AnimationTree tree; // Animation Tree of the player
 	private Area3D hitbox; // weapon hitbox
 	private Area3D vision; // Area in which the player can detect an enemy
 	private Area3D target; // Targets that enter the vision area
@@ -40,25 +40,18 @@ public partial class player : Entity
 	private List<Area3D> mobs_in_order; // Takes all the keys from sorted_mob_pos and puts them in a list
 	private int mob_index = 0; // Index of mob that we want to look at
 	private bool max_health_changed = true;
-	Vector2 blend_direction = Vector2.Zero;
+	public Vector2 blend_direction = Vector2.Zero;
 	float _t = 0.4f;
+	
+	public Vector3 velocity;
 
 	public override void _Ready()
 	{
-		// Setting instances of nodes and subscribing to events
-		// Input.MouseMode = Input.MouseModeEnum.Captured;
-		// Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
+		roll = (Roll)LoadAbility("Roll");
 
 		damage = 2;
 		health = 20;
-		// health_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
-		// resource_icon = GetNode<TextureProgressBar>("CanvasLayer/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
-		// health_icon.MaxValue = health;
-		// resource_icon.MaxValue = resource;
-		// targeting_icon = GetNode<MeshInstance3D>("TargetingIcon");
-
-		
-
+	
 		hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
 
@@ -108,16 +101,10 @@ public partial class player : Entity
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 		var direction = Vector3.Zero;
 		player_position = GlobalPosition;
-        Vector3 velocity = Velocity;
+        // Vector3 velocity = Velocity;
 		float prev_y_rotation;
 		float current_y_rotation;
 		resource = 0;
-		
-		
-		bool roll_right = false;
-		bool roll_left = false;
-		bool roll_back = false;
-		bool roll_forward = false;
 		
 		if(velocity == Vector3.Zero)
 			{
@@ -145,12 +132,6 @@ public partial class player : Entity
 			}
 		}
 
-		
-
-
-		// UpdateHealth();
-		// UpdateResource();
-
 
 		if(enemy_in_vision)
 			{
@@ -160,12 +141,18 @@ public partial class player : Entity
 			}
 
 		
-		if (Input.IsActionJustPressed("Roll") && !rolling)
+		if (Input.IsActionPressed("Roll"))
 		{
-			Roll();
 			rolling = true;
-			roll_time = 13;
-		
+		}
+		if(rolling)
+		{
+			roll.Execute(this);
+		}
+		else
+		{
+			velocity.X = direction.X * speed;
+			velocity.Z = direction.Z * speed;
 		}
 
 		
@@ -538,7 +525,6 @@ public partial class player : Entity
 			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
 
 			// Checks player position relative to enemy
-
 			// Changes the animation based on where the player is relative to the enemy, I'm sure there is a better way to handle this tho
 		}
 		else
@@ -557,73 +543,9 @@ public partial class player : Entity
 			}
 		}
 
-		if(rolling)
-		{
-			// Matches roll animations to the direction of the player
-			if(blend_direction.X > 0 && blend_direction.Y > 0)
-			{
-				roll_right = true;
-			}
-			if(blend_direction.X < 0 && blend_direction.Y < 0)
-			{
-				roll_left = true;
-			}
-			if(blend_direction.X > 0 && blend_direction.Y < 0)
-			{
-				roll_right = true;
-			}
-			if(blend_direction.X < 0 && blend_direction.Y > 0)
-			{
-				roll_left = true;
-			}
-			if(blend_direction.X > 0 && blend_direction.Y == 0)
-			{
-				roll_right = true;
-			}
-			if(blend_direction.X < 0 && blend_direction.Y == 0)
-			{
-				roll_left = true;
-			}
-			if(blend_direction.X == 0 && blend_direction.Y > 0)
-			{
-				roll_forward = true;
-			}
-			if(blend_direction.X == 0 && blend_direction.Y < 0)
-			{
-				roll_back = true;
-			}
-		}
+		
 		
 		// Set Velocity
-		velocity.X = direction.X * speed;
-		velocity.Z = direction.Z * speed;
-		
-	
-		if(roll_time != 0)
-		{
-			// Lerps to zero
-			if(roll_time < 10)
-			{
-				velocity.X += Mathf.Lerp(roll_velocity.X, 0, 0.1f);
-				velocity.Z += Mathf.Lerp(roll_velocity.Z, 0, 0.1f);
-			}
-			else if(roll_time > 10)
-			{
-				velocity.X += Mathf.Lerp(0, roll_velocity.X, 0.7f);
-				velocity.Z += Mathf.Lerp(0, roll_velocity.Z, 0.7f);
-			}
-			
-			roll_time -= 1;
-		}
-		if(roll_time == 1)
-		{
-			// Sets velocity to 0 after roll
-			velocity = Vector3.Zero;
-		}
-		if(roll_time == 0)
-		{
-			rolling = false;
-		}
 		
 		
 		if(player_position.Z - mob_to_LookAt_pos.Z > 0)
@@ -655,26 +577,15 @@ public partial class player : Entity
 		
 		// Set global velocity
 		Velocity = velocity;
+		// GD.Print("velocity ", velocity);
+		// GD.Print("Velocity ", Velocity);
 
 		// Set animations
 		tree.Set("parameters/IW/blend_position", blend_direction);
-		tree.Set("parameters/conditions/roll_back", roll_back);
-		tree.Set("parameters/conditions/roll_forward", roll_forward);
-		tree.Set("parameters/conditions/roll_left", roll_left);
-		tree.Set("parameters/conditions/roll_right", roll_right);
 		tree.Set("parameters/conditions/attacking", attack_check());
 		MoveAndSlide();
 
     }
-
-
-	public void Roll()	// Increases velocity
-	{
-		roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
-		roll_velocity += Velocity * 4;
-		GD.Print("roll");
-	}
-
     public bool attack_check() // changes weapon hitbox monitoring based on animation
 	{
 		if(Input.IsActionPressed("Attack"))
@@ -687,7 +598,6 @@ public partial class player : Entity
 		
 		return false;
 	}
-
 
 	private void OnVisionEntered(Area3D interactable) // handler for area entered signal
 	{
