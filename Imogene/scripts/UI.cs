@@ -20,13 +20,13 @@ public partial class UI : CanvasLayer
 		_customSignals.UIResourceUpdate += HandleUIResourceUpdate;
 		_customSignals.UIHealth += HandleUIHealth;
 		_customSignals.UIResource += HandleUIResource;
+		_customSignals.Interact += HandleInteract;
 		
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
 		UpdateHealth();
 		UpdateResource();
 	}
@@ -37,18 +37,6 @@ public partial class UI : CanvasLayer
 		health_icon.Value = health;
 		// GD.Print("Health Icon Value: ", health_icon.MaxValue);
 	}
-
-
-    private void HandleUIHealth(int amount)
-    {
-		health = amount;
-        health_icon.MaxValue = amount;
-
-    }
-	   private void HandleUIResource(int amount)
-    {
-        resource_icon.MaxValue = amount;
-    }
 
 	private void UpdateResource() // Updates UI resource
 	{
@@ -64,5 +52,28 @@ public partial class UI : CanvasLayer
     private void HandleUIResourceUpdate(int resource_amount)
     {
         resource -= resource_amount;
+    }
+
+	private void HandleInteract(Area3D area, bool in_interact_area)
+    {
+		if(in_interact_area)
+		{
+			GD.Print("Interact with ", area.GetParent().Name);
+		}
+		else
+		{
+			GD.Print("left ", area.GetParent().Name , " interact area");
+		}
+		
+        
+    }
+    private void HandleUIHealth(int amount)
+    {
+		health = amount;
+        health_icon.MaxValue = amount;
+    }
+	   private void HandleUIResource(int amount)
+    {
+        resource_icon.MaxValue = amount;
     }
 }

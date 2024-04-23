@@ -23,6 +23,8 @@ public partial class CustomSignals : Node
 	public delegate void UIHealthUpdateEventHandler(int amount);
 	[Signal]
 	public delegate void UIResourceUpdateEventHandler(int amount);
+	[Signal]
+	public delegate void InteractEventHandler(Area3D area, bool in_interact_area);
 
 
 }

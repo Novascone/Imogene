@@ -1,10 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
 
-[ext_resource type="Shader" path="res://shaders/interact.gdshader" id="1_hgciw"]
-[ext_resource type="Script" path="res://scripts/box.cs" id="2_uy77v"]
+[ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://g7r1svs3uder" path="res://scenes/entities/player.tscn" id="4_nj82x"]
-[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="5_il5k7"]
-[ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/objects/targeting_icon.tscn" id="5_non4s"]
+[ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/UI/targeting_icon.tscn" id="5_non4s"]
 [ext_resource type="PackedScene" uid="uid://dc1t0efid7178" path="res://scenes/UI/user_interface_new.tscn" id="5_w2tnr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
@@ -23,25 +21,6 @@ sky_material = SubResource("ProceduralSkyMaterial_iphw8")
 [sub_resource type="Environment" id="Environment_sd3p5"]
 background_mode = 2
 sky = SubResource("Sky_dd0x7")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1h8ub"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_8qq1d"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4tslu"]
-resource_local_to_scene = true
-resource_name = "highlight_interactive"
-render_priority = 0
-shader = ExtResource("1_hgciw")
-shader_parameter/strength = 0.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prx8h"]
-next_pass = SubResource("ShaderMaterial_4tslu")
-albedo_color = Color(0, 1, 1, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_k1bjr"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nt1yn"]
 
 [node name="Level" type="Node3D" groups=["terrain"]]
 
@@ -62,27 +41,6 @@ shape = SubResource("BoxShape3D_hhky2")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
 
-[node name="Box" type="Area3D" parent="." groups=["interactive"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12.3572)
-
-[node name="BoxCollision" type="CollisionShape3D" parent="Box"]
-shape = SubResource("BoxShape3D_1h8ub")
-
-[node name="Mesh" type="MeshInstance3D" parent="Box"]
-mesh = SubResource("BoxMesh_8qq1d")
-surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
-
-[node name="InteractAreaMesh" type="MeshInstance3D" parent="Box"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-mesh = SubResource("CylinderMesh_k1bjr")
-
-[node name="InteractArea" type="Area3D" parent="Box/InteractAreaMesh" groups=["interactive"]]
-script = ExtResource("2_uy77v")
-
-[node name="InteractAreaCollision" type="CollisionShape3D" parent="Box/InteractAreaMesh/InteractArea"]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
-shape = SubResource("BoxShape3D_nt1yn")
-
 [node name="Target" parent="." instance=ExtResource("5_non4s")]
 
 [node name="player" parent="." instance=ExtResource("4_nj82x")]
@@ -90,5 +48,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.444608, 0.0080943, -0.09303
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_w2tnr")]
 
-[node name="enemy" parent="." instance=ExtResource("5_il5k7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9815, 0.0080943, -4.31394)
+[node name="Box" parent="." instance=ExtResource("1_4rjct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)

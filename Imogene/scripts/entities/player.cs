@@ -68,6 +68,7 @@ public partial class player : Entity
 	
 		hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
+		hurtbox.AreaExited += OnHurtboxExited;
 
 		vision  = (Area3D)GetNode("Vision");
 		vision.AreaEntered += OnVisionEntered;
@@ -93,10 +94,9 @@ public partial class player : Entity
 		_customSignals.UIHealthUpdate += HandleUIResource;
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
 		_customSignals.UIHealthUpdate += HandleUIResourceUpdate;
-		
-
-		
+		_customSignals.Interact += HandleInteract;		
 	}
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
@@ -179,18 +179,6 @@ public partial class player : Entity
 		MoveAndSlide();
 
     }
-
-	public void SignalEmitter()
-	{
-		if(max_health_changed)
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
-			max_health_changed = false;
-		}
-		
-		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
-		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
-	}
     
 	public void SmoothRotation()
 	{
@@ -250,10 +238,8 @@ public partial class player : Entity
 				
 			}
 			
-			
 			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition;
 			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
-			
 			
 		}
 		else
@@ -323,12 +309,14 @@ public partial class player : Entity
 
 	private void OnHitboxEntered(Area3D hitbox) // handler for area entered signal
 	{
+		GD.Print("entered");
 		if(hitbox.IsInGroup("enemy"))
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage); // Sends how much damage the player does to the enemy
 			hitbox.RemoveFromGroup("player_hitbox"); // Removes weapon from attacking group
 			// GD.Print("enemy hit");
 		}
+		
 		
 	}
 
@@ -344,22 +332,46 @@ public partial class player : Entity
 
     }
 
-	private void OnHurtboxEntered(Area3D hitbox) // handler for area entered signal
+	private void OnHurtboxEntered(Area3D area) // handler for area entered signal
 	{
-		if(hitbox.IsInGroup("enemy_hitbox"))
+		if(area.IsInGroup("enemy_hitbox"))
 		{
 			GD.Print("player hit");
 			TakeDamage(1);
 			GD.Print(health);
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
 		}
+		else if(area.IsInGroup("interactive"))
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, true);
+		}
 		
 	}
+
+	private void OnHurtboxExited(Area3D area)
+    {
+        if(area.IsInGroup("interactive"))
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, false);
+		}
+    }
 
 	private void Sort()
 	{
 		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
 		mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+	}
+
+	public void SignalEmitter()
+	{
+		if(max_health_changed)
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
+			max_health_changed = false;
+		}
+		
+		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
+		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
 
 	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
@@ -378,6 +390,7 @@ public partial class player : Entity
     private void HandleUIHealth(int amount){}
 	private void HandleUIHealthUpdate(int amount){}
 	private void HandleUIResourceUpdate(int amount){}
+	private void HandleInteract(Area3D area, bool in_interact_area){}
 
 	public static class Vector3DictionarySorter 
 	{
