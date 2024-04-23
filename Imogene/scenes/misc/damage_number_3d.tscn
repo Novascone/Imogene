@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c7tpywa7qwygn"]
 
-[ext_resource type="Script" path="res://scripts/damage_numbers.cs" id="1_u23oh"]
+[ext_resource type="Script" path="res://scripts/UI/damage_numbers.cs" id="1_u23oh"]
 
 [sub_resource type="Animation" id="Animation_snepx"]
 length = 3.0

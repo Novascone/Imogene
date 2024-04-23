@@ -26,7 +26,7 @@ public partial class Entity : CharacterBody3D
     }
     public  Node LoadAbility(String name)
     {
-        var scene = GD.Load<PackedScene>("res://scenes/abilities/" + name + "/" + name + ".tscn");
+        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
         var sceneNode = scene.Instantiate();
         return sceneNode;
     }

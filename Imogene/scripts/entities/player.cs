@@ -309,7 +309,6 @@ public partial class player : Entity
 
 	private void OnHitboxEntered(Area3D hitbox) // handler for area entered signal
 	{
-		GD.Print("entered");
 		if(hitbox.IsInGroup("enemy"))
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage); // Sends how much damage the player does to the enemy
