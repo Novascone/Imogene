@@ -12,8 +12,9 @@ using System.Runtime.CompilerServices;
 public partial class player : Entity
 {
 	// Abilities - Functionalities
-	Roll roll;
+	Roll roll_ability;
 	Target target_ability;
+	BasicAttack basic_attack_ability;
 
 	// Player Direction and animation variables
 	public Vector3 player_position; // Position of the player
@@ -25,13 +26,13 @@ public partial class player : Entity
 
 	// Player bools
 	public bool rolling; 
-	private bool enemy_in_vision = false;
+	public bool enemy_in_vision = false;
 	public bool targeting = false;
 	private bool max_health_changed = true;
 
 	// Player attached areas
 	private Area3D hurtbox;
-	private Area3D hitbox;
+	public Area3D hitbox;
 	private Area3D vision;
 
 	// Player animation
@@ -58,8 +59,9 @@ public partial class player : Entity
 
 	public override void _Ready()
 	{
-		roll = (Roll)LoadAbility("Roll");
+		roll_ability = (Roll)LoadAbility("Roll");
 		target_ability = (Target)LoadAbility("Target");
+		basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
 
 		damage = 2;
 		health = 20;
@@ -99,25 +101,18 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		if(max_health_changed)
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
-			max_health_changed = false;
-		}
-		
-		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
-		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
+		SignalEmitter();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
-        // Vector3 velocity = Velocity;
+    
 		
 		resource = 0;
 		
 		if(velocity == Vector3.Zero)
-			{
-				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
-				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
-			}
+		{
+			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+		}
 		
 		if(can_move) // Basic movement controller
 		{
@@ -145,49 +140,58 @@ public partial class player : Entity
 		}
 		if(rolling)
 		{
-			roll.Execute(this);
+			roll_ability.Execute(this);
 		}
 		else
 		{
 			velocity.X = direction.X * speed;
 			velocity.Z = direction.Z * speed;
 		}
-		SmoothRotation();
 
-
-		if(enemy_in_vision)
+		if(Input.IsActionJustPressed("Attack"))
 		{
-			Targeting();
+			attacking = true;
+			basic_attack_ability.Execute(this);
 		}
+		else
+		{
+			attacking = false;
+			basic_attack_ability.Execute(this);
+		}
+
+
+		SmoothRotation();
+		EnemyCheck();
 		LookAtOver();
 
+		
 		if(mob_pos.Count == 0)
 		{	
 			// GD.Print("no enemy in sight");
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
+
+		
 	
 		Velocity = velocity;
-
 		tree.Set("parameters/IW/blend_position", blend_direction);
-		tree.Set("parameters/conditions/attacking", attack_check());
 		MoveAndSlide();
 
     }
-    public bool attack_check() // changes weapon hitbox monitoring based on animation
+
+	public void SignalEmitter()
 	{
-		if(Input.IsActionPressed("Attack"))
+		if(max_health_changed)
 		{
-			hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
-			hitbox.Monitoring = true;
-			can_move = false;
-			return true;
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
+			max_health_changed = false;
 		}
 		
-		return false;
+		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
+		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
-
+    
 	public void SmoothRotation()
 	{
 		if(!targeting)
@@ -205,6 +209,24 @@ public partial class player : Entity
 		}
 	}
 
+	private void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
+	{
+		if(enemy_in_vision)
+		{
+			if(Input.IsActionJustPressed("Target"))
+			{
+				if(!targeting)
+				{
+					targeting = true;
+				}
+				else if(targeting)
+				{
+					targeting = false;
+				}
+				
+			}
+		}
+	}
 	public void LookAtOver()
 	{
 		if(targeting && enemy_in_vision && (mobs_in_order.Count > 0))
@@ -332,24 +354,6 @@ public partial class player : Entity
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
 		}
 		
-	}
-
-	private void Targeting() // Emits signal when enemy is targeted/ untargeted
-	{
-		
-		if(Input.IsActionJustPressed("Target"))
-		{
-			if(!targeting)
-			{
-				targeting = true;
-			}
-			else if(targeting)
-			{
-				targeting = false;
-			}
-			
-		}
-
 	}
 
 	private void Sort()

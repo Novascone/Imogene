@@ -11,7 +11,7 @@ public partial class Target : Node3D
 	float _t = 0.4f;
 	public void Execute(player s)
 	{
-		Rotate(s);
+			Rotate(s);
 	}
 	public void Rotate(player s)
 	{
