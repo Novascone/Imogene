@@ -360,7 +360,6 @@ public partial class player : Entity
 	{
 		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
 		mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
-		
 	}
 
 	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
@@ -391,6 +390,4 @@ public partial class player : Entity
 			return sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
 		}
 	}
-
-
 }
