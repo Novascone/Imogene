@@ -1,219 +1,225 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc1t0efid7178"]
+[gd_scene load_steps=7 format=3 uid="uid://dc1t0efid7178"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_3nu6p"]
 [ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="1_dxojw"]
 [ext_resource type="Texture2D" uid="uid://41j8hcapqs2h" path="res://images/UI/ability_ui_ref.png" id="2_bvtxq"]
 [ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="3_rfduv"]
+[ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="5_m8nhp"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
+radius = 3.0
+
+[node name="UserInterface" type="CanvasLayer"]
+
+[node name="main_UI" type="CanvasLayer" parent="."]
 script = ExtResource("1_3nu6p")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_UI"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -591.0
+offset_left = -606.0
 offset_top = -230.0
-offset_right = 591.0
+offset_right = 606.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = -1
 
-[node name="PanelHealthContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelHealthContainer" type="PanelContainer" parent="main_UI/HBoxContainer"]
 custom_minimum_size = Vector2(415, 190)
 layout_mode = 2
 size_flags_vertical = 8
 theme_type_variation = &"Health_Art"
 
-[node name="HealthContainer" type="HBoxContainer" parent="HBoxContainer/PanelHealthContainer"]
+[node name="HealthContainer" type="HBoxContainer" parent="main_UI/HBoxContainer/PanelHealthContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_type_variation = &"Health_and_Resource"
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelHealthContainer/HealthContainer"]
+[node name="Control" type="Control" parent="main_UI/HBoxContainer/PanelHealthContainer/HealthContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HealthIcon" type="TextureProgressBar" parent="HBoxContainer/PanelHealthContainer/HealthContainer"]
+[node name="HealthIcon" type="TextureProgressBar" parent="main_UI/HBoxContainer/PanelHealthContainer/HealthContainer"]
 show_behind_parent = true
 layout_mode = 2
 value = 100.0
 fill_mode = 3
 texture_progress = ExtResource("1_dxojw")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="main_UI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="main_UI/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"BlackBorder"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Ability1Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability1Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability1Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   A   "
 
-[node name="Ability2Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability2Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability2Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   B   "
 
-[node name="Ability3Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability3Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability3Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   X   "
 
-[node name="Ability4Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability4Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability4Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   Y   "
 
-[node name="Ability5Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability5Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability5Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " RB  "
 
-[node name="Ability6Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability6Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability6Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "  LB "
 
-[node name="Ability7Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability7Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability7Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   RT"
 
-[node name="Ability8Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Ability8Container" type="VBoxContainer" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
+[node name="TextureRect" type="TextureRect" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
 layout_mode = 2
 texture = ExtResource("2_bvtxq")
 expand_mode = 4
 
-[node name="Ability" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
+[node name="Ability" type="Label" parent="main_UI/HBoxContainer/VBoxContainer/HBoxContainer/Ability8Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "   LT "
 
-[node name="PanelResourceContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelResourceContainer" type="PanelContainer" parent="main_UI/HBoxContainer"]
 custom_minimum_size = Vector2(415, 190)
 layout_mode = 2
 size_flags_vertical = 8
 theme_type_variation = &"Resource_Art"
 
-[node name="ResourceContainer" type="HBoxContainer" parent="HBoxContainer/PanelResourceContainer"]
+[node name="ResourceContainer" type="HBoxContainer" parent="main_UI/HBoxContainer/PanelResourceContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_type_variation = &"Health_and_Resource"
 
-[node name="ResourceIcon" type="TextureProgressBar" parent="HBoxContainer/PanelResourceContainer/ResourceContainer"]
+[node name="ResourceIcon" type="TextureProgressBar" parent="main_UI/HBoxContainer/PanelResourceContainer/ResourceContainer"]
 show_behind_parent = true
 layout_mode = 2
 size_flags_horizontal = 3
 fill_mode = 3
 texture_progress = ExtResource("3_rfduv")
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelResourceContainer/ResourceContainer"]
+[node name="Control" type="Control" parent="main_UI/HBoxContainer/PanelResourceContainer/ResourceContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="main_UI"]
 visible = false
 offset_right = 1054.0
-offset_bottom = 672.0
+offset_bottom = 1667.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="main_UI/PanelContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="main_UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
 text = "Quest
 "
 horizontal_alignment = 1
 
-[node name="Text" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Text" type="Label" parent="main_UI/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 text = "
@@ -229,29 +235,90 @@ Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neq
 "
 autowrap_mode = 2
 
-[node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="main_UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer1" type="Control" parent="main_UI/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Decline" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Decline" type="Button" parent="main_UI/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Decline
 "
 
-[node name="Accept" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Accept" type="Button" parent="main_UI/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Accept
 "
 
-[node name="Spacer2" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="main_UI/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Inventory" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("5_m8nhp")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -131.0
+offset_right = 87.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/ScrollContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="AddButton" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -44.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Add Item
+"
+
+[node name="RemoveButton" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -262.0
+offset_top = -45.0
+offset_right = -134.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Item
+"
+
+[node name="CursorArea2D" type="Area2D" parent="Inventory"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CursorArea2D"]
+shape = SubResource("CircleShape2D_rtd4h")
+
+[connection signal="button_down" from="Inventory/AddButton" to="Inventory" method="_on_add_button_button_down"]
+[connection signal="button_down" from="Inventory/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
+[connection signal="area_entered" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_exited"]
