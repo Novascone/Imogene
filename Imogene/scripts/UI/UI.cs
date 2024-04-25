@@ -3,7 +3,9 @@ using System;
 
 public partial class UI : CanvasLayer
 {
-
+	private Sprite2D cursor;
+	private Vector2 mouse_pos = Vector2.Zero;
+	private float mouse_max_speed = 10.0f;
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	// Called when the node enters the scene tree for the first time.
@@ -11,8 +13,12 @@ public partial class UI : CanvasLayer
 	private int resource;
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	private Inventory inventory;
+	private bool inventory_open;
 	public override void _Ready()
 	{
+		cursor = GetNode<Sprite2D>("Inventory/Cursor");
+		mouse_pos = GetWindow().Size / 4;
+		
 		health_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
 
@@ -30,11 +36,26 @@ public partial class UI : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		
+		if(inventory_open)
+		{
+			ControllerCursor();
+		}
+		
+
 		UpdateHealth();
 		UpdateResource();
 
 		if(Input.IsActionJustPressed("Inventory"))
 		{
+			if(!inventory_open)
+			{
+				inventory_open = true;
+			}
+			else
+			{
+				inventory_open = false;
+			}
 			inventory.Visible = !inventory.Visible;
 			// if(inventory.Visible)
 			// {
@@ -47,7 +68,35 @@ public partial class UI : CanvasLayer
 		}
 	}
 
-	private void UpdateHealth() // Updates UI health
+	public void ControllerCursor()
+	{
+		Input.MouseMode = Input.MouseModeEnum.Hidden;
+		Vector2 mouse_direction = Vector2.Zero;
+	
+		if (Input.IsActionPressed("CursorLeft"))
+		{
+			mouse_direction.X -= 1.0f;		
+		}
+		if (Input.IsActionPressed("CursorRight"))
+		{
+			mouse_direction.X += 1.0f;
+		}
+		if (Input.IsActionPressed("CursorUp"))
+		{
+			mouse_direction.Y -= 1.0f;
+		}
+		if (Input.IsActionPressed("CursorDown"))
+		{
+			mouse_direction.Y += 1.0f;
+		}
+		if(mouse_direction != Vector2.Zero)
+		{
+			Input.WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.2f));
+		}
+		cursor.Position = GetViewport().GetMousePosition();
+	}
+
+    private void UpdateHealth() // Updates UI health
 	{
 		// GD.Print("Health: ", health);
 		health_icon.Value = health;
@@ -91,5 +140,13 @@ public partial class UI : CanvasLayer
 	   private void HandleUIResource(int amount)
     {
         resource_icon.MaxValue = amount;
+    }
+
+	public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseMotion mouseMotion)
+		{
+			mouse_pos = mouseMotion.Position;
+		}
     }
 }

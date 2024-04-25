@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc1t0efid7178"]
+[gd_scene load_steps=11 format=3 uid="uid://dc1t0efid7178"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_3nu6p"]
 [ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="1_dxojw"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="3_rfduv"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="5_m8nhp"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="6_s75rp"]
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="7_hvwf0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5o7p"]
 
@@ -377,6 +378,11 @@ shape = SubResource("CircleShape2D_rtd4h")
 
 [node name="InventoryButton" parent="Inventory/CursorArea2D" instance=ExtResource("6_s75rp")]
 visible = false
+
+[node name="Cursor" type="Sprite2D" parent="Inventory"]
+top_level = true
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("7_hvwf0")
 
 [connection signal="area_entered" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
 [connection signal="area_exited" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]

@@ -37,7 +37,7 @@ public partial class Inventory : CanvasLayer
 		{
 			if(!clicked_on)
 			{
-				if(Input.IsActionJustPressed("RightMouse"))
+				if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
 				{
 					clicked_on = true;
 					grabbed_object = hover_over_button;
@@ -49,7 +49,7 @@ public partial class Inventory : CanvasLayer
 			}
 			else
 			{
-				if(Input.IsActionJustPressed("RightMouse"))
+				if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
 				{
 					if(over_trash)
 					{
@@ -71,7 +71,7 @@ public partial class Inventory : CanvasLayer
 				}
 			}
 		}
-		if(Input.IsActionJustPressed("RightMouse") && over_trash)
+		if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_trash)
 		{
 			clicked_on = false;
 			DeleteItem(grabbed_object);
