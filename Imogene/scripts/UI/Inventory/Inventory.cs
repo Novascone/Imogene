@@ -12,16 +12,19 @@ public partial class Inventory : CanvasLayer
 	private string item_button_path = "res://scenes/UI/inventory_button.tscn";
 	[Export]
 	public int inventory_size { get; set; } = 24;
-
+	private Vector2 last_cursor_clicked_pos;
 
 	public InventoryButton grabbed_object { get; set; }
 	public InventoryButton hover_over_button { get; set; }
 
 	private List<Item> items = new List<Item>();
+
+	private bool clicked_on;
+	private bool over_trash;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		grid_container = GetNode<GridContainer>("ScrollContainer/GridContainer");
+		grid_container = GetNode<GridContainer>("Panel/ScrollContainer/GridContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 	}
@@ -30,6 +33,65 @@ public partial class Inventory : CanvasLayer
 	public override void _Process(double delta)
 	{
 		GetNode<Area2D>("CursorArea2D").Position = GetTree().Root.GetMousePosition();
+		if(hover_over_button != null)
+		{
+			if(!clicked_on)
+			{
+				if(Input.IsActionJustPressed("RightMouse"))
+				{
+					clicked_on = true;
+					grabbed_object = hover_over_button;
+					last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
+					InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+					button.Visible = true;
+					button.UpdateItem(grabbed_object.inventory_item, 0);
+				}
+			}
+			else
+			{
+				if(Input.IsActionJustPressed("RightMouse"))
+				{
+					if(over_trash)
+					{
+						clicked_on = false;
+						DeleteItem(grabbed_object);
+						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+						button.Visible = false;
+						GD.Print("trashed");
+						
+					}
+					else
+					{
+						clicked_on = false;
+						SwapButtons(grabbed_object, hover_over_button);
+						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+						button.Visible = false;
+					}
+				
+				}
+			}
+		}
+		if(Input.IsActionJustPressed("RightMouse") && over_trash)
+		{
+			clicked_on = false;
+			DeleteItem(grabbed_object);
+		}
+	}
+
+	private void SwapButtons(InventoryButton button1, InventoryButton button2)
+	{
+		int button1_index = button1.GetIndex();
+		int button2_index = button2.GetIndex();
+		grid_container.MoveChild(button1, button2_index);
+		grid_container.MoveChild(hover_over_button, button1_index);
+	}
+
+	public void DeleteItem(InventoryButton inventory_button)
+	{
+		items.Remove(inventory_button.inventory_item);
+		ReflowButtons();
+		InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+		button.Visible = false;
 	}
 
 	private void PopulateButtons()
@@ -183,4 +245,24 @@ public partial class Inventory : CanvasLayer
 	}
 
 	public void _on_cursor_area_2d_area_exited(Area2D area) => hover_over_button = null;
+
+	public void _on_trash_area_2d_area_entered(Area2D area)
+	{	
+		over_trash = true;
+	}
+
+	public void _on_trash_area_2d_area_exited(Area2D area)
+	{
+		over_trash = false;
+	}
+
+	public void _on_add_button_2_button_down()
+	{
+		Add(ResourceLoader.Load<Item>("res://HealthPotion.tres"));
+	}
+
+	public void _on_remove_button_2_button_down()
+	{
+		Remove(ResourceLoader.Load<Item>("res://HealthPotion.tres"));
+	}
 }

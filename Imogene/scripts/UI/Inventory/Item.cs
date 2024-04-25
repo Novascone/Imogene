@@ -19,4 +19,9 @@ public partial class Item : Resource
     public bool is_stackable { get; set; }
 
     public Item Copy() => Duplicate() as Item;
+
+    public virtual void UseItem()
+    {
+        GD.Print("Used Item");
+    }
 }

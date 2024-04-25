@@ -3,7 +3,7 @@ using System;
 
 public partial class InventoryButton : Button
 {
-	private Item inventory_item;
+	public Item inventory_item;
 	private TextureRect icon;
 	private Label quantity_label;
 	private int index;
@@ -12,9 +12,11 @@ public partial class InventoryButton : Button
 	{
 		icon = GetNode<TextureRect>("TextureRect");
 		quantity_label = GetNode<Label>("Label");
+		Pressed += InventoryButton_Pressed;
 	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 	}
 
@@ -34,4 +36,9 @@ public partial class InventoryButton : Button
 		}
 		
 	}
+
+	 private void InventoryButton_Pressed()
+    {
+        inventory_item.UseItem();
+    }
 }

@@ -10,10 +10,13 @@ public partial class UI : CanvasLayer
 	private int health;
 	private int resource;
 	private CustomSignals _customSignals; // Instance of CustomSignals
+	private Inventory inventory;
 	public override void _Ready()
 	{
-		health_icon = GetNode<TextureProgressBar>("HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
-		resource_icon = GetNode<TextureProgressBar>("HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		health_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
+		resource_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
+
+		inventory = GetNode<Inventory>("Inventory");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
@@ -29,6 +32,19 @@ public partial class UI : CanvasLayer
 	{
 		UpdateHealth();
 		UpdateResource();
+
+		if(Input.IsActionJustPressed("Inventory"))
+		{
+			inventory.Visible = !inventory.Visible;
+			// if(inventory.Visible)
+			// {
+			// 	Input.MouseMode = Input.MouseModeEnum.Visible;
+			// }
+			// else
+			// {
+			// 	Input.MouseMode = Input.MouseModeEnum.Captured;
+			// }
+		}
 	}
 
 	private void UpdateHealth() // Updates UI health

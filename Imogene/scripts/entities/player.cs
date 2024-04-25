@@ -148,6 +148,7 @@ public partial class player : Entity
 			velocity.Z = direction.Z * speed;
 		}
 
+
 		if(Input.IsActionJustPressed("Attack"))
 		{
 			attacking = true;
