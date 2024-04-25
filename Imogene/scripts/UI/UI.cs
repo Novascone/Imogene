@@ -17,10 +17,10 @@ public partial class UI : CanvasLayer
 	public override void _Ready()
 	{
 		cursor = GetNode<Sprite2D>("Inventory/Cursor");
-		mouse_pos = GetWindow().Size / 4;
-		
-		health_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
-		resource_icon = GetNode<TextureProgressBar>("main_UI/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		mouse_pos = cursor.Position;
+
+		health_icon = GetNode<TextureProgressBar>("HUD/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
+		resource_icon = GetNode<TextureProgressBar>("HUD/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
 
 		inventory = GetNode<Inventory>("Inventory");
 

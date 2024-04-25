@@ -16,6 +16,7 @@ public partial class Inventory : CanvasLayer
 
 	public InventoryButton grabbed_object { get; set; }
 	public InventoryButton hover_over_button { get; set; }
+	public Button hover_over_button_non_inventory { get; set; }
 
 	private List<Item> items = new List<Item>();
 
@@ -37,6 +38,10 @@ public partial class Inventory : CanvasLayer
 		{
 			if(!clicked_on)
 			{
+				if(Input.IsActionJustPressed("Interact"))
+				{
+					hover_over_button.InventoryButtonPressed();
+				}
 				if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
 				{
 					clicked_on = true;
@@ -63,12 +68,13 @@ public partial class Inventory : CanvasLayer
 					else
 					{
 						clicked_on = false;
-						SwapButtons(grabbed_object, hover_over_button);
+						// SwapButtons(grabbed_object, hover_over_button);
 						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
 						button.Visible = false;
 					}
 				
 				}
+				
 			}
 		}
 		if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_trash)
@@ -241,10 +247,40 @@ public partial class Inventory : CanvasLayer
 		if(button is InventoryButton) 
 		{
 			hover_over_button = (InventoryButton)button;
+			hover_over_button.GrabFocus();
+			GD.Print("type " + button.GetType());
 		}
+		else if (button is Button)
+		{
+			hover_over_button_non_inventory = (Button)button;
+			hover_over_button_non_inventory.GrabFocus();
+			GD.Print("type " + button.GetType());
+		}
+		
 	}
 
-	public void _on_cursor_area_2d_area_exited(Area2D area) => hover_over_button = null;
+	public void _on_cursor_area_2d_area_exited(Area2D area)
+	{
+		if(area.GetParent() is InventoryButton)
+		{
+			if(hover_over_button != null)
+			{
+				hover_over_button.ReleaseFocus();
+				hover_over_button = null;
+			}
+			
+		}
+		else if (area.GetParent() is Button)
+		{
+			if(hover_over_button_non_inventory != null)
+			{
+				hover_over_button_non_inventory.ReleaseFocus();
+				hover_over_button_non_inventory = null;
+			}
+			
+		}
+		
+	}
 
 	public void _on_trash_area_2d_area_entered(Area2D area)
 	{	
@@ -255,6 +291,14 @@ public partial class Inventory : CanvasLayer
 	{
 		over_trash = false;
 	}
+
+	// public void _on_non_InventoryButton_2d_area_entered(Area2D area)
+	// {
+		
+	// 	InventoryButton button = area.GetParent<InventoryButton>();
+	// 	GD.Print("type " + button.GetType());
+	// 	button.GrabFocus();
+	// }
 
 	public void _on_add_button_2_button_down()
 	{

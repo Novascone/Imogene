@@ -12,7 +12,6 @@ public partial class InventoryButton : Button
 	{
 		icon = GetNode<TextureRect>("TextureRect");
 		quantity_label = GetNode<Label>("Label");
-		Pressed += InventoryButton_Pressed;
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,8 +36,15 @@ public partial class InventoryButton : Button
 		
 	}
 
-	 private void InventoryButton_Pressed()
+
+	 public void InventoryButtonPressed()
     {
-        inventory_item.UseItem();
+		
+		if(inventory_item != null)
+		{
+			inventory_item.UseItem();
+		}
+			
     }
+
 }
