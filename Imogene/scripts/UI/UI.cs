@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 
 public partial class UI : CanvasLayer
@@ -9,18 +10,25 @@ public partial class UI : CanvasLayer
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	// Called when the node enters the scene tree for the first time.
+	private PanelContainer interact_bar;
 	private int health;
 	private int resource;
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	private Inventory inventory;
 	private bool inventory_open;
+	public Node3D player;
 	public override void _Ready()
 	{
+
+		
+
 		cursor = GetNode<Sprite2D>("Inventory/Cursor");
 		mouse_pos = cursor.Position;
 
-		health_icon = GetNode<TextureProgressBar>("HUD/HBoxContainer/PanelHealthContainer/HealthContainer/HealthIcon");
-		resource_icon = GetNode<TextureProgressBar>("HUD/HBoxContainer/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
+		resource_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		interact_bar = GetNode<PanelContainer>("HUD/InteractBar");
+
 
 		inventory = GetNode<Inventory>("Inventory");
 
@@ -30,13 +38,14 @@ public partial class UI : CanvasLayer
 		_customSignals.UIHealth += HandleUIHealth;
 		_customSignals.UIResource += HandleUIResource;
 		_customSignals.Interact += HandleInteract;
-		
 	}
+
+    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
+		player = (Node3D)GetParent();
 		if(inventory_open)
 		{
 			ControllerCursor();
@@ -66,6 +75,7 @@ public partial class UI : CanvasLayer
 			// 	Input.MouseMode = Input.MouseModeEnum.Captured;
 			// }
 		}
+		// Sends how much damage the player does to the enemy
 	}
 
 	public void ControllerCursor()
@@ -123,11 +133,24 @@ public partial class UI : CanvasLayer
     {
 		if(in_interact_area)
 		{
-			GD.Print("Interact with ", area.GetParent().Name);
+			
+			
+			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+			Label press = (Label)TextContainer.GetChild(0);
+			Label object_to_interact = (Label)TextContainer.GetChild(1);
+			press.Text = "Y : ";
+			object_to_interact.Text = "Interact with " + area.GetParent().Name;
+			interact_bar.Visible = true;
 		}
 		else
 		{
-			GD.Print("left ", area.GetParent().Name , " interact area");
+			interact_bar.Visible = false;
+			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+			Label press = (Label)TextContainer.GetChild(0);
+			Label object_to_interact = (Label)TextContainer.GetChild(1);
+			press.Text = null;
+			object_to_interact.Text = null;
+			
 		}
 		
         
@@ -149,4 +172,5 @@ public partial class UI : CanvasLayer
 			mouse_pos = mouseMotion.Position;
 		}
     }
+	
 }

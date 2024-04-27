@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -11,6 +12,9 @@ using System.Runtime.CompilerServices;
 
 public partial class player : Entity
 {
+	
+	public player this_player;
+
 	// Abilities - Functionalities
 	Roll roll_ability;
 	Target target_ability;
@@ -29,11 +33,13 @@ public partial class player : Entity
 	public bool enemy_in_vision = false;
 	public bool targeting = false;
 	private bool max_health_changed = true;
+	private bool in_interact_area;
 
 	// Player attached areas
 	private Area3D hurtbox;
 	public Area3D hitbox;
 	private Area3D vision;
+	public Node3D head_slot;
 
 	// Player animation
 	public AnimationTree tree;
@@ -52,11 +58,17 @@ public partial class player : Entity
 	private CustomSignals _customSignals;
 	private Area3D target; 
 	private MeshInstance3D targeting_icon;
-	
-	
-	
+
+	public string resource_path;
+	private bool remove_equipped = false;
+
+	MeshInstance3D helm;
+
+	Node3D main_node;
 	
 
+	
+	
 	public override void _Ready()
 	{
 		roll_ability = (Roll)LoadAbility("Roll");
@@ -74,10 +86,13 @@ public partial class player : Entity
 		vision.AreaEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
 
+		head_slot = GetNode<Node3D>("Skeleton3D/Head/Head_Slot");
+		helm = new MeshInstance3D();
+
 		tree = GetNode<AnimationTree>("AnimationTree");
 		tree.AnimationFinished += OnAnimationFinsihed;
 
-		hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/axe/Hitbox");
+		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
 
 		
@@ -94,8 +109,20 @@ public partial class player : Entity
 		_customSignals.UIHealthUpdate += HandleUIResource;
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
 		_customSignals.UIHealthUpdate += HandleUIResourceUpdate;
-		_customSignals.Interact += HandleInteract;		
+		_customSignals.Interact += HandleInteract;
+		_customSignals.ItemInfo += HandleItemInfo;
+		_customSignals.ConsumableInfo += HandleConsumableInfo;
+		_customSignals.EquipableInfo += HandleEquipableInfo;
+		_customSignals.RemoveEquipped += HandleRemoveEquipped;
+		
 	}
+
+    private void HandleRemoveEquipped()
+    {
+		GD.Print("remove equipped");
+        head_slot.RemoveChild(main_node);
+    }
+
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -104,7 +131,7 @@ public partial class player : Entity
 		SignalEmitter();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
-    
+
 		
 		resource = 0;
 		
@@ -158,6 +185,18 @@ public partial class player : Entity
 		{
 			attacking = false;
 			basic_attack_ability.Execute(this);
+		}
+
+		if(in_interact_area)
+		{
+			if(Input.IsActionJustPressed("Interact"))
+			{
+				_customSignals.EmitSignal(nameof(CustomSignals.InteractPressed),true);
+			}
+		}
+		else
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.InteractPressed),false);
 		}
 
 
@@ -343,7 +382,8 @@ public partial class player : Entity
 		}
 		else if(area.IsInGroup("interactive"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, true);
+			in_interact_area = true;
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, in_interact_area);
 		}
 		
 	}
@@ -352,7 +392,8 @@ public partial class player : Entity
     {
         if(area.IsInGroup("interactive"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, false);
+			in_interact_area = false;
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, in_interact_area);
 		}
     }
 
@@ -369,7 +410,7 @@ public partial class player : Entity
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			max_health_changed = false;
 		}
-		
+		_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
@@ -383,6 +424,34 @@ public partial class player : Entity
     {
         enemy_position = position;
     }
+
+	 private void HandleEquipableInfo(Equipable item)
+    {
+        resource_path = item.item_path;
+		GD.Print("Plus " + item.strength + " Strength");
+		GD.Print(item.item_path);
+		var scene_to_load = GD.Load<PackedScene>(resource_path);
+		if(item.slot == "head")
+		{
+			GD.Print("Helmet equipped");
+			
+			main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+			GD.Print(main_node);
+			head_slot.AddChild(main_node);
+		}
+		
+    }
+
+    private void HandleConsumableInfo(Consumable item)
+    {
+        GD.Print(item.heal_amount);
+    }
+
+    private void HandleItemInfo(Item item)
+    {
+		
+    }
+
 
 	private void HandlePlayerPosition(Vector3 position){} // Sends player position to enemy
 	private void HandleTargeting(bool targeting, Vector3 position){}

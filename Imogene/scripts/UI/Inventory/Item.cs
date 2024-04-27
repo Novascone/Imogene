@@ -17,11 +17,17 @@ public partial class Item : Resource
     public int stack_size { get; set; }
     [Export]
     public bool is_stackable { get; set; }
+    [Export]
+    public string type_of_item;
 
     public Item Copy() => Duplicate() as Item;
 
+   
     public virtual void UseItem()
     {
+        
         GD.Print("Used Item");
     }
+
+
 }

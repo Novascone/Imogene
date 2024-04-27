@@ -22,65 +22,92 @@ public partial class Inventory : CanvasLayer
 
 	private bool clicked_on;
 	private bool over_trash;
+	
+	private CustomSignals _customSignals; // Instance of CustomSignals
+
+	private player this_player;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.PlayerInfo += HandlePlayerInfo;
+		
 		grid_container = GetNode<GridContainer>("Panel/ScrollContainer/GridContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    
+
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
-		GetNode<Area2D>("CursorArea2D").Position = GetTree().Root.GetMousePosition();
-		if(hover_over_button != null)
+		if(this.Visible)
 		{
-			if(!clicked_on)
+			GetNode<Area2D>("CursorArea2D").Position = GetTree().Root.GetMousePosition();
+			if(hover_over_button != null)
 			{
-				if(Input.IsActionJustPressed("Interact"))
+
+				if(!clicked_on)
 				{
-					hover_over_button.InventoryButtonPressed();
+					if(Input.IsActionJustPressed("Interact"))
+					{
+						hover_over_button.InventoryButtonPressed();
+						if(hover_over_button.inventory_item.type_of_item == "generic")
+						{
+							_customSignals.EmitSignal(nameof(CustomSignals.ItemInfo), hover_over_button.inventory_item);
+						}
+						if(hover_over_button.inventory_item.type_of_item == "consumable")
+						{
+							_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (Consumable)hover_over_button.inventory_item);
+						}
+						if(hover_over_button.inventory_item.type_of_item == "equipable")
+						{
+							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)hover_over_button.inventory_item);
+						}
+					}
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
+					{
+						clicked_on = true;
+						grabbed_object = hover_over_button;
+						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
+						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+						button.Visible = true;
+						button.UpdateItem(grabbed_object.inventory_item, 0);
+					}
 				}
-				if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
+				else
 				{
-					clicked_on = true;
-					grabbed_object = hover_over_button;
-					last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
-					InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
-					button.Visible = true;
-					button.UpdateItem(grabbed_object.inventory_item, 0);
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
+					{
+						if(over_trash)
+						{
+							clicked_on = false;
+							DeleteItem(grabbed_object);
+							InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+							button.Visible = false;
+							GD.Print("trashed");
+							
+						}
+						else
+						{
+							clicked_on = false;
+							// SwapButtons(grabbed_object, hover_over_button);
+							InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+							button.Visible = false;
+						}
+					
+					}
+					
 				}
 			}
-			else
+			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_trash)
 			{
-				if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
-				{
-					if(over_trash)
-					{
-						clicked_on = false;
-						DeleteItem(grabbed_object);
-						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
-						button.Visible = false;
-						GD.Print("trashed");
-						
-					}
-					else
-					{
-						clicked_on = false;
-						// SwapButtons(grabbed_object, hover_over_button);
-						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
-						button.Visible = false;
-					}
-				
-				}
-				
+				clicked_on = false;
+				DeleteItem(grabbed_object);
 			}
-		}
-		if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_trash)
-		{
-			clicked_on = false;
-			DeleteItem(grabbed_object);
 		}
 	}
 
@@ -134,7 +161,7 @@ public partial class Inventory : CanvasLayer
 		}
 		if(current_item.quantity > 0)
 		{
-			if(current_item.quantity < current_item.stack_size)
+			if(current_item.quantity < current_item.stack_size || !current_item.is_stackable)
 			{
 				items.Add(current_item);
 				UpdateButton(items.Count - 1);
@@ -233,12 +260,12 @@ public partial class Inventory : CanvasLayer
 
 	public void _on_add_button_button_down()
 	{
-		Add(ResourceLoader.Load<Item>("res://TestItem.tres"));
+		Add(ResourceLoader.Load<Item>("res://resources/armor.tres"));
 	}
 
 	public void _on_remove_button_button_down()
 	{
-		Remove(ResourceLoader.Load<Item>("res://TestItem.tres"));
+		Remove(ResourceLoader.Load<Item>("res://resources/armor.tres"));
 	}
 
 	public void _on_cursor_area_2d_area_entered(Area2D area)
@@ -248,13 +275,11 @@ public partial class Inventory : CanvasLayer
 		{
 			hover_over_button = (InventoryButton)button;
 			hover_over_button.GrabFocus();
-			GD.Print("type " + button.GetType());
 		}
 		else if (button is Button)
 		{
 			hover_over_button_non_inventory = (Button)button;
 			hover_over_button_non_inventory.GrabFocus();
-			GD.Print("type " + button.GetType());
 		}
 		
 	}
@@ -291,22 +316,25 @@ public partial class Inventory : CanvasLayer
 	{
 		over_trash = false;
 	}
-
-	// public void _on_non_InventoryButton_2d_area_entered(Area2D area)
-	// {
-		
-	// 	InventoryButton button = area.GetParent<InventoryButton>();
-	// 	GD.Print("type " + button.GetType());
-	// 	button.GrabFocus();
-	// }
-
 	public void _on_add_button_2_button_down()
 	{
-		Add(ResourceLoader.Load<Item>("res://HealthPotion.tres"));
+		Add(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
 	}
 
 	public void _on_remove_button_2_button_down()
 	{
-		Remove(ResourceLoader.Load<Item>("res://HealthPotion.tres"));
+		Remove(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
 	}
+
+	public void _on_remove_equiped_button_down()
+	{
+		GD.Print("button down");
+		_customSignals.EmitSignal(nameof(CustomSignals.RemoveEquipped));
+	}
+
+	private void HandlePlayerInfo(player player)
+    {
+        this_player = player;
+    }
+
 }

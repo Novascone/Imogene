@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://5vccqvn34ool"]
+
+[ext_resource type="Script" path="res://scripts/UI/Inventory/Item.cs" id="1_05vty"]
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="1_pe737"]
+
+[resource]
+script = ExtResource("1_05vty")
+id = 0
+name = "TestItem"
+resource_path = "res://TestItem.tres"
+icon = ExtResource("1_pe737")
+quantity = 3
+stack_size = 5
+is_stackable = true

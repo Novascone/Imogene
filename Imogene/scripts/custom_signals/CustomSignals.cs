@@ -25,6 +25,18 @@ public partial class CustomSignals : Node
 	public delegate void UIResourceUpdateEventHandler(int amount);
 	[Signal]
 	public delegate void InteractEventHandler(Area3D area, bool in_interact_area);
+	[Signal]
+	public delegate void ItemInfoEventHandler(Item item);
+	[Signal]
+	public delegate void ConsumableInfoEventHandler(Consumable item);
+	[Signal]
+	public delegate void EquipableInfoEventHandler(Equipable item);
+	[Signal]
+	public delegate void PlayerInfoEventHandler(player player);
+	[Signal]
+	public delegate void RemoveEquippedEventHandler();
+	[Signal]
+	public delegate void InteractPressedEventHandler(bool in_area);
 
 
 }

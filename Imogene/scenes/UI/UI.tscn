@@ -1,0 +1,477 @@
+[gd_scene load_steps=12 format=3 uid="uid://dc1t0efid7178"]
+
+[ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_3nu6p"]
+[ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="1_dxojw"]
+[ext_resource type="Texture2D" uid="uid://41j8hcapqs2h" path="res://images/UI/ability_ui_ref.png" id="2_bvtxq"]
+[ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="3_rfduv"]
+[ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="5_m8nhp"]
+[ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="6_s75rp"]
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="7_hvwf0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5o7p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tuew"]
+size = Vector2(40, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruyan"]
+size = Vector2(113.25, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
+radius = 3.0
+
+[node name="UserInterface" type="CanvasLayer"]
+script = ExtResource("1_3nu6p")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="BottomHUD" type="HBoxContainer" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -606.0
+offset_top = -230.0
+offset_right = 606.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -1
+
+[node name="PanelHealthContainer" type="PanelContainer" parent="HUD/BottomHUD"]
+custom_minimum_size = Vector2(415, 190)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Health_Art"
+
+[node name="HealthContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelHealthContainer"]
+show_behind_parent = true
+layout_mode = 2
+theme_type_variation = &"Health_and_Resource"
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HealthIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
+show_behind_parent = true
+layout_mode = 2
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("1_dxojw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="PanelContainer2" type="PanelContainer" parent="HUD/BottomHUD/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BlackBorder"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Ability1Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   A   "
+
+[node name="Ability2Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   B   "
+
+[node name="Ability3Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   X   "
+
+[node name="Ability4Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   Y   "
+
+[node name="Ability5Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " RB  "
+
+[node name="Ability6Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "  LB "
+
+[node name="Ability7Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   RT"
+
+[node name="Ability8Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
+layout_mode = 2
+texture = ExtResource("2_bvtxq")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   LT "
+
+[node name="PanelResourceContainer" type="PanelContainer" parent="HUD/BottomHUD"]
+custom_minimum_size = Vector2(415, 190)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Resource_Art"
+
+[node name="ResourceContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelResourceContainer"]
+show_behind_parent = true
+layout_mode = 2
+theme_type_variation = &"Health_and_Resource"
+
+[node name="ResourceIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 3
+fill_mode = 3
+texture_progress = ExtResource("3_rfduv")
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+visible = false
+offset_right = 1054.0
+offset_bottom = 1667.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Quest
+"
+horizontal_alignment = 1
+
+[node name="Text" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+text = "
+
+Nostrum aspernatur quod ad et. Possimus ut eum tenetur. Reprehenderit incidunt reprehenderit molestias ipsam voluptatem. Accusantium id aut enim commodi. Blanditiis vitae dolorum cumque delectus quos minus placeat perspiciatis. Assumenda modi distinctio praesentium excepturi.
+
+Aliquid saepe quod voluptate. Perferendis quasi provident impedit earum eius. Eligendi quis ea sint aut eveniet. Nulla iusto dolor quae officia harum ea.
+
+Deserunt cum fuga debitis officiis iure quis provident. Voluptas est nisi distinctio. Qui sunt in beatae molestiae doloribus adipisci soluta nobis. Distinctio fugit unde voluptatum dignissimos distinctio sit.
+
+Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neque quam exercitationem itaque enim doloribus adipisci. Et distinctio at repellat quo.
+
+"
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Decline" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Decline
+"
+
+[node name="Accept" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept
+"
+
+[node name="Spacer2" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InteractBar" type="PanelContainer" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 310.0
+offset_right = 100.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/InteractBar"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Press" type="Label" parent="HUD/InteractBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.0
+text = "Y: "
+horizontal_alignment = 1
+
+[node name="Object" type="Label" parent="HUD/InteractBar/HBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+text = " Interact"
+horizontal_alignment = 1
+
+[node name="Inventory" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("5_m8nhp")
+
+[node name="Panel" type="Panel" parent="Inventory"]
+offset_left = 1373.0
+offset_top = 355.0
+offset_right = 1662.0
+offset_bottom = 627.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d5o7p")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.5
+offset_top = -135.0
+offset_right = 30.5
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/Panel/ScrollContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="Trash" type="Button" parent="Inventory/Panel"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 3.0
+offset_right = 287.0
+offset_bottom = 47.0
+
+[node name="TrashArea2D" type="Area2D" parent="Inventory/Panel/Trash"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/Panel/Trash/TrashArea2D"]
+position = Vector2(24, 21)
+shape = SubResource("RectangleShape2D_5tuew")
+
+[node name="AddButton" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -44.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Add Item
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/AddButton"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/AddButton/ButtonArea2D"]
+position = Vector2(64.5, 19.75)
+shape = SubResource("RectangleShape2D_ruyan")
+
+[node name="RemoveButton" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -262.0
+offset_top = -45.0
+offset_right = -134.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Item
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveButton"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveButton/ButtonArea2D"]
+position = Vector2(70.5, 19.75)
+shape = SubResource("RectangleShape2D_ruyan")
+
+[node name="AddButton2" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = -90.0
+offset_right = -10.0
+offset_bottom = -49.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Add Item2
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/AddButton2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/AddButton2/ButtonArea2D"]
+position = Vector2(64.5, 19.75)
+shape = SubResource("RectangleShape2D_ruyan")
+
+[node name="RemoveButton2" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -348.0
+offset_top = -89.0
+offset_right = -158.0
+offset_bottom = -48.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Item2
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveButton2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveButton2/ButtonArea2D"]
+position = Vector2(64.5, 19.75)
+shape = SubResource("RectangleShape2D_ruyan")
+
+[node name="RemoveEquiped" type="Button" parent="Inventory"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -510.0
+offset_top = -433.0
+offset_right = -292.0
+offset_bottom = -392.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Equiped
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveEquiped"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveEquiped/ButtonArea2D"]
+position = Vector2(64.5, 19.75)
+shape = SubResource("RectangleShape2D_ruyan")
+
+[node name="CursorArea2D" type="Area2D" parent="Inventory"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CursorArea2D"]
+shape = SubResource("CircleShape2D_rtd4h")
+
+[node name="InventoryButton" parent="Inventory/CursorArea2D" instance=ExtResource("6_s75rp")]
+visible = false
+
+[node name="Cursor" type="Sprite2D" parent="Inventory"]
+top_level = true
+position = Vector2(1328, 391)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("7_hvwf0")
+
+[connection signal="area_entered" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
+[connection signal="button_down" from="Inventory/AddButton" to="Inventory" method="_on_add_button_button_down"]
+[connection signal="button_down" from="Inventory/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
+[connection signal="button_down" from="Inventory/AddButton2" to="Inventory" method="_on_add_button_2_button_down"]
+[connection signal="button_down" from="Inventory/RemoveButton2" to="Inventory" method="_on_remove_button_2_button_down"]
+[connection signal="button_down" from="Inventory/RemoveEquiped" to="Inventory" method="_on_remove_equiped_button_down"]
+[connection signal="area_entered" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_exited"]
