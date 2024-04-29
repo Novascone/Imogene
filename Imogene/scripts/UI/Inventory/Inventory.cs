@@ -106,9 +106,14 @@ public partial class Inventory : CanvasLayer
 						else
 						{
 							clicked_on = false;
-							// SwapButtons(grabbed_object, hover_over_button);
 							InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
 							button.Visible = false;
+							if(grabbed_object != null && hover_over_button != null)
+							{
+								SwapButtons(grabbed_object, hover_over_button);
+							}
+							
+							
 						}
 					
 					}

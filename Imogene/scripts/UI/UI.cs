@@ -68,7 +68,7 @@ public partial class UI : CanvasLayer
 			}
 			inventory.character_inventory.Visible = !inventory.character_inventory.Visible;
 			inventory.cursor.Visible = !inventory.cursor.Visible;
-			// inventory.cursor_area.Visible = !inventory.cursor_area.Visible;
+			inventory.cursor_area.Visible = !inventory.cursor_area.Visible;
 			// if(inventory.Visible)
 			// {
 			// 	Input.MouseMode = Input.MouseModeEnum.Visible;
