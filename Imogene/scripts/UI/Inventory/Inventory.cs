@@ -26,16 +26,28 @@ public partial class Inventory : CanvasLayer
 	private CustomSignals _customSignals; // Instance of CustomSignals
 
 	private player this_player;
+
+	public Panel character_inventory;
+	public Panel interact_inventory;
+
+	public Sprite2D cursor;
+	public Area2D cursor_area;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
+		_customSignals.InteractPressed += HandleInteractPressed;
 		
-		grid_container = GetNode<GridContainer>("Panel/ScrollContainer/GridContainer");
+		grid_container = GetNode<GridContainer>("CharacterInventory/ScrollContainer/GridContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
+
+		character_inventory = GetNode<Panel>("CharacterInventory");
+		interact_inventory = GetNode<Panel>("InteractInventory");
+		cursor_area = GetNode<Area2D>("CursorArea2D");
+		cursor = GetNode<Sprite2D>("Cursor");
 	}
 
     
@@ -44,7 +56,7 @@ public partial class Inventory : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		if(this.Visible)
+		if(character_inventory.Visible)
 		{
 			GetNode<Area2D>("CursorArea2D").Position = GetTree().Root.GetMousePosition();
 			if(hover_over_button != null)
@@ -52,7 +64,7 @@ public partial class Inventory : CanvasLayer
 
 				if(!clicked_on)
 				{
-					if(Input.IsActionJustPressed("Interact"))
+					if(Input.IsActionJustPressed("Interact") && hover_over_button is InventoryButton)
 					{
 						hover_over_button.InventoryButtonPressed();
 						if(hover_over_button.inventory_item.type_of_item == "generic")
@@ -335,6 +347,22 @@ public partial class Inventory : CanvasLayer
 	private void HandlePlayerInfo(player player)
     {
         this_player = player;
+    }
+
+	private void HandleInteractPressed(bool in_area)
+    {
+        if(!interact_inventory.Visible)
+		{
+			interact_inventory.Visible = true;
+		}
+		else
+		{
+			interact_inventory.Visible = false;
+		}
+		if(!in_area)
+		{
+			interact_inventory.Visible = false;
+		}
     }
 
 }

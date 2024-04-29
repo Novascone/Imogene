@@ -117,11 +117,7 @@ public partial class player : Entity
 		
 	}
 
-    private void HandleRemoveEquipped()
-    {
-		GD.Print("remove equipped");
-        head_slot.RemoveChild(main_node);
-    }
+  
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -415,6 +411,7 @@ public partial class player : Entity
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
 
+
 	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
 	{
 			DamageAmount += damage;
@@ -447,10 +444,13 @@ public partial class player : Entity
         GD.Print(item.heal_amount);
     }
 
-    private void HandleItemInfo(Item item)
+	  private void HandleRemoveEquipped()
     {
-		
+		GD.Print("remove equipped");
+        head_slot.RemoveChild(main_node);
     }
+
+    private void HandleItemInfo(Item item){}
 
 
 	private void HandlePlayerPosition(Vector3 position){} // Sends player position to enemy

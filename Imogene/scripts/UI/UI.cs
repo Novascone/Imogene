@@ -38,6 +38,7 @@ public partial class UI : CanvasLayer
 		_customSignals.UIHealth += HandleUIHealth;
 		_customSignals.UIResource += HandleUIResource;
 		_customSignals.Interact += HandleInteract;
+		
 	}
 
     
@@ -65,7 +66,9 @@ public partial class UI : CanvasLayer
 			{
 				inventory_open = false;
 			}
-			inventory.Visible = !inventory.Visible;
+			inventory.character_inventory.Visible = !inventory.character_inventory.Visible;
+			inventory.cursor.Visible = !inventory.cursor.Visible;
+			// inventory.cursor_area.Visible = !inventory.cursor_area.Visible;
 			// if(inventory.Visible)
 			// {
 			// 	Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -155,6 +158,8 @@ public partial class UI : CanvasLayer
 		
         
     }
+
+	
     private void HandleUIHealth(int amount)
     {
 		health = amount;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dc1t0efid7178"]
+[gd_scene load_steps=17 format=3 uid="uid://dc1t0efid7178"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_3nu6p"]
 [ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="1_dxojw"]
@@ -8,13 +8,28 @@
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="6_s75rp"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="7_hvwf0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5o7p"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5tuew"]
 size = Vector2(40, 38)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruyan"]
-size = Vector2(113.25, 28)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_434df"]
+size = Vector2(119, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug3x5"]
+size = Vector2(171, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_avlmy"]
+size = Vector2(133, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ce8i6"]
+size = Vector2(179, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feh3g"]
+size = Vector2(212, 31)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhvmu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywhi5"]
+size = Vector2(40, 38)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
@@ -306,17 +321,157 @@ text = " Interact"
 horizontal_alignment = 1
 
 [node name="Inventory" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("5_m8nhp")
 
-[node name="Panel" type="Panel" parent="Inventory"]
-offset_left = 1373.0
-offset_top = 355.0
-offset_right = 1662.0
-offset_bottom = 627.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d5o7p")
+[node name="CharacterInventory" type="Panel" parent="Inventory"]
+visible = false
+offset_left = 1468.0
+offset_top = 419.0
+offset_right = 1778.0
+offset_bottom = 734.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+offset_right = 236.0
+offset_bottom = 267.0
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/CharacterInventory/ScrollContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="Trash" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_bottom = 44.0
+grow_horizontal = 0
+
+[node name="TrashArea2D" type="Area2D" parent="Inventory/CharacterInventory/Trash"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/Trash/TrashArea2D"]
+position = Vector2(24, 21)
+shape = SubResource("RectangleShape2D_5tuew")
+
+[node name="AddButton" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -13.0
+offset_top = 290.0
+offset_right = 115.0
+offset_bottom = 331.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Add Item
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventory/AddButton"]
+
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/AddButton/ButtonArea2D"]
+position = Vector2(64.5, 21)
+shape = SubResource("RectangleShape2D_434df")
+
+[node name="RemoveButton" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = 286.0
+offset_right = -43.0
+offset_bottom = 327.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Item
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventory/RemoveButton"]
+
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/RemoveButton/ButtonArea2D"]
+position = Vector2(88.5, 21)
+shape = SubResource("RectangleShape2D_ug3x5")
+
+[node name="AddButton2" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -13.0
+offset_top = 223.0
+offset_right = 128.0
+offset_bottom = 264.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Add Item2
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventory/AddButton2"]
+
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/AddButton2/ButtonArea2D"]
+position = Vector2(70.5, 20.5)
+shape = SubResource("RectangleShape2D_avlmy")
+
+[node name="RemoveButton2" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -238.0
+offset_top = 222.0
+offset_right = -48.0
+offset_bottom = 263.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Remove Item2
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventory/RemoveButton2"]
+
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/RemoveButton2/ButtonArea2D"]
+position = Vector2(96, 20)
+shape = SubResource("RectangleShape2D_ce8i6")
+
+[node name="RemoveEquiped" type="Button" parent="Inventory/CharacterInventory"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -109.0
+offset_top = -41.0
+offset_right = 109.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Remove Equiped
+"
+
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventory/RemoveEquiped"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventory/RemoveEquiped/ButtonArea2D"]
+position = Vector2(109, 20.5)
+shape = SubResource("RectangleShape2D_feh3g")
+
+[node name="InteractInventory" type="Panel" parent="Inventory"]
+visible = false
+offset_left = 352.0
+offset_top = 152.0
+offset_right = 641.0
+offset_bottom = 424.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhvmu")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/InteractInventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -330,129 +485,25 @@ offset_bottom = 132.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="Inventory/Panel/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Inventory/InteractInventory/ScrollContainer"]
 layout_mode = 2
 columns = 4
 
-[node name="Trash" type="Button" parent="Inventory/Panel"]
+[node name="Trash" type="Button" parent="Inventory/InteractInventory"]
 layout_mode = 0
 offset_left = 239.0
 offset_top = 3.0
 offset_right = 287.0
 offset_bottom = 47.0
 
-[node name="TrashArea2D" type="Area2D" parent="Inventory/Panel/Trash"]
+[node name="TrashArea2D" type="Area2D" parent="Inventory/InteractInventory/Trash"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/Panel/Trash/TrashArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/InteractInventory/Trash/TrashArea2D"]
 position = Vector2(24, 21)
-shape = SubResource("RectangleShape2D_5tuew")
-
-[node name="AddButton" type="Button" parent="Inventory"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -131.0
-offset_top = -44.0
-offset_right = -3.0
-offset_bottom = -3.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Add Item
-"
-
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/AddButton"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/AddButton/ButtonArea2D"]
-position = Vector2(64.5, 19.75)
-shape = SubResource("RectangleShape2D_ruyan")
-
-[node name="RemoveButton" type="Button" parent="Inventory"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -262.0
-offset_top = -45.0
-offset_right = -134.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Remove Item
-"
-
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveButton"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveButton/ButtonArea2D"]
-position = Vector2(70.5, 19.75)
-shape = SubResource("RectangleShape2D_ruyan")
-
-[node name="AddButton2" type="Button" parent="Inventory"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -151.0
-offset_top = -90.0
-offset_right = -10.0
-offset_bottom = -49.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Add Item2
-"
-
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/AddButton2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/AddButton2/ButtonArea2D"]
-position = Vector2(64.5, 19.75)
-shape = SubResource("RectangleShape2D_ruyan")
-
-[node name="RemoveButton2" type="Button" parent="Inventory"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -348.0
-offset_top = -89.0
-offset_right = -158.0
-offset_bottom = -48.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Remove Item2
-"
-
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveButton2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveButton2/ButtonArea2D"]
-position = Vector2(64.5, 19.75)
-shape = SubResource("RectangleShape2D_ruyan")
-
-[node name="RemoveEquiped" type="Button" parent="Inventory"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -510.0
-offset_top = -433.0
-offset_right = -292.0
-offset_bottom = -392.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Remove Equiped
-"
-
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/RemoveEquiped"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/RemoveEquiped/ButtonArea2D"]
-position = Vector2(64.5, 19.75)
-shape = SubResource("RectangleShape2D_ruyan")
+shape = SubResource("RectangleShape2D_ywhi5")
 
 [node name="CursorArea2D" type="Area2D" parent="Inventory"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CursorArea2D"]
 shape = SubResource("CircleShape2D_rtd4h")
@@ -461,17 +512,18 @@ shape = SubResource("CircleShape2D_rtd4h")
 visible = false
 
 [node name="Cursor" type="Sprite2D" parent="Inventory"]
+visible = false
 top_level = true
-position = Vector2(1328, 391)
+position = Vector2(1256, 404)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("7_hvwf0")
 
-[connection signal="area_entered" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
-[connection signal="area_exited" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
-[connection signal="button_down" from="Inventory/AddButton" to="Inventory" method="_on_add_button_button_down"]
-[connection signal="button_down" from="Inventory/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
-[connection signal="button_down" from="Inventory/AddButton2" to="Inventory" method="_on_add_button_2_button_down"]
-[connection signal="button_down" from="Inventory/RemoveButton2" to="Inventory" method="_on_remove_button_2_button_down"]
-[connection signal="button_down" from="Inventory/RemoveEquiped" to="Inventory" method="_on_remove_equiped_button_down"]
+[connection signal="area_entered" from="Inventory/CharacterInventory/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventory/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
+[connection signal="button_down" from="Inventory/CharacterInventory/AddButton" to="Inventory" method="_on_add_button_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventory/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventory/AddButton2" to="Inventory" method="_on_add_button_2_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventory/RemoveButton2" to="Inventory" method="_on_remove_button_2_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventory/RemoveEquiped" to="Inventory" method="_on_remove_equiped_button_down"]
 [connection signal="area_entered" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_entered"]
 [connection signal="area_exited" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_exited"]

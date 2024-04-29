@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://b02njwvptdrdb"]
+[gd_scene load_steps=7 format=3 uid="uid://b02njwvptdrdb"]
 
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="1_87ipv"]
-[ext_resource type="Script" path="res://scripts/UI/Inventory/ChestInventory.cs" id="2_aqlbd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1h8ub"]
 
@@ -21,11 +20,6 @@ albedo_color = Color(0, 1, 1, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_46hos"]
 radius = 2.3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjjo8"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rh7qn"]
-size = Vector2(40, 38)
-
 [node name="Box" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
@@ -40,48 +34,3 @@ surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
 shape = SubResource("CylinderShape3D_46hos")
-
-[node name="Inventory" type="CanvasLayer" parent="."]
-visible = false
-script = ExtResource("2_aqlbd")
-
-[node name="Panel" type="Panel" parent="Inventory"]
-offset_left = 352.0
-offset_top = 152.0
-offset_right = 641.0
-offset_bottom = 424.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_wjjo8")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -140.5
-offset_top = -135.0
-offset_right = 30.5
-offset_bottom = 132.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="Inventory/Panel/ScrollContainer"]
-layout_mode = 2
-columns = 4
-
-[node name="Trash" type="Button" parent="Inventory/Panel"]
-layout_mode = 0
-offset_left = 239.0
-offset_top = 3.0
-offset_right = 287.0
-offset_bottom = 47.0
-
-[node name="TrashArea2D" type="Area2D" parent="Inventory/Panel/Trash"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/Panel/Trash/TrashArea2D"]
-position = Vector2(24, 21)
-shape = SubResource("RectangleShape2D_rh7qn")
-
-[connection signal="area_entered" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
-[connection signal="area_exited" from="Inventory/Panel/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
