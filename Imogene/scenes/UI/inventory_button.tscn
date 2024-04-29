@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryButton.cs" id="1_jestg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pngt"]
-size = Vector2(36, 36)
+size = Vector2(34.0625, 34.0469)
 
 [node name="InventoryButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)
@@ -38,5 +38,5 @@ vertical_alignment = 2
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(20, 20)
+position = Vector2(19.9688, 20)
 shape = SubResource("RectangleShape2D_1pngt")

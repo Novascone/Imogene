@@ -6,12 +6,12 @@ using System.Linq;
 public partial class Inventory : CanvasLayer
 {
 
-	private GridContainer grid_container;
+	private GridContainer item_grid_container;
 	private PackedScene  inventory_button;
 	[Export]
 	private string item_button_path = "res://scenes/UI/inventory_button.tscn";
 	[Export]
-	public int inventory_size { get; set; } = 24;
+	public int inventory_size { get; set; } = 70;
 	private Vector2 last_cursor_clicked_pos;
 
 	public InventoryButton grabbed_object { get; set; }
@@ -27,7 +27,7 @@ public partial class Inventory : CanvasLayer
 
 	private player this_player;
 
-	public Panel character_inventory;
+	public PanelContainer character_inventory;
 	public Panel interact_inventory;
 
 	public Sprite2D cursor;
@@ -40,11 +40,11 @@ public partial class Inventory : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.InteractPressed += HandleInteractPressed;
 		
-		grid_container = GetNode<GridContainer>("CharacterInventory/ScrollContainer/GridContainer");
+		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxItems/ItemGridContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 
-		character_inventory = GetNode<Panel>("CharacterInventory");
+		character_inventory = GetNode<PanelContainer>("CharacterInventoryContainer");
 		interact_inventory = GetNode<Panel>("InteractInventory");
 		cursor_area = GetNode<Area2D>("CursorArea2D");
 		cursor = GetNode<Sprite2D>("Cursor");
@@ -132,8 +132,8 @@ public partial class Inventory : CanvasLayer
 	{
 		int button1_index = button1.GetIndex();
 		int button2_index = button2.GetIndex();
-		grid_container.MoveChild(button1, button2_index);
-		grid_container.MoveChild(hover_over_button, button1_index);
+		item_grid_container.MoveChild(button1, button2_index);
+		item_grid_container.MoveChild(hover_over_button, button1_index);
 	}
 
 	public void DeleteItem(InventoryButton inventory_button)
@@ -149,7 +149,7 @@ public partial class Inventory : CanvasLayer
 		for (int i = 0; i < inventory_size; i++)
 		{
 			InventoryButton current_inventory_button = inventory_button.Instantiate<InventoryButton>();
-			grid_container.AddChild(current_inventory_button);
+			item_grid_container.AddChild(current_inventory_button);
 		}
 	}
 
@@ -266,11 +266,11 @@ public partial class Inventory : CanvasLayer
 	{
 		if(items.ElementAtOrDefault(index) != null)
 		{
-			grid_container.GetChild<InventoryButton>(index).UpdateItem(items[index], index);
+			item_grid_container.GetChild<InventoryButton>(index).UpdateItem(items[index], index);
 		}
 		else
 		{
-			grid_container.GetChild<InventoryButton>(index).UpdateItem(null, index);
+			item_grid_container.GetChild<InventoryButton>(index).UpdateItem(null, index);
 		}
 		
 	}

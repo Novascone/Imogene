@@ -224,7 +224,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
-visible = false
 offset_right = 1054.0
 offset_bottom = 672.0
 

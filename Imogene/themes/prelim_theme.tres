@@ -26,3 +26,5 @@ Label/font_sizes/font_size = 24
 Label/fonts/font = ExtResource("1_njuau")
 Resource_Art/base_type = &"PanelContainer"
 Resource_Art/styles/panel = SubResource("StyleBoxTexture_gn1x7")
+StatsButton/base_type = &"Button"
+StatsButton/font_sizes/font_size = 24
