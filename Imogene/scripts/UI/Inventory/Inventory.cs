@@ -22,7 +22,19 @@ public partial class Inventory : CanvasLayer
 
 	private bool clicked_on;
 	private bool over_trash;
-	
+	private bool over_head;
+	private bool over_shoulders;
+	private bool over_neck;
+	private bool over_chest;
+	private bool over_gloves;
+	private bool over_bracers;
+	private bool over_belt;
+	private bool over_ring1;
+	private bool over_ring2;
+	private bool over_main;
+	private bool over_off;
+	private bool over_pants;
+	private bool over_boots;
 	private CustomSignals _customSignals; // Instance of CustomSignals
 
 	private player this_player;
@@ -40,7 +52,7 @@ public partial class Inventory : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.InteractPressed += HandleInteractPressed;
 		
-		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxItems/ItemGridContainer");
+		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxItems/ItemGridContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 
@@ -124,6 +136,19 @@ public partial class Inventory : CanvasLayer
 			{
 				clicked_on = false;
 				DeleteItem(grabbed_object);
+			}
+			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_head)
+			{
+				if(grabbed_object.inventory_item.type_of_item == "equipable")
+				{
+					clicked_on = false;
+					InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+					button.Visible = false;
+					GD.Print("clicked over head");
+					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)grabbed_object.inventory_item);
+			
+				}
+				
 			}
 		}
 	}
@@ -324,6 +349,148 @@ public partial class Inventory : CanvasLayer
 		
 	}
 
+	public void _on_head_area_2d_area_entered(Area2D area)
+	{
+		over_head = true;
+		GD.Print("over head");
+	}
+
+	public void _on_head_area_2d_area_exited(Area2D area)
+	{
+		over_head = false;
+	}
+
+	public void _on_shoulder_area_2d_area_entered(Area2D area)
+	{
+		over_shoulders = true;
+		GD.Print("over shoulders");
+	}
+
+	public void _on_shoulder_area_2d_area_exited(Area2D area)
+	{
+		over_shoulders = false;
+	}
+
+	public void _on_neck_area_2d_area_entered(Area2D area)
+	{
+		over_neck = true;
+		GD.Print("over neck");
+	}
+
+	public void _on_neck_area_2d_area_exited(Area2D area)
+	{
+		over_neck = false;
+	}
+
+	public void _on_chest_area_2d_area_entered(Area2D area)
+	{
+		over_chest = true;
+		GD.Print("over chest");
+	}
+
+	public void _on_chest_area_2d_area_exited(Area2D area)
+	{
+		over_chest = false;
+	}
+
+	public void _on_glove_area_2d_area_entered(Area2D area)
+	{
+		over_gloves = true;
+		GD.Print("over gloves");
+	}
+
+	public void _on_glove_area_2d_area_exited(Area2D area)
+	{
+		over_gloves = false;
+	}
+
+	public void _on_bracer_area_2d_area_entered(Area2D area)
+	{
+		over_bracers = true;
+		GD.Print("over bracers");
+	}
+
+	public void _on_bracer_area_2d_area_exited(Area2D area)
+	{
+		over_bracers = false;
+	}
+
+	public void _on_belt_area_2d_area_entered(Area2D area)
+	{
+		over_belt = true;
+		GD.Print("over belt");
+	}
+
+	public void _on_belt_area_2d_area_exited(Area2D area)
+	{
+		over_belt = false;
+	}
+
+	public void _on_ring1_area_2d_area_entered(Area2D area)
+	{
+		over_ring1 = true;
+		GD.Print("over ring1");
+	}
+
+	public void _on_ring1_area_2d_area_exited(Area2D area)
+	{
+		over_ring1 = false;
+	}
+
+	public void _on_ring2_area_2d_area_entered(Area2D area)
+	{
+		over_ring2 = true;
+		GD.Print("over ring2");
+	}
+
+	public void _on_ring2_area_2d_area_exited(Area2D area)
+	{
+		over_ring2 = false;
+	}
+
+	public void _on_mainhand_area_2d_area_entered(Area2D area)
+	{
+		over_main = true;
+		GD.Print("over main hand");
+	}
+
+	public void _on_mainhand_area_2d_area_exited(Area2D area)
+	{
+		over_main = false;
+	}
+
+	public void _on_offhand_area_2d_area_entered(Area2D area)
+	{
+		over_off = true;
+		GD.Print("over off hand");
+	}
+
+	public void _on_offhand_area_2d_area_exited(Area2D area)
+	{
+		over_off = false;
+	}
+
+	public void _on_pants_area_2d_area_entered(Area2D area)
+	{
+		over_pants = true;
+		GD.Print("over pants");
+	}
+
+	public void _on_pants_area_2d_area_exited(Area2D area)
+	{
+		over_pants = false;
+	}
+
+	public void _on_boots_area_2d_area_entered(Area2D area)
+	{
+		over_boots = true;
+		GD.Print("over boots");
+	}
+
+	public void _on_boots_area_2d_area_exited(Area2D area)
+	{
+		over_boots = false;
+	}
 	public void _on_trash_area_2d_area_entered(Area2D area)
 	{	
 		over_trash = true;
@@ -333,6 +500,8 @@ public partial class Inventory : CanvasLayer
 	{
 		over_trash = false;
 	}
+
+
 	public void _on_add_button_2_button_down()
 	{
 		Add(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));

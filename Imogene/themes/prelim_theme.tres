@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://b6v4kp5k26en1"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://b6v4kp5k26en1"]
 
 [ext_resource type="FontFile" uid="uid://caothdc5usm0v" path="res://fonts/EBGaramond08-Regular.ttf" id="1_njuau"]
 [ext_resource type="Texture2D" uid="uid://d0ba7an85loqj" path="res://images/UI/Health_Orb.png" id="2_l06t6"]
@@ -7,6 +7,8 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_651tm"]
 texture = ExtResource("3_v328a")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqh5a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nnuxl"]
 texture = ExtResource("2_l06t6")
@@ -19,6 +21,9 @@ BlackBorder/base_type = &"PanelContainer"
 BlackBorder/styles/panel = SubResource("StyleBoxTexture_651tm")
 Button/font_sizes/font_size = 32
 Button/fonts/font = ExtResource("1_njuau")
+EmptyHBox/base_type = &"HBoxContainer"
+EmptyPanelContainer/base_type = &"PanelContainer"
+EmptyPanelContainer/styles/panel = SubResource("StyleBoxEmpty_jqh5a")
 HeaderLarge/font_sizes/font_size = 48
 Health_Art/base_type = &"PanelContainer"
 Health_Art/styles/panel = SubResource("StyleBoxTexture_nnuxl")

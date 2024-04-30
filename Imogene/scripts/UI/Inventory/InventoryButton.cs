@@ -4,8 +4,8 @@ using System;
 public partial class InventoryButton : Button
 {
 	public Item inventory_item;
-	private TextureRect icon;
-	private Label quantity_label;
+	public TextureRect icon;
+	public Label quantity_label;
 	private int index;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

@@ -86,19 +86,19 @@ size = Vector2(292, 35)
 size = Vector2(118, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4j6u"]
-size = Vector2(115, 147)
+size = Vector2(106, 136)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5okca"]
-size = Vector2(116, 146)
+size = Vector2(108, 139)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xu3me"]
-size = Vector2(115, 147)
+size = Vector2(105.5, 140.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5adj"]
-size = Vector2(115, 145)
+size = Vector2(107, 139.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f0wiy"]
-size = Vector2(121, 146)
+size = Vector2(107, 141)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_434df"]
 size = Vector2(119, 32)
@@ -441,29 +441,363 @@ visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -640.0
+offset_left = -963.0
 offset_bottom = 1080.0
 grow_horizontal = 0
+size_flags_horizontal = 0
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 2.58
+
+[node name="CharacterSheet" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CharacterInventory" type="Panel" parent="Inventory/CharacterInventoryContainer"]
+[node name="Title" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 4.5
+size_flags_stretch_ratio = 0.15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/Title"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.5
+offset_top = -12.5
+offset_right = 48.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stats Sheet
+"
+
+[node name="StatsSheet" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet"]
+visible = false
 layout_mode = 2
-offset_left = 1.0
-offset_right = 637.0
-offset_bottom = 1077.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.85
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet"]
+layout_mode = 2
+
+[node name="Offense" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Offense"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Offense"
+
+[node name="AttackPower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/AttackPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/AttackPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Attack Power"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/AttackPower"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/AttackPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="SpellPower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/SpellPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/SpellPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Spell Power"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/SpellPower"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/SpellPower"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Hit" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Hit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Hit"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hit"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Hit"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Hit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="CriticalChance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalChance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalChance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Critical Chance"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalChance"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalChance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="CriticalDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalDamage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalDamage"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Critical Damage"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalDamage"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/CriticalDamage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Cooldown" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Cooldown"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Cooldown"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cooldown"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Cooldown"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Cooldown"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Posture Damage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Posture Damage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Posture Damage"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Posture Damage"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Posture Damage"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Posture Damage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Defense" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Defense"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Defense
+"
+
+[node name="Health" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Health"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Health"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Armor" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Armor"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Armor"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Armor"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Armor"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Armor"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Resistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Resistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Resistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resistance"
+
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Resistance"]
+layout_mode = 2
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Resistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Specials" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterSheet/StatsSheet/VBoxContainer/Specials"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Specials"
+
+[node name="CharacterInventory" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
 theme_override_constants/separation = 0
 
-[node name="InventoryTitle" type="Panel" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="InventoryTitle" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/InventoryTitle"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/InventoryTitle"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -480,334 +814,329 @@ text = "Inventory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CharacterSheet" type="Panel" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="CharacterSheet" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet"]
+layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="Level" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="Level" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Level:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Level"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Rep" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="Rep" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Sheet")
 theme_type_variation = &"StatsButton"
 text = "Reputation
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Rep"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Rep"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Rep/Area2D"]
-position = Vector2(121.25, 16.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Rep/Area2D"]
+position = Vector2(121, 16.5)
 shape = SubResource("RectangleShape2D_otp4f")
 
-[node name="BaseStats" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="BaseStats" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="Strength" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Strength" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Strength:
 "
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Dexterity" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Dexterity" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Dexterity:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Dexterity"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Intellect" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Intellect" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Intellect:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
 layout_mode = 2
 text = "null"
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Intellect"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Vitality" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Vitality" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Vitality:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Vitality"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Stamina" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Stamina" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Stamina:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Stamina"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Wisdom" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Wisdom" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Wisdom:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Wisdom"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Charisma" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
+[node name="Charisma" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Charisma:"
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
 layout_mode = 2
 text = "null
 "
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Charisma"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Damage" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Damage" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Damage
 "
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
 layout_mode = 2
 text = "null
 "
 horizontal_alignment = 1
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Damage"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Resistance" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Resistance" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Resistance
 "
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
 layout_mode = 2
 text = "null
 "
 horizontal_alignment = 1
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Resistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Recovery" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Recovery" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Recovery
 "
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
+[node name="Label2" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
 layout_mode = 2
 text = "null
 "
 horizontal_alignment = 1
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/HBoxContainer/Recovery"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Sheet" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer"]
+[node name="Sheet" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Rep")
 theme_type_variation = &"StatsButton"
 text = "Sheet
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Sheet"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Sheet"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/VBoxContainer/Sheet/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/Sheet/Area2D"]
 position = Vector2(117.75, 17.5)
 shape = SubResource("RectangleShape2D_h4wgv")
 
-[node name="Armor" type="Panel" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer"]
+[node name="Armor" type="Panel" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.6
 
-[node name="Head" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Head" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 12.0
@@ -815,13 +1144,13 @@ offset_right = 228.0
 offset_bottom = 107.0
 text = "Head"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Head"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Head/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head/Area2D"]
 position = Vector2(36.5, 49)
 shape = SubResource("RectangleShape2D_cuw4y")
 
-[node name="Shoulder" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Shoulder" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 56.0
@@ -829,13 +1158,13 @@ offset_right = 123.0
 offset_bottom = 151.0
 text = "Shld"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Shoulder"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Shoulder/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder/Area2D"]
 position = Vector2(36, 46.5)
 shape = SubResource("RectangleShape2D_5e6bc")
 
-[node name="Neck" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Neck" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 263.0
 offset_top = 58.0
@@ -843,13 +1172,13 @@ offset_right = 336.0
 offset_bottom = 153.0
 text = "Neck"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Neck"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Neck/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck/Area2D"]
 position = Vector2(37.5, 50.5)
 shape = SubResource("RectangleShape2D_7v7rx")
 
-[node name="Chest" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Chest" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 156.0
 offset_top = 114.0
@@ -857,13 +1186,13 @@ offset_right = 229.0
 offset_bottom = 209.0
 text = "Chst"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Chest"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Chest"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Chest/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Chest/Area2D"]
 position = Vector2(38, 49.25)
 shape = SubResource("RectangleShape2D_uykgh")
 
-[node name="Gloves" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Gloves" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 166.0
@@ -871,13 +1200,13 @@ offset_right = 107.0
 offset_bottom = 261.0
 text = "Glove"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Gloves"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Gloves"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Gloves/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Gloves/Area2D"]
 position = Vector2(41, 49)
 shape = SubResource("RectangleShape2D_s3kal")
 
-[node name="Bracers" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Bracers" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 275.0
 offset_top = 178.0
@@ -885,13 +1214,13 @@ offset_right = 350.0
 offset_bottom = 273.0
 text = "Brace"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Bracers"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Bracers"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Bracers/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Bracers/Area2D"]
 position = Vector2(38.5, 48)
 shape = SubResource("RectangleShape2D_n7ps0")
 
-[node name="Belt" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Belt" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 156.0
 offset_top = 222.0
@@ -899,13 +1228,13 @@ offset_right = 229.0
 offset_bottom = 263.0
 text = "Belt"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Belt"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Belt"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Belt/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Belt/Area2D"]
 position = Vector2(37, 20.5)
 shape = SubResource("RectangleShape2D_fcubi")
 
-[node name="Ring1" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Ring1" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 276.0
@@ -913,13 +1242,13 @@ offset_right = 104.0
 offset_bottom = 329.0
 text = "R1"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Ring1"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Ring1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring1/Area2D"]
 position = Vector2(37, 27)
 shape = SubResource("RectangleShape2D_qmwru")
 
-[node name="Ring2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Ring2" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 279.0
 offset_top = 280.0
@@ -927,13 +1256,13 @@ offset_right = 352.0
 offset_bottom = 330.0
 text = "R2"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Ring2"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Ring2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring2/Area2D"]
 position = Vector2(38, 26)
 shape = SubResource("RectangleShape2D_eoo6u")
 
-[node name="MainHand" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="MainHand" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 349.0
@@ -941,13 +1270,13 @@ offset_right = 106.0
 offset_bottom = 459.0
 text = "Main"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/MainHand"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/MainHand"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/MainHand/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/MainHand/Area2D"]
 position = Vector2(37, 54)
 shape = SubResource("RectangleShape2D_jthq1")
 
-[node name="OffHand" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="OffHand" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 275.0
 offset_top = 346.0
@@ -956,13 +1285,13 @@ offset_bottom = 463.0
 text = "Off
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/OffHand"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/OffHand/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand/Area2D"]
 position = Vector2(39.5, 59.5)
 shape = SubResource("RectangleShape2D_hmpsh")
 
-[node name="Pants" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Pants" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 158.0
 offset_top = 280.0
@@ -970,13 +1299,13 @@ offset_right = 231.0
 offset_bottom = 375.0
 text = "Pnts"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Pants"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Pants/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants/Area2D"]
 position = Vector2(36.5, 46)
 shape = SubResource("RectangleShape2D_5q4q5")
 
-[node name="Boots" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor"]
+[node name="Boots" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor"]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 379.0
@@ -984,45 +1313,45 @@ offset_right = 233.0
 offset_bottom = 466.0
 text = "Bts"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Boots"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/CharacterSheet/HBoxContainer/Armor/Boots/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots/Area2D"]
 position = Vector2(36.5, 42.5)
 shape = SubResource("RectangleShape2D_60c51")
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="HBoxItems" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="HBoxItems" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxItems"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxItems"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="ItemGridContainer" type="GridContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxItems"]
+[node name="ItemGridContainer" type="GridContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxItems"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 14
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxItems"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxItems"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="BagSlotGridContainer" type="GridContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="BagSlotGridContainer" type="GridContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_direction = 3
 layout_mode = 2
 size_flags_horizontal = 4
@@ -1030,7 +1359,7 @@ size_flags_vertical = 4
 size_flags_stretch_ratio = 0.15
 columns = 12
 
-[node name="ItemBag1" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="ItemBag1" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "B
@@ -1039,13 +1368,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag1"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag1/Area2D"]
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_ryxdi")
 
-[node name="ItemBag2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="ItemBag2" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "B"
@@ -1053,13 +1382,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag2"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag2/Area2D"]
 position = Vector2(20.5, 20)
 shape = SubResource("RectangleShape2D_h2mfp")
 
-[node name="ItemBag3" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="ItemBag3" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "B
@@ -1068,13 +1397,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag3"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/ItemBag3/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/ItemBag3/Area2D"]
 position = Vector2(20.5, 20.5)
 shape = SubResource("RectangleShape2D_e7qf2")
 
-[node name="MatBag1" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="MatBag1" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "MBag
@@ -1083,13 +1412,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/MatBag1"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/MatBag1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/MatBag1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/MatBag1/Area2D"]
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_pw3d5")
 
-[node name="MatBag2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="MatBag2" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "M
@@ -1098,13 +1427,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/MatBag2"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/MatBag2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/MatBag2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/MatBag2/Area2D"]
 position = Vector2(20, 21)
 shape = SubResource("RectangleShape2D_hv8ly")
 
-[node name="Matbag3" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="Matbag3" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "M
@@ -1113,13 +1442,13 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Matbag3"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Matbag3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Matbag3/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Matbag3/Area2D"]
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_syrnk")
 
-[node name="Matbag4" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="Matbag4" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 text = "M
@@ -1128,55 +1457,55 @@ text_overrun_behavior = 3
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Matbag4"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Matbag4"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Matbag4/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Matbag4/Area2D"]
 position = Vector2(19, 21)
 shape = SubResource("RectangleShape2D_uk1m5")
 
-[node name="Trash" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer"]
+[node name="Trash" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 text = "Trash
 "
 
-[node name="TrashArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Trash"]
+[node name="TrashArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Trash"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Trash/TrashArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Trash/TrashArea2D"]
 position = Vector2(150, 19.5)
 shape = SubResource("RectangleShape2D_5tuew")
 
-[node name="Spacer3" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="MatsGold" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="MatsGold" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.07
 theme_override_constants/separation = 0
 
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/MatsGold"]
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/MatsGold"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.03
 
-[node name="Mats" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/MatsGold"]
+[node name="Mats" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/MatsGold"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 text = "Mats
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/MatsGold/Mats"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/MatsGold/Mats"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/MatsGold/Mats/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/MatsGold/Mats/Area2D"]
 position = Vector2(62, 20.5)
 shape = SubResource("RectangleShape2D_7hb4e")
 
-[node name="Gold" type="Label" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/MatsGold"]
+[node name="Gold" type="Label" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/MatsGold"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -1185,30 +1514,30 @@ text = "Gold
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer4" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="Spacer4" type="Control" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.35
 
-[node name="Skills" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer"]
+[node name="Skills" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Skills
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Skills"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Skills"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Skills/Area2D"]
-position = Vector2(60.5, 77.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Skills/Area2D"]
+position = Vector2(60, 73)
 shape = SubResource("RectangleShape2D_n4j6u")
 
-[node name="JournalQuests" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer"]
+[node name="JournalQuests" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Journal
@@ -1216,13 +1545,13 @@ text = "Journal
 Quests
 "
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/JournalQuests"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/JournalQuests"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/JournalQuests/Area2D"]
-position = Vector2(60, 77)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/JournalQuests/Area2D"]
+position = Vector2(60, 75)
 shape = SubResource("RectangleShape2D_5okca")
 
-[node name="Achievements" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer"]
+[node name="Achievements" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Achie-
@@ -1231,13 +1560,13 @@ nts
 "
 text_overrun_behavior = 3
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Achievements"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Achievements"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Achievements/Area2D"]
-position = Vector2(61.5, 76.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Achievements/Area2D"]
+position = Vector2(59.25, 73.75)
 shape = SubResource("RectangleShape2D_xu3me")
 
-[node name="Social" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer"]
+[node name="Social" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Social
@@ -1245,13 +1574,13 @@ text = "Social
 "
 text_overrun_behavior = 3
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Social"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Social"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Social/Area2D"]
-position = Vector2(60.5, 77.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Social/Area2D"]
+position = Vector2(58.5, 74.25)
 shape = SubResource("RectangleShape2D_y5adj")
 
-[node name="Options" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer"]
+[node name="Options" type="Button" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Opti-
@@ -1260,13 +1589,19 @@ ons
 "
 text_overrun_behavior = 3
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Options"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Options"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/HBoxContainer/Options/Area2D"]
-position = Vector2(62, 77)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/HBoxContainer/Options/Area2D"]
+position = Vector2(61, 74)
 shape = SubResource("RectangleShape2D_f0wiy")
 
-[node name="Spacer5" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="CharacterInventory2" type="Panel" parent="Inventory/CharacterInventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.5
+
+[node name="Spacer5" type="Control" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 visible = false
 layout_mode = 2
 anchors_preset = 0
@@ -1277,73 +1612,73 @@ offset_bottom = 928.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.03
 
-[node name="AddButton" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="AddButton" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -845.0
-offset_top = -966.0
-offset_right = -717.0
-offset_bottom = -925.0
+offset_left = -858.0
+offset_top = -387.0
+offset_right = -730.0
+offset_bottom = -346.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Add Item
 "
 
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton"]
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton"]
 
-[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton/ButtonArea2D"]
-position = Vector2(64.5, 21)
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton/ButtonArea2D"]
+position = Vector2(62, 21)
 shape = SubResource("RectangleShape2D_434df")
 
-[node name="RemoveButton" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="RemoveButton" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1067.0
-offset_top = -986.0
-offset_right = -890.0
-offset_bottom = -945.0
+offset_left = -1074.0
+offset_top = -382.0
+offset_right = -897.0
+offset_bottom = -341.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Remove Item
 "
 
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton"]
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton"]
 
-[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton/ButtonArea2D"]
-position = Vector2(91, 18)
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton/ButtonArea2D"]
+position = Vector2(86, 20)
 shape = SubResource("RectangleShape2D_ug3x5")
 
-[node name="AddButton2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="AddButton2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -856.0
-offset_top = -1038.0
-offset_right = -715.0
-offset_bottom = -997.0
+offset_left = -866.0
+offset_top = -461.0
+offset_right = -725.0
+offset_bottom = -420.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Add Item2
 "
 
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton2"]
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton2"]
 
-[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton2/ButtonArea2D"]
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton2/ButtonArea2D"]
 position = Vector2(70.5, 20.5)
 shape = SubResource("RectangleShape2D_avlmy")
 
-[node name="RemoveButton2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="RemoveButton2" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -1351,39 +1686,39 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -1085.0
-offset_top = -1049.0
+offset_top = -458.0
 offset_right = -895.0
-offset_bottom = -1008.0
+offset_bottom = -417.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Remove Item2
 "
 
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton2"]
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton2"]
 
-[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton2/ButtonArea2D"]
+[node name="ButtonCollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton2/ButtonArea2D"]
 position = Vector2(96, 20)
 shape = SubResource("RectangleShape2D_ce8i6")
 
-[node name="RemoveEquiped" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory"]
+[node name="RemoveEquiped" type="Button" parent="Inventory/CharacterInventoryContainer/CharacterInventory2"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -769.5
-offset_top = -897.0
-offset_right = -551.5
-offset_bottom = -856.0
+offset_left = -1023.0
+offset_top = -531.0
+offset_right = -805.0
+offset_bottom = -490.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Remove Equiped
 "
 
-[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveEquiped"]
+[node name="ButtonArea2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveEquiped"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveEquiped/ButtonArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveEquiped/ButtonArea2D"]
 position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
 
@@ -1403,12 +1738,38 @@ position = Vector2(1256, 404)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("7_hvwf0")
 
-[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
-[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/CharacterInventory/VBoxContainer/BagSlotGridContainer/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
-[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton" to="Inventory" method="_on_add_button_button_down"]
-[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
-[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory/AddButton2" to="Inventory" method="_on_add_button_2_button_down"]
-[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveButton2" to="Inventory" method="_on_remove_button_2_button_down"]
-[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory/RemoveEquiped" to="Inventory" method="_on_remove_equiped_button_down"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head/Area2D" to="Inventory" method="_on_head_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head/Area2D" to="Inventory" method="_on_head_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder/Area2D" to="Inventory" method="_on_shoulder_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder/Area2D" to="Inventory" method="_on_shoulder_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck/Area2D" to="Inventory" method="_on_neck_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck/Area2D" to="Inventory" method="_on_neck_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Chest/Area2D" to="Inventory" method="_on_chest_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Chest/Area2D" to="Inventory" method="_on_chest_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Gloves/Area2D" to="Inventory" method="_on_glove_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Gloves/Area2D" to="Inventory" method="_on_glove_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Bracers/Area2D" to="Inventory" method="_on_bracer_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Bracers/Area2D" to="Inventory" method="_on_bracer_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Belt/Area2D" to="Inventory" method="_on_belt_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Belt/Area2D" to="Inventory" method="_on_belt_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring1/Area2D" to="Inventory" method="_on_ring1_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring1/Area2D" to="Inventory" method="_on_ring1_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring2/Area2D" to="Inventory" method="_on_ring2_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring2/Area2D" to="Inventory" method="_on_ring2_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/MainHand/Area2D" to="Inventory" method="_on_mainhand_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/MainHand/Area2D" to="Inventory" method="_on_mainhand_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand/Area2D" to="Inventory" method="_on_offhand_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand/Area2D" to="Inventory" method="_on_offhand_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants/Area2D" to="Inventory" method="_on_pants_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants/Area2D" to="Inventory" method="_on_pants_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots/Area2D" to="Inventory" method="_on_boots_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots/Area2D" to="Inventory" method="_on_boots_area_2d_area_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_entered"]
+[connection signal="area_exited" from="Inventory/CharacterInventoryContainer/HBoxContainer/CharacterInventory/BagSlotGridContainer/Trash/TrashArea2D" to="Inventory" method="_on_trash_area_2d_area_exited"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton" to="Inventory" method="_on_add_button_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton" to="Inventory" method="_on_remove_button_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory2/AddButton2" to="Inventory" method="_on_add_button_2_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveButton2" to="Inventory" method="_on_remove_button_2_button_down"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/CharacterInventory2/RemoveEquiped" to="Inventory" method="_on_remove_equiped_button_down"]
 [connection signal="area_entered" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_entered"]
 [connection signal="area_exited" from="Inventory/CursorArea2D" to="Inventory" method="_on_cursor_area_2d_area_exited"]
