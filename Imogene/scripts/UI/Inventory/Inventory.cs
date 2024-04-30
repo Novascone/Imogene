@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class Inventory : CanvasLayer
 {
@@ -42,9 +43,31 @@ public partial class Inventory : CanvasLayer
 	public PanelContainer character_inventory;
 	public Panel interact_inventory;
 
+	private VBoxContainer character_Sheet_depth;
+	private VBoxContainer mats;
+
+	private Button head_slot;
+	private Button shoulder_slot;
+	private Button neck_slot;
+	private Button chest_slot;
+	private Button gloves_slot;
+	private Button bracers_slot;
+	private Button belt_slot;
+	private Button ring1_slot;
+	private Button ring2_slot;
+	private Button mainhand_slot;
+	private Button offhand_slot;
+	private Button pants_slot;
+	private Button boots_slot;
+
+
 	public Sprite2D cursor;
 	public Area2D cursor_area;
-	
+	public Panel info;
+	public Label info_text;
+	public Vector2 offset;
+	public int offset_X  = -60;
+	public int offset_y = -110;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -58,8 +81,25 @@ public partial class Inventory : CanvasLayer
 
 		character_inventory = GetNode<PanelContainer>("CharacterInventoryContainer");
 		interact_inventory = GetNode<Panel>("InteractInventory");
+		character_Sheet_depth = GetNode<VBoxContainer>("CharacterInventoryContainer/HBoxContainer/CharacterSheetDepth");
+		mats = GetNode<VBoxContainer>("CharacterInventoryContainer/HBoxContainer/Mats");
 		cursor_area = GetNode<Area2D>("CursorArea2D");
 		cursor = GetNode<Sprite2D>("Cursor");
+		info = GetNode<Panel>("Info");
+		info_text = GetNode<Label>("Info/Label");
+		head_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head");
+		shoulder_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder");
+		neck_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck");
+		chest_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Chest");
+		gloves_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Gloves");
+		bracers_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Bracers");
+		belt_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Belt");
+		ring1_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring1");
+		ring2_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Ring2");
+		mainhand_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/MainHand");
+		offhand_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand");
+		pants_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants");
+		boots_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots");
 	}
 
     
@@ -68,9 +108,10 @@ public partial class Inventory : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		
+		cursor_area.Position = GetTree().Root.GetMousePosition();
 		if(character_inventory.Visible)
 		{
-			GetNode<Area2D>("CursorArea2D").Position = GetTree().Root.GetMousePosition();
 			if(hover_over_button != null)
 			{
 
@@ -300,6 +341,18 @@ public partial class Inventory : CanvasLayer
 		
 	}
 
+	public void _on_sheet_button_down()
+	{
+		character_Sheet_depth.Visible = !character_Sheet_depth.Visible;
+		mats.Hide();
+	}
+
+	public void _on_mats_button_down()
+	{
+		mats.Visible = !mats.Visible;
+		character_Sheet_depth.Hide();
+	}
+
 	public void _on_add_button_button_down()
 	{
 		Add(ResourceLoader.Load<Item>("res://resources/armor.tres"));
@@ -352,145 +405,332 @@ public partial class Inventory : CanvasLayer
 	public void _on_head_area_2d_area_entered(Area2D area)
 	{
 		over_head = true;
-		GD.Print("over head");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = head_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Head";
+			info.Size = info_text.Size;
+			info.Show();
+			
+		}
 	}
 
 	public void _on_head_area_2d_area_exited(Area2D area)
 	{
 		over_head = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+			
+		}
 	}
 
 	public void _on_shoulder_area_2d_area_entered(Area2D area)
 	{
 		over_shoulders = true;
-		GD.Print("over shoulders");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = shoulder_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Shoulders";
+			info.Show();
+		}
 	}
 
 	public void _on_shoulder_area_2d_area_exited(Area2D area)
 	{
 		over_shoulders = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+			
+		}
 	}
 
 	public void _on_neck_area_2d_area_entered(Area2D area)
 	{
 		over_neck = true;
-		GD.Print("over neck");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = neck_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Neck";
+			info.Show();
+		}
 	}
 
 	public void _on_neck_area_2d_area_exited(Area2D area)
 	{
 		over_neck = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_chest_area_2d_area_entered(Area2D area)
 	{
 		over_chest = true;
-		GD.Print("over chest");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = chest_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Chest";
+			info.Show();
+		}
 	}
 
 	public void _on_chest_area_2d_area_exited(Area2D area)
 	{
 		over_chest = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_glove_area_2d_area_entered(Area2D area)
 	{
 		over_gloves = true;
-		GD.Print("over gloves");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = gloves_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Gloves";
+			info.Show();
+		}
 	}
 
 	public void _on_glove_area_2d_area_exited(Area2D area)
 	{
 		over_gloves = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_bracer_area_2d_area_entered(Area2D area)
 	{
 		over_bracers = true;
-		GD.Print("over bracers");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = bracers_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Bracers";
+			info.Show();
+		}
 	}
 
 	public void _on_bracer_area_2d_area_exited(Area2D area)
 	{
 		over_bracers = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_belt_area_2d_area_entered(Area2D area)
 	{
 		over_belt = true;
-		GD.Print("over belt");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = belt_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Belt";
+			info.Show();
+		}
 	}
 
 	public void _on_belt_area_2d_area_exited(Area2D area)
 	{
 		over_belt = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_ring1_area_2d_area_entered(Area2D area)
 	{
 		over_ring1 = true;
-		GD.Print("over ring1");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = ring1_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Ring";
+			info.Show();
+		}
 	}
 
 	public void _on_ring1_area_2d_area_exited(Area2D area)
 	{
 		over_ring1 = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_ring2_area_2d_area_entered(Area2D area)
 	{
 		over_ring2 = true;
-		GD.Print("over ring2");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = ring2_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Ring";
+			info.Show();
+		}
 	}
 
 	public void _on_ring2_area_2d_area_exited(Area2D area)
 	{
 		over_ring2 = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_mainhand_area_2d_area_entered(Area2D area)
 	{
 		over_main = true;
-		GD.Print("over main hand");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = mainhand_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Main-Hand";
+			info.Show();
+		}
 	}
 
 	public void _on_mainhand_area_2d_area_exited(Area2D area)
 	{
 		over_main = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_offhand_area_2d_area_entered(Area2D area)
 	{
 		over_off = true;
-		GD.Print("over off hand");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = offhand_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Off-Hand";
+			info.Show();
+		}
 	}
 
 	public void _on_offhand_area_2d_area_exited(Area2D area)
 	{
 		over_off = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_pants_area_2d_area_entered(Area2D area)
 	{
 		over_pants = true;
-		GD.Print("over pants");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = pants_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Pants";
+			info.Show();
+		}
 	}
 
 	public void _on_pants_area_2d_area_exited(Area2D area)
 	{
 		over_pants = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
 
 	public void _on_boots_area_2d_area_entered(Area2D area)
 	{
 		over_boots = true;
-		GD.Print("over boots");
+		if(area.IsInGroup("cursor"))
+		{
+			offset = boots_slot.GlobalPosition;
+			offset.X += offset_X;
+			offset.Y += offset_y;
+			info.GlobalPosition = offset;
+			info_text.Text = "Boots";
+			info.Show();
+		}
 	}
 
 	public void _on_boots_area_2d_area_exited(Area2D area)
 	{
 		over_boots = false;
+		if(area.IsInGroup("cursor"))
+		{
+			info.Hide();
+			info.GlobalPosition = offset;
+			info_text.Text = "";
+		}
 	}
+
 	public void _on_trash_area_2d_area_entered(Area2D area)
 	{	
 		over_trash = true;
@@ -527,15 +767,15 @@ public partial class Inventory : CanvasLayer
     {
         if(!interact_inventory.Visible)
 		{
-			interact_inventory.Visible = true;
+			interact_inventory.Show();
 		}
 		else
 		{
-			interact_inventory.Visible = false;
+			interact_inventory.Show();
 		}
 		if(!in_area)
 		{
-			interact_inventory.Visible = false;
+			interact_inventory.Hide();
 		}
     }
 
