@@ -46,15 +46,18 @@ visible = false
 clip_children = 2
 layout_mode = 1
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Info"]
 layout_mode = 1
-offset_left = -401.0
-offset_top = 2.0
-offset_right = -1.0
-offset_bottom = 402.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -400.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "
 
 Ut ut eligendi voluptas doloremque. Aliquid possimus ratione est perferendis atque pariatur. Exercitationem autem soluta porro occaecati ut.
