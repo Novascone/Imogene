@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,15 +60,11 @@ public partial class Inventory : CanvasLayer
 	private Button offhand_slot;
 	private Button pants_slot;
 	private Button boots_slot;
+	private Button strength_label;
 
 
 	public Sprite2D cursor;
-	public Area2D cursor_area;
-	public Panel info;
-	public Label info_text;
-	public Vector2 offset;
-	public int offset_X  = -60;
-	public int offset_y = -110;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -83,10 +80,7 @@ public partial class Inventory : CanvasLayer
 		interact_inventory = GetNode<Panel>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("CharacterInventoryContainer/HBoxContainer/CharacterSheetDepth");
 		mats = GetNode<VBoxContainer>("CharacterInventoryContainer/HBoxContainer/Mats");
-		cursor_area = GetNode<Area2D>("CursorArea2D");
 		cursor = GetNode<Sprite2D>("Cursor");
-		info = GetNode<Panel>("Info");
-		info_text = GetNode<Label>("Info/Label");
 		head_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Head");
 		shoulder_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Shoulder");
 		neck_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Neck");
@@ -100,6 +94,7 @@ public partial class Inventory : CanvasLayer
 		offhand_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/OffHand");
 		pants_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Pants");
 		boots_slot = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/Armor/Boots");
+		strength_label = GetNode<Button>("CharacterInventoryContainer/HBoxContainer/CharacterInventory/CharacterSheet/HBoxContainer/VBoxContainer/BaseStats/Strength/StrengthLabel");
 	}
 
     
@@ -108,11 +103,9 @@ public partial class Inventory : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
-		cursor_area.Position = GetTree().Root.GetMousePosition();
 		if(character_inventory.Visible)
 		{
-			if(hover_over_button != null)
+			if(hover_over_button != null && !hover_over_button.IsInGroup("cursorbutton"))
 			{
 
 				if(!clicked_on)
@@ -135,23 +128,29 @@ public partial class Inventory : CanvasLayer
 					}
 					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
 					{
+						GD.Print("hover over button name" + hover_over_button.Name);
 						clicked_on = true;
 						grabbed_object = hover_over_button;
 						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
-						InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
-						button.Visible = true;
-						button.UpdateItem(grabbed_object.inventory_item, 0);
+						if(hover_over_button is InventoryButton)
+						{
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
+							button.Visible = true;
+							button.UpdateItem(grabbed_object.inventory_item, 0);
+						}
+						
+						
 					}
 				}
 				else
 				{
-					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") && hover_over_button is InventoryButton)
 					{
 						if(over_trash)
 						{
 							clicked_on = false;
 							DeleteItem(grabbed_object);
-							InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 							button.Visible = false;
 							GD.Print("trashed");
 							
@@ -159,13 +158,15 @@ public partial class Inventory : CanvasLayer
 						else
 						{
 							clicked_on = false;
-							InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 							button.Visible = false;
-							if(grabbed_object != null && hover_over_button != null)
+							if(hover_over_button is InventoryButton)
 							{
+								if(grabbed_object != null && hover_over_button != null)
+								{
 								SwapButtons(grabbed_object, hover_over_button);
+								}
 							}
-							
 							
 						}
 					
@@ -183,7 +184,7 @@ public partial class Inventory : CanvasLayer
 				if(grabbed_object.inventory_item.type_of_item == "equipable")
 				{
 					clicked_on = false;
-					InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+					InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
 					GD.Print("clicked over head");
 					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)grabbed_object.inventory_item);
@@ -206,7 +207,7 @@ public partial class Inventory : CanvasLayer
 	{
 		items.Remove(inventory_button.inventory_item);
 		ReflowButtons();
-		InventoryButton button = GetNode<Area2D>("CursorArea2D").GetNode<InventoryButton>("InventoryButton");
+		InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 		button.Visible = false;
 	}
 
@@ -402,333 +403,201 @@ public partial class Inventory : CanvasLayer
 		
 	}
 
-	public void _on_head_area_2d_area_entered(Area2D area)
+	public void _on_head_focus_entered()
 	{
 		over_head = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = head_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Head";
-			info.Size = info_text.Size;
-			info.Show();
-			
-		}
+		Control info = (Control)head_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_head_area_2d_area_exited(Area2D area)
+	public void _on_head_focus_exited()
 	{
 		over_head = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-			
-		}
+		Control info = (Control)head_slot.GetChild(1);
+		info.Hide();
+
 	}
 
-	public void _on_shoulder_area_2d_area_entered(Area2D area)
+	public void _on_shoulder_focus_entered()
 	{
 		over_shoulders = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = shoulder_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Shoulders";
-			info.Show();
-		}
+		Control info = (Control)shoulder_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_shoulder_area_2d_area_exited(Area2D area)
+	public void _on_shoulder_focus_exited()
 	{
 		over_shoulders = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-			
-		}
+		
+		Control info = (Control)shoulder_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_neck_area_2d_area_entered(Area2D area)
+	public void _on_neck_focus_entered()
 	{
 		over_neck = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = neck_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Neck";
-			info.Show();
-		}
+		Control info = (Control)neck_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_neck_area_2d_area_exited(Area2D area)
+	public void _on_neck_focus_exited()
 	{
 		over_neck = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)neck_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_chest_area_2d_area_entered(Area2D area)
+	public void _on_chest_focus_entered()
 	{
 		over_chest = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = chest_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Chest";
-			info.Show();
-		}
+		Control info = (Control)chest_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_chest_area_2d_area_exited(Area2D area)
+	public void _on_chest_focus_exited()
 	{
 		over_chest = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)chest_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_glove_area_2d_area_entered(Area2D area)
+	public void _on_gloves_focus_entered()
 	{
 		over_gloves = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = gloves_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Gloves";
-			info.Show();
-		}
+		Control info = (Control)gloves_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_glove_area_2d_area_exited(Area2D area)
+	public void _on_gloves_focus_exited()
 	{
 		over_gloves = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)gloves_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_bracer_area_2d_area_entered(Area2D area)
+	public void _on_bracers_focus_entered()
 	{
 		over_bracers = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = bracers_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Bracers";
-			info.Show();
-		}
+		Control info = (Control)bracers_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_bracer_area_2d_area_exited(Area2D area)
+	public void _on_bracers_focus_exited()
 	{
 		over_bracers = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)bracers_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_belt_area_2d_area_entered(Area2D area)
+	public void _on_belt_focus_entered()
 	{
 		over_belt = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = belt_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Belt";
-			info.Show();
-		}
+		Control info = (Control)belt_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_belt_area_2d_area_exited(Area2D area)
+	public void _on_belt_focus_exited()
 	{
 		over_belt = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)belt_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_ring1_area_2d_area_entered(Area2D area)
+	public void _on_ring_1_focus_entered()
 	{
 		over_ring1 = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = ring1_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Ring";
-			info.Show();
-		}
+		Control info = (Control)ring1_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_ring1_area_2d_area_exited(Area2D area)
+	public void _on_ring_1_focus_exited()
 	{
 		over_ring1 = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)ring1_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_ring2_area_2d_area_entered(Area2D area)
+	public void _on_ring_2_focus_entered()
 	{
 		over_ring2 = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = ring2_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Ring";
-			info.Show();
-		}
+		Control info = (Control)ring2_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_ring2_area_2d_area_exited(Area2D area)
+	public void _on_ring_2_focus_exited()
 	{
 		over_ring2 = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)ring2_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_mainhand_area_2d_area_entered(Area2D area)
+	public void _on_main_hand_focus_entered()
 	{
 		over_main = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = mainhand_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Main-Hand";
-			info.Show();
-		}
+		Control info = (Control)mainhand_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_mainhand_area_2d_area_exited(Area2D area)
+	public void _on_main_hand_focus_exited()
 	{
 		over_main = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)mainhand_slot.GetChild(1);
+		info.Hide();
+		
 	}
 
-	public void _on_offhand_area_2d_area_entered(Area2D area)
+	public void _on_off_hand_focus_entered()
 	{
 		over_off = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = offhand_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Off-Hand";
-			info.Show();
-		}
+		Control info = (Control)offhand_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_offhand_area_2d_area_exited(Area2D area)
+	public void _on_off_hand_focus_exited()
 	{
 		over_off = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)offhand_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_pants_area_2d_area_entered(Area2D area)
+	public void _on_pants_focus_entered()
 	{
 		over_pants = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = pants_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Pants";
-			info.Show();
-		}
+		Control info = (Control)pants_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_pants_area_2d_area_exited(Area2D area)
+	public void _on_pants_focus_exited()
 	{
 		over_pants = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)pants_slot.GetChild(1);
+		info.Hide();
 	}
 
-	public void _on_boots_area_2d_area_entered(Area2D area)
+	public void _on_boots_focus_entered()
 	{
 		over_boots = true;
-		if(area.IsInGroup("cursor"))
-		{
-			offset = boots_slot.GlobalPosition;
-			offset.X += offset_X;
-			offset.Y += offset_y;
-			info.GlobalPosition = offset;
-			info_text.Text = "Boots";
-			info.Show();
-		}
+		Control info = (Control)boots_slot.GetChild(1);
+		info.Show();
 	}
 
-	public void _on_boots_area_2d_area_exited(Area2D area)
+	public void _on_boots_focus_exited()
 	{
 		over_boots = false;
-		if(area.IsInGroup("cursor"))
-		{
-			info.Hide();
-			info.GlobalPosition = offset;
-			info_text.Text = "";
-		}
+		Control info = (Control)boots_slot.GetChild(1);
+		info.Hide();
+	}
+
+	public void _on_strength_label_focus_entered()
+	{
+		Control info = (Control)strength_label.GetChild(0);
+		info.Show();
+	}
+
+	public void _on_strength_label_focus_exited()
+	{
+		Control info = (Control)strength_label.GetChild(0);
+		info.Hide();
 	}
 
 	public void _on_trash_area_2d_area_entered(Area2D area)
