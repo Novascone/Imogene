@@ -34,6 +34,10 @@ public partial class player : Entity
 	public bool targeting = false;
 	private bool max_health_changed = true;
 	private bool in_interact_area;
+	private bool interacting;
+	private bool entered_interact;
+	private bool left_interact;
+
 
 	// Player attached areas
 	private Area3D hurtbox;
@@ -65,12 +69,15 @@ public partial class player : Entity
 	MeshInstance3D helm;
 
 	Node3D main_node;
+
+	public Area3D interact_area;
 	
 
 	
 	
 	public override void _Ready()
 	{
+		this_player = this;
 		roll_ability = (Roll)LoadAbility("Roll");
 		target_ability = (Target)LoadAbility("Target");
 		basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
@@ -109,7 +116,6 @@ public partial class player : Entity
 		_customSignals.UIHealthUpdate += HandleUIResource;
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
 		_customSignals.UIHealthUpdate += HandleUIResourceUpdate;
-		_customSignals.Interact += HandleInteract;
 		_customSignals.ItemInfo += HandleItemInfo;
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
 		_customSignals.EquipableInfo += HandleEquipableInfo;
@@ -185,14 +191,28 @@ public partial class player : Entity
 
 		if(in_interact_area)
 		{
-			if(Input.IsActionJustPressed("Interact"))
+			if(entered_interact)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.InteractPressed),true);
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				entered_interact = false;
+			}
+			
+			if(Input.IsActionJustPressed("Interact") && !interacting)
+			{
+				interacting = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			}
+			else if(Input.IsActionJustPressed("Interact") && interacting)
+			{
+				interacting = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
 			}
 		}
-		else
+		else if(left_interact)
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.InteractPressed),false);
+			interacting = false;
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			left_interact = false;
 		}
 
 
@@ -378,8 +398,10 @@ public partial class player : Entity
 		}
 		else if(area.IsInGroup("interactive"))
 		{
+			GD.Print("entered");
+			entered_interact = true;
 			in_interact_area = true;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, in_interact_area);
+			interact_area = area;
 		}
 		
 	}
@@ -388,8 +410,10 @@ public partial class player : Entity
     {
         if(area.IsInGroup("interactive"))
 		{
+			GD.Print("exited");
+			left_interact = true;
 			in_interact_area = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area, in_interact_area);
+			interact_area = null;
 		}
     }
 
@@ -459,7 +483,7 @@ public partial class player : Entity
     private void HandleUIHealth(int amount){}
 	private void HandleUIHealthUpdate(int amount){}
 	private void HandleUIResourceUpdate(int amount){}
-	private void HandleInteract(Area3D area, bool in_interact_area){}
+	
 
 	public static class Vector3DictionarySorter 
 	{

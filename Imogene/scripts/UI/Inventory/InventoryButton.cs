@@ -8,6 +8,7 @@ public partial class InventoryButton : Button
 	public Label quantity_label;
 	private int index;
 	public Control info;
+	public bool focused;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -19,6 +20,10 @@ public partial class InventoryButton : Button
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		if(focused && inventory_item != null && Input.IsActionJustPressed("Interact"))
+		{
+			InventoryButtonPressed();
+		}
 	}
 
 	public void UpdateItem(Item item, int index)
@@ -45,6 +50,7 @@ public partial class InventoryButton : Button
 		if(inventory_item != null)
 		{
 			inventory_item.UseItem();
+			GD.Print("button pressed");
 		}
 			
     }
@@ -52,11 +58,13 @@ public partial class InventoryButton : Button
 	public void _on_focus_entered()
 	{
 		info.Show();
+		focused = true;
 	}
 
 	public void _on_focus_exited()
 	{
 		info.Hide();
+		focused = false;
 	}
 
 }

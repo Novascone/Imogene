@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class InteractInventory : Inventory
+public partial class InteractInventory : CanvasLayer
 {
 
 	private CustomSignals _customSignals; // Instance of CustomSignals

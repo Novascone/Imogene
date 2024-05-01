@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
+[ext_resource type="PackedScene" uid="uid://ud72kwmwkbpa" path="res://scenes/UI/UI.tscn" id="4_h533o"]
 [ext_resource type="PackedScene" uid="uid://g7r1svs3uder" path="res://scenes/entities/player.tscn" id="4_nj82x"]
 [ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/UI/targeting_icon.tscn" id="5_non4s"]
 
@@ -47,3 +48,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.444608, 0.0080943, -0.09303
 
 [node name="Box" parent="." instance=ExtResource("1_4rjct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)
+
+[node name="Inventory" parent="." instance=ExtResource("4_h533o")]

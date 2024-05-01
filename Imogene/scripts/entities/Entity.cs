@@ -3,10 +3,19 @@ using System;
 
 public partial class Entity : CharacterBody3D
 {
+    // Stats
     public float speed = 5.0f;
 	public int health = 20; // Prelim health number
     public int damage = 1; // Prelim damage number
     public int resource = 20; // prelim resource number
+    public int strength = 1;
+    public int dexterity = 1;
+    public int intellect = 1;
+    public int vitality = 1;
+    public int stamina = 1;
+    public int wisdom = 1;
+    public int charisma = 1;
+
     public bool can_move = true; // Boolean to keep track of if the play is allowed to move
     public bool attacking;
     public bool dead = false;
