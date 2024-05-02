@@ -23,91 +23,28 @@ public partial class UI : CanvasLayer
 	private List<Item> items = new List<Item>();
 
 	private bool clicked_on;
-	private bool over_trash;
-	private bool over_head;
-	private bool over_shoulders;
-	private bool over_neck;
-	private bool over_chest;
-	private bool over_gloves;
-	private bool over_bracers;
-	private bool over_belt;
-	private bool over_ring1;
-	private bool over_ring2;
-	private bool over_main;
-	private bool over_off;
-	private bool over_pants;
-	private bool over_boots;
+	public bool over_trash;
+	public bool over_head;
+	public bool over_shoulders;
+	public bool over_neck;
+	public bool over_chest;
+	public bool over_gloves;
+	public bool over_bracers;
+	public bool over_belt;
+	public bool over_ring1;
+	public bool over_ring2;
+	public bool over_main;
+	public bool over_off;
+	public bool over_pants;
+	public bool over_boots;
 	private CustomSignals _customSignals; // Instance of CustomSignals
-	private bool stats_need_updated;
+	
 
-	private player this_player;
+	public player this_player;
 
-	public PanelContainer character_inventory;
+	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
 
-	// Character equipment
-	private Button head_slot;
-	private Button shoulder_slot;
-	private Button neck_slot;
-	private Button chest_slot;
-	private Button gloves_slot;
-	private Button bracers_slot;
-	private Button belt_slot;
-	private Button ring1_slot;
-	private Button ring2_slot;
-	private Button mainhand_slot;
-	private Button offhand_slot;
-	private Button pants_slot;
-	private Button boots_slot;
-
-	// Character stats
-	private Button strength_label;
-	private Label strength_value;
-	private RichTextLabel strength_info_label;
-	private string strength_info_text = " Strength {0} \n * Primary stat for melee damage \n * Increases damage by {1} \n * Increases health by {2} ";
-
-	private Button dexterity_label;
-	private Label dexterity_value;
-	private RichTextLabel dexterity_info_label;
-	private string dexterity_info_text = " Dexterity {0} \n * Primary stat for melee \n * Calculated by physical ranged  and critical damage \n * Increases damage by {1} \n * Increases critical chance by {2} * Increases critical damage by {3}";
-
-	private Button intellect_label;
-	private Label intellect_value;
-	private RichTextLabel intellect_info_label;
-	private string intellect_info_text = " Intellect {0} \n * main stat for spell damage \n * Increases spell damage by {1} \n * Increases spell hit chance by {2}";
-
-	private Button vitality_label;
-	private Label vitality_value;
-	private RichTextLabel vitality_info_label;
-	private string vitality_info_text = " Vitality {0} \n * Primary stat for health \n * Increases health points by {1}";
-
-	private Button stamina_label;
-	private Label stamina_value;
-	private RichTextLabel stamina_info_label;
-	private string stamina_info_text = " Stamina {0} \n * Primary stat for resource and regeneration \n * Increases total resource by {1} \n * Increases health and resource regeneration by {2} \n * Increases health by {3}";
-
-	private Button wisdom_label;
-	private Label wisdom_value;
-	private RichTextLabel wisdom_info_label;
-	private string wisdom_info_text = " Wisdom {0} \n * Primary stat for hit and interaction \n * Increases hit chance by {1}";
-
-	private Button charisma_label;
-	private Label charisma_value;
-	private RichTextLabel charisma_info_label;
-	private string charisma_info_text = "  Charisma {0} \n * Primary stat for character interaction \n * Increases special interactions";
-
-	private Button trash_label;
-
-	// Character details
-	private Button damage_label;
-	private Button resistance_label;
-	private Button recovery_label;
-	private Button rep_label;
-	private Button level_label;
-	private Button sheet_label;
-	private Button mats_label;
-	private Button gold_label;
-	
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
 
@@ -135,12 +72,12 @@ public partial class UI : CanvasLayer
 		mouse_pos = cursor.Position;
 
 		// UI sections
-		character_inventory = GetNode<PanelContainer>("CharacterInventoryContainer");
+		character_inventory = GetNode<CanvasLayer>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
-		character_Sheet_depth = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/CharacterSheetDepth");
-		mats = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/Mats");
+		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/RightUI/CharacterSheetDepth");
+		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/RightUI/Mats");
 
-		stats_need_updated = true;
+		
 
 		// HUD icons
 		health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
@@ -159,74 +96,11 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 
 		// Items section
-		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/RightUI/CharacterInventory/Items/ItemsGrid");
+		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/RightUI/CharacterInventory/Items/ItemsGrid");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
-		
-		
 
-		// Armor 
-		head_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head");
-		shoulder_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder");
-		neck_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck");
-		chest_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest");
-		gloves_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves");
-		bracers_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers");
-		belt_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt");
-		ring1_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1");
-		ring2_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2");
-		mainhand_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand");
-		offhand_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand");
-		pants_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants");
-		boots_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots");
 
-		// Stats
-		strength_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel");
-		strength_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Value");
-		strength_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel/Info/MarginContainer/PanelContainer/Label");
-
-		dexterity_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel");
-		dexterity_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Value");
-		dexterity_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel/Info/MarginContainer/PanelContainer/Label");
-
-		intellect_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel");
-		intellect_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Value");
-		intellect_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel/Info/MarginContainer/PanelContainer/Label");
-
-		vitality_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel");
-		vitality_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Value");
-		vitality_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel/Info/MarginContainer/PanelContainer/Label");
-
-		stamina_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel");
-		stamina_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Value");
-		stamina_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel/Info/MarginContainer/PanelContainer/Label");
-
-		wisdom_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel");
-		wisdom_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Value");
-		wisdom_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel/Info/MarginContainer/PanelContainer/Label");
-
-		charisma_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel");
-		charisma_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Value");
-		charisma_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel/Info/MarginContainer/PanelContainer/Label");
-
-		// Stats details
-		damage_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel");
-		damage_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel");
-		resistance_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel");
-		recovery_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel");
-		rep_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/RepLabel");
-		level_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
-		sheet_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/SheetLabel");
-
-		// Character possessions
-		
-		gold_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/GoldLabel");
-
-		mats_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/MatsLabel");
-
-		// Misc
-		trash_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/BagSlots/TrashLabel");
-		
 	}
 
     
@@ -235,14 +109,10 @@ public partial class UI : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
-		if(stats_need_updated)
+		if(this_player != null)
 		{
-			CharacterInfo();
-			stats_need_updated = false;
+			
 		}
-		
-
 		if(inventory_open)
 		{
 			ControllerCursor();
@@ -476,43 +346,6 @@ public partial class UI : CanvasLayer
         resource_icon.MaxValue = amount;
     }
 
-	private void CharacterInfo()
-	{
-		string strength = this_player.strength.ToString();
-		string dexterity = this_player.dexterity.ToString();
-		string intellect = this_player.intellect.ToString();
-		string vitality = this_player.vitality.ToString();
-		string stamina = this_player.stamina.ToString();
-		string wisdom = this_player.wisdom.ToString();
-		string charisma = this_player.charisma.ToString();
-		string gold = this_player.gold.ToString();
-		
-		strength_value.Text = strength;
-		strength_info_label.Text = string.Format(strength_info_text, strength, 0, 0); // 3 variable(s)
-
-		dexterity_value.Text = dexterity;
-		dexterity_info_label.Text = string.Format(dexterity_info_text, dexterity, 0, 0, 0); // 4 variable(s)
-
-		intellect_value.Text = intellect;
-		intellect_info_label.Text = string.Format(intellect_info_text, intellect, 0, 0); // 3 variable(s)
-
-		vitality_value.Text = vitality;
-		vitality_info_label.Text = string.Format(vitality_info_text, vitality, 0, 0); // 2 variable(s)
-
-		stamina_value.Text = stamina;
-		stamina_info_label.Text = string.Format(stamina_info_text, stamina, 0, 0, 0); // 4 variable(s)
-
-		wisdom_value.Text = wisdom;
-		wisdom_info_label.Text = string.Format(wisdom_info_text, wisdom, 0); // 2 variable(s)
-
-		charisma_value.Text = charisma;
-		charisma_info_label.Text = string.Format(charisma_info_text, charisma); // 1 variable(s)
-
-		gold_label.Text = gold;
-		
-		GD.Print("updated");
-		
-	}
 
 	public override void _Input(InputEvent @event)
     {
@@ -729,395 +562,6 @@ public partial class UI : CanvasLayer
 		}
 		
 	}
-
-	public void _on_head_focus_entered()
-	{
-		over_head = true;
-		Control info = (Control)head_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_head_focus_exited()
-	{
-		over_head = false;
-		Control info = (Control)head_slot.GetChild(1);
-		info.Hide();
-
-	}
-
-	public void _on_shoulder_focus_entered()
-	{
-		over_shoulders = true;
-		Control info = (Control)shoulder_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_shoulder_focus_exited()
-	{
-		over_shoulders = false;
-		
-		Control info = (Control)shoulder_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_neck_focus_entered()
-	{
-		over_neck = true;
-		Control info = (Control)neck_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_neck_focus_exited()
-	{
-		over_neck = false;
-		Control info = (Control)neck_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_chest_focus_entered()
-	{
-		over_chest = true;
-		Control info = (Control)chest_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_chest_focus_exited()
-	{
-		over_chest = false;
-		Control info = (Control)chest_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_gloves_focus_entered()
-	{
-		over_gloves = true;
-		Control info = (Control)gloves_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_gloves_focus_exited()
-	{
-		over_gloves = false;
-		Control info = (Control)gloves_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_bracers_focus_entered()
-	{
-		over_bracers = true;
-		Control info = (Control)bracers_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_bracers_focus_exited()
-	{
-		over_bracers = false;
-		Control info = (Control)bracers_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_belt_focus_entered()
-	{
-		over_belt = true;
-		Control info = (Control)belt_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_belt_focus_exited()
-	{
-		over_belt = false;
-		Control info = (Control)belt_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_ring_1_focus_entered()
-	{
-		over_ring1 = true;
-		Control info = (Control)ring1_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_ring_1_focus_exited()
-	{
-		over_ring1 = false;
-		Control info = (Control)ring1_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_ring_2_focus_entered()
-	{
-		over_ring2 = true;
-		Control info = (Control)ring2_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_ring_2_focus_exited()
-	{
-		over_ring2 = false;
-		Control info = (Control)ring2_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_main_hand_focus_entered()
-	{
-		over_main = true;
-		Control info = (Control)mainhand_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_main_hand_focus_exited()
-	{
-		over_main = false;
-		Control info = (Control)mainhand_slot.GetChild(1);
-		info.Hide();
-		
-	}
-
-	public void _on_off_hand_focus_entered()
-	{
-		over_off = true;
-		Control info = (Control)offhand_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_off_hand_focus_exited()
-	{
-		over_off = false;
-		Control info = (Control)offhand_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_pants_focus_entered()
-	{
-		over_pants = true;
-		Control info = (Control)pants_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_pants_focus_exited()
-	{
-		over_pants = false;
-		Control info = (Control)pants_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_boots_focus_entered()
-	{
-		over_boots = true;
-		Control info = (Control)boots_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_boots_focus_exited()
-	{
-		over_boots = false;
-		Control info = (Control)boots_slot.GetChild(1);
-		info.Hide();
-	}
-
-
-	public void _on_level_label_focus_entered()
-	{
-		Control info = (Control)level_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_level_label_focus_exited()
-	{
-		Control info = (Control)level_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_rep_focus_entered()
-	{
-		// Control info = (Control)rep_label.GetChild(0);
-		// info.Show();
-	}
-
-	public void _on_rep_focus_exited()
-	{
-		// Control info = (Control)rep_label.GetChild(0);
-		// info.Hide();
-	}
-
-	public void _on_strength_label_focus_entered()
-	{
-		Control info = (Control)strength_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_strength_label_focus_exited()
-	{
-		Control info = (Control)strength_label.GetChild(0);
-		info.Hide();
-	}
-	public void _on_dexterity_label_focus_entered()
-	{
-		Control info = (Control)dexterity_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_dexterity_label_focus_exited()
-	{
-		Control info = (Control)dexterity_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_intellect_label_focus_entered()
-	{
-		Control info = (Control)intellect_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_intellect_label_focus_exited()
-	{
-		Control info = (Control)intellect_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_vitality_label_focus_entered()
-	{
-		Control info = (Control)vitality_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_vitality_label_focus_exited()
-	{
-		Control info = (Control)vitality_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_stamina_label_focus_entered()
-	{
-		Control info = (Control)stamina_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_stamina_label_focus_exited()
-	{
-		Control info = (Control)stamina_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_wisdom_label_focus_entered()
-	{
-		Control info = (Control)wisdom_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_wisdom_label_focus_exited()
-	{
-		Control info = (Control)wisdom_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_charisma_label_focus_entered()
-	{
-		Control info = (Control)charisma_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_charisma_label_focus_exited()
-	{
-		Control info = (Control)charisma_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_damage_label_focus_entered()
-	{
-		Control info = (Control)damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_damage_label_focus_exited()
-	{
-		Control info = (Control)damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_resistance_label_focus_entered()
-	{
-		Control info = (Control)resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_resistance_label_focus_exited()
-	{
-		Control info = (Control)resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_recovery_label_focus_entered()
-	{
-		Control info = (Control)recovery_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_recovery_label_focus_exited()
-	{
-		Control info = (Control)recovery_label.GetChild(0);
-		info.Hide();
-	}
-
-
-	public void _on_sheet_focus_entered()
-	{
-		// Control info = (Control)sheet_label.GetChild(0);
-		// info.Show();
-	}
-
-	public void _on_sheet_focus_exited()
-	{
-		// Control info = (Control)sheet_label.GetChild(0);
-		// info.Hide();
-	}
-
-	public void _on_mats_label_focus_entered()
-	{
-		Control info = (Control)mats_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_mats_label_focus_exited()
-	{
-		Control info = (Control)mats_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_gold_focus_entered()
-	{
-		Control info = (Control)gold_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_gold_focus_exited()
-	{
-		Control info = (Control)gold_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_trash_focus_entered()
-	{	
-		Control info = (Control)trash_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_trash_focus_exited()
-	{
-		Control info = (Control)trash_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_trash_area_2d_area_entered(Area2D area)
-	{	
-		over_trash = true;
-	}
-
-	public void _on_trash_area_2d_area_exited(Area2D area)
-	{
-		over_trash = false;
-	}
-
 
 	public void _on_add_button_2_button_down()
 	{
