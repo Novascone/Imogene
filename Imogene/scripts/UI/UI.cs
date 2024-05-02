@@ -115,7 +115,7 @@ public partial class UI : CanvasLayer
 
 
 	private Vector2 mouse_pos = Vector2.Zero;
-	private float mouse_max_speed = 10.0f;
+	private float mouse_max_speed = 20.0f;
 	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	// Called when the node enters the scene tree for the first time.
@@ -129,14 +129,26 @@ public partial class UI : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+
+		// Cursor
+		cursor = GetNode<Sprite2D>("Cursor");
+		mouse_pos = cursor.Position;
+
+		// UI sections
+		character_inventory = GetNode<PanelContainer>("CharacterInventoryContainer");
+		interact_inventory = GetNode<PanelContainer>("InteractInventory");
+		character_Sheet_depth = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/CharacterSheetDepth");
+		mats = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/Mats");
+
 		stats_need_updated = true;
+
+		// HUD icons
 		health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
 		resource_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		interact_bar = GetNode<PanelContainer>("HUD/InteractBar");
 
 
-
+		// Signals subscribed to
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
 		_customSignals.UIResourceUpdate += HandleUIResourceUpdate;
@@ -146,17 +158,12 @@ public partial class UI : CanvasLayer
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 
-		
+		// Items section
 		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/RightUI/CharacterInventory/Items/ItemsGrid");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
-
-		character_inventory = GetNode<PanelContainer>("CharacterInventoryContainer");
-		interact_inventory = GetNode<PanelContainer>("InteractInventory");
-		character_Sheet_depth = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/CharacterSheetDepth");
-		mats = GetNode<VBoxContainer>("CharacterInventoryContainer/RightUI/Mats");
-		cursor = GetNode<Sprite2D>("Cursor");
-		mouse_pos = cursor.Position;
+		
+		
 
 		// Armor 
 		head_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head");
@@ -211,9 +218,15 @@ public partial class UI : CanvasLayer
 		level_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
 		sheet_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/SheetLabel");
 
-		trash_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/BagSlots/TrashLabel");
-		mats_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/MatsLabel");
+		// Character possessions
+		
 		gold_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/GoldLabel");
+
+		mats_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/MatsLabel");
+
+		// Misc
+		trash_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/BagSlots/TrashLabel");
+		
 	}
 
     
@@ -222,9 +235,10 @@ public partial class UI : CanvasLayer
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		
 		if(stats_need_updated)
 		{
-			stats();
+			CharacterInfo();
 			stats_need_updated = false;
 		}
 		
@@ -373,7 +387,7 @@ public partial class UI : CanvasLayer
 		}
 		if(mouse_direction != Vector2.Zero)
 		{
-			Input.WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.2f));
+			Input.WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.1f));
 		}
 		cursor.Position = GetViewport().GetMousePosition();
 	}
@@ -462,7 +476,7 @@ public partial class UI : CanvasLayer
         resource_icon.MaxValue = amount;
     }
 
-	private void stats()
+	private void CharacterInfo()
 	{
 		string strength = this_player.strength.ToString();
 		string dexterity = this_player.dexterity.ToString();
@@ -471,6 +485,7 @@ public partial class UI : CanvasLayer
 		string stamina = this_player.stamina.ToString();
 		string wisdom = this_player.wisdom.ToString();
 		string charisma = this_player.charisma.ToString();
+		string gold = this_player.gold.ToString();
 		
 		strength_value.Text = strength;
 		strength_info_label.Text = string.Format(strength_info_text, strength, 0, 0); // 3 variable(s)
@@ -492,6 +507,9 @@ public partial class UI : CanvasLayer
 
 		charisma_value.Text = charisma;
 		charisma_info_label.Text = string.Format(charisma_info_text, charisma); // 1 variable(s)
+
+		gold_label.Text = gold;
+		
 		GD.Print("updated");
 		
 	}
@@ -912,14 +930,14 @@ public partial class UI : CanvasLayer
 
 	public void _on_rep_focus_entered()
 	{
-		Control info = (Control)rep_label.GetChild(0);
-		info.Show();
+		// Control info = (Control)rep_label.GetChild(0);
+		// info.Show();
 	}
 
 	public void _on_rep_focus_exited()
 	{
-		Control info = (Control)rep_label.GetChild(0);
-		info.Hide();
+		// Control info = (Control)rep_label.GetChild(0);
+		// info.Hide();
 	}
 
 	public void _on_strength_label_focus_entered()
@@ -1044,14 +1062,14 @@ public partial class UI : CanvasLayer
 
 	public void _on_sheet_focus_entered()
 	{
-		Control info = (Control)sheet_label.GetChild(0);
-		info.Show();
+		// Control info = (Control)sheet_label.GetChild(0);
+		// info.Show();
 	}
 
 	public void _on_sheet_focus_exited()
 	{
-		Control info = (Control)sheet_label.GetChild(0);
-		info.Hide();
+		// Control info = (Control)sheet_label.GetChild(0);
+		// info.Hide();
 	}
 
 	public void _on_mats_label_focus_entered()

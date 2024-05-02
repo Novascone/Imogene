@@ -124,6 +124,290 @@ radius = 3.0
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_qmnvm")
 
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="BottomHUD" type="HBoxContainer" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -606.0
+offset_top = -230.0
+offset_right = 606.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -1
+
+[node name="PanelHealthContainer" type="PanelContainer" parent="HUD/BottomHUD"]
+custom_minimum_size = Vector2(415, 190)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Health_Art"
+
+[node name="HealthContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelHealthContainer"]
+show_behind_parent = true
+layout_mode = 2
+theme_type_variation = &"Health_and_Resource"
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HealthIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
+show_behind_parent = true
+layout_mode = 2
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("5_ufnnp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="PanelContainer2" type="PanelContainer" parent="HUD/BottomHUD/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BlackBorder"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Ability1Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   A   "
+
+[node name="Ability2Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   B   "
+
+[node name="Ability3Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   X   "
+
+[node name="Ability4Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   Y   "
+
+[node name="Ability5Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " RB  "
+
+[node name="Ability6Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "  LB "
+
+[node name="Ability7Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   RT"
+
+[node name="Ability8Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
+layout_mode = 2
+texture = ExtResource("6_8hs7h")
+expand_mode = 4
+
+[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "   LT "
+
+[node name="PanelResourceContainer" type="PanelContainer" parent="HUD/BottomHUD"]
+custom_minimum_size = Vector2(415, 190)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Resource_Art"
+
+[node name="ResourceContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelResourceContainer"]
+show_behind_parent = true
+layout_mode = 2
+theme_type_variation = &"Health_and_Resource"
+
+[node name="ResourceIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 3
+fill_mode = 3
+texture_progress = ExtResource("7_hwoqp")
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+visible = false
+offset_right = 1054.0
+offset_bottom = 1667.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Quest
+"
+horizontal_alignment = 1
+
+[node name="Text" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+text = "
+
+Nostrum aspernatur quod ad et. Possimus ut eum tenetur. Reprehenderit incidunt reprehenderit molestias ipsam voluptatem. Accusantium id aut enim commodi. Blanditiis vitae dolorum cumque delectus quos minus placeat perspiciatis. Assumenda modi distinctio praesentium excepturi.
+
+Aliquid saepe quod voluptate. Perferendis quasi provident impedit earum eius. Eligendi quis ea sint aut eveniet. Nulla iusto dolor quae officia harum ea.
+
+Deserunt cum fuga debitis officiis iure quis provident. Voluptas est nisi distinctio. Qui sunt in beatae molestiae doloribus adipisci soluta nobis. Distinctio fugit unde voluptatum dignissimos distinctio sit.
+
+Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neque quam exercitationem itaque enim doloribus adipisci. Et distinctio at repellat quo.
+
+"
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Decline" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Decline
+"
+
+[node name="Accept" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept
+"
+
+[node name="Spacer2" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InteractBar" type="PanelContainer" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 310.0
+offset_right = 100.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/InteractBar"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Press" type="Label" parent="HUD/InteractBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.0
+text = "Y: "
+horizontal_alignment = 1
+
+[node name="Object" type="Label" parent="HUD/InteractBar/HBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+text = " Interact"
+horizontal_alignment = 1
+
 [node name="InteractInventory" type="PanelContainer" parent="."]
 visible = false
 offset_left = 352.0
@@ -2399,6 +2683,8 @@ size_flags_stretch_ratio = 0.35
 [node name="Skills" type="Button" parent="CharacterInventoryContainer/RightUI/CharacterInventory/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Options")
+focus_neighbor_right = NodePath("../JournalQuests")
 text = "Skills
 "
 
@@ -2411,6 +2697,7 @@ shape = SubResource("RectangleShape2D_n4j6u")
 [node name="JournalQuests" type="Button" parent="CharacterInventoryContainer/RightUI/CharacterInventory/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Skills")
 text = "Journal
 &
 Quests
@@ -2454,6 +2741,7 @@ shape = SubResource("RectangleShape2D_y5adj")
 [node name="Options" type="Button" parent="CharacterInventoryContainer/RightUI/CharacterInventory/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_right = NodePath("../Skills")
 text = "Opti-
 ons
 
@@ -2591,289 +2879,6 @@ text = "Remove Equiped
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterInventoryContainer/Buttons/RemoveEquiped/ButtonArea2D"]
 position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
-
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="BottomHUD" type="HBoxContainer" parent="HUD"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -606.0
-offset_top = -230.0
-offset_right = 606.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = -1
-
-[node name="PanelHealthContainer" type="PanelContainer" parent="HUD/BottomHUD"]
-custom_minimum_size = Vector2(415, 190)
-layout_mode = 2
-size_flags_vertical = 8
-theme_type_variation = &"Health_Art"
-
-[node name="HealthContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelHealthContainer"]
-show_behind_parent = true
-layout_mode = 2
-theme_type_variation = &"Health_and_Resource"
-
-[node name="Control" type="Control" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HealthIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
-show_behind_parent = true
-layout_mode = 2
-value = 100.0
-fill_mode = 3
-texture_progress = ExtResource("5_ufnnp")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="PanelContainer2" type="PanelContainer" parent="HUD/BottomHUD/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"BlackBorder"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Ability1Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   A   "
-
-[node name="Ability2Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   B   "
-
-[node name="Ability3Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   X   "
-
-[node name="Ability4Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   Y   "
-
-[node name="Ability5Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " RB  "
-
-[node name="Ability6Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "  LB "
-
-[node name="Ability7Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   RT"
-
-[node name="Ability8Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   LT "
-
-[node name="PanelResourceContainer" type="PanelContainer" parent="HUD/BottomHUD"]
-custom_minimum_size = Vector2(415, 190)
-layout_mode = 2
-size_flags_vertical = 8
-theme_type_variation = &"Resource_Art"
-
-[node name="ResourceContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelResourceContainer"]
-show_behind_parent = true
-layout_mode = 2
-theme_type_variation = &"Health_and_Resource"
-
-[node name="ResourceIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
-show_behind_parent = true
-layout_mode = 2
-size_flags_horizontal = 3
-fill_mode = 3
-texture_progress = ExtResource("7_hwoqp")
-
-[node name="Control" type="Control" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PanelContainer" type="PanelContainer" parent="HUD"]
-visible = false
-offset_right = 1054.0
-offset_bottom = 1667.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderLarge"
-text = "Quest
-"
-horizontal_alignment = 1
-
-[node name="Text" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-text = "
-
-Nostrum aspernatur quod ad et. Possimus ut eum tenetur. Reprehenderit incidunt reprehenderit molestias ipsam voluptatem. Accusantium id aut enim commodi. Blanditiis vitae dolorum cumque delectus quos minus placeat perspiciatis. Assumenda modi distinctio praesentium excepturi.
-
-Aliquid saepe quod voluptate. Perferendis quasi provident impedit earum eius. Eligendi quis ea sint aut eveniet. Nulla iusto dolor quae officia harum ea.
-
-Deserunt cum fuga debitis officiis iure quis provident. Voluptas est nisi distinctio. Qui sunt in beatae molestiae doloribus adipisci soluta nobis. Distinctio fugit unde voluptatum dignissimos distinctio sit.
-
-Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neque quam exercitationem itaque enim doloribus adipisci. Et distinctio at repellat quo.
-
-"
-autowrap_mode = 2
-
-[node name="Spacer" type="Control" parent="HUD/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Spacer1" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Decline" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Decline
-"
-
-[node name="Accept" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Accept
-"
-
-[node name="Spacer2" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="InteractBar" type="PanelContainer" parent="HUD"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = 310.0
-offset_right = 100.0
-offset_bottom = 360.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/InteractBar"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Press" type="Label" parent="HUD/InteractBar/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.0
-text = "Y: "
-horizontal_alignment = 1
-
-[node name="Object" type="Label" parent="HUD/InteractBar/HBoxContainer"]
-layout_mode = 2
-size_flags_stretch_ratio = 0.0
-text = " Interact"
-horizontal_alignment = 1
 
 [node name="Cursor" type="Sprite2D" parent="."]
 visible = false

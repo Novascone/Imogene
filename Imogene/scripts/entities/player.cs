@@ -33,6 +33,7 @@ public partial class player : Entity
 	public bool enemy_in_vision = false;
 	public bool targeting = false;
 	private bool max_health_changed = true;
+	private bool stats_updated = true;
 	private bool in_interact_area;
 	private bool interacting;
 	private bool entered_interact;
@@ -78,13 +79,14 @@ public partial class player : Entity
 	public override void _Ready()
 	{
 		this_player = this;
+		
 		roll_ability = (Roll)LoadAbility("Roll");
 		target_ability = (Target)LoadAbility("Target");
 		basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
 
 		damage = 2;
 		health = 20;
-	
+
 		hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
 		hurtbox.AreaExited += OnHurtboxExited;
@@ -430,7 +432,12 @@ public partial class player : Entity
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			max_health_changed = false;
 		}
-		_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
+		if(stats_updated)
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
+			stats_updated = false;
+		}
+		
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}

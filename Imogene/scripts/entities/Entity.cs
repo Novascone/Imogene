@@ -16,6 +16,9 @@ public partial class Entity : CharacterBody3D
     public int wisdom = 1;
     public int charisma = 1;
 
+    // Possessions
+    public int gold = 0;
+
     public bool can_move = true; // Boolean to keep track of if the play is allowed to move
     public bool attacking;
     public bool dead = false;
