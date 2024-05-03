@@ -74,8 +74,8 @@ public partial class UI : CanvasLayer
 		// UI sections
 		character_inventory = GetNode<CanvasLayer>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
-		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/RightUI/CharacterSheetDepth");
-		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/RightUI/Mats");
+		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
+		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
 
 		
 
@@ -96,7 +96,7 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 
 		// Items section
-		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/RightUI/CharacterInventory/Items/ItemsGrid");
+		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 

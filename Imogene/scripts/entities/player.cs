@@ -135,7 +135,6 @@ public partial class player : Entity
 		SignalEmitter();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
-
 		
 		resource = 0;
 		
@@ -253,6 +252,60 @@ public partial class player : Entity
 				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
+	}
+
+	public void UpdateStats()
+	{
+		level = 0;
+		strength = 10;
+		dexterity = 10;
+		intellect = 5;
+		vitality = 1;
+		stamina = 1;
+		wisdom = 1;
+		charisma = 1;
+
+		weapon_damage = 10;
+		attack_speed = 1.3f;
+
+		critical_hit_chance = 0.05f;
+		critical_hit_damage = 1.2f;
+
+		physical_melee_attack_abilities = 3;
+		physical_ranged_attack_abilities = 3;
+		spell_melee_attack_abilities = 3;
+		spell_ranged_attack_abilities = 3;
+		total_attack_abilities = physical_melee_attack_abilities + physical_ranged_attack_abilities + spell_melee_attack_abilities + spell_ranged_attack_abilities;
+
+		physical_melee_attack_ability_ratio = (float)physical_melee_attack_abilities / total_attack_abilities;
+		physical_ranged_attack_ability_ratio = (float)physical_ranged_attack_abilities / total_attack_abilities;
+		spell_melee_attack_ability_ratio = (float)spell_melee_attack_abilities / total_attack_abilities;
+		spell_ranged_attack_ability_ratio = (float)spell_ranged_attack_abilities / total_attack_abilities;
+
+		GD.Print(physical_melee_attack_ability_ratio);
+		GD.Print(physical_ranged_attack_ability_ratio);
+		GD.Print(spell_melee_attack_ability_ratio);
+		GD.Print(spell_ranged_attack_ability_ratio);
+
+		physical_melee_attack_power = (2 * strength) + dexterity;
+		physical_ranged_attack_power = strength + (3 * dexterity);
+		spell_melee_attack_power = strength + dexterity + (3 * intellect);
+		spell_ranged_attack_power = (2 * dexterity) + (3 * intellect);
+
+		physical_melee_damage = physical_melee_attack_power/15;
+		physical_ranged_damage = physical_ranged_attack_power/15;
+		spell_melee_damage = spell_melee_attack_power/15;
+		spell_ranged_damage = spell_ranged_attack_power/15;
+
+		damage = ((physical_melee_attack_ability_ratio * physical_melee_damage) + 
+				 (physical_ranged_attack_ability_ratio * physical_ranged_damage) + 
+				 (spell_melee_attack_ability_ratio * spell_melee_damage) + 
+				 (spell_ranged_attack_ability_ratio * spell_ranged_damage) +
+				 weapon_damage) * 
+				 attack_speed * 
+				 (1 + (critical_hit_chance * critical_hit_damage));
+
+		damage = (float)Math.Round(damage,2);
 	}
 
 	private void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
@@ -434,6 +487,7 @@ public partial class player : Entity
 		}
 		if(stats_updated)
 		{
+			UpdateStats();
 			_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
 			stats_updated = false;
 		}
@@ -443,7 +497,7 @@ public partial class player : Entity
 	}
 
 
-	private void HandlePlayerDamage(int DamageAmount) // Sends damage amount to enemy
+	private void HandlePlayerDamage(float DamageAmount) // Sends damage amount to enemy
 	{
 			DamageAmount += damage;
 	}

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://b6v4kp5k26en1"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://b6v4kp5k26en1"]
 
 [ext_resource type="FontFile" uid="uid://caothdc5usm0v" path="res://fonts/EBGaramond08-Regular.ttf" id="1_njuau"]
 [ext_resource type="Texture2D" uid="uid://d0ba7an85loqj" path="res://images/UI/Health_Orb.png" id="2_l06t6"]
@@ -24,6 +24,16 @@ texture = ExtResource("2_l06t6")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gn1x7"]
 texture = ExtResource("3_l7h5i")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqpa2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dyoe1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3olhg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s0ufh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rt7ea"]
+
 [resource]
 BlackBorder/base_type = &"PanelContainer"
 BlackBorder/styles/panel = SubResource("StyleBoxTexture_651tm")
@@ -47,3 +57,10 @@ Resource_Art/base_type = &"PanelContainer"
 Resource_Art/styles/panel = SubResource("StyleBoxTexture_gn1x7")
 StatsButton/base_type = &"Button"
 StatsButton/font_sizes/font_size = 24
+sheetbutton/base_type = &"Button"
+sheetbutton/font_sizes/font_size = 16
+sheetbutton/styles/disabled = SubResource("StyleBoxEmpty_qqpa2")
+sheetbutton/styles/focus = SubResource("StyleBoxEmpty_dyoe1")
+sheetbutton/styles/hover = SubResource("StyleBoxEmpty_3olhg")
+sheetbutton/styles/normal = SubResource("StyleBoxEmpty_s0ufh")
+sheetbutton/styles/pressed = SubResource("StyleBoxEmpty_rt7ea")

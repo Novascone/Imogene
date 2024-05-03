@@ -35,7 +35,7 @@ public partial class enemy : Entity
 
 	//Player variables
 	private Vector3 player_position; // Position of player
-	private int incoming_damage;
+	private float incoming_damage;
 	
 	// Signal variables
 	private CustomSignals _customSignals;
@@ -88,7 +88,7 @@ public partial class enemy : Entity
 		}
     }
 
-    private void HandleEnemyDamage(int DamageAmount)
+    private void HandleEnemyDamage(float DamageAmount)
     {
         DamageAmount += damage;
     }
@@ -176,7 +176,7 @@ public partial class enemy : Entity
 		
 	}
 
-	private void HandleDamageEnemy(int damage_amount)
+	private void HandleDamageEnemy(float damage_amount)
 	{
 		incoming_damage = damage_amount;
 	}

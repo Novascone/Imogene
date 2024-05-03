@@ -4,9 +4,9 @@ using System;
 public partial class CustomSignals : Node
 {
 	[Signal]
-	public delegate void PlayerDamageEventHandler(int DamageAmount);
+	public delegate void PlayerDamageEventHandler(float DamageAmount);
 	[Signal]
-	public delegate void EnemyDamageEventHandler(int DamageAmount);
+	public delegate void EnemyDamageEventHandler(float DamageAmount);
 	[Signal]
 	public delegate void EnemyPositionEventHandler(Vector3 position);
 	[Signal]

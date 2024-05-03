@@ -56,17 +56,42 @@ public partial class InventoryInfo : UI
 	private RichTextLabel charisma_info_label;
 	private string charisma_info_text = "  Charisma {0} \n * Primary stat for character interaction \n * Increases special interactions";
 
-	private Button trash_label;
-
 	// Character details
 	private Button damage_label;
+	private Label damage_value;
+	private RichTextLabel damage_info_label;
+	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character \n * Combination of physical attack power (melee and ranged), spell attack power(melee and ranged), \n    weapon damage, attack speed, critical hit chance, and critical hit damage";
+
 	private Button resistance_label;
+	private Label resistance_value;
+	private RichTextLabel resistance_info_label;
+	private string resistance_info_text = " Resistance {0} \n * Total damage the character can resist \n * Calculated by health, armor, resistances" ;
+
 	private Button recovery_label;
-	private Button rep_label;
+	private Label recovery_value;
+	private RichTextLabel recovery_info_label;
+	private string recovery_info_text =  " Recovery {0} \n * How fast the character regenerates health, resource and posture \n * Calculated by stamina ";
+
 	private Button level_label;
+	private Label level_value;
+	private RichTextLabel level_info_label;
+	private string level_info_text =  " Level {0} \n * Level of character";
+
+	private Button rep_label;
+	
 	private Button sheet_label;
 	private Button mats_label;
 	private Button gold_label;
+
+	private Button trash_label;
+
+	private Button skills_label;
+	private Button journal_quests_label;
+	private Button achievements_label;
+	private Button social_label;
+	private Button options_label;
+
+
 
 	private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
@@ -75,64 +100,84 @@ public partial class InventoryInfo : UI
 
 		stats_need_updated = true;
 
-		head_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head");
-		shoulder_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder");
-		neck_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck");
-		chest_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest");
-		gloves_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves");
-		bracers_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers");
-		belt_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt");
-		ring1_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1");
-		ring2_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2");
-		mainhand_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand");
-		offhand_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand");
-		pants_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants");
-		boots_slot = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots");
+		head_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head");
+		shoulder_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder");
+		neck_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck");
+		chest_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest");
+		gloves_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves");
+		bracers_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers");
+		belt_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt");
+		ring1_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1");
+		ring2_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2");
+		mainhand_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand");
+		offhand_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand");
+		pants_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants");
+		boots_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots");
 
-		strength_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel");
-		strength_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Value");
-		strength_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel/Info/MarginContainer/PanelContainer/Label");
+		strength_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel");
+		strength_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Value");
+		strength_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel/Info/MarginContainer/PanelContainer/Label");
 
-		dexterity_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel");
-		dexterity_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Value");
-		dexterity_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel/Info/MarginContainer/PanelContainer/Label");
+		dexterity_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel");
+		dexterity_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Value");
+		dexterity_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel/Info/MarginContainer/PanelContainer/Label");
 
-		intellect_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel");
-		intellect_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Value");
-		intellect_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel/Info/MarginContainer/PanelContainer/Label");
+		intellect_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel");
+		intellect_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Value");
+		intellect_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel/Info/MarginContainer/PanelContainer/Label");
 
-		vitality_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel");
-		vitality_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Value");
-		vitality_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel/Info/MarginContainer/PanelContainer/Label");
+		vitality_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel");
+		vitality_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Value");
+		vitality_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel/Info/MarginContainer/PanelContainer/Label");
 
-		stamina_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel");
-		stamina_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Value");
-		stamina_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel/Info/MarginContainer/PanelContainer/Label");
+		stamina_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel");
+		stamina_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Value");
+		stamina_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel/Info/MarginContainer/PanelContainer/Label");
 
-		wisdom_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel");
-		wisdom_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Value");
-		wisdom_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel/Info/MarginContainer/PanelContainer/Label");
+		wisdom_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel");
+		wisdom_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Value");
+		wisdom_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel/Info/MarginContainer/PanelContainer/Label");
 
-		charisma_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel");
-		charisma_value = GetNode<Label>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Value");
-		charisma_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel/Info/MarginContainer/PanelContainer/Label");
+		charisma_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel");
+		charisma_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Value");
+		charisma_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel/Info/MarginContainer/PanelContainer/Label");
 
 		// Stats details
-		damage_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel");
-		resistance_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel");
-		recovery_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel");
-		rep_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/RepLabel");
-		level_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
-		sheet_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/SheetLabel");
+		damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel");
+		damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/Value");
+		damage_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel/Info/MarginContainer/PanelContainer/Label");
+
+		resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel");
+		resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/Value");
+		resistance_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel/Info/MarginContainer/PanelContainer/Label");
+
+		recovery_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel");
+		recovery_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/Value");
+		recovery_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel/Info/MarginContainer/PanelContainer/Label");
+
+		level_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
+		level_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Value");
+		level_info_label = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel/Info/MarginContainer/PanelContainer/Label");
+
+
+		rep_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/RepLabel");
+		sheet_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/SheetLabel");
 
 		// Character possessions
 		
-		gold_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/GoldLabel");
+		gold_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/GoldLabel");
 
-		mats_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/MatsGold/MatsLabel");
+		mats_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/MatsLabel");
 
 		// Misc
-		trash_label = GetNode<Button>("CharacterInventoryContainer/RightUI/CharacterInventory/BagSlots/TrashLabel");
+		trash_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BagSlots/TrashLabel");
+
+		skills_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SkillsLabel");
+		journal_quests_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel");
+		achievements_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel");
+		social_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SocialLabel");
+		options_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/OptionsLabel");
+		
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
@@ -160,6 +205,8 @@ public partial class InventoryInfo : UI
 
 	private void CharacterInfo()
 	{
+		// Basic stats
+		string level = this_player.level.ToString();
 		string strength = this_player.strength.ToString();
 		string dexterity = this_player.dexterity.ToString();
 		string intellect = this_player.intellect.ToString();
@@ -167,6 +214,10 @@ public partial class InventoryInfo : UI
 		string stamina = this_player.stamina.ToString();
 		string wisdom = this_player.wisdom.ToString();
 		string charisma = this_player.charisma.ToString();
+
+		// Stat details
+		string damage = this_player.damage.ToString();
+		// Possessions
 		string gold = this_player.gold.ToString();
 		
 		strength_value.Text = strength;
@@ -189,6 +240,18 @@ public partial class InventoryInfo : UI
 
 		charisma_value.Text = charisma;
 		charisma_info_label.Text = string.Format(charisma_info_text, charisma); // 1 variable(s)
+
+		damage_value.Text = damage;
+		damage_info_label.Text = string.Format(damage_info_text, damage); // 1 variable(s)
+
+		resistance_value.Text = "";
+		resistance_info_label.Text = string.Format(resistance_info_text, 0); // 1 variable(s)
+
+		recovery_value.Text = "";
+		recovery_info_label.Text = string.Format(recovery_info_text, 0); // 1 variable(s)
+
+		level_value.Text = level;
+		level_info_label.Text = string.Format(level_info_text, level); // 1 variable(s)
 
 		gold_label.Text = gold;
 		
@@ -585,61 +648,61 @@ public partial class InventoryInfo : UI
 
 	public void _on_skills_focus_entered()
 	{	
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)skills_label.GetChild(0);
 		info.Show();
 	}
 
 	public void _on_skills_focus_exited()
 	{
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)skills_label.GetChild(0);
 		info.Hide();
 	}
 
 	public void _on_journal_quests_focus_entered()
 	{	
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)journal_quests_label.GetChild(0);
 		info.Show();
 	}
 
 	public void _on_journal_quests_focus_exited()
 	{
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)journal_quests_label.GetChild(0);
 		info.Hide();
 	}
 
 	public void _on_achievements_focus_entered()
 	{	
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)achievements_label.GetChild(0);
 		info.Show();
 	}
 
 	public void _on_achievements_focus_exited()
 	{
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)achievements_label.GetChild(0);
 		info.Hide();
 	}
 
 	public void _on_social_focus_entered()
 	{	
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)social_label.GetChild(0);
 		info.Show();
 	}
 
 	public void _on_social_focus_exited()
 	{
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)social_label.GetChild(0);
 		info.Hide();
 	}
 
 	public void _on_options_focus_entered()
 	{	
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)options_label.GetChild(0);
 		info.Show();
 	}
 
 	public void _on_options_focus_exited()
 	{
-		Control info = (Control)trash_label.GetChild(0);
+		Control info = (Control)options_label.GetChild(0);
 		info.Hide();
 	}
 
