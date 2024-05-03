@@ -33,10 +33,10 @@ public partial class Entity : CharacterBody3D
     public int weapon_damage;
     public float attack_speed;
 
-    public float physical_melee_attack_power;
-    public float physical_ranged_attack_power;
-    public float spell_melee_attack_power;
-    public float spell_ranged_attack_power;
+    public float physical_melee_power;
+    public float physical_ranged_power;
+    public float spell_melee_power;
+    public float spell_ranged_power;
 
     public float critical_hit_chance;
     public float critical_hit_damage;

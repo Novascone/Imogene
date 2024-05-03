@@ -282,20 +282,16 @@ public partial class player : Entity
 		spell_melee_attack_ability_ratio = (float)spell_melee_attack_abilities / total_attack_abilities;
 		spell_ranged_attack_ability_ratio = (float)spell_ranged_attack_abilities / total_attack_abilities;
 
-		GD.Print(physical_melee_attack_ability_ratio);
-		GD.Print(physical_ranged_attack_ability_ratio);
-		GD.Print(spell_melee_attack_ability_ratio);
-		GD.Print(spell_ranged_attack_ability_ratio);
 
-		physical_melee_attack_power = (2 * strength) + dexterity;
-		physical_ranged_attack_power = strength + (3 * dexterity);
-		spell_melee_attack_power = strength + dexterity + (3 * intellect);
-		spell_ranged_attack_power = (2 * dexterity) + (3 * intellect);
+		physical_melee_power = (2 * strength) + dexterity;
+		physical_ranged_power = strength + (3 * dexterity);
+		spell_melee_power = strength + dexterity + (3 * intellect);
+		spell_ranged_power = (2 * dexterity) + (3 * intellect);
 
-		physical_melee_damage = physical_melee_attack_power/15;
-		physical_ranged_damage = physical_ranged_attack_power/15;
-		spell_melee_damage = spell_melee_attack_power/15;
-		spell_ranged_damage = spell_ranged_attack_power/15;
+		physical_melee_damage = physical_melee_power/15;
+		physical_ranged_damage = physical_ranged_power/15;
+		spell_melee_damage = spell_melee_power/15;
+		spell_ranged_damage = spell_ranged_power/15;
 
 		damage = ((physical_melee_attack_ability_ratio * physical_melee_damage) + 
 				 (physical_ranged_attack_ability_ratio * physical_ranged_damage) + 
