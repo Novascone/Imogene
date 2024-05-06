@@ -29,7 +29,7 @@ public partial class InventoryInfo : UI
 	private Button dexterity_label;
 	private Label dexterity_value;
 	private RichTextLabel dexterity_info;
-	private string dexterity_info_text = " Dexterity {0} \n * Primary stat for melee \n * Calculated by physical ranged  and critical damage \n * Increases damage by {1} \n * Increases critical chance by {2} * Increases critical damage by {3}";
+	private string dexterity_info_text = " Dexterity {0} \n * Primary stat for melee damage \n * Calculated by physical ranged  and critical damage \n * Increases damage by {1} \n * Increases critical chance by {2} * Increases critical damage by {3}";
 
 	private Button intellect_label;
 	private Label intellect_value;
@@ -60,7 +60,7 @@ public partial class InventoryInfo : UI
 	private Button damage_label;
 	private Label damage_value;
 	private RichTextLabel damage_info;
-	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character \n * Combination of physical power (melee and ranged), spell power(melee and ranged), \n    weapon damage, attack speed, critical hit chance, and critical hit damage";
+	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character \n * Healing per second is based on DPS \n * Combination of physical power (melee and ranged), spell power(melee and ranged), \n     weapon damage, attack speed, critical hit chance, and critical hit damage";
 
 	private Button resistance_label;
 	private Label resistance_value;
@@ -90,17 +90,17 @@ public partial class InventoryInfo : UI
 	private Button spell_melee_power_label;
 	private Label spell_melee_power_value;
 	private RichTextLabel spell_melee_power_info;
-	private string spell_melee_power_info_text =  " Spell melee power {0} \n Increases magic melee DPS and HPS by 1 every 15 points \n * +3 for every point of intellect +1 for every point of dexterity + 1 for every point of strength \n * Bonuses  obtainable on gear ";
+	private string spell_melee_power_info_text =  " Spell melee power {0} \n Increases magic melee DPS by 1 every 15 points \n * +3 for every point of intellect +1 for every point of dexterity + 1 for every point of strength \n * Bonuses  obtainable on gear ";
 
 	private Button physical_ranged_power_label;
 	private Label physical_ranged_power_value;
 	private RichTextLabel physical_ranged_power_info;
-	private string physical_ranged_power_info_text =  " Physical ranged power {0} \n * Increases physical ranged dps by 1 every 15 points \n * +3 for every point of dexterity +1 for every point of strength \n * Bonuses obtainable on gear ";
+	private string physical_ranged_power_info_text =  " Physical ranged power {0} \n * Increases physical ranged DPS by 1 every 15 points \n * +3 for every point of dexterity +1 for every point of strength \n * Bonuses obtainable on gear ";
 
 	private Button spell_ranged_power_label;
 	private Label spell_ranged_power_value;
 	private RichTextLabel spell_ranged_power_info;
-	private string spell_ranged_power_info_text =  " Spell ranged power {0} \n Increases magic ranged DPS and HPS by 1 every 15 points \n * +3 for every point of intellect +2 for every point of dexterity \n * Bonuses obtainable on gear ";
+	private string spell_ranged_power_info_text =  " Spell ranged power {0} \n Increases magic ranged DPS by 1 every 15 points \n * +3 for every point of intellect +2 for every point of dexterity \n * Bonuses obtainable on gear ";
 	
 	private Button thrust_damage_label;
 	private Label thrust_damage_value;
@@ -872,9 +872,11 @@ public partial class InventoryInfo : UI
 
 	public void _on_head_focus_entered()
 	{
-		over_head = true;
+		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), head_slot);
+		GD.Print(head_slot.Name);
 		Control info = (Control)head_slot.GetChild(1);
 		info.Show();
+		
 	}
 
 	public void _on_head_focus_exited()

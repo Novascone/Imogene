@@ -44,7 +44,7 @@ public partial class UI : CanvasLayer
 
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
-
+	public CanvasLayer skills;
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
 
@@ -60,6 +60,7 @@ public partial class UI : CanvasLayer
 	private int health;
 	private int resource;
 	private bool inventory_open;
+	private bool skills_open;
 	public Node3D player;
 
 
@@ -76,7 +77,7 @@ public partial class UI : CanvasLayer
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
-
+		skills = GetNode<CanvasLayer>("Skills");
 		
 
 		// HUD icons
@@ -92,8 +93,8 @@ public partial class UI : CanvasLayer
 		_customSignals.UIHealth += HandleUIHealth;
 		_customSignals.UIResource += HandleUIResource;
 		_customSignals.Interact += HandleInteract;
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
+		_customSignals.OverSlot += HandleOverSlot;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -103,9 +104,6 @@ public partial class UI : CanvasLayer
 
 	}
 
-    
-
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
@@ -113,7 +111,7 @@ public partial class UI : CanvasLayer
 		{
 			
 		}
-		if(inventory_open)
+		if(inventory_open || skills_open)
 		{
 			ControllerCursor();
 			HideCursor();
@@ -132,12 +130,18 @@ public partial class UI : CanvasLayer
 				inventory_open = true;
 				character_inventory.Show();
 				cursor.Show();
+				skills_open = false;
+				skills.Hide();
 			}
 			else
 			{
 				inventory_open = false;
 				character_inventory.Hide();
-				cursor.Hide();
+				if(!skills_open)
+				{
+					cursor.Hide();
+				}
+				
 			}
 		}
 		if(character_inventory.Visible)
@@ -219,6 +223,7 @@ public partial class UI : CanvasLayer
 			}
 			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_head)
 			{
+				GD.Print("overhead clicking");
 				if(grabbed_object.inventory_item.type_of_item == "equipable")
 				{
 					clicked_on = false;
@@ -514,6 +519,14 @@ public partial class UI : CanvasLayer
 		character_Sheet_depth.Hide();
 	}
 
+	public void _on_skills_label_button_down()
+	{
+		skills_open = true;
+		inventory_open = false;
+		character_inventory.Hide();
+		skills.Show();
+	}
+
 	public void _on_add_button_button_down()
 	{
 		Add(ResourceLoader.Load<Item>("res://resources/armor.tres"));
@@ -563,6 +576,8 @@ public partial class UI : CanvasLayer
 		
 	}
 
+	
+
 	public void _on_add_button_2_button_down()
 	{
 		Add(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
@@ -582,6 +597,14 @@ public partial class UI : CanvasLayer
 	private void HandlePlayerInfo(player player)
     {
         this_player = player;
+    }
+
+	private void HandleOverSlot(Button slot)
+    {
+        if(slot.Name == "Head")
+		{
+			over_head = true;
+		}
     }
 
 	

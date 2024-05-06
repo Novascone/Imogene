@@ -28,6 +28,47 @@ public partial class player : Entity
 	public float current_y_rotation;
 	public Vector2 blend_direction = Vector2.Zero;
 
+	// Stats
+
+	public int strength = 1;
+    public int dexterity = 1;
+    public int intellect = 1;
+    public int vitality = 1;
+    public int stamina = 1;
+    public int wisdom = 1;
+    public int charisma = 1;
+
+	
+	public int physical_melee_attack_abilities;
+    public int physical_ranged_attack_abilities;
+    public int spell_melee_attack_abilities;
+    public int spell_ranged_attack_abilities;
+	public int wisdom_attack_abilities;
+
+	public float physical_melee_attack_ability_ratio;
+    public float physical_ranged_attack_ability_ratio;
+    public float spell_melee_attack_ability_ratio;
+    public float spell_ranged_attack_ability_ratio;
+	public float wisdom_attack_ability_ratio;
+    public int total_attack_abilities;
+
+	public float critical_hit_chance;
+    public float critical_hit_damage;
+
+	public float physical_melee_damage;
+    public float physical_ranged_damage;
+    public float spell_melee_damage;
+    public float spell_ranged_damage;
+	public float wisdom_scaler;
+
+	
+
+	
+	public float physical_melee_power;
+    public float physical_ranged_power;
+    public float spell_melee_power;
+    public float spell_ranged_power;
+
 	// Player bools
 	public bool rolling; 
 	public bool enemy_in_vision = false;
@@ -262,7 +303,7 @@ public partial class player : Entity
 		intellect = 5;
 		vitality = 1;
 		stamina = 1;
-		wisdom = 1;
+		wisdom = 20;
 		charisma = 1;
 
 		weapon_damage = 10;
@@ -275,12 +316,14 @@ public partial class player : Entity
 		physical_ranged_attack_abilities = 3;
 		spell_melee_attack_abilities = 3;
 		spell_ranged_attack_abilities = 3;
+		wisdom_attack_abilities = 3;
 		total_attack_abilities = physical_melee_attack_abilities + physical_ranged_attack_abilities + spell_melee_attack_abilities + spell_ranged_attack_abilities;
 
 		physical_melee_attack_ability_ratio = (float)physical_melee_attack_abilities / total_attack_abilities;
 		physical_ranged_attack_ability_ratio = (float)physical_ranged_attack_abilities / total_attack_abilities;
 		spell_melee_attack_ability_ratio = (float)spell_melee_attack_abilities / total_attack_abilities;
 		spell_ranged_attack_ability_ratio = (float)spell_ranged_attack_abilities / total_attack_abilities;
+		wisdom_attack_ability_ratio = (float)wisdom_attack_abilities / total_attack_abilities;
 
 
 		physical_melee_power = (2 * strength) + dexterity;
@@ -292,11 +335,13 @@ public partial class player : Entity
 		physical_ranged_damage = physical_ranged_power/15;
 		spell_melee_damage = spell_melee_power/15;
 		spell_ranged_damage = spell_ranged_power/15;
+		wisdom_scaler = wisdom/20;
 
 		damage = ((physical_melee_attack_ability_ratio * physical_melee_damage) + 
 				 (physical_ranged_attack_ability_ratio * physical_ranged_damage) + 
 				 (spell_melee_attack_ability_ratio * spell_melee_damage) + 
 				 (spell_ranged_attack_ability_ratio * spell_ranged_damage) +
+				 (wisdom_attack_ability_ratio * wisdom_scaler) +
 				 weapon_damage) * 
 				 attack_speed * 
 				 (1 + (critical_hit_chance * critical_hit_damage));

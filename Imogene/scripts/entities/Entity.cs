@@ -9,48 +9,19 @@ public partial class Entity : CharacterBody3D
     public float speed = 5.0f;
 	public float health = 20; // Prelim health number
     public int resource = 20; // prelim resource number
-    public int strength = 1;
-    public int dexterity = 1;
-    public int intellect = 1;
-    public int vitality = 1;
-    public int stamina = 1;
-    public int wisdom = 1;
-    public int charisma = 1;
+   
 
     // Offense
 
-    public int physical_melee_attack_abilities;
-    public int physical_ranged_attack_abilities;
-    public int spell_melee_attack_abilities;
-    public int spell_ranged_attack_abilities;
-
-    public float physical_melee_attack_ability_ratio;
-    public float physical_ranged_attack_ability_ratio;
-    public float spell_melee_attack_ability_ratio;
-    public float spell_ranged_attack_ability_ratio;
-    public int total_attack_abilities;
 
     public int weapon_damage;
     public float attack_speed;
 
-    public float physical_melee_power;
-    public float physical_ranged_power;
-    public float spell_melee_power;
-    public float spell_ranged_power;
-
-    public float critical_hit_chance;
-    public float critical_hit_damage;
-
-    public float physical_melee_damage;
-    public float physical_ranged_damage;
-    public float spell_melee_damage;
-    public float spell_ranged_damage;
 
     public float damage;
 
     // Defense
 
-    
 
     // Possessions
     public int gold = 0;

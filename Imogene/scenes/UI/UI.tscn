@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=53 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="7_hwoqp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ys72g"]
-size = Vector2(280, 19)
+size = Vector2(280, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_287f3"]
 size = Vector2(163, 24)
@@ -24,43 +24,43 @@ size = Vector2(220, 23)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_62t6a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuw4y"]
-size = Vector2(67, 90)
+size = Vector2(68, 66)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5e6bc"]
-size = Vector2(68, 89)
+size = Vector2(81, 80.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7v7rx"]
-size = Vector2(67, 93)
+size = Vector2(43, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uykgh"]
-size = Vector2(66, 87.5)
+size = Vector2(82, 80.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s3kal"]
-size = Vector2(76, 92)
+size = Vector2(64, 63.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7ps0"]
-size = Vector2(67, 85)
+size = Vector2(67, 66.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcubi"]
-size = Vector2(68, 37)
+size = Vector2(51, 51.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qmwru"]
-size = Vector2(66, 48)
+size = Vector2(34, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eoo6u"]
-size = Vector2(62, 42.5)
+size = Vector2(34, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jthq1"]
-size = Vector2(68, 102)
+size = Vector2(88, 85)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmpsh"]
-size = Vector2(65, 104)
+size = Vector2(91, 88)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5q4q5"]
-size = Vector2(67, 86)
+size = Vector2(82, 85)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_60c51"]
-size = Vector2(65, 79)
+size = Vector2(77.5, 79)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryxdi"]
 size = Vector2(34, 35)
@@ -121,6 +121,16 @@ size = Vector2(179, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feh3g"]
 size = Vector2(212, 31)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w78mi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16yjc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gwwsf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrv4k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uoh5t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
@@ -559,7 +569,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel/Area2D"]
-position = Vector2(128, 8.5)
+position = Vector2(128, 6)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower"]
@@ -632,7 +642,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/SpellMeleePowerLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/SpellMeleePowerLabel/Area2D"]
-position = Vector2(128, 8.5)
+position = Vector2(128, 9)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower"]
@@ -990,7 +1000,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel/Area2D"]
-position = Vector2(128, 8.5)
+position = Vector2(128, 7)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
@@ -1061,7 +1071,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel/Area2D"]
-position = Vector2(128, 8.5)
+position = Vector2(126, 6)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
@@ -4494,10 +4504,10 @@ offset_bottom = 25.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel/Info"]
 layout_mode = 0
-offset_left = -435.0
-offset_top = -134.0
-offset_right = 368.0
-offset_bottom = -37.0
+offset_left = -425.0
+offset_top = -122.0
+offset_right = 312.0
+offset_bottom = -25.0
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -4712,17 +4722,16 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_62t6a")
 layout_mode = 0
 offset_left = 155.0
 offset_top = 12.0
-offset_right = 228.0
-offset_bottom = 107.0
+offset_right = 230.0
+offset_bottom = 87.0
 focus_neighbor_left = NodePath("../Shoulder")
 focus_neighbor_right = NodePath("../Neck")
 focus_neighbor_bottom = NodePath("../Chest")
-text = "Head"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head/Area2D"]
-position = Vector2(36.5, 49)
+position = Vector2(37, 37)
 shape = SubResource("RectangleShape2D_cuw4y")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Head"]
@@ -4756,17 +4765,16 @@ horizontal_alignment = 1
 
 [node name="Shoulder" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 56.0
-offset_right = 123.0
-offset_bottom = 151.0
+offset_left = 46.0
+offset_top = 55.0
+offset_right = 136.0
+offset_bottom = 145.0
 focus_neighbor_right = NodePath("../Head")
-text = "Shld"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder/Area2D"]
-position = Vector2(36, 46.5)
+position = Vector2(44.5, 44.75)
 shape = SubResource("RectangleShape2D_5e6bc")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Shoulder"]
@@ -4799,18 +4807,17 @@ horizontal_alignment = 1
 
 [node name="Neck" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 263.0
-offset_top = 58.0
-offset_right = 336.0
-offset_bottom = 153.0
+offset_left = 253.0
+offset_top = 63.0
+offset_right = 303.0
+offset_bottom = 113.0
 focus_neighbor_left = NodePath("../Head")
 focus_neighbor_bottom = NodePath("../Bracers")
-text = "Neck"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck/Area2D"]
-position = Vector2(37.5, 50.5)
+position = Vector2(25.5, 24)
 shape = SubResource("RectangleShape2D_7v7rx")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Neck"]
@@ -4844,20 +4851,19 @@ horizontal_alignment = 1
 
 [node name="Chest" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 156.0
-offset_top = 114.0
-offset_right = 229.0
-offset_bottom = 209.0
+offset_left = 146.0
+offset_top = 107.0
+offset_right = 236.0
+offset_bottom = 197.0
 focus_neighbor_left = NodePath("../Shoulder")
 focus_neighbor_top = NodePath("../Head")
 focus_neighbor_right = NodePath("../Neck")
 focus_neighbor_bottom = NodePath("../Belt")
-text = "Chst"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest/Area2D"]
-position = Vector2(37, 48)
+position = Vector2(45, 44.625)
 shape = SubResource("RectangleShape2D_uykgh")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Chest"]
@@ -4891,19 +4897,18 @@ horizontal_alignment = 1
 
 [node name="Gloves" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 166.0
-offset_right = 107.0
-offset_bottom = 261.0
+offset_left = 45.0
+offset_top = 178.0
+offset_right = 120.0
+offset_bottom = 253.0
 focus_neighbor_top = NodePath("../Shoulder")
 focus_neighbor_right = NodePath("../Belt")
 focus_neighbor_bottom = NodePath("../Ring1")
-text = "Glove"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves/Area2D"]
-position = Vector2(41, 49)
+position = Vector2(38, 37)
 shape = SubResource("RectangleShape2D_s3kal")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Gloves"]
@@ -4937,19 +4942,18 @@ horizontal_alignment = 1
 
 [node name="Bracers" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 275.0
+offset_left = 267.0
 offset_top = 178.0
-offset_right = 350.0
-offset_bottom = 273.0
+offset_right = 342.0
+offset_bottom = 253.0
 focus_neighbor_left = NodePath("../Belt")
 focus_neighbor_top = NodePath("../Neck")
 focus_neighbor_bottom = NodePath("../Ring2")
-text = "Brace"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers/Area2D"]
-position = Vector2(37, 46)
+position = Vector2(37, 36.75)
 shape = SubResource("RectangleShape2D_n7ps0")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Bracers"]
@@ -4982,20 +4986,19 @@ horizontal_alignment = 1
 
 [node name="Belt" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 156.0
-offset_top = 222.0
-offset_right = 229.0
-offset_bottom = 263.0
+offset_left = 161.0
+offset_top = 209.0
+offset_right = 221.0
+offset_bottom = 269.0
 focus_neighbor_left = NodePath("../Gloves")
 focus_neighbor_top = NodePath("../Chest")
 focus_neighbor_right = NodePath("../Bracers")
 focus_neighbor_bottom = NodePath("../Pants")
-text = "Belt"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt/Area2D"]
-position = Vector2(37, 20.5)
+position = Vector2(30, 29.75)
 shape = SubResource("RectangleShape2D_fcubi")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Belt"]
@@ -5028,19 +5031,18 @@ horizontal_alignment = 1
 
 [node name="Ring1" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 31.0
+offset_left = 63.0
 offset_top = 276.0
-offset_right = 104.0
-offset_bottom = 329.0
+offset_right = 103.0
+offset_bottom = 316.0
 focus_neighbor_top = NodePath("../Gloves")
 focus_neighbor_right = NodePath("../Pants")
 focus_neighbor_bottom = NodePath("../MainHand")
-text = "R1"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1/Area2D"]
-position = Vector2(37, 27)
+position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_qmwru")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring1"]
@@ -5073,19 +5075,18 @@ horizontal_alignment = 1
 
 [node name="Ring2" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 279.0
-offset_top = 280.0
-offset_right = 352.0
-offset_bottom = 330.0
+offset_left = 283.0
+offset_top = 276.0
+offset_right = 323.0
+offset_bottom = 316.0
 focus_neighbor_left = NodePath("../Pants")
 focus_neighbor_top = NodePath("../Bracers")
 focus_neighbor_bottom = NodePath("../OffHand")
-text = "R2"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2/Area2D"]
-position = Vector2(36, 24.75)
+position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_eoo6u")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2"]
@@ -5118,16 +5119,15 @@ horizontal_alignment = 1
 
 [node name="MainHand" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 33.0
-offset_top = 349.0
-offset_right = 106.0
-offset_bottom = 459.0
-text = "Main"
+offset_left = 37.0
+offset_top = 340.0
+offset_right = 137.0
+offset_bottom = 440.0
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand/Area2D"]
-position = Vector2(37, 54)
+position = Vector2(50, 49.5)
 shape = SubResource("RectangleShape2D_jthq1")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand"]
@@ -5161,19 +5161,19 @@ horizontal_alignment = 1
 
 [node name="OffHand" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 275.0
-offset_top = 346.0
-offset_right = 348.0
-offset_bottom = 463.0
+offset_left = 255.0
+offset_top = 340.0
+offset_right = 355.0
+offset_bottom = 440.0
 focus_neighbor_left = NodePath("../Boots")
 focus_neighbor_top = NodePath("../Ring2")
-text = "Off
+text = "
 "
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand/Area2D"]
-position = Vector2(37.5, 58)
+position = Vector2(50.5, 50)
 shape = SubResource("RectangleShape2D_hmpsh")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand"]
@@ -5207,19 +5207,18 @@ horizontal_alignment = 1
 
 [node name="Pants" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 158.0
+offset_left = 146.0
 offset_top = 280.0
-offset_right = 231.0
-offset_bottom = 375.0
+offset_right = 236.0
+offset_bottom = 370.0
 focus_neighbor_left = NodePath("../Ring1")
 focus_neighbor_top = NodePath("../Belt")
 focus_neighbor_right = NodePath("../Ring2")
-text = "Pnts"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants/Area2D"]
-position = Vector2(36.5, 46)
+position = Vector2(45, 45.5)
 shape = SubResource("RectangleShape2D_5q4q5")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants"]
@@ -5253,19 +5252,18 @@ horizontal_alignment = 1
 
 [node name="Boots" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 160.0
-offset_top = 379.0
-offset_right = 233.0
-offset_bottom = 466.0
+offset_left = 146.0
+offset_top = 383.0
+offset_right = 236.0
+offset_bottom = 473.0
 focus_neighbor_left = NodePath("../MainHand")
 focus_neighbor_top = NodePath("../Pants")
 focus_neighbor_right = NodePath("../OffHand")
-text = "Bts"
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots/Area2D"]
-position = Vector2(36.5, 42.5)
+position = Vector2(45.25, 44)
 shape = SubResource("RectangleShape2D_60c51")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots"]
@@ -5576,6 +5574,7 @@ size_flags_stretch_ratio = 0.01
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.35
+theme_override_constants/separation = 0
 
 [node name="SkillsLabel" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons"]
 layout_mode = 2
@@ -5927,26 +5926,361 @@ text = "Remove Equiped
 position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
 
+[node name="Skills" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="Skills"]
+custom_minimum_size = Vector2(1500, 850)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_w78mi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Skills/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Panel" parent="Skills/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/Title"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 25.5
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Skills"
+horizontal_alignment = 1
+
+[node name="AbilityContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+layout_mode = 2
+
+[node name="MeleeAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Melee"
+
+[node name="RangedAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Ranged"
+
+[node name="Class" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "Class
+"
+
+[node name="SkillBinds" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_16yjc")
+
+[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="LCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 10
+columns = 3
+
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+columns = 3
+
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+columns = 3
+
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MeleeSkills" type="PanelContainer" parent="Skills/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gwwsf")
+
+[node name="RangedSkills" type="PanelContainer" parent="Skills/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nrv4k")
+
+[node name="ClassSkills" type="PanelContainer" parent="Skills/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uoh5t")
+
 [node name="Cursor" type="Sprite2D" parent="."]
 visible = false
 top_level = true
-position = Vector2(1155, 291)
+position = Vector2(1157, 294)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_kmgx5")
 script = ExtResource("3_g3gm6")
 
 [node name="CursorArea2D" type="Area2D" parent="Cursor" groups=["cursor"]]
+show_behind_parent = true
 position = Vector2(0, 6.66667)
 scale = Vector2(6.66667, 6.66667)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor/CursorArea2D"]
+position = Vector2(-9, -9.99999)
+scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_rtd4h")
 
 [node name="CursorButton" parent="Cursor/CursorArea2D" instance=ExtResource("4_cpmgk")]
-offset_left = -20.0
-offset_top = -21.0
-offset_right = 20.0
-offset_bottom = 19.0
+show_behind_parent = true
+offset_left = -43.0
+offset_top = -43.0
+offset_right = -2.99999
+offset_bottom = -2.99998
 
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel" to="Inventory" method="_on_physical_melee_power_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel" to="Inventory" method="_on_physical_melee_power_label_focus_exited"]
@@ -6096,6 +6430,7 @@ offset_bottom = 19.0
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/MatsLabel" to="Inventory" method="_on_mats_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/GoldLabel" to="Inventory" method="_on_gold_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/GoldLabel" to="Inventory" method="_on_gold_focus_exited"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SkillsLabel" to="." method="_on_skills_label_button_down"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SkillsLabel" to="Inventory" method="_on_skills_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SkillsLabel" to="Inventory" method="_on_skills_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel" to="Inventory" method="_on_journal_quests_focus_entered"]
