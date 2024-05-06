@@ -102,6 +102,12 @@ public partial class InventoryInfo : UI
 	private RichTextLabel spell_ranged_power_info;
 	private string spell_ranged_power_info_text =  " Spell ranged power {0} \n Increases magic ranged DPS by 1 every 15 points \n * +3 for every point of intellect +2 for every point of dexterity \n * Bonuses obtainable on gear ";
 	
+	private Button wisdom_scaler_label;
+	private Label wisdom_scaler_value;
+	private RichTextLabel wisdom_scaler_info;
+	private string wisdom_scaler_info_text =  " Wisdom Scaler {0} \n Increases by one for every 20 wisdom \n * Scales how powerful attacks that scale with wisdom are ";
+	
+	
 	private Button thrust_damage_label;
 	private Label thrust_damage_value;
 	private RichTextLabel thrust_damage_info;
@@ -402,6 +408,10 @@ public partial class InventoryInfo : UI
         spell_ranged_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel");
 		spell_ranged_power_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Value");
 		spell_ranged_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+
+		wisdom_scaler_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel");
+		wisdom_scaler_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Value");
+		wisdom_scaler_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
  		
 		thrust_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/ThrustDamageLabel");
 		thrust_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Value");
@@ -620,10 +630,11 @@ public partial class InventoryInfo : UI
 		string stamina = this_player.stamina.ToString();
 		string wisdom = this_player.wisdom.ToString();
 		string charisma = this_player.charisma.ToString();
+		
 
 		// Stat details
 		string damage = this_player.damage.ToString();
-
+	
 		// Sheet
 
 		// Offense
@@ -631,6 +642,7 @@ public partial class InventoryInfo : UI
 		string spell_melee_power = this_player.spell_melee_power.ToString();
 		string physical_ranged_power = this_player.physical_ranged_power.ToString();
 		string spell_ranged_power = this_player.spell_ranged_power.ToString();
+		string wisdom_scaler = this_player.wisdom_scaler.ToString();
 		// Thrust
 		// Slash
 		// Blunt
@@ -733,6 +745,9 @@ public partial class InventoryInfo : UI
 
 		spell_ranged_power_value.Text = spell_ranged_power;
 		spell_ranged_power_info.Text = string.Format(spell_ranged_power_info_text, spell_ranged_power);
+
+		wisdom_scaler_value.Text = wisdom_scaler;
+		wisdom_scaler_info.Text = string.Format(wisdom_scaler_info_text, wisdom_scaler);
 
 		// thrust_damage_value.Text =;
 		thrust_damage_info.Text = string.Format(thrust_damage_info_text, 0);
@@ -872,7 +887,7 @@ public partial class InventoryInfo : UI
 
 	public void _on_head_focus_entered()
 	{
-		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), head_slot);
+		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "Head");
 		GD.Print(head_slot.Name);
 		Control info = (Control)head_slot.GetChild(1);
 		info.Show();
@@ -881,6 +896,7 @@ public partial class InventoryInfo : UI
 
 	public void _on_head_focus_exited()
 	{
+		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "");
 		over_head = false;
 		Control info = (Control)head_slot.GetChild(1);
 		info.Hide();
@@ -1260,6 +1276,18 @@ public partial class InventoryInfo : UI
 	public void _on_spell_ranged_power_label_focus_exited()
 	{
 		Control info = (Control)spell_ranged_power_label.GetChild(0);
+		info.Hide();
+	}
+
+	public void _on_wisdom_scaler_focus_entered()
+	{
+		Control info = (Control)wisdom_scaler_label.GetChild(0);
+		info.Show();
+	}
+
+	public void _on_wisdom_scaler_focus_exited()
+	{
+		Control info = (Control)wisdom_scaler_label.GetChild(0);
 		info.Hide();
 	}
 

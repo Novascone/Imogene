@@ -1,16 +1,25 @@
-[gd_scene load_steps=53 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=56 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
-[ext_resource type="Texture2D" uid="uid://b046bwhu4klyn" path="res://images/UI/Health.png" id="5_ufnnp"]
-[ext_resource type="Texture2D" uid="uid://41j8hcapqs2h" path="res://images/UI/ability_ui_ref.png" id="6_8hs7h"]
-[ext_resource type="Texture2D" uid="uid://docwagyfeyqgm" path="res://images/UI/Resource.png" id="7_hwoqp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wudlh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vqia"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gux6w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qj3kh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_en8la"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lnptr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ys72g"]
-size = Vector2(280, 15)
+size = Vector2(280, 16.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_287f3"]
 size = Vector2(163, 24)
@@ -124,13 +133,16 @@ size = Vector2(212, 31)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w78mi"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ra0e8"]
+size = Vector2(363, 93)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_74b76"]
+size = Vector2(1493, 90)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16yjc"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gwwsf"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrv4k"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uoh5t"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ch5s"]
+size = Vector2(54, 56)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
@@ -141,253 +153,544 @@ script = ExtResource("1_qmnvm")
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="BottomHUD" type="HBoxContainer" parent="HUD"]
+[node name="BottomHUD" type="PanelContainer" parent="HUD"]
+custom_minimum_size = Vector2(1200, 210)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -606.0
-offset_top = -230.0
-offset_right = 606.0
+offset_left = -600.0
+offset_top = -200.0
+offset_right = 600.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = -1
-
-[node name="PanelHealthContainer" type="PanelContainer" parent="HUD/BottomHUD"]
-custom_minimum_size = Vector2(415, 190)
-layout_mode = 2
 size_flags_vertical = 8
-theme_type_variation = &"Health_Art"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wudlh")
 
-[node name="HealthContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelHealthContainer"]
-show_behind_parent = true
+[node name="BottomHUDVBox" type="VBoxContainer" parent="HUD/BottomHUD"]
 layout_mode = 2
-theme_type_variation = &"Health_and_Resource"
 
-[node name="Control" type="Control" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
+[node name="XP" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox"]
+custom_minimum_size = Vector2(850, 10)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 
-[node name="HealthIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelHealthContainer/HealthContainer"]
-show_behind_parent = true
-layout_mode = 2
-value = 100.0
-fill_mode = 3
-texture_progress = ExtResource("5_ufnnp")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="PanelContainer2" type="PanelContainer" parent="HUD/BottomHUD/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"BlackBorder"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/VBoxContainer"]
+[node name="BottomHUDHBox" type="HBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
 
-[node name="Ability1Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
+[node name="Health" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6vqia")
 
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health"]
 layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
 
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability1Container"]
+[node name="HitPoints" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer"]
+custom_minimum_size = Vector2(310, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   A   "
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
-[node name="Ability2Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability2Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   B   "
-
-[node name="Ability3Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability3Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   X   "
-
-[node name="Ability4Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability4Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   Y   "
-
-[node name="Ability5Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability5Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " RB  "
-
-[node name="Ability6Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability6Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "  LB "
-
-[node name="Ability7Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability7Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   RT"
-
-[node name="Ability8Container" type="VBoxContainer" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="TextureRect" type="TextureRect" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
-layout_mode = 2
-texture = ExtResource("6_8hs7h")
-expand_mode = 4
-
-[node name="Ability" type="Label" parent="HUD/BottomHUD/VBoxContainer/HBoxContainer/Ability8Container"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "   LT "
-
-[node name="PanelResourceContainer" type="PanelContainer" parent="HUD/BottomHUD"]
-custom_minimum_size = Vector2(415, 190)
-layout_mode = 2
-size_flags_vertical = 8
-theme_type_variation = &"Resource_Art"
-
-[node name="ResourceContainer" type="HBoxContainer" parent="HUD/BottomHUD/PanelResourceContainer"]
-show_behind_parent = true
-layout_mode = 2
-theme_type_variation = &"Health_and_Resource"
-
-[node name="ResourceIcon" type="TextureProgressBar" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
-show_behind_parent = true
-layout_mode = 2
-size_flags_horizontal = 3
-fill_mode = 3
-texture_progress = ExtResource("7_hwoqp")
-
-[node name="Control" type="Control" parent="HUD/BottomHUD/PanelResourceContainer/ResourceContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+[node name="HealthBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer"]
 visible = false
-offset_right = 1054.0
-offset_bottom = 1667.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderLarge"
-text = "Quest
-"
-horizontal_alignment = 1
-
-[node name="Text" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-text = "
-
-Nostrum aspernatur quod ad et. Possimus ut eum tenetur. Reprehenderit incidunt reprehenderit molestias ipsam voluptatem. Accusantium id aut enim commodi. Blanditiis vitae dolorum cumque delectus quos minus placeat perspiciatis. Assumenda modi distinctio praesentium excepturi.
-
-Aliquid saepe quod voluptate. Perferendis quasi provident impedit earum eius. Eligendi quis ea sint aut eveniet. Nulla iusto dolor quae officia harum ea.
-
-Deserunt cum fuga debitis officiis iure quis provident. Voluptas est nisi distinctio. Qui sunt in beatae molestiae doloribus adipisci soluta nobis. Distinctio fugit unde voluptatum dignissimos distinctio sit.
-
-Exercitationem doloremque est quia deserunt. Id voluptatem est aliquam esse. Neque quam exercitationem itaque enim doloribus adipisci. Et distinctio at repellat quo.
-
-"
-autowrap_mode = 2
-
-[node name="Spacer" type="Control" parent="HUD/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gux6w")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Decline" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HealthDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Decline
-"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qj3kh")
 
-[node name="Accept" type="Button" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs"]
+layout_mode = 2
+size_flags_horizontal = 8
+columns = 3
+
+[node name="Button" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="HealthBuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Accept
-"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qj3kh")
 
-[node name="Spacer2" type="Control" parent="HUD/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs"]
+layout_mode = 2
+size_flags_horizontal = 0
+columns = 3
+
+[node name="Button" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HealthBuffsDebuffs/HBoxContainer/HealthBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="LCross" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_en8la")
+
+[node name="LCrossSecondary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross"]
+modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+
+[node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+
+[node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+
+[node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+
+[node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "1"
+
+[node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "1"
+
+[node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "1"
+
+[node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "1"
+
+[node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="RCross" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lnptr")
+
+[node name="RCrossSecondary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross"]
+modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossSecondaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "4"
+
+[node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossSecondaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "4"
+
+[node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="RCrossSecondaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "4"
+
+[node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossSecondaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "4"
+
+[node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossPrimary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossPrimaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "2"
+
+[node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossPrimaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "2"
+
+[node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="RCrossPrimaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "2"
+
+[node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RCrossPrimaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "2"
+
+[node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Resource" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6vqia")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource"]
+layout_mode = 2
+
+[node name="ResourcePoints" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer"]
+custom_minimum_size = Vector2(310, 60)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="DamageBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gux6w")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs"]
+layout_mode = 2
+
+[node name="DamageBuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qj3kh")
+
+[node name="GridContainer" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs"]
+layout_mode = 2
+size_flags_horizontal = 8
+columns = 3
+
+[node name="Button" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageBuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="DamageDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qj3kh")
+
+[node name="GridContainer" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs"]
+layout_mode = 2
+size_flags_horizontal = 0
+columns = 3
+
+[node name="Button" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
 
 [node name="InteractBar" type="PanelContainer" parent="HUD"]
 visible = false
@@ -396,10 +699,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = 310.0
-offset_right = 100.0
-offset_bottom = 360.0
+offset_left = -102.0
+offset_top = 272.0
+offset_right = 98.0
+offset_bottom = 322.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -424,10 +727,17 @@ horizontal_alignment = 1
 
 [node name="InteractInventory" type="PanelContainer" parent="."]
 visible = false
-offset_left = 352.0
-offset_top = 152.0
-offset_right = 641.0
-offset_bottom = 424.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.5
+offset_top = -136.0
+offset_right = 144.5
+offset_bottom = 136.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="GridContainer" type="GridContainer" parent="InteractInventory"]
 layout_mode = 2
@@ -801,6 +1111,77 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
+[node name="WisdomScaler" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="WisdomScalerLabel" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Wisdom Scaler"
+alignment = 0
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -199.52
+offset_top = -95.004
+offset_right = 217.48
+offset_bottom = -16.004
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = " Thrust {0} \\n 
+* Percentage of melee damage inflicted as thrust \\n 
+* Increased by skills and gear "
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
 [node name="ThrustDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
 
@@ -1000,7 +1381,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel/Area2D"]
-position = Vector2(128, 7)
+position = Vector2(128, 9.25)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
@@ -1071,7 +1452,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel/Area2D"]
-position = Vector2(126, 6)
+position = Vector2(128, 9)
 shape = SubResource("RectangleShape2D_ys72g")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
@@ -4807,9 +5188,9 @@ horizontal_alignment = 1
 
 [node name="Neck" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 253.0
+offset_left = 243.0
 offset_top = 63.0
-offset_right = 303.0
+offset_right = 293.0
 offset_bottom = 113.0
 focus_neighbor_left = NodePath("../Head")
 focus_neighbor_bottom = NodePath("../Bracers")
@@ -4897,9 +5278,9 @@ horizontal_alignment = 1
 
 [node name="Gloves" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 47.0
 offset_top = 178.0
-offset_right = 120.0
+offset_right = 122.0
 offset_bottom = 253.0
 focus_neighbor_top = NodePath("../Shoulder")
 focus_neighbor_right = NodePath("../Belt")
@@ -4942,9 +5323,9 @@ horizontal_alignment = 1
 
 [node name="Bracers" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 267.0
+offset_left = 253.0
 offset_top = 178.0
-offset_right = 342.0
+offset_right = 328.0
 offset_bottom = 253.0
 focus_neighbor_left = NodePath("../Belt")
 focus_neighbor_top = NodePath("../Neck")
@@ -4986,9 +5367,9 @@ horizontal_alignment = 1
 
 [node name="Belt" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 161.0
+offset_left = 159.0
 offset_top = 209.0
-offset_right = 221.0
+offset_right = 219.0
 offset_bottom = 269.0
 focus_neighbor_left = NodePath("../Gloves")
 focus_neighbor_top = NodePath("../Chest")
@@ -5075,9 +5456,9 @@ horizontal_alignment = 1
 
 [node name="Ring2" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 283.0
+offset_left = 272.0
 offset_top = 276.0
-offset_right = 323.0
+offset_right = 312.0
 offset_bottom = 316.0
 focus_neighbor_left = NodePath("../Pants")
 focus_neighbor_top = NodePath("../Bracers")
@@ -5161,9 +5542,9 @@ horizontal_alignment = 1
 
 [node name="OffHand" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 255.0
+offset_left = 246.0
 offset_top = 340.0
-offset_right = 355.0
+offset_right = 346.0
 offset_bottom = 440.0
 focus_neighbor_left = NodePath("../Boots")
 focus_neighbor_top = NodePath("../Ring2")
@@ -5208,9 +5589,9 @@ horizontal_alignment = 1
 [node name="Pants" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
 offset_left = 146.0
-offset_top = 280.0
+offset_top = 279.0
 offset_right = 236.0
-offset_bottom = 370.0
+offset_bottom = 369.0
 focus_neighbor_left = NodePath("../Ring1")
 focus_neighbor_top = NodePath("../Belt")
 focus_neighbor_right = NodePath("../Ring2")
@@ -5927,6 +6308,7 @@ position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
 
 [node name="Skills" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="Skills"]
 custom_minimum_size = Vector2(1500, 850)
@@ -5976,6 +6358,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Melee"
 
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/MeleeAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/MeleeAbilities/Area2D"]
+position = Vector2(185.5, 49.5)
+shape = SubResource("RectangleShape2D_ra0e8")
+
 [node name="RangedAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
@@ -5983,261 +6371,513 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Ranged"
 
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/RangedAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/RangedAbilities/Area2D"]
+position = Vector2(185.5, 49.5)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="Movement" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Movement"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Movement"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Movement/Area2D"]
+position = Vector2(185.5, 49.5)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="Defense" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Defense
+"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Defense"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Defense/Area2D"]
+position = Vector2(185.5, 49.5)
+shape = SubResource("RectangleShape2D_ra0e8")
+
 [node name="Class" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 text = "Class
 "
 
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/Class"]
+position = Vector2(591.056, 44.1537)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/Class/Area2D"]
+position = Vector2(157.444, 4.84625)
+shape = SubResource("RectangleShape2D_74b76")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
 [node name="SkillBinds" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_16yjc")
 
-[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="LCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
-custom_minimum_size = Vector2(400, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer"]
+layout_mode = 2
+text = "Left Cross Primary
+"
+
+[node name="LCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer"]
+custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeft")
+focus_neighbor_right = NodePath("../LCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryUp"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryUp/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../VBoxContainer2/RCrossPrimary/RCrossPrimaryRight")
+focus_neighbor_top = NodePath("../LCrossPrimaryUp")
+focus_neighbor_right = NodePath("../LCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDown")
 
-[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryLeft"]
+position = Vector2(29.6122, 29.6355)
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryLeft/Area2D"]
+position = Vector2(0.387817, 0.364502)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeft")
+focus_neighbor_top = NodePath("../LCrossPrimaryUp")
+focus_neighbor_right = NodePath("../../../VBoxContainer2/RCrossPrimary/RCrossPrimaryLeft")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryRight"]
+position = Vector2(29.9016, 19.3901)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryRight/Area2D"]
+position = Vector2(0.0983887, 11.6099)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeft")
+focus_neighbor_top = NodePath("../LCrossPrimaryUp")
+focus_neighbor_right = NodePath("../LCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer3/LCrossSecondary/LCrossSecondaryUp")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryDown"]
+position = Vector2(33.3204, 35.571)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary/LCrossPrimaryDown/Area2D"]
+position = Vector2(-3.32043, -4.57104)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer/LCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="VBoxContainer2" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+text = "Right Cross Primary 
+"
+horizontal_alignment = 2
 
-[node name="RCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+[node name="RCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 10
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossPrimaryRight")
+focus_neighbor_right = NodePath("../RCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../RCrossPrimaryDown")
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryUp"]
+position = Vector2(37.871, 13.4483)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryUp/Area2D"]
+position = Vector2(-7.87097, 16.5517)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../VBoxContainer/LCrossPrimary/LCrossPrimaryRight")
+focus_neighbor_top = NodePath("../RCrossPrimaryUp")
+focus_neighbor_right = NodePath("../RCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../RCrossPrimaryDown")
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryLeft"]
+position = Vector2(22.496, 40.7926)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryLeft/Area2D"]
+position = Vector2(7.50403, -10.7926)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossPrimaryLeft")
+focus_neighbor_top = NodePath("../RCrossPrimaryUp")
+focus_neighbor_right = NodePath("../../../VBoxContainer/LCrossPrimary/LCrossPrimaryLeft")
+focus_neighbor_bottom = NodePath("../RCrossPrimaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryRight"]
+position = Vector2(22.9757, 38.1199)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryRight/Area2D"]
+position = Vector2(8.02429, -8.11987)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossPrimaryLeft")
+focus_neighbor_top = NodePath("../RCrossPrimaryUp")
+focus_neighbor_right = NodePath("../RCrossPrimaryRight")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer4/RCrossSecondary/RCrossSecondaryUp")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryDown"]
+position = Vector2(19.5112, 45.7167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary/RCrossPrimaryDown/Area2D"]
+position = Vector2(10.4888, -16.7167)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer2/RCrossPrimary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="VBoxContainer3" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossPrimary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+text = "Left Cross Secondary"
+horizontal_alignment = 2
 
-[node name="LCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
+[node name="LCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossSecondaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../../../VBoxContainer/LCrossPrimary/LCrossPrimaryDown")
+focus_neighbor_right = NodePath("../LCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../LCrossSecondaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryUp"]
+position = Vector2(25.2313, 29.2363)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryUp/Area2D"]
+position = Vector2(4.76868, 0.763672)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossSecondaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../VBoxContainer4/RCrossSecondary/RCrossSecondaryRight")
+focus_neighbor_top = NodePath("../LCrossSecondaryUp")
+focus_neighbor_right = NodePath("../LCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../LCrossSecondaryDown")
 
-[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryLeft"]
+position = Vector2(24.1479, 41.4316)
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryLeft/Area2D"]
+position = Vector2(6.85211, -12.4316)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossSecondaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../LCrossSecondaryUp")
+focus_neighbor_right = NodePath("../../../VBoxContainer4/RCrossSecondary/RCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../LCrossSecondaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryRight"]
+position = Vector2(8.3197, 39.6062)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryRight/Area2D"]
+position = Vector2(21.6803, -10.6062)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="LCrossSecondaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../LCrossSecondaryUp")
+focus_neighbor_right = NodePath("../LCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/LCrossPrimary/LCrossPrimaryUp")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryDown"]
+position = Vector2(20.11, 38.0148)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary/LCrossSecondaryDown/Area2D"]
+position = Vector2(10.89, -9.01483)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer3/LCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="VBoxContainer4" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/LCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+text = "Right Cross Secondary"
 
-[node name="RCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer"]
-custom_minimum_size = Vector2(400, 0)
+[node name="RCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4"]
+custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossSecondaryUp" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../../../VBoxContainer2/RCrossPrimary/RCrossPrimaryDown")
+focus_neighbor_right = NodePath("../RCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../RCrossSecondaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryUp"]
+position = Vector2(28.5, 43.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryUp/Area2D"]
+position = Vector2(1.5, -13.5)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossSecondaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../VBoxContainer3/LCrossSecondary/LCrossSecondaryRight")
+focus_neighbor_top = NodePath("../RCrossSecondaryUp")
+focus_neighbor_right = NodePath("../RCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../RCrossSecondaryDown")
 
-[node name="LCrossPrimaryLeft" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryLeft"]
+position = Vector2(22, 43)
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryLeft/Area2D"]
+position = Vector2(9, -12)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossSecondaryRight" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../RCrossSecondaryUp")
+focus_neighbor_right = NodePath("../../../VBoxContainer3/LCrossSecondary/LCrossSecondaryLeft")
+focus_neighbor_bottom = NodePath("../RCrossSecondaryDown")
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryRight"]
+position = Vector2(33.7673, 36.4768)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryRight/Area2D"]
+position = Vector2(-4.76733, -7.47681)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RCrossSecondaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../RCrossSecondaryLeft")
+focus_neighbor_top = NodePath("../RCrossSecondaryUp")
+focus_neighbor_right = NodePath("../RCrossSecondaryRight")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer2/RCrossPrimary/RCrossPrimaryUp")
 
-[node name="LCrossPrimaryDown" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryDown"]
+position = Vector2(17.5864, 34.8397)
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/GridContainer/RCrossSecondary"]
-custom_minimum_size = Vector2(80, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary/RCrossSecondaryDown/Area2D"]
+position = Vector2(12.4136, -5.83972)
+shape = SubResource("RectangleShape2D_7ch5s")
+
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxContainer4/RCrossSecondary"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -6245,17 +6885,112 @@ size_flags_vertical = 4
 [node name="MeleeSkills" type="PanelContainer" parent="Skills/PanelContainer"]
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_gwwsf")
+
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/MeleeSkills"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/MeleeSkills/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Melee Skills"
+horizontal_alignment = 1
 
 [node name="RangedSkills" type="PanelContainer" parent="Skills/PanelContainer"]
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_nrv4k")
+
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/RangedSkills"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/RangedSkills/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Ranged Skills"
+horizontal_alignment = 1
+
+[node name="MovementSkills" type="PanelContainer" parent="Skills/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/MovementSkills"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/MovementSkills/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Movement Skills"
+horizontal_alignment = 1
+
+[node name="DefenseSkills" type="PanelContainer" parent="Skills/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/DefenseSkills"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/DefenseSkills/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Defense Skills"
+horizontal_alignment = 1
 
 [node name="ClassSkills" type="PanelContainer" parent="Skills/PanelContainer"]
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_uoh5t")
+
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/ClassSkills"]
+custom_minimum_size = Vector2(750, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/ClassSkills/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Class Skills"
+horizontal_alignment = 1
 
 [node name="Cursor" type="Sprite2D" parent="."]
 visible = false
@@ -6290,6 +7025,8 @@ offset_bottom = -2.99998
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/PhysicalRangedPowerLabel" to="Inventory" method="_on_physical_ranged_power_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel" to="Inventory" method="_on_spell_ranged_power_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel" to="Inventory" method="_on_spell_ranged_power_label_focus_exited"]
+[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel" to="Inventory" method="_on_wisdom_scaler_focus_entered"]
+[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel" to="Inventory" method="_on_wisdom_scaler_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/ThrustDamageLabel" to="Inventory" method="_on_thrust_damage_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/ThrustDamageLabel" to="Inventory" method="_on_thrust_damage_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/SlashDamageLabel" to="Inventory" method="_on_slash_damage_label_focus_entered"]

@@ -34,7 +34,7 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void PlayerInfoEventHandler(player player);
 	[Signal]
-	public delegate void OverSlotEventHandler(Button slot);
+	public delegate void OverSlotEventHandler(string slot);
 	[Signal]
 	public delegate void RemoveEquippedEventHandler();
 	

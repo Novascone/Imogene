@@ -42,18 +42,28 @@ public partial class UI : CanvasLayer
 
 	public player this_player;
 
+	public GridContainer l_cross_primary;
+	public GridContainer r_cross_primary;
+	public GridContainer l_cross_secondary;
+	public GridContainer r_cross_secondary;
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
 	public CanvasLayer skills;
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
 
+	private bool l_cross_primary_selected = true;
+	private bool r_cross_primary_selected = true;
+	private bool l_cross_secondary_selected = false;
+	private bool r_cross_secondary_selected = false;
+
+
 	public Sprite2D cursor;
 
 
 	private Vector2 mouse_pos = Vector2.Zero;
 	private float mouse_max_speed = 20.0f;
-	private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
+	// private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	// Called when the node enters the scene tree for the first time.
 	private PanelContainer interact_bar;
@@ -73,6 +83,11 @@ public partial class UI : CanvasLayer
 		mouse_pos = cursor.Position;
 
 		// UI sections
+		l_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary");
+		r_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary");
+		l_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary");
+		r_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary");
+
 		character_inventory = GetNode<CanvasLayer>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
@@ -81,8 +96,8 @@ public partial class UI : CanvasLayer
 		
 
 		// HUD icons
-		health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
-		resource_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelResourceContainer/ResourceContainer/ResourceIcon");
+		// health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
+		// resource_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		interact_bar = GetNode<PanelContainer>("HUD/InteractBar");
 
 
@@ -90,8 +105,8 @@ public partial class UI : CanvasLayer
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
 		_customSignals.UIResourceUpdate += HandleUIResourceUpdate;
-		_customSignals.UIHealth += HandleUIHealth;
-		_customSignals.UIResource += HandleUIResource;
+		// _customSignals.UIHealth += HandleUIHealth;
+		// _customSignals.UIResource += HandleUIResource;
 		_customSignals.Interact += HandleInteract;
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
@@ -119,8 +134,10 @@ public partial class UI : CanvasLayer
 		}
 		
 
-		UpdateHealth();
-		UpdateResource();
+		// UpdateHealth();
+		// UpdateResource();
+
+		ChangeActionBars();
 
 		if(Input.IsActionJustPressed("Inventory"))
 		{
@@ -269,7 +286,7 @@ public partial class UI : CanvasLayer
 
 	private void HideCursor()
 	{
-		if(Input.IsActionJustPressed("D-Pad_up") || Input.IsActionJustPressed("D-Pad_down") || Input.IsActionJustPressed("D-Pad_left") || Input.IsActionJustPressed("D-Pad_right"))
+		if(Input.IsActionJustPressed("D-PadUp") || Input.IsActionJustPressed("D-PadDown") || Input.IsActionJustPressed("D-PadLeft") || Input.IsActionJustPressed("D-PadRight"))
 		{
 			cursor.Hide();
 		}
@@ -282,12 +299,12 @@ public partial class UI : CanvasLayer
 		}
 	}
 
-    private void UpdateHealth() // Updates UI health
-	{
-		// GD.Print("Health: ", health);
-		health_icon.Value = health;
-		// GD.Print("Health Icon Value: ", health_icon.MaxValue);
-	}
+    // private void UpdateHealth() // Updates UI health
+	// {
+	// 	// GD.Print("Health: ", health);
+	// 	health_icon.Value = health;
+	// 	// GD.Print("Health Icon Value: ", health_icon.MaxValue);
+	// }
 
 	private void UpdateResource() // Updates UI resource
 	{
@@ -341,15 +358,15 @@ public partial class UI : CanvasLayer
     }
 
 	
-    private void HandleUIHealth(int amount)
-    {
-		health = amount;
-        health_icon.MaxValue = amount;
-    }
-	   private void HandleUIResource(int amount)
-    {
-        resource_icon.MaxValue = amount;
-    }
+    // private void HandleUIHealth(int amount)
+    // {
+	// 	health = amount;
+    //     health_icon.MaxValue = amount;
+    // }
+	//    private void HandleUIResource(int amount)
+    // {
+    //     resource_icon.MaxValue = amount;
+    // }
 
 
 	public override void _Input(InputEvent @event)
@@ -507,6 +524,54 @@ public partial class UI : CanvasLayer
 		
 	}
 
+	public void ChangeActionBars()
+	{
+		if(!inventory_open && !skills_open && Input.IsActionJustPressed("D-PadLeft"))
+		{
+			if(l_cross_primary_selected)
+			{
+				l_cross_primary_selected = false;
+				l_cross_secondary_selected = true;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
+			}
+			else
+			{
+				l_cross_primary_selected = true;
+				l_cross_secondary_selected = false;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_primary.Modulate = new Color(Colors.White, 1f);
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+			}
+			
+		}
+		if(!inventory_open && !skills_open && Input.IsActionJustPressed("D-PadRight"))
+		{
+			if(r_cross_primary_selected)
+			{
+				r_cross_primary_selected = false;
+				r_cross_secondary_selected = true;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
+			}
+			else
+			{
+				r_cross_primary_selected = true;
+				r_cross_secondary_selected = false;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_primary.Modulate = new Color(Colors.White, 1f);
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+			}
+			
+		}
+	}
+
 	public void _on_sheet_button_down()
 	{
 		character_Sheet_depth.Visible = !character_Sheet_depth.Visible;
@@ -599,11 +664,15 @@ public partial class UI : CanvasLayer
         this_player = player;
     }
 
-	private void HandleOverSlot(Button slot)
+	private void HandleOverSlot(string slot)
     {
-        if(slot.Name == "Head")
+        if(slot == "Head")
 		{
 			over_head = true;
+		}
+		else
+		{
+			over_head = false;
 		}
     }
 
