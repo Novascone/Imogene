@@ -19,6 +19,30 @@ public partial class player : Entity
 	Roll roll_ability;
 	Target target_ability;
 	BasicAttack basic_attack_ability;
+	List<Ability> abilities = new List<Ability>();
+
+	public bool l_cross_primary_selected;
+	public bool r_cross_primary_selected;
+
+	public Dictionary<string, Ability> primary_RB;
+	public Dictionary<string, Ability> primary_LB = new Dictionary<string, Ability>();
+	public KeyValuePair<string, Ability> primary_RT;
+	public KeyValuePair<string, Ability> primary_LT;
+
+	public KeyValuePair<string, Ability> primary_A;
+	public KeyValuePair<string, Ability> primary_B;
+	public KeyValuePair<string, Ability> primary_X;
+	public KeyValuePair<string, Ability> primary_Y;
+
+	public KeyValuePair<string, Ability> secondary_RB;
+	public KeyValuePair<string, Ability> secondary_LB;
+	public KeyValuePair<string, Ability> secondary_RT;
+	public KeyValuePair<string, Ability> secondary_LT;
+
+	public KeyValuePair<string, Ability> secondary_A;
+	public KeyValuePair<string, Ability> secondary_B;
+	public KeyValuePair<string, Ability> secondary_X;
+	public KeyValuePair<string, Ability> secondary_Y;
 
 	// Player Direction and animation variables
 	public Vector3 player_position; // Position of the player
@@ -68,6 +92,7 @@ public partial class player : Entity
     public float physical_ranged_power;
     public float spell_melee_power;
     public float spell_ranged_power;
+
 
 	// Player bools
 	public bool rolling; 
@@ -122,9 +147,16 @@ public partial class player : Entity
 		this_player = this;
 		
 		roll_ability = (Roll)LoadAbility("Roll");
+		abilities.Add(roll_ability);
 		target_ability = (Target)LoadAbility("Target");
 		basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
+		abilities.Add(basic_attack_ability);
 
+		l_cross_primary_selected = true;
+		r_cross_primary_selected = true;
+
+		
+	
 		damage = 2;
 		health = 20;
 
@@ -163,10 +195,56 @@ public partial class player : Entity
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
+		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		
 	}
 
-  
+    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
+    {
+		r_cross_primary_selected = r_cross_primary_selected_signal;
+        if(r_cross_primary_selected_signal == true)
+		{
+			GD.Print("RCross Primary Selected");
+			
+		}
+		else
+		{
+			GD.Print("RCross Secondary Selected");
+		}
+    }
+
+    private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
+    {
+		l_cross_primary_selected = l_cross_primary_selected_signal;
+        if(l_cross_primary_selected)
+		{
+			GD.Print("LCross Primary Selected");
+		}
+		else
+		{
+			GD.Print("LCross Secondary Selected");
+		}
+    }
+
+    private void HandleAbilityAssigned(string ability_to_assign, string button_name, Texture2D icon)
+    {
+        GD.Print("Ability: " + ability_to_assign + " Button name: " + button_name);
+		if(button_name == "l_cross_primary_up")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign)
+				{
+					primary_LB.Add(ability_to_assign, ability);
+				}
+			}
+			
+		}
+    }
+
+
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -205,7 +283,7 @@ public partial class player : Entity
 			}
 		}
 
-		if (Input.IsActionPressed("Roll"))
+		if (Input.IsActionJustPressed("Roll"))
 		{
 			rolling = true;
 		}
@@ -230,6 +308,89 @@ public partial class player : Entity
 			attacking = false;
 			basic_attack_ability.Execute(this);
 		}
+
+		if(l_cross_primary_selected)
+		{
+			if(Input.IsActionJustPressed("RB"))
+			{
+				// Use ability assigned to primary RB
+			}
+			if(Input.IsActionJustPressed("LB"))
+			{
+
+				Ability current_ability = primary_LB.ElementAt(0).Value;
+				rolling = true;
+				current_ability.Execute(this);
+				// Use ability assigned to primary LB
+			}
+			if(Input.IsActionJustPressed("RT"))
+			{
+				// Use ability assigned to primary RT
+			}
+			if(Input.IsActionJustPressed("LT"))
+			{
+				// Use ability assigned to primary LT
+			}
+		}
+		else
+		{	
+			if(Input.IsActionJustPressed("RB"))
+			{
+				// Use ability assigned to secondary RB
+			}
+			if(Input.IsActionJustPressed("LB"))
+			{
+				// Use ability assigned to secondary LB
+			}
+			if(Input.IsActionJustPressed("RT"))
+			{
+				// Use ability assigned to secondary RT
+			}
+			if(Input.IsActionJustPressed("LT"))
+			{
+				// Use ability assigned to secondary LT
+			}
+		}
+		if(r_cross_primary_selected)
+		{
+			if(Input.IsActionJustPressed("A"))
+			{
+				// Use ability assigned to primary A
+			}
+			if(Input.IsActionJustPressed("B"))
+			{
+				// Use ability assigned to primary B
+			}
+			if(Input.IsActionJustPressed("X"))
+			{
+				// Use ability assigned to primary X
+			}
+			if(Input.IsActionJustPressed("Y"))
+			{
+				// Use ability assigned to primary Y
+			}
+		}
+		else
+		{
+			if(Input.IsActionJustPressed("A"))
+			{
+				// Use ability assigned to secondary A
+			}
+			if(Input.IsActionJustPressed("B"))
+			{
+				// Use ability assigned to secondary B
+			}
+			if(Input.IsActionJustPressed("X"))
+			{
+				// Use ability assigned to secondary X
+			}
+			if(Input.IsActionJustPressed("Y"))
+			{
+				// Use ability assigned to secondary Y
+			}
+		}
+		
+		
 
 		if(in_interact_area)
 		{
@@ -277,6 +438,17 @@ public partial class player : Entity
 		MoveAndSlide();
 
     }
+
+	public void AssignAbilities(string ability_to_assign)
+	{
+		foreach(Ability ability in abilities)
+		{
+			if(ability.Name == ability_to_assign)
+			{
+				
+			}
+		}
+	}
     
 	public void SmoothRotation()
 	{

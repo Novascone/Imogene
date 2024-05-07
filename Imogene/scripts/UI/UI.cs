@@ -46,6 +46,7 @@ public partial class UI : CanvasLayer
 	public GridContainer r_cross_primary;
 	public GridContainer l_cross_secondary;
 	public GridContainer r_cross_secondary;
+	public Button l_cross_primary_up_action;
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
 	public CanvasLayer skills;
@@ -84,6 +85,8 @@ public partial class UI : CanvasLayer
 
 		// UI sections
 		l_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary");
+		l_cross_primary_up_action = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction");
+
 		r_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary");
 		l_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary");
 		r_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary");
@@ -110,6 +113,7 @@ public partial class UI : CanvasLayer
 		_customSignals.Interact += HandleInteract;
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -118,6 +122,11 @@ public partial class UI : CanvasLayer
 
 
 	}
+
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    {
+        l_cross_primary_up_action.Icon = icon;
+    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -402,7 +411,7 @@ public partial class UI : CanvasLayer
 		}
 	}
 
-	public void Add(Item item)
+	public void AddItem(Item item)
 	{
 		Item current_item = item.Copy();
 		
@@ -439,7 +448,7 @@ public partial class UI : CanvasLayer
 				items.Add(temp_item);
 				UpdateButton(items.Count - 1);
 				current_item.quantity -= current_item.stack_size;
-				Add(current_item);
+				AddItem(current_item);
 			}
 			
 		}
@@ -532,6 +541,7 @@ public partial class UI : CanvasLayer
 			{
 				l_cross_primary_selected = false;
 				l_cross_secondary_selected = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
 				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
 				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
@@ -541,6 +551,7 @@ public partial class UI : CanvasLayer
 			{
 				l_cross_primary_selected = true;
 				l_cross_secondary_selected = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				l_cross_primary.Modulate = new Color(Colors.White, 1f);
 				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
@@ -554,6 +565,7 @@ public partial class UI : CanvasLayer
 			{
 				r_cross_primary_selected = false;
 				r_cross_secondary_selected = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
 				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
 				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
 				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
@@ -563,6 +575,7 @@ public partial class UI : CanvasLayer
 			{
 				r_cross_primary_selected = true;
 				r_cross_secondary_selected = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
 				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				r_cross_primary.Modulate = new Color(Colors.White, 1f);
 				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
@@ -594,7 +607,7 @@ public partial class UI : CanvasLayer
 
 	public void _on_add_button_button_down()
 	{
-		Add(ResourceLoader.Load<Item>("res://resources/armor.tres"));
+		AddItem(ResourceLoader.Load<Item>("res://resources/armor.tres"));
 	}
 
 	public void _on_remove_button_button_down()
@@ -645,7 +658,7 @@ public partial class UI : CanvasLayer
 
 	public void _on_add_button_2_button_down()
 	{
-		Add(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
+		AddItem(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
 	}
 
 	public void _on_remove_button_2_button_down()

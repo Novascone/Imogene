@@ -37,6 +37,16 @@ public partial class CustomSignals : Node
 	public delegate void OverSlotEventHandler(string slot);
 	[Signal]
 	public delegate void RemoveEquippedEventHandler();
+
+	// Abilities
+	[Signal]
+	public delegate void LCrossPrimaryOrSecondaryEventHandler(bool l_cross_primary_selected_signal);
+	[Signal]
+	public delegate void RCrossPrimaryOrSecondaryEventHandler(bool r_cross_primary_selected_signal);
+	[Signal]
+	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon);
+	
+
 	
 
 

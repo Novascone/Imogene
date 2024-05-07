@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Runtime.Intrinsics.X86;
 
-public partial class Target : Node3D
+public partial class Target : Ability
 {
 	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
 	private bool player_Z_less_than_target_Z; 

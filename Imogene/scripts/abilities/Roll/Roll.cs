@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Roll : Node3D
+public partial class Roll : Ability
 {
 	private Vector3 roll_velocity = Vector3.Zero; 
 	private int roll_time = 13; // How many frames the player can roll for.
@@ -9,7 +9,10 @@ public partial class Roll : Node3D
 	private bool roll_left = false;
 	private  bool roll_back = false;
 	private bool roll_forward = false;
-	public void Execute(player s)
+	public bool loaded = false;
+	
+	// public string description = "rolls";
+	public override void Execute(player s)
 	{
 		if(roll_time == 13)
 		{
@@ -96,4 +99,5 @@ public partial class Roll : Node3D
 		s.tree.Set("parameters/conditions/roll_left", roll_left);
 		s.tree.Set("parameters/conditions/roll_right", roll_right);
 	}
+	
 }

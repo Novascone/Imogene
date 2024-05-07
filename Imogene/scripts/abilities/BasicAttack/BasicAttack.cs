@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class BasicAttack : Node3D
+public partial class BasicAttack : Ability
 {
 	public void Execute(player s)
 	{
