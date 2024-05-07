@@ -43,10 +43,32 @@ public partial class UI : CanvasLayer
 	public player this_player;
 
 	public GridContainer l_cross_primary;
+	public Button l_cross_primary_up_action_button;
+	public Label l_cross_primary_up_action_label;
+	public Label l_cross_primary_down_action_label;
+	public Label l_cross_primary_left_action_label;
+	public Label l_cross_primary_right_action_label;
+
+
 	public GridContainer r_cross_primary;
+	public Button r_cross_primary_right_action_button;
+	public Label r_cross_primary_up_action_label;
+	public Label r_cross_primary_down_action_label;
+	public Label r_cross_primary_left_action_label;
+	public Label r_cross_primary_right_action_label;
+
 	public GridContainer l_cross_secondary;
+	public Label l_cross_secondary_up_action_label;
+	public Label l_cross_secondary_down_action_label;
+	public Label l_cross_secondary_left_action_label;
+	public Label l_cross_secondary_right_action_label;
+
 	public GridContainer r_cross_secondary;
-	public Button l_cross_primary_up_action;
+	public Label r_cross_secondary_up_action_label;
+	public Label r_cross_secondary_down_action_label;
+	public Label r_cross_secondary_left_action_label;
+	public Label r_cross_secondary_right_action_label;
+	
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
 	public CanvasLayer skills;
@@ -85,11 +107,31 @@ public partial class UI : CanvasLayer
 
 		// UI sections
 		l_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary");
-		l_cross_primary_up_action = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction");
+		l_cross_primary_up_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction");
+		l_cross_primary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction/Label");
+		l_cross_primary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction/Label");
+		l_cross_primary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction/Label");
+		l_cross_primary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryRightAction/Label");
+
 
 		r_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary");
+		r_cross_primary_right_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction");
+		r_cross_primary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction/Label");
+		r_cross_primary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction/Label");
+		r_cross_primary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction/Label");
+		r_cross_primary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction/Label");
+
 		l_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary");
+		l_cross_secondary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction/Label");
+		l_cross_secondary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction/Label");
+		l_cross_secondary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction/Label");
+		l_cross_secondary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction/Label");
+
 		r_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary");
+		r_cross_secondary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction/Label");
+		r_cross_secondary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction/Label");
+		r_cross_secondary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction/Label");
+		r_cross_secondary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction/Label");
 
 		character_inventory = GetNode<CanvasLayer>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
@@ -125,7 +167,15 @@ public partial class UI : CanvasLayer
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
-        l_cross_primary_up_action.Icon = icon;
+		if(button_name == "LCrossPrimaryUpAssign")
+		{
+			l_cross_primary_up_action_button.Icon = icon;
+		}
+		if(button_name == "RCrossPrimaryRightAssign")
+		{
+			r_cross_primary_right_action_button.Icon = icon;
+		}
+        
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -154,6 +204,7 @@ public partial class UI : CanvasLayer
 			if(!inventory_open)
 			{
 				inventory_open = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 				character_inventory.Show();
 				cursor.Show();
 				skills_open = false;
@@ -162,6 +213,7 @@ public partial class UI : CanvasLayer
 			else
 			{
 				inventory_open = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				character_inventory.Hide();
 				if(!skills_open)
 				{
@@ -196,7 +248,7 @@ public partial class UI : CanvasLayer
 							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)hover_over_button.inventory_item);
 						}
 					}
-					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse"))
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))
 					{
 						GD.Print("hover over button name" + hover_over_button.Name);
 						clicked_on = true;
@@ -214,7 +266,7 @@ public partial class UI : CanvasLayer
 				}
 				else
 				{
-					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") && hover_over_button is InventoryButton)
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept") && hover_over_button is InventoryButton)
 					{
 						if(over_trash)
 						{
@@ -247,7 +299,7 @@ public partial class UI : CanvasLayer
 				clicked_on = false;
 				DeleteItem(grabbed_object);
 			}
-			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_head)
+			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))  && over_head)
 			{
 				GD.Print("overhead clicking");
 				if(grabbed_object.inventory_item.type_of_item == "equipable")
@@ -544,8 +596,19 @@ public partial class UI : CanvasLayer
 				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
 				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_primary_up_action_label.Hide();
+				l_cross_primary_down_action_label.Hide();
+				l_cross_primary_left_action_label.Hide();
+				l_cross_primary_right_action_label.Hide();
+
 				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				l_cross_secondary_up_action_label.Show();
+				l_cross_secondary_down_action_label.Show();
+				l_cross_secondary_left_action_label.Show();
+				l_cross_secondary_right_action_label.Show();
+
+				
 			}
 			else
 			{
@@ -554,8 +617,18 @@ public partial class UI : CanvasLayer
 				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				l_cross_primary.Modulate = new Color(Colors.White, 1f);
+				l_cross_primary_up_action_label.Show();
+				l_cross_primary_down_action_label.Show();
+				l_cross_primary_left_action_label.Show();
+				l_cross_primary_right_action_label.Show();
+
 				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
 				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_secondary_up_action_label.Hide();
+				l_cross_secondary_down_action_label.Hide();
+				l_cross_secondary_left_action_label.Hide();
+				l_cross_secondary_right_action_label.Hide();
+				
 			}
 			
 		}
@@ -568,8 +641,18 @@ public partial class UI : CanvasLayer
 				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
 				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
 				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_primary_up_action_label.Hide();
+				r_cross_primary_down_action_label.Hide();
+				r_cross_primary_left_action_label.Hide();
+				r_cross_primary_right_action_label.Hide();
+
 				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				r_cross_secondary_up_action_label.Show();
+				r_cross_secondary_down_action_label.Show();
+				r_cross_secondary_left_action_label.Show();
+				r_cross_secondary_right_action_label.Show();
+				
 			}
 			else
 			{
@@ -578,8 +661,17 @@ public partial class UI : CanvasLayer
 				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
 				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
 				r_cross_primary.Modulate = new Color(Colors.White, 1f);
+				r_cross_primary_up_action_label.Show();
+				r_cross_primary_down_action_label.Show();
+				r_cross_primary_left_action_label.Show();
+				r_cross_primary_right_action_label.Show();
+				
 				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
 				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_secondary_up_action_label.Hide();
+				r_cross_secondary_down_action_label.Hide();
+				r_cross_secondary_left_action_label.Hide();
+				r_cross_secondary_right_action_label.Hide();
 			}
 			
 		}
@@ -600,6 +692,7 @@ public partial class UI : CanvasLayer
 	public void _on_skills_label_button_down()
 	{
 		skills_open = true;
+		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 		inventory_open = false;
 		character_inventory.Hide();
 		skills.Show();

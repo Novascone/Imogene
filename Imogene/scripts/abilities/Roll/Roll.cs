@@ -12,6 +12,11 @@ public partial class Roll : Ability
 	public bool loaded = false;
 	
 	// public string description = "rolls";
+
+	public override void _PhysicsProcess(double delta)
+	{
+
+	}
 	public override void Execute(player s)
 	{
 		if(roll_time == 13)
@@ -92,7 +97,7 @@ public partial class Roll : Ability
 			roll_forward = false;
 			roll_right = false;
 			roll_left = false;
-			s.rolling = false;
+			s.using_movement_ability = false;
 		}
 		s.tree.Set("parameters/conditions/roll_back", roll_back);
 		s.tree.Set("parameters/conditions/roll_forward", roll_forward);

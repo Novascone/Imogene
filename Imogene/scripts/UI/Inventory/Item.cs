@@ -25,7 +25,6 @@ public partial class Item : Resource
    
     public virtual void UseItem()
     {
-        
         GD.Print("Used Item");
     }
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
-[ext_resource type="Script" path="res://scenes/UI/Skills.cs" id="3_8xxua"]
+[ext_resource type="Script" path="res://scripts/UI/Skills.cs" id="3_cn3ji"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
@@ -306,7 +306,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_en8la")
 
 [node name="LCrossSecondary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross"]
-modulate = Color(1, 1, 1, 0.196078)
+modulate = Color(1, 1, 1, 0.0980392)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -320,12 +320,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+[node name="LCrossSecondaryUpAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction"]
+visible = false
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "RB"
+horizontal_alignment = 2
 
 [node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -333,12 +341,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+[node name="LCrossSecondaryLeftAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction"]
+visible = false
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "LB"
+horizontal_alignment = 2
 
 [node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -346,12 +362,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+[node name="LCrossSecondaryRightAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction"]
+visible = false
+offset_left = 27.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "RT"
+horizontal_alignment = 2
 
 [node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -359,12 +383,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
+[node name="LCrossSecondaryDownAction" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction"]
+visible = false
+offset_left = 25.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "LT"
+horizontal_alignment = 2
 
 [node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -395,6 +427,14 @@ text = "1"
 icon_alignment = 1
 expand_icon = true
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction"]
+layout_mode = 0
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "RB"
+horizontal_alignment = 2
+
 [node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -407,6 +447,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction"]
+offset_left = 30.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "LB"
+horizontal_alignment = 2
 
 [node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
@@ -421,6 +468,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryRightAction"]
+offset_left = 27.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "RT"
+horizontal_alignment = 2
+
 [node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -433,6 +487,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction"]
+offset_left = 25.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "LT"
+horizontal_alignment = 2
 
 [node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
@@ -451,7 +512,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_lnptr")
 
 [node name="RCrossSecondary" type="GridContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross"]
-modulate = Color(1, 1, 1, 0.196078)
+modulate = Color(1, 1, 1, 0.0980392)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -472,6 +533,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction"]
+visible = false
+offset_right = 20.0
+offset_bottom = 25.0
+text = "Y"
+
 [node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -484,6 +551,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction"]
+visible = false
+offset_right = 20.0
+offset_bottom = 25.0
+text = "X"
 
 [node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -498,6 +571,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction"]
+visible = false
+offset_right = 20.0
+offset_bottom = 25.0
+text = "B"
+
 [node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -510,6 +589,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction"]
+visible = false
+offset_right = 20.0
+offset_bottom = 25.0
+text = "A"
 
 [node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
@@ -538,6 +623,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction"]
+offset_right = 20.0
+offset_bottom = 25.0
+text = "Y"
+
 [node name="Control3" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -551,6 +641,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
 
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction"]
+offset_right = 20.0
+offset_bottom = 25.0
+text = "X"
+
 [node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -563,6 +658,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction"]
+offset_right = 20.0
+offset_bottom = 25.0
+text = "B"
 
 [node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
@@ -576,6 +678,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
+
+[node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction"]
+offset_right = 20.0
+offset_bottom = 25.0
+text = "A"
 
 [node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
@@ -6315,7 +6422,7 @@ shape = SubResource("RectangleShape2D_feh3g")
 
 [node name="Skills" type="CanvasLayer" parent="."]
 visible = false
-script = ExtResource("3_8xxua")
+script = ExtResource("3_cn3ji")
 
 [node name="PanelContainer" type="PanelContainer" parent="Skills"]
 custom_minimum_size = Vector2(1500, 850)
@@ -6630,6 +6737,7 @@ focus_neighbor_left = NodePath("../RCrossPrimaryLeftAssign")
 focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign"]
 position = Vector2(22.9757, 38.1199)
@@ -7214,6 +7322,7 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/Buttons/RemoveButton2" to="." method="_on_remove_button_2_button_down"]
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/Buttons/RemoveEquiped" to="." method="_on_remove_equiped_button_down"]
 [connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign" to="Skills" method="_on_l_cross_primary_up_button_down"]
+[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign" to="Skills" method="_on_r_cross_primary_right_assign_button_down"]
 [connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill/AddSkill" to="Skills" method="_on_add_skill_button_down"]
 [connection signal="area_entered" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
 [connection signal="area_exited" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_exited"]

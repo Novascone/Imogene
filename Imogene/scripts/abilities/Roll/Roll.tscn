@@ -5,3 +5,4 @@
 [node name="Roll" type="Node3D"]
 script = ExtResource("1_ni7k1")
 description = "Rolls"
+ability_type = "Movement"

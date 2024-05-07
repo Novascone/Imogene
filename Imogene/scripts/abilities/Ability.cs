@@ -10,6 +10,8 @@ public partial class Ability : Node3D
 
     [Export]
     public Resource resource { get; set; }
+    [Export]
+    public string ability_type { get; set; }
 
     public virtual void Execute(player s)
     {
