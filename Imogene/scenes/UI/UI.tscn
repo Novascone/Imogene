@@ -329,6 +329,7 @@ text = "3"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction"]
 visible = false
+layout_mode = 0
 offset_left = 29.0
 offset_right = 58.0
 offset_bottom = 25.0
@@ -350,6 +351,7 @@ text = "3"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction"]
 visible = false
+layout_mode = 0
 offset_left = 29.0
 offset_right = 58.0
 offset_bottom = 25.0
@@ -371,6 +373,7 @@ text = "3"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction"]
 visible = false
+layout_mode = 0
 offset_left = 27.0
 offset_right = 57.0
 offset_bottom = 25.0
@@ -392,6 +395,7 @@ text = "3"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction"]
 visible = false
+layout_mode = 0
 offset_left = 25.0
 offset_right = 57.0
 offset_bottom = 25.0
@@ -449,6 +453,7 @@ size_flags_vertical = 4
 text = "1"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction"]
+layout_mode = 0
 offset_left = 30.0
 offset_right = 58.0
 offset_bottom = 25.0
@@ -469,6 +474,7 @@ size_flags_vertical = 4
 text = "1"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryRightAction"]
+layout_mode = 0
 offset_left = 27.0
 offset_right = 57.0
 offset_bottom = 25.0
@@ -489,6 +495,7 @@ size_flags_vertical = 4
 text = "1"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction"]
+layout_mode = 0
 offset_left = 25.0
 offset_right = 57.0
 offset_bottom = 25.0
@@ -535,6 +542,7 @@ text = "4"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction"]
 visible = false
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "Y"
@@ -554,6 +562,7 @@ text = "4"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction"]
 visible = false
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "X"
@@ -573,6 +582,7 @@ text = "4"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction"]
 visible = false
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "B"
@@ -592,6 +602,7 @@ text = "4"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction"]
 visible = false
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "A"
@@ -624,6 +635,7 @@ size_flags_vertical = 4
 text = "2"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction"]
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "Y"
@@ -642,6 +654,7 @@ size_flags_vertical = 4
 text = "2"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction"]
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "X"
@@ -662,6 +675,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction"]
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "B"
@@ -680,6 +694,7 @@ size_flags_vertical = 4
 text = "2"
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction"]
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 25.0
 text = "A"
