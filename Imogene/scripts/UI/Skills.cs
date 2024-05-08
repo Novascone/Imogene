@@ -14,10 +14,10 @@ public partial class Skills : UI
 
 		
 
-		l_cross_primary_up_assign = GetNode<Button>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign");
+		l_cross_primary_up_assign = GetNode<Button>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign");
 
-		r_cross_primary_right_assign = GetNode<Button>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign");
-		assign_skill = GetNode<PanelContainer>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill");
+		r_cross_primary_right_assign = GetNode<Button>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign");
+		assign_skill = GetNode<PanelContainer>("PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/AssignSkill");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}

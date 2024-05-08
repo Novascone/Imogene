@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=60 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -132,21 +132,26 @@ size = Vector2(179, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feh3g"]
 size = Vector2(212, 31)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w78mi"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ra0e8"]
-size = Vector2(363, 93)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_74b76"]
-size = Vector2(1493, 90)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16yjc"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnoh3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ch5s"]
 size = Vector2(54, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y243c"]
 size = Vector2(785, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dillp"]
+size = Vector2(54, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ra0e8"]
+size = Vector2(239, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_74b76"]
+size = Vector2(488.75, 22.5)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sv8yo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aao0w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
@@ -6439,26 +6444,36 @@ shape = SubResource("RectangleShape2D_feh3g")
 visible = false
 script = ExtResource("3_cn3ji")
 
-[node name="PanelContainer" type="PanelContainer" parent="Skills"]
+[node name="PanelContainer" type="VBoxContainer" parent="Skills"]
 custom_minimum_size = Vector2(1500, 850)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+offset_left = -750.0
+offset_right = 750.0
+offset_bottom = 850.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_w78mi")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Skills/PanelContainer"]
+[node name="Control" type="Control" parent="Skills/PanelContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="Title" type="Panel" parent="Skills/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(750, 50)
+[node name="VBoxContainer" type="PanelContainer" parent="Skills/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/Title"]
+[node name="AbilityContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1000, 800)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="Title" type="Panel" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+custom_minimum_size = Vector2(815, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/Title"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
 anchors_preset = 5
@@ -6472,120 +6487,49 @@ theme_override_font_sizes/font_size = 40
 text = "Skills"
 horizontal_alignment = 1
 
-[node name="AbilityContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
-layout_mode = 2
-
-[node name="MeleeAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "Melee"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/MeleeAbilities"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/MeleeAbilities/Area2D"]
-position = Vector2(185.5, 49.5)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="RangedAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "Ranged"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/RangedAbilities"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/RangedAbilities/Area2D"]
-position = Vector2(185.5, 49.5)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="Movement" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "Movement"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Movement"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Movement/Area2D"]
-position = Vector2(185.5, 49.5)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="Defense" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "Defense
-"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Defense"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/HBoxContainer/Defense/Area2D"]
-position = Vector2(185.5, 49.5)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="Class" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-text = "Class
-"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/Class"]
-position = Vector2(591.056, 44.1537)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/Class/Area2D"]
-position = Vector2(157.444, 4.84625)
-shape = SubResource("RectangleShape2D_74b76")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="SkillBinds" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+[node name="SkillBinds" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_16yjc")
+theme_override_constants/separation = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+[node name="PanelContainer" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wnoh3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 0
 theme_override_constants/h_separation = 100
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="VBoxLeftCrossPrimary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
+[node name="VBoxLeftCrossPrimary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary"]
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary"]
 layout_mode = 2
 text = "Left Cross Primary
 "
 
-[node name="LCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary"]
+[node name="LCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="LCrossPrimaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6596,19 +6540,19 @@ focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign/Area2D"]
 position = Vector2(30, 30)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="LCrossPrimaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6618,20 +6562,20 @@ focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign"]
 position = Vector2(29.6122, 29.6355)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign/Area2D"]
 position = Vector2(0.387817, 0.364502)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossPrimaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="LCrossPrimaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6641,20 +6585,20 @@ focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign")
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryRightAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryRightAssign"]
 position = Vector2(29.9016, 19.3901)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryRightAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryRightAssign/Area2D"]
 position = Vector2(0.0983887, 11.6099)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossPrimaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="LCrossPrimaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6664,41 +6608,41 @@ focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign"]
 position = Vector2(33.3204, 35.571)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign/Area2D"]
 position = Vector2(-3.32043, -4.57104)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxRightCrossPrimary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
+[node name="VBoxRightCrossPrimary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary"]
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary"]
 layout_mode = 2
 text = "Right Cross Primary 
 "
 horizontal_alignment = 2
 
-[node name="RCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary"]
+[node name="RCrossPrimary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 10
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
-[node name="RCrossPrimaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="RCrossPrimaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6707,20 +6651,20 @@ focus_neighbor_left = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign"]
 position = Vector2(37.871, 13.4483)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign/Area2D"]
 position = Vector2(-7.87097, 16.5517)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
-[node name="RCrossPrimaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="RCrossPrimaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6730,20 +6674,20 @@ focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign"]
 position = Vector2(22.496, 40.7926)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign/Area2D"]
 position = Vector2(7.50403, -10.7926)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="RCrossPrimaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="RCrossPrimaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6754,20 +6698,20 @@ focus_neighbor_right = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCr
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
 expand_icon = true
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign"]
 position = Vector2(22.9757, 38.1199)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign/Area2D"]
 position = Vector2(8.02429, -8.11987)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RCrossPrimaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="RCrossPrimaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6777,40 +6721,40 @@ focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign"]
 position = Vector2(19.5112, 45.7167)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign/Area2D"]
 position = Vector2(10.4888, -16.7167)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxLeftCrossSecondary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
+[node name="VBoxLeftCrossSecondary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary"]
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary"]
 layout_mode = 2
 text = "Left Cross Secondary"
 horizontal_alignment = 2
 
-[node name="LCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary"]
+[node name="LCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossSecondaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="LCrossSecondaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6820,20 +6764,20 @@ focus_neighbor_top = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCros
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign"]
 position = Vector2(25.2313, 29.2363)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign/Area2D"]
 position = Vector2(4.76868, 0.763672)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossSecondaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="LCrossSecondaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6843,20 +6787,20 @@ focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign"]
 position = Vector2(24.1479, 41.4316)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign/Area2D"]
 position = Vector2(6.85211, -12.4316)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="LCrossSecondaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="LCrossSecondaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6866,20 +6810,20 @@ focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryRightAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryRightAssign"]
 position = Vector2(8.3197, 39.6062)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryRightAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryRightAssign/Area2D"]
 position = Vector2(21.6803, -10.6062)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LCrossSecondaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="LCrossSecondaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6889,40 +6833,40 @@ focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryDownAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryDownAssign"]
 position = Vector2(20.11, 38.0148)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryDownAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryDownAssign/Area2D"]
 position = Vector2(10.89, -9.01483)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxRightCrossSecondary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer"]
+[node name="VBoxRightCrossSecondary" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary"]
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary"]
 layout_mode = 2
 text = "Right Cross Secondary"
 
-[node name="RCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary"]
+[node name="RCrossSecondary" type="GridContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 columns = 3
 
-[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RCrossSecondaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="RCrossSecondaryUpAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6932,20 +6876,20 @@ focus_neighbor_top = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCro
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign"]
 position = Vector2(28.5, 43.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign/Area2D"]
 position = Vector2(1.5, -13.5)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RCrossSecondaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="RCrossSecondaryLeftAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6955,20 +6899,20 @@ focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign"]
 position = Vector2(22, 43)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign/Area2D"]
 position = Vector2(9, -12)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="Control5" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="RCrossSecondaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="RCrossSecondaryRightAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -6978,20 +6922,20 @@ focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign"]
 position = Vector2(33.7673, 36.4768)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign/Area2D"]
 position = Vector2(-4.76733, -7.47681)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="Control8" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RCrossSecondaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="RCrossSecondaryDownAssign" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -7001,149 +6945,299 @@ focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign")
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign"]
 position = Vector2(17.5864, 34.8397)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign/Area2D"]
 position = Vector2(12.4136, -5.83972)
 shape = SubResource("RectangleShape2D_7ch5s")
 
-[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
+[node name="Control9" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AssignSkill" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+[node name="AssignSkill" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AddSkill" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill"]
+[node name="AddSkill" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/AssignSkill"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 0
 text = "Add Skill
 "
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill/AddSkill"]
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/AssignSkill/AddSkill"]
 position = Vector2(236.018, 57.4503)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill/AddSkill/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/AssignSkill/AddSkill/Area2D"]
 position = Vector2(163.482, -8.45029)
 shape = SubResource("RectangleShape2D_y243c")
 
-[node name="MeleeSkills" type="PanelContainer" parent="Skills/PanelContainer"]
-visible = false
+[node name="PassivesContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds"]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="Skills/PanelContainer/MeleeSkills"]
-custom_minimum_size = Vector2(750, 50)
+[node name="Label" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer"]
+layout_mode = 2
+text = "Passive Skills
+"
+horizontal_alignment = 1
+
+[node name="PassiveRow1" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 150
+
+[node name="Passive1" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive1/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="Passive2" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive2/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="Passive3" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive3/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="Passive4" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow1/Passive4/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="PassiveRow2" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 100
+
+[node name="Passive5" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2/Passive5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2/Passive5/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="Passive6" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2/Passive6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PassivesContainer/PassiveRow2/Passive6/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_dillp")
+
+[node name="SkillTypes" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/MeleeSkills/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 25.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
+[node name="HBoxContainerGeneral" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="MeleeAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Melee"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/MeleeAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/MeleeAbilities/Area2D"]
+position = Vector2(123.5, 16)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="RangedAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Ranged"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/RangedAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/RangedAbilities/Area2D"]
+position = Vector2(123.5, 16)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="MovementAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Movement"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/MovementAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/MovementAbilities/Area2D"]
+position = Vector2(123.5, 16)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="DefenseAbilities" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Defense"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/DefenseAbilities"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerGeneral/DefenseAbilities/Area2D"]
+position = Vector2(123.5, 16)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="HBoxContainerSpecial" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes"]
+layout_mode = 2
+
+[node name="Class" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial"]
+custom_minimum_size = Vector2(405, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Class
+"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial/Class"]
+position = Vector2(591.056, 44.1537)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial/Class/Area2D"]
+position = Vector2(-343.806, -28.4037)
+shape = SubResource("RectangleShape2D_74b76")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Special" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial"]
+custom_minimum_size = Vector2(405, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Special
+"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial/Special"]
+position = Vector2(591.056, 44.1537)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillTypes/HBoxContainerSpecial/Special/Area2D"]
+position = Vector2(-341.431, -28.1537)
+shape = SubResource("RectangleShape2D_74b76")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="ButtonToBeAssigned" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_sv8yo")
+
+[node name="Button" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/ButtonToBeAssigned"]
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Action Bar to be Assigned"
+
+[node name="MeleeSkills" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer"]
+visible = false
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_aao0w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills"]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer"]
+custom_minimum_size = Vector2(750, 15)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel"]
+layout_mode = 2
 text = "Melee Skills"
 horizontal_alignment = 1
 
-[node name="RangedSkills" type="PanelContainer" parent="Skills/PanelContainer"]
-visible = false
+[node name="BackAndForward" type="HBoxContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel/BackAndForward"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="Skills/PanelContainer/RangedSkills"]
-custom_minimum_size = Vector2(750, 50)
+[node name="Back" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel/BackAndForward"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/RangedSkills/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 25.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
-text = "Ranged Skills"
-horizontal_alignment = 1
-
-[node name="MovementSkills" type="PanelContainer" parent="Skills/PanelContainer"]
-visible = false
+[node name="Control2" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel/BackAndForward"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 
-[node name="Panel" type="Panel" parent="Skills/PanelContainer/MovementSkills"]
-custom_minimum_size = Vector2(750, 50)
+[node name="Forward" type="Button" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel/BackAndForward"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="Skills/PanelContainer/MovementSkills/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 25.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
-text = "Movement Skills"
-horizontal_alignment = 1
-
-[node name="DefenseSkills" type="PanelContainer" parent="Skills/PanelContainer"]
-visible = false
+[node name="Control3" type="Control" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer/Panel/BackAndForward"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="Skills/PanelContainer/DefenseSkills"]
-custom_minimum_size = Vector2(750, 50)
+[node name="PanelContainer" type="PanelContainer" parent="Skills/PanelContainer/VBoxContainer/AbilityContainer/MeleeSkills/VBoxContainer"]
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Label" type="Label" parent="Skills/PanelContainer/DefenseSkills/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 25.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
-text = "Defense Skills"
-horizontal_alignment = 1
-
-[node name="ClassSkills" type="PanelContainer" parent="Skills/PanelContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Panel" type="Panel" parent="Skills/PanelContainer/ClassSkills"]
-custom_minimum_size = Vector2(750, 50)
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Label" type="Label" parent="Skills/PanelContainer/ClassSkills/Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 25.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
-text = "Class Skills"
-horizontal_alignment = 1
+size_flags_vertical = 3
 
 [node name="Cursor" type="Sprite2D" parent="."]
 visible = false
@@ -7336,8 +7430,8 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/Buttons/AddButton2" to="." method="_on_add_button_2_button_down"]
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/Buttons/RemoveButton2" to="." method="_on_remove_button_2_button_down"]
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/Buttons/RemoveEquiped" to="." method="_on_remove_equiped_button_down"]
-[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign" to="Skills" method="_on_l_cross_primary_up_button_down"]
-[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign" to="Skills" method="_on_r_cross_primary_right_assign_button_down"]
-[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/AssignSkill/AddSkill" to="Skills" method="_on_add_skill_button_down"]
+[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign" to="Skills" method="_on_l_cross_primary_up_button_down"]
+[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign" to="Skills" method="_on_r_cross_primary_right_assign_button_down"]
+[connection signal="button_down" from="Skills/PanelContainer/VBoxContainer/AbilityContainer/SkillBinds/PanelContainer/AssignSkill/AddSkill" to="Skills" method="_on_add_skill_button_down"]
 [connection signal="area_entered" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
 [connection signal="area_exited" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_exited"]
