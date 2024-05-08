@@ -22,6 +22,7 @@ public partial class UI : CanvasLayer
 
 	private List<Item> items = new List<Item>();
 
+	public bool UI_element_open;
 	private bool clicked_on;
 	public bool over_trash;
 	public bool over_head;
@@ -94,6 +95,7 @@ public partial class UI : CanvasLayer
 	private int resource;
 	private bool inventory_open;
 	private bool skills_open;
+	private bool skills_secondary_ui_open;
 	public Node3D player;
 
 
@@ -139,6 +141,7 @@ public partial class UI : CanvasLayer
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
 		skills = GetNode<CanvasLayer>("Skills");
 		
+		
 
 		// HUD icons
 		// health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
@@ -156,6 +159,7 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		_customSignals.SkillsUISecondaryOpen += HandelSkillsUISecondaryOpen;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -164,6 +168,11 @@ public partial class UI : CanvasLayer
 
 
 	}
+
+    private void HandelSkillsUISecondaryOpen(bool secondary_open)
+    {
+        skills_secondary_ui_open = secondary_open;
+    }
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
@@ -198,6 +207,36 @@ public partial class UI : CanvasLayer
 
 		ChangeActionBars();
 
+		if(inventory_open || skills_open)
+		{
+			UI_element_open = true;
+		}
+		else
+		{
+			UI_element_open = false;
+		}
+
+		if(Input.IsActionJustPressed("B"))
+		{
+			if(inventory_open)
+			{
+				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				inventory_open = false;
+				character_inventory.Hide();
+				mats.Hide();
+				character_Sheet_depth.Hide();
+				cursor.Hide();
+			}
+			if(skills_open && !skills_secondary_ui_open)
+			{
+				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				skills_open = false;
+				skills.Hide();
+				cursor.Hide();
+			}
+
+		}
+
 		if(Input.IsActionJustPressed("Inventory"))
 		{
 			
@@ -215,6 +254,8 @@ public partial class UI : CanvasLayer
 				inventory_open = false;
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				character_inventory.Hide();
+				mats.Hide();
+				character_Sheet_depth.Hide();
 				if(!skills_open)
 				{
 					cursor.Hide();
@@ -345,7 +386,7 @@ public partial class UI : CanvasLayer
 		cursor.Position = GetViewport().GetMousePosition();
 	}
 
-	private void HideCursor()
+	public void HideCursor()
 	{
 		if(Input.IsActionJustPressed("D-PadUp") || Input.IsActionJustPressed("D-PadDown") || Input.IsActionJustPressed("D-PadLeft") || Input.IsActionJustPressed("D-PadRight"))
 		{

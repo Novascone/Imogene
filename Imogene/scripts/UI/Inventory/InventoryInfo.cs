@@ -614,9 +614,15 @@ public partial class InventoryInfo : UI
 				CharacterInfo();
 				stats_need_updated = false;
 			}
-			
+		}	
+
+		if(this.Visible)
+		{
+			if(Input.IsActionJustPressed("B"))
+			{
+				
+			}
 		}
-		
 	}
 
 	private void CharacterInfo()

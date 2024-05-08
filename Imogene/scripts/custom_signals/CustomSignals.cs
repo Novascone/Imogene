@@ -54,6 +54,9 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void UIPreventingMovementEventHandler(bool ui_preventing_movement);
 
+	// UI to UI
+	[Signal]
+	public delegate void SkillsUISecondaryOpenEventHandler(bool secondary_open);
 	
 
 
