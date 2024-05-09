@@ -56,11 +56,11 @@ public partial class Skills : UI
 		skill_binds = GetNode<VBoxContainer>("PanelContainer/AbilityContainer/PanelContainer/SkillBinds");
 		skill_types = GetNode<VBoxContainer>("PanelContainer/AbilityContainer/PanelContainer/SkillTypes");
 		melee_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/MeleeSkills");
-		ranged_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/RangedSkills");
-		movement_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/MovementSkills");
-		defense_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/DefenseSkills");
-		class_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/ClassSkills");
-		Special_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/SpecialSkills");
+		// ranged_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/RangedSkills");
+		// movement_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/MovementSkills");
+		// defense_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/DefenseSkills");
+		// class_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/ClassSkills");
+		// Special_skills = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/SpecialSkills");
 		passives = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/Passives");
 		accept_cancel = GetNode<VBoxContainer>("PanelContainer/AbilityContainer/PanelContainer/AcceptChangesContainer");
 		button_to_be_assigned_container = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/ButtonToBeAssigned");
@@ -86,7 +86,7 @@ public partial class Skills : UI
 		r_cross_secondary_left_assign = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign");
 		r_cross_secondary_right_assign = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/SkillBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign");
 
-		assign_skill = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/SkillBinds/PanelContainer/AssignSkill");
+		assign_skill = GetNode<PanelContainer>("AssignSkill");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
@@ -313,9 +313,9 @@ public partial class Skills : UI
 
 	public void _on_add_skill_button_down()
 	{
-		
 		AbilityResource ability = ResourceLoader.Load<AbilityResource>("res://resources/roll.tres");
-		selected_button.Icon = ability.icon;
-		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), ability.name, selected_button.Name , ability.icon);
+		// selected_button.Icon = ability.icon;
+		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), ability.name, selected_button.Name , ability.icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.AddToSkillsSelection), ability.name, ability.type_of_ability, ability.icon);
 	}
 }

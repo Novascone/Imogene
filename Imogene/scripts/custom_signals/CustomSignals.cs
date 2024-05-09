@@ -45,7 +45,8 @@ public partial class CustomSignals : Node
 	public delegate void RCrossPrimaryOrSecondaryEventHandler(bool r_cross_primary_selected_signal);
 	[Signal]
 	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon);
-
+	[Signal]
+	public delegate void AddToSkillsSelectionEventHandler(string ability, string type, Texture2D icon);
 	// Movement
 	[Signal]
 	public delegate void MovementTimerEventHandler(int time);
