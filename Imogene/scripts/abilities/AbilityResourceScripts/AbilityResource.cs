@@ -13,4 +13,14 @@ public partial class AbilityResource : Resource
     public Texture2D icon { get; set; }
     [Export]
     public string type_of_ability;
+    [Export] 
+    public PackedScene modifier_1;
+    [Export] 
+    public PackedScene modifier_2;
+    [Export] 
+    public PackedScene modifier_3;
+    [Export] 
+    public PackedScene modifier_4;
+    [Export] 
+    public PackedScene modifier_5;
 }
