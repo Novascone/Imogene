@@ -23,7 +23,7 @@ public partial class SkillsCategory : PanelContainer
 		{
 			skills.Add(skill);
 		}
-		GD.Print(skills.Count);
+		// GD.Print(skills.Count);
 
 		foreach(SkillsButton modifier in skills_modifier_container.GetChildren().Cast<SkillsButton>())
 		{
