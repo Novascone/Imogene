@@ -247,7 +247,7 @@ public partial class Skills : UI
 		button_to_be_assigned_container.Show();
 	}
 
-	public void _on_r_cross_primary_Down_assign_button_down()
+	public void _on_r_cross_primary_down_assign_button_down()
 	{
 		selected_button = r_cross_primary_down_assign;
 		button_to_be_assigned.Text = "Primary A";
@@ -284,7 +284,7 @@ public partial class Skills : UI
 		button_to_be_assigned_container.Show();
 	}
 
-	public void _on_r_cross_secondary_Down_assign_button_down()
+	public void _on_r_cross_secondary_down_assign_button_down()
 	{
 		selected_button = r_cross_secondary_down_assign;
 		button_to_be_assigned.Text = "Secondary A";

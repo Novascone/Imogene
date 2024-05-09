@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=65 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -143,8 +143,10 @@ size = Vector2(785, 90)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dillp"]
 size = Vector2(54, 54)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mupwl"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ra0e8"]
-size = Vector2(990, 30)
+size = Vector2(266, 80)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aao0w"]
 
@@ -7087,94 +7089,130 @@ layout_mode = 2
 size_flags_vertical = 0
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="MeleeSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
+[node name="Panel" type="Panel" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Melee"
 
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/MeleeSkills"]
+[node name="Label" type="Label" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Select a Skill Category"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/MeleeSkills/Area2D"]
-position = Vector2(499, 16)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="RangedSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
+[node name="Control3" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Ranged"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/RangedSkills"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/RangedSkills/Area2D"]
-position = Vector2(499, 18)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="MovementSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Movement"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/MovementSkills"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/MovementSkills/Area2D"]
-position = Vector2(498, 17)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="DefenseSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Defense"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/DefenseSkills"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/DefenseSkills/Area2D"]
-position = Vector2(499, 17)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="ClassSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Class"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/ClassSkills"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/ClassSkills/Area2D"]
-position = Vector2(499, 17)
-shape = SubResource("RectangleShape2D_ra0e8")
-
-[node name="SpecialSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
-custom_minimum_size = Vector2(200, 20)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "Special"
-
-[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/SpecialSkills"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/SpecialSkills/Area2D"]
-position = Vector2(501, 19)
-shape = SubResource("RectangleShape2D_ra0e8")
 
 [node name="Control2" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
 layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes"]
+custom_minimum_size = Vector2(950, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mupwl")
+
+[node name="GridContainer" type="GridContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/v_separation = 40
+columns = 2
+
+[node name="MeleeSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Melee"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/MeleeSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/MeleeSkills/Area2D"]
+position = Vector2(149, 51)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="RangedSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Ranged"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/RangedSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/RangedSkills/Area2D"]
+position = Vector2(150, 50)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="MovementSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Movement"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/MovementSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/MovementSkills/Area2D"]
+position = Vector2(151.25, 50)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="DefneseSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Defense"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/DefneseSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/DefneseSkills/Area2D"]
+position = Vector2(153, 52)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="ClassSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Class"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/ClassSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/ClassSkills/Area2D"]
+position = Vector2(151.25, 50)
+shape = SubResource("RectangleShape2D_ra0e8")
+
+[node name="SpecialSkills" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Special"
+
+[node name="Area2D" type="Area2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/SpecialSkills"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SkillTypes/PanelContainer/GridContainer/SpecialSkills/Area2D"]
+position = Vector2(152, 50)
+shape = SubResource("RectangleShape2D_ra0e8")
 
 [node name="MeleeSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
@@ -7318,7 +7356,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/MeleeSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/MeleeSkills/VBoxContainer/PanelContainer"]
@@ -7395,7 +7433,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
-[node name="RangedSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer" groups=["action_skills"]]
+[node name="RangedSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -7537,7 +7575,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/RangedSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/RangedSkills/VBoxContainer/PanelContainer"]
@@ -7614,7 +7652,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
-[node name="MovementSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer" groups=["action_skills"]]
+[node name="MovementSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -7756,7 +7794,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/MovementSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/MovementSkills/VBoxContainer/PanelContainer"]
@@ -7833,7 +7871,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
-[node name="DefenseSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer" groups=["action_skills"]]
+[node name="DefenseSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -7850,8 +7888,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/DefenseSkills/VBoxContainer/Title"]
 layout_mode = 2
-text = "Defense Skills
-"
+text = "Defense Skills"
 horizontal_alignment = 1
 
 [node name="BackAndForward" type="HBoxContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/DefenseSkills/VBoxContainer/Title"]
@@ -7976,7 +8013,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/DefenseSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/DefenseSkills/VBoxContainer/PanelContainer"]
@@ -8053,7 +8090,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
-[node name="ClassSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer" groups=["action_skills"]]
+[node name="ClassSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -8195,7 +8232,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/ClassSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/ClassSkills/VBoxContainer/PanelContainer"]
@@ -8272,7 +8309,7 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
-[node name="SpecialSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer" groups=["action_skills"]]
+[node name="SpecialSkills" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer"]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -8414,7 +8451,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SpecialSkills/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ModiferTreeContainer" type="PanelContainer" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/SpecialSkills/VBoxContainer/PanelContainer"]
@@ -8872,6 +8909,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Action Bar to be Assigned"
+
+[node name="Button" type="Button" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/ButtonToBeAssigned/VBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Control" type="Control" parent="Skills/PanelContainer/AbilityContainer/PanelContainer/ButtonToBeAssigned/VBoxContainer"]
 custom_minimum_size = Vector2(0, 73)
