@@ -9,7 +9,7 @@ public partial class Target : Ability
 	private bool player_X_more_than_target_X; 
 	private bool player_X_less_than_target_X; 
 	float _t = 0.4f;
-	public void Execute(player s)
+	public override void Execute(player s)
 	{
 			Rotate(s);
 	}

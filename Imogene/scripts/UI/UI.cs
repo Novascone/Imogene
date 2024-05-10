@@ -72,7 +72,7 @@ public partial class UI : CanvasLayer
 	
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
-	public CanvasLayer skills;
+	public CanvasLayer abilities;
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
 
@@ -94,8 +94,8 @@ public partial class UI : CanvasLayer
 	private int health;
 	private int resource;
 	private bool inventory_open;
-	private bool skills_open;
-	private bool skills_secondary_ui_open;
+	private bool abilities_open;
+	private bool abilities_secondary_ui_open;
 	public Node3D player;
 
 
@@ -139,7 +139,7 @@ public partial class UI : CanvasLayer
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
-		skills = GetNode<CanvasLayer>("Skills");
+		abilities = GetNode<CanvasLayer>("Abilities");
 		
 		
 
@@ -159,7 +159,7 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.SkillsUISecondaryOpen += HandelSkillsUISecondaryOpen;
+		_customSignals.AbilityUISecondaryOpen += HandelSkillsUISecondaryOpen;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -171,11 +171,12 @@ public partial class UI : CanvasLayer
 
     private void HandelSkillsUISecondaryOpen(bool secondary_open)
     {
-        skills_secondary_ui_open = secondary_open;
+        abilities_secondary_ui_open = secondary_open;
     }
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
+		GD.Print(button_name);
 		if(button_name == "LCrossPrimaryUpAssign")
 		{
 			l_cross_primary_up_action_button.Icon = icon;
@@ -194,7 +195,7 @@ public partial class UI : CanvasLayer
 		{
 			
 		}
-		if(inventory_open || skills_open)
+		if(inventory_open || abilities_open)
 		{
 			ControllerCursor();
 			HideCursor();
@@ -207,7 +208,7 @@ public partial class UI : CanvasLayer
 
 		ChangeActionBars();
 
-		if(inventory_open || skills_open)
+		if(inventory_open || abilities_open)
 		{
 			UI_element_open = true;
 		}
@@ -227,11 +228,11 @@ public partial class UI : CanvasLayer
 				character_Sheet_depth.Hide();
 				cursor.Hide();
 			}
-			if(skills_open && !skills_secondary_ui_open)
+			if(abilities_open && !abilities_secondary_ui_open)
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
-				skills_open = false;
-				skills.Hide();
+				abilities_open = false;
+				abilities.Hide();
 				cursor.Hide();
 			}
 
@@ -246,8 +247,8 @@ public partial class UI : CanvasLayer
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 				character_inventory.Show();
 				cursor.Show();
-				skills_open = false;
-				skills.Hide();
+				abilities_open = false;
+				abilities.Hide();
 			}
 			else
 			{
@@ -256,7 +257,7 @@ public partial class UI : CanvasLayer
 				character_inventory.Hide();
 				mats.Hide();
 				character_Sheet_depth.Hide();
-				if(!skills_open)
+				if(!abilities_open)
 				{
 					cursor.Hide();
 				}
@@ -628,7 +629,7 @@ public partial class UI : CanvasLayer
 
 	public void ChangeActionBars()
 	{
-		if(!inventory_open && !skills_open && Input.IsActionJustPressed("D-PadLeft"))
+		if(!inventory_open && !abilities_open && Input.IsActionJustPressed("D-PadLeft"))
 		{
 			if(l_cross_primary_selected)
 			{
@@ -673,7 +674,7 @@ public partial class UI : CanvasLayer
 			}
 			
 		}
-		if(!inventory_open && !skills_open && Input.IsActionJustPressed("D-PadRight"))
+		if(!inventory_open && !abilities_open && Input.IsActionJustPressed("D-PadRight"))
 		{
 			if(r_cross_primary_selected)
 			{
@@ -730,13 +731,13 @@ public partial class UI : CanvasLayer
 		character_Sheet_depth.Hide();
 	}
 
-	public void _on_skills_label_button_down()
+	public void _on_abilities_label_button_down()
 	{
-		skills_open = true;
+		abilities_open = true;
 		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 		inventory_open = false;
 		character_inventory.Hide();
-		skills.Show();
+		abilities.Show();
 	}
 
 	public void _on_add_button_button_down()

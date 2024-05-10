@@ -8,7 +8,7 @@ public partial class AbilityResource : Resource
     [Export]
     public string name { get; set; }
     [Export]
-    public string resource_path { get; set; }
+    public string ability_path { get; set; }
     [Export]
     public Texture2D icon { get; set; }
     [Export]

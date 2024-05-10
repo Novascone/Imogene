@@ -147,12 +147,11 @@ public partial class player : Entity
 	{
 		this_player = this;
 		
-		roll_ability = (Roll)LoadAbility("Roll");
-		abilities.Add(roll_ability);
-		target_ability = (Target)LoadAbility("Target");
-		basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
-		abilities.Add(basic_attack_ability);
-
+		// roll_ability = (Roll)LoadAbility("Roll");
+		// abilities.Add(roll_ability);
+		// target_ability = (Target)LoadAbility("Target");
+		// basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
+		// abilities.Add(basic_attack_ability);
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
@@ -200,15 +199,23 @@ public partial class player : Entity
 		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
+		_customSignals.AvailableAbilities += HandleAvailableAbilities;
 		
 	}
 
-   
+    private void HandleAvailableAbilities(string ability)
+    {
+       	Ability new_ability = (Ability)LoadAbility(ability);
+		abilities.Add(new_ability);
+    }
+
+
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
+		
 		SignalEmitter();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
@@ -1132,8 +1139,6 @@ public partial class player : Entity
     }
 
     private void HandleItemInfo(Item item){}
-
-
 	private void HandlePlayerPosition(Vector3 position){} // Sends player position to enemy
 	private void HandleTargeting(bool targeting, Vector3 position){}
 	private void HandleUIResource(int amount){}

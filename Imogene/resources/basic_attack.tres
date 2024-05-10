@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bw8gmdl0un14r"]
+
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/AbilityResource.cs" id="1_yga1w"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dnnbr"]
+
+[resource]
+script = ExtResource("1_yga1w")
+id = 0
+name = "BasicAttack"
+ability_path = ""
+icon = SubResource("PlaceholderTexture2D_dnnbr")
+type_of_ability = "Movement"

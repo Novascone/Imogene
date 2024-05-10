@@ -3,7 +3,7 @@ using System;
 
 public partial class BasicAttack : Ability
 {
-	public void Execute(player s)
+	public override void Execute(player s)
 	{
 		if(s.attacking)
 		{

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class CustomSignals : Node
 {
@@ -40,13 +41,17 @@ public partial class CustomSignals : Node
 
 	// Abilities
 	[Signal]
+	public delegate void AvailableAbilitiesEventHandler(string ability);
+	[Signal]
 	public delegate void LCrossPrimaryOrSecondaryEventHandler(bool l_cross_primary_selected_signal);
 	[Signal]
 	public delegate void RCrossPrimaryOrSecondaryEventHandler(bool r_cross_primary_selected_signal);
 	[Signal]
 	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon);
 	[Signal]
-	public delegate void AddToSkillsSelectionEventHandler(string ability, string type, Texture2D icon);
+	public delegate void ButtonToBeAssignedEventHandler(Button button1, Button button2);
+	[Signal]
+	public delegate void AddToAbilitySelectionEventHandler(string name, string type, Texture2D icon);
 	// Movement
 	[Signal]
 	public delegate void MovementTimerEventHandler(int time);
@@ -57,7 +62,8 @@ public partial class CustomSignals : Node
 
 	// UI to UI
 	[Signal]
-	public delegate void SkillsUISecondaryOpenEventHandler(bool secondary_open);
+	public delegate void AbilityUISecondaryOpenEventHandler(bool secondary_open);
+	
 	
 
 

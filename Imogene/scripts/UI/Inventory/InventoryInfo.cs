@@ -314,7 +314,7 @@ public partial class InventoryInfo : UI
 
 	private Button trash_label;
 
-	private Button skills_label;
+	private Button abilities_label;
 	private Button journal_quests_label;
 	private Button achievements_label;
 	private Button social_label;
@@ -588,7 +588,7 @@ public partial class InventoryInfo : UI
 		// Misc
 		trash_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BagSlots/TrashLabel");
 
-		skills_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SkillsLabel");
+		abilities_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel");
 		journal_quests_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel");
 		achievements_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel");
 		social_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SocialLabel");
@@ -1822,15 +1822,15 @@ public partial class InventoryInfo : UI
 		over_trash = false;
 	}
 
-	public void _on_skills_focus_entered()
+	public void _on_abilities_focus_entered()
 	{	
-		Control info = (Control)skills_label.GetChild(0);
+		Control info = (Control)abilities_label.GetChild(0);
 		info.Show();
 	}
 
-	public void _on_skills_focus_exited()
+	public void _on_abilities_focus_exited()
 	{
-		Control info = (Control)skills_label.GetChild(0);
+		Control info = (Control)abilities_label.GetChild(0);
 		info.Hide();
 	}
 
