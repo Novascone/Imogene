@@ -232,7 +232,7 @@ public partial class UI : CanvasLayer
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				abilities_open = false;
-				abilities.Hide();
+				// abilities.Hide();
 				cursor.Hide();
 			}
 
@@ -385,6 +385,11 @@ public partial class UI : CanvasLayer
 			Input.WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.1f));
 		}
 		cursor.Position = GetViewport().GetMousePosition();
+	}
+
+	public void NavigateMenus()
+	{
+	
 	}
 
 	public void HideCursor()

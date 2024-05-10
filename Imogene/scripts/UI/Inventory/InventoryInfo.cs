@@ -343,235 +343,232 @@ public partial class InventoryInfo : UI
 		pants_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants");
 		boots_slot = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots");
 
-		strength_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel");
+		strength_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label");
 		strength_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Value");
-		strength_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/StrengthLabel/Info/MarginContainer/PanelContainer/Label");
+		strength_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label/Info/MarginContainer/PanelContainer/Label");
 
-		dexterity_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel");
+		dexterity_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Label");
 		dexterity_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Value");
-		dexterity_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/DexterityLabel/Info/MarginContainer/PanelContainer/Label");
+		dexterity_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Label/Info/MarginContainer/PanelContainer/Label");
 
-		intellect_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel");
+		intellect_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Label");
 		intellect_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Value");
-		intellect_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/IntellectLabel/Info/MarginContainer/PanelContainer/Label");
+		intellect_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Label/Info/MarginContainer/PanelContainer/Label");
 
-		vitality_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel");
+		vitality_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Label");
 		vitality_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Value");
-		vitality_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/VitalityLabel/Info/MarginContainer/PanelContainer/Label");
+		vitality_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Label/Info/MarginContainer/PanelContainer/Label");
 
-		stamina_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel");
+		stamina_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Label");
 		stamina_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Value");
-		stamina_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/StaminaLabel/Info/MarginContainer/PanelContainer/Label");
+		stamina_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Label/Info/MarginContainer/PanelContainer/Label");
 
-		wisdom_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel");
+		wisdom_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Label");
 		wisdom_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Value");
-		wisdom_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/WisdomLabel/Info/MarginContainer/PanelContainer/Label");
+		wisdom_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Label/Info/MarginContainer/PanelContainer/Label");
 
-		charisma_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel");
+		charisma_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Label");
 		charisma_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Value");
-		charisma_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/CharismaLabel/Info/MarginContainer/PanelContainer/Label");
+		charisma_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Label/Info/MarginContainer/PanelContainer/Label");
 
 		// Stats details
-		damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel");
+		damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/Label");
 		damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/Value");
-		damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/DamageLabel/Info/MarginContainer/PanelContainer/Label");
+		damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/Label/Info/MarginContainer/PanelContainer/Label");
 
-		resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel");
+		resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/Label");
 		resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/Value");
-		resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/ResistanceLabel/Info/MarginContainer/PanelContainer/Label");
+		resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance/Label/Info/MarginContainer/PanelContainer/Label");
 
-		recovery_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel");
+		recovery_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/Label");
 		recovery_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/Value");
-		recovery_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/RecoveryLabel/Info/MarginContainer/PanelContainer/Label");
+		recovery_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery/Label/Info/MarginContainer/PanelContainer/Label");
 
-		level_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
+		level_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Label");
 		level_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Value");
-		level_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel/Info/MarginContainer/PanelContainer/Label");
+		level_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Label/Info/MarginContainer/PanelContainer/Label");
 
-		level_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel");
-		level_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Value");
-		level_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/LevelLabel/Info/MarginContainer/PanelContainer/Label");
 
 		// Offense
-		physical_melee_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel");
+		physical_melee_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label");
 		physical_melee_power_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Value");
-		physical_melee_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/PhysicalMeleePowerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		physical_melee_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		spell_melee_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/SpellMeleePowerLabel");
+		spell_melee_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Label");
 		spell_melee_power_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Value");
-		spell_melee_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/SpellMeleePowerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		spell_melee_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		physical_ranged_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/PhysicalRangedPowerLabel");
+		physical_ranged_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Label");
 		physical_ranged_power_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Value");
-		physical_ranged_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/PhysicalRangedPowerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		physical_ranged_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
        
-        spell_ranged_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel");
+        spell_ranged_power_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label");
 		spell_ranged_power_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Value");
-		spell_ranged_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/SpellRangedPowerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		spell_ranged_power_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		wisdom_scaler_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel");
+		wisdom_scaler_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label");
 		wisdom_scaler_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Value");
-		wisdom_scaler_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/WisdomScalerLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		wisdom_scaler_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
  		
-		thrust_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/ThrustDamageLabel");
+		thrust_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label");
 		thrust_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Value");
-		thrust_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/ThrustDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		thrust_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		slash_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/SlashDamageLabel");
+		slash_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label");
 		slash_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Value");
-		slash_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/SlashDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		slash_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		blunt_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel");
+		blunt_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label");
 		blunt_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Value");
-		blunt_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/BluntDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		blunt_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		bleed_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel");
+		bleed_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label");
 		bleed_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Value");
-		bleed_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/BleedDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		bleed_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		poison_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/PoisonDamageLabel");
+		poison_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label");
 		poison_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Value");
-		poison_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/PoisonDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		poison_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		fire_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/FireDamageLabel");
+		fire_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label");
 		fire_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Value");
-		fire_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/FireDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		fire_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		cold_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/ColdDamageLabel");
+		cold_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label");
 		cold_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Value");
-		cold_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/ColdDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		cold_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		lightning_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/LightningDamageLabel");
+		lightning_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label");
 		lightning_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Value");
-		lightning_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/LightningDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		lightning_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		holy_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/HolyDamageLabel");
+		holy_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label");
 		holy_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Value");
-		holy_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/HolyDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		holy_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		critical_hit_chance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/CriticalHitChanceLabel");
+		critical_hit_chance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label");
 		critical_hit_chance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Value");
-		critical_hit_chance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/CriticalHitChanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		critical_hit_chance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		critical_hit_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/CriticalHitDamageLabel");
+		critical_hit_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label");
 		critical_hit_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Value");
-		critical_hit_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/CriticalHitDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		critical_hit_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		attack_speed_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/AttackSpeedLabel");
+		attack_speed_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Label");
 		attack_speed_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Value");
-		attack_speed_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/AttackSpeedLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		attack_speed_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		attack_speed_increase_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/AttackSpeedIncreaseLabel");
+		attack_speed_increase_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label");
 		attack_speed_increase_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Value");
-		attack_speed_increase_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/AttackSpeedIncreaseLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		attack_speed_increase_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		cooldown_reduction_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/CooldownReductionLabel");
+		cooldown_reduction_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label");
 		cooldown_reduction_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Value");
-		cooldown_reduction_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/CooldownReductionLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		cooldown_reduction_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		posture_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/PostureDamageLabel");
+		posture_damage_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label");
 		posture_damage_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Value");
-		posture_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/PostureDamageLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		posture_damage_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
 		//Defense
-		armor_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/ArmorLabel");
+		armor_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label");
 		armor_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Value");
-		armor_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/ArmorLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		armor_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		poise_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/PoiseLabel");
+		poise_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label");
 		poise_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Value");
-		poise_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/PoiseLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		poise_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		block_amount_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/BlockAmountLabel");
+		block_amount_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Label");
 		block_amount_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Value");
-		block_amount_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/BlockAmountLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		block_amount_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		retaliation_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/RetaliationLabel");
+		retaliation_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Label");
 		retaliation_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Value");
-		retaliation_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/RetaliationLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		retaliation_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		physical_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/PhysicalResistanceLabel");
+		physical_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Label");
 		physical_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Value");
-		physical_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/PhysicalResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		physical_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		thrust_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/ThrustResistanceLabel");
+		thrust_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Label");
 		thrust_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Value");
-		thrust_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/ThrustResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		thrust_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		slash_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/SlashResistanceLabel");
+		slash_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Label");
 		slash_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Value");
-		slash_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/SlashResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		slash_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		blunt_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/BluntResistanceLabel");
+		blunt_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Label");
 		blunt_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Value");
-		blunt_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/BluntResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		blunt_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		bleed_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/BleedResistanceLabel");
+		bleed_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Label");
 		bleed_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Value");
-		bleed_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/BleedResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		bleed_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		poison_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/PoisonResistanceLabel");
+		poison_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Label");
 		poison_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Value");
-		poison_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/PoisonResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		poison_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 		
-		curse_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/CurseResistanceLabel");
+		curse_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Label");
 		curse_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Value");
-		curse_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/CurseResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		curse_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		spell_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/SpellResistanceLabel");
+		spell_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Label");
 		spell_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Value");
-		spell_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/SpellResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		spell_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		fire_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/FireResistanceLabel");
+		fire_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Label");
 		fire_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Value");
-		fire_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/FireResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		fire_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		cold_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/ColdResistanceLabel");
+		cold_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Label");
 		cold_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Value");
-		cold_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/ColdResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		cold_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		lightning_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/LightningResistanceLabel");
+		lightning_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Label");
 		lightning_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Value");
-		lightning_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/LightningResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		lightning_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		holy_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/HolyResistanceLabel");
+		holy_resistance_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Label");
 		holy_resistance_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Value");
-		holy_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/HolyResistanceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		holy_resistance_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
 		// Health
-		maximum_health_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/MaximumHealthLabel");
+		maximum_health_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Label");
 		maximum_health_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Value");
-		maximum_health_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/MaximumHealthLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		maximum_health_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		health_bonus_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/HealthBonusLabel");
+		health_bonus_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label");
 		health_bonus_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Value");
-		health_bonus_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/HealthBonusLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		health_bonus_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		health_regen_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/HealthRegenerationLabel");
+		health_regen_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label");
 		health_regen_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Value");
-		health_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/HealthRegenerationLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		health_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		health_retaliation_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/HealthRetaliationLabel");
+		health_retaliation_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label");
 		health_retaliation_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Value");
-		health_retaliation_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/HealthRetaliationLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		health_retaliation_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
 		//Resource 
-		maximum_resource_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/MaximumResourceLabel");
+		maximum_resource_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label");
 		maximum_resource_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Value");
-		maximum_resource_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/MaximumResourceLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		maximum_resource_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 		
-		resource_regen_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/ResourceRegenerationLabel");
+		resource_regen_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label");
 		resource_regen_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Value");
-		resource_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/ResourceRegenerationLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		resource_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
-		resource_cost_reduction_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/ResourceCostReductionLabel");
+		resource_cost_reduction_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label");
 		resource_cost_reduction_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Value");
-		resource_cost_reduction_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/ResourceCostReductionLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		resource_cost_reduction_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
 		//Misc
-		movement_speed_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/MovementSpeedLabel");
+		movement_speed_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label");
 		movement_speed_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Value");
-		movement_speed_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/MovementSpeedLabel/Info/MarginContainer/PanelContainer/RichTextLabel");
+		movement_speed_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
 		
 		
@@ -616,13 +613,6 @@ public partial class InventoryInfo : UI
 			}
 		}	
 
-		if(this.Visible)
-		{
-			if(Input.IsActionJustPressed("B"))
-			{
-				
-			}
-		}
 	}
 
 	private void CharacterInfo()
@@ -891,205 +881,6 @@ public partial class InventoryInfo : UI
 		
 	}
 
-	public void _on_head_focus_entered()
-	{
-		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "Head");
-		GD.Print(head_slot.Name);
-		Control info = (Control)head_slot.GetChild(1);
-		info.Show();
-		
-	}
-
-	public void _on_head_focus_exited()
-	{
-		_customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "");
-		over_head = false;
-		Control info = (Control)head_slot.GetChild(1);
-		info.Hide();
-
-	}
-
-	public void _on_shoulder_focus_entered()
-	{
-		over_shoulders = true;
-		Control info = (Control)shoulder_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_shoulder_focus_exited()
-	{
-		over_shoulders = false;
-		
-		Control info = (Control)shoulder_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_neck_focus_entered()
-	{
-		over_neck = true;
-		Control info = (Control)neck_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_neck_focus_exited()
-	{
-		over_neck = false;
-		Control info = (Control)neck_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_chest_focus_entered()
-	{
-		over_chest = true;
-		Control info = (Control)chest_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_chest_focus_exited()
-	{
-		over_chest = false;
-		Control info = (Control)chest_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_gloves_focus_entered()
-	{
-		over_gloves = true;
-		Control info = (Control)gloves_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_gloves_focus_exited()
-	{
-		over_gloves = false;
-		Control info = (Control)gloves_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_bracers_focus_entered()
-	{
-		over_bracers = true;
-		Control info = (Control)bracers_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_bracers_focus_exited()
-	{
-		over_bracers = false;
-		Control info = (Control)bracers_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_belt_focus_entered()
-	{
-		over_belt = true;
-		Control info = (Control)belt_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_belt_focus_exited()
-	{
-		over_belt = false;
-		Control info = (Control)belt_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_ring_1_focus_entered()
-	{
-		over_ring1 = true;
-		Control info = (Control)ring1_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_ring_1_focus_exited()
-	{
-		over_ring1 = false;
-		Control info = (Control)ring1_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_ring_2_focus_entered()
-	{
-		over_ring2 = true;
-		Control info = (Control)ring2_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_ring_2_focus_exited()
-	{
-		over_ring2 = false;
-		Control info = (Control)ring2_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_main_hand_focus_entered()
-	{
-		over_main = true;
-		Control info = (Control)mainhand_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_main_hand_focus_exited()
-	{
-		over_main = false;
-		Control info = (Control)mainhand_slot.GetChild(1);
-		info.Hide();
-		
-	}
-
-	public void _on_off_hand_focus_entered()
-	{
-		over_off = true;
-		Control info = (Control)offhand_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_off_hand_focus_exited()
-	{
-		over_off = false;
-		Control info = (Control)offhand_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_pants_focus_entered()
-	{
-		over_pants = true;
-		Control info = (Control)pants_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_pants_focus_exited()
-	{
-		over_pants = false;
-		Control info = (Control)pants_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_boots_focus_entered()
-	{
-		over_boots = true;
-		Control info = (Control)boots_slot.GetChild(1);
-		info.Show();
-	}
-
-	public void _on_boots_focus_exited()
-	{
-		over_boots = false;
-		Control info = (Control)boots_slot.GetChild(1);
-		info.Hide();
-	}
-
-	public void _on_level_label_focus_entered()
-	{
-		Control info = (Control)level_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_level_label_focus_exited()
-	{
-		Control info = (Control)level_label.GetChild(0);
-		info.Hide();
-	}
 
 	public void _on_rep_focus_entered()
 	{
@@ -1103,126 +894,6 @@ public partial class InventoryInfo : UI
 		// info.Hide();
 	}
 
-	public void _on_strength_label_focus_entered()
-	{
-		Control info = (Control)strength_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_strength_label_focus_exited()
-	{
-		Control info = (Control)strength_label.GetChild(0);
-		info.Hide();
-	}
-	public void _on_dexterity_label_focus_entered()
-	{
-		Control info = (Control)dexterity_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_dexterity_label_focus_exited()
-	{
-		Control info = (Control)dexterity_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_intellect_label_focus_entered()
-	{
-		Control info = (Control)intellect_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_intellect_label_focus_exited()
-	{
-		Control info = (Control)intellect_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_vitality_label_focus_entered()
-	{
-		Control info = (Control)vitality_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_vitality_label_focus_exited()
-	{
-		Control info = (Control)vitality_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_stamina_label_focus_entered()
-	{
-		Control info = (Control)stamina_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_stamina_label_focus_exited()
-	{
-		Control info = (Control)stamina_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_wisdom_label_focus_entered()
-	{
-		Control info = (Control)wisdom_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_wisdom_label_focus_exited()
-	{
-		Control info = (Control)wisdom_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_charisma_label_focus_entered()
-	{
-		Control info = (Control)charisma_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_charisma_label_focus_exited()
-	{
-		Control info = (Control)charisma_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_damage_label_focus_entered()
-	{
-		Control info = (Control)damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_damage_label_focus_exited()
-	{
-		Control info = (Control)damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_resistance_label_focus_entered()
-	{
-		Control info = (Control)resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_resistance_label_focus_exited()
-	{
-		Control info = (Control)resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_recovery_label_focus_entered()
-	{
-		Control info = (Control)recovery_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_recovery_label_focus_exited()
-	{
-		Control info = (Control)recovery_label.GetChild(0);
-		info.Hide();
-	}
-
-
 	public void _on_sheet_focus_entered()
 	{
 		// Control info = (Control)sheet_label.GetChild(0);
@@ -1233,546 +904,6 @@ public partial class InventoryInfo : UI
 	{
 		// Control info = (Control)sheet_label.GetChild(0);
 		// info.Hide();
-	}
-
-	// Offense
-
-	public void _on_physical_melee_power_label_focus_entered()
-	{
-		Control info = (Control)physical_melee_power_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_physical_melee_power_label_focus_exited()
-	{
-		Control info = (Control)physical_melee_power_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_spell_melee_power_label_focus_entered()
-	{
-		Control info = (Control)spell_melee_power_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_spell_melee_power_label_focus_exited()
-	{
-		Control info = (Control)spell_melee_power_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_physical_ranged_power_label_focus_entered()
-	{
-		Control info = (Control)physical_ranged_power_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_physical_ranged_power_label_focus_exited()
-	{
-		Control info = (Control)physical_ranged_power_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_spell_ranged_power_label_focus_entered()
-	{
-		Control info = (Control)spell_ranged_power_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_spell_ranged_power_label_focus_exited()
-	{
-		Control info = (Control)spell_ranged_power_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_wisdom_scaler_focus_entered()
-	{
-		Control info = (Control)wisdom_scaler_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_wisdom_scaler_focus_exited()
-	{
-		Control info = (Control)wisdom_scaler_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_thrust_damage_label_focus_entered()
-	{
-		Control info = (Control)thrust_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_thrust_damage_label_focus_exited()
-	{
-		Control info = (Control)thrust_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_slash_damage_label_focus_entered()
-	{
-		Control info = (Control)slash_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_slash_damage_label_focus_exited()
-	{
-		Control info = (Control)slash_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_blunt_damage_label_focus_entered()
-	{
-		Control info = (Control)blunt_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_blunt_damage_label_focus_exited()
-	{
-		Control info = (Control)blunt_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_bleed_damage_label_focus_entered()
-	{
-		Control info = (Control)bleed_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_bleed_damage_label_focus_exited()
-	{
-		Control info = (Control)bleed_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_poison_damage_label_focus_entered()
-	{
-		Control info = (Control)poison_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_poison_damage_label_focus_exited()
-	{
-		Control info = (Control)poison_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_fire_damage_label_focus_entered()
-	{
-		Control info = (Control)fire_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_fire_damage_label_focus_exited()
-	{
-		Control info = (Control)fire_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_cold_damage_label_focus_entered()
-	{
-		Control info = (Control)cold_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_cold_damage_label_focus_exited()
-	{
-		Control info = (Control)cold_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_lightning_damage_label_focus_entered()
-	{
-		Control info = (Control)lightning_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_lightning_damage_label_focus_exited()
-	{
-		Control info = (Control)lightning_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_holy_damage_label_focus_entered()
-	{
-		Control info = (Control)holy_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_holy_damage_label_focus_exited()
-	{
-		Control info = (Control)holy_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_critical_hit_chance_label_focus_entered()
-	{
-		Control info = (Control)critical_hit_chance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_critical_hit_chance_label_focus_exited()
-	{
-		Control info = (Control)critical_hit_chance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_critical_hit_damage_label_focus_entered()
-	{
-		Control info = (Control)critical_hit_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_critical_hit_damage_label_focus_exited()
-	{
-		Control info = (Control)critical_hit_damage_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_attack_speed_label_focus_entered()
-	{
-		Control info = (Control)attack_speed_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_attack_speed_label_focus_exited()
-	{
-		Control info = (Control)attack_speed_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_attack_speed_increase_label_focus_entered()
-	{
-		Control info = (Control)attack_speed_increase_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_attack_speed_increase_label_focus_exited()
-	{
-		Control info = (Control)attack_speed_increase_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_cooldown_reduction_label_focus_entered()
-	{
-		Control info = (Control)cooldown_reduction_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_cooldown_reduction_label_focus_exited()
-	{
-		Control info = (Control)cooldown_reduction_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_posture_damage_label_focus_entered()
-	{
-		Control info = (Control)posture_damage_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_posture_damage_label_focus_exited()
-	{
-		Control info = (Control)posture_damage_label.GetChild(0);
-		info.Hide();
-	}
-	
-
-	// Defense
-
-	public void _on_armor_label_focus_entered()
-	{
-		Control info = (Control)armor_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_armor_label_focus_exited()
-	{
-		Control info = (Control)armor_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_poise_label_focus_entered()
-	{
-		Control info = (Control)poise_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_poise_label_focus_exited()
-	{
-		Control info = (Control)poise_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_block_amount_label_focus_entered()
-	{
-		Control info = (Control)block_amount_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_block_amount_label_focus_exited()
-	{
-		Control info = (Control)block_amount_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_retaliation_label_focus_entered()
-	{
-		Control info = (Control)retaliation_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_retaliation_label_focus_exited()
-	{
-		Control info = (Control)retaliation_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_physical_resistance_label_focus_entered()
-	{
-		Control info = (Control)physical_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_physical_resistance_label_focus_exited()
-	{
-		Control info = (Control)physical_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_thrust_resistance_label_focus_entered()
-	{
-		Control info = (Control)thrust_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_thrust_resistance_label_focus_exited()
-	{
-		Control info = (Control)thrust_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_slash_resistance_label_focus_entered()
-	{
-		Control info = (Control)slash_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_slash_resistance_label_focus_exited()
-	{
-		Control info = (Control)slash_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_blunt_resistance_label_focus_entered()
-	{
-		Control info = (Control)blunt_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_blunt_resistance_label_focus_exited()
-	{
-		Control info = (Control)blunt_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_bleed_resistance_label_focus_entered()
-	{
-		Control info = (Control)bleed_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_bleed_resistance_label_focus_exited()
-	{
-		Control info = (Control)bleed_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_poison_resistance_label_focus_entered()
-	{
-		Control info = (Control)poison_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_poison_resistance_label_focus_exited()
-	{
-		Control info = (Control)poison_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-
-	public void _on_curse_resistance_label_focus_entered()
-	{
-		Control info = (Control)curse_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_curse_resistance_label_focus_exited()
-	{
-		Control info = (Control)curse_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_spell_resistance_label_focus_entered()
-	{
-		Control info = (Control)spell_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_spell_resistance_label_focus_exited()
-	{
-		Control info = (Control)spell_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_fire_resistance_label_focus_entered()
-	{
-		Control info = (Control)fire_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_fire_resistance_label_focus_exited()
-	{
-		Control info = (Control)fire_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_cold_resistance_label_focus_entered()
-	{
-		Control info = (Control)cold_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_cold_resistance_label_focus_exited()
-	{
-		Control info = (Control)cold_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_lightning_resistance_label_focus_entered()
-	{
-		Control info = (Control)lightning_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_lightning_resistance_label_focus_exited()
-	{
-		Control info = (Control)lightning_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_holy_resistance_label_focus_entered()
-	{
-		Control info = (Control)holy_resistance_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_holy_resistance_label_focus_exited()
-	{
-		Control info = (Control)holy_resistance_label.GetChild(0);
-		info.Hide();
-	}
-
-	// Health
-
-	public void _on_maximum_health_label_focus_entered()
-	{
-		Control info = (Control)maximum_health_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_maximum_health_label_focus_exited()
-	{
-		Control info = (Control)maximum_health_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_health_bonus_label_focus_entered()
-	{
-		Control info = (Control)health_bonus_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_health_bonus_label_focus_exited()
-	{
-		Control info = (Control)health_bonus_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_health_regeneration_label_focus_entered()
-	{
-		Control info = (Control)health_regen_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_health_regeneration_label_focus_exited()
-	{
-		Control info = (Control)health_regen_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_health_retaliation_label_focus_entered()
-	{
-		Control info = (Control)health_retaliation_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_health_retaliation_label_focus_exited()
-	{
-		Control info = (Control)health_retaliation_label.GetChild(0);
-		info.Hide();
-	}
-
-	// Resource
-
-	public void _on_maximum_resource_label_focus_entered()
-	{
-		Control info = (Control)maximum_resource_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_maximum_resource_label_focus_exited()
-	{
-		Control info = (Control)maximum_resource_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_resource_regeneration_label_focus_entered()
-	{
-		Control info = (Control)resource_regen_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_resource_regeneration_label_focus_exited()
-	{
-		Control info = (Control)resource_regen_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_resource_cost_reduction_label_focus_entered()
-	{
-		Control info = (Control)resource_cost_reduction_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_resource_cost_reduction_label_focus_exited()
-	{
-		Control info = (Control)resource_cost_reduction_label.GetChild(0);
-		info.Hide();
-	}
-
-	// Misc
-
-	public void _on_movement_speed_label_focus_entered()
-	{
-		Control info = (Control)movement_speed_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_movement_speed_label_focus_exited()
-	{
-		Control info = (Control)movement_speed_label.GetChild(0);
-		info.Hide();
 	}
 
 
@@ -1821,66 +952,5 @@ public partial class InventoryInfo : UI
 	{
 		over_trash = false;
 	}
-
-	public void _on_abilities_focus_entered()
-	{	
-		Control info = (Control)abilities_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_abilities_focus_exited()
-	{
-		Control info = (Control)abilities_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_journal_quests_focus_entered()
-	{	
-		Control info = (Control)journal_quests_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_journal_quests_focus_exited()
-	{
-		Control info = (Control)journal_quests_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_achievements_focus_entered()
-	{	
-		Control info = (Control)achievements_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_achievements_focus_exited()
-	{
-		Control info = (Control)achievements_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_social_focus_entered()
-	{	
-		Control info = (Control)social_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_social_focus_exited()
-	{
-		Control info = (Control)social_label.GetChild(0);
-		info.Hide();
-	}
-
-	public void _on_options_focus_entered()
-	{	
-		Control info = (Control)options_label.GetChild(0);
-		info.Show();
-	}
-
-	public void _on_options_focus_exited()
-	{
-		Control info = (Control)options_label.GetChild(0);
-		info.Hide();
-	}
-
 
 }
