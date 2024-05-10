@@ -7,6 +7,8 @@ public partial class AbilityCategory : PanelContainer
 {
 	private GridContainer ability_container;
 	private HBoxContainer ability_modifier_container;
+	private AbilityButton button_clicked;
+	private Button button_to_be_assigned;
 	private List<AbilityButton> abilities = new List<AbilityButton>();
 	private List<Button> modifiers = new List<Button>();
 	private CustomSignals _customSignals;
@@ -20,6 +22,7 @@ public partial class AbilityCategory : PanelContainer
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 
 		_customSignals.AddToAbilitySelection += HandleAddToAbilitySelection;
+		_customSignals.SendButtonClicked += HandleButtonClicked;
 
 		foreach(AbilityButton ability in ability_container.GetChildren().Cast<AbilityButton>())
 		{
@@ -33,9 +36,19 @@ public partial class AbilityCategory : PanelContainer
 		}
 		AddAbility(roll.name, roll.type_of_ability, roll.icon);
 		AddAbility(basic_attack.name,basic_attack.type_of_ability, basic_attack.icon);
+		foreach(AbilityButton button in abilities)
+		{
+			GD.Print(button.ability_name);
+		}
 		SendAbilitiesToPlayer(abilities);
 		
 	}
+
+    private void HandleButtonClicked(AbilityButton button, Button assign_button)
+    {
+        button_clicked = button;
+		button_to_be_assigned = assign_button;
+    }
 
     private void HandleAddToAbilitySelection(string name, string type, Texture2D icon)
     {
@@ -77,6 +90,10 @@ public partial class AbilityCategory : PanelContainer
 			
 		}
 		
+	}
+	public void _on_accept_button_down()
+	{
+		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, button_to_be_assigned.Name, button_clicked.Icon);
 	}
 
 }

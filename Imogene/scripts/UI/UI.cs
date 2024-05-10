@@ -45,6 +45,9 @@ public partial class UI : CanvasLayer
 
 	public GridContainer l_cross_primary;
 	public Button l_cross_primary_up_action_button;
+	public Button l_cross_primary_right_action_button;
+	public Button l_cross_primary_left_action_button;
+	public Button l_cross_primary_down_action_button;
 	public Label l_cross_primary_up_action_label;
 	public Label l_cross_primary_down_action_label;
 	public Label l_cross_primary_left_action_label;
@@ -52,19 +55,30 @@ public partial class UI : CanvasLayer
 
 
 	public GridContainer r_cross_primary;
+	public Button r_cross_primary_up_action_button;
 	public Button r_cross_primary_right_action_button;
+	public Button r_cross_primary_left_action_button;
+	public Button r_cross_primary_down_action_button;
 	public Label r_cross_primary_up_action_label;
 	public Label r_cross_primary_down_action_label;
 	public Label r_cross_primary_left_action_label;
 	public Label r_cross_primary_right_action_label;
 
 	public GridContainer l_cross_secondary;
+	public Button l_cross_secondary_up_action_button;
+	public Button l_cross_secondary_right_action_button;
+	public Button l_cross_secondary_left_action_button;
+	public Button l_cross_secondary_down_action_button;
 	public Label l_cross_secondary_up_action_label;
 	public Label l_cross_secondary_down_action_label;
 	public Label l_cross_secondary_left_action_label;
 	public Label l_cross_secondary_right_action_label;
 
 	public GridContainer r_cross_secondary;
+	public Button r_cross_secondary_up_action_button;
+	public Button r_cross_secondary_right_action_button;
+	public Button r_cross_secondary_left_action_button;
+	public Button r_cross_secondary_down_action_button;
 	public Label r_cross_secondary_up_action_label;
 	public Label r_cross_secondary_down_action_label;
 	public Label r_cross_secondary_left_action_label;
@@ -104,12 +118,15 @@ public partial class UI : CanvasLayer
 	{
 
 		// Cursor
-		cursor = GetNode<Sprite2D>("Cursor");
+		cursor = GetNode<Sprite2D>("Cursor/CursorSprite");
 		mouse_pos = cursor.Position;
 
 		// UI sections
 		l_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary");
 		l_cross_primary_up_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction");
+		l_cross_primary_right_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryRightAction");
+		l_cross_primary_left_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction");
+		l_cross_primary_down_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction");
 		l_cross_primary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryUpAction/Label");
 		l_cross_primary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction/Label");
 		l_cross_primary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction/Label");
@@ -117,19 +134,30 @@ public partial class UI : CanvasLayer
 
 
 		r_cross_primary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary");
+		r_cross_primary_up_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction");
 		r_cross_primary_right_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction");
+		r_cross_primary_left_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction");
+		r_cross_primary_down_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction");
 		r_cross_primary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction/Label");
 		r_cross_primary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction/Label");
 		r_cross_primary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction/Label");
 		r_cross_primary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryRightAction/Label");
 
 		l_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary");
+		l_cross_secondary_up_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction");
+		l_cross_secondary_right_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction");
+		l_cross_secondary_left_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction");
+		l_cross_secondary_down_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction");
 		l_cross_secondary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction/Label");
 		l_cross_secondary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction/Label");
 		l_cross_secondary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction/Label");
 		l_cross_secondary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction/Label");
 
 		r_cross_secondary = GetNode<GridContainer>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary");
+		r_cross_secondary_up_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction");
+		r_cross_secondary_right_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction");
+		r_cross_secondary_left_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction");
+		r_cross_secondary_down_action_button = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction");
 		r_cross_secondary_up_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction/Label");
 		r_cross_secondary_down_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction/Label");
 		r_cross_secondary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction/Label");
@@ -176,15 +204,26 @@ public partial class UI : CanvasLayer
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
-		GD.Print(button_name);
-		if(button_name == "LCrossPrimaryUpAssign")
-		{
-			l_cross_primary_up_action_button.Icon = icon;
-		}
-		if(button_name == "RCrossPrimaryRightAssign")
-		{
-			r_cross_primary_right_action_button.Icon = icon;
-		}
+		
+		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryDownAssign"){l_cross_primary_down_action_button.Icon = icon;}
+
+		if(button_name == "RCrossPrimaryUpAssign"){r_cross_primary_up_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryRightAssign"){r_cross_primary_right_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryLeftAssign"){r_cross_primary_left_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryDownAssign"){r_cross_primary_down_action_button.Icon = icon;}
+
+		if(button_name == "LCrossSecondaryUpAssign"){l_cross_secondary_up_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryRightAssign"){l_cross_secondary_right_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryLeftAssign"){l_cross_secondary_left_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryDownAssign"){l_cross_secondary_down_action_button.Icon = icon;}
+
+		if(button_name == "RCrossSecondaryUpAssign"){r_cross_secondary_up_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryRightAssign"){r_cross_secondary_right_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryLeftAssign"){r_cross_secondary_left_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon = icon;}
         
     }
 
@@ -292,7 +331,7 @@ public partial class UI : CanvasLayer
 					}
 					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))
 					{
-						GD.Print("hover over button name" + hover_over_button.Name);
+						
 						clicked_on = true;
 						grabbed_object = hover_over_button;
 						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
@@ -343,13 +382,12 @@ public partial class UI : CanvasLayer
 			}
 			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))  && over_head)
 			{
-				GD.Print("overhead clicking");
+				
 				if(grabbed_object.inventory_item.type_of_item == "equipable")
 				{
 					clicked_on = false;
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
-					GD.Print("clicked over head");
 					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)grabbed_object.inventory_item);
 			
 				}
@@ -808,7 +846,6 @@ public partial class UI : CanvasLayer
 
 	public void _on_remove_equiped_button_down()
 	{
-		GD.Print("button down");
 		_customSignals.EmitSignal(nameof(CustomSignals.RemoveEquipped));
 	}
 

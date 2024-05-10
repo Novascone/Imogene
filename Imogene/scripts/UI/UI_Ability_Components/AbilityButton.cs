@@ -43,6 +43,7 @@ public partial class AbilityButton : Button
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		
 	}
 
 	public void _on_button_down()
@@ -50,11 +51,6 @@ public partial class AbilityButton : Button
 		
 		assign_button.Icon = this.Icon;
 		icon_button.Icon = this.Icon;
-	}
-
-	public void _on_accept_button_down()
-	{
-		
-		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), ability_name, assign_button.Name, Icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.SendButtonClicked), this, assign_button);
 	}
 }

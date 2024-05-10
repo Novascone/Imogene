@@ -20,29 +20,30 @@ public partial class player : Entity
 	Target target_ability;
 	BasicAttack basic_attack_ability;
 	List<Ability> abilities = new List<Ability>();
+	Ability ability_in_use;
 
 	public bool l_cross_primary_selected;
 	public bool r_cross_primary_selected;
 
-	public Dictionary<string, Ability> primary_RB = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_LB = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_RT = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_LT = new Dictionary<string, Ability>();
+	public Ability primary_RB;
+	public Ability primary_LB;
+	public Ability primary_RT;
+	public Ability primary_LT;
 
-	public Dictionary<string, Ability> primary_A = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_B = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_X = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> primary_Y = new Dictionary<string, Ability>();
+	public Ability primary_A;
+	public Ability primary_B;
+	public Ability primary_X;
+	public Ability primary_Y;
 
-	public Dictionary<string, Ability> secondary_RB = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_LB = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_RT = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_LT = new Dictionary<string, Ability>();
+	public Ability secondary_RB;
+	public Ability secondary_LB;
+	public Ability secondary_RT;
+	public Ability secondary_LT;
 
-	public Dictionary<string, Ability> secondary_A = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_B = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_X = new Dictionary<string, Ability>();
-	public Dictionary<string, Ability> secondary_Y = new Dictionary<string, Ability>();
+	public Ability secondary_A;
+	public Ability secondary_B;
+	public Ability secondary_X;
+	public Ability secondary_Y;
 
 	// Player Direction and animation variables
 	public Vector3 player_position; // Position of the player
@@ -95,8 +96,8 @@ public partial class player : Entity
 
 
 	// Player bools
-	public bool using_movement_ability; 
-	public Ability movement_ability;
+	public bool using_ability; 
+	public bool animation_finished = true;
 	public bool enemy_in_vision = false;
 	public bool targeting = false;
 	private bool max_health_changed = true;
@@ -172,7 +173,7 @@ public partial class player : Entity
 		helm = new MeshInstance3D();
 
 		tree = GetNode<AnimationTree>("AnimationTree");
-		tree.AnimationFinished += OnAnimationFinsihed;
+		tree.AnimationFinished += OnAnimationFinished;
 
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
@@ -215,7 +216,7 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+		// GD.Print(using_ability);
 		SignalEmitter();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
@@ -248,20 +249,20 @@ public partial class player : Entity
 			}
 		}
 
-		// if(Input.IsActionJustPressed("Attack"))
-		// {
-		// 	attacking = true;
-		// 	basic_attack_ability.Execute(this);
-		// }
-		// else
-		// {
-		// 	attacking = false;
-		// 	basic_attack_ability.Execute(this);
-		// }
-
+		if(Input.IsActionJustPressed("Attack"))
+		{
+			attacking = true;
+			// basic_attack_ability.Execute(this);
+		}
+		else
+		{
+			attacking = false;
+			// basic_attack_ability.Execute(this);
+		}
+		// GD.Print(attacking);
 		
 		
-		ExecuteAbility();
+		
 
 		if(in_interact_area)
 		{
@@ -302,323 +303,125 @@ public partial class player : Entity
 			mob_index = 0;
 		}
 
+		GrabAbility();
+		UseAbility(ability_in_use);
 		
-		if(using_movement_ability)
-		{
-			MovementAbility(movement_ability);
-		}
-		else
-		{
-			movement_ability = null;
-			velocity.X = direction.X * speed;
-			velocity.Z = direction.Z * speed;
-		}
+		
 		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		MoveAndSlide();
 
     }
 
-	public void ExecuteAbility()
+	public void GrabAbility()
 	{
 		if(l_cross_primary_selected)
 		{
 			// Use ability assigned to primary RB
 			if(Input.IsActionJustPressed("RB"))
 			{
-
-				if(primary_RB.Count > 0)
-				{
-					Ability current_ability = primary_RB.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(primary_RB != null) { using_ability = true; ability_in_use = primary_RB;}
+				GD.Print("here");
 			}
+			// Use ability assigned to primary LB
 			if(Input.IsActionJustPressed("LB"))
 			{
-				// Use ability assigned to primary LB
-				if(primary_LB.Count > 0)
-				{
-					Ability current_ability = primary_LB.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
-				
+				if(primary_LB != null) { using_ability = true; ability_in_use = primary_LB;}
 			}
+			// Use ability assigned to primary RT
 			if(Input.IsActionJustPressed("RT"))
 			{
-				// Use ability assigned to primary RT
-				if(primary_RT.Count > 0)
-				{
-					Ability current_ability = primary_RT.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(primary_RT != null) { using_ability = true; ability_in_use = primary_RT;}
 			}
+			// Use ability assigned to primary LT
 			if(Input.IsActionJustPressed("LT"))
 			{
-				// Use ability assigned to primary LT
-				if(primary_LT.Count > 0)
-				{
-					Ability current_ability = primary_LT.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(primary_LT != null) { using_ability = true; ability_in_use = primary_LT;}
 			}
 		}
 		else
-		{	
+		{	// Use ability assigned to secondary RB
 			if(Input.IsActionJustPressed("RB"))
 			{
-				// Use ability assigned to secondary RB
-				if(secondary_RB.Count > 0)
-				{
-					Ability current_ability = secondary_RB.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(secondary_RB != null) { using_ability = true; ability_in_use = secondary_RB;}
 			}
+			// Use ability assigned to secondary LB
 			if(Input.IsActionJustPressed("LB"))
 			{
-				// Use ability assigned to secondary LB
-				if(secondary_LB.Count > 0)
-				{
-					Ability current_ability = secondary_LB.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(secondary_LB != null) { using_ability = true; ability_in_use = secondary_LB;}
 			}
+			// Use ability assigned to secondary RT
 			if(Input.IsActionJustPressed("RT"))
 			{
-				// Use ability assigned to secondary RT
-				if(secondary_RT.Count > 0)
-				{
-					Ability current_ability = secondary_RT.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
-				
+				if(secondary_RT != null) { using_ability = true; ability_in_use = secondary_RT;}
 			}
+			// Use ability assigned to secondary LT
 			if(Input.IsActionJustPressed("LT"))
 			{
-				// Use ability assigned to secondary LT
-				if(secondary_LT.Count > 0)
-				{
-					Ability current_ability = secondary_LT.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(secondary_LT != null) { using_ability = true; ability_in_use = secondary_LT;}
 			}
 		}
 		if(r_cross_primary_selected)
 		{
+			// Use ability assigned to primary A
 			if(Input.IsActionJustPressed("A"))
 			{
-				// Use ability assigned to primary A
-				if(primary_A.Count > 0)
-				{
-					Ability current_ability = primary_A.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(primary_A != null) { using_ability = true; ability_in_use = primary_A;}
 			}
+			// Use ability assigned to primary B
 			if(Input.IsActionJustPressed("B"))
 			{
-				// Use ability assigned to primary B
-				if(primary_B.Count > 0)
-				{
-					Ability current_ability = primary_B.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(primary_B != null) { using_ability = true; ability_in_use = primary_B;}
 			}
+			// Use ability assigned to primary X
 			if(Input.IsActionJustPressed("X"))
 			{
-				// Use ability assigned to primary X
-				if(primary_X.Count > 0)
-				{
-					Ability current_ability = primary_X.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(primary_X != null) { using_ability = true; ability_in_use = primary_X;}
 			}
+			// Use ability assigned to primary Y
 			if(Input.IsActionJustPressed("Y"))
 			{
-				// Use ability assigned to primary Y
-				if(primary_Y.Count > 0)
-				{
-					Ability current_ability = primary_Y.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(primary_Y != null) { using_ability = true; ability_in_use = primary_Y;}
 			}
 		}
 		else
 		{
+			// Use ability assigned to secondary A
 			if(Input.IsActionJustPressed("A"))
 			{
-				// Use ability assigned to secondary A
-				if(secondary_A.Count > 0)
-				{
-					Ability current_ability = secondary_A.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(secondary_A != null) { using_ability = true; ability_in_use = secondary_A;}
 			}
+			// Use ability assigned to secondary B
 			if(Input.IsActionJustPressed("B"))
 			{
-				// Use ability assigned to secondary B
-				if(secondary_B.Count > 0)
-				{
-					Ability current_ability = secondary_B.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(secondary_B != null) { using_ability = true; ability_in_use = secondary_B;}
 			}
+			// Use ability assigned to secondary X
 			if(Input.IsActionJustPressed("X"))
 			{
-				// Use ability assigned to secondary X
-				if(secondary_X.Count > 0)
-				{
-					Ability current_ability = secondary_X.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(secondary_X != null) { using_ability = true; ability_in_use = secondary_X;}
 			}
+			// Use ability assigned to secondary Y
 			if(Input.IsActionJustPressed("Y"))
 			{
-				// Use ability assigned to secondary Y
-				if(secondary_Y.Count > 0)
-				{
-					Ability current_ability = secondary_Y.ElementAt(0).Value;
-					if(current_ability.ability_type == "Movement")
-					{
-						using_movement_ability = true;
-						movement_ability = current_ability;
-					}
-					else
-					{
-						current_ability.Execute(this);
-					}
-				}
+				if(secondary_Y != null) { using_ability = true; ability_in_use = secondary_Y;}
 			}
 		}
 	}
 
-	public void MovementAbility(Ability ability)
+	public void UseAbility(Ability ability)
 	{
-		ability.Execute(this);
+		if(using_ability)
+		{
+			ability.Execute(this);
+			GD.Print(ability.Name);
+		}
+		else
+		{
+			ability_in_use = null;
+			velocity.X = direction.X * speed;
+			velocity.Z = direction.Z * speed;
+		}
 	}
     
 	public void SmoothRotation()
@@ -814,14 +617,13 @@ public partial class player : Entity
 		
 	}
 
-	private void OnAnimationFinsihed(StringName animName) // when animation is finished
+	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
 	
 		if(animName == "Attack")
 		{
-			hitbox.Monitoring = false;
-			can_move = true;
-			hitbox.RemoveFromGroup("player_hitbox");
+			animation_finished = true;
+			GD.Print("finished");
 		}
 
     }
@@ -955,43 +757,28 @@ public partial class player : Entity
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RB.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){primary_RB = ability;}
 			}
-			
-		}
-		if(button_name == "LCrossPrimaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LT.Add(ability_to_assign, ability);
-				}
-			}
-			
-		}
-		if(button_name == "LCrossPrimaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LB.Add(ability_to_assign, ability);
-				}
-			}
-			
 		}
 		if(button_name == "LCrossPrimaryRightAssign")
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RT.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){primary_RT = ability;}
+			}
+		}
+		if(button_name == "LCrossPrimaryLeftAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){primary_LB = ability;}
+			}
+		}
+		if(button_name == "LCrossPrimaryDownAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){primary_LT = ability;}
 			}
 		}
 
@@ -1001,43 +788,28 @@ public partial class player : Entity
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_Y.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){primary_Y = ability;}
 			}
-			
-		}
-		if(button_name == "RCrossPrimaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_A.Add(ability_to_assign, ability);
-				}
-			}
-			
-		}
-		if(button_name == "RCrossPrimaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_X.Add(ability_to_assign, ability);
-				}
-			}
-			
 		}
 		if(button_name == "RCrossPrimaryRightAssign")
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_B.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){primary_B = ability;}
+			}
+		}
+		if(button_name == "RCrossPrimaryLeftAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){primary_X = ability;}
+			}
+		}
+		if(button_name == "RCrossPrimaryDownAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){primary_A = ability;}
 			}
 		}
 
@@ -1047,43 +819,28 @@ public partial class player : Entity
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RB.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){secondary_RB = ability;}
 			}
-			
-		}
-		if(button_name == "LCrossSecondaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LT.Add(ability_to_assign, ability);
-				}
-			}
-			
-		}
-		if(button_name == "LCrossSecondaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LB.Add(ability_to_assign, ability);
-				}
-			}
-			
 		}
 		if(button_name == "LCrossSecondaryRightAssign")
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RT.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){secondary_RT = ability;}
+			}
+		}
+		if(button_name == "LCrossSecondaryLeftAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){secondary_LB = ability;}
+			}
+		}
+		if(button_name == "LCrossSecondaryDownAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){secondary_LT = ability;}
 			}
 		}
 
@@ -1092,46 +849,32 @@ public partial class player : Entity
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RB.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){secondary_Y = ability;}
 			}
-			
-		}
-		if(button_name == "RCrossSecondaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LT.Add(ability_to_assign, ability);
-				}
-			}
-			
-		}
-		if(button_name == "RCrossSecondaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_LB.Add(ability_to_assign, ability);
-				}
-			}
-			
 		}
 		if(button_name == "RCrossSecondaryRightAssign")
 		{
 			foreach(Ability ability in abilities)
 			{
-				if(ability.Name == ability_to_assign)
-				{
-					primary_RT.Add(ability_to_assign, ability);
-				}
+				if(ability.Name == ability_to_assign){secondary_B = ability;}
 			}
 		}
-    }
+		if(button_name == "RCrossSecondaryLeftAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){secondary_X = ability;}
+			}
+		}
+		if(button_name == "RCrossSecondaryDownAssign")
+		{
+			foreach(Ability ability in abilities)
+			{
+				if(ability.Name == ability_to_assign){secondary_Y = ability;}
+			}
+		}
+    	
+	}
 
 	private void HandleUIPreventingMovement(bool ui_preventing_movement)
     {

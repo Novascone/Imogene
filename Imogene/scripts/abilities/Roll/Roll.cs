@@ -97,7 +97,8 @@ public partial class Roll : Ability
 			roll_forward = false;
 			roll_right = false;
 			roll_left = false;
-			s.using_movement_ability = false;
+			s.using_ability = false;
+			
 		}
 		s.tree.Set("parameters/conditions/roll_back", roll_back);
 		s.tree.Set("parameters/conditions/roll_forward", roll_forward);

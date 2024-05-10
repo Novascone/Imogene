@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=77 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -179,6 +179,9 @@ size = Vector2(53, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tql0w"]
 size = Vector2(145, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7lfp"]
+size = Vector2(144, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
@@ -7090,19 +7093,17 @@ size_flags_vertical = 4
 [node name="PassivesContainer" type="VBoxContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds"]
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer"]
 layout_mode = 2
-text = "Passive Skills
+text = "Passive
 "
 horizontal_alignment = 1
 
 [node name="PassiveRow1" type="HBoxContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
-theme_override_constants/separation = 150
+theme_override_constants/separation = 120
 
 [node name="Passive1" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow1"]
 custom_minimum_size = Vector2(60, 60)
@@ -7151,7 +7152,7 @@ shape = SubResource("RectangleShape2D_dillp")
 [node name="PassiveRow2" type="HBoxContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
 theme_override_constants/separation = 100
 
 [node name="Passive5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow2"]
@@ -7627,6 +7628,14 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Tree"
 
+[node name="PanelContainer" type="PanelContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Accept" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/PanelContainer"]
+layout_mode = 2
+text = "Accept"
+
 [node name="Passives" type="PanelContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer" groups=["page"]]
 visible = false
 layout_mode = 2
@@ -8024,12 +8033,28 @@ shape = SubResource("RectangleShape2D_tql0w")
 [node name="PanelContainer" type="PanelContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/AcceptCancel/AcceptChanges"]
 layout_mode = 2
 
+[node name="Close" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/Close"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/Close/Area2D"]
+position = Vector2(75, 16.5)
+shape = SubResource("RectangleShape2D_x7lfp")
+
 [node name="Control" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Cursor" type="Sprite2D" parent="."]
+[node name="Cursor" type="CanvasLayer" parent="."]
+
+[node name="CursorSprite" type="Sprite2D" parent="Cursor"]
 visible = false
 top_level = true
 position = Vector2(1157, 294)
@@ -8037,17 +8062,17 @@ scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_kmgx5")
 script = ExtResource("3_g3gm6")
 
-[node name="CursorArea2D" type="Area2D" parent="Cursor" groups=["cursor"]]
+[node name="CursorArea2D" type="Area2D" parent="Cursor/CursorSprite" groups=["cursor"]]
 show_behind_parent = true
 position = Vector2(0, 6.66667)
 scale = Vector2(6.66667, 6.66667)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor/CursorArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor/CursorSprite/CursorArea2D"]
 position = Vector2(-9, -9.99999)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_rtd4h")
 
-[node name="CursorButton" parent="Cursor/CursorArea2D" instance=ExtResource("4_cpmgk")]
+[node name="CursorButton" parent="Cursor/CursorSprite/CursorArea2D" instance=ExtResource("4_cpmgk")]
 show_behind_parent = true
 offset_left = -43.0
 offset_top = -43.0
@@ -8240,6 +8265,6 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilites" to="Abilities" method="_on_melee_abilites_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" method="_on_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" method="_on_button_down"]
-[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/AcceptCancel/AcceptChanges/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" method="_on_accept_button_down"]
-[connection signal="area_entered" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
-[connection signal="area_exited" from="Cursor/CursorArea2D" to="." method="_on_cursor_area_2d_area_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/PanelContainer/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_accept_button_down"]
+[connection signal="area_entered" from="Cursor/CursorSprite/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
+[connection signal="area_exited" from="Cursor/CursorSprite/CursorArea2D" to="." method="_on_cursor_area_2d_area_exited"]

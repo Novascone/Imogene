@@ -63,6 +63,8 @@ public partial class CustomSignals : Node
 	// UI to UI
 	[Signal]
 	public delegate void AbilityUISecondaryOpenEventHandler(bool secondary_open);
+	[Signal]
+	public delegate void SendButtonClickedEventHandler(AbilityButton button, Button assign_button);
 	
 	
 

@@ -40,11 +40,12 @@ public partial class UI_Abilities : UI
 	public PanelContainer Special_abilities;
 	public PanelContainer passives;
 	public PanelContainer accept_cancel;
+	public Button close;
 	public PanelContainer button_to_be_assigned_container;
 	public Button button_to_be_assigned;
 	public Button button_to_be_assigned_icon;
 	
-	public bool is_action_assignment_open;
+	
 	public bool is_non_action_assignment_open;
 
 	private PanelContainer current_ui;
@@ -69,6 +70,7 @@ public partial class UI_Abilities : UI
 		passives = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/Passives");
 		accept_cancel = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/AcceptCancel");
 		button_to_be_assigned_container = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned");
+		close = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/Close");
 		button_to_be_assigned = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned/");
 		button_to_be_assigned_icon = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/Button");
 
@@ -100,78 +102,10 @@ public partial class UI_Abilities : UI
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		WhichAbilityUIOpen();
-		// GoBackAbilities();
+		
 		NavigateAbilities();
 	}
 
-	public void WhichAbilityUIOpen()
-	{
-		if(melee_abilities.Visible) // || ranged_abilities.Visible || movement_abilities.Visible || defense_abilities.Visible || class_abilities.Visible || Special_abilities.Visible) // change this with groups
-		{
-			is_action_assignment_open = true;
-			is_non_action_assignment_open = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
-		}
-		else if(passives.Visible || ability_types.Visible)
-		{
-			is_action_assignment_open = false;
-			is_non_action_assignment_open = true;
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
-		}
-		else
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
-		}
-	}
-
-	public void GoBackAbilities()
-	{
-		if(this.Visible)
-		{
-			if(is_action_assignment_open)
-			{
-				if(Input.IsActionJustPressed("B"))
-				{
-					melee_abilities.Hide();
-					// ranged_abilities.Hide();
-					// movement_abilities.Hide();
-					// defense_abilities.Hide();
-					// class_abilities.Hide();
-					// Special_abilities.Hide();
-					accept_cancel.Hide();
-					button_to_be_assigned_container.Hide();
-					ability_types.Show();
-				}
-			}
-			if(ability_types.Visible)
-			{
-				if(Input.IsActionJustPressed("B"))
-				{
-					ability_types.Hide();
-					button_to_be_assigned_container.Hide();
-					ability_binds.Show();
-				}
-			}
-			if(melee_abilities.Visible)
-			{
-				if(Input.IsActionJustPressed("B"))
-				{
-					melee_abilities.Hide();
-					button_to_be_assigned_container.Hide();
-					ability_binds.Show();
-				}
-			}
-			if(passives.Visible)
-			{
-				if(Input.IsActionJustPressed("B"))
-				{
-					passives.Hide();
-					ability_binds.Show();
-				}
-			}
-		}
-	}
 
 	public void NavigateAbilities()
 	{
@@ -179,11 +113,25 @@ public partial class UI_Abilities : UI
 		if(current_ui == null)
 		{
 			current_ui = ability_binds;
+			accept_cancel.Hide();
 		}
 		if(current_ui.IsInGroup("assignment"))
 		{
-			
-			accept_cancel.Show();
+			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			close.Hide();
+			button_to_be_assigned.Show();
+			// accept_cancel.Show();
+		}
+		else if(current_ui.IsInGroup("selection"))
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			button_to_be_assigned.Hide();
+			close.Show();
+			accept_cancel.Hide();
+		}
+		else
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
 		}
 		
 		if(Input.IsActionJustPressed("B"))
@@ -191,6 +139,12 @@ public partial class UI_Abilities : UI
 			if(current_ui.IsInGroup("selection"))
 			{
 				previous_ui = ability_binds;
+				accept_cancel.Hide();
+				close.Show();
+			}
+			else if(current_ui.IsInGroup("assignment"))
+			{
+				button_to_be_assigned_container.Hide();
 			}
 			if(current_ui == ability_binds)
 			{
@@ -201,21 +155,26 @@ public partial class UI_Abilities : UI
 			previous_ui = temp_ui;
 			previous_ui.Hide();
 			current_ui.Show();
-			
-			
 		}
 	}
 
-
-	// Left Cross Primary Assignment Buttons
-	public void _on_l_cross_primary_up_assign_button_down()
+	public void AssignmentButtonNavigation()
 	{
-		selected_button = l_cross_primary_up_assign;
-		button_to_be_assigned.Text = "Primary RB";
 		previous_ui = ability_binds;
 		current_ui = ability_types;
 		previous_ui.Hide();
 		current_ui.Show();
+	}
+
+
+	// Left Cross Primary Assignment Buttons
+
+	
+	public void _on_l_cross_primary_up_assign_button_down()
+	{
+		selected_button = l_cross_primary_up_assign;
+		button_to_be_assigned.Text = "Primary RB";
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 		// assign_ability.Show();
@@ -225,27 +184,27 @@ public partial class UI_Abilities : UI
 	{
 		selected_button = l_cross_primary_down_assign;
 		button_to_be_assigned.Text = "Primary LT";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_l_cross_primary_left_assign_button_down()
 	{
 		selected_button = l_cross_primary_left_assign;
 		button_to_be_assigned.Text = "Primary LB";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_l_cross_primary_right_assign_button_down()
 	{
 		selected_button = l_cross_primary_right_assign;
 		button_to_be_assigned.Text = "Primary RT";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 		// assign_ability.Show();
 	}
 
@@ -254,9 +213,9 @@ public partial class UI_Abilities : UI
 	{
 		selected_button = l_cross_secondary_up_assign;
 		button_to_be_assigned.Text = "Secondary RB";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 		// assign_ability.Show();
 	}
 
@@ -264,27 +223,27 @@ public partial class UI_Abilities : UI
 	{
 		selected_button = l_cross_secondary_down_assign;
 		button_to_be_assigned.Text = "Secondary LT";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_l_cross_secondary_left_assign_button_down()
 	{
 		selected_button = l_cross_secondary_left_assign;
 		button_to_be_assigned.Text = "Secondary LB";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_l_cross_secondary_right_assign_button_down()
 	{
 		selected_button = l_cross_secondary_right_assign;
 		button_to_be_assigned.Text = "Secondary RT";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 		// assign_ability.Show();
 	}
 
@@ -294,36 +253,36 @@ public partial class UI_Abilities : UI
 	{
 		selected_button = r_cross_primary_up_assign;
 		button_to_be_assigned.Text = "Primary Y";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_primary_down_assign_button_down()
 	{
 		selected_button = r_cross_primary_down_assign;
 		button_to_be_assigned.Text = "Primary A";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_primary_left_assign_button_down()
 	{
 		selected_button = r_cross_primary_left_assign;
 		button_to_be_assigned.Text = "Primary X";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_primary_right_assign_button_down()
 	{
 		selected_button = r_cross_primary_right_assign;
 		button_to_be_assigned.Text = "Primary B";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	// Right Cross Secondary Assignment Buttons
@@ -331,36 +290,36 @@ public partial class UI_Abilities : UI
 	{
 		selected_button = r_cross_secondary_up_assign;
 		button_to_be_assigned.Text = "Secondary Y";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_secondary_down_assign_button_down()
 	{
 		selected_button = r_cross_secondary_down_assign;
 		button_to_be_assigned.Text = "Secondary A";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_secondary_left_assign_button_down()
 	{
 		selected_button = r_cross_secondary_left_assign;
 		button_to_be_assigned.Text = "Secondary X";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_r_cross_secondary_right_assign_button_down()
 	{
 		selected_button = r_cross_secondary_right_assign;
 		button_to_be_assigned.Text = "Secondary B";
-		ability_binds.Hide();
-		ability_types.Show();
+		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
 	}
 
 	public void _on_melee_abilites_button_down()
@@ -369,7 +328,7 @@ public partial class UI_Abilities : UI
 		current_ui = melee_abilities;
 		previous_ui.Hide();
 		current_ui.Show();
-		accept_cancel.Show();
+		// accept_cancel.Show();
 	}
 
 	
