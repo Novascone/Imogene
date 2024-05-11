@@ -173,7 +173,6 @@ public partial class player : Entity
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 		tree.AnimationFinished += OnAnimationFinished;
-		tree.AnimationStarted += OnAnimationStarted;
 
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
@@ -203,11 +202,6 @@ public partial class player : Entity
 		_customSignals.AvailableAbilities += HandleAvailableAbilities;
 		
 	}
-
-    private void OnAnimationStarted(StringName animName)
-    {
-        GD.Print("started");
-    }
 
     private void HandleAvailableAbilities(string ability)
     {
@@ -302,8 +296,6 @@ public partial class player : Entity
 		GrabAndUseAbility();
 		UseAbility(ability_in_use);
 		
-		// velocity.X = direction.X * speed;
-	 	// velocity.Z = direction.Z * speed;
 		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		MoveAndSlide();
@@ -410,11 +402,6 @@ public partial class player : Entity
 	{
 		if(using_ability)
 		{
-			if(ability.ability_type == "attack")
-			{
-				attacking = true;
-				GD.Print("here");
-			}
 			ability.Execute(this);
 			GD.Print("Ability: " + ability.Name);
 			GD.Print("using ability");
@@ -627,10 +614,10 @@ public partial class player : Entity
 		{
 			animation_finished = true;
 			tree.Set("parameters/conditions/attacking", false);
-			can_move = true;
 			hitbox.Monitoring = false;
 			can_move = true;
 			hitbox.RemoveFromGroup("player_hitbox");
+			attacking = false;
 			GD.Print("finished");
 		}
 
