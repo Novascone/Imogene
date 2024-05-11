@@ -300,10 +300,10 @@ public partial class player : Entity
 		}
 
 		GrabAndUseAbility();
-		// UseAbility(ability_in_use);
+		UseAbility(ability_in_use);
 		
-		velocity.X = direction.X * speed;
-	 	velocity.Z = direction.Z * speed;
+		// velocity.X = direction.X * speed;
+	 	// velocity.Z = direction.Z * speed;
 		Velocity = velocity;
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		MoveAndSlide();
@@ -317,45 +317,45 @@ public partial class player : Entity
 			// Use ability assigned to primary RB
 			if(Input.IsActionJustPressed("RB"))
 			{
-				if(primary_RB != null) {ability_in_use = primary_RB; ability_in_use.Execute(this);}
+				if(primary_RB != null) {using_ability = true; ability_in_use = primary_RB;}
 			}
 			// Use ability assigned to primary LB
 			if(Input.IsActionJustPressed("LB"))
 			{
-				if(primary_LB != null) { ability_in_use = primary_LB; ability_in_use.Execute(this);}
+				if(primary_LB != null) {using_ability = true; ability_in_use = primary_LB; }
 				GD.Print("LB");
 			}
 			// Use ability assigned to primary RT
 			if(Input.IsActionJustPressed("RT"))
 			{
-				if(primary_RT != null) { ability_in_use = primary_RT; ability_in_use.Execute(this);}
+				if(primary_RT != null) {using_ability = true; ability_in_use = primary_RT; }
 			}
 			// Use ability assigned to primary LT
 			if(Input.IsActionJustPressed("LT"))
 			{
-				if(primary_LT != null) {ability_in_use = primary_LT; ability_in_use.Execute(this);}
+				if(primary_LT != null) {using_ability = true; ability_in_use = primary_LT; }
 			}
 		}
 		else
 		{	// Use ability assigned to secondary RB
 			if(Input.IsActionJustPressed("RB"))
 			{
-				if(secondary_RB != null) {ability_in_use = secondary_RB; ability_in_use.Execute(this);}
+				if(secondary_RB != null) {using_ability = true; ability_in_use = secondary_RB; }
 			}
 			// Use ability assigned to secondary LB
 			if(Input.IsActionJustPressed("LB"))
 			{
-				if(secondary_LB != null) { ability_in_use = secondary_LB; ability_in_use.Execute(this);}
+				if(secondary_LB != null) {using_ability = true; ability_in_use = secondary_LB; }
 			}
 			// Use ability assigned to secondary RT
 			if(Input.IsActionJustPressed("RT"))
 			{
-				if(secondary_RT != null) { ability_in_use = secondary_RT; ability_in_use.Execute(this);}
+				if(secondary_RT != null) {using_ability = true; ability_in_use = secondary_RT; }
 			}
 			// Use ability assigned to secondary LT
 			if(Input.IsActionJustPressed("LT"))
 			{
-				if(secondary_LT != null) { ability_in_use = secondary_LT; ability_in_use.Execute(this);}
+				if(secondary_LT != null) {using_ability = true; ability_in_use = secondary_LT; }
 			}
 		}
 		if(r_cross_primary_selected)
@@ -363,22 +363,22 @@ public partial class player : Entity
 			// Use ability assigned to primary A
 			if(Input.IsActionJustPressed("A"))
 			{
-				if(primary_A != null) { ability_in_use = primary_A; ability_in_use.Execute(this);}
+				if(primary_A != null) {using_ability = true; ability_in_use = primary_A;}
 			}
 			// Use ability assigned to primary B
 			if(Input.IsActionJustPressed("B"))
 			{
-				if(primary_B != null) { ability_in_use = primary_B; ability_in_use.Execute(this);}
+				if(primary_B != null) {using_ability = true; ability_in_use = primary_B; }
 			}
 			// Use ability assigned to primary X
 			if(Input.IsActionJustPressed("X"))
 			{
-				if(primary_X != null) { ability_in_use = primary_X; ability_in_use.Execute(this);}
+				if(primary_X != null) {using_ability = true; ability_in_use = primary_X; }
 			}
 			// Use ability assigned to primary Y
 			if(Input.IsActionJustPressed("Y"))
 			{
-				if(primary_Y != null) { ability_in_use = primary_Y; ability_in_use.Execute(this);}
+				if(primary_Y != null) {using_ability = true; ability_in_use = primary_Y;}
 			}
 		}
 		else
@@ -386,41 +386,46 @@ public partial class player : Entity
 			// Use ability assigned to secondary A
 			if(Input.IsActionJustPressed("A"))
 			{
-				if(secondary_A != null) { ability_in_use = secondary_A; ability_in_use.Execute(this);}
+				if(secondary_A != null) {using_ability = true; ability_in_use = secondary_A;}
 			}
 			// Use ability assigned to secondary B
 			if(Input.IsActionJustPressed("B"))
 			{
-				if(secondary_B != null) { ability_in_use = secondary_B; ability_in_use.Execute(this);}
+				if(secondary_B != null) {using_ability = true; ability_in_use = secondary_B;}
 			}
 			// Use ability assigned to secondary X
 			if(Input.IsActionJustPressed("X"))
 			{
-				if(secondary_X != null) { ability_in_use = secondary_X; ability_in_use.Execute(this);}
+				if(secondary_X != null) {using_ability = true; ability_in_use = secondary_X;}
 			}
 			// Use ability assigned to secondary Y
 			if(Input.IsActionJustPressed("Y"))
 			{
-				if(secondary_Y != null) { ability_in_use = secondary_Y; ability_in_use.Execute(this);}
+				if(secondary_Y != null) {using_ability = true; ability_in_use = secondary_Y;}
 			}
 		}
 	}
 
-	// public void UseAbility(Ability ability)
-	// {
-	// 	if(using_ability)
-	// 	{
-	// 		ability.Execute(this);
-	// 		GD.Print("Ability: " + ability.Name);
-	// 		GD.Print("using ability");
-	// 	}
-	// 	else
-	// 	{
-	// 		ability_in_use = null;
-	// 		velocity.X = direction.X * speed;
-	// 		velocity.Z = direction.Z * speed;
-	// 	}
-	// }
+	public void UseAbility(Ability ability)
+	{
+		if(using_ability)
+		{
+			if(ability.ability_type == "attack")
+			{
+				attacking = true;
+				GD.Print("here");
+			}
+			ability.Execute(this);
+			GD.Print("Ability: " + ability.Name);
+			GD.Print("using ability");
+		}
+		else
+		{
+			ability_in_use = null;
+			velocity.X = direction.X * speed;
+			velocity.Z = direction.Z * speed;
+		}
+	}
     
 	public void SmoothRotation()
 	{

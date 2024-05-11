@@ -4,3 +4,4 @@
 
 [node name="BasicAttack" type="Node3D"]
 script = ExtResource("1_4umai")
+ability_type = "attack"
