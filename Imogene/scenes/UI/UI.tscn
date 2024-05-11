@@ -486,6 +486,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryLeftAction"]
 layout_mode = 0
