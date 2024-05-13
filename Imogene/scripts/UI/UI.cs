@@ -297,7 +297,7 @@ public partial class UI : CanvasLayer
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
-		
+		GD.Print("got assignment in ui");
 		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = icon;}
 		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon = icon;}
 		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon = icon;}
@@ -428,7 +428,7 @@ public partial class UI : CanvasLayer
 						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
 						if(hover_over_button is InventoryButton)
 						{
-							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 							button.Visible = true;
 							button.UpdateItem(grabbed_object.inventory_item, 0);
 						}
@@ -444,13 +444,13 @@ public partial class UI : CanvasLayer
 						{
 							clicked_on = false;
 							DeleteItem(grabbed_object);
-							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 							button.Visible = false;
 						}
 						else
 						{
 							clicked_on = false;
-							InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
+							InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 							button.Visible = false;
 							if(hover_over_button is InventoryButton)
 							{
@@ -477,7 +477,7 @@ public partial class UI : CanvasLayer
 				if(grabbed_object.inventory_item.type_of_item == "equipable")
 				{
 					clicked_on = false;
-					InventoryButton button = GetNode<Area2D>("Cursor/CursorArea2D").GetNode<InventoryButton>("CursorButton");
+					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
 					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)grabbed_object.inventory_item);
 			
@@ -857,6 +857,7 @@ public partial class UI : CanvasLayer
 
 	private void HandleOverSlot(string slot)
     {
+		GD.Print("Over Head signal received");
         if(slot == "Head")
 		{
 			over_head = true;

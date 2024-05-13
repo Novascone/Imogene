@@ -5,8 +5,8 @@ public partial class Entity : CharacterBody3D
 {
     // Stats
 
-    public int level;
-    public float speed = 5.0f;
+    public int level; // Level of the entity
+    public float speed = 5.0f; // Speed of the entity
 	public float health = 20; // Prelim health number
     public int resource = 20; // prelim resource number
    
@@ -18,7 +18,7 @@ public partial class Entity : CharacterBody3D
     public float attack_speed;
 
 
-    public float damage;
+    public float damage; // How much damage the entity does
 
     // Defense
 
@@ -26,14 +26,15 @@ public partial class Entity : CharacterBody3D
     // Possessions
     public int gold = 0;
 
-    public bool can_move = true; // Boolean to keep track of if the play is allowed to move
-    public bool attacking;
+    public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
+    public bool attacking; // Boolean to keep track of if the entity is attacking
+    public bool animation_triggered;
     public bool dead = false;
     public Vector3 enemy_position;
 
     
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount) // Applies damage to an entity
     {
         if(health - amount > 0)
         {
@@ -45,7 +46,7 @@ public partial class Entity : CharacterBody3D
             GD.Print("dead");
         }
     }
-    public  Node LoadAbility(String name)
+    public  Node LoadAbility(String name) // Loads an ability from a string
     {
         var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
         var sceneNode = scene.Instantiate();

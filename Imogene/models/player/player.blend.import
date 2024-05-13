@@ -32,7 +32,7 @@ import_script/path=""
 _subresources={
 "animations": {
 "Attack": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "",
 "settings/loop_mode": 0,

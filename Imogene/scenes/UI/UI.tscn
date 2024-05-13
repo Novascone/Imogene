@@ -3,16 +3,16 @@
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/StatSheetsStat.cs" id="3_8wocc"]
-[ext_resource type="Script" path="res://scripts/UI/UI_Abilities.cs" id="3_cn3ji"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BasicStat.cs" id="4_1nitg"]
-[ext_resource type="Script" path="res://scripts/UI/UI_Ability_Components/AbilityCategory.cs" id="4_bum7x"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/SummaryStat.cs" id="5_nvqbl"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
-[ext_resource type="Script" path="res://scripts/UI/UI_Ability_Components/AbilityButton.cs" id="5_xwfnx"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/GearInfo.cs" id="6_rtdw8"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="7_l2ybp"]
+[ext_resource type="Script" path="res://scripts/UI/Abilities_Interface.cs" id="8_glb34"]
+[ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
+[ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityButton.cs" id="10_4bmju"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wudlh"]
 
@@ -356,6 +356,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryUpAction"]
 visible = false
@@ -378,6 +380,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryLeftAction"]
 visible = false
@@ -400,6 +404,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryRightAction"]
 visible = false
@@ -422,6 +428,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "3"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossSecondary/LCrossSecondaryDownAction"]
 visible = false
@@ -504,6 +512,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryRightAction"]
 layout_mode = 0
@@ -525,6 +535,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "1"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary/LCrossPrimaryDownAction"]
 layout_mode = 0
@@ -571,6 +583,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryUpAction"]
 visible = false
@@ -591,6 +605,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction"]
 visible = false
@@ -611,6 +627,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction"]
 visible = false
@@ -631,6 +649,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "4"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryDownAction"]
 visible = false
@@ -665,6 +685,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
+icon_alignment = 1
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction"]
 layout_mode = 0
@@ -684,6 +705,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryLeftAction"]
 layout_mode = 0
@@ -724,6 +747,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
+icon_alignment = 1
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction"]
 layout_mode = 0
@@ -6541,7 +6565,7 @@ position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
 
 [node name="Abilities" type="CanvasLayer" parent="."]
-script = ExtResource("3_cn3ji")
+script = ExtResource("8_glb34")
 
 [node name="AssignAbility" type="PanelContainer" parent="Abilities"]
 visible = false
@@ -6689,6 +6713,8 @@ focus_neighbor_left = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCr
 focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign"]
 position = Vector2(29.6122, 29.6355)
@@ -6712,6 +6738,8 @@ focus_neighbor_left = NodePath("../LCrossPrimaryLeftAssign")
 focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign")
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryRightAssign"]
 position = Vector2(29.9016, 19.3901)
@@ -6735,6 +6763,8 @@ focus_neighbor_left = NodePath("../LCrossPrimaryLeftAssign")
 focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign"]
 position = Vector2(33.3204, 35.571)
@@ -6778,6 +6808,8 @@ size_flags_vertical = 4
 focus_neighbor_left = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign"]
 position = Vector2(37.871, 13.4483)
@@ -6801,6 +6833,8 @@ focus_neighbor_left = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCro
 focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign"]
 position = Vector2(22.496, 40.7926)
@@ -6824,6 +6858,7 @@ focus_neighbor_left = NodePath("../RCrossPrimaryLeftAssign")
 focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryLeftAssign")
 focus_neighbor_bottom = NodePath("../RCrossPrimaryDownAssign")
+icon_alignment = 1
 expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign"]
@@ -6848,6 +6883,8 @@ focus_neighbor_left = NodePath("../RCrossPrimaryLeftAssign")
 focus_neighbor_top = NodePath("../RCrossPrimaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign"]
 position = Vector2(19.5112, 45.7167)
@@ -6891,6 +6928,8 @@ focus_neighbor_left = NodePath("../LCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign")
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign"]
 position = Vector2(25.2313, 29.2363)
@@ -6914,6 +6953,8 @@ focus_neighbor_left = NodePath("../../../VBoxRightCrossSecondary/RCrossSecondary
 focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign"]
 position = Vector2(24.1479, 41.4316)
@@ -6937,6 +6978,8 @@ focus_neighbor_left = NodePath("../LCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryRightAssign"]
 position = Vector2(8.3197, 39.6062)
@@ -6960,6 +7003,7 @@ focus_neighbor_left = NodePath("../LCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../LCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../LCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign")
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryDownAssign"]
 position = Vector2(20.11, 38.0148)
@@ -7003,6 +7047,8 @@ focus_neighbor_left = NodePath("../RCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryDownAssign")
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryUpAssign"]
 position = Vector2(28.5, 43.5)
@@ -7026,6 +7072,8 @@ focus_neighbor_left = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/
 focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign"]
 position = Vector2(22, 43)
@@ -7049,6 +7097,8 @@ focus_neighbor_left = NodePath("../RCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryLeftAssign")
 focus_neighbor_bottom = NodePath("../RCrossSecondaryDownAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign"]
 position = Vector2(33.7673, 36.4768)
@@ -7072,6 +7122,8 @@ focus_neighbor_left = NodePath("../RCrossSecondaryLeftAssign")
 focus_neighbor_top = NodePath("../RCrossSecondaryUpAssign")
 focus_neighbor_right = NodePath("../RCrossSecondaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryUpAssign")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign"]
 position = Vector2(17.5864, 34.8397)
@@ -7105,6 +7157,8 @@ theme_override_constants/separation = 120
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow1/Passive1"]
 
@@ -7116,6 +7170,8 @@ shape = SubResource("RectangleShape2D_dillp")
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow1/Passive2"]
 
@@ -7127,6 +7183,8 @@ shape = SubResource("RectangleShape2D_dillp")
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow1/Passive3"]
 
@@ -7138,6 +7196,8 @@ shape = SubResource("RectangleShape2D_dillp")
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow1/Passive4"]
 
@@ -7155,6 +7215,8 @@ theme_override_constants/separation = 100
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow2/Passive5"]
 
@@ -7166,6 +7228,8 @@ shape = SubResource("RectangleShape2D_dillp")
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PassivesContainer/PassiveRow2/Passive6"]
 
@@ -7376,7 +7440,7 @@ custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxEmpty_aao0w")
-script = ExtResource("4_bum7x")
+script = ExtResource("9_twx0n")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities"]
 layout_mode = 2
@@ -7456,7 +7520,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1"]
 position = Vector2(17.0323, 23.8576)
@@ -7470,7 +7534,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2"]
 position = Vector2(17.0323, 23.8576)
@@ -7484,91 +7548,91 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button7" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button8" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button9" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button10" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button11" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button12" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button13" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button14" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button15" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Control" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -7620,7 +7684,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7628,7 +7692,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7636,7 +7700,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7644,7 +7708,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7652,7 +7716,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="Button6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7660,7 +7724,7 @@ layout_mode = 2
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("5_xwfnx")
+script = ExtResource("10_4bmju")
 
 [node name="AbilityTree" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer"]
 visible = false
@@ -7778,36 +7842,48 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="PassiveSlot2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="PassiveSlot3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="PassiveSlot4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="PassiveSlot5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="PassiveSlot6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Control3" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -7834,216 +7910,288 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive7" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive8" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive9" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive10" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive11" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive12" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive13" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive14" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive15" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive16" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive17" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive18" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive19" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive20" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive21" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive22" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive23" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive24" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive25" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive26" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive27" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive28" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive29" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive30" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive31" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive32" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive33" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive34" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive35" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Passive36" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
 
 [node name="Control4" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -8274,10 +8422,12 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryLeftAssign" to="Abilities" method="_on_r_cross_secondary_left_assign_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign" to="Abilities" method="_on_r_cross_secondary_right_assign_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign" to="Abilities" method="_on_r_cross_secondary_down_assign_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/Close/Close" to="Abilities" method="_on_close_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilites" to="Abilities" method="_on_melee_abilites_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" method="_on_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" method="_on_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_accept_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Cancel" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_cancel_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer2/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_accept_button_down"]
 [connection signal="area_entered" from="Cursor/CursorSprite/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
 [connection signal="area_exited" from="Cursor/CursorSprite/CursorArea2D" to="." method="_on_cursor_area_2d_area_exited"]

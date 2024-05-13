@@ -12,7 +12,7 @@ public partial class AbilityResource : Resource
     [Export]
     public Texture2D icon { get; set; }
     [Export]
-    public string type_of_ability;
+    public string type;
     [Export] 
     public PackedScene modifier_1;
     [Export] 

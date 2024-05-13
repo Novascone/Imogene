@@ -12,161 +12,150 @@ using System.Runtime.CompilerServices;
 
 public partial class player : Entity
 {
-	
-	public player this_player;
 
-	// Abilities - Functionalities
-	Target target_ability;
-	List<AbilityResource> ability_resources = new List<AbilityResource>();
-	List<Ability> abilities = new List<Ability>();
-	private bool abilities_loaded = false;
-	Ability ability_in_use;
+	// Player reference
+	public player this_player; // Player
 
-	public bool l_cross_primary_selected;
-	public bool r_cross_primary_selected;
+	// Abilities
+	private Target target_ability; // Target enemies
+	private List<AbilityResource> ability_resources = new List<AbilityResource>(); // List of Ability Resources to load abilities from. Each AbilityResource Contains int id, string name, string ability_path, Texture2D icon, string type as well as 5 PackedScenes containing modifiers for the ability
+	private List<Ability> abilities = new List<Ability>(); // List of abilities the player has access to. The Abilities are loaded from a PackedScene which is a Node3D with a script attached to it
+	private bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
+	private Ability ability_in_use; // The ability that the player is currently using
 
-	public Ability primary_RB;
-	public Ability primary_LB;
-	public Ability primary_RT;
-	public Ability primary_LT;
+	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
+	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 
-	public Ability primary_A;
-	public Ability primary_B;
-	public Ability primary_X;
-	public Ability primary_Y;
+	public Ability primary_RB; // Ability assigned to Primary RB
+	public Ability primary_LB;  // Ability assigned to Primary LB
+	public Ability primary_RT;  // Ability assigned to Primary RT
+	public Ability primary_LT;  // Ability assigned to Primary LT
 
-	public Ability secondary_RB;
-	public Ability secondary_LB;
-	public Ability secondary_RT;
-	public Ability secondary_LT;
+	public Ability primary_A;  // Ability assigned to Primary A
+	public Ability primary_B;  // Ability assigned to Primary B
+	public Ability primary_X;  // Ability assigned to Primary X
+	public Ability primary_Y;  // Ability assigned to Primary Y
 
-	public Ability secondary_A;
-	public Ability secondary_B;
-	public Ability secondary_X;
-	public Ability secondary_Y;
+	public Ability secondary_RB;  // Ability assigned to Secondary RB
+	public Ability secondary_LB;  // Ability assigned to Secondary RB
+	public Ability secondary_RT;  // Ability assigned to Secondary RB
+	public Ability secondary_LT;  // Ability assigned to Secondary RB
+
+	public Ability secondary_A;  // Ability assigned to Secondary A
+	public Ability secondary_B;  // Ability assigned to Secondary B
+	public Ability secondary_X;  // Ability assigned to Secondary X
+	public Ability secondary_Y;  // Ability assigned to Secondary Y
+
+
 
 	// Player Direction and animation variables
 	public Vector3 player_position; // Position of the player
-	public Vector3 velocity;
-	public Vector3 direction;
-	public float prev_y_rotation;
-	public float current_y_rotation;
-	public Vector2 blend_direction = Vector2.Zero;
+	public Vector3 velocity; // Velocity of the player
+	public Vector3 direction; // Direction of the player
+	public float prev_y_rotation; // Rotation of the player before current rotation
+	public float current_y_rotation; // Rotation of the player
+	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animations
+
+
 
 	// Stats
+	public int strength = 1; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
+    public int dexterity = 1; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
+    public int intellect = 1; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
+    public int vitality = 1; // Vitality: Primary stat for health
+    public int stamina = 1; // Primary stat for resource and regeneration
+    public int wisdom = 1; // Increases the damage of abilities that use wisdom, also used for interactions
+    public int charisma = 1; // Primary Stat for character interaction
 
-	public int strength = 1;
-    public int dexterity = 1;
-    public int intellect = 1;
-    public int vitality = 1;
-    public int stamina = 1;
-    public int wisdom = 1;
-    public int charisma = 1;
+	public float physical_melee_power; // Increases physical melee DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
+	public float spell_melee_power; // Increases melee magic DPS by 1 every 15 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
+    public float physical_ranged_power; // Increases physical ranged DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
+    public float spell_ranged_power;  // Increases physical ranged DPS by 1 every 15 points + 3 for every point of dexterity + 1 for every point of strength
+	public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
 
+	public float critical_hit_chance; // Percentage change for hit to be a critical hit
+    public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
+ 	public float physical_melee_damage; 
+    public float physical_ranged_damage; 
+    public float spell_melee_damage;
+    public float spell_ranged_damage;
 	
-	public int physical_melee_attack_abilities;
+
+	public int physical_melee_attack_abilities; // Total number of attack abilities in each category
     public int physical_ranged_attack_abilities;
     public int spell_melee_attack_abilities;
     public int spell_ranged_attack_abilities;
 	public int wisdom_attack_abilities;
 
-	public float physical_melee_attack_ability_ratio;
+	public float physical_melee_attack_ability_ratio; // ratio of attack abilities
     public float physical_ranged_attack_ability_ratio;
     public float spell_melee_attack_ability_ratio;
     public float spell_ranged_attack_ability_ratio;
 	public float wisdom_attack_ability_ratio;
     public int total_attack_abilities;
 
-	public float critical_hit_chance;
-    public float critical_hit_damage;
-
-	public float physical_melee_damage;
-    public float physical_ranged_damage;
-    public float spell_melee_damage;
-    public float spell_ranged_damage;
-	public float wisdom_scaler;
-
-	
-
-	
-	public float physical_melee_power;
-    public float physical_ranged_power;
-    public float spell_melee_power;
-    public float spell_ranged_power;
 
 
-	// Player bools
-	public bool using_ability; 
-	public bool animation_playing = false;
-	public bool animation_finished = false;
-	public bool enemy_in_vision = false;
-	public bool targeting = false;
-	private bool max_health_changed = true;
-	private bool stats_updated = true;
-	private bool in_interact_area;
-	private bool interacting;
-	private bool entered_interact;
-	private bool left_interact;
 
+	// Player bools   																									*** Switch Some of these to Entity ***
+	public bool using_ability; // Is the entity using an ability?
+	public bool animation_finished = false; // Is the entity's animation finished?
+	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
+	public bool targeting = false; // Is the entity targeting?
+	private bool max_health_changed = true; // Has the entities heath changed?
+	private bool stats_updated = true; // Have the entities stats changed?
+	private bool in_interact_area; // Is the entity in an interact area
+	private bool interacting; // Is the entity interacting?
+	private bool entered_interact; // Has the entity entered the an interact area?
+	private bool left_interact; // has the entity left the interact area?
 
 	// Player attached areas
-	private Area3D hurtbox;
-	public Area3D hitbox;
-	private Area3D vision;
-	public Node3D head_slot;
+	private Area3D hurtbox; // Area where the player takes damage
+	public Area3D hitbox; // Area where the player does damage
+	private Area3D vision; // Area where the player can target enemies
+	public Node3D head_slot; // Head slot for the player
+	public Area3D interact_area; // Radius of where the player can interact
 
 	// Player animation
-	public AnimationTree tree;
+	public AnimationTree tree; // Animation control
 
 	// Mob variables
-	public Vector3 mob_to_LookAt_pos;
-	private List<Vector3> mob_distance_from_player;
+	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
+	private List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
 
 	// Mob sorting variables
-	private	Dictionary<Area3D, Vector3> mob_pos; 
-	private Dictionary<Area3D,Vector3> sorted_mob_pos; 
-	private List<Area3D> mobs_in_order;
-	private int mob_index = 0; 
+	private	Dictionary<Area3D, Vector3> mob_pos;  // Dictionary of mob positions
+	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Sorted Dictionary of mob positions
+	private List<Area3D> mobs_in_order; // List of mobs in order
+	private int mob_index = 0; // Index of mobs in list
 
 	// Signal Variables
-	private CustomSignals _customSignals;
-	private Area3D target; 
-	private MeshInstance3D targeting_icon;
+	private CustomSignals _customSignals; // Custom signal instance
+	private MeshInstance3D targeting_icon; // Targeting icon
 
-	public string resource_path;
-	private bool remove_equipped = false;
-
-	MeshInstance3D helm;
-
-	Node3D main_node;
-
-	public Area3D interact_area;
-
+	// Ability Resources
 	AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://resources/roll.tres");
 	AbilityResource basic_attack = ResourceLoader.Load<AbilityResource>("res://resources/basic_attack.tres");
 	
+	// Misc
+	public string resource_path;
+	private bool remove_equipped = false;
 
+	public MeshInstance3D helm; // Temp helm
+
+	public Node3D main_node; // Temp helm node
 	
 	
 	public override void _Ready()
 	{
+		
 		this_player = this;
 		ability_resources.Add(roll);
 		ability_resources.Add(basic_attack);
-		
-		
-		// roll_ability = (Roll)LoadAbility("Roll");
-		// abilities.Add(roll_ability);
-		// target_ability = (Target)LoadAbility("Target");
-		// basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
-		// abilities.Add(basic_attack_ability);
-		
+
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 		
-
-		
-	
 		damage = 2;
 		health = 20;
 
@@ -195,13 +184,13 @@ public partial class player : Entity
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
-		_customSignals.PlayerPosition += HandlePlayerPosition;
-		_customSignals.Targeting += HandleTargeting;
-		_customSignals.UIHealthUpdate += HandleUIHealth;
-		_customSignals.UIHealthUpdate += HandleUIResource;
-		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
-		_customSignals.UIHealthUpdate += HandleUIResourceUpdate;
-		_customSignals.ItemInfo += HandleItemInfo;
+		// _customSignals.PlayerPosition += HandlePlayerPosition;
+		// _customSignals.Targeting += HandleTargeting;
+		// _customSignals.UIHealthUpdate += HandleUIHealth;
+		// _customSignals.UIHealthUpdate += HandleUIResource;
+		// _customSignals.UIHealthUpdate += HandleUIHealthUpdate;
+		// _customSignals.UIHealthUpdate += HandleUIResourceUpdate;
+		// _customSignals.ItemInfo += HandleItemInfo;
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
@@ -214,39 +203,20 @@ public partial class player : Entity
 		
 	}
 
-
-    private void LoadAbilities(AbilityResource ability_resource)
-    {
-       	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
-		abilities.Add(new_ability);
-		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
-		GD.Print("ability sent " + ability_resource.name);
-    }
-
-
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
-		if(!abilities_loaded)
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
-			_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
-			foreach(AbilityResource ability_resource in ability_resources)
-			{
-				LoadAbilities(ability_resource);
-			}
-			abilities_loaded = true;
-		}
-		
-		SignalEmitter();
+		LoadAbilities(); // Loads abilities into players ability list
+		ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
+		SignalEmitter(); // Emits signals to other parts of the game
+
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
 		
 		resource = 0;
 		
-		if(velocity == Vector3.Zero)
+		if(velocity == Vector3.Zero) // If not moving return to Idle slowly (hence the lerp)
 		{
 			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
@@ -272,7 +242,7 @@ public partial class player : Entity
 			}
 		}
 
-		if(Input.IsActionJustPressed("D-PadLeft"))
+		if(Input.IsActionJustPressed("D-PadLeft")) // Select crosses 
 		{
 			l_cross_primary_selected = !l_cross_primary_selected;
 			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
@@ -283,55 +253,62 @@ public partial class player : Entity
 			_customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
 		}
 
-		if(in_interact_area)
-		{
-			if(entered_interact)
-			{
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-				entered_interact = false;
-			}
-			
-			if(Input.IsActionJustPressed("Interact") && !interacting)
-			{
-				interacting = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			}
-			else if(Input.IsActionJustPressed("Interact") && interacting)
-			{
-				interacting = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			}
-		}
-		else if(left_interact)
-		{
-			interacting = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			left_interact = false;
-		}
-
-
-		SmoothRotation();
-		EnemyCheck();
-		LookAtOver();
+		SmoothRotation(); // Rotate the player character smoothly
+		GrabAbility(); // Grab ability player wants to use
+		UseAbility(ability_in_use); // Use the ability the player has just grabbed
+		CheckInteract(); // Check if the player can interact with anything
+		EnemyCheck(); // Check for enemy
+		LookAtOver(); // Look at mod and handle switching
 
 		
-		if(mob_pos.Count == 0)
+		if(mob_pos.Count == 0) // Reset enemy_in_vision
 		{	
 			// GD.Print("no enemy in sight");
 			enemy_in_vision = false;
 			mob_index = 0;
 		}
 
-		GrabAndUseAbility();
-		UseAbility(ability_in_use);
+		
 		
 		Velocity = velocity;
-		tree.Set("parameters/IW/blend_position", blend_direction);
+		
+		tree.Set("parameters/IW/blend_position", blend_direction); // Set blend position
 		MoveAndSlide();
 
     }
 
-	public void GrabAndUseAbility()
+	 private void LoadAbilities() // Loads abilities
+   {
+		if(!abilities_loaded)
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+			_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
+			foreach(AbilityResource ability_resource in ability_resources)
+			{
+				LoadAbilitiesHelper(ability_resource);
+			}
+
+		}
+		abilities_loaded = true;
+   }
+
+    private void LoadAbilitiesHelper(AbilityResource ability_resource) // Adds ability to abilities list
+    {
+       	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
+		abilities.Add(new_ability);
+		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
+    }
+
+	public void ResetAnimationTriggers() // Resets the animation triggers
+	{
+		if(animation_triggered)
+		{
+			tree.Set("parameters/conditions/attacking", false);
+			animation_triggered = false;
+		}
+	}
+
+	public void GrabAbility() // Grabs ability based on input
 	{
 		if(l_cross_primary_selected)
 		{
@@ -344,7 +321,6 @@ public partial class player : Entity
 			if(Input.IsActionJustPressed("LB"))
 			{
 				if(primary_LB != null) {using_ability = true; ability_in_use = primary_LB; }
-				GD.Print("LB");
 			}
 			// Use ability assigned to primary RT
 			if(Input.IsActionJustPressed("RT"))
@@ -427,13 +403,11 @@ public partial class player : Entity
 		}
 	}
 
-	public void UseAbility(Ability ability)
+	public void UseAbility(Ability ability) // Uses ability
 	{
 		if(using_ability)
 		{
 			ability.Execute(this);
-			GD.Print("Ability: " + ability.Name);
-			GD.Print("using ability");
 		}
 		else
 		{
@@ -443,7 +417,7 @@ public partial class player : Entity
 		}
 	}
     
-	public void SmoothRotation()
+	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
 		if(!targeting)
 		{
@@ -460,7 +434,7 @@ public partial class player : Entity
 		}
 	}
 
-	public void UpdateStats()
+	public void UpdateStats() // Updates stats 															*** NEEDS ADDITIONS ***
 	{
 		level = 0;
 		strength = 10;
@@ -484,6 +458,7 @@ public partial class player : Entity
 		wisdom_attack_abilities = 3;
 		total_attack_abilities = physical_melee_attack_abilities + physical_ranged_attack_abilities + spell_melee_attack_abilities + spell_ranged_attack_abilities;
 
+		// Calculates stats
 		physical_melee_attack_ability_ratio = (float)physical_melee_attack_abilities / total_attack_abilities;
 		physical_ranged_attack_ability_ratio = (float)physical_ranged_attack_abilities / total_attack_abilities;
 		spell_melee_attack_ability_ratio = (float)spell_melee_attack_abilities / total_attack_abilities;
@@ -514,6 +489,36 @@ public partial class player : Entity
 		damage = (float)Math.Round(damage,2);
 	}
 
+	private void CheckInteract() // Checks if within interact and handles input
+	{
+		if(in_interact_area)
+		{
+			if(entered_interact)
+			{
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				entered_interact = false;
+			}
+			
+			if(Input.IsActionJustPressed("Interact") && !interacting)
+			{
+				interacting = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			}
+			else if(Input.IsActionJustPressed("Interact") && interacting)
+			{
+				interacting = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			}
+		}
+		else if(left_interact)
+		{
+			interacting = false;
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			left_interact = false;
+		}
+
+	}
+
 	private void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
 		if(enemy_in_vision)
@@ -532,7 +537,7 @@ public partial class player : Entity
 			}
 		}
 	}
-	public void LookAtOver()
+	public void LookAtOver() // Look at enemy and switch
 	{
 		if(targeting && enemy_in_vision && (mobs_in_order.Count > 0))
 		{
@@ -641,13 +646,16 @@ public partial class player : Entity
 	
 		if(animName == "Attack")
 		{
+			attacking = false;
 			animation_finished = true;
 			tree.Set("parameters/conditions/attacking", false);
 			hitbox.Monitoring = false;
 			can_move = true;
 			hitbox.RemoveFromGroup("player_hitbox");
-			attacking = false;
-			GD.Print("finished");
+		}
+		if(animName == "Roll_Forward")
+		{
+
 		}
 
     }
@@ -663,32 +671,29 @@ public partial class player : Entity
 		}
 		else if(area.IsInGroup("interactive"))
 		{
-			GD.Print("entered");
 			entered_interact = true;
 			in_interact_area = true;
 			interact_area = area;
 		}
 		
 	}
-
-	private void OnHurtboxExited(Area3D area)
+	private void OnHurtboxExited(Area3D area) // Check if interact area has come in contact with the player
     {
         if(area.IsInGroup("interactive"))
 		{
-			GD.Print("exited");
 			left_interact = true;
 			in_interact_area = false;
 			interact_area = null;
 		}
     }
 
-	private void Sort()
+	private void Sort() // Sort mobs by distance
 	{
 		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player_position);
 		mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
 	}
 
-	public void SignalEmitter()
+	public void SignalEmitter() // Emit signals
 	{
 		if(max_health_changed)
 		{
@@ -717,7 +722,7 @@ public partial class player : Entity
         enemy_position = position;
     }
 
-	 private void HandleEquipableInfo(Equipable item)
+	 private void HandleEquipableInfo(Equipable item) // Gets info from equipable items
     {
         resource_path = item.item_path;
 		GD.Print("Plus " + item.strength + " Strength");
@@ -734,48 +739,21 @@ public partial class player : Entity
 		
     }
 
-    private void HandleConsumableInfo(Consumable item)
+    private void HandleConsumableInfo(Consumable item)// Gets info from consumable items
     {
         GD.Print(item.heal_amount);
     }
 
-	  private void HandleRemoveEquipped()
+	  private void HandleRemoveEquipped() // Removes equiped items
     {
 		GD.Print("remove equipped");
         head_slot.RemoveChild(main_node);
     }
 
-	// private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
-    // {
-	// 	r_cross_primary_selected = r_cross_primary_selected_signal;
-    //     if(r_cross_primary_selected_signal == true)
-	// 	{
-	// 		GD.Print("RCross Primary Selected");
-			
-	// 	}
-	// 	else
-	// 	{
-	// 		GD.Print("RCross Secondary Selected");
-	// 	}
-    // }
 
-    // private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
-    // {
-	// 	l_cross_primary_selected = l_cross_primary_selected_signal;
-    //     if(l_cross_primary_selected)
-	// 	{
-	// 		GD.Print("LCross Primary Selected");
-	// 	}
-	// 	else
-	// 	{
-	// 		GD.Print("LCross Secondary Selected");
-	// 	}
-    // }
-
-
-	 private void HandleAbilityAssigned(string ability_to_assign, string button_name, Texture2D icon)
+	 private void HandleAbilityAssigned(string ability_to_assign, string button_name, Texture2D icon) // Gets signal from the UI where an ability has just been assigned
     {
-
+		GD.Print("got assignment");
 		// Left Cross Primary
 		if(button_name == "LCrossPrimaryUpAssign")
 		{
@@ -900,21 +878,12 @@ public partial class player : Entity
     	
 	}
 
-	private void HandleUIPreventingMovement(bool ui_preventing_movement)
+	private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
     {
         can_move = !ui_preventing_movement;
     }
 
-    private void HandleItemInfo(Item item){}
-	private void HandlePlayerPosition(Vector3 position){} // Sends player position to enemy
-	private void HandleTargeting(bool targeting, Vector3 position){}
-	private void HandleUIResource(int amount){}
-    private void HandleUIHealth(int amount){}
-	private void HandleUIHealthUpdate(int amount){}
-	private void HandleUIResourceUpdate(int amount){}
-	
-
-	public static class Vector3DictionarySorter 
+	public static class Vector3DictionarySorter // Sorts mobs by distance
 	{
 		public static Dictionary<Area3D, Vector3> SortByDistance(Dictionary<Area3D, Vector3> dict, Vector3 point)
 		{
