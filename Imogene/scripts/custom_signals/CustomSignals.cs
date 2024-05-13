@@ -41,7 +41,7 @@ public partial class CustomSignals : Node
 
 	// Abilities
 	[Signal]
-	public delegate void AvailableAbilitiesEventHandler(string ability);
+	public delegate void AvailableAbilitiesEventHandler(AbilityResource ability);
 	[Signal]
 	public delegate void LCrossPrimaryOrSecondaryEventHandler(bool l_cross_primary_selected_signal);
 	[Signal]

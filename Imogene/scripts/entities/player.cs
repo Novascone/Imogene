@@ -17,7 +17,9 @@ public partial class player : Entity
 
 	// Abilities - Functionalities
 	Target target_ability;
+	List<AbilityResource> ability_resources = new List<AbilityResource>();
 	List<Ability> abilities = new List<Ability>();
+	private bool abilities_loaded = false;
 	Ability ability_in_use;
 
 	public bool l_cross_primary_selected;
@@ -139,6 +141,9 @@ public partial class player : Entity
 	Node3D main_node;
 
 	public Area3D interact_area;
+
+	AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://resources/roll.tres");
+	AbilityResource basic_attack = ResourceLoader.Load<AbilityResource>("res://resources/basic_attack.tres");
 	
 
 	
@@ -146,14 +151,19 @@ public partial class player : Entity
 	public override void _Ready()
 	{
 		this_player = this;
+		ability_resources.Add(roll);
+		ability_resources.Add(basic_attack);
+		
 		
 		// roll_ability = (Roll)LoadAbility("Roll");
 		// abilities.Add(roll_ability);
 		// target_ability = (Target)LoadAbility("Target");
 		// basic_attack_ability = (BasicAttack)LoadAbility("BasicAttack");
 		// abilities.Add(basic_attack_ability);
+		
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
+		
 
 		
 	
@@ -196,17 +206,21 @@ public partial class player : Entity
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
-		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
+		// _customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
+		// _customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
-		_customSignals.AvailableAbilities += HandleAvailableAbilities;
+
+		
 		
 	}
 
-    private void HandleAvailableAbilities(string ability)
+
+    private void LoadAbilities(AbilityResource ability_resource)
     {
-       	Ability new_ability = (Ability)LoadAbility(ability);
+       	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
 		abilities.Add(new_ability);
+		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
+		GD.Print("ability sent " + ability_resource.name);
     }
 
 
@@ -215,7 +229,16 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print(animation_finished);
+		if(!abilities_loaded)
+		{
+			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+			_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
+			foreach(AbilityResource ability_resource in ability_resources)
+			{
+				LoadAbilities(ability_resource);
+			}
+			abilities_loaded = true;
+		}
 		
 		SignalEmitter();
 		direction = Vector3.Zero;
@@ -248,11 +271,17 @@ public partial class player : Entity
 				direction.Z += 1.0f;
 			}
 		}
-		
 
-	
-		
-		
+		if(Input.IsActionJustPressed("D-PadLeft"))
+		{
+			l_cross_primary_selected = !l_cross_primary_selected;
+			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+		}
+		if(Input.IsActionJustPressed("D-PadRight"))
+		{
+			r_cross_primary_selected = !r_cross_primary_selected;
+			_customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
+		}
 
 		if(in_interact_area)
 		{
@@ -716,32 +745,32 @@ public partial class player : Entity
         head_slot.RemoveChild(main_node);
     }
 
-	private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
-    {
-		r_cross_primary_selected = r_cross_primary_selected_signal;
-        if(r_cross_primary_selected_signal == true)
-		{
-			GD.Print("RCross Primary Selected");
+	// private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
+    // {
+	// 	r_cross_primary_selected = r_cross_primary_selected_signal;
+    //     if(r_cross_primary_selected_signal == true)
+	// 	{
+	// 		GD.Print("RCross Primary Selected");
 			
-		}
-		else
-		{
-			GD.Print("RCross Secondary Selected");
-		}
-    }
+	// 	}
+	// 	else
+	// 	{
+	// 		GD.Print("RCross Secondary Selected");
+	// 	}
+    // }
 
-    private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
-    {
-		l_cross_primary_selected = l_cross_primary_selected_signal;
-        if(l_cross_primary_selected)
-		{
-			GD.Print("LCross Primary Selected");
-		}
-		else
-		{
-			GD.Print("LCross Secondary Selected");
-		}
-    }
+    // private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
+    // {
+	// 	l_cross_primary_selected = l_cross_primary_selected_signal;
+    //     if(l_cross_primary_selected)
+	// 	{
+	// 		GD.Print("LCross Primary Selected");
+	// 	}
+	// 	else
+	// 	{
+	// 		GD.Print("LCross Secondary Selected");
+	// 	}
+    // }
 
 
 	 private void HandleAbilityAssigned(string ability_to_assign, string button_name, Texture2D icon)

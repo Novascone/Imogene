@@ -187,7 +187,9 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.AbilityUISecondaryOpen += HandelSkillsUISecondaryOpen;
+		_customSignals.AbilityUISecondaryOpen += HandleSkillsUISecondaryOpen;
+		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
+		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -197,7 +199,98 @@ public partial class UI : CanvasLayer
 
 	}
 
-    private void HandelSkillsUISecondaryOpen(bool secondary_open)
+    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
+    {
+	
+        if(r_cross_primary_selected_signal)
+			{
+				r_cross_primary_selected = true;
+				r_cross_secondary_selected = false;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_primary.Modulate = new Color(Colors.White, 1f);
+				r_cross_primary_up_action_label.Show();
+				r_cross_primary_down_action_label.Show();
+				r_cross_primary_left_action_label.Show();
+				r_cross_primary_right_action_label.Show();
+				
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_secondary_up_action_label.Hide();
+				r_cross_secondary_down_action_label.Hide();
+				r_cross_secondary_left_action_label.Hide();
+				r_cross_secondary_right_action_label.Hide();
+
+				GD.Print("primary r cross selected");
+				
+			}
+			else
+			{
+				r_cross_primary_selected = false;
+				r_cross_secondary_selected = true;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_primary_up_action_label.Hide();
+				r_cross_primary_down_action_label.Hide();
+				r_cross_primary_left_action_label.Hide();
+				r_cross_primary_right_action_label.Hide();
+
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				r_cross_secondary_up_action_label.Show();
+				r_cross_secondary_down_action_label.Show();
+				r_cross_secondary_left_action_label.Show();
+				r_cross_secondary_right_action_label.Show();
+				GD.Print("secondary r cross selected");
+			}
+    }
+
+    private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
+    {
+		
+        if(l_cross_primary_selected_signal)
+			{
+				GD.Print("primary l cross selected");
+				
+				l_cross_primary_selected = true;
+				l_cross_secondary_selected = false;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_primary.Modulate = new Color(Colors.White, 1f);
+				l_cross_primary_up_action_label.Show();
+				l_cross_primary_down_action_label.Show();
+				l_cross_primary_left_action_label.Show();
+				l_cross_primary_right_action_label.Show();
+
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_secondary_up_action_label.Hide();
+				l_cross_secondary_down_action_label.Hide();
+				l_cross_secondary_left_action_label.Hide();
+				l_cross_secondary_right_action_label.Hide();
+			}
+			else
+			{
+				GD.Print("secondary  cross selected");
+				l_cross_primary_selected = false;
+				l_cross_secondary_selected = true;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_primary_up_action_label.Hide();
+				l_cross_primary_down_action_label.Hide();
+				l_cross_primary_left_action_label.Hide();
+				l_cross_primary_right_action_label.Hide();
+
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				l_cross_secondary_up_action_label.Show();
+				l_cross_secondary_down_action_label.Show();
+				l_cross_secondary_left_action_label.Show();
+				l_cross_secondary_right_action_label.Show();
+
+				
+			}
+    }
+
+    private void HandleSkillsUISecondaryOpen(bool secondary_open)
     {
         abilities_secondary_ui_open = secondary_open;
     }
@@ -244,8 +337,6 @@ public partial class UI : CanvasLayer
 
 		// UpdateHealth();
 		// UpdateResource();
-
-		ChangeActionBars();
 
 		if(inventory_open || abilities_open)
 		{
@@ -670,97 +761,7 @@ public partial class UI : CanvasLayer
 		
 	}
 
-	public void ChangeActionBars()
-	{
-		if(!inventory_open && !abilities_open && Input.IsActionJustPressed("D-PadLeft"))
-		{
-			if(l_cross_primary_selected)
-			{
-				l_cross_primary_selected = false;
-				l_cross_secondary_selected = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
-				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
-				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
-				l_cross_primary_up_action_label.Hide();
-				l_cross_primary_down_action_label.Hide();
-				l_cross_primary_left_action_label.Hide();
-				l_cross_primary_right_action_label.Hide();
 
-				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
-				l_cross_secondary_up_action_label.Show();
-				l_cross_secondary_down_action_label.Show();
-				l_cross_secondary_left_action_label.Show();
-				l_cross_secondary_right_action_label.Show();
-
-				
-			}
-			else
-			{
-				l_cross_primary_selected = true;
-				l_cross_secondary_selected = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
-				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				l_cross_primary.Modulate = new Color(Colors.White, 1f);
-				l_cross_primary_up_action_label.Show();
-				l_cross_primary_down_action_label.Show();
-				l_cross_primary_left_action_label.Show();
-				l_cross_primary_right_action_label.Show();
-
-				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
-				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
-				l_cross_secondary_up_action_label.Hide();
-				l_cross_secondary_down_action_label.Hide();
-				l_cross_secondary_left_action_label.Hide();
-				l_cross_secondary_right_action_label.Hide();
-				
-			}
-			
-		}
-		if(!inventory_open && !abilities_open && Input.IsActionJustPressed("D-PadRight"))
-		{
-			if(r_cross_primary_selected)
-			{
-				r_cross_primary_selected = false;
-				r_cross_secondary_selected = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
-				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
-				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
-				r_cross_primary_up_action_label.Hide();
-				r_cross_primary_down_action_label.Hide();
-				r_cross_primary_left_action_label.Hide();
-				r_cross_primary_right_action_label.Hide();
-
-				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
-				r_cross_secondary_up_action_label.Show();
-				r_cross_secondary_down_action_label.Show();
-				r_cross_secondary_left_action_label.Show();
-				r_cross_secondary_right_action_label.Show();
-				
-			}
-			else
-			{
-				r_cross_primary_selected = true;
-				r_cross_secondary_selected = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), r_cross_primary_selected);
-				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				r_cross_primary.Modulate = new Color(Colors.White, 1f);
-				r_cross_primary_up_action_label.Show();
-				r_cross_primary_down_action_label.Show();
-				r_cross_primary_left_action_label.Show();
-				r_cross_primary_right_action_label.Show();
-				
-				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
-				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
-				r_cross_secondary_up_action_label.Hide();
-				r_cross_secondary_down_action_label.Hide();
-				r_cross_secondary_left_action_label.Hide();
-				r_cross_secondary_right_action_label.Hide();
-			}
-			
-		}
-	}
 
 	public void _on_sheet_button_down()
 	{

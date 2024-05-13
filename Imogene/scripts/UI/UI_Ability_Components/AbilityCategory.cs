@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 
 public partial class AbilityCategory : PanelContainer
 {
@@ -12,8 +13,8 @@ public partial class AbilityCategory : PanelContainer
 	private List<AbilityButton> abilities = new List<AbilityButton>();
 	private List<Button> modifiers = new List<Button>();
 	private CustomSignals _customSignals;
-	AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://resources/roll.tres");
-	AbilityResource basic_attack = ResourceLoader.Load<AbilityResource>("res://resources/basic_attack.tres");
+	
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -22,6 +23,7 @@ public partial class AbilityCategory : PanelContainer
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 
 		_customSignals.AddToAbilitySelection += HandleAddToAbilitySelection;
+		_customSignals.AvailableAbilities += HandleAvailableAbilities;
 		_customSignals.SendButtonClicked += HandleButtonClicked;
 
 		foreach(AbilityButton ability in ability_container.GetChildren().Cast<AbilityButton>())
@@ -34,15 +36,27 @@ public partial class AbilityCategory : PanelContainer
 		{
 			modifiers.Add(modifier);
 		}
-		AddAbility(roll.name, roll.type_of_ability, roll.icon);
-		AddAbility(basic_attack.name,basic_attack.type_of_ability, basic_attack.icon);
-		foreach(AbilityButton button in abilities)
-		{
-			GD.Print(button.ability_name);
-		}
-		SendAbilitiesToPlayer(abilities);
+		// AddAbility(roll.name, roll.type_of_ability, roll.icon);
+		// AddAbility(basic_attack.name,basic_attack.type_of_ability, basic_attack.icon);
+		// foreach(AbilityButton button in abilities)
+		// {
+		// 	GD.Print(button.ability_name);
+		// }
+		// SendAbilitiesToPlayer(abilities);
 		
 	}
+
+    private void HandleAvailableAbilities(AbilityResource ability)
+    {
+        GD.Print("received");
+        AddAbility(ability.name, ability.type_of_ability, ability.icon);
+    }
+
+    // private void HandleAvailableAbilities(AbilityResource ability)
+    // {
+    // 	GD.Print("received");
+    //     AddAbility(ability.name, ability.type_of_ability, ability.icon);
+    // }
 
     private void HandleButtonClicked(AbilityButton button, Button assign_button)
     {
@@ -79,21 +93,22 @@ public partial class AbilityCategory : PanelContainer
 		}
 	}
 
-	public void SendAbilitiesToPlayer(List<AbilityButton> abilities)
-	{
-		foreach(AbilityButton ability in abilities)
-		{
-			if(ability.assigned)
-			{
-				_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability.ability_name);
-			}
+	// public void SendAbilitiesToPlayer(List<AbilityButton> abilities)
+	// {
+	// 	foreach(AbilityButton ability in abilities)
+	// 	{
+	// 		if(ability.assigned)
+	// 		{
+	// 			_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability.ability_name);
+	// 		}
 			
-		}
+	// 	}
 		
-	}
+	// }
 	public void _on_accept_button_down()
 	{
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, button_to_be_assigned.Name, button_clicked.Icon);
 	}
 
 }
+
