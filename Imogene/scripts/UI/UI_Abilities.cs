@@ -40,7 +40,7 @@ public partial class UI_Abilities : UI
 	public PanelContainer Special_abilities;
 	public PanelContainer passives;
 	public PanelContainer accept_cancel;
-	public Button close;
+	public VBoxContainer close_ability_binds;
 	public PanelContainer button_to_be_assigned_container;
 	public Button button_to_be_assigned;
 	public Button button_to_be_assigned_icon;
@@ -68,11 +68,11 @@ public partial class UI_Abilities : UI
 		// class_abilities = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/ClassAbilities");
 		// Special_abilities = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/SpecialAbilities");
 		passives = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/Passives");
-		accept_cancel = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/AcceptCancel");
-		button_to_be_assigned_container = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned");
-		close = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/Close");
-		button_to_be_assigned = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned/");
-		button_to_be_assigned_icon = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/Button");
+		// accept_cancel = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/AcceptCancel");
+		
+		close_ability_binds = GetNode<VBoxContainer>("PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/Close");
+		// button_to_be_assigned = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned/");
+		// button_to_be_assigned_icon = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AssignedAndAccept/ButtonToBeAssigned/VBoxContainer/Button");
 
 		l_cross_primary_up_assign = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryUpAssign");
 		l_cross_primary_down_assign = GetNode<Button>("PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxLeftCrossPrimary/LCrossPrimary/LCrossPrimaryDownAssign");
@@ -113,21 +113,19 @@ public partial class UI_Abilities : UI
 		if(current_ui == null)
 		{
 			current_ui = ability_binds;
-			accept_cancel.Hide();
+			
 		}
 		if(current_ui.IsInGroup("assignment"))
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
-			close.Hide();
-			button_to_be_assigned.Show();
+			// button_to_be_assigned.Show();
 			// accept_cancel.Show();
 		}
 		else if(current_ui.IsInGroup("selection"))
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
-			button_to_be_assigned.Hide();
-			close.Show();
-			accept_cancel.Hide();
+			// button_to_be_assigned.Hide();
+			
 		}
 		else
 		{
@@ -139,12 +137,6 @@ public partial class UI_Abilities : UI
 			if(current_ui.IsInGroup("selection"))
 			{
 				previous_ui = ability_binds;
-				accept_cancel.Hide();
-				close.Show();
-			}
-			else if(current_ui.IsInGroup("assignment"))
-			{
-				button_to_be_assigned_container.Hide();
 			}
 			if(current_ui == ability_binds)
 			{
@@ -173,38 +165,32 @@ public partial class UI_Abilities : UI
 	public void _on_l_cross_primary_up_assign_button_down()
 	{
 		selected_button = l_cross_primary_up_assign;
-		button_to_be_assigned.Text = "Primary RB";
 		AssignmentButtonNavigation();
-		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary RB");
 		// assign_ability.Show();
 	}
 
 	public void _on_l_cross_primary_down_assign_button_down()
 	{
 		selected_button = l_cross_primary_down_assign;
-		button_to_be_assigned.Text = "Primary LT";
 		AssignmentButtonNavigation();
-		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary LT");
 	}
 
 	public void _on_l_cross_primary_left_assign_button_down()
 	{
 		selected_button = l_cross_primary_left_assign;
-		button_to_be_assigned.Text = "Primary LB";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary LB");
 	}
 
 	public void _on_l_cross_primary_right_assign_button_down()
 	{
 		selected_button = l_cross_primary_right_assign;
-		button_to_be_assigned.Text = "Primary RT";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary RT");
 		// assign_ability.Show();
 	}
 
@@ -212,38 +198,34 @@ public partial class UI_Abilities : UI
 	public void _on_l_cross_secondary_up_assign_button_down()
 	{
 		selected_button = l_cross_secondary_up_assign;
-		button_to_be_assigned.Text = "Secondary RB";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary RB");
 		// assign_ability.Show();
 	}
 
 	public void _on_l_cross_secondary_down_assign_button_down()
 	{
 		selected_button = l_cross_secondary_down_assign;
-		button_to_be_assigned.Text = "Secondary LT";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary LT");
 	}
 
 	public void _on_l_cross_secondary_left_assign_button_down()
 	{
 		selected_button = l_cross_secondary_left_assign;
-		button_to_be_assigned.Text = "Secondary LB";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary LB");
 	}
 
 	public void _on_l_cross_secondary_right_assign_button_down()
 	{
 		selected_button = l_cross_secondary_right_assign;
-		button_to_be_assigned.Text = "Secondary RT";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary RT");
 		// assign_ability.Show();
 	}
 
@@ -252,74 +234,66 @@ public partial class UI_Abilities : UI
 	public void _on_r_cross_primary_up_assign_button_down()
 	{
 		selected_button = r_cross_primary_up_assign;
-		button_to_be_assigned.Text = "Primary Y";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary Y");
 	}
 
 	public void _on_r_cross_primary_down_assign_button_down()
 	{
 		selected_button = r_cross_primary_down_assign;
-		button_to_be_assigned.Text = "Primary A";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary A");
 	}
 
 	public void _on_r_cross_primary_left_assign_button_down()
 	{
 		selected_button = r_cross_primary_left_assign;
-		button_to_be_assigned.Text = "Primary X";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary X");
 	}
 
 	public void _on_r_cross_primary_right_assign_button_down()
 	{
 		selected_button = r_cross_primary_right_assign;
-		button_to_be_assigned.Text = "Primary B";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary B");
 	}
 
 	// Right Cross Secondary Assignment Buttons
 	public void _on_r_cross_secondary_up_assign_button_down()
 	{
 		selected_button = r_cross_secondary_up_assign;
-		button_to_be_assigned.Text = "Secondary Y";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary Y");
 	}
 
 	public void _on_r_cross_secondary_down_assign_button_down()
 	{
 		selected_button = r_cross_secondary_down_assign;
-		button_to_be_assigned.Text = "Secondary A";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary A");
 	}
 
 	public void _on_r_cross_secondary_left_assign_button_down()
 	{
 		selected_button = r_cross_secondary_left_assign;
-		button_to_be_assigned.Text = "Secondary X";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary X");
 	}
 
 	public void _on_r_cross_secondary_right_assign_button_down()
 	{
 		selected_button = r_cross_secondary_right_assign;
-		button_to_be_assigned.Text = "Secondary B";
 		AssignmentButtonNavigation();
 		button_to_be_assigned_container.Show();
-		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), selected_button, button_to_be_assigned_icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary B");
 	}
 
 	public void _on_melee_abilites_button_down()

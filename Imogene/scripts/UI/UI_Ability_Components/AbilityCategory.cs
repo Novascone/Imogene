@@ -9,6 +9,8 @@ public partial class AbilityCategory : PanelContainer
 	private GridContainer ability_container;
 	private HBoxContainer ability_modifier_container;
 	private AbilityButton button_clicked;
+	private VBoxContainer button_to_be_assigned_container;
+	private Button button_to_be_assigned_label;
 	private Button button_to_be_assigned;
 	private List<AbilityButton> abilities = new List<AbilityButton>();
 	private List<Button> modifiers = new List<Button>();
@@ -20,11 +22,15 @@ public partial class AbilityCategory : PanelContainer
 	{
 		ability_container = GetNode<GridContainer>("VBoxContainer/PanelContainer/GridContainer");
 		ability_modifier_container = GetNode<HBoxContainer>("VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers");
+		button_to_be_assigned_container = GetNode<VBoxContainer>("VBoxContainer/PanelContainer/AssignedAndAccepted");
+		button_to_be_assigned = GetNode<Button>("VBoxContainer/PanelContainer/AssignedAndAccepted/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned");
+		button_to_be_assigned_label = GetNode<Button>("VBoxContainer/PanelContainer/AssignedAndAccepted/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssignedLabel");
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 
 		_customSignals.AddToAbilitySelection += HandleAddToAbilitySelection;
 		_customSignals.AvailableAbilities += HandleAvailableAbilities;
 		_customSignals.SendButtonClicked += HandleButtonClicked;
+		_customSignals.ButtonName += HandleButtonName;
 
 		foreach(AbilityButton ability in ability_container.GetChildren().Cast<AbilityButton>())
 		{
@@ -45,6 +51,12 @@ public partial class AbilityCategory : PanelContainer
 		// SendAbilitiesToPlayer(abilities);
 		
 	}
+
+    private void HandleButtonName(Button cross_button, string cross_button_name)
+    {
+        button_to_be_assigned_label.Text = cross_button_name;
+		_customSignals.EmitSignal(nameof(CustomSignals.ButtonToBeAssigned), cross_button, button_to_be_assigned);
+    }
 
     private void HandleAvailableAbilities(AbilityResource ability)
     {

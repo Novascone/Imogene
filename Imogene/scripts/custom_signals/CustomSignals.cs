@@ -49,7 +49,9 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon);
 	[Signal]
-	public delegate void ButtonToBeAssignedEventHandler(Button button1, Button button2);
+	public delegate void ButtonNameEventHandler(Button cross_button, string cross_button_name);
+	[Signal]
+	public delegate void ButtonToBeAssignedEventHandler(Button cross_button, Button representative_button);
 	[Signal]
 	public delegate void AddToAbilitySelectionEventHandler(string name, string type, Texture2D icon);
 	// Movement

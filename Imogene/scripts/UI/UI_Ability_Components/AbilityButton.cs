@@ -33,11 +33,11 @@ public partial class AbilityButton : Button
     //     abilities.Add(ability);
     // }
 
-    private void HandleButtonToBeAssigned(Button button1, Button button2)
+    private void HandleButtonToBeAssigned(Button cross_button, Button representative_button)
     {
-		
-        assign_button = button1;
-		icon_button = button2;
+		GD.Print("received buttons");
+        assign_button = cross_button;
+		icon_button = representative_button;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
