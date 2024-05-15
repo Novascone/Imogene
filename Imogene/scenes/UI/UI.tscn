@@ -207,6 +207,69 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_wudlh")
 
 [node name="BottomHUDVBox" type="VBoxContainer" parent="HUD/BottomHUD"]
 layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox"]
+layout_mode = 2
+
+[node name="Consumables" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Consumable1" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "1"
+
+[node name="Consumable2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "2"
+
+[node name="Consumable3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "3"
+
+[node name="Consumable4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "4"
+
+[node name="Posture" type="Panel" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
+custom_minimum_size = Vector2(500, 15)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
 
 [node name="XP" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox"]
 custom_minimum_size = Vector2(850, 10)
@@ -233,7 +296,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="HealthBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_gux6w")
@@ -781,7 +843,6 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 
 [node name="DamageBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_gux6w")
@@ -879,6 +940,10 @@ layout_mode = 2
 
 [node name="Button9" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/DamageBuffsDebuffs/HBoxContainer/DamageDebuffs/GridContainer"]
 custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox"]
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
 [node name="InteractBar" type="PanelContainer" parent="HUD"]

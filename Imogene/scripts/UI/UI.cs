@@ -83,6 +83,11 @@ public partial class UI : CanvasLayer
 	public Label r_cross_secondary_down_action_label;
 	public Label r_cross_secondary_left_action_label;
 	public Label r_cross_secondary_right_action_label;
+
+	public Button consumable_1;
+	public Button consumable_2;
+	public Button consumable_3;
+	public Button consumable_4;
 	
 	public CanvasLayer character_inventory;
 	public PanelContainer interact_inventory;
@@ -163,6 +168,11 @@ public partial class UI : CanvasLayer
 		r_cross_secondary_left_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryLeftAction/Label");
 		r_cross_secondary_right_action_label = GetNode<Label>("HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossSecondary/RCrossSecondaryRightAction/Label");
 
+		consumable_1 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable1");
+		consumable_2 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable2");
+		consumable_3 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable3");
+		consumable_4 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable4");
+
 		character_inventory = GetNode<CanvasLayer>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
@@ -191,6 +201,7 @@ public partial class UI : CanvasLayer
 		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.HideCursor += HandleHideCursor;
+		_customSignals.WhichConsumable += HandleWhichConsumable;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -199,6 +210,8 @@ public partial class UI : CanvasLayer
 
 		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}
+
+    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -774,6 +787,14 @@ public partial class UI : CanvasLayer
 
 				
 			}
+    }
+
+	private void HandleWhichConsumable(int consumable)
+    {
+        if(consumable == 1){consumable_1.Show(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Hide();}
+		if(consumable == 2){consumable_1.Hide(); consumable_2.Show(); consumable_3.Hide(); consumable_4.Hide();}
+		if(consumable == 3){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Show(); consumable_4.Hide();}
+		if(consumable == 4){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Show();}
     }
 
     private void HandleAbilityUISecondaryOpen(bool secondary_open)

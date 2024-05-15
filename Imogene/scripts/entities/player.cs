@@ -106,6 +106,11 @@ public partial class player : Entity
 
 
 
+	//Player consumables
+	public int consumable = 1;
+	public Consumable[] consumables;
+
+
 
 	// Player bools   																									*** Switch Some of these to Entity ***
 	public bool using_ability; // Is the entity using an ability?
@@ -191,6 +196,7 @@ public partial class player : Entity
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 		tree.AnimationFinished += OnAnimationFinished;
+		
 
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
@@ -217,7 +223,7 @@ public partial class player : Entity
 		// _customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		// _customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
-
+		
 		
 		
 	}
@@ -274,6 +280,24 @@ public partial class player : Entity
 				r_cross_primary_selected = !r_cross_primary_selected;
 				_customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
 			}
+			if(Input.IsActionJustPressed("D-PadUp"))
+			{
+				// switch consumable
+				if(consumable < 4)
+				{
+					consumable += 1;
+				}
+				else if(consumable == 4)
+				{
+					consumable = 1;
+				}
+
+				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), consumable);
+			}
+			if(Input.IsActionJustPressed("D-PadDown"))
+			{
+				// use consumable
+			}
 		}
 		
 
@@ -296,7 +320,8 @@ public partial class player : Entity
 		
 		Velocity = velocity;
 		
-		tree.Set("parameters/IW/blend_position", blend_direction); // Set blend position
+		tree.Set("parameters/PlayerState/IW/blend_position", blend_direction); // Set blend position
+		tree.Set("parameters/PlayerState/Attack/AttackSpeed/scale", attack_speed);
 		MoveAndSlide();
 
     }
@@ -342,7 +367,7 @@ public partial class player : Entity
 	{
 		if(animation_triggered)
 		{
-			tree.Set("parameters/conditions/attacking", false);
+			tree.Set("parameters/PlayerState/conditions/attacking", false);
 			animation_triggered = false;
 		}
 	}
@@ -695,7 +720,7 @@ public partial class player : Entity
 		{
 			attacking = false;
 			animation_finished = true;
-			tree.Set("parameters/conditions/attacking", false);
+			tree.Set("parameters/PlayerState/conditions/attacking", false);
 			hitbox.Monitoring = false;
 			can_move = true;
 			hitbox.RemoveFromGroup("player_hitbox");

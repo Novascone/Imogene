@@ -39,23 +39,23 @@ public partial class Slash : Ability
 			s.hitbox.Monitoring = true;
 			if(s.weapon_type == "one_handed_axe") // play one handed axe animation
 			{
-				s.tree.Set("parameters/conditions/attacking", s.attacking);
+				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
 			}
 			if(s.weapon_type == "one_handed_sword") // play one handed sword animation
 			{
-				s.tree.Set("parameters/conditions/attacking", s.attacking);
+				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
 			}
 			if(s.weapon_type == "two_handed_axe") // play two handed axe animation
 			{
-				s.tree.Set("parameters/conditions/attacking", s.attacking);
+				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
 			}
 			if(s.weapon_type == "two_handed_sword") // play two handed sword animation
 			{
-				s.tree.Set("parameters/conditions/attacking", s.attacking);
+				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
 			}
 			if(s.weapon_type == "fist") // play fist animation
 			{
-				s.tree.Set("parameters/conditions/attacking", s.attacking);
+				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
 			}
 			s.can_move = false;
 			if(s.jumping)

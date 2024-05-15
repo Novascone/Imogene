@@ -25,6 +25,8 @@ public partial class CustomSignals : Node
 	public delegate void UIResourceUpdateEventHandler(int amount); // Updates the UI with the players new resource 																	*** NEEDS TO BE UPDATED ***
 	[Signal]
 	public delegate void InteractEventHandler(Area3D area, bool in_interact_area, bool interacting); // Tells the UI if the player has entered an interact area
+	[Signal]
+	public delegate void WhichConsumableEventHandler(int consumable); // Tells the UI if the player has entered an interact area
 
 
 
