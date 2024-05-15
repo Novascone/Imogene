@@ -6,7 +6,8 @@ using System.Reflection.Metadata;
 
 public partial class AbilityCategory : PanelContainer
 {
-	private GridContainer ability_container;
+	private GridContainer ability_container_page_1;
+	private GridContainer ability_container_page_2;
 	private HBoxContainer ability_modifier_container;
 	private AbilityButton button_clicked;
 	private VBoxContainer button_to_be_assigned_container;
@@ -21,25 +22,41 @@ public partial class AbilityCategory : PanelContainer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		ability_container = GetNode<GridContainer>("VBoxContainer/PanelContainer/GridContainer");
+		ability_container_page_1 = GetNode<GridContainer>("VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1");
+		ability_container_page_2 = GetNode<GridContainer>("VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2");
 		ability_modifier_container = GetNode<HBoxContainer>("VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers");
 		button_to_be_assigned_container = GetNode<VBoxContainer>("VBoxContainer/PanelContainer/AssignedAndAccepted");
 		button_to_be_assigned = GetNode<Button>("VBoxContainer/PanelContainer/AssignedAndAccepted/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned");
 		button_to_be_assigned_label = GetNode<Button>("VBoxContainer/PanelContainer/AssignedAndAccepted/ButtonToBeAssigned/VBoxContainer/ButtonToBeAssignedLabel");
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 
-		_customSignals.AddToAbilitySelection += HandleAddToAbilitySelection;
+		// _customSignals.AddToAbilitySelection += HandleAddToAbilitySelection;
 		_customSignals.AvailableAbilities += HandleAvailableAbilities;
 		_customSignals.AbilitySelected += HandleAbilitySelected;
 		_customSignals.ButtonName += HandleButtonName;
 		_customSignals.AbilityAccept += HandleAbilityAccept;
 		_customSignals.AbilityCancel += HandleAbilityCancel;
+		_customSignals.CurrentAbilityBoundOnCrossButton += HandleCurrentAbilityBoundOnCrossButton;
 		
 
-		foreach(AbilityButton ability in ability_container.GetChildren().Cast<AbilityButton>())
+		foreach(AbilityButton ability in ability_container_page_1.GetChildren().Cast<AbilityButton>())
 		{
-			abilities.Add(ability);
+			if(ability.GetIndex() < 11)
+			{
+				abilities.Add(ability);
+			}
 		}
+		if(abilities.Count > 12)
+		{
+			foreach(AbilityButton ability in ability_container_page_2.GetChildren().Cast<AbilityButton>())
+			{
+				if(ability.GetIndex() > 11)
+				{
+					abilities.Add(ability);
+				}
+			}
+		}
+		
 		// GD.Print(abilities.Count);
 
 		foreach(AbilityButton modifier in ability_modifier_container.GetChildren().Cast<AbilityButton>())
@@ -56,7 +73,9 @@ public partial class AbilityCategory : PanelContainer
 		
 	}
 
-	private void HandleAbilityCancel()
+    
+
+    private void HandleAbilityCancel()
 	{
 		button_to_be_assigned.Icon = null;
 	}
@@ -64,6 +83,11 @@ public partial class AbilityCategory : PanelContainer
 	{
 		button_to_be_assigned.Icon = null;
 	}
+
+	private void HandleCurrentAbilityBoundOnCrossButton(Texture2D icon)
+    {
+        button_to_be_assigned.Icon = icon;
+    }
 
     private void HandleButtonName(Button cross_button, string cross_button_name)
     {
@@ -73,8 +97,8 @@ public partial class AbilityCategory : PanelContainer
 
     private void HandleAvailableAbilities(AbilityResource ability)
     {
-        GD.Print("received");
-        AddAbility(ability.name, ability.type, ability.icon);
+        // GD.Print("received");
+        AddAbility(ability.name, ability.type, ability.description, ability.icon);
     }
 
     // private void HandleAvailableAbilities(AbilityResource ability)
@@ -85,11 +109,12 @@ public partial class AbilityCategory : PanelContainer
 
   
 
-    private void HandleAddToAbilitySelection(string name, string type, Texture2D icon)
+    private void HandleAddToAbilitySelection(string name, string type, string description, Texture2D icon)
     {
 		if(this.IsInGroup(type))
 		{
-			AddAbility(name,type, icon);
+			GD.Print("HandleAddToAbilitySelection");
+			AddAbility(name, type, description, icon);
 		}
     }
 
@@ -98,20 +123,25 @@ public partial class AbilityCategory : PanelContainer
 	{
 	}
 
-	public void AddAbility(string name, string type, Texture2D icon)
+	public void AddAbility(string name, string type, string description, Texture2D icon)
 	{
-		foreach(AbilityButton ability in abilities)
+		if(this.IsInGroup(type))
 		{
-			if(!ability.assigned)
+			foreach(AbilityButton ability in abilities)
 			{
-				// ability.Text = name;
-				ability.ability_name = name;
-				ability.ability_type = type;
-				ability.Icon = icon;
-				ability.assigned = true;
-				break;
+				if(!ability.assigned)
+				{
+					// ability.Text = name;
+					ability.ability_name = name;
+					ability.ability_type = type;
+					ability.info_text.Text = description;
+					ability.Icon = icon;
+					ability.assigned = true;
+					break;
+				}
 			}
 		}
+		
 	}
 
 	// public void SendAbilitiesToPlayer(List<AbilityButton> abilities)
@@ -140,6 +170,18 @@ public partial class AbilityCategory : PanelContainer
 	public void _on_cancel_button_down()
 	{
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityCancel));
+	}
+
+	public void _on_last_page_button_down()
+	{
+		ability_container_page_1.Show();
+		ability_container_page_2.Hide();
+	}
+
+	public void _on_next_page_button_down()
+	{
+		ability_container_page_2.Show();
+		ability_container_page_1.Hide();
 	}
 
 }

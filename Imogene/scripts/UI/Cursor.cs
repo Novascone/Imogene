@@ -6,6 +6,7 @@ public partial class Cursor : Sprite2D
 
 	public InventoryButton cursor_button;
 	public Area2D cursor_button_area;
+	private CustomSignals _customSignals; // Instance of CustomSignals
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -15,11 +16,18 @@ public partial class Cursor : Sprite2D
 		cursor_button_area.Monitoring = false;
 		cursor_button.AddToGroup("cursorbutton");
 		cursor_button.Hide();
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.HideCursor += HandleHideCursor;
 		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    private void HandleHideCursor()
+    {
+        Hide();
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b02njwvptdrdb"]
+[gd_scene load_steps=8 format=3 uid="uid://b02njwvptdrdb"]
 
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="1_87ipv"]
 
@@ -17,6 +17,8 @@ shader_parameter/strength = 0.0
 next_pass = SubResource("ShaderMaterial_4tslu")
 albedo_color = Color(0, 1, 1, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dq5sj"]
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_46hos"]
 radius = 2.3
 
@@ -29,6 +31,13 @@ shape = SubResource("BoxShape3D_1h8ub")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Mesh"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/StaticBody3D"]
+shape = SubResource("BoxShape3D_dq5sj")
 
 [node name="InteractArea" type="Area3D" parent="." groups=["interactive"]]
 

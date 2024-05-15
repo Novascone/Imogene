@@ -75,6 +75,10 @@ public partial class CustomSignals : Node
 	public delegate void AbilityAcceptEventHandler(); // Tells the UI that the ability assignment has been accepted
 	[Signal]
 	public delegate void AbilityCancelEventHandler(); // Tells the UI that the ability assignment has been accepted
+	[Signal]
+	public delegate void HideCursorEventHandler(); // Tells the UI to close cursor
+	[Signal]
+	public delegate void CurrentAbilityBoundOnCrossButtonEventHandler(Texture2D icon); // Tells the Ability category which button is currently bound
 	
 
 

@@ -7,6 +7,8 @@ public partial class Entity : CharacterBody3D
 
     public int level; // Level of the entity
     public float speed = 5.0f; // Speed of the entity
+    public float fall_speed = 75.0f;
+    public float jump_speed = 20.0f;
 	public float health = 20; // Prelim health number
     public int resource = 20; // prelim resource number
    
@@ -27,6 +29,8 @@ public partial class Entity : CharacterBody3D
     public int gold = 0;
 
     public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
+    public bool jumping = false;
+    public bool on_floor;
     public bool attacking; // Boolean to keep track of if the entity is attacking
     public bool animation_triggered;
     public bool dead = false;
@@ -52,4 +56,6 @@ public partial class Entity : CharacterBody3D
         var sceneNode = scene.Instantiate();
         return sceneNode;
     }
+
+    
 }

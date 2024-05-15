@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=76 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -166,6 +166,9 @@ size = Vector2(266, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_df47f"]
 size = Vector2(26, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ft7ea"]
+size = Vector2(73, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pfo0"]
 size = Vector2(53, 54)
@@ -686,6 +689,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
 icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryUpAction"]
 layout_mode = 0
@@ -748,6 +752,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "2"
 icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/RCross/RCrossPrimary/RCrossPrimaryDownAction"]
 layout_mode = 0
@@ -6565,6 +6570,7 @@ position = Vector2(109, 20.5)
 shape = SubResource("RectangleShape2D_feh3g")
 
 [node name="Abilities" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("8_glb34")
 
 [node name="AssignAbility" type="PanelContainer" parent="Abilities"]
@@ -7312,7 +7318,7 @@ size_flags_vertical = 4
 theme_override_constants/v_separation = 40
 columns = 2
 
-[node name="MeleeAbilites" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer"]
+[node name="MeleeAbilities" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -7320,9 +7326,9 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Melee"
 
-[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilites"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilities"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilites/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilities/Area2D"]
 position = Vector2(149, 51)
 shape = SubResource("RectangleShape2D_ra0e8")
 
@@ -7434,7 +7440,7 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MeleeAbilities" type="PanelContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer" groups=["Movement", "assignment", "page"]]
+[node name="MeleeAbilities" type="PanelContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer" groups=["assignment", "melee", "page"]]
 visible = false
 custom_minimum_size = Vector2(1000, 650)
 layout_mode = 2
@@ -7507,132 +7513,1044 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LastPage" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/LastPage"]
+position = Vector2(34.1453, 20.0729)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/LastPage/Area2D"]
+position = Vector2(5.35474, -0.072937)
+shape = SubResource("RectangleShape2D_ft7ea")
+
+[node name="Control" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="GridContainerPage1" type="GridContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_constants/h_separation = 80
+theme_override_constants/h_separation = 90
 theme_override_constants/v_separation = 60
-columns = 5
+columns = 4
 
-[node name="Button1" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Button1" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1"]
 position = Vector2(17.0323, 23.8576)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1/Area2D"]
 position = Vector2(12.4677, 6.14243)
 shape = SubResource("RectangleShape2D_5pfo0")
 
-[node name="Button2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2"]
 position = Vector2(17.0323, 23.8576)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2/Area2D"]
 position = Vector2(12.4677, 6.14243)
 shape = SubResource("RectangleShape2D_5pfo0")
 
-[node name="Button3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button7" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button7" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button8" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button8" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button9" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button9" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button10" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button10" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button11" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button11" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button12" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button12" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button13" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="GridContainerPage2" type="GridContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/h_separation = 90
+theme_override_constants/v_separation = 60
+columns = 4
+
+[node name="Button13" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button14" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button14" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button15" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer"]
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button15" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button16" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button17" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button18" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button19" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button20" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button21" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button22" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Butto23" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Button24" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_4bmju")
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24"]
+position = Vector2(17.0323, 23.8576)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24/Area2D"]
+position = Vector2(12.4677, 6.14243)
+shape = SubResource("RectangleShape2D_5pfo0")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
+[node name="Control2" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="NextPage" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/NextPage"]
+position = Vector2(34.1453, 20.0729)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/NextPage/Area2D"]
+position = Vector2(5.35474, -0.072937)
+shape = SubResource("RectangleShape2D_ft7ea")
 
 [node name="Control" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -7686,6 +8604,34 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button1"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button1/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button1/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button1/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
 [node name="Button2" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -7693,6 +8639,34 @@ size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button2"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button2/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button2/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button2/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
 
 [node name="Button3" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7702,6 +8676,34 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button3"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button3/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button3/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button3/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
+
 [node name="Button4" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -7709,6 +8711,34 @@ size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
+
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button4"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button4/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button4/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button4/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
 
 [node name="Button5" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
 custom_minimum_size = Vector2(60, 60)
@@ -7718,13 +8748,33 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_4bmju")
 
-[node name="Button6" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers"]
-custom_minimum_size = Vector2(60, 60)
+[node name="Info" type="Control" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button5"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button5/Info"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = -84.0
+offset_right = 248.0
+offset_bottom = 7.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button5/Info/MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 4
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("10_4bmju")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer/Modifier/VBoxContainer/AbilityModifiers/Button5/Info/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 175.0
+offset_bottom = 73.0
+text = "Some text about the ability"
 
 [node name="AbilityTree" type="Button" parent="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/ModifierTreeContainer"]
 visible = false
@@ -8423,9 +9473,82 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryRightAssign" to="Abilities" method="_on_r_cross_secondary_right_assign_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/AbilityBinds/PanelContainer/HBoxContainer/GridContainer/VBoxRightCrossSecondary/RCrossSecondary/RCrossSecondaryDownAssign" to="Abilities" method="_on_r_cross_secondary_down_assign_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityBinds/Close/Close" to="Abilities" method="_on_close_button_down"]
-[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilites" to="Abilities" method="_on_melee_abilites_button_down"]
-[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button1" method="_on_button_down"]
-[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/GridContainer/Button2" method="_on_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/AbilityTypes/PanelContainer/GridContainer/MeleeAbilities" to="Abilities" method="_on_melee_abilities_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/AbilityTypes/Close/Close" to="Abilities" method="_on_close_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/LastPage" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_last_page_button_down"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button1" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button2" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button3" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button4" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button5" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button6" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button7" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button8" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button9" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button10" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button11" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage1/Button12" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button13" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button14" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button15" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button16" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button17" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button18" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button19" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button20" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button21" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button22" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Butto23" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" method="_on_button_down"]
+[connection signal="focus_entered" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/GridContainerPage2/Button24" method="_on_focus_exited"]
+[connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/HBoxContainer/NextPage" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_next_page_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_accept_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Cancel" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_cancel_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer2/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/MeleeAbilities" method="_on_accept_button_down"]

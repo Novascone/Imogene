@@ -163,7 +163,7 @@ public partial class Abilities_Interface : UI
 			current_ui = previous_ui;
 			previous_ui = temp_ui;
 			if(previous_ui != null){previous_ui.Hide();}
-			current_ui.Show();
+			if(current_ui != null){current_ui.Show();}
 		}
 		if(previous_ui != null && current_ui != null)
 		{
@@ -190,6 +190,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_primary_up_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary RB");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 		// assign_ability.Show();
 	}
 
@@ -198,6 +199,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_primary_down_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary LT");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_l_cross_primary_left_assign_button_down()
@@ -205,6 +207,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_primary_left_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary LB");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_l_cross_primary_right_assign_button_down()
@@ -212,6 +215,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_primary_right_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary RT");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 		// assign_ability.Show();
 	}
 
@@ -221,6 +225,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_secondary_up_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary RB");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 		// assign_ability.Show();
 	}
 
@@ -229,6 +234,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_secondary_down_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary LT");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_l_cross_secondary_left_assign_button_down()
@@ -236,6 +242,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_secondary_left_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary LB");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_l_cross_secondary_right_assign_button_down()
@@ -243,6 +250,7 @@ public partial class Abilities_Interface : UI
 		selected_button = l_cross_secondary_right_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary RT");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 		// assign_ability.Show();
 	}
 
@@ -253,6 +261,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_primary_up_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary Y");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_primary_down_assign_button_down()
@@ -260,6 +269,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_primary_down_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary A");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_primary_left_assign_button_down()
@@ -267,6 +277,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_primary_left_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary X");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_primary_right_assign_button_down()
@@ -274,6 +285,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_primary_right_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary B");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	// Right Cross Secondary Assignment Buttons
@@ -282,6 +294,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_secondary_up_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary Y");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_secondary_down_assign_button_down()
@@ -289,6 +302,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_secondary_down_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary A");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_secondary_left_assign_button_down()
@@ -296,6 +310,7 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_secondary_left_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary X");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
 	public void _on_r_cross_secondary_right_assign_button_down()
@@ -303,9 +318,10 @@ public partial class Abilities_Interface : UI
 		selected_button = r_cross_secondary_right_assign;
 		AssignmentButtonNavigation();
 		_customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Secondary B");
+		_customSignals.EmitSignal(nameof(CustomSignals.CurrentAbilityBoundOnCrossButton), selected_button.Icon);
 	}
 
-	public void _on_melee_abilites_button_down()
+	public void _on_melee_abilities_button_down()
 	{
 		previous_ui = ability_types;
 		current_ui = melee_abilities;
@@ -316,7 +332,11 @@ public partial class Abilities_Interface : UI
 
 	public void _on_close_button_down()
 	{
+		GD.Print("close");
 		Hide();
+		_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
+		_customSignals.EmitSignal(nameof(CustomSignals.HideCursor));
+		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}
 
 	

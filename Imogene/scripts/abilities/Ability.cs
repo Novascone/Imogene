@@ -13,6 +13,8 @@ public partial class Ability : Node3D
     [Export]
     public string ability_type { get; set; }
 
+    public bool in_use = true;
+
     public virtual void Execute(player s)
     {
         GD.Print("Execute");

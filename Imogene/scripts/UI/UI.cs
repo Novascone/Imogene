@@ -100,7 +100,7 @@ public partial class UI : CanvasLayer
 
 
 	private Vector2 mouse_pos = Vector2.Zero;
-	private float mouse_max_speed = 20.0f;
+	private float mouse_max_speed = 25.0f;
 	// private TextureProgressBar health_icon; // Health icon in the UI that displays how much health the player has
 	private TextureProgressBar resource_icon; // Resource icon in the UI that displays how much resource (mana, fury, etc) the player has
 	// Called when the node enters the scene tree for the first time.
@@ -187,138 +187,18 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.AbilityUISecondaryOpen += HandleSkillsUISecondaryOpen;
+		_customSignals.AbilityUISecondaryOpen += HandleAbilityUISecondaryOpen;
 		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
+		_customSignals.HideCursor += HandleHideCursor;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 
-
+		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}
-
-    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
-    {
-	
-        if(r_cross_primary_selected_signal)
-			{
-				r_cross_primary_selected = true;
-				r_cross_secondary_selected = false;
-				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				r_cross_primary.Modulate = new Color(Colors.White, 1f);
-				r_cross_primary_up_action_label.Show();
-				r_cross_primary_down_action_label.Show();
-				r_cross_primary_left_action_label.Show();
-				r_cross_primary_right_action_label.Show();
-				
-				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
-				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
-				r_cross_secondary_up_action_label.Hide();
-				r_cross_secondary_down_action_label.Hide();
-				r_cross_secondary_left_action_label.Hide();
-				r_cross_secondary_right_action_label.Hide();
-
-				GD.Print("primary r cross selected");
-				
-			}
-			else
-			{
-				r_cross_primary_selected = false;
-				r_cross_secondary_selected = true;
-				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
-				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
-				r_cross_primary_up_action_label.Hide();
-				r_cross_primary_down_action_label.Hide();
-				r_cross_primary_left_action_label.Hide();
-				r_cross_primary_right_action_label.Hide();
-
-				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
-				r_cross_secondary_up_action_label.Show();
-				r_cross_secondary_down_action_label.Show();
-				r_cross_secondary_left_action_label.Show();
-				r_cross_secondary_right_action_label.Show();
-				GD.Print("secondary r cross selected");
-			}
-    }
-
-    private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
-    {
-		
-        if(l_cross_primary_selected_signal)
-			{
-				GD.Print("primary l cross selected");
-				
-				l_cross_primary_selected = true;
-				l_cross_secondary_selected = false;
-				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				l_cross_primary.Modulate = new Color(Colors.White, 1f);
-				l_cross_primary_up_action_label.Show();
-				l_cross_primary_down_action_label.Show();
-				l_cross_primary_left_action_label.Show();
-				l_cross_primary_right_action_label.Show();
-
-				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
-				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
-				l_cross_secondary_up_action_label.Hide();
-				l_cross_secondary_down_action_label.Hide();
-				l_cross_secondary_left_action_label.Hide();
-				l_cross_secondary_right_action_label.Hide();
-			}
-			else
-			{
-				GD.Print("secondary  cross selected");
-				l_cross_primary_selected = false;
-				l_cross_secondary_selected = true;
-				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
-				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
-				l_cross_primary_up_action_label.Hide();
-				l_cross_primary_down_action_label.Hide();
-				l_cross_primary_left_action_label.Hide();
-				l_cross_primary_right_action_label.Hide();
-
-				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
-				l_cross_secondary_up_action_label.Show();
-				l_cross_secondary_down_action_label.Show();
-				l_cross_secondary_left_action_label.Show();
-				l_cross_secondary_right_action_label.Show();
-
-				
-			}
-    }
-
-    private void HandleSkillsUISecondaryOpen(bool secondary_open)
-    {
-        abilities_secondary_ui_open = secondary_open;
-    }
-
-    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
-    {
-		GD.Print("got assignment in ui");
-		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = icon;}
-		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon = icon;}
-		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon = icon;}
-		if(button_name == "LCrossPrimaryDownAssign"){l_cross_primary_down_action_button.Icon = icon;}
-
-		if(button_name == "RCrossPrimaryUpAssign"){r_cross_primary_up_action_button.Icon = icon;}
-		if(button_name == "RCrossPrimaryRightAssign"){r_cross_primary_right_action_button.Icon = icon;}
-		if(button_name == "RCrossPrimaryLeftAssign"){r_cross_primary_left_action_button.Icon = icon;}
-		if(button_name == "RCrossPrimaryDownAssign"){r_cross_primary_down_action_button.Icon = icon;}
-
-		if(button_name == "LCrossSecondaryUpAssign"){l_cross_secondary_up_action_button.Icon = icon;}
-		if(button_name == "LCrossSecondaryRightAssign"){l_cross_secondary_right_action_button.Icon = icon;}
-		if(button_name == "LCrossSecondaryLeftAssign"){l_cross_secondary_left_action_button.Icon = icon;}
-		if(button_name == "LCrossSecondaryDownAssign"){l_cross_secondary_down_action_button.Icon = icon;}
-
-		if(button_name == "RCrossSecondaryUpAssign"){r_cross_secondary_up_action_button.Icon = icon;}
-		if(button_name == "RCrossSecondaryRightAssign"){r_cross_secondary_right_action_button.Icon = icon;}
-		if(button_name == "RCrossSecondaryLeftAssign"){r_cross_secondary_left_action_button.Icon = icon;}
-		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon = icon;}
-        
-    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -511,7 +391,7 @@ public partial class UI : CanvasLayer
 		}
 		if(mouse_direction != Vector2.Zero)
 		{
-			Input.WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.1f));
+			GetViewport().WarpMouse(mouse_pos + mouse_direction * Mathf.Lerp(0, mouse_max_speed, 0.1f));
 		}
 		cursor.Position = GetViewport().GetMousePosition();
 	}
@@ -536,63 +416,7 @@ public partial class UI : CanvasLayer
 		}
 	}
 
-    // private void UpdateHealth() // Updates UI health
-	// {
-	// 	// GD.Print("Health: ", health);
-	// 	health_icon.Value = health;
-	// 	// GD.Print("Health Icon Value: ", health_icon.MaxValue);
-	// }
-
-	private void UpdateResource() // Updates UI resource
-	{
-		resource_icon.Value = resource;
-	}
-
-	private void HandleUIHealthUpdate(int health_update)
-    {
-		
-        health -= health_update;
-		
-    }
-    private void HandleUIResourceUpdate(int resource_amount)
-    {
-        resource -= resource_amount;
-    }
-
-	private void HandleInteract(Area3D area, bool in_interact_area, bool interacting)
-    {
 	
-		if(in_interact_area)
-		{
-			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
-			Label press = (Label)TextContainer.GetChild(0);
-			Label object_to_interact = (Label)TextContainer.GetChild(1);
-			press.Text = "Y : ";
-			object_to_interact.Text = "Interact with " + area.GetParent().Name;
-			interact_bar.Visible = true;
-			if(interacting)
-			{
-				interact_inventory.Show();
-			}
-			if(!interacting)
-			{
-				interact_inventory.Hide();
-			}
-
-		}
-		else
-		{
-			interact_bar.Visible = false;
-			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
-			Label press = (Label)TextContainer.GetChild(0);
-			Label object_to_interact = (Label)TextContainer.GetChild(1);
-			press.Text = null;
-			object_to_interact.Text = null;
-			interact_inventory.Hide();
-			
-		}
-		
-    }
 
 	
     // private void HandleUIHealth(int amount)
@@ -855,9 +679,194 @@ public partial class UI : CanvasLayer
         this_player = player;
     }
 
+	 private void HandleHideCursor()
+    {
+        abilities_open = false;
+		inventory_open = false;
+    }
+
+    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
+    {
+	
+        if(r_cross_primary_selected_signal)
+			{
+				r_cross_primary_selected = true;
+				r_cross_secondary_selected = false;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_primary.Modulate = new Color(Colors.White, 1f);
+				r_cross_primary_up_action_label.Show();
+				r_cross_primary_down_action_label.Show();
+				r_cross_primary_left_action_label.Show();
+				r_cross_primary_right_action_label.Show();
+				
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_secondary_up_action_label.Hide();
+				r_cross_secondary_down_action_label.Hide();
+				r_cross_secondary_left_action_label.Hide();
+				r_cross_secondary_right_action_label.Hide();
+
+				// GD.Print("primary r cross selected");
+				
+			}
+			else
+			{
+				r_cross_primary_selected = false;
+				r_cross_secondary_selected = true;
+				r_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin;
+				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_primary_up_action_label.Hide();
+				r_cross_primary_down_action_label.Hide();
+				r_cross_primary_left_action_label.Hide();
+				r_cross_primary_right_action_label.Hide();
+
+				r_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				r_cross_secondary_up_action_label.Show();
+				r_cross_secondary_down_action_label.Show();
+				r_cross_secondary_left_action_label.Show();
+				r_cross_secondary_right_action_label.Show();
+				// GD.Print("secondary r cross selected");
+			}
+    }
+
+    private void HandleLCrossPrimaryOrSecondary(bool l_cross_primary_selected_signal)
+    {
+		
+        if(l_cross_primary_selected_signal)
+			{
+				// GD.Print("primary l cross selected");
+				
+				l_cross_primary_selected = true;
+				l_cross_secondary_selected = false;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_primary.Modulate = new Color(Colors.White, 1f);
+				l_cross_primary_up_action_label.Show();
+				l_cross_primary_down_action_label.Show();
+				l_cross_primary_left_action_label.Show();
+				l_cross_primary_right_action_label.Show();
+
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_secondary_up_action_label.Hide();
+				l_cross_secondary_down_action_label.Hide();
+				l_cross_secondary_left_action_label.Hide();
+				l_cross_secondary_right_action_label.Hide();
+			}
+			else
+			{
+				// GD.Print("secondary  cross selected");
+				l_cross_primary_selected = false;
+				l_cross_secondary_selected = true;
+				l_cross_primary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_primary_up_action_label.Hide();
+				l_cross_primary_down_action_label.Hide();
+				l_cross_primary_left_action_label.Hide();
+				l_cross_primary_right_action_label.Hide();
+
+				l_cross_secondary.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
+				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				l_cross_secondary_up_action_label.Show();
+				l_cross_secondary_down_action_label.Show();
+				l_cross_secondary_left_action_label.Show();
+				l_cross_secondary_right_action_label.Show();
+
+				
+			}
+    }
+
+    private void HandleAbilityUISecondaryOpen(bool secondary_open)
+    {
+        abilities_secondary_ui_open = secondary_open;
+    }
+
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    {
+		// GD.Print("got assignment in ui");
+		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon = icon;}
+		if(button_name == "LCrossPrimaryDownAssign"){l_cross_primary_down_action_button.Icon = icon;}
+
+		if(button_name == "RCrossPrimaryUpAssign"){r_cross_primary_up_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryRightAssign"){r_cross_primary_right_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryLeftAssign"){r_cross_primary_left_action_button.Icon = icon;}
+		if(button_name == "RCrossPrimaryDownAssign"){r_cross_primary_down_action_button.Icon = icon;}
+
+		if(button_name == "LCrossSecondaryUpAssign"){l_cross_secondary_up_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryRightAssign"){l_cross_secondary_right_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryLeftAssign"){l_cross_secondary_left_action_button.Icon = icon;}
+		if(button_name == "LCrossSecondaryDownAssign"){l_cross_secondary_down_action_button.Icon = icon;}
+
+		if(button_name == "RCrossSecondaryUpAssign"){r_cross_secondary_up_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryRightAssign"){r_cross_secondary_right_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryLeftAssign"){r_cross_secondary_left_action_button.Icon = icon;}
+		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon = icon;}
+        
+    }
+
+    // private void UpdateHealth() // Updates UI health
+	// {
+	// 	// GD.Print("Health: ", health);
+	// 	health_icon.Value = health;
+	// 	// GD.Print("Health Icon Value: ", health_icon.MaxValue);
+	// }
+
+	private void UpdateResource() // Updates UI resource
+	{
+		resource_icon.Value = resource;
+	}
+
+	private void HandleUIHealthUpdate(int health_update)
+    {
+		
+        health -= health_update;
+		
+    }
+    private void HandleUIResourceUpdate(int resource_amount)
+    {
+        resource -= resource_amount;
+    }
+
+	private void HandleInteract(Area3D area, bool in_interact_area, bool interacting)
+    {
+	
+		if(in_interact_area)
+		{
+			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+			Label press = (Label)TextContainer.GetChild(0);
+			Label object_to_interact = (Label)TextContainer.GetChild(1);
+			press.Text = "Y : ";
+			object_to_interact.Text = "Interact with " + area.GetParent().Name;
+			interact_bar.Visible = true;
+			if(interacting)
+			{
+				interact_inventory.Show();
+			}
+			if(!interacting)
+			{
+				interact_inventory.Hide();
+			}
+
+		}
+		else
+		{
+			interact_bar.Visible = false;
+			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+			Label press = (Label)TextContainer.GetChild(0);
+			Label object_to_interact = (Label)TextContainer.GetChild(1);
+			press.Text = null;
+			object_to_interact.Text = null;
+			interact_inventory.Hide();
+			
+		}
+		
+    }
+
 	private void HandleOverSlot(string slot)
     {
-		GD.Print("Over Head signal received");
+		// GD.Print("Over Head signal received");
         if(slot == "Head")
 		{
 			over_head = true;

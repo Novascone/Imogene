@@ -10,7 +10,8 @@ public partial class AbilityButton : Button
 	public Button assign_button;
 	public Button icon_button;
 	public string ability_name;
-
+	public Control info;
+	public RichTextLabel info_text;
 	public string ability_type;
 
 	public Ability current_ability;
@@ -23,6 +24,10 @@ public partial class AbilityButton : Button
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
+		info = GetNode<Control>("Info");
+		info_text = GetNode<RichTextLabel>("Info/MarginContainer/Panel/RichTextLabel");
+
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.ButtonToBeAssigned += HandleButtonToBeAssigned;
 		_customSignals.AbilityCancel += HandleAbilityCancel;
@@ -54,6 +59,15 @@ public partial class AbilityButton : Button
 		icon_button.Icon = this.Icon;
 		GD.Print(icon_button.Name);
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilitySelected), this, assign_button);
+	}
+	public void _on_focus_entered()
+	{
+		info.Show();
+	}
+
+	public void _on_focus_exited()
+	{
+		info.Hide();
 	}
 
 	private void HandleAbilityCancel()

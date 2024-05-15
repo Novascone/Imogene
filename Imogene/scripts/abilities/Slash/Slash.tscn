@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2syxxwi1wgte"]
+
+[ext_resource type="Script" path="res://scripts/abilities/Slash/Slash.cs" id="1_abkjy"]
+
+[node name="Slash" type="Node3D"]
+script = ExtResource("1_abkjy")

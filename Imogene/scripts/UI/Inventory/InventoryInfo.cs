@@ -877,7 +877,7 @@ public partial class InventoryInfo : UI
 
 		gold_label.Text = gold;
 		
-		GD.Print("updated");
+		// GD.Print("updated");
 		
 	}
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cdf6dyd00vj52"]
+
+[ext_resource type="Texture2D" uid="uid://bocyxacihqyse" path="res://images/icons/jump_icon.png" id="1_6f85b"]
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/AbilityResource.cs" id="2_nbxp0"]
+
+[resource]
+script = ExtResource("2_nbxp0")
+id = 0
+name = "Jump"
+description = "Jump into the air"
+ability_path = ""
+icon = ExtResource("1_6f85b")
+type = "melee"
