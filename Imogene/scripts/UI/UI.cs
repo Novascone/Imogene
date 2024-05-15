@@ -202,6 +202,7 @@ public partial class UI : CanvasLayer
 		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.HideCursor += HandleHideCursor;
 		_customSignals.WhichConsumable += HandleWhichConsumable;
+		_customSignals.EquipConsumable += HandleEquipConsumable;
 
 		// Items section
 		item_grid_container = GetNode<GridContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -211,7 +212,15 @@ public partial class UI : CanvasLayer
 		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}
 
-    
+    private void HandleEquipConsumable(Consumable item, int consumable_slot)
+    {
+        if(consumable_slot == 1){consumable_1.Icon = item.icon;}
+		if(consumable_slot == 2){consumable_2.Icon = item.icon;}
+		if(consumable_slot == 3){consumable_3.Icon = item.icon;}
+		if(consumable_slot == 4){consumable_4.Icon = item.icon;}
+    }
+
+
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -300,15 +309,16 @@ public partial class UI : CanvasLayer
 					if(Input.IsActionJustPressed("Interact") && hover_over_button is InventoryButton)
 					{
 						hover_over_button.InventoryButtonPressed();
-						if(hover_over_button.inventory_item.type_of_item == "generic")
+						if(hover_over_button.inventory_item.type == "generic")
 						{
 							_customSignals.EmitSignal(nameof(CustomSignals.ItemInfo), hover_over_button.inventory_item);
 						}
-						if(hover_over_button.inventory_item.type_of_item == "consumable")
+						if(hover_over_button.inventory_item.type == "consumable")
 						{
 							_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (Consumable)hover_over_button.inventory_item);
+							
 						}
-						if(hover_over_button.inventory_item.type_of_item == "equipable")
+						if(hover_over_button.inventory_item.type == "equipable")
 						{
 							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)hover_over_button.inventory_item);
 						}
@@ -367,7 +377,7 @@ public partial class UI : CanvasLayer
 			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))  && over_head)
 			{
 				
-				if(grabbed_object.inventory_item.type_of_item == "equipable")
+				if(grabbed_object.inventory_item.type == "equipable")
 				{
 					clicked_on = false;
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");

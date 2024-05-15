@@ -13,7 +13,6 @@ public partial class Equipable : Item
     public override void UseItem()
     {
         // GD.Print(mesh.GetType());
-        
     }
 
     public static explicit operator Equipable(PackedScene v)

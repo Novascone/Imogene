@@ -108,7 +108,7 @@ public partial class player : Entity
 
 	//Player consumables
 	public int consumable = 1;
-	public Consumable[] consumables;
+	public Consumable[] consumables = new Consumable[4];
 
 
 
@@ -223,10 +223,12 @@ public partial class player : Entity
 		// _customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		// _customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
-		
+		_customSignals.EquipConsumable += HandleEquipConsumable;		
 		
 		
 	}
+
+    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -297,6 +299,7 @@ public partial class player : Entity
 			if(Input.IsActionJustPressed("D-PadDown"))
 			{
 				// use consumable
+				consumables[consumable].UseItem();
 			}
 		}
 		
@@ -813,7 +816,7 @@ public partial class player : Entity
 
     private void HandleConsumableInfo(Consumable item)// Gets info from consumable items
     {
-        GD.Print(item.heal_amount);
+        // GD.Print(item.heal_amount);
     }
 
 	  private void HandleRemoveEquipped() // Removes equiped items
@@ -949,6 +952,12 @@ public partial class player : Entity
 		}
     	
 	}
+
+	private void HandleEquipConsumable(Consumable item, int consumable_slot)
+    {
+        consumables[consumable_slot] = item;
+		GD.Print(consumables[consumable_slot].name);
+    }	
 
 	private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
     {

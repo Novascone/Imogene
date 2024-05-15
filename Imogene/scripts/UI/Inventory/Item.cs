@@ -18,7 +18,7 @@ public partial class Item : Resource
     [Export]
     public bool is_stackable { get; set; }
     [Export]
-    public string type_of_item;
+    public string type;
 
     public Item Copy() => Duplicate() as Item;
 
@@ -26,6 +26,10 @@ public partial class Item : Resource
     public virtual void UseItem()
     {
         GD.Print("Used Item");
+    }
+    public virtual void EquipItem()
+    {
+        GD.Print("Not Equipable");
     }
 
 

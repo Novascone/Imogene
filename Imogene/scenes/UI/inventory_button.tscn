@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bow7tls2d854x"]
+[gd_scene load_steps=4 format=3 uid="uid://bow7tls2d854x"]
 
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryButton.cs" id="1_jestg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pngt"]
 size = Vector2(34.0625, 34.0469)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yveum"]
+size = Vector2(209, 59)
 
 [node name="InventoryButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)
@@ -66,5 +69,117 @@ Similique ratione doloribus facere ut repudiandae omnis facilis. Aut ut ad quos 
 
 At eos voluptate dolores vel est ut et. In voluptatem dolore animi perferendis. Ab voluptatem eaque quos quas ratione quod veritatis aut. Eusandae."
 
+[node name="ConsumableSlotSelection" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -143.0
+offset_right = 31.0
+offset_bottom = -102.0
+grow_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="ConsumableSlotSelection"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+offset_left = -274.0
+offset_top = -153.0
+offset_right = 2.0
+offset_bottom = -1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConsumableSlotSelection/PanelContainer"]
+layout_mode = 2
+
+[node name="Consumable1" type="HBoxContainer" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Consumable1" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable1"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Slot 1"
+
+[node name="Area2D" type="Area2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable1/Consumable1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable1/Consumable1/Area2D"]
+position = Vector2(106.5, 31.5)
+shape = SubResource("RectangleShape2D_yveum")
+
+[node name="Current1" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+
+[node name="Consumable2" type="HBoxContainer" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Consumable2" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Slot 2"
+
+[node name="Area2D" type="Area2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable2/Consumable2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable2/Consumable2/Area2D"]
+position = Vector2(106.5, 31.5)
+shape = SubResource("RectangleShape2D_yveum")
+
+[node name="Current2" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+
+[node name="Consumable3" type="HBoxContainer" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Consumable3" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Slot 3"
+
+[node name="Area2D" type="Area2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable3/Consumable3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable3/Consumable3/Area2D"]
+position = Vector2(106.5, 31.5)
+shape = SubResource("RectangleShape2D_yveum")
+
+[node name="Current3" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable3"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+
+[node name="Consumable4" type="HBoxContainer" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Consumable4" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Slot 4"
+
+[node name="Area2D" type="Area2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable4/Consumable4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable4/Consumable4/Area2D"]
+position = Vector2(106.5, 31.5)
+shape = SubResource("RectangleShape2D_yveum")
+
+[node name="Current4" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable4"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+
+[node name="Cancel" type="Button" parent="ConsumableSlotSelection/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="button_down" from="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable1/Consumable1" to="." method="_on_consumable_1_button_down"]
+[connection signal="button_down" from="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable2/Consumable2" to="." method="_on_consumable_2_button_down"]
+[connection signal="button_down" from="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable3/Consumable3" to="." method="_on_consumable_1_button_down"]
+[connection signal="button_down" from="ConsumableSlotSelection/PanelContainer/VBoxContainer/Consumable4/Consumable4" to="." method="_on_consumable_1_button_down"]
+[connection signal="button_down" from="ConsumableSlotSelection/PanelContainer/VBoxContainer/Cancel" to="." method="_on_cancel_button_down"]

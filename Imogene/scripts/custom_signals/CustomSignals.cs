@@ -53,6 +53,8 @@ public partial class CustomSignals : Node
 	// UI to Player
 	[Signal]
 	public delegate void RemoveEquippedEventHandler(); // Tells the player to remove what is equipped (only head slot right now)
+	[Signal]
+	public delegate void EquipConsumableEventHandler(Consumable item, int consumable_slot); // Tells the player which consumable has been equipped
 
 
 
@@ -81,6 +83,8 @@ public partial class CustomSignals : Node
 	public delegate void HideCursorEventHandler(); // Tells the UI to close cursor
 	[Signal]
 	public delegate void CurrentAbilityBoundOnCrossButtonEventHandler(Texture2D icon); // Tells the Ability category which button is currently bound
+	[Signal]
+	public delegate void SendConsumableIconEventHandler(Texture2D icon); // Tells the UI which icon to assign the consumable
 	
 
 

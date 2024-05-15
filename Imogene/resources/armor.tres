@@ -19,4 +19,4 @@ icon = SubResource("GradientTexture2D_r4wuk")
 quantity = 1
 stack_size = 1
 is_stackable = true
-type_of_item = "equipable"
+type = "equipable"

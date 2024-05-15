@@ -227,6 +227,8 @@ offset_bottom = 64.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "1"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Consumable2" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
 visible = false
@@ -238,6 +240,8 @@ offset_bottom = 64.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "2"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Consumable3" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
 visible = false
@@ -249,6 +253,8 @@ offset_bottom = 64.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "3"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Consumable4" type="Button" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables"]
 visible = false
@@ -260,6 +266,8 @@ offset_bottom = 64.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "4"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Posture" type="Panel" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
 custom_minimum_size = Vector2(500, 15)
@@ -953,10 +961,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -102.0
-offset_top = 272.0
-offset_right = 98.0
-offset_bottom = 322.0
+offset_left = -97.0
+offset_top = 230.0
+offset_right = 103.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4

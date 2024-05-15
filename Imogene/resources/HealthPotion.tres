@@ -1,19 +1,15 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://b2a1oly2epp6"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b2a1oly2epp6"]
 
+[ext_resource type="Texture2D" uid="uid://btmrg2xyvcy1q" path="res://images/icons/potion_icon.png" id="1_ddvxg"]
 [ext_resource type="Script" path="res://scripts/items/Consumable.cs" id="1_etg8g"]
-
-[sub_resource type="Gradient" id="Gradient_va16s"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_g8qkx"]
-gradient = SubResource("Gradient_va16s")
 
 [resource]
 script = ExtResource("1_etg8g")
 heal_amount = 10
 id = 2
 name = "Health Potion"
-icon = SubResource("GradientTexture1D_g8qkx")
+icon = ExtResource("1_ddvxg")
 quantity = 4
 stack_size = 10
 is_stackable = true
-type_of_item = "consumable"
+type = "consumable"
