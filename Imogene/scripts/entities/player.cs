@@ -98,8 +98,6 @@ public partial class player : Entity
 	public float slash_damage;
 	public float thrust_damage;
 	public float blunt_damage;
-
-
 	
 	//Player equipment details
 	public string weapon_type = "one_handed_axe";
@@ -384,7 +382,7 @@ public partial class player : Entity
 				// Use ability assigned to primary RB
 				if(Input.IsActionJustPressed("RB"))
 				{
-					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}
+					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}	
 				}
 				// Use ability assigned to primary LB
 				if(Input.IsActionJustPressed("LB"))
@@ -477,6 +475,7 @@ public partial class player : Entity
 
 	public void UseAbility(Ability ability) // Uses ability
 	{
+		
 		if(can_use_abilities)
 		{
 			if(ability != null && ability.in_use)
@@ -719,7 +718,7 @@ public partial class player : Entity
 	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
 	
-		if(animName == "Slash")
+		if(animName == "Slash_And_Bash_Duel_Wield_First")
 		{
 			attacking = false;
 			animation_finished = true;
