@@ -521,7 +521,7 @@ public partial class player : Entity
 		charisma = 1;
 
 		weapon_damage = 10;
-		attack_speed = 1.3f;
+		attack_speed = 2f;
 
 		critical_hit_chance = 0.05f;
 		critical_hit_damage = 1.2f;
@@ -719,6 +719,16 @@ public partial class player : Entity
 	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
 	
+		if(animName == "Slash")
+		{
+			attacking = false;
+			animation_finished = true;
+			tree.Set("parameters/PlayerState/conditions/attacking", false);
+			hitbox.Monitoring = false;
+			can_move = true;
+			hitbox.RemoveFromGroup("player_hitbox");
+			GD.Print("finished");
+		}
 		if(animName == "Attack")
 		{
 			attacking = false;

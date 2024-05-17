@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
-[ext_resource type="PackedScene" uid="uid://g7r1svs3uder" path="res://scenes/entities/player.tscn" id="4_nj82x"]
+[ext_resource type="PackedScene" uid="uid://cc7vclrx4fu5n" path="res://scenes/entities/player_game_rig_test_2.tscn" id="4_hjuj8"]
 [ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/UI/targeting_icon.tscn" id="5_non4s"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
@@ -43,8 +43,6 @@ environment = SubResource("Environment_sd3p5")
 
 [node name="Target" parent="." instance=ExtResource("5_non4s")]
 
-[node name="player" parent="." instance=ExtResource("4_nj82x")]
-
 [node name="Box" parent="." instance=ExtResource("1_4rjct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)
 
@@ -56,3 +54,5 @@ transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 
 
 [node name="Platform3" parent="." instance=ExtResource("4_atlgh")]
 transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 13.4703, 2.38739, -6)
+
+[node name="player" parent="." instance=ExtResource("4_hjuj8")]
