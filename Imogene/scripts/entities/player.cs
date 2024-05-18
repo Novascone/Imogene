@@ -162,6 +162,10 @@ public partial class player : Entity
 	public MeshInstance3D helm; // Temp helm
 
 	public Node3D main_node; // Temp helm node
+
+	public int slash_presses = 0;
+	public bool slash_one_finished = false;
+	public bool slash_two_finished = false;
 	
 	
 	public override void _Ready()
@@ -304,7 +308,11 @@ public partial class player : Entity
 
 		SmoothRotation(); // Rotate the player character smoothly
 		GrabAbility(); // Grab ability player wants to use
-		UseAbility(ability_in_use); // Use the ability the player has just grabbed
+		if(abilities_in_use != null)
+		{
+			UseAbility(ability_in_use); 
+		}
+		// Use the ability the player has just grabbed
 		CheckInteract(); // Check if the player can interact with anything
 		EnemyCheck(); // Check for enemy
 		LookAtOver(); // Look at mod and handle switching
@@ -382,7 +390,11 @@ public partial class player : Entity
 				// Use ability assigned to primary RB
 				if(Input.IsActionJustPressed("RB"))
 				{
-					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}	
+					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}
+					if(primary_RB.Name == "Slash")
+					{
+						slash_presses += 1;
+					}
 				}
 				// Use ability assigned to primary LB
 				if(Input.IsActionJustPressed("LB"))
@@ -475,7 +487,6 @@ public partial class player : Entity
 
 	public void UseAbility(Ability ability) // Uses ability
 	{
-		
 		if(can_use_abilities)
 		{
 			if(ability != null && ability.in_use)
@@ -718,15 +729,52 @@ public partial class player : Entity
 	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
 	
-		if(animName == "Slash_And_Bash_Duel_Wield_First")
+		if(animName == "Slash_And_Bash_Dual_Wield_First")
 		{
-			attacking = false;
-			animation_finished = true;
-			tree.Set("parameters/PlayerState/conditions/attacking", false);
-			hitbox.Monitoring = false;
-			can_move = true;
-			hitbox.RemoveFromGroup("player_hitbox");
-			GD.Print("finished");
+			if(slash_presses < 2)
+			{
+				attacking = false;
+				animation_finished = true;
+				tree.Set("parameters/PlayerState/conditions/attacking", false);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+				hitbox.Monitoring = false;
+				can_move = true;
+				hitbox.RemoveFromGroup("player_hitbox");
+				GD.Print("finished slash 1");
+				slash_presses = 0;
+			}
+			else if (slash_presses % 2 != 0)
+			{
+				slash_presses -= 1;
+				GD.Print("Slash Presses dec from 1 " + slash_presses);
+			}
+			
+		}
+		if(animName == "Slash_And_Bash_Dual_Wield_Second")
+		{
+			if(slash_presses < 3)
+			{
+				attacking = false;
+				animation_finished = true;
+				tree.Set("parameters/PlayerState/conditions/attacking", false);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
+				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+				hitbox.Monitoring = false;
+				can_move = true;
+				hitbox.RemoveFromGroup("player_hitbox");
+				GD.Print("finished slash 2");
+				slash_presses = 0;
+			}
+			else if (slash_presses % 2 == 0)
+			{
+				slash_presses -= 1;
+				GD.Print("Slash Presses dec from 2 " + slash_presses);
+			}
 		}
 		if(animName == "Attack")
 		{

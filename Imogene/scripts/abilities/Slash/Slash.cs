@@ -33,13 +33,38 @@ public partial class Slash : Ability
 			s.attacking = true;
 			s.animation_triggered = true;
 			s.slash_damage = s.weapon_damage;
-			GD.Print("weapon damage: " + s.weapon_damage);
-			GD.Print("slash damage: " + s.slash_damage);
+			// GD.Print("weapon damage: " + s.weapon_damage);
+			// GD.Print("slash damage: " + s.slash_damage);
 			s.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 			s.hitbox.Monitoring = true;
 			if(s.weapon_type == "one_handed_axe") // play one handed axe animation
 			{
-				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+				if(s.slash_presses == 1)
+				{
+					s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+				}
+				if(s.slash_presses == 2)
+				{
+					s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", false);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", true);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+				}
+				if(s.slash_presses > 2)
+				{
+					GD.Print("slash presses " + s.slash_presses);
+					s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", false);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", false);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", true);
+					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", true);
+					
+				}
 			}
 			if(s.weapon_type == "one_handed_sword") // play one handed sword animation
 			{
