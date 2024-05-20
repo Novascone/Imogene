@@ -21,7 +21,7 @@ public partial class player : Entity
 	private List<AbilityResource> ability_resources = new List<AbilityResource>(); // List of Ability Resources to load abilities from. Each AbilityResource Contains int id, string name, string ability_path, Texture2D icon, string type as well as 5 PackedScenes containing modifiers for the ability
 	private List<Ability> abilities = new List<Ability>(); // List of abilities the player has access to. The Abilities are loaded from a PackedScene which is a Node3D with a script attached to it
 	private bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
-	private Ability ability_in_use; // The ability that the player is currently using
+	public Ability ability_in_use; // The ability that the player is currently using
 	public List<Ability> abilities_in_use = new List<Ability>();
 
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
@@ -162,10 +162,9 @@ public partial class player : Entity
 	public MeshInstance3D helm; // Temp helm
 
 	public Node3D main_node; // Temp helm node
-
-	public int slash_presses = 0;
 	public bool slash_one_finished = false;
 	public bool slash_two_finished = false;
+	public bool test_abilities_assigned = false;
 	
 	
 	public override void _Ready()
@@ -178,7 +177,6 @@ public partial class player : Entity
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
-
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 		
@@ -236,11 +234,13 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
+		
+	
 		// GD.Print("Can move: " + can_move);
 		LoadAbilities(); // Loads abilities into players ability list
 		ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
 		SignalEmitter(); // Emits signals to other parts of the game
-
+		AssignAbilities();
 		direction = Vector3.Zero;
 		player_position = GlobalPosition;
 		// GD.Print("Jumping " + jumping);
@@ -350,7 +350,7 @@ public partial class player : Entity
 	}
 
 
-	 private void LoadAbilities() // Loads abilities
+	private void LoadAbilities() // Loads abilities
    {
 		if(!abilities_loaded)
 		{
@@ -364,7 +364,6 @@ public partial class player : Entity
 		}
 		abilities_loaded = true;
    }
-
     private void LoadAbilitiesHelper(AbilityResource ability_resource) // Adds ability to abilities list
     {
        	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
@@ -372,6 +371,20 @@ public partial class player : Entity
 		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
+	private void AssignAbilities()
+	{	
+		if(!test_abilities_assigned)
+		{
+			AssignAbilityHelper("RCrossPrimaryRightAssign", roll);
+			AssignAbilityHelper("LCrossPrimaryUpAssign", slash);
+			AssignAbilityHelper("RCrossPrimaryDownAssign", jump);
+		}
+		test_abilities_assigned = true;
+	}
+	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource)
+   {
+		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
+   }
 	public void ResetAnimationTriggers() // Resets the animation triggers
 	{
 		if(animation_triggered)
@@ -390,11 +403,8 @@ public partial class player : Entity
 				// Use ability assigned to primary RB
 				if(Input.IsActionJustPressed("RB"))
 				{
-					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}
-					if(primary_RB.Name == "Slash")
-					{
-						slash_presses += 1;
-					}
+					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB; ability_in_use.pressed += 1;}
+	
 				}
 				// Use ability assigned to primary LB
 				if(Input.IsActionJustPressed("LB"))
@@ -487,14 +497,18 @@ public partial class player : Entity
 
 	public void UseAbility(Ability ability) // Uses ability
 	{
+		
 		if(can_use_abilities)
 		{
 			if(ability != null && ability.in_use)
 			{
+				GD.Print("pressed " + ability_in_use.pressed);
 				ability.Execute(this);
 			}
 			else
 			{
+				// GD.Print("Ability Finished");
+				
 				ability_in_use = null;
 				velocity.X = direction.X * speed;
 				velocity.Z = direction.Z * speed;
@@ -728,10 +742,10 @@ public partial class player : Entity
 
 	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
-	
+		
 		if(animName == "Slash_And_Bash_Dual_Wield_First")
 		{
-			if(slash_presses < 2)
+			if(ability_in_use.pressed == 1)
 			{
 				attacking = false;
 				animation_finished = true;
@@ -743,38 +757,29 @@ public partial class player : Entity
 				hitbox.Monitoring = false;
 				can_move = true;
 				hitbox.RemoveFromGroup("player_hitbox");
-				GD.Print("finished slash 1");
-				slash_presses = 0;
+				ability_in_use.animation_finished = true;
 			}
-			else if (slash_presses % 2 != 0)
-			{
-				slash_presses -= 1;
-				GD.Print("Slash Presses dec from 1 " + slash_presses);
-			}
+			ability_in_use.pressed -= 1;
+			GD.Print("finished slash 1");
 			
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Second")
 		{
-			if(slash_presses < 3)
-			{
-				attacking = false;
-				animation_finished = true;
-				tree.Set("parameters/PlayerState/conditions/attacking", false);
-				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
-				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
-				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
-				tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
-				hitbox.Monitoring = false;
-				can_move = true;
-				hitbox.RemoveFromGroup("player_hitbox");
-				GD.Print("finished slash 2");
-				slash_presses = 0;
-			}
-			else if (slash_presses % 2 == 0)
-			{
-				slash_presses -= 1;
-				GD.Print("Slash Presses dec from 2 " + slash_presses);
-			}
+		
+			attacking = false;
+			animation_finished = true;
+			tree.Set("parameters/PlayerState/conditions/attacking", false);
+			tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
+			tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
+			tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
+			tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+			hitbox.Monitoring = false;
+			can_move = true;
+			hitbox.RemoveFromGroup("player_hitbox");
+			GD.Print("finished slash 2");
+			ability_in_use.pressed -= 1;
+			ability_in_use.animation_finished = true;
+		
 		}
 		if(animName == "Attack")
 		{

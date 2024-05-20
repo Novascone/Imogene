@@ -12,13 +12,16 @@ public partial class Jump : Ability
 		if(s.IsOnFloor() && off_floor == false && !s.jumping)
 		{
 			GD.Print("start jumping");
-			s.velocity.Y = s.jump_speed;
+			s.tree.Set("parameters/PlayerState/conditions/jump", true);
+			s.velocity.Y = Mathf.Lerp(s.velocity.Y, s.jump_speed, 0.8f);
 			s.jumping = true;
 			off_floor = true;
 			timer += 1;
 		}
         else if(!s.IsOnFloor())
 		{
+			s.tree.Set("parameters/PlayerState/conditions/jump", false);
+			s.tree.Set("parameters/PlayerState/Jump/JumpState/conditions/on_ground", false);
 			GD.Print("still jumping");
 			s.jumping = true;
 			timer += 1;
@@ -26,6 +29,7 @@ public partial class Jump : Ability
 		if(timer > 1 && s.IsOnFloor() && off_floor == true)
 		{
 			GD.Print("stop jumping");
+			s.tree.Set("parameters/PlayerState/Jump/JumpState/conditions/on_ground", true);
 			off_floor = false;
 			s.jumping = false;
 			in_use = false;

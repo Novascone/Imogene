@@ -14,6 +14,8 @@ public partial class Ability : Node3D
     public string ability_type { get; set; }
 
     public bool in_use = true;
+    public int pressed = 0;
+    public bool animation_finished = false;
 
     public virtual void Execute(player s)
     {
