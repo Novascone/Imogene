@@ -56,6 +56,7 @@ public partial class player : Entity
 	public float prev_y_rotation; // Rotation of the player before current rotation
 	public float current_y_rotation; // Rotation of the player
 	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animations
+	public Vector2 walk_recovery = Vector2.Zero;
 
 
 
@@ -165,6 +166,11 @@ public partial class player : Entity
 	public bool slash_one_finished = false;
 	public bool slash_two_finished = false;
 	public bool test_abilities_assigned = false;
+	public bool recovery_1 = false;
+	public bool recovery_2 = false;
+
+	public bool attack_1_set;
+	public bool attack_2_set;
 	
 	
 	public override void _Ready()
@@ -234,7 +240,9 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print("Can move: " + can_move);
+		GD.Print("Recovery_2: " + recovery_2);
+		// GD.Print("Attack 1 set : " + attack_1_set);
+		// GD.Print("Attack 2 set : " + attack_2_set);
 		LoadAbilities(); // Loads abilities into players ability list
 		ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
 		SignalEmitter(); // Emits signals to other parts of the game
@@ -247,6 +255,8 @@ public partial class player : Entity
 		{
 			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+			walk_recovery.X = Mathf.Lerp(walk_recovery.X, 0, 0.1f);
+			walk_recovery.Y = Mathf.Lerp(walk_recovery.Y, 0, 0.1f);
 		}
 		
 		Fall(delta);
@@ -327,7 +337,9 @@ public partial class player : Entity
 		
 		Velocity = velocity;
 		
-		tree.Set("parameters/Master/Not_Attacking/IW/blend_position", blend_direction); // Set blend position
+		tree.Set("parameters/Master/Not_Attacking/IW/blend_position", blend_direction);
+		tree.Set("parameters/Master/Attacking/Attack_1/Recovery_1/Walk_Recovery/blend_position", blend_direction);
+		tree.Set("parameters/Master/Attacking/Attack_2/Recovery_2/Walk_Recovery/blend_position", blend_direction); // Set blend position
 		// tree.Set("parameters/Master/Attack/AttackSpeed/scale", attack_speed);
 		MoveAndSlide();
 
@@ -498,10 +510,15 @@ public partial class player : Entity
 		
 		if(can_use_abilities)
 		{
-			if(ability != null && ability.in_use)
+			if(ability != null && ability_in_use.in_use)
 			{
 				// GD.Print("pressed " + ability_in_use.pressed);
 				ability.Execute(this);
+				if(can_move)
+				{
+					velocity.X = direction.X * speed;
+					velocity.Z = direction.Z * speed;
+				}
 			}
 			else
 			{
@@ -670,12 +687,16 @@ public partial class player : Entity
 			{
 				blend_direction.X = 0;
 				blend_direction.Y = 1;
+				walk_recovery.X = 0;
+				walk_recovery.Y = 1;
 				// GD.Print("Normal: ", blend_direction);
 			}
 			else
 			{
 				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+				walk_recovery.X = Mathf.Lerp(walk_recovery.X, 0, 0.1f);
+				walk_recovery.Y = Mathf.Lerp(walk_recovery.Y, 0, 0.1f);
 			}
 		}
 	}
@@ -741,50 +762,71 @@ public partial class player : Entity
 	private void OnAnimationFinished(StringName animName) // when animation is finished
     {
 		
+		if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
+		{
+	
+			// GD.Print("Swing 1 Finished");
+			// can_move = true;
+			// recovery_1 = true;
+			ability_in_use.AnimationHandler(this, "attack_1");
+		}
+		
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
 		{
-			if(ability_in_use.pressed == 1)
-			{
-				attacking = false;
-				animation_finished = true;
-				tree.Set("parameters/Master/conditions/attacking", false);
-				tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-				tree.Set("parameters/Master/Attack/conditions/no_second", true);
-				tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-				tree.Set("parameters/Master/Attack/conditions/loop", false);
-				hitbox.Monitoring = false;
-				can_move = true;
-				ability_in_use.pressed -= 1;
-				GD.Print("one presses");
-				hitbox.RemoveFromGroup("player_hitbox");
-				ability_in_use.animation_finished = true;
-			}
+
+			// if(ability_in_use.pressed == 1)
+			// {
+			// 	GD.Print("Recovery 1 Finished");
+			// 	attacking = false;
+			// 	animation_finished = true;
+			// 	tree.Set("parameters/Master/conditions/attacking", false);
+			// 	tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+			// 	tree.Set("parameters/Master/Attack/conditions/no_second", true);
+			// 	tree.Set("parameters/Master/Attack/conditions/second_swing", false);
+			// 	tree.Set("parameters/Master/Attack/conditions/loop", false);
+			// 	hitbox.Monitoring = false;
+			// 	recovery_1 = false;
+			// 	can_move = true;
+			// 	ability_in_use.pressed -= 1;
+			// 	GD.Print("one presses");
+			// 	hitbox.RemoveFromGroup("player_hitbox");
+			// 	ability_in_use.animation_finished = true;
+			// 	attack_1_set = false;
+			// }
+			ability_in_use.AnimationHandler(this, "recovery_1");
 			
-			GD.Print("finished slash 1");
 			
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
 		{
-		
-			attacking = false;
-			animation_finished = true;
-			tree.Set("parameters/Master/conditions/attacking", false);
-			tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-			tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-			tree.Set("parameters/Master/Attacking/conditions/loop", false);
-			hitbox.Monitoring = false;
-			can_move = true;
-			hitbox.RemoveFromGroup("player_hitbox");
-			GD.Print("finished slash 2");
-			GD.Print("two presses");
-			if(ability_in_use.pressed != 1)
-			{
-				ability_in_use.pressed = 0;
-			}
+			// recovery_2 = true;
+			// attacking = false;
+			// animation_finished = true;
+			// tree.Set("parameters/Master/conditions/attacking", false);
+			// tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+			// tree.Set("parameters/Master/Attacking/conditions/no_second", true);
+			// tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
+			// tree.Set("parameters/Master/Attacking/conditions/loop", false);
+			// hitbox.Monitoring = false;
+			// can_move = true;
+			// hitbox.RemoveFromGroup("player_hitbox");
+			// GD.Print("Swing 2 Finished");
+			// GD.Print("two presses");
+			// if(ability_in_use.pressed != 1)
+			// {
+			// 	ability_in_use.pressed = 0;
+			// }
 			
-			ability_in_use.animation_finished = true;
+			// ability_in_use.animation_finished = true;
+			ability_in_use.AnimationHandler(this, "attack_2");
 		
+		}
+		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
+		{
+			// attack_1_set = false;
+			// recovery_2 = false;
+			// attack_2_set = false;
+			ability_in_use.AnimationHandler(this, "recovery_2");
 		}
 		if(animName == "Attack")
 		{

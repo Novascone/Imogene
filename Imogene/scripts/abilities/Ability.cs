@@ -21,4 +21,9 @@ public partial class Ability : Node3D
     {
         GD.Print("Execute");
     }
+
+    public virtual void AnimationHandler(player s, string animation)
+    {
+        
+    }
 }
