@@ -1,13 +1,14 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 
 public partial class Slash : Ability
 {
 	Ability jump;
 	public override void Execute(player s)
 	{
-		GD.Print("In use");
+		GD.Print(s.ability_in_use.pressed);
 		if(s.weapon_type == "one_handed_axe" || s.weapon_type == "two_handed_axe" || s.weapon_type == "one_handed_sword" || s.weapon_type == "two_handed_sword" ||  s.weapon_type == "fist" ||  s.weapon_type == "katana")
 		{
 			if(s.jumping) // Need to do this for other attacks
@@ -43,22 +44,22 @@ public partial class Slash : Ability
 			{
 				if(s.ability_in_use.pressed == 1)
 				{
-					GD.Print("Playing one");
-					s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", true);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", false);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+					
+					s.tree.Set("parameters/Master/conditions/attacking", s.attacking);
+					s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+					s.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
+					s.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
+					s.tree.Set("parameters/Master/Attacking/conditions/loop", false);
 					animation_finished = false;
 				}
 				if(s.ability_in_use.pressed == 2)
 				{
-					GD.Print("Playing two");
-					s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/not_attacking", true);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/no_second", false);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/second_attack", true);
-					s.tree.Set("parameters/PlayerState/Attack/AttackState/conditions/loop", false);
+		
+					s.tree.Set("parameters/Master/conditions/attacking", s.attacking);
+					s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+					s.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
+					s.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
+					s.tree.Set("parameters/Master/Attacking/conditions/loop", false);
 					animation_finished = false;
 				}
 				if(s.ability_in_use.pressed > 2)
