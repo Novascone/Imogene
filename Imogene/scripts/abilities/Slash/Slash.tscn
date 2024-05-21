@@ -4,3 +4,12 @@
 
 [node name="Slash" type="Node3D"]
 script = ExtResource("1_abkjy")
+
+[node name="SwingTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HeldTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
+[connection signal="timeout" from="HeldTimer" to="." method="_on_held_timer_timeout"]

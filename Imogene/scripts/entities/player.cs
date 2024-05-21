@@ -171,11 +171,13 @@ public partial class player : Entity
 
 	public bool attack_1_set;
 	public bool attack_2_set;
+
+	public bool attack_ready = true;
+
 	
 	
 	public override void _Ready()
 	{
-		
 		this_player = this;
 		ability_resources.Add(roll);
 		ability_resources.Add(basic_attack);
@@ -240,9 +242,8 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print("Recovery_2: " + recovery_2);
-		// GD.Print("Attack 1 set : " + attack_1_set);
-		// GD.Print("Attack 2 set : " + attack_2_set);
+		// GD.Print("X velocity from player: " + velocity.X);
+		// GD.Print("Z velocity from player: " + velocity.Z);
 		LoadAbilities(); // Loads abilities into players ability list
 		ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
 		SignalEmitter(); // Emits signals to other parts of the game
@@ -318,7 +319,7 @@ public partial class player : Entity
 		GrabAbility(); // Grab ability player wants to use
 		if(abilities_in_use != null)
 		{
-			UseAbility(ability_in_use); 
+			// UseAbility(ability_in_use); 
 		}
 		// Use the ability the player has just grabbed
 		CheckInteract(); // Check if the player can interact with anything
@@ -334,10 +335,11 @@ public partial class player : Entity
 		}
 
 		
-		
+		velocity.X = direction.X * speed;
+		velocity.Z = direction.Z * speed;
 		Velocity = velocity;
 		
-		tree.Set("parameters/Master/Not_Attacking/IW/blend_position", blend_direction);
+		tree.Set("parameters/Master/Main/IW/blend_position", blend_direction);
 		tree.Set("parameters/Master/Attacking/Attack_1/Recovery_1/Walk_Recovery/blend_position", blend_direction);
 		tree.Set("parameters/Master/Attacking/Attack_2/Recovery_2/Walk_Recovery/blend_position", blend_direction); // Set blend position
 		// tree.Set("parameters/Master/Attack/AttackSpeed/scale", attack_speed);
@@ -378,6 +380,7 @@ public partial class player : Entity
     {
        	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
 		abilities.Add(new_ability);
+		AddChild(new_ability);
 		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
@@ -413,7 +416,7 @@ public partial class player : Entity
 				// Use ability assigned to primary RB
 				if(Input.IsActionJustPressed("RB"))
 				{
-					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB; ability_in_use.pressed += 1;}
+					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}
 	
 				}
 				// Use ability assigned to primary LB
@@ -768,7 +771,8 @@ public partial class player : Entity
 			// GD.Print("Swing 1 Finished");
 			// can_move = true;
 			// recovery_1 = true;
-			ability_in_use.AnimationHandler(this, "attack_1");
+			// ability_in_use.AnimationHandler(this, "attack_1");
+			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_1");
 		}
 		
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
@@ -793,7 +797,8 @@ public partial class player : Entity
 			// 	ability_in_use.animation_finished = true;
 			// 	attack_1_set = false;
 			// }
-			ability_in_use.AnimationHandler(this, "recovery_1");
+			// ability_in_use.AnimationHandler(this, "recovery_1");
+			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_1");
 			
 			
 		}
@@ -818,7 +823,8 @@ public partial class player : Entity
 			// }
 			
 			// ability_in_use.animation_finished = true;
-			ability_in_use.AnimationHandler(this, "attack_2");
+			// ability_in_use.AnimationHandler(this, "attack_2");
+			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_2");
 		
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
@@ -826,7 +832,9 @@ public partial class player : Entity
 			// attack_1_set = false;
 			// recovery_2 = false;
 			// attack_2_set = false;
-			ability_in_use.AnimationHandler(this, "recovery_2");
+			// ability_in_use.AnimationHandler(this, "recovery_2");
+			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_2");
+
 		}
 		if(animName == "Attack")
 		{
@@ -1074,6 +1082,10 @@ public partial class player : Entity
 		can_use_abilities = !ui_preventing_movement;
 		velocity = Vector3.Zero;
     }
+	public void _on_swing_timer_timeout()
+	{
+		attack_ready = true;
+	}
 
 	public static class Vector3DictionarySorter // Sorts mobs by distance
 	{

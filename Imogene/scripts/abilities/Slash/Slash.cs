@@ -7,19 +7,80 @@ using System.Runtime.Intrinsics.X86;
 public partial class Slash : Ability
 {
 	Ability jump;
+	Timer swing_timer;
+	Timer held_timer;
+	player player;
+	private int frames_held = 0;
+	private bool held = false;
+	private CustomSignals _customSignals; // Custom signal instance
+	public override void _Ready()
+    {
+		swing_timer = GetNode<Timer>("SwingTimer");
+		held_timer = GetNode<Timer>("HeldTimer");
+		cross_type = "primary";
+		assigned_button = "RB";
+		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.PlayerInfo += HandlePlayerInfo;
+		_customSignals.AnimationFinished += HandleAnimationFinished;
+		
+    }
 
-	
-	public override void Execute(player s)
-	{
-		GD.Print(s.ability_in_use.pressed);
-		if(s.weapon_type == "one_handed_axe" || s.weapon_type == "two_handed_axe" || s.weapon_type == "one_handed_sword" || s.weapon_type == "two_handed_sword" ||  s.weapon_type == "fist")
+  
+
+    public override void _PhysicsProcess(double delta)
+    {
+		// GD.Print("pressed: " + pressed);
+		GD.Print(held);
+		GD.Print("held time: " + held_timer.TimeLeft);
+		if(player.can_move == false)
 		{
-			if(s.jumping) // Need to do this for other attacks
+			player.velocity.X = 0;
+			player.velocity.Z = 0;
+		}
+		if(Input.IsActionPressed(assigned_button))
+		{
+			if(held == false && pressed == 0)
+			{
+				held_timer.Start();	
+			}
+			
+			if(held)
+			{
+				pressed += 1;
+			}
+			else if(Input.IsActionJustPressed(assigned_button))
+			{
+				pressed += 1;
+			}
+			GD.Print(assigned_button);
+			GD.Print(frames_held);
+			Execute_1();
+		}
+		if(Input.IsActionJustReleased(assigned_button))
+		{
+			held = false;
+		}
+    }
+    
+    public  void Execute_1()
+	{
+		if(player.attack_ready)
+		{
+			swing_timer.Start();
+			player.attack_ready = false;
+		}
+		
+	
+		// GD.Print("In use " + in_use);
+		// GD.Print(s.ability_in_use.pressed);
+		if(player.weapon_type == "one_handed_axe" || player.weapon_type == "two_handed_axe" || player.weapon_type == "one_handed_sword" || player.weapon_type == "two_handed_sword" ||  player.weapon_type == "fist")
+		{
+			if(player.jumping) // Need to do this for other attacks
 			{
 				GD.Print("jump attack");
 				if(jump == null)
 				{
-					foreach(Ability ability in s.abilities_in_use)
+					foreach(Ability ability in player.abilities_in_use)
 					{
 						if(ability.Name == "Jump")
 						{
@@ -32,178 +93,184 @@ public partial class Slash : Ability
 				}
 				else
 				{
-					s.UseAbility(jump);
+					player.UseAbility(jump);
 				}
 				
 			}
-			s.attacking = true;
-			s.animation_triggered = true;
-			s.slash_damage = s.weapon_damage;
+			player.attacking = true;
+			player.animation_triggered = true;
+			player.slash_damage = player.weapon_damage;
 			// GD.Print("weapon damage: " + s.weapon_damage);
 			// GD.Print("slash damage: " + s.slash_damage);
-			s.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
-			s.hitbox.Monitoring = true;
-			if(s.weapon_type == "one_handed_axe") // play one handed axe animation
+			player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
+			player.hitbox.Monitoring = true;
+			if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 			{
-				if(s.ability_in_use.pressed == 1)
+				if(pressed == 1)
 				{
-					
-					if(!s.attack_1_set)
+					GD.Print("here");
+					if(!player.attack_1_set)
 					{
 						GD.Print("Setting swing 1");
-						s.tree.Set("parameters/Master/conditions/attacking", s.attacking);
-						s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-						s.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-						s.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-						s.tree.Set("parameters/Master/Attacking/conditions/loop", false);
-						s.attack_1_set = true;
-						s.attack_2_set = false;
+						player.tree.Set("parameters/Master/conditions/attacking", player.attacking);
+						player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+						player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
+						player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
+						player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
+						player.attack_2_set = false;
 						
 					}
-					s.velocity.X = Mathf.Lerp(s.velocity.X, 0, 0.5f);
-					s.velocity.Z = Mathf.Lerp(s.velocity.Z, 0, 0.5f);
-					if(!s.recovery_1)
+					if(!player.recovery_1)
 					{
-						s.can_move = false;
-						s.velocity.X = s.direction.X * s.speed;
-						s.velocity.Z = s.direction.Z * s.speed;
+						player.can_move = false;
+						
 					}
 					animation_finished = false;
 				}
-				if(s.ability_in_use.pressed == 2)
+				if(pressed == 2)
 				{
-					if(!s.attack_2_set)
+					if(!player.attack_2_set)
 					{
 						GD.Print("Setting swing 2");
-						s.tree.Set("parameters/Master/conditions/attacking", s.attacking);
-						s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-						s.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
-						s.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
-						s.tree.Set("parameters/Master/Attacking/conditions/loop", false);
-						s.attack_2_set = true;
+						player.tree.Set("parameters/Master/conditions/attacking", player.attacking);
+						player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+						player.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
+						player.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
+						player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
+						player.attack_2_set = true;
+						player.attack_1_set = false;
 						
 					}
-					s.velocity.X = Mathf.Lerp(s.velocity.X, 0, 0.5f);
-					s.velocity.Z = Mathf.Lerp(s.velocity.Z, 0, 0.5f);
-					if(!s.recovery_2)
+				
+					if(!player.recovery_2)
 					{
-						s.can_move = false;
-						s.velocity.X = s.direction.X * s.speed;
-						s.velocity.Z = s.direction.Z * s.speed;
+						player.can_move = false;
 					}
 					animation_finished = false;
 				}
-				if(s.ability_in_use.pressed > 2)
+				if(pressed > 2)
 				{
-					s.ability_in_use.pressed = 1;
+					pressed = 1;
 				}
 			}
-			if(s.weapon_type == "one_handed_sword") // play one handed sword animation
+			if(player.weapon_type == "one_handed_sword") // play one handed sword animation
 			{
-				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+				player.tree.Set("parameters/PlayerState/conditions/attacking", player.attacking);
 			}
-			if(s.weapon_type == "two_handed_axe") // play two handed axe animation
+			if(player.weapon_type == "two_handed_axe") // play two handed axe animation
 			{
-				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+				player.tree.Set("parameters/PlayerState/conditions/attacking", player.attacking);
 			}
-			if(s.weapon_type == "two_handed_sword") // play two handed sword animation
+			if(player.weapon_type == "two_handed_sword") // play two handed sword animation
 			{
-				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+				player.tree.Set("parameters/PlayerState/conditions/attacking", player.attacking);
 			}
-			if(s.weapon_type == "fist") // play fist animation
+			if(player.weapon_type == "fist") // play fist animation
 			{
-				s.tree.Set("parameters/PlayerState/conditions/attacking", s.attacking);
+				player.tree.Set("parameters/PlayerState/conditions/attacking", player.attacking);
 			}
-			
-			
-			
-			
-			
-			if(s.jumping)
+	
+			if(player.jumping)
 			{
 				in_use = true;
 			}
-			// if(s.ability_finished && s.ability_in_use.pressed == 0)
-			// {
-			// 	GD.Print("finished");
-			// 	in_use = false;
-			// 	s.can_move = true;
-			// }
-
-			
 		}
 		else
 		{
 			GD.Print("can not use that ability with equipped weapon");
-			s.can_move = true;
+			player.can_move = true;
 			in_use = false;
 		}
 		
 	}
 
-	public override void AnimationHandler(player s, string animation)
-	{
-		
-		if(animation == "attack_1")
+	 private void HandlePlayerInfo(player s)
+    {
+        GD.Print("Player info received in slash");
+        player = s;
+        GD.Print(player.Name);
+    }
+
+	  private void HandleAnimationFinished(string animation)
+    {
+        if(animation == "attack_1")
         {
 			GD.Print("Swing 1 Finished");
-			s.can_move = true;
-			s.recovery_1 = true;
+			player.can_move = true;
+			player.recovery_1 = true;
         }
         if(animation == "recovery_1")
         {
-            if(s.ability_in_use.pressed == 1)
+            if(pressed == 1)
 			{
 				GD.Print("Recovery 1 Finished");
-				s.attacking = false;
-				s.animation_finished = true;
-				s.tree.Set("parameters/Master/conditions/attacking", false);
-				s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-				s.tree.Set("parameters/Master/Attack/conditions/no_second", true);
-				s.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-				s.tree.Set("parameters/Master/Attack/conditions/loop", false);
-				s.hitbox.Monitoring = false;
-				s.recovery_1 = false;
-				s.can_move = true;
-				s.ability_in_use.pressed -= 1;
+				player.attacking = false;
+				player.animation_finished = true;
+				player.tree.Set("parameters/Master/conditions/attacking", false);
+				player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+				player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
+				player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
+				player.tree.Set("parameters/Master/Attack/conditions/loop", false);
+				player.hitbox.Monitoring = false;
+				player.recovery_1 = false;
+				player.can_move = true;
+				pressed -= 1;
 				GD.Print("one presses");
-				s.hitbox.RemoveFromGroup("player_hitbox");
-				s.ability_in_use.animation_finished = true;
-				s.attack_1_set = false;
+				player.hitbox.RemoveFromGroup("player_hitbox");
+				player.ability_in_use.animation_finished = true;
+				player.attack_1_set = false;
+				if(!player.attack_2_set)
+				{
+					in_use = false;
+				}
 			}
         }
         if(animation == "attack_2")
         {
-            s.recovery_2 = true;
-			s.attacking = false;
-			s.animation_finished = true;
-			s.tree.Set("parameters/Master/conditions/attacking", false);
-			s.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			s.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-			s.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-			s.tree.Set("parameters/Master/Attacking/conditions/loop", false);
-			s.hitbox.Monitoring = false;
-			s.can_move = true;
-			s.hitbox.RemoveFromGroup("player_hitbox");
+            player.recovery_2 = true;
+			player.attacking = false;
+			player.animation_finished = true;
+			player.tree.Set("parameters/Master/conditions/attacking", false);
+			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+			player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
+			player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
+			player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
+			player.hitbox.Monitoring = false;
+			player.can_move = true;
+			player.hitbox.RemoveFromGroup("player_hitbox");
 			GD.Print("Swing 2 Finished");
 			GD.Print("two presses");
-			if(s.ability_in_use.pressed != 1)
+			if(pressed != 1)
 			{
-				s.ability_in_use.pressed = 0;
+				pressed = 0;
 			}
 			
-			s.ability_in_use.animation_finished = true;
+			player.ability_in_use.animation_finished = true;
+			
 			
         }
         if(animation == "recovery_2")
         {
-            s.attack_1_set = false;
-			s.recovery_1 = false;
-			s.recovery_2 = false;
-			s.attack_2_set = false;
+            player.attack_1_set = false;
+			player.recovery_1 = false;
+			player.recovery_2 = false;
+			player.attack_2_set = false;
+			if(!player.attack_1_set)
+			{
+				in_use = false;
+			}
+			
         }
-	}
+    }
 	
+	public void _on_swing_timer_timeout()
+	{
+		GD.Print("timeout");
+	}
 
+	public void _on_held_timer_timeout()
+	{
+		held = true;
+	}
     
 }

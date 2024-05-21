@@ -5,12 +5,15 @@ using System.Collections.Generic;
 public partial class CustomSignals : Node
 {
 
-	// Player to Ability
+	// Player to Ability / UI
 	[Signal]
-	public delegate void AnimationFinishedEventHandler(player s, string animation); // Tell the ability when an animation has finished
+	public delegate void PlayerInfoEventHandler(player s); // Send the player stats from the player to the UI
+	[Signal]
+	public delegate void AnimationFinishedEventHandler(string animation); // Send the player stats from the player to the UI
+
+
 	// Player to UI
-	[Signal]
-	public delegate void PlayerInfoEventHandler(player player); // Send the player stats from the player to the UI
+	
 	[Signal]
 	public delegate void AvailableAbilitiesEventHandler(AbilityResource ability); // Tells the UI what abilities the player has available
 	[Signal]
