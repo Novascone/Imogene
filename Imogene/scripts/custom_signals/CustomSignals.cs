@@ -10,6 +10,8 @@ public partial class CustomSignals : Node
 	public delegate void PlayerInfoEventHandler(player s); // Send the player stats from the player to the UI
 	[Signal]
 	public delegate void AnimationFinishedEventHandler(string animation); // Send the player stats from the player to the UI
+	[Signal]
+	public delegate void KeyBindEventHandler(string ability, string input, string cross); // Send the player stats from the player to the UI
 
 
 	// Player to UI

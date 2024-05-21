@@ -227,7 +227,7 @@ public partial class player : Entity
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
-		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
 		// _customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		// _customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
@@ -242,6 +242,7 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
+		
 		// GD.Print("X velocity from player: " + velocity.X);
 		// GD.Print("Z velocity from player: " + velocity.Z);
 		LoadAbilities(); // Loads abilities into players ability list
@@ -316,7 +317,7 @@ public partial class player : Entity
 		
 
 		SmoothRotation(); // Rotate the player character smoothly
-		GrabAbility(); // Grab ability player wants to use
+		// GrabAbility(); // Grab ability player wants to use
 		if(abilities_in_use != null)
 		{
 			// UseAbility(ability_in_use); 
@@ -352,12 +353,6 @@ public partial class player : Entity
 		if(!IsOnFloor())
 		{
 			velocity.Y -= fall_speed * (float)delta;
-			on_floor = false;
-		}
-		else
-		{
-			velocity.Y = 0;
-			on_floor = true;
 		}
 	}
 
@@ -388,15 +383,16 @@ public partial class player : Entity
 	{	
 		if(!test_abilities_assigned)
 		{
-			AssignAbilityHelper("RCrossPrimaryRightAssign", roll);
-			AssignAbilityHelper("LCrossPrimaryUpAssign", slash);
-			AssignAbilityHelper("RCrossPrimaryDownAssign", jump);
+			AssignAbilityHelper("RCrossPrimaryRightAssign", roll, "B", "Primary");
+			AssignAbilityHelper("LCrossPrimaryUpAssign", slash, "RB", "primary");
+			AssignAbilityHelper("RCrossPrimaryDownAssign", jump, "A", "primary");
 		}
 		test_abilities_assigned = true;
 	}
-	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource)
+	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource, string input, string type)
    {
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
+		_customSignals.EmitSignal(nameof(CustomSignals.KeyBind),abilityResource.name, input, type);
    }
 	public void ResetAnimationTriggers() // Resets the animation triggers
 	{
@@ -407,133 +403,6 @@ public partial class player : Entity
 		}
 	}
 
-	public void GrabAbility() // Grabs ability based on input
-	{
-		if(can_use_abilities)
-		{
-			if(l_cross_primary_selected)
-			{
-				// Use ability assigned to primary RB
-				if(Input.IsActionJustPressed("RB"))
-				{
-					if(primary_RB != null) {abilities_in_use.Add(primary_RB); primary_RB.in_use = true; ability_in_use = primary_RB;}
-	
-				}
-				// Use ability assigned to primary LB
-				if(Input.IsActionJustPressed("LB"))
-				{
-					if(primary_LB != null) {abilities_in_use.Add(primary_LB); primary_LB.in_use = true; ability_in_use = primary_LB; }
-				}
-				// Use ability assigned to primary RT
-				if(Input.IsActionJustPressed("RT"))
-				{
-					if(primary_RT != null) {abilities_in_use.Add(primary_RT); primary_RT.in_use = true; ability_in_use = primary_RT; }
-				}
-				// Use ability assigned to primary LT
-				if(Input.IsActionJustPressed("LT"))
-				{
-					if(primary_LT != null) {abilities_in_use.Add(primary_LT); primary_LT.in_use = true; ability_in_use = primary_LT; }
-				}
-			}
-			else
-			{	// Use ability assigned to secondary RB
-				if(Input.IsActionJustPressed("RB"))
-				{
-					if(secondary_RB != null) {abilities_in_use.Add(secondary_RB); secondary_RB.in_use = true; ability_in_use = secondary_RB; }
-				}
-				// Use ability assigned to secondary LB
-				if(Input.IsActionJustPressed("LB"))
-				{
-					if(secondary_LB != null) {abilities_in_use.Add(secondary_LB); secondary_LB.in_use = true; ability_in_use = secondary_LB; }
-				}
-				// Use ability assigned to secondary RT
-				if(Input.IsActionJustPressed("RT"))
-				{
-					if(secondary_RT != null) {abilities_in_use.Add(secondary_RT); secondary_RT.in_use = true; ability_in_use = secondary_RT; }
-				}
-				// Use ability assigned to secondary LT
-				if(Input.IsActionJustPressed("LT"))
-				{
-					if(secondary_LT != null) {abilities_in_use.Add(secondary_LT); secondary_LT.in_use = true; ability_in_use = secondary_LT; }
-				}
-			}
-			if(r_cross_primary_selected)
-			{
-				// Use ability assigned to primary A
-				if(Input.IsActionJustPressed("A"))
-				{
-					if(primary_A != null) {abilities_in_use.Add(primary_A); primary_A.in_use = true; ability_in_use = primary_A;}
-				}
-				// Use ability assigned to primary B
-				if(Input.IsActionJustPressed("B"))
-				{
-					if(primary_B != null) {abilities_in_use.Add(primary_B); primary_B.in_use = true; ability_in_use = primary_B; }
-				}
-				// Use ability assigned to primary X
-				if(Input.IsActionJustPressed("X"))
-				{
-					if(primary_X != null) {abilities_in_use.Add(primary_X); primary_X.in_use = true; ability_in_use = primary_X; }
-				}
-				// Use ability assigned to primary Y
-				if(Input.IsActionJustPressed("Y"))
-				{
-					if(primary_Y != null) {abilities_in_use.Add(primary_Y); primary_Y.in_use = true; ability_in_use = primary_Y;}
-				}
-			}
-			else
-			{
-				// Use ability assigned to secondary A
-				if(Input.IsActionJustPressed("A"))
-				{
-					if(secondary_A != null) {abilities_in_use.Add(secondary_A); secondary_A.in_use = true; ability_in_use = secondary_A;}
-				}
-				// Use ability assigned to secondary B
-				if(Input.IsActionJustPressed("B"))
-				{
-					if(secondary_B != null) {abilities_in_use.Add(secondary_B); secondary_B.in_use = true; ability_in_use = secondary_B;}
-				}
-				// Use ability assigned to secondary X
-				if(Input.IsActionJustPressed("X"))
-				{
-					if(secondary_X != null) {abilities_in_use.Add(secondary_X); secondary_X.in_use = true; ability_in_use = secondary_X;}
-				}
-				// Use ability assigned to secondary Y
-				if(Input.IsActionJustPressed("Y"))
-				{
-					if(secondary_Y != null) {abilities_in_use.Add(secondary_Y); secondary_Y.in_use = true; ability_in_use = secondary_Y;}
-				}
-			}
-
-		}
-		
-	}
-
-	public void UseAbility(Ability ability) // Uses ability
-	{
-		
-		if(can_use_abilities)
-		{
-			if(ability != null && ability_in_use.in_use)
-			{
-				// GD.Print("pressed " + ability_in_use.pressed);
-				ability.Execute(this);
-				if(can_move)
-				{
-					velocity.X = direction.X * speed;
-					velocity.Z = direction.Z * speed;
-				}
-			}
-			else
-			{
-				// GD.Print("Ability Finished");
-				
-				ability_in_use = null;
-				velocity.X = direction.X * speed;
-				velocity.Z = direction.Z * speed;
-			}
-		}
-	}
-    
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
 		if(!targeting)
@@ -767,72 +636,20 @@ public partial class player : Entity
 		
 		if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
 		{
-	
-			// GD.Print("Swing 1 Finished");
-			// can_move = true;
-			// recovery_1 = true;
-			// ability_in_use.AnimationHandler(this, "attack_1");
 			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_1");
 		}
 		
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
 		{
-
-			// if(ability_in_use.pressed == 1)
-			// {
-			// 	GD.Print("Recovery 1 Finished");
-			// 	attacking = false;
-			// 	animation_finished = true;
-			// 	tree.Set("parameters/Master/conditions/attacking", false);
-			// 	tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			// 	tree.Set("parameters/Master/Attack/conditions/no_second", true);
-			// 	tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-			// 	tree.Set("parameters/Master/Attack/conditions/loop", false);
-			// 	hitbox.Monitoring = false;
-			// 	recovery_1 = false;
-			// 	can_move = true;
-			// 	ability_in_use.pressed -= 1;
-			// 	GD.Print("one presses");
-			// 	hitbox.RemoveFromGroup("player_hitbox");
-			// 	ability_in_use.animation_finished = true;
-			// 	attack_1_set = false;
-			// }
-			// ability_in_use.AnimationHandler(this, "recovery_1");
 			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_1");
-			
-			
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
 		{
-			// recovery_2 = true;
-			// attacking = false;
-			// animation_finished = true;
-			// tree.Set("parameters/Master/conditions/attacking", false);
-			// tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			// tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-			// tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-			// tree.Set("parameters/Master/Attacking/conditions/loop", false);
-			// hitbox.Monitoring = false;
-			// can_move = true;
-			// hitbox.RemoveFromGroup("player_hitbox");
-			// GD.Print("Swing 2 Finished");
-			// GD.Print("two presses");
-			// if(ability_in_use.pressed != 1)
-			// {
-			// 	ability_in_use.pressed = 0;
-			// }
-			
-			// ability_in_use.animation_finished = true;
-			// ability_in_use.AnimationHandler(this, "attack_2");
 			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_2");
 		
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
 		{
-			// attack_1_set = false;
-			// recovery_2 = false;
-			// attack_2_set = false;
-			// ability_in_use.AnimationHandler(this, "recovery_2");
 			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_2");
 
 		}
@@ -941,134 +758,6 @@ public partial class player : Entity
 		GD.Print("remove equipped");
         head_slot.RemoveChild(main_node);
     }
-
-
-	 private void HandleAbilityAssigned(string ability_to_assign, string button_name, Texture2D icon) // Gets signal from the UI where an ability has just been assigned
-    {
-		GD.Print("got assignment");
-		// Left Cross Primary
-		if(button_name == "LCrossPrimaryUpAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_RB = ability;}
-			}
-		}
-		if(button_name == "LCrossPrimaryRightAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_RT = ability;}
-			}
-		}
-		if(button_name == "LCrossPrimaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_LB = ability;}
-			}
-		}
-		if(button_name == "LCrossPrimaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_LT = ability;}
-			}
-		}
-
-
-		// Right Cross Primary
-		if(button_name == "RCrossPrimaryUpAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_Y = ability;}
-			}
-		}
-		if(button_name == "RCrossPrimaryRightAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_B = ability;}
-			}
-		}
-		if(button_name == "RCrossPrimaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_X = ability;}
-			}
-		}
-		if(button_name == "RCrossPrimaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){primary_A = ability;}
-			}
-		}
-
-
-		// Left Cross Secondary
-		if(button_name == "LCrossSecondaryUpAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_RB = ability;}
-			}
-		}
-		if(button_name == "LCrossSecondaryRightAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_RT = ability;}
-			}
-		}
-		if(button_name == "LCrossSecondaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_LB = ability;}
-			}
-		}
-		if(button_name == "LCrossSecondaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_LT = ability;}
-			}
-		}
-
-		// Right Cross Secondary
-		if(button_name == "RCrossSecondaryUpAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_Y = ability;}
-			}
-		}
-		if(button_name == "RCrossSecondaryRightAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_B = ability;}
-			}
-		}
-		if(button_name == "RCrossSecondaryLeftAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_X = ability;}
-			}
-		}
-		if(button_name == "RCrossSecondaryDownAssign")
-		{
-			foreach(Ability ability in abilities)
-			{
-				if(ability.Name == ability_to_assign){secondary_Y = ability;}
-			}
-		}
-    	
-	}
 
 	private void HandleEquipConsumable(Consumable item, int consumable_slot)
     {
