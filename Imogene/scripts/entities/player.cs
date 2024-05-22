@@ -27,36 +27,13 @@ public partial class player : Entity
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 
-	public Ability primary_RB; // Ability assigned to Primary RB
-	public Ability primary_LB;  // Ability assigned to Primary LB
-	public Ability primary_RT;  // Ability assigned to Primary RT
-	public Ability primary_LT;  // Ability assigned to Primary LT
-
-	public Ability primary_A;  // Ability assigned to Primary A
-	public Ability primary_B;  // Ability assigned to Primary B
-	public Ability primary_X;  // Ability assigned to Primary X
-	public Ability primary_Y;  // Ability assigned to Primary Y
-
-	public Ability secondary_RB;  // Ability assigned to Secondary RB
-	public Ability secondary_LB;  // Ability assigned to Secondary RB
-	public Ability secondary_RT;  // Ability assigned to Secondary RB
-	public Ability secondary_LT;  // Ability assigned to Secondary RB
-
-	public Ability secondary_A;  // Ability assigned to Secondary A
-	public Ability secondary_B;  // Ability assigned to Secondary B
-	public Ability secondary_X;  // Ability assigned to Secondary X
-	public Ability secondary_Y;  // Ability assigned to Secondary Y
-
-
-
 	// Player Direction and animation variables
 	public Vector3 player_position; // Position of the player
 	public Vector3 velocity; // Velocity of the player
 	public Vector3 direction; // Direction of the player
 	public float prev_y_rotation; // Rotation of the player before current rotation
 	public float current_y_rotation; // Rotation of the player
-	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animations
-	public Vector2 walk_recovery = Vector2.Zero;
+	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animation
 
 
 
@@ -113,7 +90,7 @@ public partial class player : Entity
 
 	// Player bools   																									*** Switch Some of these to Entity ***
 	public bool using_ability; // Is the entity using an ability?
-	public bool animation_finished = false; // Is the entity's animation finished?
+
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	public bool targeting = false; // Is the entity targeting?
 	private bool max_health_changed = true; // Has the entities heath changed?
@@ -122,7 +99,7 @@ public partial class player : Entity
 	private bool interacting; // Is the entity interacting?
 	private bool entered_interact; // Has the entity entered the an interact area?
 	private bool left_interact; // has the entity left the interact area?
-	private bool can_use_abilities;
+	public bool can_use_abilities;
 
 	// Player attached areas
 	private Area3D hurtbox; // Area where the player takes damage
@@ -246,7 +223,7 @@ public partial class player : Entity
 		// GD.Print("X velocity from player: " + velocity.X);
 		// GD.Print("Z velocity from player: " + velocity.Z);
 		LoadAbilities(); // Loads abilities into players ability list
-		ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
+		// ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
 		SignalEmitter(); // Emits signals to other parts of the game
 		AssignAbilities();
 		direction = Vector3.Zero;
@@ -257,8 +234,6 @@ public partial class player : Entity
 		{
 			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
-			walk_recovery.X = Mathf.Lerp(walk_recovery.X, 0, 0.1f);
-			walk_recovery.Y = Mathf.Lerp(walk_recovery.Y, 0, 0.1f);
 		}
 		
 		Fall(delta);
@@ -383,25 +358,24 @@ public partial class player : Entity
 	{	
 		if(!test_abilities_assigned)
 		{
-			AssignAbilityHelper("RCrossPrimaryRightAssign", roll, "B", "Primary");
-			AssignAbilityHelper("LCrossPrimaryUpAssign", slash, "RB", "primary");
-			AssignAbilityHelper("RCrossPrimaryDownAssign", jump, "A", "primary");
+			AssignAbilityHelper("RCrossPrimaryRightAssign", roll);
+			AssignAbilityHelper("LCrossPrimaryUpAssign", slash);
+			AssignAbilityHelper("RCrossPrimaryDownAssign", jump);
 		}
 		test_abilities_assigned = true;
 	}
-	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource, string input, string type)
+	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource)
    {
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
-		_customSignals.EmitSignal(nameof(CustomSignals.KeyBind),abilityResource.name, input, type);
    }
-	public void ResetAnimationTriggers() // Resets the animation triggers
-	{
-		if(animation_triggered)
-		{
-			tree.Set("parameters/PlayerState/conditions/attacking", false);
-			animation_triggered = false;
-		}
-	}
+	// public void ResetAnimationTriggers() // Resets the animation triggers
+	// {
+	// 	if(animation_triggered)
+	// 	{
+	// 		tree.Set("parameters/PlayerState/conditions/attacking", false);
+	// 		animation_triggered = false;
+	// 	}
+	// }
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
@@ -559,16 +533,12 @@ public partial class player : Entity
 			{
 				blend_direction.X = 0;
 				blend_direction.Y = 1;
-				walk_recovery.X = 0;
-				walk_recovery.Y = 1;
 				// GD.Print("Normal: ", blend_direction);
 			}
 			else
 			{
 				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
-				walk_recovery.X = Mathf.Lerp(walk_recovery.X, 0, 0.1f);
-				walk_recovery.Y = Mathf.Lerp(walk_recovery.Y, 0, 0.1f);
 			}
 		}
 	}
@@ -656,7 +626,7 @@ public partial class player : Entity
 		if(animName == "Attack")
 		{
 			attacking = false;
-			animation_finished = true;
+	
 			tree.Set("parameters/PlayerState/conditions/attacking", false);
 			hitbox.Monitoring = false;
 			can_move = true;

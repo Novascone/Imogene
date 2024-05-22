@@ -11,7 +11,9 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void AnimationFinishedEventHandler(string animation); // Send the player stats from the player to the UI
 	[Signal]
-	public delegate void KeyBindEventHandler(string ability, string input, string cross); // Send the player stats from the player to the UI
+	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon); // Tells the player which ability has been assigned to which action button. Tells the HUD the same thing and send the icon of the ability as well.
+
+
 
 
 	// Player to UI
@@ -67,11 +69,7 @@ public partial class CustomSignals : Node
 
 
 
-	// UI to player and UI
-	[Signal]
-	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon); // Tells the player which ability has been assigned to which action button. Tells the HUD the same thing and send the icon of the ability as well.
-
-
+	
 
 	// UI to UI
 	[Signal]

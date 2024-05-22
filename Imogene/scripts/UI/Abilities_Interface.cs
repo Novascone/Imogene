@@ -100,6 +100,7 @@ public partial class Abilities_Interface : UI
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.AbilityAccept += HandleAbilityAccept;
 		_customSignals.AbilityCancel += HandleAbilityCancel;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 	}
 
     private void HandleAbilityAccept()
@@ -346,5 +347,28 @@ public partial class Abilities_Interface : UI
 		// selected_button.Icon = ability.icon;
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), ability.name, selected_button.Name , ability.icon);
 		_customSignals.EmitSignal(nameof(CustomSignals.AddToAbilitySelection), ability.name, ability.type, ability.icon);
+	}
+
+	public void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+	{
+		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_assign.Icon  = icon;}
+		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_assign.Icon  = icon;}
+		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_assign.Icon  = icon;}
+		if(button_name == "LCrossPrimaryDownAssign"){l_cross_primary_down_assign.Icon  = icon;}
+		
+		if(button_name == "LCrossSecondaryUpAssign"){l_cross_secondary_up_assign.Icon  = icon;}
+		if(button_name == "LCrossSecondaryRightAssign"){l_cross_secondary_right_assign.Icon  = icon;}
+		if(button_name == "LCrossSecondaryLeftAssign"){l_cross_secondary_left_assign.Icon  = icon;}
+		if(button_name == "LCrossSecondaryDownAssign"){l_cross_secondary_down_assign.Icon  = icon;}
+
+		if(button_name == "RCrossPrimaryUpAssign"){r_cross_primary_up_assign.Icon  = icon;}
+		if(button_name == "RCrossPrimaryRightAssign"){r_cross_primary_right_assign.Icon  = icon;}
+		if(button_name == "RCrossPrimaryLeftAssign"){r_cross_primary_left_assign.Icon  = icon;}
+		if(button_name == "RCrossPrimaryDownAssign"){r_cross_primary_down_assign.Icon  = icon;}
+
+		if(button_name == "RCrossSecondaryUpAssign"){r_cross_secondary_up_assign.Icon  = icon;}
+		if(button_name == "RCrossSecondaryRightAssign"){r_cross_secondary_right_assign.Icon  = icon;}
+		if(button_name == "RCrossSecondaryLeftAssign"){r_cross_secondary_left_assign.Icon  = icon;}
+		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_assign.Icon  = icon;}
 	}
 }

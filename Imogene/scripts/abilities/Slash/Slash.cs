@@ -9,10 +9,9 @@ public partial class Slash : Ability
 	Ability jump;
 	Timer swing_timer;
 	Timer held_timer;
-	player player;
 	private int frames_held = 0;
 	private bool held = false;
-	
+
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
@@ -23,21 +22,30 @@ public partial class Slash : Ability
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.AnimationFinished += HandleAnimationFinished;
-		_customSignals.KeyBind += HandleKeyBind;
-		
+		// _customSignals.KeyBind += HandleKeyBind;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
     }
 
-    private void HandleKeyBind(string ability, string input, string type)
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
-		if(ability == this.Name)
+        if(this.Name == ability)
 		{
-			assigned_button = input;
-			cross_type = type;
-			GD.Print(assigned_button);
-			GD.Print(type);
+			CheckAssignment(button_name);
 		}
-        
     }
+
+    // private void HandleKeyBind(string ability, string input, string _cross, string type)
+    // {
+	// 	if(ability == this.Name)
+	// 	{
+	// 		assigned_button = input;
+	// 		cross = _cross;
+	// 		cross_type = type;
+	// 		GD.Print(assigned_button);
+	// 		GD.Print(type);
+	// 	}
+        
+    // }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -46,7 +54,15 @@ public partial class Slash : Ability
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
 		}
-		if(Input.IsActionPressed(assigned_button))
+		if(player.recovery_1 || player.recovery_2)
+		{
+			player.speed = 3.0f;
+		}
+		else
+		{
+			player.speed = 7.0f;
+		}
+		if(player.can_use_abilities && Input.IsActionPressed(assigned_button) && CheckCross())
 		{
 			if(held == false && pressed == 0)
 			{
@@ -153,6 +169,8 @@ public partial class Slash : Ability
 		
 	}
 
+
+
 	 private void HandlePlayerInfo(player s)
     {
         GD.Print("Player info received in slash");
@@ -173,7 +191,7 @@ public partial class Slash : Ability
             if(pressed == 1)
 			{
 				GD.Print("Recovery 1 Finished");
-				player.animation_finished = true;
+			
 				player.tree.Set("parameters/Master/conditions/attacking", false);
 				player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 				player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
@@ -195,7 +213,6 @@ public partial class Slash : Ability
         if(animation == "attack_2")
         {
             player.recovery_2 = true;
-			player.animation_finished = true;
 			player.tree.Set("parameters/Master/conditions/attacking", false);
 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 			player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);

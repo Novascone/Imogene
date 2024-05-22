@@ -5,17 +5,36 @@ public partial class Jump : Ability
 {
 	bool off_floor;
 	int timer = 0;
-	player player;
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
 		
-		cross_type = "primary";
-		assigned_button = "A";
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.KeyBind += HandleKeyBind;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 
 		
+    }
+	//   private void HandleKeyBind(string ability, string input, string _cross, string type)
+    // {
+	// 	if(ability == this.Name)
+	// 	{
+	// 		assigned_button = input;
+	// 		cross = _cross;
+	// 		cross_type = type;
+	// 		GD.Print("jump: " + assigned_button);
+	// 		GD.Print("jump: " + type);
+	// 	}
+        
+    // }
+
+	private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    {
+        if(this.Name == ability)
+		{
+			CheckAssignment(button_name);
+		}
     }
 
     private void HandlePlayerInfo(player s)
@@ -30,7 +49,7 @@ public partial class Jump : Ability
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
 		}
-		if(Input.IsActionPressed(assigned_button) || player.jumping)
+		if(player.can_use_abilities && Input.IsActionPressed(assigned_button) && CheckCross() || player.jumping)
 		{
 			Execute();
 		}
