@@ -144,18 +144,6 @@ public partial class AbilityCategory : PanelContainer
 		
 	}
 
-	// public void SendAbilitiesToPlayer(List<AbilityButton> abilities)
-	// {
-	// 	foreach(AbilityButton ability in abilities)
-	// 	{
-	// 		if(ability.assigned)
-	// 		{
-	// 			_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability.ability_name);
-	// 		}
-			
-	// 	}
-		
-	// }
 	  private void HandleAbilitySelected(AbilityButton button, Button assign_button)
     {
         button_clicked = button;

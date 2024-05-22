@@ -16,18 +16,7 @@ public partial class Jump : Ability
 
 		
     }
-	//   private void HandleKeyBind(string ability, string input, string _cross, string type)
-    // {
-	// 	if(ability == this.Name)
-	// 	{
-	// 		assigned_button = input;
-	// 		cross = _cross;
-	// 		cross_type = type;
-	// 		GD.Print("jump: " + assigned_button);
-	// 		GD.Print("jump: " + type);
-	// 	}
-        
-    // }
+
 
 	private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {

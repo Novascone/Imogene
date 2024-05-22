@@ -17,12 +17,10 @@ public partial class Slash : Ability
     {
 		swing_timer = GetNode<Timer>("SwingTimer");
 		held_timer = GetNode<Timer>("HeldTimer");
-		// cross_type = "primary";
-		// assigned_button = "RB";
+	
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.AnimationFinished += HandleAnimationFinished;
-		// _customSignals.KeyBind += HandleKeyBind;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
     }
 
@@ -33,19 +31,6 @@ public partial class Slash : Ability
 			CheckAssignment(button_name);
 		}
     }
-
-    // private void HandleKeyBind(string ability, string input, string _cross, string type)
-    // {
-	// 	if(ability == this.Name)
-	// 	{
-	// 		assigned_button = input;
-	// 		cross = _cross;
-	// 		cross_type = type;
-	// 		GD.Print(assigned_button);
-	// 		GD.Print(type);
-	// 	}
-        
-    // }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -128,7 +113,6 @@ public partial class Slash : Ability
 						player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 						player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
 						player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-						player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
 						player.attack_2_set = false;
 						player.can_move = false;
 					}
@@ -142,7 +126,6 @@ public partial class Slash : Ability
 						player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 						player.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
 						player.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
-						player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
 						player.attack_2_set = true;
 						player.attack_1_set = false;
 						player.can_move = false;
@@ -196,7 +179,6 @@ public partial class Slash : Ability
 				player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 				player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
 				player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-				player.tree.Set("parameters/Master/Attack/conditions/loop", false);
 				player.hitbox.Monitoring = false;
 				player.recovery_1 = false;
 				player.can_move = true;
@@ -217,7 +199,6 @@ public partial class Slash : Ability
 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
 			player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
 			player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-			player.tree.Set("parameters/Master/Attacking/conditions/loop", false);
 			player.hitbox.Monitoring = false;
 			player.can_move = true;
 			player.hitbox.RemoveFromGroup("player_hitbox");

@@ -165,8 +165,10 @@ public partial class player : Entity
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 		
+
 		damage = 2;
 		health = 20;
+
 
 		hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
@@ -186,30 +188,19 @@ public partial class player : Entity
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
 
-		
+
 		mob_distance_from_player = new List<Vector3>();
 		mob_pos = new Dictionary<Area3D, Vector3>();
 		
-		
+
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
-		// _customSignals.PlayerPosition += HandlePlayerPosition;
-		// _customSignals.Targeting += HandleTargeting;
-		// _customSignals.UIHealthUpdate += HandleUIHealth;
-		// _customSignals.UIHealthUpdate += HandleUIResource;
-		// _customSignals.UIHealthUpdate += HandleUIHealthUpdate;
-		// _customSignals.UIHealthUpdate += HandleUIResourceUpdate;
-		// _customSignals.ItemInfo += HandleItemInfo;
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
-		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
-		// _customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
-		// _customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
 		_customSignals.EquipConsumable += HandleEquipConsumable;		
-		
 		
 	}
 
@@ -368,14 +359,6 @@ public partial class player : Entity
    {
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
    }
-	// public void ResetAnimationTriggers() // Resets the animation triggers
-	// {
-	// 	if(animation_triggered)
-	// 	{
-	// 		tree.Set("parameters/PlayerState/conditions/attacking", false);
-	// 		animation_triggered = false;
-	// 	}
-	// }
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{

@@ -56,3 +56,24 @@ transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 
 transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 13.4703, 2.38739, -6)
 
 [node name="player" parent="." instance=ExtResource("4_j8e3h")]
+
+[node name="Platform4" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0507778, 5.7949)
+
+[node name="Platform5" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184252, 6.73639)
+
+[node name="Platform6" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.350969, 7.69502)
+
+[node name="Platform7" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.516428, 8.51507)
+
+[node name="Platform8" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.698438, 9.0432)
+
+[node name="Platform9" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903539, 9.56571)
+
+[node name="Platform10" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.10338, 0.903539, 9.56571)
