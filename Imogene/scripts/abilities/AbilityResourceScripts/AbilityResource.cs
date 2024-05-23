@@ -25,4 +25,5 @@ public partial class AbilityResource : Resource
     public PackedScene modifier_4;
     [Export] 
     public PackedScene modifier_5;
+    
 }

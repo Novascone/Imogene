@@ -197,6 +197,7 @@ public partial class UI : CanvasLayer
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		_customSignals.AbilityRemoved += HandleAbilityRemoved;
 		_customSignals.AbilityUISecondaryOpen += HandleAbilityUISecondaryOpen;
 		_customSignals.LCrossPrimaryOrSecondary += HandleLCrossPrimaryOrSecondary;
 		_customSignals.RCrossPrimaryOrSecondary += HandleRCrossPrimaryOrSecondary;
@@ -836,6 +837,30 @@ public partial class UI : CanvasLayer
 		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon = icon;}
         
     }
+	private void HandleAbilityRemoved(string ability, string button_name)
+	{
+		GD.Print(button_name);
+		
+		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon  = null;}
+		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon  = null;}
+		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon  = null;}
+		if(button_name == "LCrossPrimaryDownAssign"){l_cross_primary_down_action_button.Icon  = null;}
+		
+		if(button_name == "LCrossSecondaryUpAssign"){l_cross_secondary_up_action_button.Icon  = null;}
+		if(button_name == "LCrossSecondaryRightAssign"){l_cross_secondary_right_action_button.Icon  = null;}
+		if(button_name == "LCrossSecondaryLeftAssign"){l_cross_secondary_left_action_button.Icon  = null;}
+		if(button_name == "LCrossSecondaryDownAssign"){l_cross_secondary_down_action_button.Icon  = null;}
+
+		if(button_name == "RCrossPrimaryUpAssign"){r_cross_primary_up_action_button.Icon  = null;}
+		if(button_name == "RCrossPrimaryRightAssign"){r_cross_primary_right_action_button.Icon  = null;}
+		if(button_name == "RCrossPrimaryLeftAssign"){r_cross_primary_left_action_button.Icon  = null;}
+		if(button_name == "RCrossPrimaryDownAssign"){r_cross_primary_down_action_button.Icon  = null;}
+
+		if(button_name == "RCrossSecondaryUpAssign"){r_cross_secondary_up_action_button.Icon  = null;}
+		if(button_name == "RCrossSecondaryRightAssign"){r_cross_secondary_right_action_button.Icon  = null;}
+		if(button_name == "RCrossSecondaryLeftAssign"){r_cross_secondary_left_action_button.Icon  = null;}
+		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon  = null;}
+	}
 
     // private void UpdateHealth() // Updates UI health
 	// {

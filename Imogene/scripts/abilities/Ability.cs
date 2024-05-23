@@ -15,9 +15,11 @@ public partial class Ability : Node3D
     public string cross{ get; set; }
     public string cross_type { get; set; }
     public string assigned_button { get; set; }
+    public string action_button { get; set; }
     public bool cross_selected;
     public player player;
 
+    public bool useable = true;
     public bool in_use = true;
     public int pressed = 0;
     public bool animation_finished = false;
@@ -104,12 +106,14 @@ public partial class Ability : Node3D
             cross = "left";
             cross_type = "primary";
             assigned_button = "RB";
+            action_button = "LCrossPrimaryUpAssign";
         }
         if(incoming_button_assignment == "LCrossPrimaryRightAssign")
         {
             cross = "left";
             cross_type = "primary";
             assigned_button = "RT";
+            action_button = "LCrossPrimaryRightAssign";
         }
         if(incoming_button_assignment == "LCrossPrimaryLeftAssign")
         {

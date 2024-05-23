@@ -11,6 +11,7 @@ public partial class AbilityCategory : PanelContainer
 	private HBoxContainer ability_modifier_container;
 	private AbilityButton button_clicked;
 	private VBoxContainer button_to_be_assigned_container;
+	private Button current_button;
 	private Button button_to_be_assigned_label;
 	private Button button_to_be_assigned;
 	private Button action_button_to_be_assigned;
@@ -37,6 +38,7 @@ public partial class AbilityCategory : PanelContainer
 		_customSignals.AbilityAccept += HandleAbilityAccept;
 		_customSignals.AbilityCancel += HandleAbilityCancel;
 		_customSignals.CurrentAbilityBoundOnCrossButton += HandleCurrentAbilityBoundOnCrossButton;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 		
 
 		foreach(AbilityButton ability in ability_container_page_1.GetChildren().Cast<AbilityButton>())
@@ -63,17 +65,23 @@ public partial class AbilityCategory : PanelContainer
 		{
 			modifiers.Add(modifier);
 		}
-		// AddAbility(roll.name, roll.type_of_ability, roll.icon);
-		// AddAbility(basic_attack.name,basic_attack.type_of_ability, basic_attack.icon);
-		// foreach(AbilityButton button in abilities)
-		// {
-		// 	GD.Print(button.ability_name);
-		// }
-		// SendAbilitiesToPlayer(abilities);
 		
 	}
 
-    
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    {
+       foreach(AbilityButton abilityButton in abilities)
+			{
+				if(abilityButton.assigned && abilityButton.ability_name == ability)
+				{
+					// ability.Text = name;
+					abilityButton.button_assigned = button_name;
+					GD.Print(abilityButton.Name);
+					GD.Print(abilityButton.button_assigned);
+					break;
+				}
+			}
+    }
 
     private void HandleAbilityCancel()
 	{
@@ -82,6 +90,7 @@ public partial class AbilityCategory : PanelContainer
 	private void HandleAbilityAccept()
 	{
 		button_to_be_assigned.Icon = null;
+		current_button = button_clicked;
 	}
 
 	private void HandleCurrentAbilityBoundOnCrossButton(Texture2D icon)
@@ -97,15 +106,9 @@ public partial class AbilityCategory : PanelContainer
 
     private void HandleAvailableAbilities(AbilityResource ability)
     {
-        // GD.Print("received");
         AddAbility(ability.name, ability.type, ability.description, ability.icon);
     }
 
-    // private void HandleAvailableAbilities(AbilityResource ability)
-    // {
-    // 	GD.Print("received");
-    //     AddAbility(ability.name, ability.type_of_ability, ability.icon);
-    // }
 
   
 
@@ -148,11 +151,20 @@ public partial class AbilityCategory : PanelContainer
     {
         button_clicked = button;
 		action_button_to_be_assigned = assign_button;
+		current_button = assign_button;
+		if(button_clicked.button_assigned == null)
+		{
+			button_clicked.button_assigned = assign_button.Name;
+		}
+		
+		GD.Print(button_clicked.button_assigned);
     }
 	public void _on_accept_button_down()
-	{
+	{	
+		_customSignals.EmitSignal(nameof(CustomSignals.AbilityRemoved),button_clicked.ability_name, button_clicked.button_assigned);
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAccept));
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, action_button_to_be_assigned.Name, button_clicked.Icon);
+		
 	}
 
 	public void _on_cancel_button_down()

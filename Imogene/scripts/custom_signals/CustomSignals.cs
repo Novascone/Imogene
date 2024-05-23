@@ -12,7 +12,8 @@ public partial class CustomSignals : Node
 	public delegate void AnimationFinishedEventHandler(string animation); // Send the player stats from the player to the UI
 	[Signal]
 	public delegate void AbilityAssignedEventHandler(string ability, string button_name, Texture2D icon); // Tells the player which ability has been assigned to which action button. Tells the HUD the same thing and send the icon of the ability as well.
-
+	[Signal]
+	public delegate void AbilityRemovedEventHandler(string ability, string button_removed); // Tells the player which ability has been assigned to which action button. Tells the HUD the same thing and send the icon of the ability as well.
 
 
 

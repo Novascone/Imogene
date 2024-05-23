@@ -23,6 +23,11 @@ public partial class player : Entity
 	private bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
 	public Ability ability_in_use; // The ability that the player is currently using
 	public List<Ability> abilities_in_use = new List<Ability>();
+	public bool test_abilities_assigned = false;
+	public bool recovery_1 = false;
+	public bool recovery_2 = false;
+	public bool attack_1_set;
+	public bool attack_2_set;
 
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
@@ -66,7 +71,7 @@ public partial class player : Entity
     public int spell_ranged_attack_abilities;
 	public int wisdom_attack_abilities;
 
-	public float physical_melee_attack_ability_ratio; // ratio of attack abilities
+	public float physical_melee_attack_ability_ratio; 
     public float physical_ranged_attack_ability_ratio;
     public float spell_melee_attack_ability_ratio;
     public float spell_ranged_attack_ability_ratio;
@@ -136,20 +141,13 @@ public partial class player : Entity
 	// Misc
 	public string resource_path;
 	private bool remove_equipped = false;
-
 	public MeshInstance3D helm; // Temp helm
-
 	public Node3D main_node; // Temp helm node
-	public bool slash_one_finished = false;
-	public bool slash_two_finished = false;
-	public bool test_abilities_assigned = false;
-	public bool recovery_1 = false;
-	public bool recovery_2 = false;
+	
+	
+	
 
-	public bool attack_1_set;
-	public bool attack_2_set;
-
-	public bool attack_ready = true;
+	
 
 	
 	
@@ -724,10 +722,7 @@ public partial class player : Entity
 		can_use_abilities = !ui_preventing_movement;
 		velocity = Vector3.Zero;
     }
-	public void _on_swing_timer_timeout()
-	{
-		attack_ready = true;
-	}
+	
 
 	public static class Vector3DictionarySorter // Sorts mobs by distance
 	{

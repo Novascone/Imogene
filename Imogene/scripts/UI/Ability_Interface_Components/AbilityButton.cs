@@ -7,17 +7,13 @@ public partial class AbilityButton : Button
 {
 	[Export]
 	public bool assigned;
+	public string button_assigned;
 	public Button assign_button;
 	public Button icon_button;
 	public string ability_name;
 	public Control info;
 	public RichTextLabel info_text;
 	public string ability_type;
-
-	public Ability current_ability;
-
-	// public List<Ability> abilities;
-
 	private CustomSignals _customSignals;
 
 	public PackedScene[] modifiers = new PackedScene[5];
@@ -34,15 +30,11 @@ public partial class AbilityButton : Button
 		// _customSignals.AvailableAbilities += HandleAvailableAbilities;
 	}
 
-    // private void HandleAvailableAbilities(Ability ability)
-    // {
-    //     abilities.Add(ability);
-    // }
 
     private void HandleButtonToBeAssigned(Button cross_button, Button representative_button)
     {
-		GD.Print("Cross Button name " + cross_button.Name);
-		GD.Print("Representative Button name " + representative_button.Name);
+		// GD.Print("Cross Button name " + cross_button.Name);
+		// GD.Print("Representative Button name " + representative_button.Name);
         assign_button = cross_button;
 		icon_button = representative_button;
     }

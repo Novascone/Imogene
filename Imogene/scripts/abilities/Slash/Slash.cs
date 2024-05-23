@@ -14,19 +14,32 @@ public partial class Slash : Ability
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
-		swing_timer = GetNode<Timer>("SwingTimer");
-		held_timer = GetNode<Timer>("HeldTimer");
+		swing_timer = GetNode<Timer>("SwingTimer"); // Timer for swinging not used 
+		held_timer = GetNode<Timer>("HeldTimer"); // Timer to see how long attack is held handles if the play is holding down the button
 	
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.AnimationFinished += HandleAnimationFinished;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		_customSignals.AbilityRemoved += HandleAbilityRemoved;
+    }
+
+    private void HandleAbilityRemoved(string ability, string button_removed)
+    {
+        if(this.Name == ability)
+		{
+			useable = false;
+			assigned_button = null;
+			cross_type = null;
+			cross = null;
+		}
     }
 
     private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     {
         if(this.Name == ability)
 		{
+			useable = true;
 			CheckAssignment(button_name);
 		}
     }
@@ -47,7 +60,7 @@ public partial class Slash : Ability
 		{
 			player.speed = 7.0f;
 		}
-		if(player.can_use_abilities && Input.IsActionPressed(assigned_button) && CheckCross())
+		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
 		{
 			if(held == false && pressed == 0)
 			{
@@ -142,15 +155,13 @@ public partial class Slash : Ability
 				in_use = true;
 			}
 		}
-		// else
-		// {
-		// 	GD.Print("can not use that ability with equipped weapon");
-		// 	player.can_move = true;
-		// 	in_use = false;
-		// }
-		
+		else
+		{
+			GD.Print("can not use that ability with equipped weapon");
+			player.can_move = true;
+			in_use = false;
+		}
 	}
-
 
 
 	 private void HandlePlayerInfo(player s)
@@ -214,11 +225,6 @@ public partial class Slash : Ability
 			// GD.Print("two presses");
 			
 			pressed = 0;
-			
-			
-			// player.ability_in_use.animation_finished = true;
-			
-			
         }
         if(animation == "recovery_2")
         {
@@ -230,7 +236,6 @@ public partial class Slash : Ability
 			{
 				in_use = false;
 			}
-			
         }
     }
 	
