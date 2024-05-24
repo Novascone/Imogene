@@ -180,7 +180,7 @@ public partial class player : Entity
 		helm = new MeshInstance3D();
 
 		tree = GetNode<AnimationTree>("AnimationTree");
-		tree.AnimationFinished += OnAnimationFinished;
+		// tree.AnimationFinished += OnAnimationFinished;
 		
 
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
@@ -582,43 +582,43 @@ public partial class player : Entity
 		
 	}
 
-	private void OnAnimationFinished(StringName animName) // when animation is finished
-    {
+	// private void OnAnimationFinished(StringName animName) // when animation is finished
+    // {
 		
-		if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_1");
-		}
+	// 	if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
+	// 	{
+	// 		_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_1");
+	// 	}
 		
-		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_1");
-		}
-		if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_2");
+	// 	if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
+	// 	{
+	// 		_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_1");
+	// 	}
+	// 	if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
+	// 	{
+	// 		_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "attack_2");
 		
-		}
-		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_2");
+	// 	}
+	// 	if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
+	// 	{
+	// 		_customSignals.EmitSignal(nameof(CustomSignals.AnimationFinished), "recovery_2");
 
-		}
-		if(animName == "Attack")
-		{
-			attacking = false;
+	// 	}
+	// 	if(animName == "Attack")
+	// 	{
+	// 		attacking = false;
 	
-			tree.Set("parameters/PlayerState/conditions/attacking", false);
-			hitbox.Monitoring = false;
-			can_move = true;
-			hitbox.RemoveFromGroup("player_hitbox");
-		}
-		if(animName == "Roll_Forward")
-		{
+	// 		tree.Set("parameters/PlayerState/conditions/attacking", false);
+	// 		hitbox.Monitoring = false;
+	// 		can_move = true;
+	// 		hitbox.RemoveFromGroup("player_hitbox");
+	// 	}
+	// 	if(animName == "Roll_Forward")
+	// 	{
 
-		}
+	// 	}
 
-    }
+    // }
 
 	private void OnHurtboxEntered(Area3D area) // handler for area entered signal
 	{
