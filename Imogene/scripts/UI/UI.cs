@@ -303,11 +303,11 @@ public partial class UI : CanvasLayer
 			{
 				if(GetViewport().GuiGetFocusOwner() is InventoryButton)
 				{
-					hover_over_button = (InventoryButton)GetViewport().GuiGetFocusOwner();
+					hover_over_button = (InventoryButton)GetViewport().GuiGetFocusOwner(); // Set current button hovered over
 				}
 				if(!clicked_on)
 				{
-					if(Input.IsActionJustPressed("Interact") && hover_over_button is InventoryButton)
+					if(Input.IsActionJustPressed("Interact") && hover_over_button is InventoryButton) // If the player presses the interact button and that button is an inventory button send a signal to the player
 					{
 						hover_over_button.InventoryButtonPressed();
 						if(hover_over_button.inventory_item.type == "generic")
@@ -324,7 +324,7 @@ public partial class UI : CanvasLayer
 							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)hover_over_button.inventory_item);
 						}
 					}
-					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))
+					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept")) // Handle grab object set icon of clicked object to a button attached to the cursor
 					{
 						
 						clicked_on = true;
@@ -344,7 +344,7 @@ public partial class UI : CanvasLayer
 				{
 					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept") && hover_over_button is InventoryButton)
 					{
-						if(over_trash)
+						if(over_trash) // Delete item if over trash
 						{
 							clicked_on = false;
 							DeleteItem(grabbed_object);
@@ -360,7 +360,7 @@ public partial class UI : CanvasLayer
 							{
 								if(grabbed_object != null && hover_over_button != null)
 								{
-								SwapButtons(grabbed_object, hover_over_button);
+									SwapButtons(grabbed_object, hover_over_button);
 								}
 							}
 							
@@ -392,7 +392,7 @@ public partial class UI : CanvasLayer
 		
 	}
 
-	public void ControllerCursor()
+	public void ControllerCursor() // Control the cursor with the joysticks
 	{
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		Vector2 mouse_direction = Vector2.Zero;
@@ -425,7 +425,7 @@ public partial class UI : CanvasLayer
 	
 	}
 
-	public void HideCursor()
+	public void HideCursor() // Hide cursor is the player wants to navigate with the D-Pad
 	{
 		if(Input.IsActionJustPressed("D-PadUp") || Input.IsActionJustPressed("D-PadDown") || Input.IsActionJustPressed("D-PadLeft") || Input.IsActionJustPressed("D-PadRight"))
 		{
@@ -709,7 +709,7 @@ public partial class UI : CanvasLayer
 		inventory_open = false;
     }
 
-    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal)
+    private void HandleRCrossPrimaryOrSecondary(bool r_cross_primary_selected_signal) // Hides/ shows the selected crosses
     {
 	
         if(r_cross_primary_selected_signal)
@@ -800,7 +800,7 @@ public partial class UI : CanvasLayer
 			}
     }
 
-	private void HandleWhichConsumable(int consumable)
+	private void HandleWhichConsumable(int consumable) // Hides/ shows the current selected consumable
     {
         if(consumable == 1){consumable_1.Show(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Hide();}
 		if(consumable == 2){consumable_1.Hide(); consumable_2.Show(); consumable_3.Hide(); consumable_4.Hide();}

@@ -6,17 +6,17 @@ using System.Reflection.Metadata;
 
 public partial class AbilityCategory : PanelContainer
 {
-	private GridContainer ability_container_page_1;
-	private GridContainer ability_container_page_2;
-	private HBoxContainer ability_modifier_container;
-	private AbilityButton button_clicked;
-	private VBoxContainer button_to_be_assigned_container;
+	private GridContainer ability_container_page_1; // First page of abilities
+	private GridContainer ability_container_page_2; // Second page of abilities
+	private HBoxContainer ability_modifier_container; // Modifiers for abilities
+	private AbilityButton button_clicked; // The button from the list of abilities that was clicked
+	private VBoxContainer button_to_be_assigned_container; // The ability that is going to be/is assigned, and the accept/ cancel buttons
 	private Button current_button;
-	private Button button_to_be_assigned_label;
+	private Button button_to_be_assigned_label; 
 	private Button button_to_be_assigned;
 	private Button action_button_to_be_assigned;
-	private List<AbilityButton> abilities = new List<AbilityButton>();
-	private List<Button> modifiers = new List<Button>();
+	private List<AbilityButton> abilities = new List<AbilityButton>(); // List of ability buttons
+	private List<Button> modifiers = new List<Button>(); // List of modifiers
 	private CustomSignals _customSignals;
 	
 	
@@ -157,7 +157,7 @@ public partial class AbilityCategory : PanelContainer
 			button_clicked.button_assigned = assign_button.Name;
 		}
 		
-		GD.Print(button_clicked.button_assigned);
+		// GD.Print(button_clicked.button_assigned);
     }
 	public void _on_accept_button_down()
 	{	

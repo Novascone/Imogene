@@ -30,6 +30,7 @@ public partial class Entity : CharacterBody3D
 
     public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
     public bool jumping = false;
+    public bool using_movement_ability;
     public bool on_floor;
     public bool attacking; // Boolean to keep track of if the entity is attacking
     public bool animation_triggered;

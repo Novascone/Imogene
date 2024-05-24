@@ -246,6 +246,11 @@ public partial class player : Entity
 				direction.Z += 1.0f;
 			}
 		}
+		if(can_move == false)
+		{
+			velocity.X = 0;
+			velocity.Z = 0;
+		}
 		if(can_use_abilities)
 		{
 			if(Input.IsActionJustPressed("D-PadLeft")) // Select crosses 
@@ -299,9 +304,12 @@ public partial class player : Entity
 			mob_index = 0;
 		}
 
-		
-		velocity.X = direction.X * speed;
-		velocity.Z = direction.Z * speed;
+		if(!using_movement_ability)
+		{
+			velocity.X = direction.X * speed;
+			velocity.Z = direction.Z * speed;
+		}
+
 		Velocity = velocity;
 		
 		tree.Set("parameters/Master/Main/IW/blend_position", blend_direction);
@@ -483,7 +491,7 @@ public partial class player : Entity
 		if(targeting && enemy_in_vision && (mobs_in_order.Count > 0))
 		{
 			
-			target_ability.Execute(this);
+			// target_ability.Execute(this);
 			if(Input.IsActionJustPressed("TargetNext"))
 			{
 				if(mob_index < mob_pos.Count - 1)

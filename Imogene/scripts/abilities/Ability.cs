@@ -33,7 +33,7 @@ public partial class Ability : Node3D
 
    
 
-    public virtual void Execute(player s)
+    public virtual void Execute()
     {
         // GD.Print("Execute");
     }

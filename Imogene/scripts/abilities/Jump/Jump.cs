@@ -46,33 +46,30 @@ public partial class Jump : Ability
     }
 
     // Called when the node enters the scene tree for the first time.
-    public void Execute()
+    public override void Execute()
     {	
 		
-		if(player.IsOnFloor() && !player.jumping)
+		if(player.IsOnFloor() && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			GD.Print("start jumping");
-			player.tree.Set("parameters/Master/Main/conditions/jumping", true);
+			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player.velocity.Y = player.jump_speed;			
 			player.jumping = true;
-			timer += 1;
 		}
 		else if(player.IsOnFloor())
 		{
 			GD.Print("stop jumping");
-			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true);
+			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
 			in_use = false;
-			timer = 0;
 		}
         if(!player.IsOnFloor())
 		{
 			player.tree.Set("parameters/Master/Main/conditions/jumping", false);
-			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false);
+			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
 			GD.Print("still jumping");
 			player.jumping = true;
-			timer += 1;
 		}
 		
     }

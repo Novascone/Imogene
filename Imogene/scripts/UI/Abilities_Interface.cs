@@ -126,7 +126,7 @@ public partial class Abilities_Interface : UI
 	}
 
 
-	public void NavigateAbilities()
+	public void NavigateAbilities() // Enables navigation through abilities, keeps track of current and previous UI
 	{
 		
 		if(current_ui == null)
@@ -187,7 +187,7 @@ public partial class Abilities_Interface : UI
 	// Left Cross Primary Assignment Buttons
 
 	
-	public void _on_l_cross_primary_up_assign_button_down()
+	public void _on_l_cross_primary_up_assign_button_down() // 												******** Probably could clean this up *********
 	{
 		selected_button = l_cross_primary_up_assign;
 		AssignmentButtonNavigation();

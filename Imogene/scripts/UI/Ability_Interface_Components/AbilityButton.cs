@@ -7,11 +7,11 @@ public partial class AbilityButton : Button
 {
 	[Export]
 	public bool assigned;
-	public string button_assigned;
-	public Button assign_button;
-	public Button icon_button;
-	public string ability_name;
-	public Control info;
+	public string button_assigned; // The cross slot the current ability/ ability button is assigned to
+	public Button assign_button; // The cross slot the ability is going to be assigned to
+	public Button icon_button; // The icon of the current button assigned/ the one thats going to be assigned
+	public string ability_name; 
+	public Control info; // Info about the skill
 	public RichTextLabel info_text;
 	public string ability_type;
 	private CustomSignals _customSignals;
@@ -49,7 +49,7 @@ public partial class AbilityButton : Button
 	{
 		assign_button.Icon = this.Icon;
 		icon_button.Icon = this.Icon;
-		GD.Print(icon_button.Name);
+		// GD.Print(icon_button.Name);
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilitySelected), this, assign_button);
 	}
 	public void _on_focus_entered()

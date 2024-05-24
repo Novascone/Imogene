@@ -10,100 +10,137 @@ public partial class Roll : Ability
 	private  bool roll_back = false;
 	private bool roll_forward = false;
 	public bool loaded = false;
+	private bool rolling = false;
+	private Vector3 temp_rotation = Vector3.Zero;
+	Timer roll_timer;
 	
 	// public string description = "rolls";
+	private CustomSignals _customSignals; // Custom signal instance
+	public override void _Ready()
+    {	
+		roll_timer = GetNode<Timer>("RollTimer");
+		
+		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.AnimationFinished += HandleAnimationFinished;
+		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		_customSignals.AbilityRemoved += HandleAbilityRemoved;
+
+		
+    }
 
 	public override void _PhysicsProcess(double delta)
 	{
-
-	}
-	public override void Execute(player s)
-	{
-		if(roll_time == 13)
+		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
 		{
-
-			Roll_(s);
+			player.using_movement_ability = true;
+			roll_timer.Start(); // Starts roll timer which is exactly the same time as the roll animation
+			Execute();
 		}
-		RollHandler(s);
+		if(rolling)
+		{
+			player.Rotation = temp_rotation; // Gets the rotation of the player the moment they roll
+			if(roll_timer.TimeLeft > 0.65) // Sets the speed of the player during the roll, depending on where they are in the roll
+			{
+				player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
+				GD.Print("Speeding up");
+			}
+			else
+			{
+				player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
+				GD.Print("Slowing Down");
+			}
+			
+		}
+		else
+		{
+			temp_rotation = Vector3.Zero; // reset
+		}
 	}
-	public void Roll_(player s)	// Increases velocity
+	public override void Execute()
 	{
-		roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
-		roll_velocity += s.Velocity * 4;
-	}
-
-	public void RollHandler(player s)
-	{
-		if(s.blend_direction.X > 0 && s.blend_direction.Y > 0)
+		temp_rotation = player.Rotation;
+		if(player.blend_direction.X > 0 && player.blend_direction.Y > 0) // Determines which roll animation to use
 		{
 			roll_right = true;
 		}
-		if(s.blend_direction.X < 0 && s.blend_direction.Y < 0)
+		if(player.blend_direction.X < 0 && player.blend_direction.Y < 0)
 		{
 			roll_left = true;
 		}
-		if(s.blend_direction.X > 0 && s.blend_direction.Y < 0)
+		if(player.blend_direction.X > 0 && player.blend_direction.Y < 0)
 		{
 			roll_right = true;
 		}
-		if(s.blend_direction.X < 0 && s.blend_direction.Y > 0)
+		if(player.blend_direction.X < 0 && player.blend_direction.Y > 0)
 		{
 			roll_left = true;
 		}
-		if(s.blend_direction.X > 0 && s.blend_direction.Y == 0)
+		if(player.blend_direction.X > 0 && player.blend_direction.Y == 0)
 		{
 			roll_right = true;
 		}
-		if(s.blend_direction.X < 0 && s.blend_direction.Y == 0)
+		if(player.blend_direction.X < 0 && player.blend_direction.Y == 0)
 		{
 			roll_left = true;
 		}
-		if(s.blend_direction.X == 0 && s.blend_direction.Y > 0)
+		if(player.blend_direction.X == 0 && player.blend_direction.Y > 0)
 		{
 			roll_forward = true;
 		}
-		if(s.blend_direction.X == 0 && s.blend_direction.Y < 0)
+		if(player.blend_direction.X == 0 && player.blend_direction.Y < 0)
 		{
 			roll_back = true;
 		}
-		if(roll_time != 0)
+		if(!rolling)
 		{
-			// Lerps to zero
-			if(roll_time < 10)
-			{
-				s.velocity.X = Mathf.Lerp(roll_velocity.X, 0, 0.1f);
-				s.velocity.Z = Mathf.Lerp(roll_velocity.Z, 0, 0.1f);
-			}
-			else if(roll_time > 10)
-			{
-				s.velocity.X = Mathf.Lerp(0, roll_velocity.X, 0.7f);
-				s.velocity.Z = Mathf.Lerp(0, roll_velocity.Z, 0.7f);
-			}
-			
-			roll_time -= 1;
-			// GD.Print(roll_time);
-			// GD.Print("velocity in roll ", s.velocity);
+			rolling = true;
+			roll_velocity = Vector3.Zero; 
+			// roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
+			roll_velocity += player.Velocity * 1.5f; // Set roll velocity
+			player.tree.Set("parameters/conditions/roll_back", roll_back); // Set animations
+			player.tree.Set("parameters/Master/Main/conditions/rolling", roll_forward);
+			player.tree.Set("parameters/conditions/roll_left", roll_left);
+			player.tree.Set("parameters/conditions/roll_right", roll_right);
 		}
-		if(roll_time == 1)
-		{
-			// Sets velocity to 0 after roll
-			s.velocity = Vector3.Zero;
-			s.blend_direction = Vector2.Zero;
-		}
-		if(roll_time == 0)
-		{
-			roll_time = 13;
-			roll_back = false;
-			roll_forward = false;
-			roll_right = false;
-			roll_left = false;
-			s.using_ability = false;
-			
-		}
-		s.tree.Set("parameters/conditions/roll_back", roll_back);
-		s.tree.Set("parameters/conditions/roll_forward", roll_forward);
-		s.tree.Set("parameters/conditions/roll_left", roll_left);
-		s.tree.Set("parameters/conditions/roll_right", roll_right);
+		
 	}
+	
+	private void OnAnimationFinished(StringName animName)
+    {
+        if(animName == "Roll_Forward")
+		{
+			GD.Print("Roll finished");
+			rolling = false;
+			player.using_movement_ability = false;
+			player.tree.Set("parameters/Master/Main/conditions/rolling", false);
+		}
+    }
+
+    private void HandleAbilityRemoved(string ability, string button_removed)
+    {
+        if(this.Name == ability)
+		{
+			useable = false;
+			assigned_button = null;
+			cross_type = null;
+			cross = null;
+		}
+    }
+
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    {
+        if(this.Name == ability)
+		{
+			useable = true;
+			CheckAssignment(button_name);
+		}
+    }
+
+	private void HandlePlayerInfo(player s)
+    {
+        player = s;
+		player.tree.AnimationFinished += OnAnimationFinished;
+    }
 	
 }

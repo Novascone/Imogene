@@ -6,3 +6,5 @@
 script = ExtResource("1_ni7k1")
 description = "Rolls"
 ability_type = "Movement"
+
+[node name="RollTimer" type="Timer" parent="."]
