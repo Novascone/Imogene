@@ -20,7 +20,7 @@ public partial class Ability : Node3D
     public player player;
 
     public bool useable = true;
-    public bool in_use = true;
+    public bool in_use = false;
     public int pressed = 0;
     public bool animation_finished = false;
 
@@ -36,6 +36,29 @@ public partial class Ability : Node3D
     public virtual void Execute()
     {
         // GD.Print("Execute");
+    }
+    public void AddToAbilityList(Ability ability)
+    {
+        if(!player.abilities_in_use.Contains(ability))
+        {
+            player.abilities_in_use.AddFirst(ability);
+            in_use = true;
+        }
+        player.ability_in_use = player.abilities_in_use.First.Value;
+    }
+    public void RemoveFromAbilityList(Ability ability)
+    {
+        
+        player.abilities_in_use.Remove(ability);
+        if(player.abilities_in_use.Count > 0)
+        {
+            player.ability_in_use = player.abilities_in_use.First.Value;
+        }
+        else
+        {
+            player.ability_in_use = null;
+        }
+        in_use = false;
     }
 
     public virtual void AnimationHandler(player s, string animation)

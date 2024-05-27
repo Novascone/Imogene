@@ -33,6 +33,7 @@ public partial class Roll : Ability
 	{
 		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
 		{
+			AddToAbilityList(this);
 			player.using_movement_ability = true;
 			roll_timer.Start(); // Starts roll timer which is exactly the same time as the roll animation
 			Execute();
@@ -43,12 +44,12 @@ public partial class Roll : Ability
 			if(roll_timer.TimeLeft > 0.65) // Sets the speed of the player during the roll, depending on where they are in the roll
 			{
 				player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
-				GD.Print("Speeding up");
+				// GD.Print("Speeding up");
 			}
 			else
 			{
 				player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
-				GD.Print("Slowing Down");
+				// GD.Print("Slowing Down");
 			}
 			
 		}
@@ -59,7 +60,11 @@ public partial class Roll : Ability
 	}
 	public override void Execute()
 	{
-		temp_rotation = player.Rotation;
+		if(!rolling)
+		{
+			temp_rotation = player.Rotation;
+		}
+		
 		if(player.blend_direction.X > 0 && player.blend_direction.Y > 0) // Determines which roll animation to use
 		{
 			roll_right = true;
@@ -110,10 +115,11 @@ public partial class Roll : Ability
     {
         if(animName == "Roll_Forward")
 		{
-			GD.Print("Roll finished");
+			// GD.Print("Roll finished");
 			rolling = false;
 			player.using_movement_ability = false;
 			player.tree.Set("parameters/Master/Main/conditions/rolling", false);
+			RemoveFromAbilityList(this);
 		}
     }
 

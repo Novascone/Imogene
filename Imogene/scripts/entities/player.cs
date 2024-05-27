@@ -22,7 +22,7 @@ public partial class player : Entity
 	private List<Ability> abilities = new List<Ability>(); // List of abilities the player has access to. The Abilities are loaded from a PackedScene which is a Node3D with a script attached to it
 	private bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
 	public Ability ability_in_use; // The ability that the player is currently using
-	public List<Ability> abilities_in_use = new List<Ability>();
+	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
 	public bool test_abilities_assigned = false;
 	public bool recovery_1 = false;
 	public bool recovery_2 = false;
@@ -208,6 +208,16 @@ public partial class player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
+		
+		// foreach(Ability ability in abilities_in_use)
+		// {
+		// 	GD.Print(ability.Name);
+		// }
+		// if(ability_in_use != null)
+		// {
+		// 	GD.Print(ability_in_use.Name);
+		// }
+		
 		
 		// GD.Print("X velocity from player: " + velocity.X);
 		// GD.Print("Z velocity from player: " + velocity.Z);

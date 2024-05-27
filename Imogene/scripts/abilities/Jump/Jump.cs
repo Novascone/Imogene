@@ -32,7 +32,7 @@ public partial class Jump : Ability
     }
 	  public override void _PhysicsProcess(double delta)
     {
-		
+		// GD.Print(in_use);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
@@ -40,6 +40,7 @@ public partial class Jump : Ability
 		}
 		if(player.can_use_abilities && Input.IsActionPressed(assigned_button) && CheckCross() || player.jumping)
 		{
+			AddToAbilityList(this);
 			Execute();
 		}
 		
@@ -51,24 +52,24 @@ public partial class Jump : Ability
 		
 		if(player.IsOnFloor() && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
-			GD.Print("start jumping");
+			// GD.Print("start jumping");
 			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player.velocity.Y = player.jump_speed;			
 			player.jumping = true;
 		}
 		else if(player.IsOnFloor())
 		{
-			GD.Print("stop jumping");
+			// GD.Print("stop jumping");
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
-			in_use = false;
+			RemoveFromAbilityList(this);
 		}
         if(!player.IsOnFloor())
 		{
 			player.tree.Set("parameters/Master/Main/conditions/jumping", false);
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
-			GD.Print("still jumping");
+			// GD.Print("still jumping");
 			player.jumping = true;
 		}
 		

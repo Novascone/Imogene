@@ -30,7 +30,6 @@ public partial class Slash : Ability
 
     public override void _PhysicsProcess(double delta)
     {
-		
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
@@ -46,6 +45,8 @@ public partial class Slash : Ability
 		}
 		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
 		{
+			GD.Print(held);
+			AddToAbilityList(this);
 			if(held == false && pressed == 0)
 			{
 				held_timer.Start();	
@@ -56,7 +57,9 @@ public partial class Slash : Ability
 			}
 			else if(Input.IsActionJustPressed(assigned_button))
 			{
+				
 				pressed += 1;
+				// GD.Print("Pressed: " + pressed);
 			}
 			Execute();
 		}
@@ -130,6 +133,7 @@ public partial class Slash : Ability
 				if(pressed > 2)
 				{
 					pressed = 1;
+					held = true;
 				}
 			}
 		
@@ -143,7 +147,7 @@ public partial class Slash : Ability
 		{
 			GD.Print("can not use that ability with equipped weapon");
 			player.can_move = true;
-			in_use = false;
+			RemoveFromAbilityList(this);
 		}
 	}
 
@@ -172,7 +176,7 @@ public partial class Slash : Ability
 				player.hitbox.Monitoring = false;
 				player.recovery_1 = false;
 				pressed -= 1;
-				// GD.Print("one presses");
+				GD.Print("one presses");
 				player.hitbox.RemoveFromGroup("player_hitbox");
 				player.attack_1_set = false;
 				if(player.attack_2_set)
@@ -182,23 +186,28 @@ public partial class Slash : Ability
 					else
 					{
 						player.can_move = true;
+						RemoveFromAbilityList(this);
 					}
-				
 			}
 			if(pressed == 2)
-				{
-					player.tree.Set("parameters/Master/conditions/attacking", false);
-					player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-					player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
-					player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-					player.hitbox.Monitoring = false;
-					player.recovery_1 = false;
-					player.can_move = false;
-				}
+			{
+				pressed -= 1;
+				player.tree.Set("parameters/Master/conditions/attacking", false);
+				player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+				player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
+				player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
+				player.hitbox.Monitoring = false;
+				player.recovery_1 = false;
+				player.can_move = false;
+			}
         }
 
         if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
         {
+			// if(pressed == 2)
+			// {
+			// 	temp_pressed = 1;
+			// }
             player.recovery_2 = true;
 			player.tree.Set("parameters/Master/conditions/attacking", false);
 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
@@ -207,9 +216,23 @@ public partial class Slash : Ability
 			player.hitbox.Monitoring = false;
 			player.can_move = true;
 			player.hitbox.RemoveFromGroup("player_hitbox");
-			// GD.Print("two presses");
+			GD.Print(pressed);
 			
-			pressed = 0;
+			if(pressed != 2)
+			{
+				GD.Print("Pressed set to zero");
+				pressed = 0;
+			}
+			else
+			{
+				GD.Print("Pressed set to 1");
+				pressed = 1;
+			}
+
+			
+			
+			
+			
         }
         if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
         {
@@ -219,8 +242,9 @@ public partial class Slash : Ability
 			player.attack_2_set = false;
 			if(!player.attack_1_set)
 			{
-				in_use = false;
+				RemoveFromAbilityList(this);
 			}
+			
         }
     }
 
