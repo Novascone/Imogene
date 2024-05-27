@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=78 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
@@ -68,10 +68,16 @@ size = Vector2(34, 33)
 size = Vector2(34, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jthq1"]
-size = Vector2(88, 85)
+size = Vector2(80, 77)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsum0"]
+size = Vector2(63, 65)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmpsh"]
-size = Vector2(91, 88)
+size = Vector2(81, 78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nne11"]
+size = Vector2(65, 66)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5q4q5"]
 size = Vector2(82, 85)
@@ -5736,10 +5742,10 @@ horizontal_alignment = 1
 
 [node name="Ring1" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 63.0
-offset_top = 276.0
-offset_right = 103.0
-offset_bottom = 316.0
+offset_left = 61.0
+offset_top = 266.0
+offset_right = 101.0
+offset_bottom = 306.0
 focus_neighbor_top = NodePath("../Gloves")
 focus_neighbor_right = NodePath("../Pants")
 focus_neighbor_bottom = NodePath("../MainHand")
@@ -5782,9 +5788,9 @@ horizontal_alignment = 1
 [node name="Ring2" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
 offset_left = 272.0
-offset_top = 276.0
+offset_top = 272.0
 offset_right = 312.0
-offset_bottom = 316.0
+offset_bottom = 312.0
 focus_neighbor_left = NodePath("../Pants")
 focus_neighbor_top = NodePath("../Bracers")
 focus_neighbor_bottom = NodePath("../OffHand")
@@ -5826,16 +5832,16 @@ horizontal_alignment = 1
 
 [node name="MainHand" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 340.0
-offset_right = 137.0
-offset_bottom = 440.0
+offset_left = 38.0
+offset_top = 315.0
+offset_right = 128.0
+offset_bottom = 405.0
 script = ExtResource("6_rtdw8")
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand/Area2D"]
-position = Vector2(50, 49.5)
+position = Vector2(46, 45.5)
 shape = SubResource("RectangleShape2D_jthq1")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand"]
@@ -5867,12 +5873,56 @@ text = "Main
 Hand"
 horizontal_alignment = 1
 
+[node name="MainSecondary" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 419.0
+offset_right = 125.0
+offset_bottom = 494.0
+script = ExtResource("6_rtdw8")
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary"]
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.009
+offset_left = -18.5
+offset_top = -30.0
+offset_right = 21.5
+offset_bottom = 10.01
+grow_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary/Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_top = -40.0
+offset_right = 37.5
+offset_bottom = -5.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary/Info/PanelContainer"]
+layout_mode = 2
+text = "Main 
+Hand
+Secondary"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary/Area2D"]
+position = Vector2(37, 38)
+shape = SubResource("RectangleShape2D_tsum0")
+
 [node name="OffHand" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 246.0
-offset_top = 340.0
-offset_right = 346.0
-offset_bottom = 440.0
+offset_left = 252.0
+offset_top = 324.0
+offset_right = 342.0
+offset_bottom = 414.0
 focus_neighbor_left = NodePath("../Boots")
 focus_neighbor_top = NodePath("../Ring2")
 text = "
@@ -5882,7 +5932,7 @@ script = ExtResource("6_rtdw8")
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand/Area2D"]
-position = Vector2(50.5, 50)
+position = Vector2(45.5, 45)
 shape = SubResource("RectangleShape2D_hmpsh")
 
 [node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand"]
@@ -5913,6 +5963,54 @@ layout_mode = 2
 text = "Off
 Hand"
 horizontal_alignment = 1
+
+[node name="OffHandSecondary" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
+layout_mode = 0
+offset_left = 251.0
+offset_top = 422.0
+offset_right = 326.0
+offset_bottom = 497.0
+focus_neighbor_left = NodePath("../Boots")
+focus_neighbor_top = NodePath("../Ring2")
+text = "
+"
+script = ExtResource("6_rtdw8")
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -14.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 17.0
+grow_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary/Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_top = -40.0
+offset_right = 37.5
+offset_bottom = -5.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary/Info/PanelContainer"]
+layout_mode = 2
+text = "Off
+Hand 
+Secondary"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary/Area2D"]
+position = Vector2(38, 37)
+shape = SubResource("RectangleShape2D_nne11")
 
 [node name="Pants" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
@@ -5962,10 +6060,10 @@ horizontal_alignment = 1
 
 [node name="Boots" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor"]
 layout_mode = 0
-offset_left = 146.0
-offset_top = 383.0
-offset_right = 236.0
-offset_bottom = 473.0
+offset_left = 143.0
+offset_top = 406.0
+offset_right = 233.0
+offset_bottom = 496.0
 focus_neighbor_left = NodePath("../MainHand")
 focus_neighbor_top = NodePath("../Pants")
 focus_neighbor_right = NodePath("../OffHand")
@@ -9497,8 +9595,12 @@ offset_bottom = -2.99998
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Ring2" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainHand" method="_on_focus_exited"]
+[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/MainSecondary" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHand" method="_on_focus_exited"]
+[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/OffHandSecondary" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots" method="_on_focus_entered"]

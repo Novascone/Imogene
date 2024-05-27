@@ -4,10 +4,13 @@ using System;
 public partial class Jump : Ability
 {
 	bool off_floor;
+	private Timer coyote = new Timer();
+	private bool coyote_elapsed = false;
 	int timer = 0;
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
+		coyote = GetNode<Timer>("Coyote");
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
@@ -32,6 +35,13 @@ public partial class Jump : Ability
     }
 	  public override void _PhysicsProcess(double delta)
     {
+		if(!player.IsOnFloor() && !coyote_elapsed)
+		{
+			GD.Print("coyote timer started");
+			coyote.Start();
+			coyote_elapsed = true;
+		}
+		GD.Print(coyote.TimeLeft);
 		// GD.Print(in_use);
 		if(player.can_move == false)
 		{
@@ -50,7 +60,7 @@ public partial class Jump : Ability
     public override void Execute()
     {	
 		
-		if(player.IsOnFloor() && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
+		if((player.IsOnFloor() || coyote.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			// GD.Print("start jumping");
 			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
@@ -60,9 +70,11 @@ public partial class Jump : Ability
 		else if(player.IsOnFloor())
 		{
 			// GD.Print("stop jumping");
+			coyote_elapsed = false;
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
+			
 			RemoveFromAbilityList(this);
 		}
         if(!player.IsOnFloor())
