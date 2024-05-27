@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class arms : Node
+public partial class Arm : Node
 {
 	[Export]
 	public int strength;
@@ -78,5 +78,6 @@ public partial class arms : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		GD.Print("I have " + strength + " strength");
 	}
 }
