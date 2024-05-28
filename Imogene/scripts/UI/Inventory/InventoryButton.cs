@@ -31,6 +31,19 @@ public partial class InventoryButton : Button
 		// }
 	}
 
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+		}
+		
+	}
+
 	public void UpdateItem(Item item, int index)
 	{
 		this.index = index;

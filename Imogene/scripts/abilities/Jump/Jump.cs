@@ -41,14 +41,14 @@ public partial class Jump : Ability
 			coyote.Start();
 			coyote_elapsed = true;
 		}
-		GD.Print(coyote.TimeLeft);
+		// GD.Print(coyote.TimeLeft);
 		// GD.Print(in_use);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
 		}
-		if(player.can_use_abilities && Input.IsActionPressed(assigned_button) && CheckCross() || player.jumping)
+		if(player.can_use_abilities && button_pressed && CheckCross() || player.jumping)
 		{
 			AddToAbilityList(this);
 			Execute();

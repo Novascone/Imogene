@@ -104,6 +104,19 @@ public partial class Abilities_Interface : UI
 		_customSignals.AbilityRemoved += HandleAbilityRemoved;
 	}
 
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+		}
+		
+	}
+
     private void HandleAbilityAccept()
     {
         current_ui = ability_binds;

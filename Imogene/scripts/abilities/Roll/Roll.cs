@@ -31,7 +31,7 @@ public partial class Roll : Ability
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
+		if(player.can_use_abilities && useable && button_pressed && CheckCross())
 		{
 			AddToAbilityList(this);
 			player.using_movement_ability = true;
@@ -57,6 +57,7 @@ public partial class Roll : Ability
 		{
 			temp_rotation = Vector3.Zero; // reset
 		}
+		
 	}
 	public override void Execute()
 	{

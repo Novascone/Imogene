@@ -24,5 +24,18 @@ public partial class BottomButton : Button
 		info.Hide();
 	}
 
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+		}
+		
+	}
+
 
 }

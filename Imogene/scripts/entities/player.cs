@@ -217,6 +217,7 @@ public partial class player : Entity
 		// {
 		// 	GD.Print(ability_in_use.Name);
 		// }
+		// GD.Print("Can use abilities: " + can_use_abilities);
 		
 		
 		// GD.Print("X velocity from player: " + velocity.X);
@@ -337,6 +338,8 @@ public partial class player : Entity
 			velocity.Y -= fall_speed * (float)delta;
 		}
 	}
+
+	
 
 
 	private void LoadAbilities() // Loads abilities

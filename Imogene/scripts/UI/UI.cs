@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
-public partial class UI : CanvasLayer
+public partial class UI : Control
 {
 
 	private GridContainer item_grid_container;
@@ -89,9 +89,9 @@ public partial class UI : CanvasLayer
 	public Button consumable_3;
 	public Button consumable_4;
 	
-	public CanvasLayer character_inventory;
+	public Control character_inventory;
 	public PanelContainer interact_inventory;
-	public CanvasLayer abilities;
+	public Control abilities;
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
 
@@ -173,11 +173,11 @@ public partial class UI : CanvasLayer
 		consumable_3 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable3");
 		consumable_4 = GetNode<Button>("HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable4");
 
-		character_inventory = GetNode<CanvasLayer>("Inventory");
+		character_inventory = GetNode<Control>("Inventory");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
-		abilities = GetNode<CanvasLayer>("Abilities");
+		abilities = GetNode<Control>("Abilities");
 		
 		
 
@@ -211,6 +211,8 @@ public partial class UI : CanvasLayer
 		PopulateButtons();
 
 		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+
+		FocusMode = FocusModeEnum.All;
 	}
 
     private void HandleEquipConsumable(Consumable item, int consumable_slot)
@@ -220,12 +222,41 @@ public partial class UI : CanvasLayer
 		if(consumable_slot == 3){consumable_3.Icon = item.icon;}
 		if(consumable_slot == 4){consumable_4.Icon = item.icon;}
     }
-
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(inventory_open && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+		}
+		
+	}
+	// public override void _UnhandledInput(InputEvent @event)
+	// {
+	// 	if(@event is InputEventJoypadButton eventJoypadButton)
+	// 	{
+	// 		if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+	// 		{
+	// 			GD.Print("event accepted ");
+	// 			AcceptEvent();
+	// 		}
+	// 	}
+	// }
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		// var node_focused = GetViewport().GuiGetFocusOwner();
+		// if(node_focused != null)
+		// {
+		// 	GD.Print(node_focused.Name);
+		// }
+		
+		// GD.Print(HasFocus());
 		if(this_player != null)
 		{
 			
@@ -252,6 +283,9 @@ public partial class UI : CanvasLayer
 
 		if(Input.IsActionJustPressed("B"))
 		{
+			
+			GrabFocus();
+			GD.Print(HasFocus());
 			if(inventory_open)
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
@@ -273,7 +307,7 @@ public partial class UI : CanvasLayer
 
 		if(Input.IsActionJustPressed("Inventory"))
 		{
-			
+			GrabFocus();
 			if(!inventory_open)
 			{
 				inventory_open = true;
@@ -611,8 +645,9 @@ public partial class UI : CanvasLayer
 
 
 
-	public void _on_sheet_button_down()
+	public void _on_sheet_label_button_down()
 	{
+		GD.Print("sheet button down");
 		character_Sheet_depth.Visible = !character_Sheet_depth.Visible;
 		mats.Hide();
 	}

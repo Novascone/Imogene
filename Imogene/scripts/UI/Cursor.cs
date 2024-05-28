@@ -30,4 +30,6 @@ public partial class Cursor : Sprite2D
     public override void _Process(double delta)
 	{
 	}
+
+	
 }

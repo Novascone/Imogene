@@ -18,6 +18,7 @@ public partial class Ability : Node3D
     public string action_button { get; set; }
     public bool cross_selected;
     public player player;
+    public bool button_pressed;
 
     public bool useable = true;
     public bool in_use = false;
@@ -30,6 +31,27 @@ public partial class Ability : Node3D
     {
       
     }
+
+    public void CheckCanUse()
+    {
+       
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+	{
+        if(assigned_button != null)
+        {
+            if(@event.IsActionPressed(assigned_button))
+            {
+                button_pressed = true;
+            }
+            if(@event.IsActionReleased(assigned_button))
+            {
+                button_pressed = false;
+            }
+        }
+		
+	}
 
    
 

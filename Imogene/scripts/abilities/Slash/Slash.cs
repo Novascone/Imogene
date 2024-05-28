@@ -43,7 +43,7 @@ public partial class Slash : Ability
 		{
 			player.speed = 7.0f;
 		}
-		if(player.can_use_abilities && useable && Input.IsActionPressed(assigned_button) && CheckCross())
+		if(player.can_use_abilities && useable && button_pressed && CheckCross())
 		{
 			GD.Print(held);
 			AddToAbilityList(this);
