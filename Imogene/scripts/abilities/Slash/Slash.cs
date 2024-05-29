@@ -100,7 +100,7 @@ public partial class Slash : Ability
 			player.slash_damage = player.weapon_damage;
 			player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 			player.hitbox.Monitoring = true;
-			if(player.weapon_type == "one_handed_axe") // play one handed axe animation
+			if(player.weapon_type == "dual_wield") // play one handed axe animation
 			{
 				if(pressed == 1)
 				{
@@ -135,6 +135,43 @@ public partial class Slash : Ability
 					pressed = 1;
 					held = true;
 				}
+			}
+			if(player.weapon_type == "one_handed_axe") // play one handed axe animation
+			{
+				if(pressed == 1)
+				{
+					if(!player.attack_1_set) // Sets swing 1 animation
+					{
+						// GD.Print("Setting swing 1");
+						player.attack_1_set = true;
+						player.tree.Set("parameters/Master/conditions/attacking", true);
+						player.tree.Set("parameters/Master/Attacking/Attack_1/conditions/melee", true);
+						player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/conditions/Slash", true);
+						player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/conditions/One_Handed", true);
+						player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", true);
+						// player.attack_2_set = false;
+						player.can_move = false;
+						
+					}
+				}
+				// if(pressed == 2)
+				// {
+				// 	if(!player.attack_2_set) // Sets swing 2 animation
+				// 	{
+				// 		player.tree.Set("parameters/Master/conditions/attacking", true);
+				// 		player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
+				// 		player.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
+				// 		player.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
+				// 		player.attack_2_set = true;
+				// 		player.attack_1_set = false;
+				// 		player.can_move = false;
+				// 	}
+				// }
+				// if(pressed > 2)
+				// {
+				// 	pressed = 1;
+				// 	held = true;
+				// }
 			}
 		
 	
@@ -246,6 +283,21 @@ public partial class Slash : Ability
 			}
 			
         }
+		if(animName == "Slash")
+		{
+			GD.Print("slash finished");
+			player.tree.Set("parameters/Master/conditions/attacking", false);
+			player.tree.Set("parameters/Master/Attacking/Attack_1/conditions/melee", false);
+			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/conditions/Slash", false);
+			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/conditions/One_Handed", false);
+			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
+			player.can_move = true;
+			player.attacking = false;
+			player.hitbox.Monitoring = false;
+			player.attack_1_set = false;
+			pressed -= 1;
+			player.hitbox.RemoveFromGroup("player_hitbox");
+		}
     }
 
     private void HandleAbilityRemoved(string ability, string button_removed)

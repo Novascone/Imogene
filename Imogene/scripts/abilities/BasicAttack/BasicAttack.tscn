@@ -5,3 +5,6 @@
 [node name="BasicAttack" type="Node3D"]
 script = ExtResource("1_4umai")
 ability_type = "attack"
+
+[node name="HeldTimer" type="Timer" parent="."]
+one_shot = true
