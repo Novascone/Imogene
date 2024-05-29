@@ -3,6 +3,12 @@ using System;
 using System.ComponentModel;
 
 
+// Ability class, abilities must have a script, a resource, and a scene
+// The scene will be a Node3D named the same as the ability, capitalized
+// The resource will have an ID, Name, Description, Ability Path, Icon, Type, and up to 5 modifiers
+// The Ability Path is not utilized right now. The Type decides which category it will be in
+// The script controls how the ability will function
+
 public partial class Ability : Node3D
 {
     [Export]

@@ -222,7 +222,8 @@ public partial class UI : Control
 		if(consumable_slot == 3){consumable_3.Icon = item.icon;}
 		if(consumable_slot == 4){consumable_4.Icon = item.icon;}
     }
-	public override void _GuiInput(InputEvent @event)
+	
+	public override void _UnhandledInput(InputEvent @event)
 	{
 		if(@event is InputEventJoypadButton eventJoypadButton)
 		{
@@ -232,19 +233,7 @@ public partial class UI : Control
 				AcceptEvent();
 			}
 		}
-		
 	}
-	// public override void _UnhandledInput(InputEvent @event)
-	// {
-	// 	if(@event is InputEventJoypadButton eventJoypadButton)
-	// 	{
-	// 		if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
-	// 		{
-	// 			GD.Print("event accepted ");
-	// 			AcceptEvent();
-	// 		}
-	// 	}
-	// }
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -685,7 +674,7 @@ public partial class UI : Control
 			hover_over_button = (InventoryButton)button;
 			hover_over_button.GrabFocus();
 		}
-		else if (button is Button)
+		else if (button is Button && button.Visible)
 		{
 			hover_over_button_non_inventory = (Button)button;
 			hover_over_button_non_inventory.GrabFocus();
