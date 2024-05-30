@@ -324,8 +324,8 @@ public partial class player : Entity
 		Velocity = velocity;
 		
 		tree.Set("parameters/Master/Main/IW/blend_position", blend_direction);
-		tree.Set("parameters/Master/Attacking/Attack_1/Recovery_1/Walk_Recovery/blend_position", blend_direction);
-		tree.Set("parameters/Master/Attacking/Attack_1/Melee_Recovery_1/Slash/One_Handed_Slash_recovery_1/One_Handed_Medium_Recovery/Walk_Recovery/blend_position", blend_direction); // Set blend position
+		tree.Set("parameters/Master/Ability/Ability_1/Recovery_1/Walk_Recovery/blend_position", blend_direction);
+		tree.Set("parameters/Master/Ability/Ability_1/Melee_Recovery_1/Slash/One_Handed_Slash_recovery_1/One_Handed_Medium_Recovery/Walk_Recovery/blend_position", blend_direction); // Set blend position
 		// tree.Set("parameters/Master/Attack/AttackSpeed/scale", attack_speed);
 		MoveAndSlide();
 

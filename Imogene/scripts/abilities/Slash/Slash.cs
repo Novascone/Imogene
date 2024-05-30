@@ -244,10 +244,10 @@ public partial class Slash : Ability
 			// 	temp_pressed = 1;
 			// }
             player.recovery_2 = true;
-			player.tree.Set("parameters/Master/conditions/attacking", false);
-			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-			player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
+			player.tree.Set("parameters/Master/conditions/using_ability", false);
+			player.tree.Set("parameters/Master/Ability/conditions/not_attacking", true);
+			player.tree.Set("parameters/Master/Ability/conditions/no_second", true);
+			player.tree.Set("parameters/Master/Ability/conditions/second_action", false);
 			player.hitbox.Monitoring = false;
 			// player.can_move = true;
 			player.hitbox.RemoveFromGroup("player_hitbox");
@@ -294,11 +294,11 @@ public partial class Slash : Ability
             if(pressed <= 1)
 			{
 				GD.Print("slash 1 recovery finished");
-				player.tree.Set("parameters/Master/conditions/attacking", false);
-				player.tree.Set("parameters/Master/Attacking/Attack_1/conditions/melee", false);
-				player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/conditions/Slash", false);
-				player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/conditions/One_Handed", false);
-				player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
+				player.tree.Set("parameters/Master/conditions/using_ability", false);
+				player.tree.Set("parameters/Master/Attacking/Ability/conditions/melee", false);
+				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/conditions/Slash", false);
+				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/conditions/One_Handed", false);
+				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
 				player.hitbox.Monitoring = false;
 				player.recovery_1 = false;
 				// pressed -= 1;
@@ -307,7 +307,7 @@ public partial class Slash : Ability
 				player.attack_1_set = false;
 				if(player.attack_2_set)
 					{
-						player.can_move = false;
+						// player.can_move = false;
 					}
 					else
 					{
@@ -437,11 +437,11 @@ public partial class Slash : Ability
 			GD.Print("Setting swing 1");
 			player.attack_1_set = true;
 			GD.Print("Setting animations");
-			player.tree.Set("parameters/Master/conditions/attacking", true);
-			player.tree.Set("parameters/Master/Attacking/Attack_1/conditions/melee", true);
-			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/conditions/Slash", true);
-			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/conditions/One_Handed", true);
-			player.tree.Set("parameters/Master/Attacking/Attack_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", true);
+			player.tree.Set("parameters/Master/conditions/using_ability", true);
+			player.tree.Set("parameters/Master/Ability/Ability_1/conditions/melee", true);
+			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/conditions/Slash", true);
+			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/Slash/conditions/One_Handed", true);
+			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", true);
 			// pressed -= 1;
 			// player.attack_2_set = false;
 			player.can_move = false;
