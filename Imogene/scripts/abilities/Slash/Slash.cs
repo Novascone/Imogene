@@ -281,6 +281,7 @@ public partial class Slash : Ability
 		{
 			// GD.Print("slash 1 finished");
 			
+			player.recovery_1 = true;
 			player.can_move = true;
 			player.attacking = false;
 			player.hitbox.Monitoring = false;
