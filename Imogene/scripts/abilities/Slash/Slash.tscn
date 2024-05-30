@@ -12,7 +12,10 @@ one_shot = true
 [node name="HeldTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="SwingTimerSecondary" type="Timer" parent="."]
+[node name="SecondarySwingTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
 
 [connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
 [connection signal="timeout" from="HeldTimer" to="." method="_on_held_timer_timeout"]
+[connection signal="timeout" from="SecondarySwingTimer" to="." method="_on_secondary_swing_timer_timeout"]
