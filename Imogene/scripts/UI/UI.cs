@@ -23,6 +23,7 @@ public partial class UI : Control
 	private List<Item> items = new List<Item>();
 
 	public bool UI_element_open;
+	public bool player_in_interact_area;
 	private bool clicked_on;
 	public bool over_trash;
 	public bool over_head;
@@ -232,7 +233,13 @@ public partial class UI : Control
 				GD.Print("event accepted ");
 				AcceptEvent();
 			}
+			if(UI_element_open && eventJoypadButton.ButtonIndex == JoyButton.A)
+			{
+
+				AcceptEvent();
+			}
 		}
+		
 	}
 
 
@@ -261,7 +268,7 @@ public partial class UI : Control
 		// UpdateHealth();
 		// UpdateResource();
 
-		if(inventory_open || abilities_open)
+		if(inventory_open || abilities_open || player_in_interact_area)
 		{
 			UI_element_open = true;
 		}
@@ -914,12 +921,14 @@ public partial class UI : Control
 	
 		if(in_interact_area)
 		{
+			
 			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
 			Label press = (Label)TextContainer.GetChild(0);
 			Label object_to_interact = (Label)TextContainer.GetChild(1);
-			press.Text = "Y : ";
+			press.Text = "A : ";
 			object_to_interact.Text = "Interact with " + area.GetParent().Name;
-			interact_bar.Visible = true;
+			interact_bar.Show();
+			player_in_interact_area = true;
 			if(interacting)
 			{
 				interact_inventory.Show();
@@ -933,6 +942,7 @@ public partial class UI : Control
 		else
 		{
 			interact_bar.Visible = false;
+			player_in_interact_area = false;
 			HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
 			Label press = (Label)TextContainer.GetChild(0);
 			Label object_to_interact = (Label)TextContainer.GetChild(1);

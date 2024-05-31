@@ -21,7 +21,7 @@ public partial class Roll : Ability
 		roll_timer = GetNode<Timer>("RollTimer");
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 		_customSignals.AbilityRemoved += HandleAbilityRemoved;
@@ -112,7 +112,7 @@ public partial class Roll : Ability
 		
 	}
 	
-	private void OnAnimationFinished(StringName animName)
+	public override void OnAnimationFinished(StringName animName)
     {
         if(animName == "Roll_Forward")
 		{
@@ -144,10 +144,10 @@ public partial class Roll : Ability
 		}
     }
 
-	private void HandlePlayerInfo(player s)
-    {
-        player = s;
-		player.tree.AnimationFinished += OnAnimationFinished;
-    }
+	// private void HandlePlayerInfo(player s)
+    // {
+    //     player = s;
+	// 	player.tree.AnimationFinished += OnAnimationFinished;
+    // }
 	
 }

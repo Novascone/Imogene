@@ -21,7 +21,7 @@ public partial class Slash : Ability
 		held_timer = GetNode<Timer>("HeldTimer"); // Timer to see how long attack is held handles if the play is holding down the button
 		release_timer = GetNode<Timer>("ReleaseTimer");	
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 		_customSignals.AbilityRemoved += HandleAbilityRemoved;
@@ -36,7 +36,6 @@ public partial class Slash : Ability
 		
 		// GD.Print("Swing timer time remaining: " + swing_timer.TimeLeft);
 		// GD.Print(pressed);
-		GD.Print("Releasetimer: " + release_timer.TimeLeft);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
@@ -226,13 +225,14 @@ public partial class Slash : Ability
 	}
 
 
-	 private void HandlePlayerInfo(player s)
-    {
-        player = s;
-		player.tree.AnimationFinished += OnAnimationFinished;
-    }
+	//  private void HandlePlayerInfo(player s)
+    // {
+	// 	GD.Print("got signal");
+    //     player = s;
+	// 	player.tree.AnimationFinished += OnAnimationFinished;
+    // }
 
-	 private void OnAnimationFinished(StringName animName) // Handles logic needed when animations finish
+	 public override void OnAnimationFinished(StringName animName) // Handles logic needed when animations finish
     {
         // if(animName == "Slash_And_Bash_Dual_Wield_Swing_1") 
         // {

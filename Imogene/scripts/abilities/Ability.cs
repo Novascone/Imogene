@@ -63,7 +63,7 @@ public partial class Ability : Node3D
 
     public virtual void Execute()
     {
-        // GD.Print("Execute");
+        GD.Print("access ability child");
     }
     public void AddToAbilityList(Ability ability)
     {
@@ -93,6 +93,17 @@ public partial class Ability : Node3D
     {
         
     }
+    public void GetPlayerInfo(player playerinfo)
+    {
+        player = playerinfo;
+        player.tree.AnimationFinished += OnAnimationFinished;
+    }
+
+    public virtual void OnAnimationFinished(StringName animName)
+    {
+        // throw new NotImplementedException();
+    }
+
     public bool CheckCross()
     {
         if(cross == "left")

@@ -13,7 +13,7 @@ public partial class Jump : Ability
 		coyote = GetNode<Timer>("Coyote");
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.KeyBind += HandleKeyBind;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 
@@ -29,10 +29,10 @@ public partial class Jump : Ability
 		}
     }
 
-    private void HandlePlayerInfo(player s)
-    {
-        player = s;
-    }
+    // private void HandlePlayerInfo(player s)
+    // {
+    //     player = s;
+    // }
 	  public override void _PhysicsProcess(double delta)
     {
 		if(!player.IsOnFloor() && !coyote_elapsed)

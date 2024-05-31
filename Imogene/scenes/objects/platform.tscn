@@ -7,6 +7,8 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_anlxy"]
 
 [node name="Platform" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.12228, 0, 0, 0, 0.287135, 0, 0, 0, 1, 0, 0, 0)

@@ -41,7 +41,7 @@ shape = SubResource("BoxShape3D_hhky2")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
 
-[node name="Target" parent="." instance=ExtResource("5_non4s")]
+[node name="Target" parent="WorldEnvironment" instance=ExtResource("5_non4s")]
 
 [node name="Box" parent="." instance=ExtResource("1_4rjct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)
@@ -101,3 +101,11 @@ transform = Transform3D(-0.0215706, 0, -0.999767, 0, 1, 0, 0.999767, 0, -0.02157
 
 [node name="Platform18" parent="." instance=ExtResource("4_atlgh")]
 transform = Transform3D(-0.777201, 0, -0.629253, 0, 1, 0, 0.629253, 0, -0.777201, -3.43577, 10.6634, -1.10253)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852181, -0.348481, 0.390318, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.905882, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 1.09
+shadow_enabled = true
+sky_mode = 1
