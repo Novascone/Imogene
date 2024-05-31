@@ -10,6 +10,7 @@ public partial class Slash : Ability
 	Timer swing_timer;
 	Timer secondary_swing_timer;
 	Timer held_timer;
+	Timer release_timer;
 	private bool held = false;
 
 	private CustomSignals _customSignals; // Custom signal instance
@@ -18,7 +19,7 @@ public partial class Slash : Ability
 		swing_timer = GetNode<Timer>("SwingTimer");
 		secondary_swing_timer = GetNode<Timer>("SecondarySwingTimer"); // Timer for swinging not used 
 		held_timer = GetNode<Timer>("HeldTimer"); // Timer to see how long attack is held handles if the play is holding down the button
-	
+		release_timer = GetNode<Timer>("ReleaseTimer");	
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
@@ -35,6 +36,7 @@ public partial class Slash : Ability
 		
 		// GD.Print("Swing timer time remaining: " + swing_timer.TimeLeft);
 		// GD.Print(pressed);
+		GD.Print("Releasetimer: " + release_timer.TimeLeft);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
@@ -48,7 +50,7 @@ public partial class Slash : Ability
 		{
 			player.speed = 7.0f;
 		}
-		if(swing_timer.TimeLeft == 0 && pressed >= 2)
+		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held)
 		{
 			GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
 			pressed = 0;
@@ -87,6 +89,7 @@ public partial class Slash : Ability
 				{
 					secondary_swing_timer.Start();
 					GD.Print("Secondary timer started");
+					held = true;
 				}
 				{
 
@@ -105,7 +108,8 @@ public partial class Slash : Ability
 		}
 		if(Input.IsActionJustReleased(assigned_button))
 		{
-			held = false;
+			// held = false;\
+			release_timer.Start();
 			held_timer.Stop();
 		}
     }
@@ -291,7 +295,7 @@ public partial class Slash : Ability
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
         {
-            if(pressed <= 1)
+            if(pressed <= 1 && release_timer.TimeLeft == 0)
 			{
 				GD.Print("slash 1 recovery finished");
 				player.tree.Set("parameters/Master/conditions/using_ability", false);
@@ -503,6 +507,11 @@ public partial class Slash : Ability
 	public void _on_held_timer_timeout()
 	{
 		held = true;
+	}
+
+	public void _on_release_timer_timeout()
+	{
+		held = false;
 	}
     
 }

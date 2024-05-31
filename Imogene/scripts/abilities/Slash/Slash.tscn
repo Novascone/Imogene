@@ -16,6 +16,11 @@ one_shot = true
 wait_time = 1.2
 one_shot = true
 
+[node name="ReleaseTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
 [connection signal="timeout" from="HeldTimer" to="." method="_on_held_timer_timeout"]
 [connection signal="timeout" from="SecondarySwingTimer" to="." method="_on_secondary_swing_timer_timeout"]
+[connection signal="timeout" from="ReleaseTimer" to="." method="_on_release_timer_timeout"]
