@@ -7,39 +7,39 @@ public partial class PlayerEntity : Entity
 {
 
 	public int strength = 1; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
-    public int dexterity = 1; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
-    public int intellect = 1; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
-    public int vitality = 1; // Vitality: Primary stat for health
-    public int stamina = 1; // Primary stat for resource and regeneration
-    public int wisdom = 1; // Increases the damage of abilities that use wisdom, also used for interactions
-    public int charisma = 1; // Primary Stat for character interaction
+	public int dexterity = 1; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
+	public int intellect = 1; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
+	public int vitality = 1; // Vitality: Primary stat for health
+	public int stamina = 1; // Primary stat for resource and regeneration
+	public int wisdom = 1; // Increases the damage of abilities that use wisdom, also used for interactions
+	public int charisma = 1; // Primary Stat for character interaction
 
 	public float physical_melee_power; // Increases physical melee DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
 	public float spell_melee_power; // Increases melee magic DPS by 1 every 15 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
-    public float physical_ranged_power; // Increases physical ranged DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
-    public float spell_ranged_power;  // Increases physical ranged DPS by 1 every 15 points + 3 for every point of dexterity + 1 for every point of strength
+	public float physical_ranged_power; // Increases physical ranged DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
+	public float spell_ranged_power;  // Increases physical ranged DPS by 1 every 15 points + 3 for every point of dexterity + 1 for every point of strength
 	public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
 
 	public float critical_hit_chance; // Percentage change for hit to be a critical hit
-    public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
+	public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
  	public float physical_melee_damage; 
-    public float physical_ranged_damage; 
-    public float spell_melee_damage;
-    public float spell_ranged_damage;
+	public float physical_ranged_damage; 
+	public float spell_melee_damage;
+	public float spell_ranged_damage;
 	
 
 	public int physical_melee_attack_abilities; // Total number of attack abilities in each category
-    public int physical_ranged_attack_abilities;
-    public int spell_melee_attack_abilities;
-    public int spell_ranged_attack_abilities;
+	public int physical_ranged_attack_abilities;
+	public int spell_melee_attack_abilities;
+	public int spell_ranged_attack_abilities;
 	public int wisdom_attack_abilities;
 
 	public float physical_melee_attack_ability_ratio; 
-    public float physical_ranged_attack_ability_ratio;
-    public float spell_melee_attack_ability_ratio;
-    public float spell_ranged_attack_ability_ratio;
+	public float physical_ranged_attack_ability_ratio;
+	public float spell_melee_attack_ability_ratio;
+	public float spell_ranged_attack_ability_ratio;
 	public float wisdom_attack_ability_ratio;
-    public int total_attack_abilities;
+	public int total_attack_abilities;
 
 	public float slash_damage;
 	public float thrust_damage;
@@ -62,10 +62,40 @@ public partial class PlayerEntity : Entity
 	private List<Area3D> mobs_in_order; // List of mobs in order
 
 	public Vector3 player_position; // Position of the player
+	public Vector3 velocity; // Velocity of the player
+
+	public bool in_interact_area; // Is the entity in an interact area
+	public bool entered_interact; // Has the entity entered the an interact area?
+	public bool left_interact; // has the entity left the interact area?
+	public bool interacting; // Is the entity interacting?
+	public Area3D interact_area; // Radius of where the player can interact
 
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
 	private List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
+
+	public bool recovery_1 = false;
+	public bool recovery_2 = false;
+	public bool attack_1_set;
+	public bool attack_2_set;
+
+	public Area3D hurtbox; // Area where the player takes damage
+	public Area3D hitbox; // Area where the player does damage
+	// private Area3D vision; // Area where the player can target enemies
+	public Node3D head_slot; // Head slot for the player
+
+
+	public CustomSignals _customSignals; // Custom signal instance
+
+	public bool using_ability; // Is the entity using an ability?
+
 	
+	
+	public bool max_health_changed = true; // Has the entities heath changed?
+	public bool stats_updated = true; // Have the entities stats changed?
+	
+	
+	
+	public bool can_use_abilities = true;
 
 	// Add all player stat handling here
 	// Called when the node enters the scene tree for the first time.
@@ -75,6 +105,8 @@ public partial class PlayerEntity : Entity
 		vision.AreaEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
 		mob_distance_from_player = new List<Vector3>();
+
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -142,6 +174,14 @@ public partial class PlayerEntity : Entity
 				 (1 + (critical_hit_chance * critical_hit_damage));
 
 		damage = (float)Math.Round(damage,2);
+	}
+
+	public void Fall(double delta) // bring the player back to the ground
+	{
+		if(!IsOnFloor())
+		{
+			velocity.Y -= fall_speed * (float)delta;
+		}
 	}
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
@@ -248,6 +288,82 @@ public partial class PlayerEntity : Entity
 			{
 				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+			}
+		}
+	}
+
+	public void CheckInteract() // Checks if within interact and handles input
+	{
+		if(in_interact_area)
+		{
+			if(entered_interact)
+			{
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				entered_interact = false;
+			}
+			
+			if(Input.IsActionJustPressed("Interact") && !interacting)
+			{
+				interacting = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			}
+			else if(Input.IsActionJustPressed("Interact") && interacting)
+			{
+				interacting = false;
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			}
+		}
+		else if(left_interact)
+		{
+			interacting = false;
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			left_interact = false;
+		}
+
+	}
+
+	public void OnHurtboxEntered(Area3D area) // handler for area entered signal
+	{
+		if(area.IsInGroup("enemy_hitbox"))
+		{
+			GD.Print("player hit");
+			TakeDamage(1);
+			GD.Print(health);
+			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
+		}
+		else if(area.IsInGroup("interactive"))
+		{
+			entered_interact = true;
+			in_interact_area = true;
+			interact_area = area;
+		}
+		
+	}
+	public void OnHurtboxExited(Area3D area) // Check if interact area has come in contact with the player
+	{
+		if(area.IsInGroup("interactive"))
+		{
+			left_interact = true;
+			in_interact_area = false;
+			interact_area = null;
+		}
+	}
+
+	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
+	{
+		if(enemy_in_vision)
+		{
+			if(Input.IsActionJustPressed("Target"))
+			{
+				if(!targeting)
+				{
+					targeting = true;
+				}
+				else if(targeting)
+				{
+					targeting = false;
+				}
+				
 			}
 		}
 	}

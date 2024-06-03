@@ -1,6 +1,7 @@
-[gd_scene load_steps=78 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=79 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
+[ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/StatSheetsStat.cs" id="3_8wocc"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
@@ -211,6 +212,7 @@ offset_top = -279.0
 offset_right = 600.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("2_5xxmo")
 
 [node name="InteractBar" type="PanelContainer" parent="UI/HUD"]
 visible = false

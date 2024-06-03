@@ -24,67 +24,18 @@ public partial class player : PlayerEntity
 	public Ability ability_in_use; // The ability that the player is currently using
 	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
 	public bool test_abilities_assigned = false;
-	public bool recovery_1 = false;
-	public bool recovery_2 = false;
-	public bool attack_1_set;
-	public bool attack_2_set;
-
+	
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
-
-	// Player Direction and animation variables
-	
-	public Vector3 velocity; // Velocity of the player
-	
-	
-	
-
-
-
-
-	// Stats
-	
-
-
 
 	//Player consumables
 	public int consumable = 1;
 	public Consumable[] consumables = new Consumable[4];
 
 
-
-	// Player bools   																									*** Switch Some of these to Entity ***
-	public bool using_ability; // Is the entity using an ability?
-
-	
-	
-	private bool max_health_changed = true; // Has the entities heath changed?
-	private bool stats_updated = true; // Have the entities stats changed?
-	private bool in_interact_area; // Is the entity in an interact area
-	private bool interacting; // Is the entity interacting?
-	private bool entered_interact; // Has the entity entered the an interact area?
-	private bool left_interact; // has the entity left the interact area?
-	public bool can_use_abilities;
-
-	// Player attached areas
-	private Area3D hurtbox; // Area where the player takes damage
-	public Area3D hitbox; // Area where the player does damage
-	private Area3D vision; // Area where the player can target enemies
-	public Node3D head_slot; // Head slot for the player
-	public Area3D interact_area; // Radius of where the player can interact
-
 	// Player animation
 	public AnimationTree tree; // Animation control
 
-	// Mob variables
-	
-	
-
-	// Mob sorting variables
-	
-
-	// Signal Variables
-	private CustomSignals _customSignals; // Custom signal instance
 	private MeshInstance3D targeting_icon; // Targeting icon
 
 	// Ability Resources
@@ -101,13 +52,7 @@ public partial class player : PlayerEntity
 	public MeshInstance3D helm; // Temp helm
 	public Node3D main_node; // Temp helm node
 	
-	
-	
 
-	
-
-	
-	
 	public override void _Ready()
 	{
 		base._Ready();
@@ -118,6 +63,7 @@ public partial class player : PlayerEntity
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
+		
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 		
@@ -126,12 +72,10 @@ public partial class player : PlayerEntity
 		health = 20;
 
 
+
 		hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
 		hurtbox.AreaExited += OnHurtboxExited;
-
-		
-		
 
 		head_slot = GetNode<Node3D>("Skeleton3D/Head/Head_Slot");
 		helm = new MeshInstance3D();
@@ -143,12 +87,6 @@ public partial class player : PlayerEntity
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
 
-
-		
-		
-		
-
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
@@ -159,28 +97,12 @@ public partial class player : PlayerEntity
 		
 	}
 
-    
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
     {
 		
-		// foreach(Ability ability in abilities_in_use)
-		// {
-		// 	GD.Print(ability.Name);
-		// }
-		// if(ability_in_use != null)
-		// {
-		// 	GD.Print(ability_in_use.Name);
-		// }
-		// GD.Print("Can use abilities: " + can_use_abilities);
-		
-		
-		// GD.Print("X velocity from player: " + velocity.X);
-		// GD.Print("Z velocity from player: " + velocity.Z);
 		LoadAbilities(); // Loads abilities into players ability list
-		// ResetAnimationTriggers(); // Resets animation triggers so animations don't play twice
 		SignalEmitter(); // Emits signals to other parts of the game
 		AssignAbilities();
 		player_position = GlobalPosition;
@@ -247,7 +169,7 @@ public partial class player : PlayerEntity
 			if(Input.IsActionJustPressed("D-PadDown"))
 			{
 				// use consumable
-				consumables[consumable].UseItem();
+				consumables[consumable]?.UseItem();
 			}
 		}
 		
@@ -281,17 +203,6 @@ public partial class player : PlayerEntity
 		MoveAndSlide();
 
     }
-
-	private void Fall(double delta) // bring the player back to the ground
-	{
-		if(!IsOnFloor())
-		{
-			velocity.Y -= fall_speed * (float)delta;
-		}
-	}
-
-	
-
 
 	private void LoadAbilities() // Loads abilities
    {
@@ -329,63 +240,8 @@ public partial class player : PlayerEntity
 	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource)
    {
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
+		GD.Print("Ability Assigned");
    }
-
-	
-
-	
-
-	private void CheckInteract() // Checks if within interact and handles input
-	{
-		if(in_interact_area)
-		{
-			if(entered_interact)
-			{
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-				entered_interact = false;
-			}
-			
-			if(Input.IsActionJustPressed("Interact") && !interacting)
-			{
-				interacting = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			}
-			else if(Input.IsActionJustPressed("Interact") && interacting)
-			{
-				interacting = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			}
-		}
-		else if(left_interact)
-		{
-			interacting = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
-			left_interact = false;
-		}
-
-	}
-
-	private void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
-	{
-		if(enemy_in_vision)
-		{
-			if(Input.IsActionJustPressed("Target"))
-			{
-				if(!targeting)
-				{
-					targeting = true;
-				}
-				else if(targeting)
-				{
-					targeting = false;
-				}
-				
-			}
-		}
-	}
-	
-
-	
 
 	private void OnHitboxEntered(Area3D hitbox) // handler for area entered signal
 	{
@@ -399,44 +255,12 @@ public partial class player : PlayerEntity
 		
 	}
 
-	private void OnHurtboxEntered(Area3D area) // handler for area entered signal
-	{
-		if(area.IsInGroup("enemy_hitbox"))
-		{
-			GD.Print("player hit");
-			TakeDamage(1);
-			GD.Print(health);
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
-		}
-		else if(area.IsInGroup("interactive"))
-		{
-			entered_interact = true;
-			in_interact_area = true;
-			interact_area = area;
-		}
-		
-	}
-	private void OnHurtboxExited(Area3D area) // Check if interact area has come in contact with the player
-    {
-        if(area.IsInGroup("interactive"))
-		{
-			left_interact = true;
-			in_interact_area = false;
-			interact_area = null;
-		}
-    }
-
-	
-
 	public void SignalEmitter() // Emit signals
 	{
 		if(max_health_changed)
 		{
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			max_health_changed = false;
-		}
-		if(stats_updated)
-		{
 			UpdateStats();
 			_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
 			stats_updated = false;
@@ -456,6 +280,8 @@ public partial class player : PlayerEntity
     {
         enemy_position = position;
     }
+
+	// UI
 
 	 private void HandleEquipableInfo(Equipable item) // Gets info from equipable items
     {
