@@ -6,7 +6,6 @@ using System.Runtime.Intrinsics.X86;
 
 public partial class Slash : Ability
 {
-	Ability jump;
 	Timer swing_timer;
 	Timer secondary_swing_timer;
 	Timer held_timer;
@@ -19,29 +18,21 @@ public partial class Slash : Ability
 		swing_timer = GetNode<Timer>("SwingTimer");
 		secondary_swing_timer = GetNode<Timer>("SecondarySwingTimer"); // Timer for swinging not used 
 		held_timer = GetNode<Timer>("HeldTimer"); // Timer to see how long attack is held handles if the play is holding down the button
-		release_timer = GetNode<Timer>("ReleaseTimer");	
+		release_timer = GetNode<Timer>("ReleaseTimer");	// Timer that starts when the attack button is released
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.PlayerInfo += HandlePlayerInfo;
-		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		_customSignals.AbilityAssigned += HandleAbilityAssigned;
 		_customSignals.AbilityRemoved += HandleAbilityRemoved;
-
-		
     }
-
-   
 
     public override void _PhysicsProcess(double delta)
     {
 		
-		// GD.Print("Swing timer time remaining: " + swing_timer.TimeLeft);
-		// GD.Print(pressed);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
 		}
-		if(player.recovery_1 || player.recovery_2)
+		if(player.recovery_1 || player.recovery_2) // If player is in recovery slow down the speed of the player
 		{
 			player.speed = 3.0f;
 		}
@@ -49,7 +40,7 @@ public partial class Slash : Ability
 		{
 			player.speed = 7.0f;
 		}
-		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held)
+		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held) // Resets the amount of times pressed if the button is not held and pressed is greater than 2
 		{
 			GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
 			pressed = 0;
@@ -57,21 +48,20 @@ public partial class Slash : Ability
 			player.can_move = true;
 			player.attacking = false;
 		}
-		if(player.can_use_abilities && useable && button_pressed && CheckCross())
+		if(player.can_use_abilities && useable && button_pressed && CheckCross()) 
 		{
 			// GD.Print(held);
-			AddToAbilityList(this);
+			AddToAbilityList(this); // Adds ability to list of abilities the player is using
 			
-			if(held == false && pressed == 0)
+			if(held == false && pressed == 0) // Starts timer to see if the action is being held down
 			{
 				held_timer.Start();
-				
 			}
 			if(held)
 			{
 				pressed += 1;
 			}
-			else if(Input.IsActionJustPressed(assigned_button))
+			else if(Input.IsActionJustPressed(assigned_button))  // Executes the ability, and increments how many times it is pressed
 			{
 				if(swing_timer.TimeLeft == 0)
 				{
@@ -98,14 +88,12 @@ public partial class Slash : Ability
 					// GD.Print("Timer started");
 					swing_timer.Start();
 				}
-				
-				// GD.Print("pressed: " + pressed);
-				// GD.Print("Pressed: " + pressed);
+
 			}
 			
 			
 		}
-		if(Input.IsActionJustReleased(assigned_button))
+		if(Input.IsActionJustReleased(assigned_button)) // Resets timers if button is released
 		{
 			// held = false;\
 			release_timer.Start();
@@ -113,7 +101,7 @@ public partial class Slash : Ability
 		}
     }
     
-    public override void Execute()
+    public override void Execute() // checks weapon type sets animations enables the hitbox 
 	{
 		GD.Print("execute");
 		GD.Print("Pressed in execute: " + pressed);
@@ -121,93 +109,15 @@ public partial class Slash : Ability
 		{
 			OneHanded();
 		}
-		// if(player.jumping) // Need to do this for other attacks
-		// {
-		// 	GD.Print("jump attack");
-		// 	if(jump == null)
-		// 	{
-		// 		foreach(Ability ability in player.abilities_in_use)
-		// 		{
-		// 			if(ability.Name == "Jump")
-		// 			{
-		// 				GD.Print("found jump");
-						
-		// 				jump = ability;
-		// 			}
-		// 		}
-				
-		// 	}
-		// 	else
-		// 	{
-		// 		player.UseAbility(jump);
-		// 	}
-			
-		// }
+
 		player.slash_damage = player.weapon_damage;
 		player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 		player.hitbox.Monitoring = true;
-		// if(player.weapon_type == "dual_wield") // play one handed axe animation
-		// {
-		// 	if(pressed == 1)
-		// 	{
-		// 		if(!player.attack_1_set) // Sets swing 1 animation
-		// 		{
-		// 			// GD.Print("Setting swing 1");
-		// 			player.attack_1_set = true;
-		// 			player.tree.Set("parameters/Master/conditions/attacking", true);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-		// 			player.attack_2_set = false;
-		// 			player.can_move = false;
-					
-		// 		}
-		// 	}
-		// 	if(pressed == 2)
-		// 	{
-		// 		if(!player.attack_2_set) // Sets swing 2 animation
-		// 		{
-		// 			player.tree.Set("parameters/Master/conditions/attacking", true);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
-		// 			player.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
-		// 			player.attack_2_set = true;
-		// 			player.attack_1_set = false;
-		// 			player.can_move = false;
-		// 		}
-		// 	}
-		// 	if(pressed > 2)
-		// 	{
-		// 		pressed = 1;
-		// 		held = true;
-		// 	}
-		// }
+	
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{
-
 			OneHanded();
-			// if(pressed == 1)
-			// {
-				
-			// }
-			// if(pressed == 2)
-			// {
-			// 	if(!player.attack_2_set) // Sets swing 2 animation
-			// 	{
-			// 		player.tree.Set("parameters/Master/conditions/attacking", true);
-			// 		player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			// 		player.tree.Set("parameters/Master/Attacking/conditions/no_second", false);
-			// 		player.tree.Set("parameters/Master/Attacking/conditions/second_swing", true);
-			// 		player.attack_2_set = true;
-			// 		player.attack_1_set = false;
-			// 		player.can_move = false;
-			// 	}
-			// }
-			// if(pressed > 2)
-			// {
-			// 	pressed = 1;
-			// 	held = true;
-			// }
+
 		}
 	
 
@@ -215,38 +125,15 @@ public partial class Slash : Ability
 		{
 			in_use = true;
 		}
-	
-		else
-		{
-			GD.Print("can not use that ability with equipped weapon");
-			// player.can_move = true;
-			RemoveFromAbilityList(this);
-		}
 	}
 
 
-	//  private void HandlePlayerInfo(player s)
-    // {
-	// 	GD.Print("got signal");
-    //     player = s;
-	// 	player.tree.AnimationFinished += OnAnimationFinished;
-    // }
-
 	 public override void OnAnimationFinished(StringName animName) // Handles logic needed when animations finish
     {
-        // if(animName == "Slash_And_Bash_Dual_Wield_Swing_1") 
-        // {
-		// 	player.can_move = true;
-		// 	player.recovery_1 = true;
-        // }
-        
 
         if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
         {
-			// if(pressed == 2)
-			// {
-			// 	temp_pressed = 1;
-			// }
+		
             player.recovery_2 = true;
 			player.tree.Set("parameters/Master/conditions/using_ability", false);
 			player.tree.Set("parameters/Master/Ability/conditions/not_attacking", true);
@@ -271,11 +158,11 @@ public partial class Slash : Ability
         }
         if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
         {
-            player.attack_1_set = false;
+            player.action_1_set = false;
 			player.recovery_1 = false;
 			player.recovery_2 = false;
-			player.attack_2_set = false;
-			if(!player.attack_1_set)
+			player.action_2_set = false;
+			if(!player.action_1_set)
 			{
 				RemoveFromAbilityList(this);
 			}
@@ -283,14 +170,12 @@ public partial class Slash : Ability
         }
 		if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
 		{
-			// GD.Print("slash 1 finished");
 			
 			player.recovery_1 = true;
 			player.can_move = true;
 			player.attacking = false;
 			player.hitbox.Monitoring = false;
-			player.attack_1_set = false;
-			// pressed -= 1;
+			player.action_1_set = false;
 			player.hitbox.RemoveFromGroup("player_hitbox");
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
@@ -305,11 +190,9 @@ public partial class Slash : Ability
 				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
 				player.hitbox.Monitoring = false;
 				player.recovery_1 = false;
-				// pressed -= 1;
-				// GD.Print("one presses");
 				player.hitbox.RemoveFromGroup("player_hitbox");
-				player.attack_1_set = false;
-				if(player.attack_2_set)
+				player.action_1_set = false;
+				if(player.action_2_set)
 					{
 						// player.can_move = false;
 					}
@@ -318,23 +201,7 @@ public partial class Slash : Ability
 						// player.can_move = true;
 						RemoveFromAbilityList(this);
 					}
-				// player.can_move = true;
-				// if(!player.attack_2_set)
-				// {
-				// 	pressed = 0;
-				// }
 			}
-			// if(pressed > 1)
-			// {
-			// 	pressed -= 1;
-			// 	player.tree.Set("parameters/Master/conditions/attacking", false);
-			// 	player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-			// 	player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
-			// 	player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-			// 	player.hitbox.Monitoring = false;
-			// 	player.recovery_1 = false;
-			// 	player.can_move = false;
-			// }
         }
     }
 
@@ -357,77 +224,6 @@ public partial class Slash : Ability
 			CheckAssignment(button_name);
 		}
     }
-
-	//   private void HandleAnimationFinished(string animation)
-    // {
-    //     if(animation == "attack_1")
-    //     {
-	// 		player.can_move = true;
-	// 		player.recovery_1 = true;
-    //     }
-    //     if(animation == "recovery_1")
-    //     {
-    //         if(pressed == 1)
-	// 		{
-	// 			player.tree.Set("parameters/Master/conditions/attacking", false);
-	// 			player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-	// 			player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
-	// 			player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-	// 			player.hitbox.Monitoring = false;
-	// 			player.recovery_1 = false;
-	// 			pressed -= 1;
-	// 			// GD.Print("one presses");
-	// 			player.hitbox.RemoveFromGroup("player_hitbox");
-	// 			player.attack_1_set = false;
-	// 			if(player.attack_2_set)
-	// 				{
-	// 					player.can_move = false;
-	// 				}
-	// 				else
-	// 				{
-	// 					player.can_move = true;
-	// 				}
-				
-	// 		}
-	// 		if(pressed == 2)
-	// 			{
-	// 				player.tree.Set("parameters/Master/conditions/attacking", false);
-	// 				player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-	// 				player.tree.Set("parameters/Master/Attack/conditions/no_second", true);
-	// 				player.tree.Set("parameters/Master/Attack/conditions/second_swing", false);
-	// 				player.hitbox.Monitoring = false;
-	// 				player.recovery_1 = false;
-	// 				player.can_move = false;
-	// 			}
-    //     }
-
-    //     if(animation == "attack_2")
-    //     {
-    //         player.recovery_2 = true;
-	// 		player.tree.Set("parameters/Master/conditions/attacking", false);
-	// 		player.tree.Set("parameters/Master/Attacking/conditions/not_attacking", true);
-	// 		player.tree.Set("parameters/Master/Attacking/conditions/no_second", true);
-	// 		player.tree.Set("parameters/Master/Attacking/conditions/second_swing", false);
-	// 		player.hitbox.Monitoring = false;
-	// 		player.can_move = true;
-	// 		player.hitbox.RemoveFromGroup("player_hitbox");
-	// 		// GD.Print("two presses");
-			
-	// 		pressed = 0;
-    //     }
-    //     if(animation == "recovery_2")
-    //     {
-    //         player.attack_1_set = false;
-	// 		player.recovery_1 = false;
-	// 		player.recovery_2 = false;
-	// 		player.attack_2_set = false;
-	// 		if(!player.attack_1_set)
-	// 		{
-	// 			in_use = false;
-	// 		}
-    //     }
-    // }
-
 	public void DualWield()
 	{
 
@@ -435,11 +231,11 @@ public partial class Slash : Ability
 
 	public void OneHanded()
 	{
-		if(!player.attack_1_set) // Sets swing 1 animation
+		if(!player.action_1_set) // Sets swing 1 animation
 		{
 			// GD.Print(pressed);
 			GD.Print("Setting swing 1");
-			player.attack_1_set = true;
+			player.action_1_set = true;
 			GD.Print("Setting animations");
 			player.tree.Set("parameters/Master/conditions/using_ability", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/conditions/melee", true);
@@ -452,7 +248,7 @@ public partial class Slash : Ability
 			GD.Print(player.can_move);
 			if(pressed > 1)
 			{
-				player.attack_2_set = true;
+				player.action_2_set = true;
 				GD.Print("Attack 2 set");
 			}
 			
@@ -464,24 +260,6 @@ public partial class Slash : Ability
 
 	}
 
-	public void DualWieldReset()
-	{
-
-	}
-
-	public void OneHandedReset()
-	{
-
-	}
-
-	public void TwoHandedReset()
-	{
-
-	}
-
-	
-
-	
 	public void _on_swing_timer_timeout()
 	{
 		// GD.Print("timeout");

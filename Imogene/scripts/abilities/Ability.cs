@@ -23,7 +23,7 @@ public partial class Ability : Node3D
     public string assigned_button { get; set; }
     public string action_button { get; set; }
     public bool cross_selected;
-    public player player;
+    public Player player;
     public bool button_pressed;
 
     public bool useable = true;
@@ -43,7 +43,7 @@ public partial class Ability : Node3D
        
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+    public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
         if(assigned_button != null)
         {
@@ -61,11 +61,11 @@ public partial class Ability : Node3D
 
    
 
-    public virtual void Execute()
+    public virtual void Execute() // Default execute
     {
         GD.Print("access ability child");
     }
-    public void AddToAbilityList(Ability ability)
+    public void AddToAbilityList(Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
         if(!player.abilities_in_use.Contains(ability))
         {
@@ -74,7 +74,7 @@ public partial class Ability : Node3D
         }
         player.ability_in_use = player.abilities_in_use.First.Value;
     }
-    public void RemoveFromAbilityList(Ability ability)
+    public void RemoveFromAbilityList(Ability ability) // Removes ability from abilities used
     {
         
         player.abilities_in_use.Remove(ability);
@@ -89,11 +89,11 @@ public partial class Ability : Node3D
         in_use = false;
     }
 
-    public virtual void AnimationHandler(player s, string animation)
+    public virtual void AnimationHandler(Player s, string animation)
     {
         
     }
-    public void GetPlayerInfo(player playerinfo)
+    public void GetPlayerInfo(Player playerinfo) // Handles the player info
     {
         player = playerinfo;
         player.tree.AnimationFinished += OnAnimationFinished;
@@ -104,7 +104,7 @@ public partial class Ability : Node3D
         // throw new NotImplementedException();
     }
 
-    public bool CheckCross()
+    public bool CheckCross() // Checks what cross the ability is assigned to
     {
         if(cross == "left")
 		{
@@ -161,7 +161,7 @@ public partial class Ability : Node3D
 		
     }
 
-    public void CheckAssignment(string incoming_button_assignment)
+    public void CheckAssignment(string incoming_button_assignment) // Checks the button the ability is assigned to
     {
         if(incoming_button_assignment == "LCrossPrimaryUpAssign")
         {

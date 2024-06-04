@@ -2,7 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class enemy : Entity
+// 																********************************************** MARKED FOR REWORK ************************************************************
+
+public partial class Enemy : Entity
 {
 	public enum States 
 	{

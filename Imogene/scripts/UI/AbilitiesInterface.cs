@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Reflection.Metadata;
 
-public partial class Abilities_Interface : UI
+public partial class AbilitiesInterface : UI
 {
 	// Left Cross Primary
 	private Button l_cross_primary_up_assign;

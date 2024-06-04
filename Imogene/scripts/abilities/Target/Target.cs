@@ -2,6 +2,9 @@ using Godot;
 using System;
 using System.Runtime.Intrinsics.X86;
 
+// 																********************************************** MARKED FOR REWORK ************************************************************
+
+
 public partial class Target : Ability
 {
 	private bool player_Z_more_than_target_Z; // Booleans to see where player is relative the the object it is targeting
@@ -13,7 +16,7 @@ public partial class Target : Ability
 	// {
 	// 		Rotate(s);
 	// }
-	public void Rotate(player s)
+	public void Rotate(Player s)
 	{
 		if(s.player_position.Z - s.mob_to_LookAt_pos.Z > 0)
 			{

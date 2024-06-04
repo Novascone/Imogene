@@ -9,12 +9,13 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
+// Player class, handles movement, abilities, sends signals to the UI
 
-public partial class player : PlayerEntity
+public partial class Player : PlayerEntity
 {
 
 	// Player reference
-	public player this_player; // Player
+	public Player this_player; // Player
 
 	// Abilities
 	private Target target_ability; // Target enemies
@@ -40,17 +41,12 @@ public partial class player : PlayerEntity
 
 	// Ability Resources
 	AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Roll/roll.tres");
-	AbilityResource basic_attack = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/BasicAttack/basic_attack.tres");
 	AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Slash/Slash.tres");
 	AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Thrust/Thrust.tres");
 	AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
 	
-	// Misc
-	public string resource_path;
-	private bool remove_equipped = false;
-	public MeshInstance3D helm; // Temp helm
-	public Node3D main_node; // Temp helm node
+	
 	
 
 	public override void _Ready()
@@ -58,7 +54,6 @@ public partial class player : PlayerEntity
 		base._Ready();
 		this_player = this;
 		ability_resources.Add(roll);
-		ability_resources.Add(basic_attack);
 		ability_resources.Add(slash);
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
@@ -93,7 +88,9 @@ public partial class player : PlayerEntity
 		_customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
-		_customSignals.EquipConsumable += HandleEquipConsumable;		
+		_customSignals.EquipConsumable += HandleEquipConsumable;
+		GD.Print("max health ", maximum_health);
+		GD.Print("max resource ", maximum_resource);
 		
 	}
 

@@ -1,7 +1,9 @@
 using Godot;
 using System;
 
-public partial class damage_numbers : Node3D
+// 																********************************************** MARKED FOR REWORK ************************************************************
+
+public partial class DamageNumbers : Node3D
 {	
 	private Label3D label;
 	private Node3D label_container;

@@ -6,6 +6,8 @@ using System.Linq;
 public partial class PlayerEntity : Entity
 {
 
+	// Stats
+
 	public int strength = 1; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
 	public int dexterity = 1; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
 	public int intellect = 1; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
@@ -14,14 +16,15 @@ public partial class PlayerEntity : Entity
 	public int wisdom = 1; // Increases the damage of abilities that use wisdom, also used for interactions
 	public int charisma = 1; // Primary Stat for character interaction
 
+	// Offense
+
 	public float physical_melee_power; // Increases physical melee DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
 	public float spell_melee_power; // Increases melee magic DPS by 1 every 15 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
 	public float physical_ranged_power; // Increases physical ranged DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
 	public float spell_ranged_power;  // Increases physical ranged DPS by 1 every 15 points + 3 for every point of dexterity + 1 for every point of strength
 	public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
 
-	public float critical_hit_chance; // Percentage change for hit to be a critical hit
-	public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
+	
  	public float physical_melee_damage; 
 	public float physical_ranged_damage; 
 	public float spell_melee_damage;
@@ -44,60 +47,113 @@ public partial class PlayerEntity : Entity
 	public float slash_damage;
 	public float thrust_damage;
 	public float blunt_damage;
+	public float bleed_damage;
+	public float poison_damage;
+	public float fire_damage;
+	public float cold_damage;
+	public float lightning_damage;
+	public float holy_damage;
+	public float critical_hit_chance; // Percentage change for hit to be a critical hit
+	public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
+	public float attack_speed_increase;
+	public float cool_down_reduction;
+	public float posture_damage;
+
+	// Defense
+
+	public int armor;
+	public int poise;
+	public int block_amount;
+	public int retaliation;
+	public int physical_resistance;
+	public int thrust_resistance;
+	public int slash_resistance;
+	public int blunt_resistance;
+	public int bleed_resistance;
+	public int poison_resistance;
+	public int curse_resistance;
+	public int spell_resistance;
+	public int fire_resistance;
+	public int cold_resistance;
+	public int lightning_resistance;
+	public int holy_resistance;
+
+	// Health
+
+	public float maximum_health => health;
+	public float health_bonus;
+	public float health_regen;
+	public float health_on_retaliate;
+
+	// Resources
+
+	public float maximum_resource => resource;
+	public float resource_regen;
+	public float resource_cost_reduction;
+
+	// Misc
+	public float movement_speed;
+
+	// Materials
+
+	public int maixmum_gold => gold;
+
+
+
+	public bool max_health_changed = true; // Has the entities heath changed?
+	public bool stats_updated = true; // Have the entities stats changed?
+	
+	// Equipment
+	public string resource_path;
+	public string weapon_type = "one_handed_axe";
+	public Node3D head_slot; // Head slot for the player
+	public MeshInstance3D helm; // Temp helm
+	public Node3D main_node; // Temp helm node
+	public bool remove_equipped = false;
 
 	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animation
 	
-	//Player equipment details
-	public string weapon_type = "one_handed_axe";
-
-	public bool targeting = false; // Is the entity targeting?
+	// Player orientation
+	public Vector3 direction; // Direction of the player
+	public Vector3 player_position; // Position of the player
+	public Vector3 velocity; // Velocity of the player
 	public float prev_y_rotation; // Rotation of the player before current rotation
 	public float current_y_rotation; // Rotation of the player
-	public Vector3 direction; // Direction of the player
+	
+
+	// Targeting variables
+	private Area3D vision; // Area where the player can target enemies
+	public bool targeting = false; // Is the entity targeting?
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	private int mob_index = 0; // Index of mobs in list
-	private Area3D vision; // Area where the player can target enemies
 	private	Dictionary<Area3D, Vector3> mob_pos = new Dictionary<Area3D, Vector3>();  // Dictionary of mob positions
 	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Sorted Dictionary of mob positions
 	private List<Area3D> mobs_in_order; // List of mobs in order
+	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
+	private List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
 
-	public Vector3 player_position; // Position of the player
-	public Vector3 velocity; // Velocity of the player
-
+	// Interact variables
+	public Area3D interact_area; // Radius of where the player can interact
 	public bool in_interact_area; // Is the entity in an interact area
 	public bool entered_interact; // Has the entity entered the an interact area?
 	public bool left_interact; // has the entity left the interact area?
 	public bool interacting; // Is the entity interacting?
-	public Area3D interact_area; // Radius of where the player can interact
+	
 
-	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
-	private List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
-
+	// Ability Variables
 	public bool recovery_1 = false;
 	public bool recovery_2 = false;
-	public bool attack_1_set;
-	public bool attack_2_set;
+	public bool action_1_set;
+	public bool action_2_set;
+	public bool using_ability; // Is the entity using an ability?
+	public bool can_use_abilities = true;
 
 	public Area3D hurtbox; // Area where the player takes damage
 	public Area3D hitbox; // Area where the player does damage
-	// private Area3D vision; // Area where the player can target enemies
-	public Node3D head_slot; // Head slot for the player
 
-
+	
 	public CustomSignals _customSignals; // Custom signal instance
 
-	public bool using_ability; // Is the entity using an ability?
-
-	
-	
-	public bool max_health_changed = true; // Has the entities heath changed?
-	public bool stats_updated = true; // Have the entities stats changed?
-	
-	
-	
-	public bool can_use_abilities = true;
-
-	// Add all player stat handling here
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

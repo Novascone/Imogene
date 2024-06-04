@@ -42,7 +42,7 @@ public partial class UI : Control
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	
 
-	public player this_player;
+	public Player this_player;
 
 	
 	
@@ -633,7 +633,7 @@ public partial class UI : Control
 		_customSignals.EmitSignal(nameof(CustomSignals.RemoveEquipped));
 	}
 
-	private void HandlePlayerInfo(player player)
+	private void HandlePlayerInfo(Player player)
     {
         this_player = player;
     }

@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/GearInfo.cs" id="6_rtdw8"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="7_l2ybp"]
-[ext_resource type="Script" path="res://scripts/UI/Abilities_Interface.cs" id="8_glb34"]
+[ext_resource type="Script" path="res://scripts/UI/AbilitiesInterface.cs" id="9_4fs8w"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityButton.cs" id="10_4bmju"]
 
@@ -6770,7 +6770,7 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 grow_horizontal = 2
-script = ExtResource("8_glb34")
+script = ExtResource("9_4fs8w")
 
 [node name="AssignAbility" type="PanelContainer" parent="UI/Abilities"]
 visible = false

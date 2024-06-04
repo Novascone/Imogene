@@ -1,6 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7tpywa7qwygn"]
-
-[ext_resource type="Script" path="res://scripts/UI/damage_numbers.cs" id="1_u23oh"]
+[gd_scene load_steps=4 format=3 uid="uid://c7tpywa7qwygn"]
 
 [sub_resource type="Animation" id="Animation_snepx"]
 length = 3.0
@@ -114,7 +112,6 @@ _data = {
 }
 
 [node name="Damage_Number_3D" type="Node3D"]
-script = ExtResource("1_u23oh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("")

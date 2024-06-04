@@ -3,6 +3,8 @@ using System;
 
 public partial class AbilityResource : Resource
 {
+
+    // Base class for loading abilities
 	[Export]
     public int id { get; set; }
     [Export]

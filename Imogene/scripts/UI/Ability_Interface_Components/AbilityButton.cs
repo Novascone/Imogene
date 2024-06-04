@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 
+// Button inside of ability assignment UI
 public partial class AbilityButton : Button
 {
 	[Export]
@@ -12,11 +13,11 @@ public partial class AbilityButton : Button
 	public Button icon_button; // The icon of the current button assigned/ the one thats going to be assigned
 	public string ability_name; 
 	public Control info; // Info about the skill
-	public RichTextLabel info_text;
-	public string ability_type;
+	public RichTextLabel info_text; // Info text
+	public string ability_type; // Type of ability e.g. melee, movement etc
 	private CustomSignals _customSignals;
 
-	public PackedScene[] modifiers = new PackedScene[5];
+	public PackedScene[] modifiers = new PackedScene[5]; // Modifiers for abilities, not yet implemented
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

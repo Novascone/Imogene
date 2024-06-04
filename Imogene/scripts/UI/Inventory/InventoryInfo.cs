@@ -596,7 +596,7 @@ public partial class InventoryInfo : UI
 		_customSignals.PlayerInfo += HandlePlayerInfo;
 	}
 
-	private void HandlePlayerInfo(player player)
+	private void HandlePlayerInfo(Player player)
 	{
 		this_player = player;
 	}

@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+// The base class for all entities in game
+
 public partial class Entity : CharacterBody3D
 {
     // Stats

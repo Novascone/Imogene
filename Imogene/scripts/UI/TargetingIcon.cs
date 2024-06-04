@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class targeting_icon : Node3D
+public partial class TargetingIcon : Node3D
 {
 
 	private MeshInstance3D icon;

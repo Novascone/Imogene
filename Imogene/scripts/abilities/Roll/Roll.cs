@@ -3,15 +3,14 @@ using System;
 
 public partial class Roll : Ability
 {
-	private Vector3 roll_velocity = Vector3.Zero; 
-	private int roll_time = 13; // How many frames the player can roll for.
+	private Vector3 roll_velocity = Vector3.Zero; // The velocity of the player when rolling
 	private bool roll_right = false;
 	private bool roll_left = false;
 	private  bool roll_back = false;
 	private bool roll_forward = false;
 	public bool loaded = false;
 	private bool rolling = false;
-	private Vector3 temp_rotation = Vector3.Zero;
+	private Vector3 temp_rotation = Vector3.Zero; // Rotation of the player when roll started
 	Timer roll_timer;
 	
 	// public string description = "rolls";
@@ -33,7 +32,7 @@ public partial class Roll : Ability
 	{
 		if(player.can_use_abilities && useable && button_pressed && CheckCross())
 		{
-			AddToAbilityList(this);
+			AddToAbilityList(this); // Adds this ability to the players currently used abilities 
 			player.using_movement_ability = true;
 			roll_timer.Start(); // Starts roll timer which is exactly the same time as the roll animation
 			Execute();
@@ -112,7 +111,7 @@ public partial class Roll : Ability
 		
 	}
 	
-	public override void OnAnimationFinished(StringName animName)
+	public override void OnAnimationFinished(StringName animName) // Resets the states for the player when the animation finishes
     {
         if(animName == "Roll_Forward")
 		{
@@ -124,7 +123,7 @@ public partial class Roll : Ability
 		}
     }
 
-    private void HandleAbilityRemoved(string ability, string button_removed)
+    private void HandleAbilityRemoved(string ability, string button_removed) // Unbinds the ability
     {
         if(this.Name == ability)
 		{
@@ -135,7 +134,7 @@ public partial class Roll : Ability
 		}
     }
 
-    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon) // Binds the ability
     {
         if(this.Name == ability)
 		{
