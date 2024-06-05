@@ -100,6 +100,10 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void EnemyPositionEventHandler(Vector3 position);  // Tells the player where the enemy is
 
+	// UI to object
+	[Signal]
+	public delegate void ZoomCameraEventHandler(bool zoom);  // Tells the camera to zoom
+
 
 
 	// Object to object
@@ -117,5 +121,6 @@ public partial class CustomSignals : Node
 	// Object to misc																																								*** NOT SURE WHAT THIS IS FOR ***
 	[Signal]
 	public delegate void EnemyDamageEventHandler(float DamageAmount);
+
 
 }

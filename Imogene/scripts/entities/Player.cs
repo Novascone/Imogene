@@ -16,6 +16,7 @@ public partial class Player : PlayerEntity
 
 	// Player reference
 	public Player this_player; // Player
+	public RayCast3D raycast;
 
 	// Abilities
 	private Target target_ability; // Target enemies
@@ -46,11 +47,15 @@ public partial class Player : PlayerEntity
 	AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
 	
-	
+	Vector3 ray_origin;
+	Vector3 ray_target = new  Vector3(0, -4, 0);
+	int ray_range = 2000;
 	
 
 	public override void _Ready()
 	{
+		
+		// ray_target = ;
 		base._Ready();
 		this_player = this;
 		ability_resources.Add(roll);
@@ -77,6 +82,8 @@ public partial class Player : PlayerEntity
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 		// tree.AnimationFinished += OnAnimationFinished;
+
+		raycast = GetNode<RayCast3D>("RayCast3D");
 		
 
 		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
@@ -91,6 +98,11 @@ public partial class Player : PlayerEntity
 		_customSignals.EquipConsumable += HandleEquipConsumable;
 		GD.Print("max health ", maximum_health);
 		GD.Print("max resource ", maximum_resource);
+		GD.Print("physical resistance", physical_resistance);
+		GD.Print("spell resistance ", spell_resistance);
+		exclude.Add(vision.GetRid());
+		exclude.Add(hitbox.GetRid());
+		GD.Print("exclude: " + exclude);
 		
 	}
 
@@ -98,11 +110,54 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
+		// ray_origin = GlobalTransform.Origin;
 		
+		// GD.Print("ray origin" + ray_origin);
 		LoadAbilities(); // Loads abilities into players ability list
 		SignalEmitter(); // Emits signals to other parts of the game
 		AssignAbilities();
 		player_position = GlobalPosition;
+		// if(raycast.IsColliding())
+		// {
+		// 	GD.Print("Collision point on RayCast Node: " + raycast.GetCollisionPoint());
+		// 	land_point_position = raycast.GetCollisionPoint();
+		// }
+		
+		
+			ray_origin = GlobalTransform.Origin;
+			ray_target = GlobalTransform.Origin + new Vector3(0, -20, 0);
+			var spaceState = GetWorld3D().DirectSpaceState;
+			var ray_query = PhysicsRayQueryParameters3D.Create(ray_origin, ray_target);
+			ray_query.CollideWithAreas = true;
+			ray_query.Exclude = exclude;
+			var ray = spaceState.IntersectRay(ray_query);
+			
+				// if((string)ray["collider"] == "floor")
+				if(ray.Count > 0)
+				{
+					
+				GD.Print("collision point of created raycast: " + ray["position"]);
+				GD.Print("player position: " + player_position);
+				GD.Print("collision: " + ray["collider"]);
+				GD.Print("Land point Position: " + land_point.Position);
+				// GD.Print("Player position: " + player_position);
+				// GD.Print("collision point: " + ray["position"]);
+				land_point_position = ray["position"].AsVector3();
+				
+				// GD.Print("Land point position", land_point_position);
+				land_point.Show();
+				
+				// GD.Print(land_point.Visible);
+				// GD.Print("land point position: " + land_point_position);
+				}
+				
+		
+		
+		
+		
+		
+		
+		
 		// GD.Print("Jumping " + jumping);
 		resource = 0;
 		if(velocity == Vector3.Zero) // If not moving return to Idle slowly (hence the lerp)
@@ -192,7 +247,7 @@ public partial class Player : PlayerEntity
 		}
 
 		Velocity = velocity;
-		
+		land_point.GlobalPosition = land_point_position;
 		tree.Set("parameters/Master/Main/IW/blend_position", blend_direction);
 		tree.Set("parameters/Master/Ability/Ability_1/Recovery_1/Walk_Recovery/blend_position", blend_direction);
 		tree.Set("parameters/Master/Ability/Ability_1/Melee_Recovery_1/Slash/One_Handed_Slash_recovery_1/One_Handed_Medium_Recovery/Walk_Recovery/blend_position", blend_direction); // Set blend position

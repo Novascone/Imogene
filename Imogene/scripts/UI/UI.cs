@@ -184,6 +184,7 @@ public partial class UI : Control
 			GD.Print(HasFocus());
 			if(inventory_open)
 			{
+				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				inventory_open = false;
 				character_inventory.Hide();
@@ -203,9 +204,11 @@ public partial class UI : Control
 
 		if(Input.IsActionJustPressed("Inventory"))
 		{
+			
 			GrabFocus();
 			if(!inventory_open)
 			{
+				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), true);
 				inventory_open = true;
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 				character_inventory.Show();
@@ -215,6 +218,7 @@ public partial class UI : Control
 			}
 			else
 			{
+				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
 				inventory_open = false;
 				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				character_inventory.Hide();

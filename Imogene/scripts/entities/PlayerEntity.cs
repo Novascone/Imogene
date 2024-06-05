@@ -6,6 +6,7 @@ using System.Linq;
 public partial class PlayerEntity : Entity
 {
 
+
 	// Stats
 
 	public int strength = 1; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
@@ -119,10 +120,12 @@ public partial class PlayerEntity : Entity
 	public Vector3 velocity; // Velocity of the player
 	public float prev_y_rotation; // Rotation of the player before current rotation
 	public float current_y_rotation; // Rotation of the player
+
+	public Godot.Collections.Array<Rid> exclude = new Godot.Collections.Array<Rid>();
 	
 
 	// Targeting variables
-	private Area3D vision; // Area where the player can target enemies
+	public Area3D vision; // Area where the player can target enemies
 	public bool targeting = false; // Is the entity targeting?
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	private int mob_index = 0; // Index of mobs in list
@@ -148,8 +151,15 @@ public partial class PlayerEntity : Entity
 	public bool using_ability; // Is the entity using an ability?
 	public bool can_use_abilities = true;
 
+
+	// Attached objects
 	public Area3D hurtbox; // Area where the player takes damage
 	public Area3D hitbox; // Area where the player does damage
+	public MeshInstance3D land_point;
+	public Vector3 land_point_position;
+	
+
+	
 
 	
 	public CustomSignals _customSignals; // Custom signal instance
@@ -157,10 +167,13 @@ public partial class PlayerEntity : Entity
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 		vision  = (Area3D)GetNode("Vision");
+		land_point = GetNode<MeshInstance3D>("LandPoint");
 		vision.AreaEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
 		mob_distance_from_player = new List<Vector3>();
+		
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
@@ -168,6 +181,7 @@ public partial class PlayerEntity : Entity
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
 		direction = Vector3.Zero;
 		if(mob_pos.Count == 0) // Reset enemy_in_vision
 		{	
@@ -188,11 +202,43 @@ public partial class PlayerEntity : Entity
 		wisdom = 20;
 		charisma = 1;
 
+
+
 		weapon_damage = 10;
 		attack_speed = 2f;
 
-		critical_hit_chance = 0.05f;
-		critical_hit_damage = 1.2f;
+		slash_damage = 0;
+		thrust_damage = 0;
+	 	blunt_damage = 0;
+	 	bleed_damage = 0;
+	 	poison_damage = 0;
+		fire_damage= 0;
+	 	cold_damage = 0;
+		lightning_damage = 0;
+		holy_damage = 0;
+	 	critical_hit_chance = 0.05f; // Percentage change for hit to be a critical hit
+	 	critical_hit_damage = 1.2f; // Multiplier applied to base damage if a hit is critical
+	 	attack_speed_increase = 0;
+	 	cool_down_reduction = 0;
+		posture_damage = 0;
+
+		armor = 0;
+		poise = 0;
+		block_amount = 0;
+		retaliation = 0;
+		physical_resistance = 0;
+		thrust_resistance = 0;
+		slash_resistance = 0;
+		blunt_resistance = 0;
+		bleed_resistance = 0;
+		poison_resistance = 0;
+		curse_resistance = 0;
+		spell_resistance = 0;
+		fire_resistance = 0;
+		cold_resistance = 0;
+		lightning_resistance = 0;
+		holy_resistance = 0;
+
 
 		physical_melee_attack_abilities = 3;
 		physical_ranged_attack_abilities = 3;
@@ -237,7 +283,18 @@ public partial class PlayerEntity : Entity
 		if(!IsOnFloor())
 		{
 			velocity.Y -= fall_speed * (float)delta;
+			// land_point.Position = player_position;
+			// player_position.DistanceTo()
+			// land_point_position.Y = -4;
+			// land_point.Position = land_point_position;
+			land_point.Show();
 		}
+		else
+		{
+			GD.Print("on floor");
+			land_point.Hide();
+		}
+		
 	}
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
@@ -440,5 +497,6 @@ public partial class PlayerEntity : Entity
 			return sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
 		}
 	}
+	
 	
 }

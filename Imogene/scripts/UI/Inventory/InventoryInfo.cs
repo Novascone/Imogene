@@ -639,57 +639,57 @@ public partial class InventoryInfo : UI
 		string physical_ranged_power = this_player.physical_ranged_power.ToString();
 		string spell_ranged_power = this_player.spell_ranged_power.ToString();
 		string wisdom_scaler = this_player.wisdom_scaler.ToString();
-		// Thrust
-		// Slash
-		// Blunt
-		// Bleed
-		// Poison
-		// Fire
-		// Cold
-		// Lightning
-		// Holy
+		string slash_damage = this_player.slash_damage.ToString();
+		string thrust_damage = this_player.thrust_damage.ToString();
+		string blunt_damage = this_player.blunt_damage.ToString();
+		string bleed_damage = this_player.bleed_damage.ToString();
+		string poison_damage = this_player.poison_damage.ToString();
+		string fire_damage = this_player.fire_damage.ToString();
+		string cold_damage = this_player.cold_damage.ToString();
+		string lightning_damage = this_player.lightning_damage.ToString();
+		string holy_damage = this_player.holy_damage.ToString();
 		string critical_hit_chance = this_player.critical_hit_chance.ToString();
 		string critical_hit_damage = this_player.critical_hit_damage.ToString();
 		string attack_speed = this_player.attack_speed.ToString();
-		// Attack Speed Increase
-		// Cooldown reduction
-		// Posture Damage
+		string attack_speed_increase = this_player.attack_speed_increase.ToString();
+		string cool_down_reduction = this_player.cool_down_reduction.ToString();
+		string posture_damage = this_player.posture_damage.ToString();
 
 		// Defense
 
-		// Armor
-		// Poise 
-		// Block Amount
-		// Retaliation
-		// Physical Resistance
-		// Thrust Resistance
-		// Slash Resistance
-		// Blunt Resistance
-		// Bleed Resistance
-		// Poison Resistance
-		// Curse Resistance
-		// Spell Resistance
-		// Fire Resistance
-		// Cold Resistance
-		// Lightning Resistance
-		// Holy Resistance
+		string armor = this_player.armor.ToString();
+		string poise = this_player.poise.ToString();
+		string block_amount = this_player.block_amount.ToString();
+		string retaliation = this_player.retaliation.ToString();
+		string physical_resistance = this_player.physical_resistance.ToString();
+		string thrust_resistance = this_player.thrust_resistance.ToString();
+		string slash_resistance = this_player.slash_resistance.ToString();
+		string blunt_resistance = this_player.blunt_resistance.ToString();
+		string bleed_resistance = this_player.bleed_resistance.ToString();
+		string poison_resistance = this_player.poison_resistance.ToString();
+		string curse_resistance = this_player.curse_resistance.ToString();
+		string spell_resistance = this_player.spell_resistance.ToString();
+		string fire_resistance = this_player.fire_resistance.ToString();
+		string cold_resistance = this_player.cold_resistance.ToString();
+		string lightning_resistance = this_player.lightning_resistance.ToString();
+		string holy_resistance = this_player.holy_resistance.ToString();
 
 		// Health
 
 		string maximum_health = this_player.health.ToString();
-		// Health Bonus
-		// Health Regen
-		// Health on Retaliate
+		string health_bonus = this_player.health_bonus.ToString();
+		string health_regen = this_player.health_regen.ToString();
+		string health_on_retaliate = this_player.health_on_retaliate.ToString();
 
 		// Resources
 
 		string maximum_resource = this_player.resource.ToString();
-		// Resource Regen
-		// Resource Cost Reduction
+		string resource_regen = this_player.resource_regen.ToString();
+		string resource_cost_reduction = this_player.resource_cost_reduction.ToString();
 
 		// Misc
 
-		// Movement Speed
+		string movement_speed = this_player.movement_speed.ToString();
 
 		// Possessions
 		string gold = this_player.gold.ToString();
@@ -745,31 +745,31 @@ public partial class InventoryInfo : UI
 		wisdom_scaler_value.Text = wisdom_scaler;
 		wisdom_scaler_info.Text = string.Format(wisdom_scaler_info_text, wisdom_scaler);
 
-		// thrust_damage_value.Text =;
-		thrust_damage_info.Text = string.Format(thrust_damage_info_text, 0);
-
-		// slash_damage_value.Text =;
+		slash_damage_value.Text = slash_damage;
 		slash_damage_info.Text = string.Format(slash_damage_info_text, 0);
 
-		// blunt_damage_value.Text =;
+		thrust_damage_value.Text = thrust_damage;
+		thrust_damage_info.Text = string.Format(thrust_damage_info_text, 0);
+
+		blunt_damage_value.Text = blunt_damage;
 		blunt_damage_info.Text = string.Format(blunt_damage_info_text, 0);
 
-		// bleed_damage_value.Text =;
+		bleed_damage_value.Text = bleed_damage;
 		bleed_damage_info.Text = string.Format(bleed_damage_info_text, 0);
 
-		// poison_damage_value.Text =;
+		poison_damage_value.Text = poison_damage;
 		poison_damage_info.Text = string.Format(poison_damage_info_text, 0);
 
-		// fire_damage_value.Text =;
+		fire_damage_value.Text = fire_damage;
 		fire_damage_info.Text = string.Format(fire_damage_info_text, 0);
 
-		// cold_damage_value.Text =;
+		cold_damage_value.Text = cold_damage;
 		cold_damage_info.Text = string.Format(cold_damage_info_text, 0);
 
-		// lightning_damage_value.Text =;
+		lightning_damage_value.Text = lightning_damage;
 		lightning_damage_info.Text = string.Format(lightning_damage_info_text, 0);
 
-		// holy_damage_value.Text =;
+		holy_damage_value.Text = holy_damage;
 		holy_damage_info.Text = string.Format(holy_damage_info_text, 0);
 
 		critical_hit_chance_value.Text = critical_hit_chance;
@@ -781,63 +781,63 @@ public partial class InventoryInfo : UI
 		attack_speed_value.Text = attack_speed;
 		attack_speed_info.Text = string.Format(attack_speed_info_text, attack_speed);
 
-		// attack_speed_increase_value.Text =;
+		attack_speed_increase_value.Text = attack_speed;
 		attack_speed_increase_info.Text = string.Format(attack_speed_increase_text, 0);
 
-		// cooldown_reduction_value.Text =;
+		cooldown_reduction_value.Text = cool_down_reduction;
 		cooldown_reduction_info.Text = string.Format(cooldown_reduction_info_text, 0);
 
-		// posture_damage_value.Text =;
+		posture_damage_value.Text = posture_damage;
 		posture_damage_info.Text = string.Format(posture_damage_text, 0);
 
 		// Defense
 
-		// armor_value.Text =;
+		armor_value.Text = armor;
 		armor_info.Text = string.Format(armor_info_text, 0, 0);
 
-		// poise_value.Text =;
+		poise_value.Text = poise;
 		poise_info.Text = string.Format(poise_info_text, 0);
 
-		// block_amount_value.Text =;
+		block_amount_value.Text = block_amount;
 		block_amount_info.Text = string.Format(block_amount_info_text, 0);
 
-		// retaliation_value.Text =;
+		retaliation_value.Text = retaliation;
 		retaliation_info.Text = string.Format(retaliation_info_text, 0);
 
-		// physical_resistance_value.Text =;
+		physical_resistance_value.Text = physical_resistance;
 		physical_resistance_info.Text = string.Format(physical_resistance_info_text, 0);
 
-		// thrust_resistance_value.Text =;
+		thrust_resistance_value.Text = thrust_resistance;
 		thrust_resistance_info.Text = string.Format(thrust_resistance_info_text, 0);
 
-		// slash_resistance_value.Text =;
+		slash_resistance_value.Text = slash_resistance;
 		slash_resistance_info.Text = string.Format(slash_resistance_info_text, 0);
 
-		// blunt_resistance_value.Text =;
+		blunt_resistance_value.Text = blunt_resistance;
 		blunt_resistance_info.Text = string.Format(blunt_resistance_info_text, 0);
 
-		// bleed_resistance_value.Text =;
+		bleed_resistance_value.Text = bleed_resistance;
 		bleed_resistance_info.Text = string.Format(bleed_resistance_info_text, 0);
 
-		// poison_resistance_value.Text =;
+		poison_resistance_value.Text = poison_resistance;
 		poison_resistance_info.Text = string.Format(poison_resistance_info_text, 0);
 
-		// curse_resistance_value.Text =;
+		curse_resistance_value.Text = curse_resistance;
 		curse_resistance_info.Text = string.Format(curse_resistance_info_text, 0);
 
-		// spell_resistance_value.Text =;
+		spell_resistance_value.Text = spell_resistance;
 		spell_resistance_info.Text = string.Format(spell_resistance_info_text, 0);
 
-		// fire_resistance_value.Text =;
+		fire_resistance_value.Text = fire_resistance;
 		fire_resistance_info.Text = string.Format(fire_resistance_info_text, 0);
 
-		// cold_resistance_value.Text =;
+		cold_resistance_value.Text = cold_resistance;
 		cold_resistance_info.Text = string.Format(cold_resistance_info_text, 0);
 
-		// lightning_resistance_value.Text =;
+		lightning_resistance_value.Text = lightning_resistance;
 		lightning_resistance_info.Text = string.Format(lighting_resistance_info_text, 0);
 
-		// holy_resistance_value.Text =;
+		holy_resistance_value.Text = holy_resistance;
 		holy_resistance_info.Text = string.Format(holy_resistance_info_text, 0);
 
 		// Health
@@ -845,13 +845,13 @@ public partial class InventoryInfo : UI
 		maximum_health_value.Text = maximum_health;
 		maximum_health_info.Text = string.Format(maximum_health_info_text, maximum_health);
 
-		// health_bonus_value.Text =;
+		health_bonus_value.Text = health_bonus;
 		health_bonus_info.Text = string.Format(health_bonus_info_text, 0);
 
-		// health_regen_value.Text =;
+		health_regen_value.Text = health_regen;
 		health_regen_info.Text = string.Format(health_regen_info_text, 0);
 
-		// health_retaliation_value.Text =;
+		health_retaliation_value.Text = health_on_retaliate;
 		health_retaliation_info.Text = string.Format(health_retaliation_info_text, 0);
 
 		// Resource
@@ -859,15 +859,15 @@ public partial class InventoryInfo : UI
 		maximum_resource_value.Text = maximum_resource;
 		maximum_resource_info.Text = string.Format(maximum_resource_info_text, 0);
 
-		// resource_regen_value.Text =;
+		resource_regen_value.Text = resource_regen;
 		resource_regen_info.Text = string.Format(resource_regen_info_text, 0);
 
-		// resource_cost_reduction_value.Text =;
+		resource_cost_reduction_value.Text = resource_cost_reduction;
 		resource_cost_reduction_info.Text = string.Format(resource_cost_reduction_info_text, 0);
 
 		// Misc
 
-		// movement_speed_value.Text =;
+		movement_speed_value.Text = movement_speed;
 		movement_speed_info.Text = string.Format(movement_speed_info_text, 0);
 
 		

@@ -74,7 +74,7 @@ public partial class Jump : Ability
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
-			
+			player.velocity.Y = 0;
 			RemoveFromAbilityList(this);
 		}
         if(!player.IsOnFloor())
