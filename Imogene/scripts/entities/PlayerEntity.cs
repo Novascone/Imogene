@@ -19,10 +19,18 @@ public partial class PlayerEntity : Entity
 
 	// Offense
 
-	public float physical_melee_power; // Increases physical melee DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
-	public float spell_melee_power; // Increases melee magic DPS by 1 every 15 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
-	public float physical_ranged_power; // Increases physical ranged DPS by 1 every 15 points + 2 for every point of strength + 1 for every point of dexterity
-	public float spell_ranged_power;  // Increases physical ranged DPS by 1 every 15 points + 3 for every point of dexterity + 1 for every point of strength
+	
+	public float total_dps;
+	public float physical_melee_dps;
+	public float spell_melee_dps;
+	public float physical_ranged_dps;
+	public float spell_ranged_dps;
+	public float offhand_damage;
+
+	public float physical_melee_power; // Increases physical melee DPS by a magnitude every 100 points + 2 for every point of strength + 1 for every point of dexterity
+	public float spell_melee_power; // Increases melee magic DPS a magnitude every 100 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
+	public float physical_ranged_power; // Increases physical ranged DPS a magnitude every 100 points + 2 for every point of strength + 1 for every point of dexterity
+	public float spell_ranged_power;  // Increases physical ranged DPS by a magnitude every 100 points + 3 for every point of dexterity + 1 for every point of strength
 	public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
 
 	
@@ -30,20 +38,24 @@ public partial class PlayerEntity : Entity
 	public float physical_ranged_damage; 
 	public float spell_melee_damage;
 	public float spell_ranged_damage;
-	
 
-	public int physical_melee_attack_abilities; // Total number of attack abilities in each category
-	public int physical_ranged_attack_abilities;
-	public int spell_melee_attack_abilities;
-	public int spell_ranged_attack_abilities;
-	public int wisdom_attack_abilities;
+	public float physical_melee_power_mod; 
+	public float physical_ranged_power_mod; 
+	public float spell_melee_power_mod;
+	public float spell_ranged_power_mod;
+	public float power_mod_avg;
 
-	public float physical_melee_attack_ability_ratio; 
-	public float physical_ranged_attack_ability_ratio;
-	public float spell_melee_attack_ability_ratio;
-	public float spell_ranged_attack_ability_ratio;
-	public float wisdom_attack_ability_ratio;
-	public int total_attack_abilities;
+	public int damage_bonus;
+	public float combined_damage;
+	public float base_aps;
+	public float aps_modifiers;
+	public float aps;
+	public float aps_mod;
+	public float base_dps;
+	public float skill_mod;
+	public float crit_mod;
+
+
 
 	public float slash_damage;
 	public float thrust_damage;
@@ -191,12 +203,12 @@ public partial class PlayerEntity : Entity
 		}
 	}
 
-	public void UpdateStats() // Updates stats 															*** NEEDS ADDITIONS ***
+	public void UpdateStats() // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
 	{
 		level = 0;
-		strength = 10;
-		dexterity = 10;
-		intellect = 5;
+		strength = 20;
+		dexterity = 30;
+		intellect = 10;
 		vitality = 1;
 		stamina = 1;
 		wisdom = 20;
@@ -205,8 +217,10 @@ public partial class PlayerEntity : Entity
 
 
 		weapon_damage = 10;
+		offhand_damage = 9;
 		attack_speed = 2f;
-
+		
+		
 		slash_damage = 0;
 		thrust_damage = 0;
 	 	blunt_damage = 0;
@@ -216,8 +230,8 @@ public partial class PlayerEntity : Entity
 	 	cold_damage = 0;
 		lightning_damage = 0;
 		holy_damage = 0;
-	 	critical_hit_chance = 0.05f; // Percentage change for hit to be a critical hit
-	 	critical_hit_damage = 1.2f; // Multiplier applied to base damage if a hit is critical
+	 	critical_hit_chance = 0.5f; // Percentage change for hit to be a critical hit
+	 	critical_hit_damage = 0.9f; // Multiplier applied to base damage if a hit is critical
 	 	attack_speed_increase = 0;
 	 	cool_down_reduction = 0;
 		posture_damage = 0;
@@ -240,42 +254,63 @@ public partial class PlayerEntity : Entity
 		holy_resistance = 0;
 
 
-		physical_melee_attack_abilities = 3;
-		physical_ranged_attack_abilities = 3;
-		spell_melee_attack_abilities = 3;
-		spell_ranged_attack_abilities = 3;
-		wisdom_attack_abilities = 3;
-		total_attack_abilities = physical_melee_attack_abilities + physical_ranged_attack_abilities + spell_melee_attack_abilities + spell_ranged_attack_abilities;
 
 		// Calculates stats
-		physical_melee_attack_ability_ratio = (float)physical_melee_attack_abilities / total_attack_abilities;
-		physical_ranged_attack_ability_ratio = (float)physical_ranged_attack_abilities / total_attack_abilities;
-		spell_melee_attack_ability_ratio = (float)spell_melee_attack_abilities / total_attack_abilities;
-		spell_ranged_attack_ability_ratio = (float)spell_ranged_attack_abilities / total_attack_abilities;
-		wisdom_attack_ability_ratio = (float)wisdom_attack_abilities / total_attack_abilities;
-
+		combined_damage = weapon_damage + damage_bonus;
+		aps = base_aps * (1 + aps_modifiers);
+		base_dps = aps * combined_damage;
 
 		physical_melee_power = (2 * strength) + dexterity;
 		physical_ranged_power = strength + (3 * dexterity);
 		spell_melee_power = strength + dexterity + (3 * intellect);
 		spell_ranged_power = (2 * dexterity) + (3 * intellect);
 
-		physical_melee_damage = physical_melee_power/15;
-		physical_ranged_damage = physical_ranged_power/15;
-		spell_melee_damage = spell_melee_power/15;
-		spell_ranged_damage = spell_ranged_power/15;
+		// physical_melee_damage = physical_melee_power/15;
+		// physical_ranged_damage = physical_ranged_power/15;
+		// spell_melee_damage = spell_melee_power/15;
+		// spell_ranged_damage = spell_ranged_power/15;
 		wisdom_scaler = wisdom/20;
 
-		damage = ((physical_melee_attack_ability_ratio * physical_melee_damage) + 
-				 (physical_ranged_attack_ability_ratio * physical_ranged_damage) + 
-				 (spell_melee_attack_ability_ratio * spell_melee_damage) + 
-				 (spell_ranged_attack_ability_ratio * spell_ranged_damage) +
-				 (wisdom_attack_ability_ratio * wisdom_scaler) +
-				 weapon_damage) * 
-				 attack_speed * 
-				 (1 + (critical_hit_chance * critical_hit_damage));
+		combined_damage = weapon_damage + offhand_damage + 2 + 1 + 1;
 
-		damage = (float)Math.Round(damage,2);
+		aps = 1.71f;
+		base_dps = aps * combined_damage;
+		skill_mod = 1.15f;
+		crit_mod = 1 + (critical_hit_chance * critical_hit_damage);
+
+		physical_melee_power_mod = 1 + (physical_melee_power/100);
+		spell_melee_power_mod = 1 + (spell_melee_power/100);
+		physical_ranged_power_mod = 1 + (physical_ranged_power/100);
+		spell_ranged_power_mod = 1 + (spell_ranged_power/100);
+
+		power_mod_avg = (physical_melee_power_mod + spell_melee_power_mod + physical_ranged_power_mod + spell_ranged_power_mod) / 4;
+
+		physical_melee_dps = base_dps * physical_melee_power_mod * skill_mod * crit_mod;
+		spell_melee_dps = base_dps * spell_melee_power_mod * skill_mod * crit_mod;
+		physical_ranged_dps = base_dps * physical_ranged_power_mod * skill_mod * crit_mod;
+		spell_ranged_dps = base_dps * spell_ranged_power_mod * skill_mod * crit_mod;
+
+		physical_melee_dps = (float)Math.Round(physical_melee_dps,2);
+		spell_melee_dps = (float)Math.Round(spell_melee_dps,2);
+		physical_ranged_dps = (float)Math.Round(physical_ranged_dps,2);
+		spell_ranged_dps = (float)Math.Round(spell_ranged_dps,2);
+
+		total_dps = base_dps * power_mod_avg * skill_mod * crit_mod;
+		total_dps = (float)Math.Round(total_dps,2);
+		damage = total_dps;
+		GD.Print("combined damage " + combined_damage);
+		GD.Print("base dps " + base_dps);
+		GD.Print("aps " + aps);
+		GD.Print("skill mod " + skill_mod);
+		GD.Print("crit mod " + crit_mod);
+		GD.Print("physical melee power mod " + physical_melee_power_mod);
+		GD.Print("spell melee power mod " + spell_melee_power_mod);
+		GD.Print("physical ranged power mod " + physical_ranged_power_mod);
+		GD.Print("spell ranged power mod " + spell_ranged_power_mod);
+		GD.Print("physical melee dps " + physical_melee_dps);
+		GD.Print("spell melee dps " + spell_melee_dps);
+		GD.Print("physical ranged dps " + physical_ranged_dps);
+		GD.Print("spell ranged dps " + spell_ranged_dps);
 	}
 
 	public void Fall(double delta) // bring the player back to the ground
@@ -291,7 +326,7 @@ public partial class PlayerEntity : Entity
 		}
 		else
 		{
-			GD.Print("on floor");
+			// GD.Print("on floor");
 			land_point.Hide();
 		}
 		

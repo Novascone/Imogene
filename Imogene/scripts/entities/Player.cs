@@ -136,10 +136,10 @@ public partial class Player : PlayerEntity
 				if(ray.Count > 0)
 				{
 					
-				GD.Print("collision point of created raycast: " + ray["position"]);
-				GD.Print("player position: " + player_position);
-				GD.Print("collision: " + ray["collider"]);
-				GD.Print("Land point Position: " + land_point.Position);
+				// GD.Print("collision point of created raycast: " + ray["position"]);
+				// GD.Print("player position: " + player_position);
+				// GD.Print("collision: " + ray["collider"]);
+				// GD.Print("Land point Position: " + land_point.Position);
 				// GD.Print("Player position: " + player_position);
 				// GD.Print("collision point: " + ray["position"]);
 				land_point_position = ray["position"].AsVector3();

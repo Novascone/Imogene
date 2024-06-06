@@ -5,7 +5,7 @@ public partial class CameraRig : Node3D
 {
 	// Called when the node enters the scene tree for the first time.
 	private Camera3D camera; // Gets camera node
-	private int default_camera_size = 20; // Controls camera zoom
+	private int default_camera_size = 21; // Controls camera zoom
 	private int zoom_camera_size = 10; // Controls camera zoom
 	private CustomSignals _customSignals;
 	public override void _Ready()

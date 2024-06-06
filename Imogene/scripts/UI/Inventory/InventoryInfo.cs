@@ -24,12 +24,12 @@ public partial class InventoryInfo : UI
 	private Button strength_label;
 	private Label strength_value;
 	private RichTextLabel strength_info;
-	private string strength_info_text = " Strength {0} \n * Primary stat for melee damage \n * Increases damage by {1} \n * Increases health by {2} ";
+	private string strength_info_text = " Strength {0} \n * Primary stat for melee damage \n * Increases damage by {1} \n * Increases health by {2} \n * Increases critical hit damage by {3}";
 
 	private Button dexterity_label;
 	private Label dexterity_value;
 	private RichTextLabel dexterity_info;
-	private string dexterity_info_text = " Dexterity {0} \n * Primary stat for melee damage \n * Calculated by physical ranged  and critical damage \n * Increases damage by {1} \n * Increases critical chance by {2} * Increases critical damage by {3}";
+	private string dexterity_info_text = " Dexterity {0}  \n * Primary stat for ranged damage\n * Increases damage by {1} \n * Increases critical chance by {2}";
 
 	private Button intellect_label;
 	private Label intellect_value;
@@ -44,12 +44,12 @@ public partial class InventoryInfo : UI
 	private Button stamina_label;
 	private Label stamina_value;
 	private RichTextLabel stamina_info;
-	private string stamina_info_text = " Stamina {0} \n * Primary stat for resource and regeneration \n * Increases total resource by {1} \n * Increases health and resource regeneration by {2} \n * Increases health by {3}";
+	private string stamina_info_text = " Stamina {0} \n * Primary stat for resource and regeneration \n * Increases health and resource regeneration by {2} \n * Increases health by {3}";
 
 	private Button wisdom_label;
 	private Label wisdom_value;
 	private RichTextLabel wisdom_info;
-	private string wisdom_info_text = " Wisdom {0} \n * Primary stat for hit and interaction \n * Increases hit chance by {1}";
+	private string wisdom_info_text = " Wisdom {0} \n * Primary stat for interaction \n * Increases hit chance by {1}";
 
 	private Button charisma_label;
 	private Label charisma_value;
@@ -60,7 +60,7 @@ public partial class InventoryInfo : UI
 	private Button damage_label;
 	private Label damage_value;
 	private RichTextLabel damage_info;
-	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character \n * Healing per second is based on DPS \n * Combination of physical power (melee and ranged), spell power(melee and ranged), \n     weapon damage, attack speed, critical hit chance, and critical hit damage";
+	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character by the average of power modifiers \n * Physical melee dps {1} \n * spell melee dps {2} \n * Physical ranged dps {3} \n * spell ranged dps {4} \n These 4 catagories are the damage that will be applied when using a skill of the respective type. In other words this is the actual dps dealt for a give ability type and the overall damage is an estimate \n * Combination of power modifiers melee and ranged, in both their physical and spell forms, \n     damage, attack speed, critical hit chance, and critical hit damage";
 
 	private Button resistance_label;
 	private Label resistance_value;
@@ -634,6 +634,12 @@ public partial class InventoryInfo : UI
 		// Sheet
 
 		// Offense
+
+		string physical_melee_dps = this_player.physical_melee_dps.ToString();
+		string spell_melee_dps = this_player.spell_melee_dps.ToString();
+		string physical_ranged_dps = this_player.physical_ranged_dps.ToString();
+		string spell_ranged_dps = this_player.spell_ranged_dps.ToString();
+
 		string physical_melee_power = this_player.physical_melee_power.ToString();
 		string spell_melee_power = this_player.spell_melee_power.ToString();
 		string physical_ranged_power = this_player.physical_ranged_power.ToString();
@@ -654,6 +660,7 @@ public partial class InventoryInfo : UI
 		string attack_speed_increase = this_player.attack_speed_increase.ToString();
 		string cool_down_reduction = this_player.cool_down_reduction.ToString();
 		string posture_damage = this_player.posture_damage.ToString();
+		
 
 		// Defense
 
@@ -696,19 +703,19 @@ public partial class InventoryInfo : UI
 		
 		// Base Stats
 		strength_value.Text = strength;
-		strength_info.Text = string.Format(strength_info_text, strength, 0, 0); // 3 variable(s)
+		strength_info.Text = string.Format(strength_info_text, strength, 0, strength, strength); // 3 variable(s)
 
 		dexterity_value.Text = dexterity;
-		dexterity_info.Text = string.Format(dexterity_info_text, dexterity, 0, 0, 0); // 4 variable(s)
+		dexterity_info.Text = string.Format(dexterity_info_text, dexterity, 0, dexterity); // 4 variable(s)
 
 		intellect_value.Text = intellect;
 		intellect_info.Text = string.Format(intellect_info_text, intellect, 0, 0); // 3 variable(s)
 
 		vitality_value.Text = vitality;
-		vitality_info.Text = string.Format(vitality_info_text, vitality, 0, 0); // 2 variable(s)
+		vitality_info.Text = string.Format(vitality_info_text, vitality, 2 * vitality.ToInt()); // 2 variable(s)
 
 		stamina_value.Text = stamina;
-		stamina_info.Text = string.Format(stamina_info_text, stamina, 0, 0, 0); // 4 variable(s)
+		stamina_info.Text = string.Format(stamina_info_text, stamina, stamina, stamina, stamina); // 4 variable(s)
 
 		wisdom_value.Text = wisdom;
 		wisdom_info.Text = string.Format(wisdom_info_text, wisdom, 0); // 2 variable(s)
@@ -718,7 +725,7 @@ public partial class InventoryInfo : UI
 
 		// Stats Summary
 		damage_value.Text = damage;
-		damage_info.Text = string.Format(damage_info_text, damage); // 1 variable(s)
+		damage_info.Text = string.Format(damage_info_text, damage, physical_melee_dps, spell_melee_dps, physical_ranged_dps, spell_ranged_dps); // 1 variable(s)
 
 		resistance_value.Text = "";
 		resistance_info.Text = string.Format(resistance_info_text, 0); // 1 variable(s)
