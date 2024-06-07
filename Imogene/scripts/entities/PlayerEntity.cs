@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 
 public partial class PlayerEntity : Entity
 {
@@ -9,13 +10,13 @@ public partial class PlayerEntity : Entity
 
 	// Stats
 
-	public int strength = 1; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
-	public int dexterity = 1; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
-	public int intellect = 1; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
-	public int vitality = 1; // Vitality: Primary stat for health
-	public int stamina = 1; // Primary stat for resource and regeneration
-	public int wisdom = 1; // Increases the damage of abilities that use wisdom, also used for interactions
-	public int charisma = 1; // Primary Stat for character interaction
+	public int strength = 0; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
+	public int dexterity = 0; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
+	public int intellect = 0; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
+	public int vitality = 0; // Vitality: Primary stat for health
+	public int stamina = 0; // Primary stat for resource and regeneration
+	public int wisdom = 0; // Increases the damage of abilities that use wisdom, also used for interactions
+	public int charisma = 0; // Primary Stat for character interaction
 
 	// Offense
 
@@ -34,78 +35,73 @@ public partial class PlayerEntity : Entity
 	public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
 
 	
- 	public float physical_melee_damage; 
-	public float physical_ranged_damage; 
-	public float spell_melee_damage;
-	public float spell_ranged_damage;
-
 	public float physical_melee_power_mod; 
 	public float physical_ranged_power_mod; 
 	public float spell_melee_power_mod;
 	public float spell_ranged_power_mod;
 	public float power_mod_avg;
 
-	public int damage_bonus;
-	public float combined_damage;
-	public float base_aps;
-	public float aps_modifiers;
-	public float aps;
-	public float aps_mod;
-	public float base_dps;
-	public float skill_mod;
-	public float crit_mod;
+	public int damage_bonus = 0;
+	public float combined_damage = 0;
+	public float base_aps = 0;
+	public float aps_modifiers = 0;
+	public float aps = 0;
+	public float aps_mod = 0;
+	public float base_dps = 0;
+	public float skill_mod = 0;
+	public float crit_mod = 0;
 
 
 
-	public float slash_damage;
-	public float thrust_damage;
-	public float blunt_damage;
-	public float bleed_damage;
-	public float poison_damage;
-	public float fire_damage;
-	public float cold_damage;
-	public float lightning_damage;
-	public float holy_damage;
-	public float critical_hit_chance; // Percentage change for hit to be a critical hit
-	public float critical_hit_damage; // Multiplier applied to base damage if a hit is critical
-	public float attack_speed_increase;
-	public float cool_down_reduction;
-	public float posture_damage;
+	public float slash_damage = 0;
+	public float thrust_damage = 0;
+	public float blunt_damage = 0;
+	public float bleed_damage = 0;
+	public float poison_damage = 0;
+	public float fire_damage = 0;
+	public float cold_damage = 0;
+	public float lightning_damage = 0;
+	public float holy_damage = 0;
+	public float critical_hit_chance = 0.5f; // Percentage change for hit to be a critical hit
+	public float critical_hit_damage = 0.9f; // Multiplier applied to base damage if a hit is critical
+	public float attack_speed_increase = 0;
+	public float cool_down_reduction = 0;
+	public float posture_damage = 0;
 
 	// Defense
 
-	public int armor;
-	public int poise;
-	public int block_amount;
-	public int retaliation;
-	public int physical_resistance;
-	public int thrust_resistance;
-	public int slash_resistance;
-	public int blunt_resistance;
-	public int bleed_resistance;
-	public int poison_resistance;
-	public int curse_resistance;
-	public int spell_resistance;
-	public int fire_resistance;
-	public int cold_resistance;
-	public int lightning_resistance;
-	public int holy_resistance;
+	public int armor = 0;
+	public int poise = 0;
+	public int block_amount = 0;
+	public int retaliation = 0;
+	public int physical_resistance = 0;
+	public int thrust_resistance = 0;
+	public int slash_resistance = 0;
+	public int blunt_resistance = 0;
+	public int bleed_resistance = 0;
+	public int poison_resistance = 0;
+	public int curse_resistance = 0;
+	public int spell_resistance = 0;
+	public int fire_resistance = 0;
+	public int cold_resistance = 0;
+	public int lightning_resistance = 0;
+	public int holy_resistance = 0;
 
 	// Health
 
 	public float maximum_health => health;
-	public float health_bonus;
-	public float health_regen;
-	public float health_on_retaliate;
+	public float health_bonus = 0;
+	public float health_regen = 0;
+	public float health_on_retaliate = 0;
 
 	// Resources
 
 	public float maximum_resource => resource;
-	public float resource_regen;
-	public float resource_cost_reduction;
+	public float resource_regen = 0;
+	public float resource_cost_reduction = 0;
 
 	// Misc
-	public float movement_speed;
+	public float movement_speed = 0;
 
 	// Materials
 
@@ -205,54 +201,6 @@ public partial class PlayerEntity : Entity
 
 	public void UpdateStats() // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
 	{
-		level = 0;
-		strength = 20;
-		dexterity = 30;
-		intellect = 10;
-		vitality = 1;
-		stamina = 1;
-		wisdom = 20;
-		charisma = 1;
-
-
-
-		weapon_damage = 10;
-		offhand_damage = 9;
-		attack_speed = 2f;
-		
-		
-		slash_damage = 0;
-		thrust_damage = 0;
-	 	blunt_damage = 0;
-	 	bleed_damage = 0;
-	 	poison_damage = 0;
-		fire_damage= 0;
-	 	cold_damage = 0;
-		lightning_damage = 0;
-		holy_damage = 0;
-	 	critical_hit_chance = 0.5f; // Percentage change for hit to be a critical hit
-	 	critical_hit_damage = 0.9f; // Multiplier applied to base damage if a hit is critical
-	 	attack_speed_increase = 0;
-	 	cool_down_reduction = 0;
-		posture_damage = 0;
-
-		armor = 0;
-		poise = 0;
-		block_amount = 0;
-		retaliation = 0;
-		physical_resistance = 0;
-		thrust_resistance = 0;
-		slash_resistance = 0;
-		blunt_resistance = 0;
-		bleed_resistance = 0;
-		poison_resistance = 0;
-		curse_resistance = 0;
-		spell_resistance = 0;
-		fire_resistance = 0;
-		cold_resistance = 0;
-		lightning_resistance = 0;
-		holy_resistance = 0;
-
 
 
 		// Calculates stats
@@ -311,6 +259,32 @@ public partial class PlayerEntity : Entity
 		GD.Print("spell melee dps " + spell_melee_dps);
 		GD.Print("physical ranged dps " + physical_ranged_dps);
 		GD.Print("spell ranged dps " + spell_ranged_dps);
+		SendStats();
+		
+	}
+
+	public void SendStats()
+	{
+		GD.Print("sending stats");
+		_customSignals.EmitSignal(nameof(CustomSignals.SendStats),
+																level, strength, dexterity, intellect, vitality, stamina, wisdom, charisma, total_dps,
+
+																physical_melee_dps, spell_melee_dps, physical_ranged_dps, spell_ranged_dps, physical_melee_power, 
+
+																spell_melee_power, physical_ranged_power, spell_ranged_power, wisdom_scaler, physical_melee_power_mod,
+
+																physical_ranged_power_mod, spell_ranged_power_mod, power_mod_avg, damage_bonus, combined_damage, base_aps,
+
+																aps_modifiers, aps, aps_mod, base_dps, skill_mod, crit_mod, slash_damage, thrust_damage, blunt_damage, bleed_damage,
+
+																poison_damage, fire_damage, cold_damage, lightning_damage, holy_damage, critical_hit_chance, critical_hit_damage, attack_speed_increase,
+
+																cool_down_reduction, posture_damage, armor, poise, block_amount, retaliation, physical_resistance, thrust_resistance, slash_resistance,
+
+																blunt_resistance, bleed_resistance, poison_resistance, curse_resistance, spell_resistance, fire_resistance, cold_resistance, lightning_resistance,
+																
+																holy_resistance, maximum_health, health_bonus, health_regen, health_on_retaliate, maximum_resource, resource_regen, resource_cost_reduction, movement_speed, maixmum_gold
+																);
 	}
 
 	public void Fall(double delta) // bring the player back to the ground
@@ -532,6 +506,42 @@ public partial class PlayerEntity : Entity
 			return sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
 		}
 	}
+
+	public void AddEquipableStats(ArmsResource item)
+	{
+		strength += item.strength;
+		dexterity += item.dexterity;
+		intellect += item.intellect;
+		vitality += item.vitality;
+		stamina += item.stamina;
+		wisdom += item.wisdom;
+		charisma += item.charisma;
+		critical_hit_chance += item.critical_hit_chance;
+		critical_hit_damage += item.critical_hit_damage;
+		armor += item.armor;
+		poise += item.poise;	
+		block_amount += item.block;
+		retaliation += item.retaliation;
+		physical_resistance += item.physical_resistance;
+		thrust_resistance += item.thrust_resistance;
+		slash_resistance += item.slash_resistance;
+		blunt_resistance += item.blunt_resistance;
+		bleed_resistance += item.bleed_resistance;
+		poison_resistance += item.poison_resistance;
+		curse_resistance += item.curse_resistance;
+		spell_resistance += item.spell_resistance;
+		fire_resistance += item.fire_resistance;
+		cold_resistance += item.cold_resistance;
+		lightning_resistance += item.lightning_resistance;
+		holy_resistance += item.holy_resistance;
+		health_bonus += item.health_bonus;
+		health_regen += item.health_regen;
+		health_on_retaliate += item.health_retaliate;
+		resource_regen += item.resource_regen;
+		resource_cost_reduction += resource_cost_reduction;
+	}
+
+	
 	
 	
 }

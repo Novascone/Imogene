@@ -20,7 +20,7 @@ public partial class UI : Control
 	public InventoryButton hover_over_button { get; set; }
 	public Button hover_over_button_non_inventory { get; set; }
 
-	private List<Item> items = new List<Item>();
+	private List<ItemResource> items = new List<ItemResource>();
 
 	public bool UI_element_open;
 	public bool player_in_interact_area;
@@ -254,12 +254,14 @@ public partial class UI : Control
 						}
 						if(hover_over_button.inventory_item.type == "consumable")
 						{
-							_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (Consumable)hover_over_button.inventory_item);
+							_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (ConsumableResource)hover_over_button.inventory_item);
 							
 						}
 						if(hover_over_button.inventory_item.type == "equipable")
 						{
-							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)hover_over_button.inventory_item);
+							// GD.Print("Arm item that UI is sending " + hover_over_button.arm);
+							// GD.Print("inventory item: " + hover_over_button.inventory_item);
+							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
 						}
 					}
 					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept")) // Handle grab object set icon of clicked object to a button attached to the cursor
@@ -321,7 +323,7 @@ public partial class UI : Control
 					clicked_on = false;
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
-					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (Equipable)grabbed_object.inventory_item);
+					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (EquipableResource)grabbed_object.inventory_item);
 			
 				}
 				
@@ -425,10 +427,10 @@ public partial class UI : Control
 		}
 	}
 
-	public void AddItem(Item item)
+	public void AddItem(ItemResource item)
 	{
-		Item current_item = item.Copy();
-		
+		ItemResource current_item = item.Copy();
+		GD.Print("Add item");
 		for (int i = 0; i < items.Count; i++)
 		{
 			if(items[i].id == current_item.id && items[i].quantity != items[i].stack_size)
@@ -457,7 +459,7 @@ public partial class UI : Control
 			}
 			else
 			{
-				Item temp_item = current_item.Copy();
+				ItemResource temp_item = current_item.Copy();
 				temp_item.quantity = current_item.stack_size;
 				items.Add(temp_item);
 				UpdateButton(items.Count - 1);
@@ -468,11 +470,11 @@ public partial class UI : Control
 		}
 	}
 
-	public bool Remove(Item item)
+	public bool Remove(ItemResource item)
 	{
 		if(CanAfford(item))
 		{
-			Item current_item = item.Copy();
+			ItemResource current_item = item.Copy();
 
 			for(int i = 0; i < items.Count; i++)
 			{
@@ -507,9 +509,9 @@ public partial class UI : Control
 		return false;
 	}
 
-	private bool CanAfford(Item item)
+	private bool CanAfford(ItemResource item)
 	{
-		List<Item> current_items = items.Where(x => x.id == item.id).ToList();
+		List<ItemResource> current_items = items.Where(x => x.id == item.id).ToList();
 
 		int i = 0;
 		foreach (var item1 in current_items)
@@ -573,12 +575,13 @@ public partial class UI : Control
 
 	public void _on_add_button_button_down()
 	{
-		AddItem(ResourceLoader.Load<Item>("res://resources/armor.tres"));
+		// AddItem(ResourceLoader.Load<ItemResource>("res://resources/armor.tres"));
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/helmet/helmet.tres"));
 	}
 
 	public void _on_remove_button_button_down()
 	{
-		Remove(ResourceLoader.Load<Item>("res://resources/armor.tres"));
+		Remove(ResourceLoader.Load<ItemResource>("res://resources/armor.tres"));
 	}
 
 	public void _on_cursor_area_2d_area_entered(Area2D area)
@@ -624,12 +627,12 @@ public partial class UI : Control
 
 	public void _on_add_button_2_button_down()
 	{
-		AddItem(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
+		AddItem(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
 	}
 
 	public void _on_remove_button_2_button_down()
 	{
-		Remove(ResourceLoader.Load<Item>("res://resources/HealthPotion.tres"));
+		Remove(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
 	}
 
 	public void _on_remove_equiped_button_down()

@@ -3,7 +3,7 @@ using System;
 
 public partial class InventoryButton : Button
 {
-	public Item inventory_item;
+	public ItemResource inventory_item;
 	public TextureRect icon;
 	public Label quantity_label;
 	private int index;
@@ -64,7 +64,7 @@ public partial class InventoryButton : Button
 		
 	// }
 
-	public void UpdateItem(Item item, int index)
+	public void UpdateItem(ItemResource item, int index)
 	{
 		this.index = index;
 		inventory_item = item;
@@ -77,6 +77,7 @@ public partial class InventoryButton : Button
 		{
 			icon.Texture = item.icon;
 			quantity_label.Text = item.quantity.ToString();
+
 		}
 		
 	}

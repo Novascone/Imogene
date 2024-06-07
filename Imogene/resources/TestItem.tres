@@ -1,14 +1,13 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://5vccqvn34ool"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5vccqvn34ool"]
 
-[ext_resource type="Script" path="res://scripts/UI/Inventory/Item.cs" id="1_05vty"]
-[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="1_pe737"]
+[ext_resource type="Script" path="res://scripts/items/ConsumableResource.cs" id="2_ff1d1"]
 
 [resource]
-script = ExtResource("1_05vty")
+script = ExtResource("2_ff1d1")
+heal_amount = 10
 id = 0
-name = "TestItem"
-resource_path = "res://TestItem.tres"
-icon = ExtResource("1_pe737")
-quantity = 3
-stack_size = 5
-is_stackable = true
+name = ""
+quantity = 0
+stack_size = 0
+is_stackable = false
+type = ""

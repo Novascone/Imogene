@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 
 public partial class CustomSignals : Node
 {
@@ -39,6 +40,31 @@ public partial class CustomSignals : Node
 	public delegate void InteractEventHandler(Area3D area, bool in_interact_area, bool interacting); // Tells the UI if the player has entered an interact area
 	[Signal]
 	public delegate void WhichConsumableEventHandler(int consumable); // Tells the UI if the player has entered an interact area
+	[Signal]
+	public delegate void SendStatsEventHandler(
+												int level, int strength, int dexterity, int intellect, int vitality, int stamina, int wisdom, int charisma,
+
+												float total_dps, float physical_melee_dps, float spell_melee_dps, float physical_ranged_dps, float spell_ranged_dps,
+
+												float physical_melee_power, float spell_melee_power, float physical_ranged_power, float spell_ranged_power,
+
+												float wisdom_scaler, float physical_melee_power_mod, float physical_ranged_power_mod, float spell_ranged_power_mod, float power_mod_avg, 
+
+												int damage_bonus, float combined_damage, float base_aps, float aps_modifiers, float aps, float aps_mod, float base_dps, float skill_mod,
+
+												float crit_mod, float slash_damage, float thrust_damage, float blunt_damage, float bleed_damage, float poison_damage, float fire_damage,
+
+												float cold_damage, float lightning_damage, float holy_damage, float critical_hit_chance, float critical_hit_damage, float attack_speed_increase,
+
+												float cool_down_reduction, float posture_damage, int armor, int poise, int block_amount, int retaliation, int physical_resistance, int thrust_resistance,
+
+												int slash_resistance, int blunt_resistance, int bleed_resistance, int poison_resistance, int curse_resistance, int spell_resistance, int fire_resistance,
+
+												int cold_resistance, int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float health_on_retaliate,
+
+												float maximum_resource, float resource_regen, float resource_cost_reduction, float movement_speed, int maixmum_gold
+												);
+	
 
 
 
@@ -54,9 +80,9 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void UIPreventingMovementEventHandler(bool ui_preventing_movement); // Tells the player if the UI is preventing movement
 	[Signal]
-	public delegate void EquipableInfoEventHandler(Equipable item); // Gives the player information about an equipable item in their inventory
+	public delegate void EquipableInfoEventHandler(ArmsResource item); // Gives the player information about an equipable item in their inventory
 	[Signal]
-	public delegate void ConsumableInfoEventHandler(Consumable item); // Gives the player information about a consumable item in their inventory
+	public delegate void ConsumableInfoEventHandler(ConsumableResource item); // Gives the player information about a consumable item in their inventory
 	[Signal]
 	public delegate void ItemInfoEventHandler(Item item); // Gives the player information about a generic item in their inventory
 
@@ -66,7 +92,7 @@ public partial class CustomSignals : Node
 	[Signal]
 	public delegate void RemoveEquippedEventHandler(); // Tells the player to remove what is equipped (only head slot right now)
 	[Signal]
-	public delegate void EquipConsumableEventHandler(Consumable item, int consumable_slot); // Tells the player which consumable has been equipped
+	public delegate void EquipConsumableEventHandler(ConsumableResource item, int consumable_slot); // Tells the player which consumable has been equipped
 
 
 

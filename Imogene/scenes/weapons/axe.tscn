@@ -7,7 +7,6 @@
 
 [node name="axe" instance=ExtResource("1_ad7li")]
 script = ExtResource("2_uha7f")
-strength = 5
 
 [node name="Hitbox" type="Area3D" parent="." index="1"]
 transform = Transform3D(1, -2.98023e-08, -1.63913e-07, 5.96046e-08, 1, 1.51992e-06, 0, 0, 0.999999, -0.00900173, 1.6362, 0.249891)

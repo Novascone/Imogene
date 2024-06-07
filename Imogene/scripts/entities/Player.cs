@@ -32,7 +32,7 @@ public partial class Player : PlayerEntity
 
 	//Player consumables
 	public int consumable = 1;
-	public Consumable[] consumables = new Consumable[4];
+	public ConsumableResource[] consumables = new ConsumableResource[4];
 
 
 	// Player animation
@@ -335,24 +335,33 @@ public partial class Player : PlayerEntity
 
 	// UI
 
-	 private void HandleEquipableInfo(Equipable item) // Gets info from equipable items
+	 private void HandleEquipableInfo(ArmsResource arm) // Gets info from equipable items
     {
-        resource_path = item.item_path;
-		GD.Print("Plus " + item.strength + " Strength");
-		GD.Print(item.item_path);
+		// GD.Print("Item name: "  + arm.name);
+        resource_path = arm.resource_path;
 		var scene_to_load = GD.Load<PackedScene>(resource_path);
-		if(item.slot == "head")
-		{
+		// if(arm.slot == "head")
+		// {
 			GD.Print("Helmet equipped");
 			
 			main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
 			GD.Print(main_node);
 			head_slot.AddChild(main_node);
-		}
+			// if(equpipable.equipable_type is "Arm")
+			// {
+				GD.Print("Adding stats");
+				// Arm item_to_add = equpipable.arm_item;
+				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+				AddEquipableStats(arm);
+				UpdateStats();
+				PrintStats();
+			// }
+			
+		// }
 		
     }
 
-    private void HandleConsumableInfo(Consumable item)// Gets info from consumable items
+    private void HandleConsumableInfo(ConsumableResource item)// Gets info from consumable items
     {
         // GD.Print(item.heal_amount);
     }
@@ -363,7 +372,7 @@ public partial class Player : PlayerEntity
         head_slot.RemoveChild(main_node);
     }
 
-	private void HandleEquipConsumable(Consumable item, int consumable_slot)
+	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
     {
         consumables[consumable_slot] = item;
 		GD.Print(consumables[consumable_slot].name);
@@ -376,6 +385,13 @@ public partial class Player : PlayerEntity
 		velocity = Vector3.Zero;
     }
 	
+	public void PrintStats()
+	{
+		GD.Print("Strength: " + strength);
+		GD.Print("Dexterity: " + dexterity);
+		GD.Print("intellect: " + intellect);
+		GD.Print("Physical Resistance: " + physical_resistance);
+	}
 
 	
 }
