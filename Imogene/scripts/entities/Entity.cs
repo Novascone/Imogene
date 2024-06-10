@@ -7,12 +7,12 @@ public partial class Entity : CharacterBody3D
 {
     // Stats
 
-    public int level; // Level of the entity
+    public int level = 1; // Level of the entity
     public float speed = 7.0f; // Speed of the entity
     public float fall_speed = 40.0f;
     public float jump_speed = 20.0f;
-	public float health = 20; // Prelim health number
-    public int resource = 20; // prelim resource number
+	public float health = 200; // Prelim health number
+    public int resource = 100; // prelim resource number
    
 
     // Offense

@@ -3993,6 +3993,83 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
+[node name="PostureRegeneration" type="HBoxContainer" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_8wocc")
+
+[node name="Spacer1" type="Control" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Posture Regen"
+alignment = 0
+
+[node name="Info" type="Control" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 122.0
+offset_top = -332.0
+offset_right = 162.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -319.52
+offset_top = 225.496
+offset_right = 61.48
+offset_bottom = 304.496
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "Health regen {0} 
+\\n * Amount of health regenerated per second 
+\\n * Increased by skills and gear
+"
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
 [node name="HealthRetaliation" type="HBoxContainer" parent="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("3_8wocc")
@@ -9569,6 +9646,8 @@ offset_bottom = -2.99998
 [connection signal="focus_exited" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration" method="_on_label_focus_exited"]
+[connection signal="focus_entered" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_entered"]
+[connection signal="focus_exited" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource" method="_on_label_focus_entered"]

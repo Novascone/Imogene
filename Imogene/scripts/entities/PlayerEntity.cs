@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.Intrinsics.X86;
 
@@ -70,7 +71,7 @@ public partial class PlayerEntity : Entity
 
 	// Defense
 
-	public int armor = 0;
+	public int armor = 20;
 	public int poise = 0;
 	public int block_amount = 0;
 	public int retaliation = 0;
@@ -87,25 +88,50 @@ public partial class PlayerEntity : Entity
 	public int lightning_resistance = 0;
 	public int holy_resistance = 0;
 
+	public float dr_armor;
+	public float dr_phys;
+	public float dr_slash;
+	public float dr_thrust;
+	public float dr_blunt;
+	public float dr_bleed;
+	public float dr_poison;
+	public float dr_curse;
+	public float dr_spell;
+	public float dr_fire;
+	public float dr_cold;
+	public float dr_lightning;
+	public float dr_holy;
+
+	public float dr_lvl_scale;
+	public float avg_res_dr;
+
+	public float resistance;
+
+	public float recovery;
+
 	// Health
 
 	public float maximum_health => health;
 	public float health_bonus = 0;
 	public float health_regen = 0;
+	public float health_regen_bonus = 0;
 	public float health_on_retaliate = 0;
 
 	// Resources
 
 	public float maximum_resource => resource;
 	public float resource_regen = 0;
+	public float resource_regen_bonus = 0;
+	public float posture_regen = 0;
 	public float resource_cost_reduction = 0;
+	public float rec_lvl_scale;
 
 	// Misc
 	public float movement_speed = 0;
 
 	// Materials
 
-	public int maixmum_gold => gold;
+	public int maximum_gold => gold;
 
 
 
@@ -134,7 +160,7 @@ public partial class PlayerEntity : Entity
 
 	// Targeting variables
 	public Area3D vision; // Area where the player can target enemies
-	public bool targeting = false; // Is the entity targeting?
+	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	private int mob_index = 0; // Index of mobs in list
 	private	Dictionary<Area3D, Vector3> mob_pos = new Dictionary<Area3D, Vector3>();  // Dictionary of mob positions
@@ -176,6 +202,8 @@ public partial class PlayerEntity : Entity
 	public override void _Ready()
 	{
 		
+		dr_lvl_scale = 50 * (float)level;
+		rec_lvl_scale = 100 * (float)level;
 		vision  = (Area3D)GetNode("Vision");
 		land_point = GetNode<MeshInstance3D>("LandPoint");
 		vision.AreaEntered += OnVisionEntered;
@@ -204,9 +232,7 @@ public partial class PlayerEntity : Entity
 
 
 		// Calculates stats
-		combined_damage = weapon_damage + damage_bonus;
-		aps = base_aps * (1 + aps_modifiers);
-		base_dps = aps * combined_damage;
+		
 
 		physical_melee_power = (2 * strength) + dexterity;
 		physical_ranged_power = strength + (3 * dexterity);
@@ -219,6 +245,10 @@ public partial class PlayerEntity : Entity
 		// spell_ranged_damage = spell_ranged_power/15;
 		wisdom_scaler = wisdom/20;
 
+		// damage
+		combined_damage = weapon_damage + damage_bonus;
+		aps = base_aps * (1 + aps_modifiers);
+		base_dps = aps * combined_damage;
 		combined_damage = weapon_damage + offhand_damage + 2 + 1 + 1;
 
 		aps = 1.71f;
@@ -243,22 +273,70 @@ public partial class PlayerEntity : Entity
 		physical_ranged_dps = (float)Math.Round(physical_ranged_dps,2);
 		spell_ranged_dps = (float)Math.Round(spell_ranged_dps,2);
 
-		total_dps = base_dps * power_mod_avg * skill_mod * crit_mod;
-		total_dps = (float)Math.Round(total_dps,2);
+		total_dps = (float)Math.Round(base_dps * power_mod_avg * skill_mod * crit_mod,2);
+		// total_dps = (float)Math.Round(total_dps,2);
 		damage = total_dps;
-		GD.Print("combined damage " + combined_damage);
-		GD.Print("base dps " + base_dps);
-		GD.Print("aps " + aps);
-		GD.Print("skill mod " + skill_mod);
-		GD.Print("crit mod " + crit_mod);
-		GD.Print("physical melee power mod " + physical_melee_power_mod);
-		GD.Print("spell melee power mod " + spell_melee_power_mod);
-		GD.Print("physical ranged power mod " + physical_ranged_power_mod);
-		GD.Print("spell ranged power mod " + spell_ranged_power_mod);
-		GD.Print("physical melee dps " + physical_melee_dps);
-		GD.Print("spell melee dps " + spell_melee_dps);
-		GD.Print("physical ranged dps " + physical_ranged_dps);
-		GD.Print("spell ranged dps " + spell_ranged_dps);
+
+		// mitigation
+		dr_armor = (float)Math.Round(1 + (armor/dr_lvl_scale), 2);
+		dr_phys = (float)Math.Round(1 + (physical_resistance/dr_lvl_scale), 2);
+		dr_slash = (float)Math.Round(1 + (slash_resistance/dr_lvl_scale), 2);
+		dr_thrust = (float)Math.Round(1 + (thrust_resistance/dr_lvl_scale), 2);
+		dr_blunt = (float)Math.Round(1 + (blunt_resistance/dr_lvl_scale), 2);
+		dr_bleed = (float)Math.Round(1 + (bleed_resistance/dr_lvl_scale), 2);
+		dr_poison = (float)Math.Round(1 + (poison_resistance/dr_lvl_scale), 2);
+		dr_spell = (float)Math.Round(1 + (spell_resistance/dr_lvl_scale), 2);
+		dr_fire = (float)Math.Round(1 + (fire_resistance/dr_lvl_scale), 2);
+		dr_cold = (float)Math.Round(1 + (cold_resistance/dr_lvl_scale), 2);
+		dr_lightning = (float)Math.Round(1 + (lightning_resistance/dr_lvl_scale), 2);
+		dr_holy = (float)Math.Round(1 + (holy_resistance/dr_lvl_scale), 2);
+		
+		avg_res_dr = (dr_phys + dr_slash + dr_thrust + dr_blunt + dr_bleed + dr_poison + dr_spell + dr_fire + dr_cold + dr_poison + dr_holy) / 11;
+
+		resistance = (float)Math.Round(maximum_health * (dr_armor * avg_res_dr),2);
+
+		// recovery
+
+		health_regen = (float)Math.Round(1 + (stamina/rec_lvl_scale) + health_regen_bonus, 2);
+		resource_regen = (float)Math.Round(1 + (stamina/rec_lvl_scale) + resource_regen_bonus, 2);
+		posture_regen = (float)Math.Round(1 + stamina/rec_lvl_scale * (1 + poise/100), 2);
+		recovery = (float)Math.Round((health_regen + resource_regen + posture_regen) / 3, 2);
+
+		// GD.Print("combined damage " + combined_damage);
+		// GD.Print("base dps " + base_dps);
+		// GD.Print("aps " + aps);
+		// GD.Print("skill mod " + skill_mod);
+		// GD.Print("crit mod " + crit_mod);
+		// GD.Print("physical melee power mod " + physical_melee_power_mod);
+		// GD.Print("spell melee power mod " + spell_melee_power_mod);
+		// GD.Print("physical ranged power mod " + physical_ranged_power_mod);
+		// GD.Print("spell ranged power mod " + spell_ranged_power_mod);
+		// GD.Print("physical melee dps " + physical_melee_dps);
+		// GD.Print("spell melee dps " + spell_melee_dps);
+		// GD.Print("physical ranged dps " + physical_ranged_dps);
+		// GD.Print("spell ranged dps " + spell_ranged_dps);
+
+		// GD.Print("dr_armor " + dr_armor);
+		// GD.Print("dr_phys " + dr_phys);
+		// GD.Print("dr_slash " + dr_slash);
+		// GD.Print("dr_thrust " + dr_thrust);
+		// GD.Print("dr_blunt " + dr_blunt);
+		// GD.Print("dr_bleed " + dr_bleed);
+		// GD.Print("dr_poison " + dr_poison);
+		// GD.Print("dr_spell " + dr_spell);
+		// GD.Print("dr_fire " + dr_fire);
+		// GD.Print("dr_cold " + dr_cold);
+		// GD.Print("dr_lightning " + dr_lightning);
+		// GD.Print("dr_holy " + dr_holy);
+
+		// GD.Print("avg_res " + avg_res_dr);
+		// GD.Print("maximum health " + maximum_health);
+		// GD.Print("resistance " + resistance);
+
+		GD.Print("health_regen " + health_regen);
+		GD.Print("resource_regen " + resource_regen);
+		GD.Print("posture_regen " + posture_regen);
+		GD.Print("recovery " + recovery);
 		SendStats();
 		
 	}
@@ -283,7 +361,7 @@ public partial class PlayerEntity : Entity
 
 																blunt_resistance, bleed_resistance, poison_resistance, curse_resistance, spell_resistance, fire_resistance, cold_resistance, lightning_resistance,
 																
-																holy_resistance, maximum_health, health_bonus, health_regen, health_on_retaliate, maximum_resource, resource_regen, resource_cost_reduction, movement_speed, maixmum_gold
+																holy_resistance, maximum_health, health_bonus, health_regen, posture_regen, health_on_retaliate, resistance, maximum_resource, resource_regen, resource_cost_reduction, recovery, movement_speed, maximum_gold
 																);
 	}
 

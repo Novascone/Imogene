@@ -17,7 +17,9 @@ public partial class InventoryInfo : UI
 	
 
 	// Stat details
-	string damage;
+	string damage_UI;
+	string resistance_UI;
+	string recovery_UI;
 
 	// Sheet
 
@@ -74,6 +76,7 @@ public partial class InventoryInfo : UI
 	string maximum_health_UI;
 	string health_bonus_UI;
 	string health_regen_UI;
+	string posture_regen_UI;
 	string health_on_retaliate_UI;
 
 	// Resources
@@ -143,7 +146,7 @@ public partial class InventoryInfo : UI
 	private Button damage_label;
 	private Label damage_value;
 	private RichTextLabel damage_info;
-	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character by the average of power modifiers \n * Physical melee dps {1} \n * spell melee dps {2} \n * Physical ranged dps {3} \n * spell ranged dps {4} \n These 4 catagories are the damage that will be applied when using a skill of the respective type. In other words this is the actual dps dealt for a give ability type and the overall damage is an estimate \n * Combination of power modifiers melee and ranged, in both their physical and spell forms, \n     damage, attack speed, critical hit chance, and critical hit damage";
+	private string damage_info_text = "  Damage {0} \n * Total damage per second done by character by the average of power modifiers \n * Physical melee dps {1} \n * spell melee dps {2} \n * Physical ranged dps {3} \n * spell ranged dps {4} \n These 4 catagories are your dps when using a skill of the respective type. \n * Combination of power modifiers melee and ranged, in both their physical and spell forms, \n     damage, attack speed, critical hit chance, and critical hit damage";
 
 	private Button resistance_label;
 	private Label resistance_value;
@@ -153,7 +156,7 @@ public partial class InventoryInfo : UI
 	private Button recovery_label;
 	private Label recovery_value;
 	private RichTextLabel recovery_info;
-	private string recovery_info_text =  " Recovery {0} \n * How fast the character regenerates health, resource and posture \n * Calculated by stamina ";
+	private string recovery_info_text =  " Recovery {0} \n * The average of health regen, resource regen, and posture regen \n * Calculated by stamina ";
 
 	private Button level_label;
 	private Label level_value;
@@ -362,6 +365,11 @@ public partial class InventoryInfo : UI
 	private Label health_regen_value;
 	private RichTextLabel health_regen_info;
 	private string health_regen_info_text =  " Health regen {0} \n * Amount of health regenerated per second \n * Increased by skills and gear ";
+
+	private Button posture_regen_label;
+	private Label posture_regen_value;
+	private RichTextLabel posture_regen_info;
+	private string posture_regen_info_text =  " Posture regen {0} \n * Amount of posture regenerated per second \n * Increased by skills and gear ";
 
 	private Button health_retaliation_label;
 	private Label health_retaliation_value;
@@ -631,6 +639,10 @@ public partial class InventoryInfo : UI
 		health_regen_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Value");
 		health_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
 
+		posture_regen_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label");
+		posture_regen_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Value");
+		posture_regen_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
+
 		health_retaliation_label = GetNode<Button>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label");
 		health_retaliation_value = GetNode<Label>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Value");
 		health_retaliation_info = GetNode<RichTextLabel>("CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer/PanelContainer/RichTextLabel");
@@ -699,9 +711,9 @@ public partial class InventoryInfo : UI
 
 								int bleed_resistance, int poison_resistance, int curse_resistance, int spell_resistance, int fire_resistance, int cold_resistance,
 
-								int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float health_on_retaliate,
+								int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float posture_regen, float health_on_retaliate,
 
-								float maximum_resource, float resource_regen, float resource_cost_reduction, float movement_speed, int maixmum_gold
+								float resistance, float maximum_resource, float resource_regen, float resource_cost_reduction, float recovery, float movement_speed, int maximum_gold
 								)
 								{
 									GD.Print("receiving stats");
@@ -717,8 +729,9 @@ public partial class InventoryInfo : UI
 									
 
 									// Stat details
-									damage = total_dps.ToString();
-								
+									damage_UI = total_dps.ToString();
+									resistance_UI = resistance.ToString();
+									recovery_UI = recovery.ToString();
 									// Sheet
 
 									// Offense
@@ -774,6 +787,7 @@ public partial class InventoryInfo : UI
 									maximum_health_UI = maximum_health.ToString();
 									health_bonus_UI = health_bonus.ToString();
 									health_regen_UI = health_regen.ToString();
+									posture_regen_UI = posture_regen.ToString();
 									health_on_retaliate_UI = health_on_retaliate.ToString();
 
 									// Resources
@@ -787,7 +801,7 @@ public partial class InventoryInfo : UI
 									movement_speed_UI = movement_speed.ToString();
 
 									// Possessions
-									gold_UI = maixmum_gold.ToString();
+									gold_UI = maximum_gold.ToString();
 									CharacterInfo();
 		
 								}
@@ -838,14 +852,14 @@ public partial class InventoryInfo : UI
 		charisma_info.Text = string.Format(charisma_info_text, charisma_UI); // 1 variable(s)
 
 		// Stats Summary
-		damage_value.Text = damage;
-		damage_info.Text = string.Format(damage_info_text, damage, physical_melee_dps_UI, spell_melee_dps_UI, physical_ranged_dps_UI, spell_ranged_dps_UI); // 1 variable(s)
+		damage_value.Text = damage_UI;
+		damage_info.Text = string.Format(damage_info_text, damage_UI, physical_melee_dps_UI, spell_melee_dps_UI, physical_ranged_dps_UI, spell_ranged_dps_UI); // 1 variable(s)
 
-		resistance_value.Text = "";
-		resistance_info.Text = string.Format(resistance_info_text, 0); // 1 variable(s)
+		resistance_value.Text = resistance_UI;
+		resistance_info.Text = string.Format(resistance_info_text, resistance_UI); // 1 variable(s)
 
-		recovery_value.Text = "";
-		recovery_info.Text = string.Format(recovery_info_text, 0); // 1 variable(s)
+		recovery_value.Text = recovery_UI;
+		recovery_info.Text = string.Format(recovery_info_text, recovery_UI); // 1 variable(s)
 
 		// Sheet
 
@@ -970,7 +984,10 @@ public partial class InventoryInfo : UI
 		health_bonus_info.Text = string.Format(health_bonus_info_text, 0);
 
 		health_regen_value.Text = health_regen_UI;
-		health_regen_info.Text = string.Format(health_regen_info_text, 0);
+		health_regen_info.Text = string.Format(health_regen_info_text, health_regen_UI);
+
+		posture_regen_value.Text = posture_regen_UI;
+		posture_regen_info.Text = string.Format(posture_regen_info_text, posture_regen_UI);
 
 		health_retaliation_value.Text = health_on_retaliate_UI;
 		health_retaliation_info.Text = string.Format(health_retaliation_info_text, 0);

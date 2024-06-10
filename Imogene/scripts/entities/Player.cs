@@ -66,10 +66,7 @@ public partial class Player : PlayerEntity
 		
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
-		
-
-		damage = 2;
-		health = 20;
+	
 
 
 
