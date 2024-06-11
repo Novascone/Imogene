@@ -74,8 +74,35 @@ public partial class Player : PlayerEntity
 		hurtbox.AreaEntered += OnHurtboxEntered;
 		hurtbox.AreaExited += OnHurtboxExited;
 
-		head_slot = GetNode<Node3D>("Skeleton3D/Head/Head_Slot");
+		head_slot = GetNode<Node3D>("Skeleton3D/Head/HeadSlot");
 		helm = new MeshInstance3D();
+		shoulder_right_slot = GetNode<Node3D>("Skeleton3D/ShoulderRight/ShoulderRightSlot");
+		shoulder_right = new MeshInstance3D();
+		shoulder_left_slot = GetNode<Node3D>("Skeleton3D/ShoulderLeft/ShoulderLeftSlot");
+		shoulder_left = new MeshInstance3D();
+		chest_slot = GetNode<Node3D>("Skeleton3D/Chest/ChestSlot");
+		chest = new MeshInstance3D();
+		mark_slot = GetNode<Node3D>("Skeleton3D/Mark/MarkSlot");
+		mark = new MeshInstance3D();
+		belt_slot = GetNode<Node3D>("Skeleton3D/Belt/BeltSlot");
+		belt = new MeshInstance3D();
+		glove_right_slot = GetNode<Node3D>("Skeleton3D/GloveRight/GloveRightSlot");
+		glove_right = new MeshInstance3D();
+		glove_left_slot = GetNode<Node3D>("Skeleton3D/GloveLeft/GloveLeftSlot");
+		glove_left = new MeshInstance3D();
+		main_hand_slot = GetNode<Node3D>("Skeleton3D/MainHand/MainHandSlot");
+		main_hand = new MeshInstance3D();
+		off_hand_slot = GetNode<Node3D>("Skeleton3D/OffHand/OffHandSlot");
+		off_hand = new MeshInstance3D();
+		leg_right_slot = GetNode<Node3D>("Skeleton3D/LegRight/LegRightSlot");
+		leg_right = new MeshInstance3D();
+		leg_left_slot = GetNode<Node3D>("Skeleton3D/LegLeft/LegLeftSlot");
+		leg_left = new MeshInstance3D();
+		foot_right_slot = GetNode<Node3D>("Skeleton3D/FootRight/FootRightSlot");
+		foot_right = new MeshInstance3D();
+		foot_left_slot = GetNode<Node3D>("Skeleton3D/FootLeft/FootLeftSlot");
+		foot_left = new MeshInstance3D();
+
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 		// tree.AnimationFinished += OnAnimationFinished;
@@ -83,7 +110,7 @@ public partial class Player : PlayerEntity
 		raycast = GetNode<RayCast3D>("RayCast3D");
 		
 
-		hitbox = (Area3D)GetNode("Skeleton3D/WeaponRight/axe/Hitbox");
+		hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
 		hitbox.AreaEntered += OnHitboxEntered;
 
 		_customSignals.PlayerDamage += HandlePlayerDamage;
@@ -336,12 +363,16 @@ public partial class Player : PlayerEntity
     {
 		// GD.Print("Item name: "  + arm.name);
         resource_path = arm.resource_path;
-		var scene_to_load = GD.Load<PackedScene>(resource_path);
-		// if(arm.slot == "head")
-		// {
+		var resource = GD.Load<PackedScene>(resource_path);
+		// var resource_2 = GD.Load<PackedScene>(resource_path_2);
+		
+		
+		
+		if(arm.slot == "head")
+		{
 			GD.Print("Helmet equipped");
 			
-			main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
 			GD.Print(main_node);
 			head_slot.AddChild(main_node);
 			// if(equpipable.equipable_type is "Arm")
@@ -353,7 +384,151 @@ public partial class Player : PlayerEntity
 				UpdateStats();
 				PrintStats();
 			// }
+		}
+		if(arm.slot == "shoulders")
+		{
+			GD.Print("Shoulder equipped");
+			GD.Print(resource);
+			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+			right_node = (Node3D)main_node.GetChild(0);
+			left_node = (Node3D)main_node.GetChild(2);
+			left_node.Hide();
+			// right_node.Reparent(shoulder_right_slot);
+			// left_node.Reparent(shoulder_left_slot);
+			shoulder_right_slot.AddChild(main_node);
+
+			// main_node.GetChild(2).Reparent(shoulder_left_slot);
+			// if(equpipable.equipable_type is "Arm")
+			// {
+				GD.Print("Adding stats");
+				// Arm item_to_add = equpipable.arm_item;
+				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+				AddEquipableStats(arm);
+				UpdateStats();
+				PrintStats();
+			// }
+		}
+		if(arm.slot == "chest")
+		{
+			GD.Print("chest equipped");
 			
+			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+			GD.Print(main_node);
+			chest_slot.AddChild(main_node);
+			// if(equpipable.equipable_type is "Arm")
+			// {
+				GD.Print("Adding stats");
+				// Arm item_to_add = equpipable.arm_item;
+				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+				AddEquipableStats(arm);
+				UpdateStats();
+				PrintStats();
+			// }
+		}
+		// if(arm.slot == "gloves")
+		// {
+		// 	GD.Print("Gloves equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	glove_left_slot.AddChild(main_node.GetChild(0));
+		// 	glove_right_slot.AddChild(main_node.GetChild(1));
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "belt")
+		// {
+		// 	GD.Print("Belt equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	belt_slot.AddChild(main_node);
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "legs")
+		// {
+		// 	GD.Print("Legs equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	leg_left_slot.AddChild(main_node.GetChild(0));
+		// 	leg_right_slot.AddChild(main_node.GetChild(1));
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "main hand")
+		// {
+		// 	GD.Print("Main Hand equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	main_hand_slot.AddChild(main_node.GetChild(0));
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "off hand")
+		// {
+		// 	GD.Print("Off-Hand equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	off_hand_slot.AddChild(main_node.GetChild(0));
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "feet")
+		// {
+		// 	GD.Print("Feet equipped");
+			
+		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(main_node);
+		// 	foot_left_slot.AddChild(main_node.GetChild(0));
+		// 	foot_right_slot.AddChild(main_node.GetChild(1));
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		UpdateStats();
+		// 		PrintStats();
+		// 	// }
 		// }
 		
     }

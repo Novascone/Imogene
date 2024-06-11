@@ -251,6 +251,7 @@ public partial class UI : Control
 						{
 							GD.Print("Hover over button inventory", hover_over_button.inventory_item);
 							hover_over_button.InventoryButtonPressed();
+							// hover_over_button = null;
 						}
 						if(hover_over_button.inventory_item.type == "generic")
 						{
@@ -438,6 +439,7 @@ public partial class UI : Control
 	{
 		ItemResource current_item = item.Copy();
 		GD.Print("Add item");
+		GD.Print("Item name " + item.name);
 		for (int i = 0; i < items.Count; i++)
 		{
 			if(items[i].id == current_item.id && items[i].quantity != items[i].stack_size)
@@ -585,6 +587,7 @@ public partial class UI : Control
 	{
 		// AddItem(ResourceLoader.Load<ItemResource>("res://resources/armor.tres"));
 		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/helmet/helmet.tres"));
+		GD.Print("Button 1 down");
 	}
 
 	public void _on_remove_button_button_down()
@@ -637,6 +640,17 @@ public partial class UI : Control
 	public void _on_add_button_2_button_down()
 	{
 		AddItem(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
+		GD.Print("Button 2 down");
+	}
+	public void _on_add_button_3_button_down()
+	{
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/chest/chest.tres"));
+		GD.Print("Button 3 down");
+	}
+	public void _on_add_button_4_button_down()
+	{
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/shoulders/shoulder_test.tres"));
+		GD.Print("Button 4 down");
 	}
 
 	public void _on_remove_button_2_button_down()

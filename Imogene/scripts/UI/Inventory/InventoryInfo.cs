@@ -711,9 +711,11 @@ public partial class InventoryInfo : UI
 
 								int bleed_resistance, int poison_resistance, int curse_resistance, int spell_resistance, int fire_resistance, int cold_resistance,
 
-								int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float posture_regen, float health_on_retaliate,
+								int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float health_regen_bonus, float posture_regen,
 
-								float resistance, float maximum_resource, float resource_regen, float resource_cost_reduction, float recovery, float movement_speed, int maximum_gold
+								float posture_regen_bonus,  float health_on_retaliate, float resistance, float maximum_resource, float resource_regen, float resource_cost_reduction,
+								
+								float recovery, float movement_speed, int maximum_gold
 								)
 								{
 									GD.Print("receiving stats");

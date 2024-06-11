@@ -123,6 +123,7 @@ public partial class PlayerEntity : Entity
 	public float resource_regen = 0;
 	public float resource_regen_bonus = 0;
 	public float posture_regen = 0;
+	public float posture_regen_bonus = 0;
 	public float resource_cost_reduction = 0;
 	public float rec_lvl_scale;
 
@@ -141,9 +142,40 @@ public partial class PlayerEntity : Entity
 	// Equipment
 	public string resource_path;
 	public string weapon_type = "one_handed_axe";
+	public Node3D main_node; // Temp helm node
+	public Node3D right_node;
+	public Node3D left_node;
 	public Node3D head_slot; // Head slot for the player
 	public MeshInstance3D helm; // Temp helm
-	public Node3D main_node; // Temp helm node
+	public Node3D shoulder_right_slot; 
+	public MeshInstance3D shoulder_right;
+	public Node3D shoulder_left_slot;
+	public MeshInstance3D shoulder_left;
+	public Node3D chest_slot;
+	public MeshInstance3D chest;
+	public Node3D mark_slot;
+	public MeshInstance3D mark;
+	public Node3D belt_slot;
+	public MeshInstance3D belt; 
+	public Node3D glove_right_slot; 
+	public MeshInstance3D glove_right; 
+	public Node3D glove_left_slot;
+	public MeshInstance3D glove_left;
+	public Node3D main_hand_slot;
+	public MeshInstance3D main_hand;
+	public Node3D off_hand_slot;
+	public MeshInstance3D off_hand;
+	public Node3D leg_right_slot;
+	public MeshInstance3D leg_right;
+	public Node3D leg_left_slot;
+	public MeshInstance3D leg_left;
+	public Node3D foot_right_slot;
+	public MeshInstance3D foot_right;
+	public Node3D foot_left_slot;
+	public MeshInstance3D foot_left;
+	
+	
+	
 	public bool remove_equipped = false;
 
 	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animation
@@ -361,7 +393,7 @@ public partial class PlayerEntity : Entity
 
 																blunt_resistance, bleed_resistance, poison_resistance, curse_resistance, spell_resistance, fire_resistance, cold_resistance, lightning_resistance,
 																
-																holy_resistance, maximum_health, health_bonus, health_regen, posture_regen, health_on_retaliate, resistance, maximum_resource, resource_regen, resource_cost_reduction, recovery, movement_speed, maximum_gold
+																holy_resistance, maximum_health, health_bonus, health_regen, health_regen_bonus, posture_regen, posture_regen_bonus, health_on_retaliate, resistance, maximum_resource, resource_regen, resource_cost_reduction, recovery, movement_speed, maximum_gold
 																);
 	}
 
