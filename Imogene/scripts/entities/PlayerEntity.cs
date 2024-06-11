@@ -297,8 +297,8 @@ public partial class PlayerEntity : Entity
 
 		// recovery
 
-		health_regen = (float)Math.Round(1 + (stamina/rec_lvl_scale) + health_regen_bonus, 2);
-		resource_regen = (float)Math.Round(1 + (stamina/rec_lvl_scale) + resource_regen_bonus, 2);
+		health_regen = (float)Math.Round(1 + stamina/rec_lvl_scale * health_regen_bonus, 2);
+		resource_regen = (float)Math.Round(1 + stamina/rec_lvl_scale * resource_regen_bonus, 2);
 		posture_regen = (float)Math.Round(1 + stamina/rec_lvl_scale * (1 + poise/100), 2);
 		recovery = (float)Math.Round((health_regen + resource_regen + posture_regen) / 3, 2);
 

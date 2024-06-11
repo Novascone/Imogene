@@ -14,6 +14,7 @@ public partial class InventoryButton : Button
 	public Button consumable_3;
 	public Button consumable_4;
 	public bool focused;
+	public bool is_empty = true;
 	private CustomSignals _customSignals; // Custom signal instance
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -67,6 +68,7 @@ public partial class InventoryButton : Button
 	public void UpdateItem(ItemResource item, int index)
 	{
 		this.index = index;
+		is_empty = false;
 		inventory_item = item;
 		if(item == null)
 		{
@@ -116,6 +118,12 @@ public partial class InventoryButton : Button
 	{
 		info.Hide();
 		focused = false;
+	}
+
+	public void _on_area_2d_area_exited(Area2D area)
+	{
+		// GD.Print("Release focus");
+		ReleaseFocus();
 	}
 
 	public void _on_consumable_1_button_down()

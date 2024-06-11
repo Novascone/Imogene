@@ -39,6 +39,8 @@ public partial class UI : Control
 	public bool over_off;
 	public bool over_pants;
 	public bool over_boots;
+	public bool over_slot;
+
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	
 
@@ -153,6 +155,8 @@ public partial class UI : Control
 		// }
 		
 		// GD.Print(HasFocus());
+
+		// GD.Print("Hover over button ", hover_over_button.Name);
 		if(this_player != null)
 		{
 			
@@ -264,11 +268,13 @@ public partial class UI : Control
 							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
 						}
 					}
-					if(Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept")) // Handle grab object set icon of clicked object to a button attached to the cursor
+					if(Input.IsActionJustPressed("InteractMenu") && !hover_over_button.is_empty ) // Handle grab object set icon of clicked object to a button attached to the cursor
 					{
 						
 						clicked_on = true;
 						grabbed_object = hover_over_button;
+						GD.Print("Object grabbed");
+						GD.Print(grabbed_object.is_empty);
 						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
 						if(hover_over_button is InventoryButton)
 						{
@@ -298,9 +304,10 @@ public partial class UI : Control
 							button.Visible = false;
 							if(hover_over_button is InventoryButton)
 							{
-								if(grabbed_object != null && hover_over_button != null)
+								if(grabbed_object != null && hover_over_button != null && !over_slot)
 								{
 									SwapButtons(grabbed_object, hover_over_button);
+									GD.Print("buttons swapped");
 								}
 							}
 							
@@ -313,9 +320,10 @@ public partial class UI : Control
 			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse")) && over_trash)
 			{
 				clicked_on = false;
+				grabbed_object.is_empty = true;
 				DeleteItem(grabbed_object);
 			}
-			if((Input.IsActionJustPressed("InteractMenu") || Input.IsActionJustPressed("RightMouse") || Input.IsActionJustPressed("ui_accept"))  && over_head)
+			if(Input.IsActionJustPressed("InteractMenu")   && over_slot)
 			{
 				
 				if(grabbed_object.inventory_item.type == "equipable")
@@ -324,7 +332,6 @@ public partial class UI : Control
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
 					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (EquipableResource)grabbed_object.inventory_item);
-			
 				}
 				
 			}
@@ -541,6 +548,7 @@ public partial class UI : Control
 		if(items.ElementAtOrDefault(index) != null)
 		{
 			item_grid_container.GetChild<InventoryButton>(index).UpdateItem(items[index], index);
+			
 		}
 		else
 		{
@@ -607,6 +615,7 @@ public partial class UI : Control
 			if(hover_over_button != null)
 			{
 				hover_over_button.ReleaseFocus();
+				GD.Print("Release focus");
 				hover_over_button = null;
 			}
 			
@@ -733,6 +742,7 @@ public partial class UI : Control
 	private void HandleOverSlot(string slot)
     {
 		// GD.Print("Over Head signal received");
+		over_slot = true;
         if(slot == "Head")
 		{
 			over_head = true;
