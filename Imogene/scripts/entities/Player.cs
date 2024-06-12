@@ -30,6 +30,8 @@ public partial class Player : PlayerEntity
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 
+	public GearController gearController;
+
 	//Player consumables
 	public int consumable = 1;
 	public ConsumableResource[] consumables = new ConsumableResource[4];
@@ -74,6 +76,8 @@ public partial class Player : PlayerEntity
 		hurtbox.AreaEntered += OnHurtboxEntered;
 		hurtbox.AreaExited += OnHurtboxExited;
 
+		gearController = GetNode<GearController>("GearController");
+
 		head_slot = GetNode<Node3D>("Skeleton3D/Head/HeadSlot");
 		helm = new MeshInstance3D();
 		shoulder_right_slot = GetNode<Node3D>("Skeleton3D/ShoulderRight/ShoulderRightSlot");
@@ -107,7 +111,7 @@ public partial class Player : PlayerEntity
 		tree = GetNode<AnimationTree>("AnimationTree");
 		// tree.AnimationFinished += OnAnimationFinished;
 
-		raycast = GetNode<RayCast3D>("RayCast3D");
+		// raycast = GetNode<RayCast3D>("RayCast3D");
 		
 
 		hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
@@ -116,7 +120,7 @@ public partial class Player : PlayerEntity
 		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.ConsumableInfo += HandleConsumableInfo;
-		_customSignals.EquipableInfo += HandleEquipableInfo;
+		// _customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		_customSignals.UIPreventingMovement += HandleUIPreventingMovement;
 		_customSignals.EquipConsumable += HandleEquipConsumable;
@@ -127,6 +131,7 @@ public partial class Player : PlayerEntity
 		exclude.Add(vision.GetRid());
 		exclude.Add(hitbox.GetRid());
 		GD.Print("exclude: " + exclude);
+		gearController.GetPlayerInfo(this);
 		
 	}
 
@@ -136,7 +141,7 @@ public partial class Player : PlayerEntity
     {
 		// ray_origin = GlobalTransform.Origin;
 		
-		// GD.Print("ray origin" + ray_origin);
+		// GD.Print("ray origin" + ray_origin);GetPlayerInfoGetPlayerInfo
 		LoadAbilities(); // Loads abilities into players ability list
 		SignalEmitter(); // Emits signals to other parts of the game
 		AssignAbilities();
@@ -175,13 +180,6 @@ public partial class Player : PlayerEntity
 				// GD.Print("land point position: " + land_point_position);
 				}
 				
-		
-		
-		
-		
-		
-		
-		
 		// GD.Print("Jumping " + jumping);
 		resource = 0;
 		if(velocity == Vector3.Zero) // If not moving return to Idle slowly (hence the lerp)
@@ -359,179 +357,7 @@ public partial class Player : PlayerEntity
 
 	// UI
 
-	 private void HandleEquipableInfo(ArmsResource arm) // Gets info from equipable items
-    {
-		// GD.Print("Item name: "  + arm.name);
-        resource_path = arm.resource_path;
-		var resource = GD.Load<PackedScene>(resource_path);
-		// var resource_2 = GD.Load<PackedScene>(resource_path_2);
-		
-		
-		
-		if(arm.slot == "head")
-		{
-			GD.Print("Helmet equipped");
-			
-			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			GD.Print(main_node);
-			head_slot.AddChild(main_node);
-			// if(equpipable.equipable_type is "Arm")
-			// {
-				GD.Print("Adding stats");
-				// Arm item_to_add = equpipable.arm_item;
-				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-				AddEquipableStats(arm);
-				UpdateStats();
-				PrintStats();
-			// }
-		}
-		if(arm.slot == "shoulders")
-		{
-			GD.Print("Shoulder equipped");
-			GD.Print(resource);
-			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			right_node = (Node3D)main_node.GetChild(0);
-			left_node = (Node3D)main_node.GetChild(2);
-			left_node.Hide();
-			// right_node.Reparent(shoulder_right_slot);
-			// left_node.Reparent(shoulder_left_slot);
-			shoulder_right_slot.AddChild(main_node);
-
-			// main_node.GetChild(2).Reparent(shoulder_left_slot);
-			// if(equpipable.equipable_type is "Arm")
-			// {
-				GD.Print("Adding stats");
-				// Arm item_to_add = equpipable.arm_item;
-				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-				AddEquipableStats(arm);
-				UpdateStats();
-				PrintStats();
-			// }
-		}
-		if(arm.slot == "chest")
-		{
-			GD.Print("chest equipped");
-			
-			main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			GD.Print(main_node);
-			chest_slot.AddChild(main_node);
-			// if(equpipable.equipable_type is "Arm")
-			// {
-				GD.Print("Adding stats");
-				// Arm item_to_add = equpipable.arm_item;
-				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-				AddEquipableStats(arm);
-				UpdateStats();
-				PrintStats();
-			// }
-		}
-		// if(arm.slot == "gloves")
-		// {
-		// 	GD.Print("Gloves equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	glove_left_slot.AddChild(main_node.GetChild(0));
-		// 	glove_right_slot.AddChild(main_node.GetChild(1));
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		// if(arm.slot == "belt")
-		// {
-		// 	GD.Print("Belt equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	belt_slot.AddChild(main_node);
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		// if(arm.slot == "legs")
-		// {
-		// 	GD.Print("Legs equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	leg_left_slot.AddChild(main_node.GetChild(0));
-		// 	leg_right_slot.AddChild(main_node.GetChild(1));
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		// if(arm.slot == "main hand")
-		// {
-		// 	GD.Print("Main Hand equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	main_hand_slot.AddChild(main_node.GetChild(0));
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		// if(arm.slot == "off hand")
-		// {
-		// 	GD.Print("Off-Hand equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	off_hand_slot.AddChild(main_node.GetChild(0));
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		// if(arm.slot == "feet")
-		// {
-		// 	GD.Print("Feet equipped");
-			
-		// 	main_node = (Node3D)scene_to_load.GetState().GetNodeInstance(0).Instantiate();
-		// 	GD.Print(main_node);
-		// 	foot_left_slot.AddChild(main_node.GetChild(0));
-		// 	foot_right_slot.AddChild(main_node.GetChild(1));
-		// 	// if(equpipable.equipable_type is "Arm")
-		// 	// {
-		// 		GD.Print("Adding stats");
-		// 		// Arm item_to_add = equpipable.arm_item;
-		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-		// 		AddEquipableStats(arm);
-		// 		UpdateStats();
-		// 		PrintStats();
-		// 	// }
-		// }
-		
-    }
+	
 
     private void HandleConsumableInfo(ConsumableResource item)// Gets info from consumable items
     {

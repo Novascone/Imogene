@@ -9,7 +9,8 @@ public partial class ItemResource : Resource
     public string name { get; set; }
     [Export]
     public string resource_path{ get; set; }
-   
+    [Export]
+    public string second_resource_path{ get; set; }
     [Export]
     public Texture2D icon { get; set; }
     [Export]

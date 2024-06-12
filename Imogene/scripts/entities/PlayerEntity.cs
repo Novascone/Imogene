@@ -141,6 +141,7 @@ public partial class PlayerEntity : Entity
 	
 	// Equipment
 	public string resource_path;
+	public string secondary_resource_path;
 	public string weapon_type = "one_handed_axe";
 	public Node3D main_node; // Temp helm node
 	public Node3D right_node;

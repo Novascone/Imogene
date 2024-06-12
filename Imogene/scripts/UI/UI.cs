@@ -607,7 +607,7 @@ public partial class UI : Control
 	}
 	public void _on_add_button_4_button_down()
 	{
-		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/shoulders/shoulder_test.tres"));
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/shoulders_split.tres"));
 		GD.Print("Button 4 down");
 	}
 
