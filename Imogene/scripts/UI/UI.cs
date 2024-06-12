@@ -595,6 +595,32 @@ public partial class UI : Control
 		Remove(ResourceLoader.Load<ItemResource>("res://resources/armor.tres"));
 	}
 
+	public void _on_add_button_2_button_down()
+	{
+		AddItem(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
+		GD.Print("Button 2 down");
+	}
+	public void _on_add_button_3_button_down()
+	{
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/chest/chest.tres"));
+		GD.Print("Button 3 down");
+	}
+	public void _on_add_button_4_button_down()
+	{
+		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/shoulders/shoulder_test.tres"));
+		GD.Print("Button 4 down");
+	}
+
+	public void _on_remove_button_2_button_down()
+	{
+		Remove(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
+	}
+
+	public void _on_remove_equiped_button_down()
+	{
+		_customSignals.EmitSignal(nameof(CustomSignals.RemoveEquipped));
+	}
+
 	public void _on_cursor_area_2d_area_entered(Area2D area)
 	{
 		Control button = area.GetParent<Control>();
@@ -637,31 +663,7 @@ public partial class UI : Control
 
 	
 
-	public void _on_add_button_2_button_down()
-	{
-		AddItem(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
-		GD.Print("Button 2 down");
-	}
-	public void _on_add_button_3_button_down()
-	{
-		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/chest/chest.tres"));
-		GD.Print("Button 3 down");
-	}
-	public void _on_add_button_4_button_down()
-	{
-		AddItem(ResourceLoader.Load<ItemResource>("res://scenes/armor/shoulders/shoulder_test.tres"));
-		GD.Print("Button 4 down");
-	}
-
-	public void _on_remove_button_2_button_down()
-	{
-		Remove(ResourceLoader.Load<ItemResource>("res://resources/HealthPotion.tres"));
-	}
-
-	public void _on_remove_equiped_button_down()
-	{
-		_customSignals.EmitSignal(nameof(CustomSignals.RemoveEquipped));
-	}
+	
 
 	private void HandlePlayerInfo(Player player)
     {

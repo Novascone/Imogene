@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("1_ae5q2")
 slot = "head"
+equipable_type = ""
 item_path = "res://scenes/armor/torus.tscn"
-strength = 2
-id = 3
+id = 2
 name = "armor"
 icon = SubResource("PlaceholderTexture2D_duxnm")
 quantity = 1
