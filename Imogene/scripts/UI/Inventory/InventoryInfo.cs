@@ -701,7 +701,7 @@ public partial class InventoryInfo : UI
 
 								float physical_ranged_power_mod, float spell_ranged_power_mod, float power_mod_avg, int damage_bonus, float combined_damage, float base_aps,
 
-								float aps_modifiers, float aps, float aps_mod, float base_dps, float skill_mod, float crit_mod, float slash_damage, float thrust_damage,
+								float aps_modifiers, float aps, float base_dps, float skill_mod, float crit_mod, float slash_damage, float thrust_damage,
 
 								float blunt_damage, float bleed_damage, float poison_damage, float fire_damage, float cold_damage, float lightning_damage, float holy_damage,
 

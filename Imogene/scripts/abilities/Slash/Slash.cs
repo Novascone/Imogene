@@ -110,7 +110,7 @@ public partial class Slash : Ability
 			OneHanded();
 		}
 
-		player.slash_damage = player.weapon_damage;
+		player.slash_damage = player.main_hand_damage;
 		player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 		player.hitbox.Monitoring = true;
 	

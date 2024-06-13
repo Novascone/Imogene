@@ -11,13 +11,10 @@ using System.ComponentModel;
 
 public partial class Ability : Node3D
 {
-    [Export]
-    public string description { get; set; }
-
-    [Export]
-    public Resource resource { get; set; }
-    [Export]
-    public string ability_type { get; set; }
+    [Export] public string description { get; set; }
+    [Export] public Resource resource { get; set; }
+    [Export] public string ability_type { get; set; }
+    
     public string cross{ get; set; }
     public string cross_type { get; set; }
     public string assigned_button { get; set; }
@@ -59,12 +56,11 @@ public partial class Ability : Node3D
 		
 	}
 
-   
-
     public virtual void Execute() // Default execute
     {
         GD.Print("access ability child");
     }
+
     public void AddToAbilityList(Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
         if(!player.abilities_in_use.Contains(ability))
@@ -72,6 +68,7 @@ public partial class Ability : Node3D
             player.abilities_in_use.AddFirst(ability);
             in_use = true;
         }
+
         player.ability_in_use = player.abilities_in_use.First.Value;
     }
     public void RemoveFromAbilityList(Ability ability) // Removes ability from abilities used
@@ -86,6 +83,7 @@ public partial class Ability : Node3D
         {
             player.ability_in_use = null;
         }
+
         in_use = false;
     }
 

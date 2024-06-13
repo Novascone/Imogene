@@ -9588,6 +9588,7 @@ text = "Cancel"
 anchors_preset = 0
 
 [node name="CursorSprite" type="Sprite2D" parent="UI/Cursor"]
+visible = false
 top_level = true
 position = Vector2(1157, 294)
 scale = Vector2(0.15, 0.15)

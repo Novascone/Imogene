@@ -18,26 +18,26 @@ public partial class Target : Ability
 	// }
 	public void Rotate(Player s)
 	{
-		if(s.player_position.Z - s.mob_to_LookAt_pos.Z > 0)
+		if(s.position.Z - s.mob_to_LookAt_pos.Z > 0)
 			{
 				player_Z_more_than_target_Z = true;
 				player_Z_less_than_target_Z = false;
 				// GD.Print("player_Z_more_than_target_Z");
 			}
-			if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0)
+			if(s.position.Z - s.mob_to_LookAt_pos.Z < 0)
 			{
 				player_Z_less_than_target_Z = true;
 				player_Z_more_than_target_Z = false;
 				// GD.Print("player_Z_less_than_target_Z ");
 			}
-			if((s.player_position.X - s.mob_to_LookAt_pos.X) > 0)
+			if((s.position.X - s.mob_to_LookAt_pos.X) > 0)
 			{
 				player_X_more_than_target_X = true;
 				player_X_less_than_target_X = false;
 				// GD.Print("player_X_more_than_target_X");
 				
 			}
-			if((s.player_position.X - s.mob_to_LookAt_pos.X) < 0)
+			if((s.position.X - s.mob_to_LookAt_pos.X) < 0)
 			{
 				player_X_less_than_target_X = true;
 				player_X_more_than_target_X = false;
@@ -60,7 +60,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == -1 && s.direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.X, 1, _t);
@@ -73,7 +73,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == 1 && s.direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5) 
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5) 
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -87,7 +87,7 @@ public partial class Target : Ability
 				if(s.direction.X == 1 && s.direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
 					
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -102,7 +102,7 @@ public partial class Target : Ability
 				if(s.direction.X == -1 && s.direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
 					
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -152,7 +152,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == 1 && s.direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -166,7 +166,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == -1 && s.direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -179,7 +179,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == 1 && s.direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -192,7 +192,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == -1 && s.direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -219,7 +219,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == -1 && s.direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -232,7 +232,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == 1 && s.direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -245,7 +245,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == 1 && s.direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -258,7 +258,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == -1 && s.direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -305,7 +305,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == 1 && s.direction.X == 0) // strafe right unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
@@ -318,7 +318,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.Z == -1 && s.direction.X == 0) // strafe left unless player is directly perpendicular to enemy by the x axis
 				{
-					if(s.player_position.X - s.mob_to_LookAt_pos.X < 0.5)
+					if(s.position.X - s.mob_to_LookAt_pos.X < 0.5)
 					{
 						
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
@@ -332,7 +332,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == 1 && s.direction.Z == 0) // strafe right unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, 1, _t);
@@ -345,7 +345,7 @@ public partial class Target : Ability
 				}
 				if(s.direction.X == -1 && s.direction.Z == 0) // strafe left unless player is directly perpendicular to enemy by the z axis
 				{
-					if(s.player_position.Z - s.mob_to_LookAt_pos.Z < 0.5)
+					if(s.position.Z - s.mob_to_LookAt_pos.Z < 0.5)
 					{
 						s.blend_direction.X = Mathf.Lerp(s.blend_direction.X, 0, _t);
 						s.blend_direction.Y = Mathf.Lerp(s.blend_direction.Y, -1, _t);
