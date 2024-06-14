@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=13 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
 [ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player_update_3.tscn" id="4_j8e3h"]
 [ext_resource type="PackedScene" uid="uid://ba78a3phihgiq" path="res://scenes/UI/targeting_icon.tscn" id="5_non4s"]
 [ext_resource type="PackedScene" uid="uid://brgb83leic67g" path="res://scenes/armor/helmet/helmet.tscn" id="5_t1ow3"]
+[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="6_mtorr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
@@ -113,3 +114,6 @@ sky_mode = 1
 
 [node name="Helmet" parent="." instance=ExtResource("5_t1ow3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6336, 2.64948, 0)
+
+[node name="enemy" parent="." instance=ExtResource("6_mtorr")]
+transform = Transform3D(-0.807547, 0, -0.589803, 0, 1, 0, 0.589803, 0, -0.807547, -14.715, 0, -12.138)

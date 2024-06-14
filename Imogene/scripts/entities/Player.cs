@@ -181,8 +181,6 @@ public partial class Player : PlayerEntity
 			hitbox.RemoveFromGroup("player_hitbox"); // Removes weapon from attacking group
 			// GD.Print("enemy hit");
 		}
-		
-		
 	}
 
 	public void SignalEmitter() // Emit signals

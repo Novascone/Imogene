@@ -42,9 +42,9 @@ public partial class Slash : Ability
 		}
 		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held) // Resets the amount of times pressed if the button is not held and pressed is greater than 2
 		{
-			GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
+			// GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
 			pressed = 0;
-			GD.Print("Pressed: " + pressed);
+			// GD.Print("Pressed: " + pressed);
 			player.can_move = true;
 			player.attacking = false;
 		}
@@ -71,13 +71,13 @@ public partial class Slash : Ability
 				else if(swing_timer.TimeLeft > 0)
 				{
 					pressed += 1;
-					GD.Print("Pressed while swinging");
+					// GD.Print("Pressed while swinging");
 					Execute();
 				}
 				if(secondary_swing_timer.TimeLeft == 0 && pressed > 1)
 				{
 					secondary_swing_timer.Start();
-					GD.Print("Secondary timer started");
+					// GD.Print("Secondary timer started");
 					held = true;
 				}
 				{
@@ -103,16 +103,20 @@ public partial class Slash : Ability
     
     public override void Execute() // checks weapon type sets animations enables the hitbox 
 	{
-		GD.Print("execute");
-		GD.Print("Pressed in execute: " + pressed);
+		// GD.Print("execute");
+		// GD.Print("Pressed in execute: " + pressed);
 		if(player.weapon_type == "one_handed")
 		{
 			OneHanded();
 		}
 
-		player.slash_damage = player.main_hand_damage;
+		player.slash_damage = 0.8f;
+		player.bleed_damage = 0.2f;
+		player.SetDamageTypesToDeal();
+		GD.Print("slash damage " + player.slash_damage);
 		player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 		player.hitbox.Monitoring = true;
+		player.DealDamageUpdate();
 	
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{
@@ -146,12 +150,12 @@ public partial class Slash : Ability
 			
 			if(pressed != 2)
 			{
-				GD.Print("Pressed set to zero");
+				// GD.Print("Pressed set to zero");
 				pressed = 0;
 			}
 			else
 			{
-				GD.Print("Pressed set to 1");
+				// GD.Print("Pressed set to 1");
 				pressed = 1;
 			}
 			
@@ -182,7 +186,7 @@ public partial class Slash : Ability
         {
             if(pressed <= 1 && release_timer.TimeLeft == 0)
 			{
-				GD.Print("slash 1 recovery finished");
+				// GD.Print("slash 1 recovery finished");
 				player.tree.Set("parameters/Master/conditions/using_ability", false);
 				player.tree.Set("parameters/Master/Attacking/Ability/conditions/melee", false);
 				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/conditions/Slash", false);
@@ -231,12 +235,12 @@ public partial class Slash : Ability
 
 	public void OneHanded()
 	{
-		if(!player.action_1_set) // Sets swing 1 animation
+		if(!player.action_1_set) // Sets swing 1 animation for one handed
 		{
 			// GD.Print(pressed);
-			GD.Print("Setting swing 1");
+			// GD.Print("Setting swing 1");
 			player.action_1_set = true;
-			GD.Print("Setting animations");
+			// GD.Print("Setting animations");
 			player.tree.Set("parameters/Master/conditions/using_ability", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/conditions/melee", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/conditions/Slash", true);
@@ -245,11 +249,11 @@ public partial class Slash : Ability
 			// pressed -= 1;
 			// player.attack_2_set = false;
 			player.can_move = false;
-			GD.Print(player.can_move);
+			// GD.Print(player.can_move);
 			if(pressed > 1)
 			{
 				player.action_2_set = true;
-				GD.Print("Attack 2 set");
+				// GD.Print("Attack 2 set");
 			}
 			
 		}
@@ -260,34 +264,34 @@ public partial class Slash : Ability
 
 	}
 
-	public void _on_swing_timer_timeout()
+	public void _on_swing_timer_timeout() // decrements presses on primary swing timer timeout
 	{
 		// GD.Print("timeout");
 		if(pressed > 0)
 		{
-			GD.Print("Pressed was at: " + pressed);
+			// GD.Print("Pressed was at: " + pressed);
 			pressed -= 1;
-			GD.Print("Press decremented to: " + pressed);
+			// GD.Print("Press decremented to: " + pressed);
 		}
 		
 	}
 
-	public void _on_secondary_swing_timer_timeout()
+	public void _on_secondary_swing_timer_timeout() // decrements presses on secondary swing timer timeout
 	{
 		if(pressed > 0)
 		{
-			GD.Print("Pressed was at: " + pressed);
+			// GD.Print("Pressed was at: " + pressed);
 			pressed -= 1;
-			GD.Print("Press decremented to: " + pressed);
+			// GD.Print("Press decremented to: " + pressed);
 		}
 	}
 
-	public void _on_held_timer_timeout()
+	public void _on_held_timer_timeout() // If the button has been held for the duration of the held timer set held to true
 	{
 		held = true;
 	}
 
-	public void _on_release_timer_timeout()
+	public void _on_release_timer_timeout() // Tracks time after release of input, it is the same length of time as the attack animation. It is used to check when the player is finished with inputs, and its time to reset animations to the normal states
 	{
 		held = false;
 	}

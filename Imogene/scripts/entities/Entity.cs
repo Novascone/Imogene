@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 // The base class for all entities in game
 // All stats are used for players
@@ -13,6 +15,8 @@ public partial class Entity : CharacterBody3D
     public float speed = 7.0f; // Speed of the entity
     public float fall_speed = 40.0f; // How fast the player falls 
     public float jump_speed = 30.0f; // How fast the player jumps
+	public Dictionary<string, float> damage_types_to_deal = new Dictionary<string, float>(9);
+	public Dictionary<string, float> damage_by_type = new Dictionary<string, float>(7);
 	public float health = 200; // Prelim health number
     public int resource = 100; // prelim resource number
 
@@ -164,10 +168,26 @@ public partial class Entity : CharacterBody3D
     public bool dead = false;
     public Vector3 enemy_position;
 
-    
-    
+	float incoming_physical = 0;
+	float incoming_bleed = 0;
+	float incoming_poison = 0;
+	float incoming_fire = 0;
+	float incoming_cold = 0;
+	float incoming_lightning = 0;
+	float incoming_holy = 0;
+
+	float outgoing_physical = 0;
+	float outgoing_bleed = 0;
+	float outgoing_poison = 0;
+	float outgoing_fire = 0;
+	float outgoing_cold = 0;
+	float outgoing_lightning = 0;
+	float outgoing_holy = 0;
+
+ 
     public void TakeDamage(float amount) // Applies damage to an entity
     {
+		
         if(health - amount > 0)
         {
             health -= amount;
@@ -178,6 +198,171 @@ public partial class Entity : CharacterBody3D
             GD.Print("dead");
         }
     }
+
+	public void DealDamageUpdate()
+	{
+		CalculateDamageTypes();
+		foreach(KeyValuePair<string, float> type in damage_by_type)
+		{
+			GD.Print(type.Key + " " + type.Value);
+			damage_by_type[type.Key] = 0;
+		}
+		foreach(KeyValuePair<string, float> type in damage_types_to_deal)
+		{
+			damage_types_to_deal[type.Key] = 0;
+		}
+		ResetDamageTypes();
+
+	}
+
+	public void TakeDamageUpdate(Dictionary<string, float> types) // Applies damage to an entity
+    {
+		
+		foreach(KeyValuePair<string, float> type in types)
+		{
+			if(type.Value > 0.0)
+			{
+				if(type.Key == "physical")
+				{
+					incoming_physical = type.Value;
+					incoming_physical *= 1 - dr_armor;
+					incoming_physical *= 1 - dr_phys;
+				}
+				if(type.Key == "bleed")
+				{
+					incoming_bleed = type.Value;
+					incoming_bleed *= 1 - dr_armor;
+					incoming_bleed *= 1 - dr_bleed;
+				}
+				if(type.Key == "poison")
+				{
+					incoming_poison = type.Value;
+					incoming_poison *= 1 - dr_armor;
+					incoming_poison *= 1 - dr_poison;
+				}
+				if(type.Key == "fire")
+				{
+					incoming_fire = type.Value;
+					incoming_fire *= 1 - dr_armor;
+					incoming_fire *= 1 - dr_fire;
+				}
+				if(type.Key == "cold")
+				{
+					incoming_cold = type.Value;
+					incoming_cold *= 1 - dr_armor;
+					incoming_cold *= 1 - dr_cold;
+				}
+				if(type.Key == "lightning")
+				{
+					incoming_lightning = type.Value;
+					incoming_lightning *= 1 - dr_armor;
+					incoming_lightning *= 1 - dr_lightning;
+				}
+				if(type.Key == "holy")
+				{
+					incoming_holy = type.Value;
+					incoming_holy *= 1 - dr_armor;
+					incoming_holy *= 1 - dr_holy;
+				}
+
+			}
+		}
+
+
+		float damage_to_take = incoming_physical + incoming_bleed + incoming_poison + incoming_fire + incoming_cold + incoming_lightning + incoming_holy;
+
+        if(health - damage_to_take > 0)
+        {
+            health -= damage_to_take;
+        }
+        else
+        {
+            dead = true;
+            GD.Print("dead");
+        }
+    }
+
+	public void CalculateDamageTypes()
+	{
+		
+		foreach(KeyValuePair<string, float> type in damage_types_to_deal)
+		{
+			if(type.Key == "slash")
+			{
+				outgoing_physical += damage * type.Value;
+			}
+			if(type.Key == "thrust")
+			{
+				outgoing_physical += damage * type.Value;
+			}
+			if(type.Key == "blunt")
+			{
+				outgoing_physical += damage * type.Value;
+			}
+			if(type.Key == "bleed")
+			{
+				outgoing_bleed = damage * type.Value;
+			}
+			if(type.Key == "poison")
+			{
+				outgoing_poison = damage * type.Value;
+			}
+			if(type.Key == "fire")
+			{
+				outgoing_fire = damage * type.Value;
+			}
+			if(type.Key == "cold")
+			{
+				outgoing_cold = damage * type.Value;
+			}
+			if(type.Key == "lightning")
+			{
+				outgoing_lightning = damage * type.Value;
+			}
+			if(type.Key == "holy")
+			{
+				outgoing_holy = damage * type.Value;
+			}
+			
+		}
+		
+		damage_by_type["physical"] = outgoing_physical;
+		damage_by_type["bleed"] = outgoing_bleed;
+		damage_by_type["poison"] = outgoing_poison;
+		damage_by_type["fire"] = outgoing_fire;
+		damage_by_type["cold"] = outgoing_cold;
+		damage_by_type["lightning"] = outgoing_lightning;
+		damage_by_type["holy"] = outgoing_holy;
+	}
+
+	public void SetDamageTypesToDeal()
+	{
+		damage_types_to_deal["slash"] = slash_damage;
+		damage_types_to_deal["thrust"] = thrust_damage;
+		damage_types_to_deal["blunt"] = blunt_damage;
+		damage_types_to_deal["bleed"] = bleed_damage;
+		damage_types_to_deal["poison"] = poison_damage;
+		damage_types_to_deal["fire"] = fire_damage;
+		damage_types_to_deal["cold"] = cold_damage;
+		damage_types_to_deal["lightning"] = lightning_damage;
+
+		GD.Print(damage_types_to_deal["slash"]);
+	}
+
+	public void ResetDamageTypes()
+	{
+		slash_damage = 0;
+		thrust_damage = 0;
+		blunt_damage = 0;
+		bleed_damage = 0;
+		poison_damage = 0;
+		fire_damage = 0;
+		cold_damage = 0;
+		lightning_damage = 0;
+
+		outgoing_physical = 0;
+	}
+
 
     public  Node LoadAbility(String name) // Loads an ability from a string
     {

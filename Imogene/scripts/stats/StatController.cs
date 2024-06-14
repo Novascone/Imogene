@@ -69,18 +69,19 @@ public partial class StatController : Controller
 		player.damage = player.total_dps;
 
 		// mitigation
-		player.dr_armor = (float)Math.Round(1 + (player.armor/player.dr_lvl_scale), 2);
-		player.dr_phys = (float)Math.Round(1 + (player.physical_resistance/player.dr_lvl_scale), 2);
-		player.dr_slash = (float)Math.Round(1 + (player.slash_resistance/player.dr_lvl_scale), 2);
-		player.dr_thrust = (float)Math.Round(1 + (player.thrust_resistance/player.dr_lvl_scale), 2);
-		player.dr_blunt = (float)Math.Round(1 + (player.blunt_resistance/player.dr_lvl_scale), 2);
-		player.dr_bleed = (float)Math.Round(1 + (player.bleed_resistance/player.dr_lvl_scale), 2);
-		player.dr_poison = (float)Math.Round(1 + (player.poison_resistance/player.dr_lvl_scale), 2);
-		player.dr_spell = (float)Math.Round(1 + (player.spell_resistance/player.dr_lvl_scale), 2);
-		player.dr_fire = (float)Math.Round(1 + (player.fire_resistance/player.dr_lvl_scale), 2);
-		player.dr_cold = (float)Math.Round(1 + (player.cold_resistance/player.dr_lvl_scale), 2);
-		player.dr_lightning = (float)Math.Round(1 + (player.lightning_resistance/player.dr_lvl_scale), 2);
-		player.dr_holy = (float)Math.Round(1 + (player.holy_resistance/player.dr_lvl_scale), 2);
+		player.dr_armor = (float)Math.Round(player.armor/player.dr_lvl_scale, 2);
+		GD.Print("dr_armor " + player.dr_armor);
+		player.dr_phys = (float)Math.Round(player.physical_resistance/player.dr_lvl_scale, 2);
+		player.dr_slash = (float)Math.Round(player.slash_resistance/player.dr_lvl_scale, 2);
+		player.dr_thrust = (float)Math.Round(player.thrust_resistance/player.dr_lvl_scale, 2);
+		player.dr_blunt = (float)Math.Round(player.blunt_resistance/player.dr_lvl_scale, 2);
+		player.dr_bleed = (float)Math.Round(player.bleed_resistance/player.dr_lvl_scale, 2);
+		player.dr_poison = (float)Math.Round(player.poison_resistance/player.dr_lvl_scale, 2);
+		player.dr_spell = (float)Math.Round(player.spell_resistance/player.dr_lvl_scale, 2);
+		player.dr_fire = (float)Math.Round(player.fire_resistance/player.dr_lvl_scale, 2);
+		player.dr_cold = (float)Math.Round(player.cold_resistance/player.dr_lvl_scale, 2);
+		player.dr_lightning = (float)Math.Round(player.lightning_resistance/player.dr_lvl_scale, 2);
+		player.dr_holy = (float)Math.Round(player.holy_resistance/player.dr_lvl_scale, 2);
 		
 		player.avg_res_dr = (player.dr_phys + player.dr_slash + player.dr_thrust + player.dr_blunt + player.dr_bleed + player.dr_poison + player.dr_spell + player.dr_fire + player.dr_cold + player.dr_poison + player.dr_holy) / 11;
 
@@ -124,11 +125,11 @@ public partial class StatController : Controller
 		// GD.Print("maximum health " + maximum_health);
 		// GD.Print("resistance " + resistance);
 
-		GD.Print("health_regen " + player.health_regen);
-		GD.Print("resource_regen " + player.resource_regen);
-		GD.Print("posture_regen " + player.posture_regen);
-		GD.Print("recovery " + player.recovery);
-		GD.Print("Stats have been updated from the stat controller");
+		// GD.Print("health_regen " + player.health_regen);
+		// GD.Print("resource_regen " + player.resource_regen);
+		// GD.Print("posture_regen " + player.posture_regen);
+		// GD.Print("recovery " + player.recovery);
+		// GD.Print("Stats have been updated from the stat controller");
 		SendStats();
 		
 	}
