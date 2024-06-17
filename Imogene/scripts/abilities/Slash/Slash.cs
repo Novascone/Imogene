@@ -110,13 +110,25 @@ public partial class Slash : Ability
 			OneHanded();
 		}
 
-		player.slash_damage = 0.8f;
-		player.bleed_damage = 0.2f;
-		player.SetDamageTypesToDeal();
-		GD.Print("slash damage " + player.slash_damage);
-		player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
-		player.hitbox.Monitoring = true;
-		player.DealDamageUpdate();
+		// player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
+		player.main_hand_hitbox.AddToGroup("ActiveHitbox");
+		// player.hitbox.Monitoring = true;
+		player.main_hand_hitbox.damage_type = "Slash";
+		GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
+		if(player.Crit())
+		{
+			GD.Print("Critical!");
+			player.main_hand_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
+			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
+		}
+		else
+		{
+			player.main_hand_hitbox.damage = player.damage;
+			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
+		}
+		
+		
+		
 	
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{
@@ -143,9 +155,9 @@ public partial class Slash : Ability
 			player.tree.Set("parameters/Master/Ability/conditions/not_attacking", true);
 			player.tree.Set("parameters/Master/Ability/conditions/no_second", true);
 			player.tree.Set("parameters/Master/Ability/conditions/second_action", false);
-			player.hitbox.Monitoring = false;
+			// player.hitbox.Monitoring = false;
 			// player.can_move = true;
-			player.hitbox.RemoveFromGroup("player_hitbox");
+			// player.hitbox.RemoveFromGroup("player_hitbox");
 			GD.Print(pressed);
 			
 			if(pressed != 2)
@@ -178,9 +190,9 @@ public partial class Slash : Ability
 			player.recovery_1 = true;
 			player.can_move = true;
 			player.attacking = false;
-			player.hitbox.Monitoring = false;
+			// player.hitbox.Monitoring = false;
 			player.action_1_set = false;
-			player.hitbox.RemoveFromGroup("player_hitbox");
+			player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
         {
@@ -192,9 +204,9 @@ public partial class Slash : Ability
 				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/conditions/Slash", false);
 				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/conditions/One_Handed", false);
 				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
-				player.hitbox.Monitoring = false;
+				// player.hitbox.Monitoring = false;
 				player.recovery_1 = false;
-				player.hitbox.RemoveFromGroup("player_hitbox");
+				player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
 				player.action_1_set = false;
 				if(player.action_2_set)
 					{

@@ -17,8 +17,8 @@ public partial class Enemy : Entity
 	public States currentState;
 	
 	// Enemy attached areas
-	private Area3D hurtbox; 
-	private Area3D hitbox;
+	// private Area3D hurtbox; 
+	// private Area3D hitbox;
 
 	// Mob variables
 	private bool playerInAlert = false; 
@@ -50,14 +50,14 @@ public partial class Enemy : Entity
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+		base._Ready();
 		speed = 2;
 		attacking = false;
 
-		hurtbox = (Area3D)GetNode("Hurtbox");
-		hurtbox.AreaEntered += OnHurtboxEntered;
-		hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/Hitbox");
-		hitbox.AreaEntered += OnHitboxEntered;
+		// hurtbox = (Area3D)GetNode("Hurtbox");
+		// hurtbox.AreaEntered += OnHurtboxEntered;
+		// hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/Hitbox");
+		// hitbox.AreaEntered += OnHitboxEntered;
 
 		NavigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 
@@ -73,21 +73,19 @@ public partial class Enemy : Entity
 		damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.PlayerDamage += HandleDamageEnemy;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.CameraPosition += HandleCameraPosition;
-		_customSignals.EnemyDamage += HandleEnemyDamage;
 	}
 
     private void OnHitboxEntered(Area3D area)
     {
-        if(hitbox.IsInGroup("player"))
-		{
-			_customSignals.EmitSignal(nameof(CustomSignals.EnemyDamage), damage);
-			hitbox.RemoveFromGroup("enemy_hitbox"); 
+        // if(hitbox.IsInGroup("player"))
+		// {
+		// 	// _customSignals.EmitSignal(nameof(CustomSignals.EnemyDamage), damage);
+		// 	hitbox.RemoveFromGroup("enemy_hitbox"); 
 			
-		}
+		// }
     }
 
     private void HandleEnemyDamage(float DamageAmount)
@@ -100,7 +98,7 @@ public partial class Enemy : Entity
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
+
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
@@ -144,9 +142,9 @@ public partial class Enemy : Entity
 				// }
 				break;
 			case States.Attacking:
-				hitbox.AddToGroup("enemy_hitbox");
-				attacking = true;
-				hitbox.Monitoring = true;
+				// hitbox.AddToGroup("enemy_hitbox");
+				// attacking = true;
+				// hitbox.Monitoring = true;
 				tree.Set("parameters/conditions/attacking", attacking);
 				if(distance_to_player > attack_dist && playerInAlert)
 				{
@@ -172,7 +170,7 @@ public partial class Enemy : Entity
 			
 			GD.Print("hit");
 			damage_numbers.Play("Rise_and_Fade");
-			TakeDamage(incoming_damage);
+			// TakeDamage(incoming_damage);
 			GD.Print("Enemy: ", health);
 			damage_label.Text = Convert.ToString(incoming_damage);
 

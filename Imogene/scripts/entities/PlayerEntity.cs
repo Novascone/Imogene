@@ -86,8 +86,8 @@ public partial class PlayerEntity : Entity
 
 
 	// Attached objects
-	public Area3D hurtbox; // Area where the player takes damage
-	public Area3D hitbox; // Area where the player does damage
+	// public Area3D hurtbox; // Area where the player takes damage
+	// public Area3D hitbox; // Area where the player does damage
 	public MeshInstance3D land_point;
 	public Vector3 land_point_position;
 	
@@ -96,7 +96,7 @@ public partial class PlayerEntity : Entity
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+		base._Ready();
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		vision  = (Area3D)GetNode("Vision");
@@ -152,6 +152,7 @@ public partial class PlayerEntity : Entity
 	{
 		if(interactable.IsInGroup("enemy")) 
 		{
+			
 			enemy_in_vision = true;
 			Vector3 dist_vec = position - interactable.GlobalPosition;
 			if(targeting && mob_pos.Count > 0)
@@ -165,7 +166,6 @@ public partial class PlayerEntity : Entity
 			}
 	
 		}
-		
 	}
 
 	private void OnVisionExited(Area3D interactable) // handler for area exited signal
@@ -275,7 +275,7 @@ public partial class PlayerEntity : Entity
 		if(area.IsInGroup("enemy_hitbox"))
 		{
 			GD.Print("player hit");
-			TakeDamage(1);
+			// TakeDamage(1);
 			GD.Print(health);
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
 		}

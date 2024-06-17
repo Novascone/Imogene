@@ -62,7 +62,7 @@ public partial class Player : PlayerEntity
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
-		hurtbox = GetNode<Area3D>("Hurtbox");
+		// hurtbox = GetNode<Area3D>("Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxEntered;
 		hurtbox.AreaExited += OnHurtboxExited;
 
@@ -107,10 +107,9 @@ public partial class Player : PlayerEntity
 		// raycast = GetNode<RayCast3D>("RayCast3D");
 		
 
-		hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
-		hitbox.AreaEntered += OnHitboxEntered;
+		// hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
+		// hitbox.AreaEntered += OnHitboxEntered;
 
-		_customSignals.PlayerDamage += HandlePlayerDamage;
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
@@ -119,13 +118,16 @@ public partial class Player : PlayerEntity
 		GD.Print("physical resistance", physical_resistance);
 		GD.Print("spell resistance ", spell_resistance);
 		exclude.Add(vision.GetRid());
-		exclude.Add(hitbox.GetRid());
+		// exclude.Add(hitbox.GetRid());
 		GD.Print("exclude: " + exclude);
 		movementController.GetPlayerInfo(this);
 		equipmentController.GetPlayerInfo(this);
 		statController.GetPlayerInfo(this);
 		abilityController.GetPlayerInfo(this);
 		abilityController.LoadAbilities();
+
+		GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
+		GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -177,7 +179,7 @@ public partial class Player : PlayerEntity
 	{
 		if(hitbox.IsInGroup("enemy"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.PlayerDamage), damage); // Sends how much damage the player does to the enemy
+			
 			hitbox.RemoveFromGroup("player_hitbox"); // Removes weapon from attacking group
 			// GD.Print("enemy hit");
 		}
@@ -199,7 +201,7 @@ public partial class Player : PlayerEntity
 	}
 
 
-	private void HandlePlayerDamage(float DamageAmount) // Sends damage amount to enemy
+	private void HandleDamage(float DamageAmount) // Sends damage amount to enemy
 	{
 			DamageAmount += damage;
 	}

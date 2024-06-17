@@ -140,15 +140,6 @@ public partial class CustomSignals : Node
 
 
 
-	// Player to misc 																																								*** NOT SURE WHAT THIS IS FOR ***
-	[Signal]
-	public delegate void PlayerDamageEventHandler(float DamageAmount); 
-
-
-
-	// Object to misc																																								*** NOT SURE WHAT THIS IS FOR ***
-	[Signal]
-	public delegate void EnemyDamageEventHandler(float DamageAmount);
 
 
 }
