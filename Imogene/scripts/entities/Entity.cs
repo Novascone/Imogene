@@ -10,13 +10,14 @@ using System.Net.Http.Headers;
 public partial class Entity : CharacterBody3D
 {
 
+	[Export] public string name;
+
 	// Areas
 	public Hitbox main_hand_hitbox;
 	public Hitbox off_hand_hitbox;
 	public Hurtbox hurtbox;
 
     // Stats
-
     public int level = 1; // Level of the entity
     public float speed = 7.0f; // Speed of the entity
     public float fall_speed = 40.0f; // How fast the player falls 
@@ -245,8 +246,8 @@ public partial class Entity : CharacterBody3D
             dead = true;
             GD.Print("dead");
         }
-		GD.Print(Name + " took " + amount + " of " + damage_type + " damage") ;
-		GD.Print(Name + " " + health);
+		GD.Print(name + " took " + amount + " of " + damage_type + " damage") ;
+		GD.Print(name + " " + health);
     }
 
 	public void DealDamageUpdate()

@@ -46,6 +46,7 @@ public partial class Player : PlayerEntity
 	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Thrust/Thrust.tres");
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
+
 	
 
 	public override void _Ready()
@@ -53,6 +54,7 @@ public partial class Player : PlayerEntity
 		
 		base._Ready();
 		this_player = this;
+
 		ability_resources.Add(roll);
 		ability_resources.Add(slash);
 		ability_resources.Add(thrust);
