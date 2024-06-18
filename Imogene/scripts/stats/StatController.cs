@@ -25,74 +25,74 @@ public partial class StatController : Controller
 		// Calculates stats
 		
 
-		player.physical_melee_power = (2 * player.strength) + player.dexterity;
-		player.physical_ranged_power = player.strength + (3 * player.dexterity);
-		player.spell_melee_power = player.strength + player.dexterity + (3 * player.intellect);
-		player.spell_ranged_power = (2 * player.dexterity) + (3 * player.intellect);
+		entity.physical_melee_power = (2 * entity.strength) + entity.dexterity;
+		entity.physical_ranged_power = entity.strength + (3 * entity.dexterity);
+		entity.spell_melee_power = entity.strength + entity.dexterity + (3 * entity.intellect);
+		entity.spell_ranged_power = (2 * entity.dexterity) + (3 * entity.intellect);
 
 		// physical_melee_damage = physical_melee_power/15;
 		// physical_ranged_damage = physical_ranged_power/15;
 		// spell_melee_damage = spell_melee_power/15;
 		// spell_ranged_damage = spell_ranged_power/15;
-		player.wisdom_scaler = player.wisdom/20;
+		entity.wisdom_scaler = entity.wisdom/20;
 
 		// damage
-		player.combined_damage = player.main_hand_damage + player.off_hand_damage + player.damage_bonus;
-		player.aps = player.base_aps * (1 + player.aps_modifiers);
-		player.base_dps = player.aps * player.combined_damage;
-		player.combined_damage = player.main_hand_damage + player.off_hand_damage + 2 + 1 + 1;
+		entity.combined_damage = entity.main_hand_damage + entity.off_hand_damage + entity.damage_bonus;
+		entity.aps = entity.base_aps * (1 + entity.aps_modifiers);
+		entity.base_dps = entity.aps * entity.combined_damage;
+		entity.combined_damage = entity.main_hand_damage + entity.off_hand_damage + 2 + 1 + 1;
 
-		player.aps = 1.71f;
-		player.base_dps = player.aps * player.combined_damage;
-		player.skill_mod = 1.15f;
-		player.crit_mod = 1 + (player.critical_hit_chance * player.critical_hit_damage);
+		entity.aps = 1.71f;
+		entity.base_dps = entity.aps * entity.combined_damage;
+		entity.skill_mod = 1.15f;
+		entity.crit_mod = 1 + (entity.critical_hit_chance * entity.critical_hit_damage);
 
-		player.physical_melee_power_mod = 1 + (player.physical_melee_power/100);
-		player.spell_melee_power_mod = 1 + (player.spell_melee_power/100);
-		player.physical_ranged_power_mod = 1 + (player.physical_ranged_power/100);
-		player.spell_ranged_power_mod = 1 + (player.spell_ranged_power/100);
+		entity.physical_melee_power_mod = 1 + (entity.physical_melee_power/100);
+		entity.spell_melee_power_mod = 1 + (entity.spell_melee_power/100);
+		entity.physical_ranged_power_mod = 1 + (entity.physical_ranged_power/100);
+		entity.spell_ranged_power_mod = 1 + (entity.spell_ranged_power/100);
 
-		player.power_mod_avg = (player.physical_melee_power_mod + player.spell_melee_power_mod + player.physical_ranged_power_mod + player.spell_ranged_power_mod) / 4;
+		entity.power_mod_avg = (entity.physical_melee_power_mod + entity.spell_melee_power_mod + entity.physical_ranged_power_mod + entity.spell_ranged_power_mod) / 4;
 
-		player.physical_melee_dps = player.base_dps * player.physical_melee_power_mod * player.skill_mod * player.crit_mod;
-		player.spell_melee_dps = player.base_dps * player.spell_melee_power_mod * player.skill_mod * player.crit_mod;
-		player.physical_ranged_dps = player.base_dps * player.physical_ranged_power_mod * player.skill_mod * player.crit_mod;
-		player.spell_ranged_dps = player.base_dps * player.spell_ranged_power_mod * player.skill_mod * player.crit_mod;
+		entity.physical_melee_dps = entity.base_dps * entity.physical_melee_power_mod * entity.skill_mod * entity.crit_mod;
+		entity.spell_melee_dps = entity.base_dps * entity.spell_melee_power_mod * entity.skill_mod * entity.crit_mod;
+		entity.physical_ranged_dps = entity.base_dps * entity.physical_ranged_power_mod * entity.skill_mod * entity.crit_mod;
+		entity.spell_ranged_dps = entity.base_dps * entity.spell_ranged_power_mod * entity.skill_mod * entity.crit_mod;
 
-		player.physical_melee_dps = (float)Math.Round(player.physical_melee_dps,2);
-		player.spell_melee_dps = (float)Math.Round(player.spell_melee_dps,2);
-		player.physical_ranged_dps = (float)Math.Round(player.physical_ranged_dps,2);
-		player.spell_ranged_dps = (float)Math.Round(player.spell_ranged_dps,2);
+		entity.physical_melee_dps = (float)Math.Round(entity.physical_melee_dps,2);
+		entity.spell_melee_dps = (float)Math.Round(entity.spell_melee_dps,2);
+		entity.physical_ranged_dps = (float)Math.Round(entity.physical_ranged_dps,2);
+		entity.spell_ranged_dps = (float)Math.Round(entity.spell_ranged_dps,2);
 
-		player.total_dps = (float)Math.Round(player.base_dps * player.power_mod_avg * player.skill_mod * player.crit_mod,2);
+		entity.total_dps = (float)Math.Round(entity.base_dps * entity.power_mod_avg * entity.skill_mod * entity.crit_mod,2);
 		// total_dps = (float)Math.Round(total_dps,2);
-		player.damage = player.total_dps;
+		entity.damage = entity.total_dps;
 
 		// mitigation
-		player.dr_armor = (float)Math.Round(player.armor/player.dr_lvl_scale, 2);
-		GD.Print("dr_armor " + player.dr_armor);
-		player.dr_phys = (float)Math.Round(player.physical_resistance/player.dr_lvl_scale, 2);
-		player.dr_slash = (float)Math.Round(player.slash_resistance/player.dr_lvl_scale, 2);
-		player.dr_thrust = (float)Math.Round(player.thrust_resistance/player.dr_lvl_scale, 2);
-		player.dr_blunt = (float)Math.Round(player.blunt_resistance/player.dr_lvl_scale, 2);
-		player.dr_bleed = (float)Math.Round(player.bleed_resistance/player.dr_lvl_scale, 2);
-		player.dr_poison = (float)Math.Round(player.poison_resistance/player.dr_lvl_scale, 2);
-		player.dr_spell = (float)Math.Round(player.spell_resistance/player.dr_lvl_scale, 2);
-		player.dr_fire = (float)Math.Round(player.fire_resistance/player.dr_lvl_scale, 2);
-		player.dr_cold = (float)Math.Round(player.cold_resistance/player.dr_lvl_scale, 2);
-		player.dr_lightning = (float)Math.Round(player.lightning_resistance/player.dr_lvl_scale, 2);
-		player.dr_holy = (float)Math.Round(player.holy_resistance/player.dr_lvl_scale, 2);
+		entity.dr_armor = (float)Math.Round(entity.armor/entity.dr_lvl_scale, 2);
+		GD.Print("dr_armor of " + entity.dr_armor + " for " + entity.identifier);
+		entity.dr_phys = (float)Math.Round(entity.physical_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_slash = (float)Math.Round(entity.slash_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_thrust = (float)Math.Round(entity.thrust_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_blunt = (float)Math.Round(entity.blunt_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_bleed = (float)Math.Round(entity.bleed_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_poison = (float)Math.Round(entity.poison_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_spell = (float)Math.Round(entity.spell_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_fire = (float)Math.Round(entity.fire_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_cold = (float)Math.Round(entity.cold_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_lightning = (float)Math.Round(entity.lightning_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_holy = (float)Math.Round(entity.holy_resistance/entity.dr_lvl_scale, 2);
 		
-		player.avg_res_dr = (player.dr_phys + player.dr_slash + player.dr_thrust + player.dr_blunt + player.dr_bleed + player.dr_poison + player.dr_spell + player.dr_fire + player.dr_cold + player.dr_poison + player.dr_holy) / 11;
+		entity.avg_res_dr = (entity.dr_phys + entity.dr_slash + entity.dr_thrust + entity.dr_blunt + entity.dr_bleed + entity.dr_poison + entity.dr_spell + entity.dr_fire + entity.dr_cold + entity.dr_poison + entity.dr_holy) / 11;
 
-		player.resistance = (float)Math.Round(player.maximum_health * (player.dr_armor * player.avg_res_dr),2);
+		entity.resistance = (float)Math.Round(entity.maximum_health * (entity.dr_armor * entity.avg_res_dr),2);
 
 		// recovery
 
-		player.health_regen = (float)Math.Round(1 + player.stamina/player.rec_lvl_scale * player.health_regen_bonus, 2);
-		player.resource_regen = (float)Math.Round(1 + player.stamina/player.rec_lvl_scale * player.resource_regen_bonus, 2);
-		player.posture_regen = (float)Math.Round(1 + player.stamina/player.rec_lvl_scale * (1 + player.poise/100), 2);
-		player.recovery = (float)Math.Round((player.health_regen + player.resource_regen + player.posture_regen) / 3, 2);
+		entity.health_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * entity.health_regen_bonus, 2);
+		entity.resource_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * entity.resource_regen_bonus, 2);
+		entity.posture_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * (1 + entity.poise/100), 2);
+		entity.recovery = (float)Math.Round((entity.health_regen + entity.resource_regen + entity.posture_regen) / 3, 2);
 
 		// GD.Print("combined damage " + combined_damage);
 		// GD.Print("base dps " + base_dps);
@@ -130,7 +130,11 @@ public partial class StatController : Controller
 		// GD.Print("posture_regen " + player.posture_regen);
 		// GD.Print("recovery " + player.recovery);
 		// GD.Print("Stats have been updated from the stat controller");
-		SendStats();
+		if(entity is Player)
+		{
+			SendStats();
+		}
+		
 		
 	}
 
@@ -138,25 +142,25 @@ public partial class StatController : Controller
 	{
 		GD.Print("sending stats from stat controller");
 		_customSignals.EmitSignal(nameof(CustomSignals.SendStats),
-		player.level, player.strength, player.dexterity, player.intellect, player.vitality, player.stamina, player.wisdom, player.charisma, player.total_dps,
+		entity.level, entity.strength, entity.dexterity, entity.intellect, entity.vitality, entity.stamina, entity.wisdom, entity.charisma, entity.total_dps,
 
-		player.physical_melee_dps, player.spell_melee_dps, player.physical_ranged_dps, player.spell_ranged_dps, player.physical_melee_power, 
+		entity.physical_melee_dps, entity.spell_melee_dps, entity.physical_ranged_dps, entity.spell_ranged_dps, entity.physical_melee_power, 
 
-		player.spell_melee_power, player.physical_ranged_power, player.spell_ranged_power, player.wisdom_scaler, player.physical_melee_power_mod,
+		entity.spell_melee_power, entity.physical_ranged_power, entity.spell_ranged_power, entity.wisdom_scaler, entity.physical_melee_power_mod,
 
-		player.physical_ranged_power_mod, player.spell_ranged_power_mod, player.power_mod_avg, player.damage_bonus, player.combined_damage, player.base_aps,
+		entity.physical_ranged_power_mod, entity.spell_ranged_power_mod, entity.power_mod_avg, entity.damage_bonus, entity.combined_damage, entity.base_aps,
 
-		player.aps_modifiers, player.aps, player.base_dps, player.skill_mod, player.crit_mod, player.slash_damage, player.thrust_damage, player.blunt_damage, player.bleed_damage,
+		entity.aps_modifiers, entity.aps, entity.base_dps, entity.skill_mod, entity.crit_mod, entity.slash_damage, entity.thrust_damage, entity.blunt_damage, entity.bleed_damage,
 
-		player.poison_damage, player.fire_damage, player.cold_damage, player.lightning_damage, player.holy_damage, player.critical_hit_chance, player.critical_hit_damage, player.attack_speed_increase,
+		entity.poison_damage, entity.fire_damage, entity.cold_damage, entity.lightning_damage, entity.holy_damage, entity.critical_hit_chance, entity.critical_hit_damage, entity.attack_speed_increase,
 
-		player.cool_down_reduction, player.posture_damage, player.armor, player.poise, player.block_amount, player.retaliation, player.physical_resistance, player.thrust_resistance, player.slash_resistance,
+		entity.cool_down_reduction, entity.posture_damage, entity.armor, entity.poise, entity.block_amount, entity.retaliation, entity.physical_resistance, entity.thrust_resistance, entity.slash_resistance,
 
-		player.blunt_resistance, player.bleed_resistance, player.poison_resistance, player.curse_resistance, player.spell_resistance, player.fire_resistance, player.cold_resistance, player.lightning_resistance,
+		entity.blunt_resistance, entity.bleed_resistance, entity.poison_resistance, entity.curse_resistance, entity.spell_resistance, entity.fire_resistance, entity.cold_resistance, entity.lightning_resistance,
 		
-		player.holy_resistance, player.maximum_health, player.health_bonus, player.health_regen, player.health_regen_bonus, player.posture_regen, player.posture_regen_bonus, player.health_on_retaliate, player.resistance,
+		entity.holy_resistance, entity.maximum_health, entity.health_bonus, entity.health_regen, entity.health_regen_bonus, entity.posture_regen, entity.posture_regen_bonus, entity.health_on_retaliate, entity.resistance,
 
-		player.maximum_resource, player.resource_regen, player.resource_cost_reduction, player.recovery, player.movement_speed, player.maximum_gold
+		entity.maximum_resource, entity.resource_regen, entity.resource_cost_reduction, entity.recovery, entity.movement_speed, entity.maximum_gold
 																);
 	}
 }

@@ -42,6 +42,8 @@ public partial class Enemy : Entity
 	// Signal variables
 	private CustomSignals _customSignals;
 	private Vector3 camera_position; // Position of camera
+
+	public StatController statController;
 	
 	
 
@@ -51,9 +53,17 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
+		statController = GetNode<StatController>("StatController");
 		speed = 2;
 		attacking = false;
-
+		level = 1;
+		armor = 20;
+		physical_resistance = 10;
+		slash_resistance = 15;
+		dr_lvl_scale = 50 * (float)level;
+		rec_lvl_scale = 100 * (float)level;
+		statController.GetEntityInfo(this);
+		statController.UpdateStats();
 		// hurtbox = (Area3D)GetNode("Hurtbox");
 		// hurtbox.AreaEntered += OnHurtboxEntered;
 		// hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/Hitbox");
@@ -76,6 +86,7 @@ public partial class Enemy : Entity
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.CameraPosition += HandleCameraPosition;
+		
 	}
 
     private void OnHitboxEntered(Area3D area)

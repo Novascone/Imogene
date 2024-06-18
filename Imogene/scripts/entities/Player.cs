@@ -124,7 +124,7 @@ public partial class Player : PlayerEntity
 		GD.Print("exclude: " + exclude);
 		movementController.GetPlayerInfo(this);
 		equipmentController.GetPlayerInfo(this);
-		statController.GetPlayerInfo(this);
+		statController.GetEntityInfo(this);
 		abilityController.GetPlayerInfo(this);
 		abilityController.LoadAbilities();
 

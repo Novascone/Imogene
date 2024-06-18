@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 public partial class Entity : CharacterBody3D
 {
 
-	[Export] public string name;
+	[Export] public string identifier;
 
 	public Hitbox main_hand_hitbox;
 	public Hitbox off_hand_hitbox;
@@ -125,7 +125,7 @@ public partial class Entity : CharacterBody3D
 	public float dr_lightning;
 	public float dr_holy;
 
-	public float dr_lvl_scale; // level * 50 <-- set in player entity
+	public float dr_lvl_scale; // level * 50 <-- set in player entity / on enemy script
 	public float avg_res_dr; // Average of all resistances
 
 	public float resistance; // Estimated total resistance stat
@@ -221,11 +221,8 @@ public partial class Entity : CharacterBody3D
 			
 		}
 	
-	//    if(body is CharacterBody3D)
-	//    {
-	// 	GD.Print("character body 3D");
-	//    }
-    }// Areas
+
+    }
 
     public bool Crit()
 	{
@@ -243,7 +240,7 @@ public partial class Entity : CharacterBody3D
     public void TakeDamage(string damage_type, float amount, bool is_critical) // Applies damage to an entity
     {
 		
-		
+		amount = DamageMitigation(damage_type, amount);
         if(health - amount > 0)
         {
             health -= amount;
@@ -254,14 +251,21 @@ public partial class Entity : CharacterBody3D
             GD.Print("dead");
         }
 
-		GD.Print(name + " took " + amount + " of " + damage_type + " damage") ;
-		GD.Print(name + " " + health);
+		GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
+		GD.Print(identifier + " " + health);
 
-		if(is_critical)
+		if(is_critical && (damage_type == "Slash" || damage_type == "Fire"))
 		{
 			dot_duration = 5;
-			dot_damage_type = damage_type;
-			DoT(damage_type, (float)(amount * 0.1), dot_duration);
+			if(damage_type == "Slash")
+			{
+				dot_damage_type = "Bleed";
+			}
+			else
+			{
+				dot_damage_type = damage_type;
+			}
+			DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
 			GD.Print("The hit is critical");
 		}
     }
@@ -278,7 +282,7 @@ public partial class Entity : CharacterBody3D
 		GD.Print("One tick of " + dot_in_seconds + " " + dot_damage_type);
 		GD.Print("DoT duration " + dot_duration);
         health -= dot_in_seconds;
-		GD.Print(name + " health " + health);
+		GD.Print(identifier + " health " + health);
 		dot_duration -= 1;
 		if(dot_duration == 0)
 		{
@@ -287,16 +291,71 @@ public partial class Entity : CharacterBody3D
 		}
     }
 
-	public void DealDamageUpdate()
+	public float DamageMitigation(string damage_type, float amount)
 	{
-		
+		float mitigated_damage = amount;
+		GD.Print(mitigated_damage + " of damage going into mitigation ");
+		mitigated_damage *= 1 - dr_armor;
+		GD.Print("Damage reduced by armor to " + mitigated_damage);
+		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
+		{
+			mitigated_damage *= 1 - dr_phys;
+			GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
+			if(damage_type == "Slash")
+			{
+				mitigated_damage *= 1 - dr_slash;
+				GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
+				return mitigated_damage;
+				
+			}
+			if(damage_type == "Thrust")
+			{
+				mitigated_damage *= 1 - dr_thrust;
+				return mitigated_damage;
+			}
+			if(damage_type == "Blunt")
+			{
+				mitigated_damage *= 1 - dr_blunt;
+				return mitigated_damage;
+			}
+		}
+		if(damage_type == "Bleed")
+		{
+			mitigated_damage *= 1 - dr_bleed;
+			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
+			return mitigated_damage;
+		}
+		if(damage_type == "Poison")
+		{
+			mitigated_damage *= 1 - dr_poison;
+			return mitigated_damage;
+		}
+		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
+		{
+			mitigated_damage *= 1 - dr_spell;
+			if(damage_type == "Fire")
+			{
+				mitigated_damage *= 1 - dr_fire;
+				return mitigated_damage;
+			}
+			if(damage_type == "Cold")
+			{
+				mitigated_damage *= 1 - dr_cold;
+				return mitigated_damage;
+			}
+			if(damage_type == "Lightning")
+			{
+				mitigated_damage *= 1 - dr_lightning;
+				return mitigated_damage;
+			}
+			if(damage_type == "Holy")
+			{
+				mitigated_damage *= 1 - dr_holy;
+				return mitigated_damage;
+			}
+		}
+		return mitigated_damage;
 	}
-
-
-
-	
-
-
 
     public  Node LoadAbility(String name) // Loads an ability from a string
     {
