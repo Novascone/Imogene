@@ -112,7 +112,7 @@ public partial class Player : PlayerEntity
 		// hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
 		// hitbox.AreaEntered += OnHitboxEntered;
 
-		_customSignals.EnemyPosition += HandleEnemyPosition;
+		// _customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
 		GD.Print("max health ", maximum_health);
@@ -203,15 +203,15 @@ public partial class Player : PlayerEntity
 	}
 
 
-	private void HandleDamage(float DamageAmount) // Sends damage amount to enemy
-	{
-			DamageAmount += damage;
-	}
+	// private void HandleDamage(float DamageAmount) // Sends damage amount to enemy
+	// {
+	// 		DamageAmount += damage;
+	// }
 
-	private void HandleEnemyPosition(Vector3 position) // Gets enemy position from enemy
-    {
-        enemy_position = position;
-    }
+	// private void HandleEnemyPosition(Vector3 position) // Gets enemy position from enemy
+    // {
+    //     enemy_position = position;
+    // }
 
 	// UI
 

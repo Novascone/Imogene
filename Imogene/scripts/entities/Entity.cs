@@ -12,10 +12,14 @@ public partial class Entity : CharacterBody3D
 
 	[Export] public string name;
 
-	// Areas
 	public Hitbox main_hand_hitbox;
 	public Hitbox off_hand_hitbox;
 	public Hurtbox hurtbox;
+	public Timer dot_timer;
+	public string dot_damage_type;
+	public float dot_in_seconds;
+	public int dot_duration;
+
 
     // Stats
     public int level = 1; // Level of the entity
@@ -195,9 +199,13 @@ public partial class Entity : CharacterBody3D
     {
         main_hand_hitbox = GetNode<Hitbox>("Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 		hurtbox = GetNode<Hurtbox>("Hurtbox");
+		dot_timer = GetNode<Timer>("DoTTimer");
 
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+		dot_timer.Timeout += OnDoTTimerTimeout;
     }
+
+    
 
     private void OnHurtboxBodyEntered(Area3D body)
     {
@@ -208,7 +216,7 @@ public partial class Entity : CharacterBody3D
 		{
 			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
 			{
-				TakeDamage(box.damage_type, box.damage);
+				TakeDamage(box.damage_type, box.damage, box.is_critical);
 			}
 			
 		}
@@ -217,7 +225,7 @@ public partial class Entity : CharacterBody3D
 	//    {
 	// 	GD.Print("character body 3D");
 	//    }
-    }
+    }// Areas
 
     public bool Crit()
 	{
@@ -232,8 +240,7 @@ public partial class Entity : CharacterBody3D
 		}
 	}
 
-
-    public void TakeDamage(string damage_type, float amount) // Applies damage to an entity
+    public void TakeDamage(string damage_type, float amount, bool is_critical) // Applies damage to an entity
     {
 		
 		
@@ -246,8 +253,38 @@ public partial class Entity : CharacterBody3D
             dead = true;
             GD.Print("dead");
         }
+
 		GD.Print(name + " took " + amount + " of " + damage_type + " damage") ;
 		GD.Print(name + " " + health);
+
+		if(is_critical)
+		{
+			dot_duration = 5;
+			dot_damage_type = damage_type;
+			DoT(damage_type, (float)(amount * 0.1), dot_duration);
+			GD.Print("The hit is critical");
+		}
+    }
+
+	public void DoT(string damage_type, float amount, int duration)
+	{
+		dot_timer.Start();
+		dot_in_seconds = amount / duration;
+		GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
+	}
+
+	private void OnDoTTimerTimeout()
+    {
+		GD.Print("One tick of " + dot_in_seconds + " " + dot_damage_type);
+		GD.Print("DoT duration " + dot_duration);
+        health -= dot_in_seconds;
+		GD.Print(name + " health " + health);
+		dot_duration -= 1;
+		if(dot_duration == 0)
+		{
+			dot_timer.Stop();
+			dot_damage_type = null;
+		}
     }
 
 	public void DealDamageUpdate()

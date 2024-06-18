@@ -119,11 +119,13 @@ public partial class Slash : Ability
 		{
 			GD.Print("Critical!");
 			player.main_hand_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
+			player.main_hand_hitbox.is_critical = true;
 			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
 		}
 		else
 		{
 			player.main_hand_hitbox.damage = player.damage;
+			player.main_hand_hitbox.is_critical = false;
 			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
 		}
 		
