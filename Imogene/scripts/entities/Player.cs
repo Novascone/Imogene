@@ -136,7 +136,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
-	
+		
 		SignalEmitter(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
 		position = GlobalPosition;

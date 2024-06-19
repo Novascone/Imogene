@@ -25,8 +25,11 @@ public partial class Entity : CharacterBody3D
 
 	// Posture
 	public Timer posture_regen_timer;
+
 	// Slow
 	public Timer slow_timer;
+	public int slow_duration;
+	public bool slowed;
 
 	// Stun
 	public Timer stun_timer;
@@ -39,8 +42,6 @@ public partial class Entity : CharacterBody3D
     public float speed = 7.0f; // Speed of the entity
     public float fall_speed = 40.0f; // How fast the player falls 
     public float jump_speed = 30.0f; // How fast the player jumps
-	public Dictionary<string, float> damage_types_to_deal = new Dictionary<string, float>(9);
-	public Dictionary<string, float> damage_by_type = new Dictionary<string, float>(7);
 	public float health = 200; // Prelim health number
     public int resource = 100; // prelim resource number
 
@@ -202,10 +203,32 @@ public partial class Entity : CharacterBody3D
 		dot_timer = GetNode<Timer>("DoTTimer");
 		posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
 		cast_timer = GetNode<Timer>("CastTimer");
+		slow_timer = GetNode<Timer>("SlowTimer");
 		stun_timer = GetNode<Timer>("StunTimer");
 
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
-		dot_timer.Timeout += OnDoTTimerTimeout;
+		dot_timer.Timeout += OnDoTTickTimeout;
+		posture_regen_timer.Timeout += OnPostureRegenTickTimeout;
+		cast_timer.Timeout += OnCastTickTimeout;
+		slow_timer.Timeout += OnSlowTickTimeout;
+		stun_timer.Timeout += OnStunTickTimeout;
+    }
+
+   
+
+    private void OnStunTickTimeout()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnCastTickTimeout()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnPostureRegenTickTimeout()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnHurtboxBodyEntered(Area3D body)
@@ -250,28 +273,44 @@ public partial class Entity : CharacterBody3D
 		// GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
 		// GD.Print(identifier + " " + health);
 
-		if(is_critical && (damage_type == "Slash" || damage_type == "Fire"))
+		if(is_critical)
 		{
-			if(taking_dot)
+			if(damage_type == "Slash" || damage_type == "Fire")
 			{
-				dot_duration += 5;
-				GD.Print("Already taking DoT added more to duration");
+				if(taking_dot)
+				{
+					dot_duration += 5;
+					GD.Print("Already taking DoT added more to duration");
+				}
+				else
+				{
+					dot_duration = 5;
+				}
+				
+				if(damage_type == "Slash")
+				{
+					dot_damage_type = "Bleed";
+				}
+				else
+				{
+					dot_damage_type = damage_type;
+				}
+				DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
+			// GD.Print("The hit is critical");
 			}
-			else
+			if(damage_type == "Cold")
 			{
-				dot_duration = 5;
+				if(slowed)
+				{
+					slow_duration += 5;
+				}
+				else
+				{
+					slow_duration = 5;
+				}
+				Slow();
 			}
 			
-			if(damage_type == "Slash")
-			{
-				dot_damage_type = "Bleed";
-			}
-			else
-			{
-				dot_damage_type = damage_type;
-			}
-			DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
-			// GD.Print("The hit is critical");
 		}
     }
 
@@ -283,7 +322,7 @@ public partial class Entity : CharacterBody3D
 		// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
 	}
 
-	private void OnDoTTimerTimeout()
+	private void OnDoTTickTimeout()
     {
 		GD.Print("One tick of " + dot_in_seconds + " " + dot_damage_type);
 		GD.Print("DoT duration " + dot_duration);
@@ -295,6 +334,25 @@ public partial class Entity : CharacterBody3D
 			dot_timer.Stop();
 			dot_damage_type = null;
 			taking_dot = false;
+		}
+    }
+
+	public void Slow()
+	{
+		slow_timer.Start();
+		speed /= 2;
+		slowed = true;
+	}
+	 private void OnSlowTickTimeout()
+    {
+        GD.Print(identifier + " is slowed for " + slow_duration);
+		
+		slow_duration -= 1;
+		if(slow_duration == 0)
+		{
+			slow_timer.Stop();
+			slowed = false;
+			speed = speed *= 2;
 		}
     }
 

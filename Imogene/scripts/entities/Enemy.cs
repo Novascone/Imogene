@@ -105,7 +105,7 @@ public partial class Enemy : Entity
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-
+		
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
@@ -123,7 +123,6 @@ public partial class Enemy : Entity
 				// comment/ uncomment to get enemy to chase
 
 				// attacking = false;
-				// hitbox.Monitoring = false;
 				// NavigationAgent.TargetPosition = player_position; 
 				// var targetPos = NavigationAgent.GetNextPathPosition();
 				// var direction = GlobalPosition.DirectionTo(targetPos);
@@ -147,7 +146,7 @@ public partial class Enemy : Entity
 				// 	tree.Set("parameters/IW/blend_position", blend_direction);
 				// 	currentState = States.Waiting;
 				// }
-				break;
+				// break;
 			case States.Attacking:
 				// hitbox.AddToGroup("enemy_hitbox");
 				// attacking = true;
