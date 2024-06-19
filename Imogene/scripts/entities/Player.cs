@@ -136,6 +136,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
+	
 		SignalEmitter(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
@@ -201,19 +202,6 @@ public partial class Player : PlayerEntity
 		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
-
-
-	// private void HandleDamage(float DamageAmount) // Sends damage amount to enemy
-	// {
-	// 		DamageAmount += damage;
-	// }
-
-	// private void HandleEnemyPosition(Vector3 position) // Gets enemy position from enemy
-    // {
-    //     enemy_position = position;
-    // }
-
-	// UI
 
 	private void HandleRemoveEquipped() // Removes equiped items
     {

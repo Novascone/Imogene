@@ -15,11 +15,24 @@ public partial class Entity : CharacterBody3D
 	public Hitbox main_hand_hitbox;
 	public Hitbox off_hand_hitbox;
 	public Hurtbox hurtbox;
+
+	//Dot
 	public Timer dot_timer;
 	public string dot_damage_type;
 	public float dot_in_seconds;
 	public int dot_duration;
+	public bool taking_dot;
 
+	// Posture
+	public Timer posture_regen_timer;
+	// Slow
+	public Timer slow_timer;
+
+	// Stun
+	public Timer stun_timer;
+
+	// Cast
+	public Timer cast_timer;
 
     // Stats
     public int level = 1; // Level of the entity
@@ -179,49 +192,32 @@ public partial class Entity : CharacterBody3D
     public bool dead = false;
     public Vector3 enemy_position;
 
-	float incoming_physical = 0;
-	float incoming_bleed = 0;
-	float incoming_poison = 0;
-	float incoming_fire = 0;
-	float incoming_cold = 0;
-	float incoming_lightning = 0;
-	float incoming_holy = 0;
-
-	float outgoing_physical = 0;
-	float outgoing_bleed = 0;
-	float outgoing_poison = 0;
-	float outgoing_fire = 0;
-	float outgoing_cold = 0;
-	float outgoing_lightning = 0;
-	float outgoing_holy = 0;
 
     public override void _Ready()
     {
         main_hand_hitbox = GetNode<Hitbox>("Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 		hurtbox = GetNode<Hurtbox>("Hurtbox");
+
+		// Timers
 		dot_timer = GetNode<Timer>("DoTTimer");
+		posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
+		cast_timer = GetNode<Timer>("CastTimer");
+		stun_timer = GetNode<Timer>("StunTimer");
 
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
 		dot_timer.Timeout += OnDoTTimerTimeout;
     }
 
-    
-
     private void OnHurtboxBodyEntered(Area3D body)
     {
-		
 		GD.Print("Hitbox entered " + this.Name);
-		
 		if(body is Hitbox box)
 		{
 			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
 			{
 				TakeDamage(box.damage_type, box.damage, box.is_critical);
 			}
-			
 		}
-	
-
     }
 
     public bool Crit()
@@ -251,12 +247,21 @@ public partial class Entity : CharacterBody3D
             GD.Print("dead");
         }
 
-		GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
-		GD.Print(identifier + " " + health);
+		// GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
+		// GD.Print(identifier + " " + health);
 
 		if(is_critical && (damage_type == "Slash" || damage_type == "Fire"))
 		{
-			dot_duration = 5;
+			if(taking_dot)
+			{
+				dot_duration += 5;
+				GD.Print("Already taking DoT added more to duration");
+			}
+			else
+			{
+				dot_duration = 5;
+			}
+			
 			if(damage_type == "Slash")
 			{
 				dot_damage_type = "Bleed";
@@ -266,7 +271,7 @@ public partial class Entity : CharacterBody3D
 				dot_damage_type = damage_type;
 			}
 			DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
-			GD.Print("The hit is critical");
+			// GD.Print("The hit is critical");
 		}
     }
 
@@ -274,7 +279,8 @@ public partial class Entity : CharacterBody3D
 	{
 		dot_timer.Start();
 		dot_in_seconds = amount / duration;
-		GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
+		taking_dot = true;
+		// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
 	}
 
 	private void OnDoTTimerTimeout()
@@ -288,23 +294,24 @@ public partial class Entity : CharacterBody3D
 		{
 			dot_timer.Stop();
 			dot_damage_type = null;
+			taking_dot = false;
 		}
     }
 
 	public float DamageMitigation(string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
-		GD.Print(mitigated_damage + " of damage going into mitigation ");
+		// GD.Print(mitigated_damage + " of damage going into mitigation ");
 		mitigated_damage *= 1 - dr_armor;
-		GD.Print("Damage reduced by armor to " + mitigated_damage);
+		// GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
 			mitigated_damage *= 1 - dr_phys;
-			GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
+			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
 				mitigated_damage *= 1 - dr_slash;
-				GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
+				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
 				return mitigated_damage;
 				
 			}
@@ -322,7 +329,7 @@ public partial class Entity : CharacterBody3D
 		if(damage_type == "Bleed")
 		{
 			mitigated_damage *= 1 - dr_bleed;
-			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
+			// GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
 			return mitigated_damage;
 		}
 		if(damage_type == "Poison")
@@ -369,15 +376,10 @@ public partial class Entity : CharacterBody3D
 		if(!IsOnFloor())
 		{
 			velocity.Y -= fall_speed * (float)delta;
-			// land_point.Position = player_position;
-			// player_position.DistanceTo()
-			// land_point_position.Y = -4;
-			// land_point.Position = land_point_position;
             return true;
 		}
 		else
 		{
-			// GD.Print("on floor");
             return false;
 		}
 		

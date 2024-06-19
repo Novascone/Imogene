@@ -46,6 +46,13 @@ public partial class PlayerEntity : Entity
 	public MeshInstance3D foot_right;
 	public Node3D foot_left_slot;
 	public MeshInstance3D foot_left;
+
+	// Timers
+
+	public Timer health_regen_timer;
+	public Timer resource_regen_timer;
+	public Timer posture_regen_timer;
+
 	
 	
 	
@@ -99,6 +106,9 @@ public partial class PlayerEntity : Entity
 		base._Ready();
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
+		Timer health_regen_timer = GetNode<Timer>("HealthRegenTimer");
+		Timer resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
+		Timer posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
 		vision  = (Area3D)GetNode("Vision");
 		land_point = GetNode<MeshInstance3D>("LandPoint");
 		vision.AreaEntered += OnVisionEntered;

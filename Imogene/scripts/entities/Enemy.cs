@@ -15,10 +15,6 @@ public partial class Enemy : Entity
 	}
 
 	public States currentState;
-	
-	// Enemy attached areas
-	// private Area3D hurtbox; 
-	// private Area3D hitbox;
 
 	// Mob variables
 	private bool playerInAlert = false; 
@@ -57,9 +53,9 @@ public partial class Enemy : Entity
 		speed = 2;
 		attacking = false;
 		level = 1;
-		armor = 20;
+		armor = 5;
 		physical_resistance = 10;
-		slash_resistance = 15;
+		slash_resistance = 3;
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		statController.GetEntityInfo(this);
