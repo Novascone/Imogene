@@ -113,7 +113,7 @@ public partial class Slash : Ability
 		// player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 		player.main_hand_hitbox.AddToGroup("ActiveHitbox");
 		// player.hitbox.Monitoring = true;
-		player.main_hand_hitbox.damage_type = "Cold";
+		player.main_hand_hitbox.damage_type = "Lightning";
 		GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
 		if(player.Crit())
 		{

@@ -33,6 +33,8 @@ public partial class Entity : CharacterBody3D
 
 	// Stun
 	public Timer stun_timer;
+	public int stun_duration;
+	public bool stunned;
 
 	// Cast
 	public Timer cast_timer;
@@ -216,10 +218,7 @@ public partial class Entity : CharacterBody3D
 
    
 
-    private void OnStunTickTimeout()
-    {
-        throw new NotImplementedException();
-    }
+    
 
     private void OnCastTickTimeout()
     {
@@ -260,9 +259,11 @@ public partial class Entity : CharacterBody3D
     {
 		
 		amount = DamageMitigation(damage_type, amount);
+		GD.Print("Amount of damage " + amount);
         if(health - amount > 0)
         {
             health -= amount;
+			health = MathF.Round(health,2);	
         }
         else
         {
@@ -270,8 +271,8 @@ public partial class Entity : CharacterBody3D
             GD.Print("dead");
         }
 
-		// GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
-		// GD.Print(identifier + " " + health);
+		GD.Print(identifier + " took " + amount + " of " + damage_type + " damage") ;
+		GD.Print(identifier + " " + health);
 
 		if(is_critical)
 		{
@@ -296,7 +297,7 @@ public partial class Entity : CharacterBody3D
 					dot_damage_type = damage_type;
 				}
 				DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
-			// GD.Print("The hit is critical");
+				GD.Print("The hit is critical");
 			}
 			if(damage_type == "Cold")
 			{
@@ -309,6 +310,18 @@ public partial class Entity : CharacterBody3D
 					slow_duration = 5;
 				}
 				Slow();
+			}
+			if(damage_type == "Lightning")
+			{
+				if(stunned)
+				{
+					stun_duration += 5;
+				}
+				else
+				{
+					stun_duration = 5;
+				}
+				Stun();
 			}
 			
 		}
@@ -343,6 +356,7 @@ public partial class Entity : CharacterBody3D
 		speed /= 2;
 		slowed = true;
 	}
+
 	 private void OnSlowTickTimeout()
     {
         GD.Print(identifier + " is slowed for " + slow_duration);
@@ -356,44 +370,66 @@ public partial class Entity : CharacterBody3D
 		}
     }
 
+	public void Stun()
+	{
+		stun_timer.Start();
+		can_move = false;
+		stunned = true;
+	}
+
+	private void OnStunTickTimeout()
+    {
+
+       GD.Print(identifier + " is stunned for " + stun_duration);
+
+	   stun_duration -= 1;
+	   if(stun_duration == 0)
+	   {
+			stun_timer.Stop();
+			stunned = false;
+			can_move = true;
+	   }
+    }
+
+
 	public float DamageMitigation(string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
-		// GD.Print(mitigated_damage + " of damage going into mitigation ");
+		GD.Print(mitigated_damage + " of damage going into mitigation ");
 		mitigated_damage *= 1 - dr_armor;
-		// GD.Print("Damage reduced by armor to " + mitigated_damage);
+		GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
 			mitigated_damage *= 1 - dr_phys;
-			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
+			GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
 				mitigated_damage *= 1 - dr_slash;
-				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
-				return mitigated_damage;
+				GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
+				return MathF.Round(mitigated_damage,2);
 				
 			}
 			if(damage_type == "Thrust")
 			{
 				mitigated_damage *= 1 - dr_thrust;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 			if(damage_type == "Blunt")
 			{
 				mitigated_damage *= 1 - dr_blunt;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 		}
 		if(damage_type == "Bleed")
 		{
 			mitigated_damage *= 1 - dr_bleed;
-			// GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
-			return mitigated_damage;
+			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
+			return MathF.Round(mitigated_damage,2);
 		}
 		if(damage_type == "Poison")
 		{
 			mitigated_damage *= 1 - dr_poison;
-			return mitigated_damage;
+			return MathF.Round(mitigated_damage,2);
 		}
 		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
 		{
@@ -401,25 +437,25 @@ public partial class Entity : CharacterBody3D
 			if(damage_type == "Fire")
 			{
 				mitigated_damage *= 1 - dr_fire;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 			if(damage_type == "Cold")
 			{
 				mitigated_damage *= 1 - dr_cold;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 			if(damage_type == "Lightning")
 			{
 				mitigated_damage *= 1 - dr_lightning;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 			if(damage_type == "Holy")
 			{
 				mitigated_damage *= 1 - dr_holy;
-				return mitigated_damage;
+				return MathF.Round(mitigated_damage,2);
 			}
 		}
-		return mitigated_damage;
+		return MathF.Round(mitigated_damage,2);
 	}
 
     public  Node LoadAbility(String name) // Loads an ability from a string

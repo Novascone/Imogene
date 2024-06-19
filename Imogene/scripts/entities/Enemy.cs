@@ -105,7 +105,6 @@ public partial class Enemy : Entity
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
@@ -122,31 +121,40 @@ public partial class Enemy : Entity
 
 				// comment/ uncomment to get enemy to chase
 
-				// attacking = false;
-				// NavigationAgent.TargetPosition = player_position; 
-				// var targetPos = NavigationAgent.GetNextPathPosition();
-				// var direction = GlobalPosition.DirectionTo(targetPos);
-				// blend_direction.Y = 1; // Sets animation to walk
-				// Velocity = direction * speed;
-				// if (!GlobalTransform.Origin.IsEqualApprox(player_position))
-				// {
-				// 	LookAt(player_position with {Y = GlobalPosition.Y}); 
-				// }
-				// tree.Set("parameters/IW/blend_position", blend_direction);
-				// tree.Set("parameters/conditions/attacking", attacking);
-				// MoveAndSlide();
-				// if(distance_to_player < attack_dist && playerInAlert)
-				// {
-				// 	currentState = States.Attacking;
-				// 	return;
-				// }
-				// else if(!playerInAlert)
-				// {
-				// 	blend_direction.Y = 0;
-				// 	tree.Set("parameters/IW/blend_position", blend_direction);
-				// 	currentState = States.Waiting;
-				// }
-				// break;
+				attacking = false;
+				if(can_move)
+				{
+					NavigationAgent.TargetPosition = player_position; 
+					var targetPos = NavigationAgent.GetNextPathPosition();
+					var direction = GlobalPosition.DirectionTo(targetPos);
+					blend_direction.Y = 1; // Sets animation to walk
+					Velocity = direction * speed;
+					if (!GlobalTransform.Origin.IsEqualApprox(player_position))
+					{
+						LookAt(player_position with {Y = GlobalPosition.Y}); 
+					}
+					tree.Set("parameters/IW/blend_position", blend_direction);
+					tree.Set("parameters/conditions/attacking", attacking);
+					MoveAndSlide();
+					if(distance_to_player < attack_dist && playerInAlert)
+					{
+						currentState = States.Attacking;
+						return;
+					}
+					else if(!playerInAlert)
+					{
+						blend_direction.Y = 0;
+						tree.Set("parameters/IW/blend_position", blend_direction);
+						currentState = States.Waiting;
+					}
+				}
+				else
+				{
+					tree.Set("parameters/IW/blend_position", Vector2.Zero);
+					tree.Set("parameters/conditions/attacking", false);
+				}
+				
+				break;
 			case States.Attacking:
 				// hitbox.AddToGroup("enemy_hitbox");
 				// attacking = true;
