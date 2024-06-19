@@ -64,10 +64,6 @@ public partial class Player : PlayerEntity
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
-		// hurtbox = GetNode<Area3D>("Hurtbox");
-		hurtbox.AreaEntered += OnHurtboxEntered;
-		hurtbox.AreaExited += OnHurtboxExited;
-
 		movementController = GetNode<MovementController>("MovementController");
 		abilityController = GetNode<AbilityController>("AbilityController");
 		statController = GetNode<StatController>("StatController");
@@ -104,15 +100,7 @@ public partial class Player : PlayerEntity
 
 
 		tree = GetNode<AnimationTree>("AnimationTree");
-		// tree.AnimationFinished += OnAnimationFinished;
-
-		// raycast = GetNode<RayCast3D>("RayCast3D");
-		
-
-		// hitbox = (Area3D)GetNode("Skeleton3D/MainHand/axe/Hitbox");
-		// hitbox.AreaEntered += OnHitboxEntered;
-
-		// _customSignals.EnemyPosition += HandleEnemyPosition;
+	
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
 		GD.Print("max health ", maximum_health);

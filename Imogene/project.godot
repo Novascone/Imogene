@@ -238,3 +238,4 @@ EquipHelmet={
 3d_physics/layer_4="playerhurtbox"
 3d_physics/layer_5="enemyhurtbox"
 3d_physics/layer_6="playervision"
+3d_physics/layer_7="Interact"

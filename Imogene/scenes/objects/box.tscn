@@ -40,6 +40,8 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_dq5sj")
 
 [node name="InteractArea" type="Area3D" parent="." groups=["interactive"]]
+collision_layer = 64
+collision_mask = 64
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
 shape = SubResource("CylinderShape3D_46hos")

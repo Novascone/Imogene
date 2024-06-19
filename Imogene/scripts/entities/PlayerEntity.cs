@@ -51,7 +51,7 @@ public partial class PlayerEntity : Entity
 
 	public Timer health_regen_timer;
 	public Timer resource_regen_timer;
-	public Timer posture_regen_timer;
+	
 
 	
 	
@@ -77,6 +77,7 @@ public partial class PlayerEntity : Entity
 
 	// Interact variables
 	public Area3D interact_area; // Radius of where the player can interact
+	public Area3D area_interacting;
 	public bool in_interact_area; // Is the entity in an interact area
 	public bool entered_interact; // Has the entity entered the an interact area?
 	public bool left_interact; // has the entity left the interact area?
@@ -110,17 +111,39 @@ public partial class PlayerEntity : Entity
 		Timer resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
 		Timer posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
 		vision  = (Area3D)GetNode("Vision");
+		interact_area = GetNode<Area3D>("InteractArea");
+
 		land_point = GetNode<MeshInstance3D>("LandPoint");
+
 		vision.AreaEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
+		interact_area.AreaEntered += OnInteractAreaEntered;
+		interact_area.AreaExited += OnInteractAreaExited;
+
 		mob_distance_from_player = new List<Vector3>();
+
 		
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    private void OnInteractAreaExited(Area3D area)
+    {
+		
+        left_interact = true;
+		in_interact_area = false;
+		area_interacting = null;
+    }
+
+    private void OnInteractAreaEntered(Area3D area)
+    {
+        entered_interact = true;
+		in_interact_area = true;
+		area_interacting = area;
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 		
 		direction = Vector3.Zero;
@@ -256,55 +279,28 @@ public partial class PlayerEntity : Entity
 		{
 			if(entered_interact)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
 				entered_interact = false;
 			}
 			
 			if(Input.IsActionJustPressed("Interact") && !interacting)
 			{
 				interacting = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
 			}
 			else if(Input.IsActionJustPressed("Interact") && interacting)
 			{
 				interacting = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
 			}
 		}
 		else if(left_interact)
 		{
 			interacting = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), interact_area, in_interact_area, interacting);
+			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
 			left_interact = false;
 		}
 
-	}
-
-	public void OnHurtboxEntered(Area3D area) // handler for area entered signal
-	{
-		if(area.IsInGroup("enemy_hitbox"))
-		{
-			GD.Print("player hit");
-			// TakeDamage(1);
-			GD.Print(health);
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealthUpdate), 1);
-		}
-		else if(area.IsInGroup("interactive"))
-		{
-			entered_interact = true;
-			in_interact_area = true;
-			interact_area = area;
-		}
-		
-	}
-	public void OnHurtboxExited(Area3D area) // Check if interact area has come in contact with the player
-	{
-		if(area.IsInGroup("interactive"))
-		{
-			left_interact = true;
-			in_interact_area = false;
-			interact_area = null;
-		}
 	}
 
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted

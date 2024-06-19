@@ -331,6 +331,7 @@ public partial class Entity : CharacterBody3D
 	{
 		dot_timer.Start();
 		dot_in_seconds = amount / duration;
+		dot_in_seconds = MathF.Round(dot_in_seconds, 2);
 		taking_dot = true;
 		// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
 	}
@@ -340,6 +341,7 @@ public partial class Entity : CharacterBody3D
 		GD.Print("One tick of " + dot_in_seconds + " " + dot_damage_type);
 		GD.Print("DoT duration " + dot_duration);
         health -= dot_in_seconds;
+		health = MathF.Round(health,2);
 		GD.Print(identifier + " health " + health);
 		dot_duration -= 1;
 		if(dot_duration == 0)
