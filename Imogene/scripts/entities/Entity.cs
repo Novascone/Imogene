@@ -150,7 +150,7 @@ public partial class Entity : CharacterBody3D
 
 	// Health
 
-	public float maximum_health => health;
+	public float maximum_health;
 	public float health_bonus = 0; // Health bonus from skills and gear
 	public float health_regen = 0; // Health regenerated every second 1 + (stamina/rec_lvl_scale * health_regen_bonus)
 	public float health_regen_bonus = 0; // Bonus to health regeneration from skills and gear
@@ -158,7 +158,7 @@ public partial class Entity : CharacterBody3D
 
 	// Resource
 
-	public float maximum_resource => resource;
+	public float maximum_resource;
 	public float resource_regen = 0; // Resource regenerated every second 1 + (stamina/rec_lvl_scale *  resource_regen_bonus)
 	public float resource_regen_bonus = 0; // Bonus to health regeneration from skills and gear
 	public float posture_regen = 0; // Posture regenerated every second 1 + (stamina/rec_lvl_scale * (1 + poise/100)
@@ -195,6 +195,10 @@ public partial class Entity : CharacterBody3D
     public bool dead = false;
     public Vector3 enemy_position;
 
+	public bool targeted;
+
+	private CustomSignals _customSignals;
+
 
     public override void _Ready()
     {
@@ -214,6 +218,8 @@ public partial class Entity : CharacterBody3D
 		cast_timer.Timeout += OnCastTickTimeout;
 		slow_timer.Timeout += OnSlowTickTimeout;
 		stun_timer.Timeout += OnStunTickTimeout;
+
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
     }
 
    
@@ -263,7 +269,12 @@ public partial class Entity : CharacterBody3D
         if(health - amount > 0)
         {
             health -= amount;
-			health = MathF.Round(health,2);	
+			health = MathF.Round(health,2);
+			if(this is Enemy enemy)
+			{
+				enemy.health_bar.Value = health;
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), health);
+			}
         }
         else
         {
@@ -296,7 +307,7 @@ public partial class Entity : CharacterBody3D
 				{
 					dot_damage_type = damage_type;
 				}
-				DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 0.1)), dot_duration);
+				DoT(dot_damage_type, DamageMitigation(dot_damage_type,(float)(amount * 5)), dot_duration);
 				GD.Print("The hit is critical");
 			}
 			if(damage_type == "Cold")
@@ -340,8 +351,23 @@ public partial class Entity : CharacterBody3D
     {
 		GD.Print("One tick of " + dot_in_seconds + " " + dot_damage_type);
 		GD.Print("DoT duration " + dot_duration);
-        health -= dot_in_seconds;
-		health = MathF.Round(health,2);
+		if(health > 0)
+		{
+			health -= dot_in_seconds;
+			health = MathF.Round(health,2);
+			if(this is Enemy enemy)
+			{
+				enemy.health_bar.Value = health;
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), health);
+			}
+		}
+		else
+		{
+			dead = true;
+			GD.Print("Dead");
+		}
+        
+		
 		GD.Print(identifier + " health " + health);
 		dot_duration -= 1;
 		if(dot_duration == 0)

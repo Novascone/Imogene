@@ -40,7 +40,9 @@ public partial class Enemy : Entity
 	private Vector3 camera_position; // Position of camera
 
 	public StatController statController;
-	
+
+	// UI
+	public ProgressBar health_bar;
 	
 
 
@@ -50,6 +52,10 @@ public partial class Enemy : Entity
 	{
 		base._Ready();
 		statController = GetNode<StatController>("StatController");
+		health_bar = GetNode<ProgressBar>("SubViewport/ProgressBar");
+		maximum_health = health;
+		health_bar.MaxValue = health;
+		health_bar.Value = health;
 		speed = 2;
 		attacking = false;
 		level = 1;
@@ -103,8 +109,10 @@ public partial class Enemy : Entity
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
+		GD.Print("Max Health " + maximum_health);
+		GD.Print("Health " + health);
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
@@ -170,6 +178,7 @@ public partial class Enemy : Entity
 			case States.Dead:
 				can_move = false;
 				tree.Set("parameters/conditions/dead", dead);
+				health = 0;
 				break;
 			default:
 				break;

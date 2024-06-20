@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.Intrinsics.X86;
+using System.Transactions;
 
 public partial class PlayerEntity : Entity
 {
@@ -47,6 +48,9 @@ public partial class PlayerEntity : Entity
 	public Node3D foot_left_slot;
 	public MeshInstance3D foot_left;
 
+	private Enemy targeted_enemy;
+	private bool target_enemy_set;
+
 	// Timers
 
 	public Timer health_regen_timer;
@@ -69,9 +73,9 @@ public partial class PlayerEntity : Entity
 	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	private int mob_index = 0; // Index of mobs in list
-	private	Dictionary<Area3D, Vector3> mob_pos = new Dictionary<Area3D, Vector3>();  // Dictionary of mob positions
-	private Dictionary<Area3D,Vector3> sorted_mob_pos; // Sorted Dictionary of mob positions
-	private List<Area3D> mobs_in_order; // List of mobs in order
+	private	Dictionary<Enemy, Vector3> mob_pos = new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
+	private Dictionary<Enemy,Vector3> sorted_mob_pos; // Sorted Dictionary of mob positions
+	private List<Enemy> mobs_in_order; // List of mobs in order
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
 	private List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
 
@@ -115,7 +119,7 @@ public partial class PlayerEntity : Entity
 
 		land_point = GetNode<MeshInstance3D>("LandPoint");
 
-		vision.AreaEntered += OnVisionEntered;
+		vision.BodyEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
 		interact_area.AreaEntered += OnInteractAreaEntered;
 		interact_area.AreaExited += OnInteractAreaExited;
@@ -181,34 +185,41 @@ public partial class PlayerEntity : Entity
 		}
 	}
 
-	private void OnVisionEntered(Area3D interactable) // handler for area entered signal
+	private void OnVisionEntered(Node3D body) // handler for area entered signal
 	{
-		if(interactable.IsInGroup("enemy")) 
+		if(body is Enemy enemy)
 		{
-			
-			enemy_in_vision = true;
-			Vector3 dist_vec = position - interactable.GlobalPosition;
-			if(targeting && mob_pos.Count > 0)
+			GD.Print("Entity entered vision");
+		
+			if(body.IsInGroup("enemy")) 
 			{
-				mob_index += 1; // increments index when enemy enters so the player stays looking at the current enemy
+				GD.Print(body.Name + " entered vision ");
+				enemy_in_vision = true;
+				Vector3 dist_vec = position - body.GlobalPosition;
+				if(targeting && mob_pos.Count > 0)
+				{
+					mob_index += 1; // increments index when enemy enters so the player stays looking at the current enemy
+				}
+				if(!mob_pos.ContainsKey(enemy))
+				{
+					mob_pos.Add(enemy, dist_vec); // adds mob to list and how close it is to the player
+					Sort(); // sorts the enemies by position
+				}
+		
 			}
-			if(!mob_pos.ContainsKey(interactable))
-			{
-				mob_pos.Add(interactable, dist_vec); // adds mob to list and how close it is to the player
-				Sort(); // sorts the enemies by position
-			}
-	
 		}
 	}
 
-	private void OnVisionExited(Area3D interactable) // handler for area exited signal
+	private void OnVisionExited(Node3D body) // handler for area exited signal
 	{
-		if(interactable.IsInGroup("enemy")) 
+		if (body is Enemy enemy)
+		{
+			if(enemy.IsInGroup("enemy")) 
 		{
 			if (mob_pos.Count == 1)
 			{
 				mob_index = 0; // resets index when all enemies leave
-				mob_pos.Remove(interactable);
+				mob_pos.Remove(enemy);
 				sorted_mob_pos.Clear();
 				mobs_in_order.Clear();
 			}
@@ -219,11 +230,13 @@ public partial class PlayerEntity : Entity
 					mob_index -= 1; // decrements index when enemy leaves so the player keeps looking at the current enemy
 				}
 				
-				mob_pos.Remove(interactable);
+				mob_pos.Remove(enemy);
 				
 			}
 			
 		}
+		}
+		
 		
 	}
 	
@@ -235,6 +248,7 @@ public partial class PlayerEntity : Entity
 			// target_ability.Execute(this);
 			if(Input.IsActionJustPressed("TargetNext"))
 			{
+				target_enemy_set = false;
 				if(mob_index < mob_pos.Count - 1)
 				{
 					mob_index += 1;
@@ -243,6 +257,7 @@ public partial class PlayerEntity : Entity
 			}
 			else if (Input.IsActionJustPressed("TargetLast"))
 			{
+				target_enemy_set = false;
 				if(mob_index > 0)
 				{
 					mob_index -= 1;
@@ -252,6 +267,13 @@ public partial class PlayerEntity : Entity
 			
 			mob_to_LookAt_pos = mobs_in_order[mob_index].GlobalPosition;
 			LookAt(mob_to_LookAt_pos with {Y = GlobalPosition.Y});
+			if(!target_enemy_set)
+			{
+				targeted_enemy = mobs_in_order[mob_index];
+				GD.Print("Targeted enemy " + targeted_enemy.identifier);
+				target_enemy_set = true;
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyTargetedUI), targeted_enemy);
+			}
 			
 		}
 		else
@@ -309,6 +331,7 @@ public partial class PlayerEntity : Entity
 		{
 			if(Input.IsActionJustPressed("Target"))
 			{
+				target_enemy_set = false;
 				if(!targeting)
 				{
 					targeting = true;
@@ -316,6 +339,7 @@ public partial class PlayerEntity : Entity
 				else if(targeting)
 				{
 					targeting = false;
+					_customSignals.EmitSignal(nameof(CustomSignals.EnemyUntargetedUI));
 				}
 				
 			}
@@ -324,12 +348,12 @@ public partial class PlayerEntity : Entity
 	private void Sort() // Sort mobs by distance
 	{
 		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, position);
-		mobs_in_order = new List<Area3D>(sorted_mob_pos.Keys);
+		mobs_in_order = new List<Enemy>(sorted_mob_pos.Keys);
 	}
 
 	public static class Vector3DictionarySorter // Sorts mobs by distance
 	{
-		public static Dictionary<Area3D, Vector3> SortByDistance(Dictionary<Area3D, Vector3> dict, Vector3 point)
+		public static Dictionary<Enemy, Vector3> SortByDistance(Dictionary<Enemy, Vector3> dict, Vector3 point)
 		{
 			var sortedList = dict.ToList();
 
