@@ -45,7 +45,7 @@ public partial class CustomSignals : Node
 
 												int slash_resistance, int blunt_resistance, int bleed_resistance, int poison_resistance, int curse_resistance, int spell_resistance, int fire_resistance,
 
-												int cold_resistance, int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float health_regen_bonus,
+												int cold_resistance, int lightning_resistance, int holy_resistance, float maximum_health, float health_bonus, float health_regen, float health_regen_bonus, float maximum_posture,
 
 												float posture_regen, float posture_regen_bonus, float health_on_retaliate, float resistance, float maximum_resource, float resource_regen, float resource_cost_reduction,
 												
@@ -101,6 +101,7 @@ public partial class CustomSignals : Node
 	[Signal] public delegate void EnemyTargetedUIEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyUntargetedUIEventHandler();
 	[Signal] public delegate void EnemyHealthChangedUIEventHandler(float health);
+	[Signal] public delegate void EnemyPostureChangedUIEventHandler(float posture);
 
 
 	// Object to object

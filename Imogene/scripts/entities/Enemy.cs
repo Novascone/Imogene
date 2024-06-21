@@ -43,6 +43,7 @@ public partial class Enemy : Entity
 
 	// UI
 	public ProgressBar health_bar;
+	public TextureProgressBar posture_bar;
 	
 
 
@@ -52,20 +53,25 @@ public partial class Enemy : Entity
 	{
 		base._Ready();
 		statController = GetNode<StatController>("StatController");
-		health_bar = GetNode<ProgressBar>("SubViewport/ProgressBar");
+		health_bar = GetNode<ProgressBar>("SubViewport/VBoxContainer/ProgressBar");
+		posture_bar = GetNode<TextureProgressBar>("SubViewport/VBoxContainer/TextureProgressBar");
 		maximum_health = health;
 		health_bar.MaxValue = health;
 		health_bar.Value = health;
+		posture_bar.MaxValue = maximum_posture;
+		posture_bar.Value = 0;
 		speed = 2;
 		attacking = false;
 		level = 1;
 		armor = 5;
+		stamina = 2000;
 		physical_resistance = 10;
 		slash_resistance = 3;
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		statController.GetEntityInfo(this);
 		statController.UpdateStats();
+		GD.Print("Posture Regen " + posture_regen);
 		// hurtbox = (Area3D)GetNode("Hurtbox");
 		// hurtbox.AreaEntered += OnHurtboxEntered;
 		// hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/Hitbox");
@@ -91,28 +97,11 @@ public partial class Enemy : Entity
 		
 	}
 
-    private void OnHitboxEntered(Area3D area)
-    {
-        // if(hitbox.IsInGroup("player"))
-		// {
-		// 	// _customSignals.EmitSignal(nameof(CustomSignals.EnemyDamage), damage);
-		// 	hitbox.RemoveFromGroup("enemy_hitbox"); 
-			
-		// }
-    }
-
-    private void HandleEnemyDamage(float DamageAmount)
-    {
-        DamageAmount += damage;
-    }
-
-
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
 	{
-		GD.Print("Max Health " + maximum_health);
-		GD.Print("Health " + health);
+		// GD.Print("Max Health " + maximum_health);
+		// GD.Print("Health " + health);
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
@@ -186,25 +175,8 @@ public partial class Enemy : Entity
 		
 	}
 
-	private void OnHurtboxEntered(Area3D hitbox)
-	{
-		if(hitbox.IsInGroup("player_hitbox"))
-		{
-			
-			GD.Print("hit");
-			damage_numbers.Play("Rise_and_Fade");
-			// TakeDamage(incoming_damage);
-			GD.Print("Enemy: ", health);
-			damage_label.Text = Convert.ToString(incoming_damage);
+	
 
-		}
-		
-	}
-
-	private void HandleDamageEnemy(float damage_amount)
-	{
-		incoming_damage = damage_amount;
-	}
 
 	 private void OnAlertEntered(Area3D area) 
     {

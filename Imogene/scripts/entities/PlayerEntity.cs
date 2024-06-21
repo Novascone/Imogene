@@ -112,8 +112,7 @@ public partial class PlayerEntity : Entity
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		Timer health_regen_timer = GetNode<Timer>("HealthRegenTimer");
-		Timer resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
-		Timer posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
+		
 		vision  = (Area3D)GetNode("Vision");
 		interact_area = GetNode<Area3D>("InteractArea");
 

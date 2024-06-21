@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://ud72kwmwkbpa"]
+[gd_scene load_steps=83 format=3 uid="uid://ud72kwmwkbpa"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityButton.cs" id="10_4bmju"]
 [ext_resource type="Script" path="res://scripts/UI/EnemyHealthUI.cs" id="15_okotv"]
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="16_qax2o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wudlh"]
 
@@ -9660,12 +9661,14 @@ size_flags_stretch_ratio = 2.0
 theme_override_styles/background = SubResource("StyleBoxFlat_j84rj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_kvckw")
 
-[node name="PostureBar" type="ProgressBar" parent="UI/EnemyHealth/VBoxContainer"]
+[node name="PostureBar" type="TextureProgressBar" parent="UI/EnemyHealth/VBoxContainer"]
+custom_minimum_size = Vector2(200, 10)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme_override_styles/background = SubResource("StyleBoxFlat_j84rj")
-theme_override_styles/fill = SubResource("StyleBoxFlat_kvckw")
+size_flags_horizontal = 4
+size_flags_vertical = 0
+fill_mode = 6
+nine_patch_stretch = true
+texture_progress = ExtResource("16_qax2o")
 
 [connection signal="focus_entered" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label" to="UI/Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower" method="_on_label_focus_exited"]

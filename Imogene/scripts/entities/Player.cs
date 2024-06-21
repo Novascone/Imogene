@@ -166,15 +166,6 @@ public partial class Player : PlayerEntity
 		EnemyCheck(); // Check for enemy
     }
 
-	private void OnHitboxEntered(Area3D hitbox) // handler for area entered signal
-	{
-		if(hitbox.IsInGroup("enemy"))
-		{
-			
-			hitbox.RemoveFromGroup("player_hitbox"); // Removes weapon from attacking group
-			// GD.Print("enemy hit");
-		}
-	}
 
 	public void SignalEmitter() // Emit signals
 	{
