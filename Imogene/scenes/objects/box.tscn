@@ -33,7 +33,7 @@ mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Mesh"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/StaticBody3D"]

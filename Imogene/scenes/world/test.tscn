@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
 [ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player_update_3.tscn" id="4_j8e3h"]
-[ext_resource type="PackedScene" uid="uid://bxbrh1ylu6uj3" path="res://scenes/UI/targeting_icon.tscn" id="5_non4s"]
 [ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="6_mtorr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
@@ -16,12 +15,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iphw8"]
 
-[sub_resource type="Sky" id="Sky_dd0x7"]
+[sub_resource type="Sky" id="Sky_vroqb"]
 sky_material = SubResource("ProceduralSkyMaterial_iphw8")
 
 [sub_resource type="Environment" id="Environment_sd3p5"]
 background_mode = 2
-sky = SubResource("Sky_dd0x7")
+sky = SubResource("Sky_vroqb")
 
 [node name="Level" type="Node3D" groups=["terrain"]]
 
@@ -41,8 +40,6 @@ shape = SubResource("BoxShape3D_hhky2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sd3p5")
-
-[node name="Target" parent="WorldEnvironment" instance=ExtResource("5_non4s")]
 
 [node name="Box" parent="." instance=ExtResource("1_4rjct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)

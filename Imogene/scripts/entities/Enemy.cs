@@ -119,15 +119,7 @@ public partial class Enemy : Entity
 	{
 		// GD.Print("Max Health " + maximum_health);
 		// GD.Print("Health " + health);
-		if(targeted)
-		{
-			GD.Print( identifier + " is targeted");
-			target_icon.Show();
-		}
-		else
-		{
-			target_icon.Hide();
-		}
+	
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
