@@ -38,7 +38,6 @@ public partial class Player : PlayerEntity
 	// Player animation
 	public AnimationTree tree; // Animation control
 
-	private MeshInstance3D targeting_icon; // Targeting icon
 
 	// Ability Resources
 	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Roll/roll.tres");

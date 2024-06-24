@@ -44,6 +44,8 @@ public partial class Enemy : Entity
 	// UI
 	public ProgressBar health_bar;
 	public TextureProgressBar posture_bar;
+	public Sprite3D status_bar;
+	public Sprite3D target_icon;
 	
 
 
@@ -53,8 +55,10 @@ public partial class Enemy : Entity
 	{
 		base._Ready();
 		statController = GetNode<StatController>("StatController");
-		health_bar = GetNode<ProgressBar>("SubViewport/VBoxContainer/ProgressBar");
-		posture_bar = GetNode<TextureProgressBar>("SubViewport/VBoxContainer/TextureProgressBar");
+		health_bar = GetNode<ProgressBar>("HealthBarViewport/VBoxContainer/ProgressBar");
+		posture_bar = GetNode<TextureProgressBar>("HealthBarViewport/VBoxContainer/TextureProgressBar");
+		status_bar = GetNode<Sprite3D>("StatusBar");
+		target_icon = GetNode<Sprite3D>("TargetIcon");
 		maximum_health = health;
 		health_bar.MaxValue = health;
 		health_bar.Value = health;
@@ -94,14 +98,36 @@ public partial class Enemy : Entity
 		_customSignals.EnemyPosition += HandleEnemyPosition;
 		_customSignals.PlayerPosition += HandlePlayerPosition;
 		_customSignals.CameraPosition += HandleCameraPosition;
-		
+		_customSignals.EnemyTargetedUI += HandleEnemyTargetedUI;
+		_customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;		
 	}
+
+    private void HandleEnemyUntargetedUI()
+    {
+        status_bar.Hide();
+		target_icon.Hide();
+    }
+
+    private void HandleEnemyTargetedUI(Enemy enemy)
+    {
+        status_bar.Show();
+		target_icon.Show();
+    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
 	{
 		// GD.Print("Max Health " + maximum_health);
 		// GD.Print("Health " + health);
+		if(targeted)
+		{
+			GD.Print( identifier + " is targeted");
+			target_icon.Show();
+		}
+		else
+		{
+			target_icon.Hide();
+		}
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
