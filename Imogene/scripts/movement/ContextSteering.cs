@@ -152,7 +152,7 @@ public partial class ContextSteering : CharacterBody3D
 		
 		ChooseDirection();
 		
-		GD.Print("direction  " + chosen_dir);
+		// GD.Print("direction  " + chosen_dir);
 		// GD.Print("chosen dir " + chosen_dir);
 		// Movement
 		_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
@@ -242,7 +242,7 @@ public partial class ContextSteering : CharacterBody3D
 
 			// Sum up all of the directions where there is interest (if the interest is zero at a given direction that direction will not factor into the chosen direction)
 			chosen_dir += ray_directions[i] * interest[i];
-			GD.Print("directions: " + ray_directions[i] * interest[i]);
+			// GD.Print("directions: " + ray_directions[i] * interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
 			SetDirectionLines(direction_lines, (ray_directions[i] * interest[i]) * look_ahead);
