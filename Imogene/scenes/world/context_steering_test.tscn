@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://coht5bdngj0g"]
+[gd_scene load_steps=10 format=3 uid="uid://coht5bdngj0g"]
 
 [ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/world/enemy_context_steering.tscn" id="1_gaxd5"]
+[ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="2_jpjfx"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_e35vt"]
 
@@ -30,6 +31,7 @@ mesh = SubResource("BoxMesh_e35vt")
 [node name="BoxOne" type="StaticBody3D" parent="Box"]
 collision_layer = 128
 collision_mask = 0
+script = ExtResource("2_jpjfx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Box/BoxOne"]
 shape = SubResource("BoxShape3D_atxni")
