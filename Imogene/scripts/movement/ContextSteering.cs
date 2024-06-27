@@ -8,8 +8,10 @@ public partial class ContextSteering : CharacterBody3D
 {
 
 	[Export] int max_speed = 4; // How fast the entity will move 
-	[Export] float steer_force = 0.01f; // How fast the entity turns
-	[Export] int look_ahead = 10; // How far the rays will project
+	[Export] float steer_force = 0.02f; // How fast the entity turns
+	[Export] int look_ahead = 5; // How far the rays will project
+	[Export] int direction_lines_mag = 5;
+	[Export] int direction_line_mag = 7;
 	[Export] int num_rays = 16;
 
 	Vector3 look_at_position;
@@ -22,6 +24,12 @@ public partial class ContextSteering : CharacterBody3D
 	Vector3 velocity = Vector3.Zero;
 	Vector3 acceleration = Vector3.Zero;
 	Vector3 direction = Vector3.Zero;
+
+	public NavigationAgent3D navigation_agent;
+	public Vector3 target_position;
+	StateMachine state_machine;
+	Area3D detection_area;
+	Vector3 box_position;
 
 
 	Node3D ray_position; // Position rays are cast from
@@ -50,9 +58,9 @@ public partial class ContextSteering : CharacterBody3D
 	private AnimationTree tree;
 
 	// ***************************** change this to state machine controlled **********************************
-	bool in_contact_with_rotate_box;
-	bool looking_at_object;
-	Node3D collider;
+	public bool in_contact_with_rotate_box;
+	public bool switch_to_state2;
+	public Node3D collider;
 	// *********************************************************************************************************
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -63,6 +71,14 @@ public partial class ContextSteering : CharacterBody3D
 		ray_lines = GetNode<MeshInstance3D>("RayLines");
 		direction_lines = GetNode<MeshInstance3D>("DirectionLines");
 		direction_moving_line = GetNode<MeshInstance3D>("DirectionMovingLine");
+
+		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		state_machine = GetNode<StateMachine>("StateMachine");
+		state_machine.GetEntityInfo(this);
+
+		detection_area = GetNode<Area3D>("DetectionArea");
+		detection_area.AreaEntered += OnDetectionAreaEntered;
+		detection_area.AreaExited += OnDetectionAreaExited;
 
 		// Resize arrays to given number of arrays
 		Array.Resize(ref interest, num_rays);
@@ -79,8 +95,30 @@ public partial class ContextSteering : CharacterBody3D
 	
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+	private void OnDetectionAreaEntered(Area3D area)
+    {
+
+        if(area.IsInGroup("RotateBox"))
+		{
+			GD.Print("In contact with rotate box");
+			in_contact_with_rotate_box = true;
+			box_position = area.GlobalPosition;
+		}
+    }
+    private void OnDetectionAreaExited(Area3D area)
+    {
+         if(area.IsInGroup("RotateBox"))
+		{
+			GD.Print("In contact with rotate box");
+			in_contact_with_rotate_box = false;
+			
+		}
+    }
+
+    
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(double delta)
 	{
 		
 		ray_origin = ray_position.GlobalPosition;
@@ -102,7 +140,12 @@ public partial class ContextSteering : CharacterBody3D
 			direction_moving_line_mesh.ClearSurfaces();
 		}
 
-
+		if (Input.IsActionPressed("A"))
+		{
+			in_contact_with_rotate_box = false;
+			switch_to_state2 = true;
+		}
+		
 		// We check for each move input and update the direction accordingly.
 		if (Input.IsActionPressed("Right"))
 		{
@@ -143,6 +186,11 @@ public partial class ContextSteering : CharacterBody3D
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
 
+		
+
+		SmoothRotation();
+		LookAtOver();
+
     	// Moving the character
     
 		// Populate interest arrays 
@@ -159,18 +207,32 @@ public partial class ContextSteering : CharacterBody3D
 		// }
 		
 		ChooseDirection();
-		
-		// GD.Print("chosen dir " + chosen_dir);
+
+		// GD.Print("chosen dir " + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
+
+		// GD.Print("target position " + target_position);
+		// if(collider != null)
+		// {
+		// 	GD.Print("collider position " + collider.GlobalPosition);
+		// }
+
 	
-		// // Movement
+	
+	
+		
+	
+		// Movement
+		// It is very important that the ray_directions, and the final chosen direction get rotated around the global Y axis by the Y rotation of the node they are attached to
+		// If they don't get rotated then the direction the entity faces and moves will be incorrect
 		_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
 		Velocity = Velocity.Lerp(_targetVelocity, steer_force);
 		if(Velocity > Vector3.Zero)
 		{
 			blend_direction.Y = 1; // Sets animation to walk
-		}	
+		}
 		
-		SmoothRotation();
+		
+	
 		tree.Set("parameters/IW/blend_position", blend_direction);
 		MoveAndSlide();
 
@@ -180,62 +242,99 @@ public partial class ContextSteering : CharacterBody3D
 
 	}
 
+	public void LookAtOver() // Look at enemy and switch
+	{
+		if(in_contact_with_rotate_box)
+		{
+			
+			// target_ability.Execute(this);
+		
+			
+			look_at_position = box_position;
+			LookAt(look_at_position with {Y = GlobalPosition.Y});
+			
+			
+		}
+		else
+		{
+			
+			in_contact_with_rotate_box = false;
+			// Sets the animation to walk forward when not targeting
+			if(chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)
+			{
+				blend_direction.X = 0;
+				blend_direction.Y = 1;
+				// GD.Print("Normal: ", blend_direction);
+			}
+			else
+			{
+				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+			}
+		}
+	}
+
 	public void SetInterest()
 	{
 		// *************** comment/uncomment for test behavior ***************
 
 		// // ******** make state machine controlled **********
-		// if(collider != null)
-		// {
-		// 	SetObjectInterest();
-		// }
-		// else
-		// {
-		// 	SetDefaultInterest();
-		// }
+		if(state_machine.current_state.name == "State3")
+		{
+			
+			SetObjectInterest();
+		}
+		else if (state_machine.current_state.name == "State2")
+		{
+			
+			SetDefaultInterest();
+		}
 
 		// ******************************************************************************************
 
 
 		// *************** comment/uncomment for base behavior ***************
-		SetDefaultInterest();
+		// if(state_machine.current_state.name == "State2")
+		// {
+		// 	navigation_agent.TargetPosition = Vector3.Forward; 
+		// 	target_position = navigation_agent.GetNextPathPosition();
+		// 	SetDefaultInterest();
+		// }
+		
 
 		// ***************************************************************************
 	}
 
 	public void SetObjectInterest()
 	{
-		
+			navigation_agent.TargetPosition = box_position; 
+			target_position = navigation_agent.GetNextPathPosition();
+
 			for(int i = 0; i < num_rays; i++)
 			{
 				// GD.Print(ray_directions[i].Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) + " dot " + Transform.Basis.Z);
 
-				// Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move (in this base case forward which is Transform.Basis.Z)
-				
-				var d = ray_directions[i].Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y).Dot(Transform.Basis.X + GlobalPosition.DirectionTo(collider.GlobalPosition with {Y = 0}));
+				// Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
+				// (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
+				var d = ray_directions[i].Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y).Dot(Transform.Basis.X + GlobalPosition.DirectionTo(target_position)); 
 				// If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
 				interest[i] = MathF.Max(0, d);
 
 				// GD.Print(interest[i]);
 			}
-
-			if(chosen_dir.Z < 0)
-				{
-					GD.Print("Stop");
-				}
 	}
 
 	public void SetDefaultInterest()
 	{
+		navigation_agent.TargetPosition = Vector3.Forward; 
+		target_position = navigation_agent.GetNextPathPosition();
+
 		for(int i = 0; i < num_rays; i++)
 		{
 			// Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move (in this base case forward which is Transform.Basis.Z)
-			var d = ray_directions[i].Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y).Dot(Vector3.Forward);
-
-			// GD.Print("Equals " + d);
-			// GD.Print("d " + d);
-
+			var d = ray_directions[i].Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y).Dot(target_position.Normalized());
 			// If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
+			// GD.Print("d " + d);
 			interest[i] = MathF.Max(0, d);
 			// GD.Print(interest[i]);
 		}
@@ -256,53 +355,56 @@ public partial class ContextSteering : CharacterBody3D
 			// SetRayCastLines(ray_lines,ray_target);
 
 			// *************** Comment/ Uncomment for test behavior ***************
-			// if(result.Count > 0)
-			// {
-			// 	collider = (Node3D)result["collider"];
-			// 	SetCollisionLines(collision_lines, result);
-			// 	// danger[i] = 1.0f;
-			// }
-			// else
-			// {
-			// 	in_contact_with_rotate_box = false;
-			// }
+			if(result.Count > 0)
+			{
+				collider = (Node3D)result["collider"];
+				SetCollisionLines(collision_lines, result);
+				danger[i] = 1.0f;
+				// if(i == 0)
+				// {
+				// 	danger[i + 1] = 0.5f;
+				// 	danger[i + 2] = 0.5f;
+				// }
+				// else if(i == num_rays - 1)
+				// {
+				// 	danger[i - 1] = 0.5f;
+				// 	danger[i - 2] = 0.5f;
+				// }
+				// else
+				// {
+				// 	danger[i - 1] = 0.5f;
+				// 	danger[i + 1] = 0.5f;
+				// }
 			
-			// if(collider is RotateBox box)
-			// {
-			// 	in_contact_with_rotate_box = true;
-			// 	looking_at_object = true;
-			// 	LookAt(collider.GlobalPosition with {Y = GlobalPosition.Y});
-			// 	// GD.Print("RotateBox");
-			// 	// danger[i] = 0.5f;
-			// 	// interest[i] = 1.0f;
-			// }
-			// else
-			// {
-			// 	in_contact_with_rotate_box = false;
-			// 	looking_at_object = false;
 				
-			// }
+			}
+			else
+			{
+				danger[i] = 0;
+			}
+		
+			
+			
 
 			// ******************************************************************************************
 
 			// *************** Comment/ Uncomment for base behavior ***************
 			// If the ray has collided
 			
-			if(result.Count > 0)
-			{
+			// if(result.Count > 0)
+			// {
 				
-				danger[i] = 1.0f;
 	
-				// Set danger in the direction of the ray cast to 1
+			// 	// Set danger in the direction of the ray cast to 1
+			// 	danger[i] = 1.0f;
+			// 	// Uncomment to show ray casts when they collide
+			// 	SetCollisionLines(collision_lines, result);
 				
-				// Uncomment to show ray casts when they collide
-				SetCollisionLines(collision_lines, result);
-				
-			}
-			else
-			{
-				danger[i] = 0.0f;
-			}
+			// }
+			// else
+			// {
+			// 	danger[i] = 0.0f;
+			// }
 
 			// ***************************************************************************
 		}
@@ -329,16 +431,17 @@ public partial class ContextSteering : CharacterBody3D
 			// Sum up all of the directions where there is interest (if the interest is zero at a given direction that direction will not factor into the chosen direction)
 			chosen_dir += ray_directions[i] * interest[i];
 			// GD.Print("directions: " + ray_directions[i] * interest[i]);
+			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			SetDirectionLines(direction_lines, ray_directions[i] * interest[i] * look_ahead);
+			SetDirectionLines(direction_lines, ray_directions[i] * interest[i] * direction_lines_mag);
 		}
 
 		// Normalize the chosen direction
 		chosen_dir = chosen_dir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		SetDirectionMovingLine(direction_moving_line, chosen_dir * look_ahead);
+		SetDirectionMovingLine(direction_moving_line, chosen_dir * direction_line_mag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}
@@ -404,22 +507,22 @@ public partial class ContextSteering : CharacterBody3D
 	}
 
 	// Rotate the entity smoothly in the direction it is looking
-	public void SmoothRotation() // Rotates the entity smoothly with lerp
+	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
-		if(!looking_at_object)
+		if(!in_contact_with_rotate_box)
 		{
 			prev_y_rotation = GlobalRotation.Y;
-			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir)) // looks at direction the player is moving
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving
 			{
-				LookAt(GlobalPosition + chosen_dir);
+				LookAt(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
+				
 			}
 			current_y_rotation = GlobalRotation.Y;
 			if(prev_y_rotation != current_y_rotation)
 			{
-				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.1f)}; // smoothly rotates between the previous angle and the new angle!
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
-			}
-		
+		}
 	}
 	
 

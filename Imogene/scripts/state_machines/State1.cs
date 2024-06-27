@@ -11,11 +11,11 @@ public partial class State1 : State
 	}
    public override async void Enter()
    {
-       GD.Print("Hello from state 1");
-
+     
+      GD.Print("Hello from state 1");
 		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
-		Exit("State2");
+      Exit("State2");
    }
 
    public override void Exit(string next_state)

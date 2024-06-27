@@ -10,6 +10,7 @@ public partial class Player : PlayerEntity
 	// Player reference
 	public Player this_player; // Player
 	public RayCast3D raycast;
+	public Node3D camera_rig;
 
 	// Abilities
 	private Target target_ability; // Target enemies
@@ -62,6 +63,9 @@ public partial class Player : PlayerEntity
 	
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
+
+		camera_rig = GetNode<Node3D>("CameraRig");
+		camera_rig.TopLevel = true;
 
 		movementController = GetNode<MovementController>("MovementController");
 		abilityController = GetNode<AbilityController>("AbilityController");
@@ -123,7 +127,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+		CameraFollowsPlayer();
 		SignalEmitter(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
@@ -193,6 +197,14 @@ public partial class Player : PlayerEntity
 		GD.Print("Dexterity: " + dexterity);
 		GD.Print("intellect: " + intellect);
 		GD.Print("Physical Resistance: " + physical_resistance);
+	}
+
+	public void CameraFollowsPlayer()
+	{
+		var camera_transform = new Transform3D();
+		var pos = GlobalTransform.Origin;
+		camera_transform.Origin = pos;
+		camera_rig.GlobalTransform = camera_transform;
 	}
 
 	

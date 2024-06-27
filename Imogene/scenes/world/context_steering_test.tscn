@@ -1,11 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://coht5bdngj0g"]
+[gd_scene load_steps=12 format=3 uid="uid://coht5bdngj0g"]
 
 [ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/world/enemy_context_steering.tscn" id="1_gaxd5"]
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="2_jpjfx"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_2tlhh"]
+vertices = PackedVector3Array(-19.3001, 0.491906, -142.468, -19.3001, 0.491906, 8.03171, 19.1999, 0.491906, 8.03171, 19.1999, 0.491906, -142.468)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_j286k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_113fl"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_e35vt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_atxni"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lf32x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t56v3"]
 
@@ -16,16 +26,28 @@ sky_material = SubResource("ProceduralSkyMaterial_t56v3")
 background_mode = 2
 sky = SubResource("Sky_dd0x7")
 
-[sub_resource type="BoxMesh" id="BoxMesh_j286k"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_113fl"]
-
 [node name="ContextSteeringTest" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_2tlhh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 151.405, 0, 0, -67.2658)
+mesh = SubResource("BoxMesh_j286k")
+skeleton = NodePath("../..")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+collision_layer = 4
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
+shape = SubResource("BoxShape3D_113fl")
 
 [node name="enemy" parent="." instance=ExtResource("1_gaxd5")]
 
 [node name="Box" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.55165, 1.85571, -9.71791)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -8.60541, 1.85571, -17.0465)
 mesh = SubResource("BoxMesh_e35vt")
 
 [node name="BoxOne" type="StaticBody3D" parent="Box"]
@@ -36,8 +58,16 @@ script = ExtResource("2_jpjfx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Box/BoxOne"]
 shape = SubResource("BoxShape3D_atxni")
 
+[node name="Area3D" type="Area3D" parent="Box" groups=["RotateBox"]]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Area3D"]
+shape = SubResource("SphereShape3D_lf32x")
+
 [node name="Box2" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.96641, 0, 2.68336, 0, 4, 0, -2.68336, 0, 2.96641, -3.7175, 1.85571, -28.7001)
+transform = Transform3D(2.96641, 0, 2.68336, 0, 4, 0, -2.68336, 0, 2.96641, -3.7175, 1.85571, -37.508)
 mesh = SubResource("BoxMesh_e35vt")
 
 [node name="BoxTwo" type="StaticBody3D" parent="Box2"]
@@ -48,7 +78,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_atxni")
 
 [node name="Box3" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.68667, 0, 1.55193, 0, 4, 0, -1.55193, 0, 3.68667, 11.0418, 2.01073, -32.7395)
+transform = Transform3D(3.68667, 0, 1.55193, 0, 4, 0, -1.55193, 0, 3.68667, 11.0418, 2.01073, -41.7045)
 mesh = SubResource("BoxMesh_e35vt")
 
 [node name="BoxThree" type="StaticBody3D" parent="Box3"]
@@ -59,7 +89,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_atxni")
 
 [node name="Box4" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.97651, 0, 0.4329, 0, 4, 0, -0.4329, 0, 3.97651, 0.807876, 1.85571, -48.4308)
+transform = Transform3D(3.97651, 0, 0.4329, 0, 4, 0, -0.4329, 0, 3.97651, -4.2207, 1.85571, -56.7405)
 mesh = SubResource("BoxMesh_e35vt")
 
 [node name="BoxFour" type="StaticBody3D" parent="Box4"]
@@ -102,15 +132,3 @@ light_energy = 0.25
 light_volumetric_fog_energy = 1.09
 shadow_enabled = true
 sky_mode = 1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 151.405, 0, 0, -67.2658)
-mesh = SubResource("BoxMesh_j286k")
-
-[node name="Floor" type="StaticBody3D" parent="MeshInstance3D"]
-collision_layer = 4
-collision_mask = 0
-input_ray_pickable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Floor"]
-shape = SubResource("BoxShape3D_113fl")

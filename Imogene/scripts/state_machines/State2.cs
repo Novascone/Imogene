@@ -1,25 +1,45 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 public partial class State2 : State
 {
-    public override void _Ready()
+   public override void _Ready()
 	{
       name = "State2";
 	}
-   public override async void Enter()
+   public override  void Enter()
    {
-       GD.Print("Hello from state 2");
+        entity = fsm.this_entity;
+      GD.Print("Hello from state 2");
+      GD.Print(entity.Name);
+    
+     
 
-		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
-		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
-		Exit("State1");
+      
+      
+      
+		// SceneTreeTimer timer = GetTree().CreateTimer(2.0);
+		// await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
+      
+		
    }
 
-   public override void Exit(string next_state)
+    public override void _PhysicsProcess(double delta)
+    {
+        if(entity.in_contact_with_rotate_box)
+        {
+            Exit("State3");
+        }
+    }
+
+    
+
+    public override void Exit(string next_state)
    {
-        fsm.Back();
+      fsm.ChangeTo(next_state);
    }
+
 
 }
