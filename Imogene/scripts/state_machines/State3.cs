@@ -41,7 +41,7 @@ public partial class State3: State
     public override void SetInterest()
     {
         entity.navigation_agent.TargetPosition = entity.box_position;
-        target_position = entity.navigation_agent.GetNextPathPosition();
+        target_position_1 = entity.navigation_agent.GetNextPathPosition();
 
         for(int i = 0; i < entity.num_rays; i++)
             {
@@ -49,7 +49,7 @@ public partial class State3: State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = entity.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y).Dot(entity.Transform.Basis.X + entity.GlobalPosition.DirectionTo(target_position)); 
+                var d = entity.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y).Dot(entity.Transform.Basis.X + entity.GlobalPosition.DirectionTo(target_position_1)); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 entity.interest[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);

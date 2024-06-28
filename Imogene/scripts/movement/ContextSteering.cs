@@ -30,6 +30,7 @@ public partial class ContextSteering : CharacterBody3D
 	StateMachine state_machine;
 	Area3D detection_area;
 	public Vector3 box_position;
+	public Vector3 center_position;
 
 
 	public Node3D ray_position; // Position rays are cast from
@@ -84,6 +85,7 @@ public partial class ContextSteering : CharacterBody3D
 
 		// Resize arrays to given number of arrays
 		Array.Resize(ref interest, num_rays);
+		
 		Array.Resize(ref danger, num_rays);
 		Array.Resize(ref ray_directions, num_rays);
 		
@@ -115,15 +117,24 @@ public partial class ContextSteering : CharacterBody3D
 			entity_in_detection = true;
 			box_position = area.GlobalPosition;
 		}
+		if(area.IsInGroup("Center"))
+		{
+			GD.Print("within range of center");
+			
+			center_position = area.GlobalPosition;
+			GD.Print(center_position);
+		}
     }
     private void OnDetectionAreaExited(Area3D area)
     {
          if(area.IsInGroup("RotateBox"))
 		{
 			GD.Print("out of contact with rotate box");
+			box_position = Vector3.Zero;
 			entity_in_detection = false;
 			
 		}
+		
     }
 
     
@@ -151,10 +162,9 @@ public partial class ContextSteering : CharacterBody3D
 			direction_moving_line_mesh.ClearSurfaces();
 		}
 
-		if (Input.IsActionPressed("A"))
+		if (Input.IsActionJustPressed("A"))
 		{
-			entity_in_detection = false;
-			switch_to_state2 = true;
+			state_machine.current_state.Exit("State4");
 		}
 		
 		// We check for each move input and update the direction accordingly.
@@ -220,6 +230,8 @@ public partial class ContextSteering : CharacterBody3D
 		// ChooseDirection();
 
 		// GD.Print("chosen dir " + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
+		GD.Print("Navigation point " + navigation_agent.GetNextPathPosition());
+		GD.Print("Box position " + box_position);
 
 		// GD.Print("target position " + target_position);
 		// if(collider != null)
@@ -255,20 +267,24 @@ public partial class ContextSteering : CharacterBody3D
 
 	public void LookAtOver() // Look at enemy and switch
 	{
-		if(entity_in_detection)
+		if(center_position == Vector3.Zero)
 		{
+			if(entity_in_detection)
+			{
+				
+				// target_ability.Execute(this);
 			
-			// target_ability.Execute(this);
-		
-			
-			look_at_position = box_position;
-			LookAt(look_at_position with {Y = GlobalPosition.Y});
-			
-			
+				
+				look_at_position = box_position;
+				LookAt(look_at_position with {Y = GlobalPosition.Y});
+				
+			}
 		}
+		
 		else
 		{
-			
+			look_at_position = center_position;
+			LookAt(look_at_position with {Y = GlobalPosition.Y});
 			entity_in_detection = false;
 			// Sets the animation to walk forward when not targeting
 			if(chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)

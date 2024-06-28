@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://bhen6dwnykdg2"]
+
+[ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="1_0w2jw"]
+[ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/entities/enemy_context_steering.tscn" id="2_x5xk6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hk1iy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x11xj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ca5xk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nphh7"]
+
+[sub_resource type="Sky" id="Sky_dd0x7"]
+sky_material = SubResource("ProceduralSkyMaterial_nphh7")
+
+[sub_resource type="Environment" id="Environment_gfcd5"]
+background_mode = 2
+sky = SubResource("Sky_dd0x7")
+
+[sub_resource type="SphereMesh" id="SphereMesh_y7165"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qvync"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j5o38"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_c2dj5"]
+vertices = PackedVector3Array(-50.1891, 0.491906, -142.468, -50.1891, 0.491906, 8.03171, 50.3109, 0.491906, 8.03171, 50.3109, 0.491906, -142.468)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vtgyt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ttvuu"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Box" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 9.8472, 2.1623, 23.6006)
+mesh = SubResource("BoxMesh_hk1iy")
+
+[node name="BoxOne" type="StaticBody3D" parent="Box"]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_0w2jw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/BoxOne"]
+shape = SubResource("BoxShape3D_x11xj")
+
+[node name="Area3D" type="Area3D" parent="Box" groups=["RotateBox"]]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Area3D"]
+shape = SubResource("SphereShape3D_ca5xk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gfcd5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852182, -0.348481, 0.390317, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.905882, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 1.09
+shadow_enabled = true
+sky_mode = 1
+
+[node name="Center" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Center"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.60951, 0)
+mesh = SubResource("SphereMesh_y7165")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Center/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center/MeshInstance3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_qvync")
+
+[node name="Area3D" type="Area3D" parent="Center/MeshInstance3D" groups=["Center"]]
+transform = Transform3D(75, 0, 0, 0, 75, 0, 0, 0, 75, 0, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center/MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_j5o38")
+
+[node name="enemy" parent="." instance=ExtResource("2_x5xk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4974, 0, 48.984)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59.7906)
+navigation_mesh = SubResource("NavigationMesh_c2dj5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(-101.378, 0, 0, 0, 0.0161886, 0, 0, 0, 151.405, 0, 0, -67.2658)
+mesh = SubResource("BoxMesh_vtgyt")
+skeleton = NodePath("../..")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+collision_layer = 4
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
+shape = SubResource("BoxShape3D_ttvuu")

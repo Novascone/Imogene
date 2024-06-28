@@ -7,7 +7,8 @@ public partial class State : Node3D
 	public StateMachine fsm;
 	public string name;
 	public ContextSteering entity;
-	public Vector3 target_position;
+	public Vector3 target_position_1;
+	public Vector3 target_position_2;
 	public Node3D collider;
 	public CustomSignals _customSignals; // Custom signal instance
 	// Called when the node enters the scene tree for the first time.

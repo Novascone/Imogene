@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://coht5bdngj0g"]
 
-[ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/world/enemy_context_steering.tscn" id="1_gaxd5"]
+[ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/entities/enemy_context_steering.tscn" id="1_gaxd5"]
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="2_jpjfx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2tlhh"]
@@ -19,12 +19,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t56v3"]
 
-[sub_resource type="Sky" id="Sky_dd0x7"]
+[sub_resource type="Sky" id="Sky_4ptte"]
 sky_material = SubResource("ProceduralSkyMaterial_t56v3")
 
 [sub_resource type="Environment" id="Environment_odjlt"]
 background_mode = 2
-sky = SubResource("Sky_dd0x7")
+sky = SubResource("Sky_4ptte")
 
 [node name="ContextSteeringTest" type="Node3D"]
 
@@ -45,6 +45,7 @@ input_ray_pickable = false
 shape = SubResource("BoxShape3D_113fl")
 
 [node name="enemy" parent="." instance=ExtResource("1_gaxd5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99903, 0, 2.7045)
 
 [node name="Box" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -8.60541, 1.85571, -17.0465)
