@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class CustomSignals : Node
 {
@@ -106,6 +107,9 @@ public partial class CustomSignals : Node
 
 	// Object to object
 	[Signal] public delegate void CameraPositionEventHandler(Vector3 position); // Tells a object where the camera is
+
+	// State machine signals
+	[Signal] public delegate void FinishedCirclingEventHandler();
 
 
 

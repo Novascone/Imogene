@@ -7,41 +7,41 @@ using System.Linq.Expressions;
 public partial class ContextSteering : CharacterBody3D
 {
 
-	[Export] int max_speed = 4; // How fast the entity will move 
-	[Export] float steer_force = 0.02f; // How fast the entity turns
-	[Export] int look_ahead = 5; // How far the rays will project
-	[Export] int direction_lines_mag = 5;
-	[Export] int direction_line_mag = 7;
-	[Export] int num_rays = 16;
+	[Export] public int max_speed = 4; // How fast the entity will move 
+	[Export] public float steer_force = 0.02f; // How fast the entity turns
+	[Export] public int look_ahead = 5; // How far the rays will project
+	[Export] public int direction_lines_mag = 5;
+	[Export] public int direction_line_mag = 7;
+	[Export] public int num_rays = 16;
 
 	Vector3 look_at_position;
 
-	Vector3[] ray_directions; // Directions the rays will be cast in
-	float[] interest; // Interest weight, how interested the entity is in moving toward a location
-	float[] danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
+	public Vector3[] ray_directions; // Directions the rays will be cast in
+	public float[] interest; // Interest weight, how interested the entity is in moving toward a location
+	public float[] danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
 
-	Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
-	Vector3 velocity = Vector3.Zero;
-	Vector3 acceleration = Vector3.Zero;
-	Vector3 direction = Vector3.Zero;
+	public Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
+	public Vector3 velocity = Vector3.Zero;
+	public Vector3 acceleration = Vector3.Zero;
+	public Vector3 direction = Vector3.Zero;
 
 	public NavigationAgent3D navigation_agent;
 	public Vector3 target_position;
 	StateMachine state_machine;
 	Area3D detection_area;
-	Vector3 box_position;
+	public Vector3 box_position;
 
 
-	Node3D ray_position; // Position rays are cast from
-	Vector3 ray_origin;
-	MeshInstance3D collision_lines;
-	StandardMaterial3D collision_lines_material = new StandardMaterial3D();
-	MeshInstance3D ray_lines;
-	StandardMaterial3D ray_lines_material = new StandardMaterial3D();
-	MeshInstance3D direction_lines;
-	StandardMaterial3D direction_line_material = new StandardMaterial3D();
-	MeshInstance3D direction_moving_line;
-	StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
+	public Node3D ray_position; // Position rays are cast from
+	public Vector3 ray_origin;
+	public MeshInstance3D collision_lines;
+	public StandardMaterial3D collision_lines_material = new StandardMaterial3D();
+	public MeshInstance3D ray_lines;
+	public StandardMaterial3D ray_lines_material = new StandardMaterial3D();
+	public MeshInstance3D direction_lines;
+	public StandardMaterial3D direction_line_material = new StandardMaterial3D();
+	public MeshInstance3D direction_moving_line;
+	public StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
 
 
 	Entity entity;
@@ -58,9 +58,11 @@ public partial class ContextSteering : CharacterBody3D
 	private AnimationTree tree;
 
 	// ***************************** change this to state machine controlled **********************************
-	public bool in_contact_with_rotate_box;
+	public bool entity_in_detection;
 	public bool switch_to_state2;
 	public Node3D collider;
+
+	public CustomSignals _customSignals; // Custom signal instance
 	// *********************************************************************************************************
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -92,16 +94,25 @@ public partial class ContextSteering : CharacterBody3D
 			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
 			GD.Print(ray_directions[i]);
 		}
-	
+
+		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		_customSignals.FinishedCircling += HandleFinishedCircling;
 	}
 
-	private void OnDetectionAreaEntered(Area3D area)
+    private void HandleFinishedCircling()
+    {
+        state_machine.current_state.Exit("State2");
+    }
+
+
+
+    private void OnDetectionAreaEntered(Area3D area)
     {
 
         if(area.IsInGroup("RotateBox"))
 		{
 			GD.Print("In contact with rotate box");
-			in_contact_with_rotate_box = true;
+			entity_in_detection = true;
 			box_position = area.GlobalPosition;
 		}
     }
@@ -109,8 +120,8 @@ public partial class ContextSteering : CharacterBody3D
     {
          if(area.IsInGroup("RotateBox"))
 		{
-			GD.Print("In contact with rotate box");
-			in_contact_with_rotate_box = false;
+			GD.Print("out of contact with rotate box");
+			entity_in_detection = false;
 			
 		}
     }
@@ -142,7 +153,7 @@ public partial class ContextSteering : CharacterBody3D
 
 		if (Input.IsActionPressed("A"))
 		{
-			in_contact_with_rotate_box = false;
+			entity_in_detection = false;
 			switch_to_state2 = true;
 		}
 		
@@ -194,19 +205,19 @@ public partial class ContextSteering : CharacterBody3D
     	// Moving the character
     
 		// Populate interest arrays 
-		SetInterest();
-		// foreach(float i in interest)
-		// {
-		// 	GD.Print("interest " + i);
-		// }
+		// SetInterest();
+		// // foreach(float i in interest)
+		// // {
+		// // 	GD.Print("interest " + i);
+		// // }
 		
-		SetDanger();
-		// foreach(float i in danger)
-		// {
-		// 	GD.Print("danger " + i);
-		// }
+		// SetDanger();
+		// // foreach(float i in danger)
+		// // {
+		// // 	GD.Print("danger " + i);
+		// // }
 		
-		ChooseDirection();
+		// ChooseDirection();
 
 		// GD.Print("chosen dir " + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
 
@@ -244,7 +255,7 @@ public partial class ContextSteering : CharacterBody3D
 
 	public void LookAtOver() // Look at enemy and switch
 	{
-		if(in_contact_with_rotate_box)
+		if(entity_in_detection)
 		{
 			
 			// target_ability.Execute(this);
@@ -258,7 +269,7 @@ public partial class ContextSteering : CharacterBody3D
 		else
 		{
 			
-			in_contact_with_rotate_box = false;
+			entity_in_detection = false;
 			// Sets the animation to walk forward when not targeting
 			if(chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)
 			{
@@ -326,8 +337,8 @@ public partial class ContextSteering : CharacterBody3D
 
 	public void SetDefaultInterest()
 	{
-		navigation_agent.TargetPosition = Vector3.Forward; 
-		target_position = navigation_agent.GetNextPathPosition();
+		// navigation_agent.TargetPosition = Vector3.Forward; 
+		// target_position = navigation_agent.GetNextPathPosition();
 
 		for(int i = 0; i < num_rays; i++)
 		{
@@ -509,7 +520,7 @@ public partial class ContextSteering : CharacterBody3D
 	// Rotate the entity smoothly in the direction it is looking
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
-		if(!in_contact_with_rotate_box)
+		if(!entity_in_detection)
 		{
 			prev_y_rotation = GlobalRotation.Y;
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving

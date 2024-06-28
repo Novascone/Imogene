@@ -33,6 +33,7 @@ public partial class StateMachine : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public void ChangeTo(string state_name)
 	{
+		GD.Print("State machine changing");
 		history.Add(current_state.name);
 		SetState(state_name);
 	}
