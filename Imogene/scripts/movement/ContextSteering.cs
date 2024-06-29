@@ -31,6 +31,9 @@ public partial class ContextSteering : CharacterBody3D
 	Area3D detection_area;
 	public Vector3 box_position;
 	public Vector3 center_position;
+	public bool can_see_center;
+	public Node3D chaser;
+	public bool running_away_from_chaser;
 
 
 	public Node3D ray_position; // Position rays are cast from
@@ -80,8 +83,9 @@ public partial class ContextSteering : CharacterBody3D
 		state_machine.GetEntityInfo(this);
 
 		detection_area = GetNode<Area3D>("DetectionArea");
+		detection_area.BodyEntered += OnDetectionBodyEntered;
 		detection_area.AreaEntered += OnDetectionAreaEntered;
-		detection_area.AreaExited += OnDetectionAreaExited;
+		detection_area.BodyExited += OnDetectionAreaExited;
 
 		// Resize arrays to given number of arrays
 		Array.Resize(ref interest, num_rays);
@@ -101,16 +105,8 @@ public partial class ContextSteering : CharacterBody3D
 		_customSignals.FinishedCircling += HandleFinishedCircling;
 	}
 
-    private void HandleFinishedCircling()
-    {
-        state_machine.current_state.Exit("State2");
-    }
-
-
-
     private void OnDetectionAreaEntered(Area3D area)
     {
-
         if(area.IsInGroup("RotateBox"))
 		{
 			GD.Print("In contact with rotate box");
@@ -120,12 +116,38 @@ public partial class ContextSteering : CharacterBody3D
 		if(area.IsInGroup("Center"))
 		{
 			GD.Print("within range of center");
-			
-			center_position = area.GlobalPosition;
+			can_see_center = true;
+			center_position = area.GlobalPosition with {Y = 0};
 			GD.Print(center_position);
 		}
     }
-    private void OnDetectionAreaExited(Area3D area)
+
+    private void HandleFinishedCircling()
+    {
+        state_machine.current_state.Exit("State2");
+    }
+
+
+
+    private void OnDetectionBodyEntered(Node3D area)
+    {
+		GD.Print(area.Name + " entered detection area");
+
+        
+		if(area.IsInGroup("Center"))
+		{
+			GD.Print("within range of center");
+			can_see_center = true;
+			center_position = area.GlobalPosition;
+			GD.Print(center_position);
+		}
+		if(area is Chaser chaser_entered )
+		{
+			GD.Print("Chaser in detection");
+			chaser = chaser_entered;
+		}
+    }
+    private void OnDetectionAreaExited(Node3D area)
     {
          if(area.IsInGroup("RotateBox"))
 		{
@@ -134,6 +156,8 @@ public partial class ContextSteering : CharacterBody3D
 			entity_in_detection = false;
 			
 		}
+
+		
 		
     }
 
@@ -230,8 +254,8 @@ public partial class ContextSteering : CharacterBody3D
 		// ChooseDirection();
 
 		// GD.Print("chosen dir " + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
-		GD.Print("Navigation point " + navigation_agent.GetNextPathPosition());
-		GD.Print("Box position " + box_position);
+		// GD.Print("Navigation point " + navigation_agent.GetNextPathPosition());
+		// GD.Print("Box position " + box_position);
 
 		// GD.Print("target position " + target_position);
 		// if(collider != null)
@@ -247,11 +271,53 @@ public partial class ContextSteering : CharacterBody3D
 		// Movement
 		// It is very important that the ray_directions, and the final chosen direction get rotated around the global Y axis by the Y rotation of the node they are attached to
 		// If they don't get rotated then the direction the entity faces and moves will be incorrect
-		_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
-		Velocity = Velocity.Lerp(_targetVelocity, steer_force);
-		if(Velocity > Vector3.Zero)
+		
+
+		// If there is a chaser and its distance from the entity is less than 5 set running away from chaser to true and increase speed
+		// when the distance from the chaser is greater than 15 set running away from chaser to false and reduce speed
+		if(chaser != null) 
+		{
+			if(GlobalPosition.DistanceTo(chaser.GlobalPosition) < 5)
+			{
+				running_away_from_chaser = true;
+				max_speed = 8;
+				
+			}
+			else if (GlobalPosition.DistanceTo(chaser.GlobalPosition) > 15)
+			{
+				running_away_from_chaser = false;
+				max_speed = 4;
+			
+			}
+			GD.Print("Distance from chaser " + GlobalPosition.DistanceTo(chaser.GlobalPosition));
+		}
+		
+		
+		// GD.Print("Velocity " + Velocity);
+		// GD.Print("running away from chaser " + running_away_from_chaser);
+		// GD.Print("can see center " + can_see_center);
+
+		if(can_see_center && GlobalPosition.DistanceTo(center_position) < 2 && !running_away_from_chaser) // If the entity is under the center stop moving
+		{
+			GD.Print("Stop moving");
+			_targetVelocity = Vector3.Zero;
+			Velocity = _targetVelocity;
+		}
+		else
+		{
+			_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
+			Velocity = Velocity.Lerp(_targetVelocity, steer_force);
+		}
+		
+		// _targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
+		// Velocity = Velocity.Lerp(_targetVelocity, steer_force);
+		if(Velocity > Vector3.Zero )
 		{
 			blend_direction.Y = 1; // Sets animation to walk
+		}
+		if(Velocity.IsEqualApprox(Vector3.Zero))
+		{
+			blend_direction.Y = 0;
 		}
 		
 		
@@ -267,14 +333,12 @@ public partial class ContextSteering : CharacterBody3D
 
 	public void LookAtOver() // Look at enemy and switch
 	{
-		if(center_position == Vector3.Zero)
+		if(!can_see_center)
 		{
 			if(entity_in_detection)
 			{
 				
 				// target_ability.Execute(this);
-			
-				
 				look_at_position = box_position;
 				LookAt(look_at_position with {Y = GlobalPosition.Y});
 				
@@ -283,8 +347,7 @@ public partial class ContextSteering : CharacterBody3D
 		
 		else
 		{
-			look_at_position = center_position;
-			LookAt(look_at_position with {Y = GlobalPosition.Y});
+
 			entity_in_detection = false;
 			// Sets the animation to walk forward when not targeting
 			if(chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)

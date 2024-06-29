@@ -25,7 +25,7 @@ public partial class State4 : State
         {
 			Array.Resize(ref interest_away_from_object, entity.num_rays);
 			Array.Resize(ref interest_to_center, entity.num_rays);
-			if(entity.box_position != Vector3.Zero) // If the entity can see the box calculate the interest for moving away from it
+			if(entity.running_away_from_chaser == true) // If the entity can see the box calculate the interest for moving away from it
 			{
 				SetInterestAwayFromObject();
 			}
@@ -37,11 +37,20 @@ public partial class State4 : State
 				}
 				
 			}
+			if(entity.GlobalPosition.DistanceTo(entity.center_position) < 2)
+			{
+				GD.Print("distance less than 2");
+				for(int i = 0; i < entity.num_rays; i++)
+				{
+					interest_to_center[i] = 0;
+				}
+			}
             
 			SetInterestToCenter();
 			// CombineInterests();
             SetDanger();
             ChooseDirection();
+			GD.Print("Distance to center " + entity.GlobalPosition.DistanceTo(entity.center_position));
         }
     }
 
@@ -59,7 +68,7 @@ public partial class State4 : State
 		GD.Print("Setting interest away from object");
         // entity.navigation_agent.TargetPosition = entity.box_position;
         // target_position = entity.navigation_agent.GetNextPathPosition();
-		target_position_2 = entity.box_position;
+		target_position_2 = entity.chaser.GlobalPosition;
 
         for(int i = 0; i < entity.num_rays; i++)
             {
@@ -68,7 +77,7 @@ public partial class State4 : State
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // The interest in moving away from the object
                 var d = entity.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y).Dot(-1 * entity.GlobalPosition.DirectionTo(target_position_2).Normalized()); 
-				// d *= 2f;
+				d *= 1.2f; // Making the entity more interested in running away from the chaser than moving toward the center
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 interest_away_from_object[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
