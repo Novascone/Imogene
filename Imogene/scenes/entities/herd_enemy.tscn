@@ -1,0 +1,100 @@
+[gd_scene load_steps=14 format=3 uid="uid://cd6cqravba4bt"]
+
+[ext_resource type="Script" path="res://scripts/movement/ContextSteering.cs" id="1_s7uwf"]
+[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.cs" id="2_sj7gg"]
+[ext_resource type="Script" path="res://scripts/state_machines/State1.cs" id="3_v667a"]
+[ext_resource type="Script" path="res://scripts/state_machines/State2.cs" id="4_ejttx"]
+[ext_resource type="Script" path="res://scripts/state_machines/State3.cs" id="5_5567a"]
+[ext_resource type="Script" path="res://scripts/state_machines/State4.cs" id="6_jf3wf"]
+[ext_resource type="Script" path="res://scenes/entities/State5.cs" id="7_j1vah"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_02dnb"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_t8mbd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cnscv"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_roj31"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7hdhi"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_swfnx"]
+graph_offset = Vector2(-153.11, 52.18)
+
+[node name="Node3D" type="CharacterBody3D"]
+script = ExtResource("1_s7uwf")
+
+[node name="StateMachine" type="Node3D" parent="."]
+script = ExtResource("2_sj7gg")
+
+[node name="State1" type="Node3D" parent="StateMachine"]
+script = ExtResource("3_v667a")
+
+[node name="State2" type="Node3D" parent="StateMachine"]
+script = ExtResource("4_ejttx")
+
+[node name="State3" type="Node3D" parent="StateMachine"]
+script = ExtResource("5_5567a")
+
+[node name="CircleTimer" type="Timer" parent="StateMachine/State3"]
+wait_time = 4.0
+one_shot = true
+
+[node name="CombineInterestTestState" type="Node3D" parent="StateMachine"]
+script = ExtResource("6_jf3wf")
+
+[node name="HerdState" type="Node3D" parent="StateMachine"]
+script = ExtResource("7_j1vah")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="HerdDetection" type="Area3D" parent="."]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 1, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HerdDetection"]
+shape = SubResource("SphereShape3D_02dnb")
+
+[node name="DetectionArea" type="Area3D" parent="."]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 1, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_02dnb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_t8mbd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_cnscv")
+
+[node name="RayPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionLines" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_roj31")
+
+[node name="RayLines" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_roj31")
+
+[node name="DirectionLines" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_roj31")
+
+[node name="DirectionMovingLine" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_roj31")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 1, -0.25)
+mesh = SubResource("CapsuleMesh_7hdhi")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_swfnx")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="timeout" from="StateMachine/State3/CircleTimer" to="StateMachine/State3" method="_on_circle_timer_timeout"]

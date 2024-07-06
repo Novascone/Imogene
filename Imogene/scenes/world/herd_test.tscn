@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://duhfcpjc5nswd"]
+
+[ext_resource type="Script" path="res://scripts/CameraRig.cs" id="1_rilqc"]
+[ext_resource type="PackedScene" uid="uid://cd6cqravba4bt" path="res://scenes/entities/herd_enemy.tscn" id="2_n3t1b"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_llvl6"]
+vertices = PackedVector3Array(-8.95438, 0.408188, -6.05074, -8.95438, 0.408188, 5.94926, 9.04562, 0.408188, 5.94926, 9.04562, 0.408188, -6.05074)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qeru"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aldre"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1hn72"]
+
+[sub_resource type="Sky" id="Sky_vroqb"]
+sky_material = SubResource("ProceduralSkyMaterial_1hn72")
+
+[sub_resource type="Environment" id="Environment_ri8io"]
+background_mode = 2
+sky = SubResource("Sky_vroqb")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(7.63414, 0, 0, 0, 1, 0, 0, 0, 8.84803, 0, 0, 0)
+navigation_mesh = SubResource("NavigationMesh_llvl6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(18.9088, 0, 0, 0, 0.183625, 0, 0, 0, 13.1015, 0, 0, 0)
+mesh = SubResource("BoxMesh_4qeru")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_aldre")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ri8io")
+
+[node name="CameraRig" type="Node3D" parent="."]
+transform = Transform3D(1.0002, 0, 0, 0, 1.0002, 0, 0, 0, 1.0002, 0, 0, 0)
+script = ExtResource("1_rilqc")
+
+[node name="Camera" type="Camera3D" parent="CameraRig" groups=["Camera"]]
+transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577858, -0.5, 0.500439, -0.706796, 14, 21, -25)
+projection = 1
+size = 50.0
+far = 100.0
+
+[node name="Node3D" parent="." instance=ExtResource("2_n3t1b")]
+transform = Transform3D(1.00171, 0, 0, 0, 1.00171, 0, 0, 0, 1.00171, 0, 0, 0)

@@ -27,8 +27,8 @@ public partial class ContextSteering : CharacterBody3D
 
 	public NavigationAgent3D navigation_agent;
 	public Vector3 target_position;
-	StateMachine state_machine;
-	Area3D detection_area;
+	public StateMachine state_machine;
+	public Area3D detection_area;
 	public Vector3 box_position;
 	public Vector3 center_position;
 	public bool can_see_center;
@@ -189,6 +189,10 @@ public partial class ContextSteering : CharacterBody3D
 		if (Input.IsActionJustPressed("A"))
 		{
 			state_machine.current_state.Exit("State4");
+		}
+		if (Input.IsActionJustPressed("B"))
+		{
+			state_machine.current_state.Exit("State5");
 		}
 		
 		// We check for each move input and update the direction accordingly.
