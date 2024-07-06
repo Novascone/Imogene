@@ -29,11 +29,16 @@ public partial class ContextSteering : CharacterBody3D
 	public Vector3 target_position;
 	public StateMachine state_machine;
 	public Area3D detection_area;
+	public Area3D herd_detection;
 	public Vector3 box_position;
 	public Vector3 center_position;
+	public Vector3 interest_position;
+	public Vector3 herd_mate_position;
 	public bool can_see_center;
 	public Node3D chaser;
+	public Node3D herd_mate;
 	public bool running_away_from_chaser;
+	public bool near_herd_mate;
 
 
 	public Node3D ray_position; // Position rays are cast from
@@ -87,6 +92,11 @@ public partial class ContextSteering : CharacterBody3D
 		detection_area.AreaEntered += OnDetectionAreaEntered;
 		detection_area.BodyExited += OnDetectionAreaExited;
 
+		herd_detection = GetNode<Area3D>("HerdDetection");
+		herd_detection.AreaEntered += OnHerdDetectionEntered;
+		herd_detection.AreaExited += OnHerdDetectionExited;
+		herd_detection.BodyEntered += OnHerdBodyEntered;
+
 		// Resize arrays to given number of arrays
 		Array.Resize(ref interest, num_rays);
 		
@@ -105,6 +115,37 @@ public partial class ContextSteering : CharacterBody3D
 		_customSignals.FinishedCircling += HandleFinishedCircling;
 	}
 
+    private void OnHerdBodyEntered(Node3D body)
+    {
+		
+        if(body is ContextSteering herd_entity && body.Name != Name)
+		{
+			GD.Print(body.Name + " entered detection area of " + Name);
+			GD.Print("Herd mate in detection");
+			herd_mate = herd_entity;
+		}
+    }
+
+    private void OnHerdDetectionExited(Area3D area)
+    {
+        if(area.IsInGroup("Herd"))
+		{
+			GD.Print("Away from herd mate");
+			near_herd_mate = false;
+			
+		}
+    }
+
+    private void OnHerdDetectionEntered(Area3D area)
+    {
+        if(area.IsInGroup("Herd"))
+		{
+			GD.Print("Near herd mate");
+			near_herd_mate = true;
+			herd_mate_position = area.GlobalPosition;
+		}
+    }
+
     private void OnDetectionAreaEntered(Area3D area)
     {
         if(area.IsInGroup("RotateBox"))
@@ -119,6 +160,12 @@ public partial class ContextSteering : CharacterBody3D
 			can_see_center = true;
 			center_position = area.GlobalPosition with {Y = 0};
 			GD.Print(center_position);
+		}
+		if(area.IsInGroup("InterestPoint"))
+		{
+			GD.Print("within range of interest position");
+			interest_position = area.GlobalPosition with {Y = 0};
+			GD.Print(interest_position);
 		}
     }
 
@@ -156,6 +203,7 @@ public partial class ContextSteering : CharacterBody3D
 			entity_in_detection = false;
 			
 		}
+		
 
 		
 		
@@ -235,7 +283,10 @@ public partial class ContextSteering : CharacterBody3D
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
 
-		
+		if(herd_mate_position != Vector3.Zero)
+		{
+			GD.Print("herd mate position " + herd_mate_position + " from " + Name);
+		}
 
 		SmoothRotation();
 		LookAtOver();
@@ -294,6 +345,23 @@ public partial class ContextSteering : CharacterBody3D
 			
 			}
 			GD.Print("Distance from chaser " + GlobalPosition.DistanceTo(chaser.GlobalPosition));
+		}
+		if(herd_mate != null) 
+		{
+			herd_mate_position = herd_mate.GlobalPosition;
+			// if(GlobalPosition.DistanceTo(herd_mate.GlobalPosition) < 5)
+			// {
+			// 	running_away_from_chaser = true;
+			// 	max_speed = 8;
+				
+			// }
+			// else if (GlobalPosition.DistanceTo(chaser.GlobalPosition) > 15)
+			// {
+			// 	running_away_from_chaser = false;
+			// 	max_speed = 4;
+			
+			// }
+			
 		}
 		
 		

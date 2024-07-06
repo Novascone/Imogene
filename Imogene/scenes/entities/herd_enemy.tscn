@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/state_machines/State2.cs" id="4_ejttx"]
 [ext_resource type="Script" path="res://scripts/state_machines/State3.cs" id="5_5567a"]
 [ext_resource type="Script" path="res://scripts/state_machines/State4.cs" id="6_jf3wf"]
-[ext_resource type="Script" path="res://scenes/entities/State5.cs" id="7_j1vah"]
+[ext_resource type="Script" path="res://scripts/state_machines/State5.cs" id="7_ekc10"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_02dnb"]
 
@@ -44,14 +44,14 @@ one_shot = true
 script = ExtResource("6_jf3wf")
 
 [node name="HerdState" type="Node3D" parent="StateMachine"]
-script = ExtResource("7_j1vah")
+script = ExtResource("7_ekc10")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
-[node name="HerdDetection" type="Area3D" parent="."]
+[node name="HerdDetection" type="Area3D" parent="." groups=["Herd"]]
 transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 1, 0)
-collision_layer = 256
-collision_mask = 256
+collision_layer = 257
+collision_mask = 257
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HerdDetection"]
 shape = SubResource("SphereShape3D_02dnb")

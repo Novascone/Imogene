@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://duhfcpjc5nswd"]
+
+[ext_resource type="Script" path="res://scripts/CameraRig.cs" id="1_2lyyp"]
+[ext_resource type="PackedScene" uid="uid://cd6cqravba4bt" path="res://scenes/entities/herd_enemy.tscn" id="2_js8kw"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_llvl6"]
+vertices = PackedVector3Array(-8.95438, 0.408188, -6.05074, -8.95438, 0.408188, 5.94926, 9.04562, 0.408188, 5.94926, 9.04562, 0.408188, -6.05074)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qeru"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aldre"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1hn72"]
+
+[sub_resource type="Sky" id="Sky_vroqb"]
+sky_material = SubResource("ProceduralSkyMaterial_1hn72")
+
+[sub_resource type="Environment" id="Environment_ri8io"]
+background_mode = 2
+sky = SubResource("Sky_vroqb")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ox4qv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4m466"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qey6k"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(7.63414, 0, 0, 0, 1, 0, 0, 0, 8.84803, 0, 0, 0)
+navigation_mesh = SubResource("NavigationMesh_llvl6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(18.9088, 0, 0, 0, 0.183625, 0, 0, 0, 13.1015, 0, 0, 0)
+mesh = SubResource("BoxMesh_4qeru")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_aldre")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ri8io")
+
+[node name="CameraRig" type="Node3D" parent="."]
+transform = Transform3D(1.0002, 0, 0, 0, 1.0002, 0, 0, 0, 1.0002, 0, 0, 0)
+script = ExtResource("1_2lyyp")
+
+[node name="Camera" type="Camera3D" parent="CameraRig" groups=["Camera"]]
+transform = Transform3D(-0.865852, -0.288872, 0.407987, 0, 0.815974, 0.577743, -0.4999, 0.50034, -0.706654, 48.3854, 60.5509, -61.0768)
+projection = 1
+size = 75.0
+
+[node name="Herd1" parent="." instance=ExtResource("2_js8kw")]
+transform = Transform3D(1.00171, 0, 0, 0, 1.00171, 0, 0, 0, 1.00171, -34.8618, 0, -2.84781)
+
+[node name="InterestPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.9551, 0, -33.4165)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InterestPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.60951, 0)
+mesh = SubResource("SphereMesh_ox4qv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="InterestPoint/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InterestPoint/MeshInstance3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_4m466")
+
+[node name="Area3D" type="Area3D" parent="InterestPoint/MeshInstance3D" groups=["InterestPoint"]]
+transform = Transform3D(150, 0, 0, 0, 150, 0, 0, 0, 150, 0, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InterestPoint/MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_qey6k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852182, -0.348481, 0.390317, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.905882, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 1.09
+shadow_enabled = true
+sky_mode = 1
+
+[node name="Herd2" parent="." instance=ExtResource("2_js8kw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6832, 0, -35.9821)
