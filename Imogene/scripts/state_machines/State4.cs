@@ -15,48 +15,50 @@ public partial class State4 : State
     public override void _PhysicsProcess(double delta)
     {
 		// GD.Print("chosen dir " + entity.chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
-		
-        if(entity.switch_to_state2)
-        {
-            Exit("State2");
-        }
-
-        if(entity != null)
-        {
-			Array.Resize(ref interest_away_from_object, entity.num_rays);
-			Array.Resize(ref interest_to_center, entity.num_rays);
-			if(entity.running_away_from_chaser == true) // If the entity can see the box calculate the interest for moving away from it
+		if(entity != null)
+		{
+			if(entity.switch_to_state2)
 			{
-				SetInterestAwayFromObject();
+				Exit("State2");
 			}
-			else // If the entity can't see the box remove the interest in moving away from it
+
+			if(entity != null)
 			{
-				for(int i = 0; i < entity.num_rays; i++)
+				Array.Resize(ref interest_away_from_object, entity.num_rays);
+				Array.Resize(ref interest_to_center, entity.num_rays);
+				if(entity.running_away_from_chaser == true) // If the entity can see the box calculate the interest for moving away from it
 				{
-					interest_away_from_object[i] = 0;
+					SetInterestAwayFromObject();
+				}
+				else // If the entity can't see the box remove the interest in moving away from it
+				{
+					for(int i = 0; i < entity.num_rays; i++)
+					{
+						interest_away_from_object[i] = 0;
+					}
+					
+				}
+				if(entity.GlobalPosition.DistanceTo(entity.center_position) < 2)
+				{
+					GD.Print("distance less than 2");
+					for(int i = 0; i < entity.num_rays; i++)
+					{
+						interest_to_center[i] = 0;
+					}
 				}
 				
+				SetInterestToCenter();
+				// CombineInterests();
+				SetDanger();
+				ChooseDirection();
+				GD.Print("Distance to center " + entity.GlobalPosition.DistanceTo(entity.center_position));
 			}
-			if(entity.GlobalPosition.DistanceTo(entity.center_position) < 2)
-			{
-				GD.Print("distance less than 2");
-				for(int i = 0; i < entity.num_rays; i++)
-				{
-					interest_to_center[i] = 0;
-				}
-			}
-            
-			SetInterestToCenter();
-			// CombineInterests();
-            SetDanger();
-            ChooseDirection();
-			GD.Print("Distance to center " + entity.GlobalPosition.DistanceTo(entity.center_position));
-        }
+	  }
     }
 
     public override  void Enter()
     {
-        entity = fsm.this_entity;
+        entity = fsm.this_entity_context;
         GD.Print("Hello from state 4 (multiple interests state)");
 
         // SceneTreeTimer timer = GetTree().CreateTimer(2.0);

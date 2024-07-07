@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 
 public partial class ContextSteering : CharacterBody3D
 {
@@ -52,6 +53,8 @@ public partial class ContextSteering : CharacterBody3D
 	public MeshInstance3D direction_moving_line;
 	public StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
 
+	public string type = "ContextTester";
+
 
 	Entity entity;
 
@@ -85,7 +88,7 @@ public partial class ContextSteering : CharacterBody3D
 
 		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		state_machine = GetNode<StateMachine>("StateMachine");
-		state_machine.GetEntityInfo(this);
+		state_machine.GetEntityInfoContextTest(this);
 
 		detection_area = GetNode<Area3D>("DetectionArea");
 		detection_area.BodyEntered += OnDetectionBodyEntered;

@@ -6,28 +6,38 @@ using System.Collections.Generic;
 
 public partial class Enemy : Entity
 {
-	public enum States 
-	{
-		Chasing,
-		Attacking,
-		Waiting,
-		Dead
-	}
+	
 
-	public States currentState;
+	
+
+	[Export] public int max_speed = 4; // How fast the entity will move 
+	[Export] public float steer_force = 0.02f; // How fast the entity turns
+	[Export] public int look_ahead = 5; // How far the rays will project
+	[Export] public int direction_lines_mag = 5;
+	[Export] public int direction_line_mag = 7;
+	[Export] public int num_rays = 16;
+
+	public Vector3[] ray_directions; // Directions the rays will be cast in
+	public float[] interest; // Interest weight, how interested the entity is in moving toward a location
+	public float[] danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
+
 
 	// Mob variables
 	private bool playerInAlert = false; 
 	private float attack_dist = 2.5f;
 	private Label3D damage_label; 
 	private AnimationPlayer damage_numbers;
-	private Area3D alert;
+	private Area3D alert_area;
+
+	public Node3D collider;
+
+	
 
 	// Enemy animation
 	private AnimationTree tree;
 
 	// Navigation variables
-	public NavigationAgent3D NavigationAgent; 
+	public NavigationAgent3D navigation_agent; 
 	private List<Marker3D> waypoints = new List<Marker3D>(); 
 	private int waypointIndex; 
 
@@ -46,6 +56,19 @@ public partial class Enemy : Entity
 	public TextureProgressBar posture_bar;
 	public Sprite3D status_bar;
 	public Sprite3D target_icon;
+
+	public Node3D ray_position; // Position rays are cast from
+	public Vector3 ray_origin;
+	public MeshInstance3D collision_lines;
+	public StandardMaterial3D collision_lines_material = new StandardMaterial3D();
+	public MeshInstance3D ray_lines;
+	public StandardMaterial3D ray_lines_material = new StandardMaterial3D();
+	public MeshInstance3D direction_lines;
+	public StandardMaterial3D direction_line_material = new StandardMaterial3D();
+	public MeshInstance3D direction_moving_line;
+	public StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
+
+	public StateMachine state_machine;
 	
 
 
@@ -76,18 +99,24 @@ public partial class Enemy : Entity
 		statController.GetEntityInfo(this);
 		statController.UpdateStats();
 		GD.Print("Posture Regen " + posture_regen);
-		// hurtbox = (Area3D)GetNode("Hurtbox");
-		// hurtbox.AreaEntered += OnHurtboxEntered;
-		// hitbox = (Area3D)GetNode("Skeleton3D/BoneAttachment3D/Hitbox");
-		// hitbox.AreaEntered += OnHitboxEntered;
 
-		NavigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		ray_position = GetNode<Node3D>("RayPosition");
+		tree = GetNode<AnimationTree>("AnimationTree");
+		collision_lines = GetNode<MeshInstance3D>("CollisionLines");
+		ray_lines = GetNode<MeshInstance3D>("RayLines");
+		direction_lines = GetNode<MeshInstance3D>("DirectionLines");
+		direction_moving_line = GetNode<MeshInstance3D>("DirectionMovingLine");
 
-		alert = (Area3D)GetNode("Alert");
-		alert.AreaEntered += OnAlertEntered;
-		alert.AreaExited += OnAlertExited;
+		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		state_machine = GetNode<StateMachine>("StateMachine");
+		state_machine.GetEntityInfo(this);
 
-		currentState = States.Waiting;
+		alert_area = GetNode<Area3D>("Alert");
+		alert_area.BodyEntered += OnAlertAreaBodyEntered;
+		alert_area.AreaEntered += OnAlertAreaEntered;
+		alert_area.BodyExited += OnAlertAreaBodyExited;
+	
+
 
 		tree = GetNode<AnimationTree>("AnimationTree");
 
@@ -95,9 +124,6 @@ public partial class Enemy : Entity
 		damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.EnemyPosition += HandleEnemyPosition;
-		_customSignals.PlayerPosition += HandlePlayerPosition;
-		_customSignals.CameraPosition += HandleCameraPosition;
 		_customSignals.EnemyTargetedUI += HandleEnemyTargetedUI;
 		_customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;		
 	}
@@ -119,111 +145,87 @@ public partial class Enemy : Entity
 	{
 		// GD.Print("Max Health " + maximum_health);
 		// GD.Print("Health " + health);
+
+		ray_origin = ray_position.GlobalPosition;
+		var direction = Vector3.Zero;
+		if(collision_lines.Mesh is ImmediateMesh collision_lines_mesh)
+		{
+			collision_lines_mesh.ClearSurfaces();
+		}
+		if(ray_lines.Mesh is ImmediateMesh ray_lines_mesh)
+		{
+			ray_lines_mesh.ClearSurfaces();
+		}
+		if(direction_lines.Mesh is ImmediateMesh direction_lines_mesh)
+		{
+			direction_lines_mesh.ClearSurfaces();
+		}
+		if(direction_moving_line.Mesh is ImmediateMesh direction_moving_line_mesh)
+		{
+			direction_moving_line_mesh.ClearSurfaces();
+		}
 	
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
 		// GD.Print(currentState);
-		damage_label.LookAt(camera_position,Vector3.Up,true); 
-		if(dead)
-		{
-			currentState = States.Dead;
-		}
-		switch (currentState)
-		{
 		
-			case States.Chasing: 
 
-				// comment/ uncomment to get enemy to chase
-
-				attacking = false;
-				if(can_move)
-				{
-					NavigationAgent.TargetPosition = player_position; 
-					var targetPos = NavigationAgent.GetNextPathPosition();
-					var direction = GlobalPosition.DirectionTo(targetPos);
-					blend_direction.Y = 1; // Sets animation to walk
-					Velocity = direction * speed;
-					if (!GlobalTransform.Origin.IsEqualApprox(player_position))
-					{
-						LookAt(player_position with {Y = GlobalPosition.Y}); 
-					}
-					tree.Set("parameters/IW/blend_position", blend_direction);
-					tree.Set("parameters/conditions/attacking", attacking);
-					MoveAndSlide();
-					if(distance_to_player < attack_dist && playerInAlert)
-					{
-						currentState = States.Attacking;
-						return;
-					}
-					else if(!playerInAlert)
-					{
-						blend_direction.Y = 0;
-						tree.Set("parameters/IW/blend_position", blend_direction);
-						currentState = States.Waiting;
-					}
-				}
-				else
-				{
-					tree.Set("parameters/IW/blend_position", Vector2.Zero);
-					tree.Set("parameters/conditions/attacking", false);
-				}
-				
-				break;
-			case States.Attacking:
-				// hitbox.AddToGroup("enemy_hitbox");
-				// attacking = true;
-				// hitbox.Monitoring = true;
-				tree.Set("parameters/conditions/attacking", attacking);
-				if(distance_to_player > attack_dist && playerInAlert)
-				{
-					currentState = States.Chasing;
-				}
-				break;
-			case States.Waiting:
-				break;
-			case States.Dead:
-				can_move = false;
-				tree.Set("parameters/conditions/dead", dead);
-				health = 0;
-				break;
-			default:
-				break;
-		}
-		
 	}
 
 	
 
 
-	 private void OnAlertEntered(Area3D area) 
+	private void OnAlertAreaEntered(Area3D area) 
     {
 		if(area.IsInGroup("player")) 
 		{
-			currentState = States.Chasing;
+			// currentState = States.Chasing;
+			playerInAlert = true;
+			// GD.Print("Player Entered Alert");
+		}
+
+		// if(area.IsInGroup("RotateBox"))
+		// {
+		// 	GD.Print("In contact with rotate box");
+		// 	entity_in_detection = true;
+		// 	box_position = area.GlobalPosition;
+		// }
+		// if(area.IsInGroup("Center"))
+		// {
+		// 	GD.Print("within range of center");
+		// 	can_see_center = true;
+		// 	center_position = area.GlobalPosition with {Y = 0};
+		// 	GD.Print(center_position);
+		// }
+		// if(area.IsInGroup("InterestPoint"))
+		// {
+		// 	GD.Print("within range of interest position");
+		// 	interest_position = area.GlobalPosition with {Y = 0};
+		// 	GD.Print(interest_position);
+		// }
+    }
+
+	private void OnAlertAreaBodyEntered(Node3D body) 
+    {
+		if(body.IsInGroup("player")) 
+		{
+			// currentState = States.Chasing;
 			playerInAlert = true;
 			// GD.Print("Player Entered Alert");
 		}
     }
 
-	private void OnAlertExited(Area3D area)
+	private void OnAlertAreaBodyExited(Node3D body)
     {
-		if(area.IsInGroup("player"))
+		if(body.IsInGroup("player"))
 		{
 			playerInAlert = false;
 		}
         
     }
 
-	private void HandleEnemyPosition(Vector3 position){}
+	
 
-	private void HandlePlayerPosition(Vector3 position) 
-	{
-       player_position = position;
-    }
-
-	private void HandleCameraPosition(Vector3 position)
-    {
-		camera_position = position;
-    }
+	
 }

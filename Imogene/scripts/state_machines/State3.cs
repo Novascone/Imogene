@@ -15,22 +15,25 @@ public partial class State3: State
   
     public override void _PhysicsProcess(double delta)
     {
-        if(entity.switch_to_state2)
-        {
-            Exit("State2");
-        }
-
         if(entity != null)
         {
-            SetInterest();
-            SetDanger();
-            ChooseDirection();
+            if(entity.switch_to_state2)
+            {
+                Exit("State2");
+            }
+
+            if(entity != null)
+            {
+                SetInterest();
+                SetDanger();
+                ChooseDirection();
+            }
         }
     }
 
     public override  void Enter()
     {
-        entity = fsm.this_entity;
+        entity = fsm.this_entity_context;
        circle_timer.Start();
         GD.Print("Hello from state 3 (circle state)");
 

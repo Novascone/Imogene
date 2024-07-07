@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://duhfcpjc5nswd"]
+[gd_scene load_steps=12 format=3 uid="uid://city4owfc4mdq"]
 
 [ext_resource type="Script" path="res://scripts/CameraRig.cs" id="1_2lyyp"]
 [ext_resource type="PackedScene" uid="uid://cd6cqravba4bt" path="res://scenes/entities/herd_enemy.tscn" id="2_js8kw"]
@@ -86,3 +86,6 @@ sky_mode = 1
 
 [node name="Herd2" parent="." instance=ExtResource("2_js8kw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6832, 0, -35.9821)
+
+[node name="Herd3" parent="." instance=ExtResource("2_js8kw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6832, 0, 26.8692)

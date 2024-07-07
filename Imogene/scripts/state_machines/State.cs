@@ -7,6 +7,7 @@ public partial class State : Node3D
 	public StateMachine fsm;
 	public string name;
 	public ContextSteering entity;
+	public Entity real_entity;
 	public Vector3 target_position_1;
 	public Vector3 target_position_2;
 	public Node3D collider;

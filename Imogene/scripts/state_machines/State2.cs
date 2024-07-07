@@ -15,23 +15,37 @@ public partial class State2 : State
    
    public override void _PhysicsProcess(double delta)
    {
-     
-      if(entity.entity_in_detection)
-      {
-         Exit("State3");
-      }
       if(entity != null)
       {
-         SetInterest();
-         SetDanger();
-         ChooseDirection();
+         if(entity.entity_in_detection)
+         {
+            Exit("State3");
+         }
+         if(real_entity == null)
+         {
+            
+            SetInterest();
+            SetDanger();
+            ChooseDirection();
+         }
       }
+     
+      
    }
 
       public override  void Enter()
    {
-      entity = fsm.this_entity;
-      SetInterest();
+      entity = fsm.this_entity_context;
+      if(real_entity == null)
+      {
+         
+      }
+      else
+      {
+         GD.Print("real entity " + real_entity.Name);
+         SetInterest();
+      }
+      
       GD.Print("Hello from state 2 (forward state)");
       
       // SceneTreeTimer timer = GetTree().CreateTimer(2.0);

@@ -17,6 +17,8 @@ public partial class State5 : State
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if(entity != null)
+      {
 		 if(entity.switch_to_state2)
         {
             Exit("State2");
@@ -60,11 +62,12 @@ public partial class State5 : State
             ChooseDirection();
 			
         }
+	  }
 	}
 
 	public override  void Enter()
     {
-        entity = fsm.this_entity;
+        entity = fsm.this_entity_context;
         GD.Print("Hello from state 5 (Herd interest state)");
 
         // SceneTreeTimer timer = GetTree().CreateTimer(2.0);

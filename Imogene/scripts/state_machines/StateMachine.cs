@@ -6,7 +6,8 @@ using System.Linq;
 public partial class StateMachine : Node3D
 {
 	public State current_state;
-	public ContextSteering this_entity;
+	public Entity this_entity;
+	public ContextSteering this_entity_context;
 	public List<string> history = new List<string>();
 	public Dictionary<string, State> states = new Dictionary<string, State>();
 	// Called when the node enters the scene tree for the first time.
@@ -55,9 +56,14 @@ public partial class StateMachine : Node3D
 		current_state.Enter();
 	}
 	
-	public void GetEntityInfo(ContextSteering s)
+	public void GetEntityInfo(Entity s)
 	{
 		this_entity = s;
+	}
+
+	public void GetEntityInfoContextTest(ContextSteering s)
+	{
+		this_entity_context = s;
 	}
 	
 }
