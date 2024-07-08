@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://b7ghvhmya5jm0"]
 
-[ext_resource type="Script" path="res://scripts/entities/Enemy.cs" id="1_m5wjv"]
+[ext_resource type="Script" path="res://scripts/entities/HerdEnemy.cs" id="1_gffy5"]
 [ext_resource type="Script" path="res://scripts/state_machines/StateMachine.cs" id="2_eatk5"]
 [ext_resource type="Script" path="res://scripts/state_machines/State1.cs" id="3_sw184"]
 [ext_resource type="Script" path="res://scripts/state_machines/State2.cs" id="4_j11uu"]
@@ -47,7 +47,7 @@ viewport_path = NodePath("Armature/TargetIconViewport")
 [node name="Herd" type="Node3D"]
 
 [node name="Armature" type="CharacterBody3D" parent="."]
-script = ExtResource("1_m5wjv")
+script = ExtResource("1_gffy5")
 
 [node name="StateMachine" type="Node3D" parent="Armature"]
 script = ExtResource("2_eatk5")
@@ -460,7 +460,7 @@ bones/44/rotation = Quaternion(0.0619537, 0, 0.998079, 0)
 bones/44/scale = Vector3(1, 1, 1)
 
 [node name="MainHand" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.385133, -0.0476125, 0.921632, 0.134379, -0.990917, 0.0049628, 0.913025, 0.12576, 0.388033, 0.837869, 2.33638, 0.0820064)
+transform = Transform3D(-0.385133, -0.0476117, 0.921632, 0.134379, -0.990918, 0.00496355, 0.913025, 0.12576, 0.388033, 0.837868, 2.33638, 0.0820064)
 bone_name = "hand.L"
 bone_idx = 17
 

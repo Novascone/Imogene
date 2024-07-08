@@ -5,6 +5,7 @@ public partial class State4 : State
 {
 	public float[] interest_to_center; // Interest weight, how interested the entity is in moving toward a location
 	public float[] interest_away_from_object; // Interest weight, how interested the entity is in moving toward a location
+	private AvoidanceEnemy avoidance_enemy;
 	public override void _Ready()
 	{
         base._Ready();
@@ -24,7 +25,7 @@ public partial class State4 : State
 
 			Array.Resize(ref interest_away_from_object, enemy.num_rays);
 			Array.Resize(ref interest_to_center, enemy.num_rays);
-			if(enemy.running_away_from_chaser == true) // If the entity can see the box calculate the interest for moving away from it
+			if(avoidance_enemy.running_away_from_chaser == true) // If the entity can see the box calculate the interest for moving away from it
 			{
 				SetInterestAwayFromObject();
 			}
@@ -36,7 +37,7 @@ public partial class State4 : State
 				}
 				
 			}
-			if(entity.GlobalPosition.DistanceTo(enemy.center_position) < 2)
+			if(entity.GlobalPosition.DistanceTo(avoidance_enemy.center_position) < 2)
 			{
 				GD.Print("distance less than 2");
 				for(int i = 0; i < enemy.num_rays; i++)
@@ -49,7 +50,7 @@ public partial class State4 : State
 			// CombineInterests();
 			SetDanger();
 			ChooseDirection();
-			GD.Print("Distance to center " + entity.GlobalPosition.DistanceTo(enemy.center_position));
+			GD.Print("Distance to center " + entity.GlobalPosition.DistanceTo(avoidance_enemy.center_position));
 	  }
     }
 
@@ -57,9 +58,11 @@ public partial class State4 : State
     {
         entity = fsm.this_entity;
 
-		if (entity is Enemy this_enemy)
+		if (entity is AvoidanceEnemy this_enemy)
 		{
 			enemy = this_enemy;
+			avoidance_enemy = this_enemy;
+			GD.Print("Avoidance enemy");
 		}
 
     	GD.Print("Hello from state 4 (multiple interests state)");
@@ -73,7 +76,7 @@ public partial class State4 : State
 		GD.Print("Setting interest away from object");
         // entity.navigation_agent.TargetPosition = entity.box_position;
         // target_position = entity.navigation_agent.GetNextPathPosition();
-		target_position_2 = enemy.chaser.GlobalPosition;
+		target_position_2 = avoidance_enemy.chaser.GlobalPosition;
 
         for(int i = 0; i < enemy.num_rays; i++)
             {
@@ -92,7 +95,7 @@ public partial class State4 : State
     {
 		GD.Print("Setting interest to center");
         // entity.navigation_agent.TargetPosition = 
-        target_position_1 = enemy.center_position;
+        target_position_1 = avoidance_enemy.center_position;
 
         for(int i = 0; i < enemy.num_rays; i++)
             {

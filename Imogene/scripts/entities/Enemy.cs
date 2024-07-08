@@ -22,7 +22,7 @@ public partial class Enemy : Entity
 	public float[] danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
 
 	// Movement variables
-	private Vector3 _targetVelocity = Vector3.Zero;
+	public Vector3 _targetVelocity = Vector3.Zero;
 	[Export] public int FallAcceleration { get; set; } = 75;
 	public Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
 
@@ -33,7 +33,7 @@ public partial class Enemy : Entity
 	private float attack_dist = 2.5f;
 	private Label3D damage_label; 
 	private AnimationPlayer damage_numbers;
-	private Area3D alert_area;
+	public Area3D alert_area;
 	private Area3D herd_area;
 
 	public Node3D collider;
@@ -100,10 +100,7 @@ public partial class Enemy : Entity
 	
 
 	// Multiple interests variables
-	public bool running_away_from_chaser;
-	public Vector3 center_position;
-	public Node3D chaser;
-
+	
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -256,22 +253,7 @@ public partial class Enemy : Entity
 		SmoothRotation();
 		LookAtOver();
 
-		if(chaser != null) 
-		{
-			if(GlobalPosition.DistanceTo(chaser.GlobalPosition) < 5)
-			{
-				running_away_from_chaser = true;
-				max_speed = 8;
-				
-			}
-			else if (GlobalPosition.DistanceTo(chaser.GlobalPosition) > 15)
-			{
-				running_away_from_chaser = false;
-				max_speed = 4;
-			
-			}
-			GD.Print("Distance from chaser " + GlobalPosition.DistanceTo(chaser.GlobalPosition));
-		}
+		
 		if(herd_mate != null) 
 		{
 			herd_mate_position = herd_mate.GlobalPosition;
@@ -295,17 +277,14 @@ public partial class Enemy : Entity
 		// GD.Print("running away from chaser " + running_away_from_chaser);
 		// GD.Print("can see center " + can_see_center);
 
-		if(can_see_center && GlobalPosition.DistanceTo(center_position) < 2 && !running_away_from_chaser) // If the entity is under the center stop moving
-		{
-			GD.Print("Stop moving");
-			_targetVelocity = Vector3.Zero;
-			Velocity = _targetVelocity;
-		}
-		else
+		
+		if(this is not AvoidanceEnemy)
 		{
 			_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
 			Velocity = Velocity.Lerp(_targetVelocity, steer_force);
 		}
+		
+		
 		
 		// _targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
 		// Velocity = Velocity.Lerp(_targetVelocity, steer_force);
@@ -380,7 +359,7 @@ public partial class Enemy : Entity
 	
 
 
-	private void OnAlertAreaEntered(Area3D area) 
+	virtual public void OnAlertAreaEntered(Area3D area) 
     {
 		if(area.IsInGroup("player")) 
 		{
@@ -395,13 +374,6 @@ public partial class Enemy : Entity
 			entity_in_alert_area = true;
 			box_position = area.GlobalPosition;
 		}
-		if(area.IsInGroup("Center"))
-		{
-			GD.Print("within range of center");
-			can_see_center = true;
-			center_position = area.GlobalPosition with {Y = 0};
-			GD.Print(center_position);
-		}
 		if(area.IsInGroup("InterestPoint"))
 		{
 			GD.Print("within range of interest position");
@@ -411,7 +383,7 @@ public partial class Enemy : Entity
 		
     }
 
-	private void OnAlertAreaBodyEntered(Node3D body) 
+	virtual public void OnAlertAreaBodyEntered(Node3D body) 
     {
 		if(body.IsInGroup("player")) 
 		{
@@ -421,22 +393,16 @@ public partial class Enemy : Entity
 		}
 		
     }
-
-	private void OnAlertAreaBodyExited(Node3D body)
+	
+	virtual public void OnAlertAreaBodyExited(Node3D body)
     {
 		if(body.IsInGroup("player"))
 		{
 			playerInAlert = false;
 		}
-		if(body is Chaser chaser_entered )
-		{
-			GD.Print("Chaser in detection");
-			chaser = chaser_entered;
-		}
-        
     }
 
-	private void OnHerdDetectionExited(Area3D area)
+	virtual public void OnHerdDetectionExited(Area3D area)
     {
         if(area.IsInGroup("Herd"))
 		{
@@ -446,7 +412,7 @@ public partial class Enemy : Entity
 		}
     }
 
-    private void OnHerdDetectionEntered(Area3D area)
+    virtual public void OnHerdDetectionEntered(Area3D area)
     {
         if(area.IsInGroup("Herd"))
 		{
@@ -456,7 +422,7 @@ public partial class Enemy : Entity
 		}
     }
 
-	private void OnHerdBodyEntered(Node3D body)
+	virtual public void OnHerdBodyEntered(Node3D body)
     {
 		
         if(body is Enemy herd_entity && body.GetParent().Name != GetParent().Name)
