@@ -6,8 +6,9 @@ public partial class State : Node3D
 {
 	public StateMachine fsm;
 	public string name;
-	public ContextSteering entity;
-	public Entity real_entity;
+	// public ContextSteering entity;
+	public Entity entity;
+	public Enemy enemy;
 	public Vector3 target_position_1;
 	public Vector3 target_position_2;
 	public Node3D collider;
@@ -49,9 +50,13 @@ public partial class State : Node3D
 		fsm.ChangeTo(next_state);
 	}
 
-	public void GetEntityInfo(ContextSteering s)
+	public void GetEntityInfo(Entity s)
 	{
 		entity = s;
+		if(entity is Enemy es)
+		{
+			enemy = es;
+		}
 	}
 
 

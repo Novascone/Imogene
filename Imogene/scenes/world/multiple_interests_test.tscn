@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://bhen6dwnykdg2"]
 
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="1_0w2jw"]
-[ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/entities/enemy_context_steering.tscn" id="2_x5xk6"]
+[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="3_fwpve"]
 [ext_resource type="Script" path="res://scripts/test/Chaser.cs" id="3_puugv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_hk1iy"]
@@ -94,9 +94,6 @@ collision_mask = 256
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Center/MeshInstance3D/Area3D"]
 shape = SubResource("SphereShape3D_j5o38")
-
-[node name="enemy" parent="." instance=ExtResource("2_x5xk6")]
-transform = Transform3D(0.0795726, 0, -0.996829, 0, 1, 0, 0.996829, 0, 0.0795726, -28.972, 0, -7.75735)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59.7906)
@@ -217,3 +214,12 @@ collision_mask = 384
 shape = SubResource("SphereShape3D_ngb1j")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Chaser"]
+
+[node name="enemy" parent="." instance=ExtResource("3_fwpve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5598, 0, 8.85785)
+
+[node name="Camera" type="Camera3D" parent="." groups=["Camera"]]
+transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577857, -0.5, 0.500439, -0.706796, 20.3343, 40.285, -34.6774)
+projection = 1
+size = 60.0
+far = 100.0

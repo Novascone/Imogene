@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://coht5bdngj0g"]
 
-[ext_resource type="PackedScene" uid="uid://cu1lm7lsgtln6" path="res://scenes/entities/enemy_context_steering.tscn" id="1_gaxd5"]
+[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="2_hemi8"]
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="2_jpjfx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2tlhh"]
@@ -43,9 +43,6 @@ input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
 shape = SubResource("BoxShape3D_113fl")
-
-[node name="enemy" parent="." instance=ExtResource("1_gaxd5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99903, 0, 2.7045)
 
 [node name="Box" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -8.60541, 1.85571, -17.0465)
@@ -133,3 +130,12 @@ light_energy = 0.25
 light_volumetric_fog_energy = 1.09
 shadow_enabled = true
 sky_mode = 1
+
+[node name="Camera" type="Camera3D" parent="." groups=["Camera"]]
+transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577857, -0.5, 0.500439, -0.706796, 16.2417, 40.285, -87.2619)
+projection = 1
+size = 60.0
+far = 100.0
+
+[node name="enemy2" parent="." instance=ExtResource("2_hemi8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.87219, 0, 6.10594)

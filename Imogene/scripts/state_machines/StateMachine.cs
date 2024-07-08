@@ -7,7 +7,7 @@ public partial class StateMachine : Node3D
 {
 	public State current_state;
 	public Entity this_entity;
-	public ContextSteering this_entity_context;
+	// public ContextSteering this_entity_context;
 	public List<string> history = new List<string>();
 	public Dictionary<string, State> states = new Dictionary<string, State>();
 	// Called when the node enters the scene tree for the first time.
@@ -61,9 +61,9 @@ public partial class StateMachine : Node3D
 		this_entity = s;
 	}
 
-	public void GetEntityInfoContextTest(ContextSteering s)
-	{
-		this_entity_context = s;
-	}
+	// public void GetEntityInfoContextTest(ContextSteering s)
+	// {
+	// 	this_entity_context = s;
+	// }
 	
 }

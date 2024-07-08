@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection.Metadata;
 
+// *********************************************** This is a preliminary script that is being adapted into the Enemy class ************************************************************************************
+
 public partial class ContextSteering : CharacterBody3D
 {
 
@@ -88,7 +90,7 @@ public partial class ContextSteering : CharacterBody3D
 
 		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		state_machine = GetNode<StateMachine>("StateMachine");
-		state_machine.GetEntityInfoContextTest(this);
+		// state_machine.GetEntityInfoContextTest(this);
 
 		detection_area = GetNode<Area3D>("DetectionArea");
 		detection_area.BodyEntered += OnDetectionBodyEntered;
