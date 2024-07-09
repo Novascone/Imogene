@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://coht5bdngj0g"]
 
-[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="2_hemi8"]
+[ext_resource type="PackedScene" uid="uid://xqk3gj8dodrq" path="res://scenes/entities/circling_enemy.tscn" id="2_a62pt"]
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="2_jpjfx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2tlhh"]
@@ -137,5 +137,5 @@ projection = 1
 size = 60.0
 far = 100.0
 
-[node name="enemy2" parent="." instance=ExtResource("2_hemi8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.87219, 0, 6.10594)
+[node name="CirclingEnemy" parent="." instance=ExtResource("2_a62pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)

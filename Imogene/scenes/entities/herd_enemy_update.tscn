@@ -1,12 +1,12 @@
 [gd_scene load_steps=27 format=3 uid="uid://b7ghvhmya5jm0"]
 
-[ext_resource type="Script" path="res://scripts/entities/HerdEnemy.cs" id="1_gffy5"]
+[ext_resource type="Script" path="res://scripts/entities/enemies/HerdEnemy.cs" id="1_gffy5"]
 [ext_resource type="Script" path="res://scripts/state_machines/StateMachine.cs" id="2_eatk5"]
-[ext_resource type="Script" path="res://scripts/state_machines/State1.cs" id="3_sw184"]
-[ext_resource type="Script" path="res://scripts/state_machines/State2.cs" id="4_j11uu"]
-[ext_resource type="Script" path="res://scripts/state_machines/State3.cs" id="5_ynnpr"]
-[ext_resource type="Script" path="res://scripts/state_machines/State4.cs" id="6_nubje"]
-[ext_resource type="Script" path="res://scripts/state_machines/State5.cs" id="7_4bu8q"]
+[ext_resource type="Script" path="res://scripts/state_machines/InitialState.cs" id="3_51we4"]
+[ext_resource type="Script" path="res://scripts/state_machines/ForwardState.cs" id="4_5v22m"]
+[ext_resource type="Script" path="res://scripts/state_machines/CircleState.cs" id="5_mw4mt"]
+[ext_resource type="Script" path="res://scripts/state_machines/AvoidanceInterestsState.cs" id="6_pbvqu"]
+[ext_resource type="Script" path="res://scripts/state_machines/HerdState.cs" id="7_iko6m"]
 [ext_resource type="Script" path="res://scripts/systems/DamageSystem.cs" id="8_jnuns"]
 [ext_resource type="Script" path="res://scripts/systems/ResourceSystem.cs" id="9_n4qvu"]
 [ext_resource type="Script" path="res://scripts/stats/StatController.cs" id="10_cdcvs"]
@@ -44,7 +44,7 @@ viewport_path = NodePath("Armature/HealthBarViewport")
 [sub_resource type="ViewportTexture" id="ViewportTexture_1y573"]
 viewport_path = NodePath("Armature/TargetIconViewport")
 
-[node name="Herd" type="Node3D"]
+[node name="HerdEnemy" type="Node3D"]
 
 [node name="Armature" type="CharacterBody3D" parent="."]
 script = ExtResource("1_gffy5")
@@ -52,24 +52,24 @@ script = ExtResource("1_gffy5")
 [node name="StateMachine" type="Node3D" parent="Armature"]
 script = ExtResource("2_eatk5")
 
-[node name="State1" type="Node3D" parent="Armature/StateMachine"]
-script = ExtResource("3_sw184")
+[node name="InitialState" type="Node3D" parent="Armature/StateMachine"]
+script = ExtResource("3_51we4")
 
-[node name="State2" type="Node3D" parent="Armature/StateMachine"]
-script = ExtResource("4_j11uu")
+[node name="ForwardState" type="Node3D" parent="Armature/StateMachine"]
+script = ExtResource("4_5v22m")
 
-[node name="State3" type="Node3D" parent="Armature/StateMachine"]
-script = ExtResource("5_ynnpr")
+[node name="CircleState" type="Node3D" parent="Armature/StateMachine"]
+script = ExtResource("5_mw4mt")
 
-[node name="CircleTimer" type="Timer" parent="Armature/StateMachine/State3"]
+[node name="CircleTimer" type="Timer" parent="Armature/StateMachine/CircleState"]
 wait_time = 4.0
 one_shot = true
 
-[node name="CombineInterestTestState" type="Node3D" parent="Armature/StateMachine"]
-script = ExtResource("6_nubje")
+[node name="AvoidanceInterestsState" type="Node3D" parent="Armature/StateMachine"]
+script = ExtResource("6_pbvqu")
 
 [node name="HerdState" type="Node3D" parent="Armature/StateMachine"]
-script = ExtResource("7_4bu8q")
+script = ExtResource("7_iko6m")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Armature"]
 
@@ -565,4 +565,4 @@ billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_1y573")
 
-[connection signal="timeout" from="Armature/StateMachine/State3/CircleTimer" to="Armature/StateMachine/State3" method="_on_circle_timer_timeout"]
+[connection signal="timeout" from="Armature/StateMachine/CircleState/CircleTimer" to="Armature/StateMachine/CircleState" method="_on_circle_timer_timeout"]

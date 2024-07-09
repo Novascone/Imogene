@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://cd6cqravba4bt"]
 
-[ext_resource type="Script" path="res://scripts/entities/Enemy.cs" id="1_f8mkv"]
+[ext_resource type="Script" path="res://scripts/entities/enemies/Enemy.cs" id="1_f8mkv"]
 [ext_resource type="Script" path="res://scripts/state_machines/StateMachine.cs" id="2_sj7gg"]
 [ext_resource type="Script" path="res://scripts/state_machines/State1.cs" id="3_v667a"]
 [ext_resource type="Script" path="res://scripts/state_machines/State2.cs" id="4_ejttx"]
