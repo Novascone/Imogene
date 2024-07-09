@@ -89,11 +89,11 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
-		statController = GetNode<StatController>("StatController");
-		health_bar = GetNode<ProgressBar>("HealthBarViewport/VBoxContainer/ProgressBar");
-		posture_bar = GetNode<TextureProgressBar>("HealthBarViewport/VBoxContainer/TextureProgressBar");
-		status_bar = GetNode<Sprite3D>("StatusBar");
-		target_icon = GetNode<Sprite3D>("TargetIcon");
+		statController = GetNode<StatController>("Controllers/StatController");
+		health_bar = GetNode<ProgressBar>("UI/HealthBarViewport/VBoxContainer/ProgressBar");
+		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarViewport/VBoxContainer/TextureProgressBar");
+		status_bar = GetNode<Sprite3D>("UI/StatusBar");
+		target_icon = GetNode<Sprite3D>("UI/TargetIcon");
 		maximum_health = health;
 		health_bar.MaxValue = health;
 		health_bar.Value = health;
@@ -112,18 +112,20 @@ public partial class Enemy : Entity
 		statController.UpdateStats();
 		GD.Print("Posture Regen " + posture_regen);
 
-		ray_position = GetNode<Node3D>("RayPosition");
-		tree = GetNode<AnimationTree>("AnimationTree");
-		collision_lines = GetNode<MeshInstance3D>("CollisionLines");
-		ray_lines = GetNode<MeshInstance3D>("RayLines");
-		direction_lines = GetNode<MeshInstance3D>("DirectionLines");
-		direction_moving_line = GetNode<MeshInstance3D>("DirectionMovingLine");
+		ray_position = GetNode<Node3D>("Controllers/RayPosition");
+		tree = GetNode<AnimationTree>("Animation/AnimationTree");
+		collision_lines = GetNode<MeshInstance3D>("Debug/CollisionLines");
+		ray_lines = GetNode<MeshInstance3D>("Debug/RayLines");
+		direction_lines = GetNode<MeshInstance3D>("Debug/DirectionLines");
+		direction_moving_line = GetNode<MeshInstance3D>("Debug/DirectionMovingLine");
+
+		main_hand_hitbox = GetNode<Hitbox>("Armature/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 
 		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-		state_machine = GetNode<StateMachine>("StateMachine");
+		state_machine = GetNode<StateMachine>("Controllers/StateMachine");
 		state_machine.GetEntityInfo(this);
 
-		alert_area = GetNode<Area3D>("Alert");
+		alert_area = GetNode<Area3D>("Areas/Alert");
 		alert_area.BodyEntered += OnAlertAreaBodyEntered;
 		alert_area.AreaEntered += OnAlertAreaEntered;
 		alert_area.BodyExited += OnAlertAreaBodyExited;
@@ -141,12 +143,6 @@ public partial class Enemy : Entity
 			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
 			GD.Print(ray_directions[i]);
 		}
-
-		
-	
-
-
-		tree = GetNode<AnimationTree>("AnimationTree");
 
 		// damage_numbers = GetNode<AnimationPlayer>("Damage_Number_3D/AnimationPlayer");
 		// damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");

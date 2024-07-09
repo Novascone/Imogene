@@ -67,42 +67,42 @@ public partial class Player : PlayerEntity
 		camera_rig = GetNode<Node3D>("CameraRig");
 		camera_rig.TopLevel = true;
 
-		movementController = GetNode<MovementController>("MovementController");
-		abilityController = GetNode<AbilityController>("AbilityController");
-		statController = GetNode<StatController>("StatController");
-		equipmentController = GetNode<EquipmentController>("EquipmentController");
+		movementController = GetNode<MovementController>("Controllers/MovementController");
+		abilityController = GetNode<AbilityController>("Controllers/AbilityController");
+		statController = GetNode<StatController>("Controllers/StatController");
+		equipmentController = GetNode<EquipmentController>("Controllers/EquipmentController");
 
-		head_slot = GetNode<Node3D>("Skeleton3D/Head/HeadSlot");
+		head_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Head/HeadSlot");
 		helm = new MeshInstance3D();
-		shoulder_right_slot = GetNode<Node3D>("Skeleton3D/ShoulderRight/ShoulderRightSlot");
+		shoulder_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/ShoulderRight/ShoulderRightSlot");
 		shoulder_right = new MeshInstance3D();
-		shoulder_left_slot = GetNode<Node3D>("Skeleton3D/ShoulderLeft/ShoulderLeftSlot");
+		shoulder_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/ShoulderLeft/ShoulderLeftSlot");
 		shoulder_left = new MeshInstance3D();
-		chest_slot = GetNode<Node3D>("Skeleton3D/Chest/ChestSlot");
+		chest_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Chest/ChestSlot");
 		chest = new MeshInstance3D();
-		mark_slot = GetNode<Node3D>("Skeleton3D/Mark/MarkSlot");
+		mark_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Mark/MarkSlot");
 		mark = new MeshInstance3D();
-		belt_slot = GetNode<Node3D>("Skeleton3D/Belt/BeltSlot");
+		belt_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Belt/BeltSlot");
 		belt = new MeshInstance3D();
-		glove_right_slot = GetNode<Node3D>("Skeleton3D/GloveRight/GloveRightSlot");
+		glove_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/GloveRight/GloveRightSlot");
 		glove_right = new MeshInstance3D();
-		glove_left_slot = GetNode<Node3D>("Skeleton3D/GloveLeft/GloveLeftSlot");
+		glove_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/GloveLeft/GloveLeftSlot");
 		glove_left = new MeshInstance3D();
-		main_hand_slot = GetNode<Node3D>("Skeleton3D/MainHand/MainHandSlot");
+		main_hand_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot");
 		main_hand = new MeshInstance3D();
-		off_hand_slot = GetNode<Node3D>("Skeleton3D/OffHand/OffHandSlot");
+		off_hand_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/OffHand/OffHandSlot");
 		off_hand = new MeshInstance3D();
-		leg_right_slot = GetNode<Node3D>("Skeleton3D/LegRight/LegRightSlot");
+		leg_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/LegRight/LegRightSlot");
 		leg_right = new MeshInstance3D();
-		leg_left_slot = GetNode<Node3D>("Skeleton3D/LegLeft/LegLeftSlot");
+		leg_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/LegLeft/LegLeftSlot");
 		leg_left = new MeshInstance3D();
-		foot_right_slot = GetNode<Node3D>("Skeleton3D/FootRight/FootRightSlot");
+		foot_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootRight/FootRightSlot");
 		foot_right = new MeshInstance3D();
-		foot_left_slot = GetNode<Node3D>("Skeleton3D/FootLeft/FootLeftSlot");
+		foot_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootLeft/FootLeftSlot");
 		foot_left = new MeshInstance3D();
 
 
-		tree = GetNode<AnimationTree>("AnimationTree");
+		tree = GetNode<AnimationTree>("Animation/AnimationTree");
 	
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		

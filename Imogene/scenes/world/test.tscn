@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=10 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
 [ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player_update_3.tscn" id="4_j8e3h"]
-[ext_resource type="PackedScene" uid="uid://ysbm7yf72cl1" path="res://scenes/entities/enemy.tscn" id="6_mtorr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
@@ -107,6 +106,3 @@ light_energy = 0.25
 light_volumetric_fog_energy = 1.09
 shadow_enabled = true
 sky_mode = 1
-
-[node name="enemy" parent="." instance=ExtResource("6_mtorr")]
-transform = Transform3D(-0.807547, 0, -0.589803, 0, 1, 0, 0.589803, 0, -0.807547, -14.715, 0, -12.138)

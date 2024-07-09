@@ -26,6 +26,7 @@ public partial class Chaser : CharacterBody3D
 
     private void OnChaseAreaEntered(Node3D body)
     {
+		GD.Print(body.Name);
         if(body.IsInGroup("enemy"))
 		GD.Print("Entity in chase area");
 		{

@@ -30,7 +30,7 @@ public partial class EquipmentController : Controller
 
     public override void _Input(InputEvent @event)
     {
-        if (Input.IsActionJustPressed("EquipHelmet"))
+        if (Input.IsActionJustPressed("one"))
 		{
 			GD.Print("EquipHelmet Pressed");
 			if (!IsInstanceValid(currentHelm))

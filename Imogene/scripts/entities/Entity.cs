@@ -206,19 +206,19 @@ public partial class Entity : CharacterBody3D
     public override void _Ready()
     {
 
-		damage_system = GetNode<DamageSystem>("DamageSystem");
+		damage_system = GetNode<DamageSystem>("Systems/DamageSystem");
 		damage_system.GetEntityInfo(this);
 
-		resource_system = GetNode<ResourceSystem>("ResourceSystem");
+		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
 		resource_system.GetEntityInfo(this);
 
-        main_hand_hitbox = GetNode<Hitbox>("Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
-		hurtbox = GetNode<Hurtbox>("Hurtbox");
+        
+		hurtbox = GetNode<Hurtbox>("Areas/Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
 
 		// Timers
 		
-		cast_timer = GetNode<Timer>("CastTimer");
+		cast_timer = GetNode<Timer>("Systems/CastTimer");
 		cast_timer.Timeout += OnCastTickTimeout;
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");

@@ -15,7 +15,7 @@ public partial class HerdEnemy : Enemy
 	{
 		base._Ready();
 
-		herd_area = GetNode<Area3D>("HerdDetection");
+		herd_area = GetNode<Area3D>("Areas/HerdDetection");
 		herd_area.AreaEntered += OnHerdDetectionEntered;
 		herd_area.AreaExited += OnHerdDetectionExited;
 		herd_area.BodyEntered += OnHerdBodyEntered;
@@ -98,9 +98,9 @@ public partial class HerdEnemy : Enemy
 	virtual public void OnHerdBodyEntered(Node3D body)
     {
 		
-        if(body is Enemy herd_entity && body.GetParent().Name != GetParent().Name)
+        if(body is Enemy herd_entity && body.Name != Name)
 		{
-			GD.Print(body.GetParent().Name + " entered detection area of " + GetParent().Name);
+			GD.Print(body.Name + " entered detection area of " + Name);
 			GD.Print("Herd mate in detection");
 			herd_mate = herd_entity;
 		}

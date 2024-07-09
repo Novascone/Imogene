@@ -1,8 +1,8 @@
 [gd_scene load_steps=21 format=3 uid="uid://bhen6dwnykdg2"]
 
 [ext_resource type="Script" path="res://scripts/objects/RotateBox.cs" id="1_0w2jw"]
-[ext_resource type="PackedScene" uid="uid://dhutbvc71w0q5" path="res://scenes/entities/AvoidanceEnemy.tscn" id="3_f8ww4"]
 [ext_resource type="Script" path="res://scripts/test/Chaser.cs" id="3_puugv"]
+[ext_resource type="PackedScene" uid="uid://d38cepxtfp2mp" path="res://scenes/entities/avoidance_enemy_organized.tscn" id="3_y2ydq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_hk1iy"]
 
@@ -221,5 +221,5 @@ projection = 1
 size = 60.0
 far = 100.0
 
-[node name="enemy2" parent="." instance=ExtResource("3_f8ww4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7913, 0, 8.56161)
+[node name="AvoidanceEnemy" parent="." instance=ExtResource("3_y2ydq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 6)
