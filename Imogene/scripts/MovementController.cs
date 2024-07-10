@@ -85,8 +85,12 @@ public partial class MovementController : Controller
 	}
 	private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
     {
-        player.can_move = !ui_preventing_movement;
-		player.can_use_abilities = !ui_preventing_movement;
-		player.velocity = Vector3.Zero;
+		if(player != null)
+		{
+			player.can_move = !ui_preventing_movement;
+			player.can_use_abilities = !ui_preventing_movement;
+			player.velocity = Vector3.Zero;
+		}
+        
     }
 }

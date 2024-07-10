@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
-[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player_update_3.tscn" id="4_j8e3h"]
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player.tscn" id="4_j8e3h"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
@@ -51,8 +51,6 @@ transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 
 
 [node name="Platform3" parent="." instance=ExtResource("4_atlgh")]
 transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 13.4703, 2.38739, -6)
-
-[node name="player" parent="." instance=ExtResource("4_j8e3h")]
 
 [node name="Platform4" parent="." instance=ExtResource("4_atlgh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0507778, 5.7949)
@@ -106,3 +104,5 @@ light_energy = 0.25
 light_volumetric_fog_energy = 1.09
 shadow_enabled = true
 sky_mode = 1
+
+[node name="player" parent="." instance=ExtResource("4_j8e3h")]
