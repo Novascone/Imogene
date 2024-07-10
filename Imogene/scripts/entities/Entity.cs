@@ -213,8 +213,8 @@ public partial class Entity : CharacterBody3D
 		resource_system.GetEntityInfo(this);
 
         
-		hurtbox = GetNode<Hurtbox>("Areas/Hurtbox");
-		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+		
+		
 
 		// Timers
 		
@@ -230,22 +230,7 @@ public partial class Entity : CharacterBody3D
         throw new NotImplementedException();
     }
 
-   
-    private void OnHurtboxBodyEntered(Area3D body)
-    {
-		GD.Print("Hitbox entered " + this.Name);
-		if(body is Hitbox box)
-		{
-			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
-			{
-				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
-				resource_system.Posture(box.posture_damage);
-			}
-		}
-    }
-
-	
-    public  Node LoadAbility(String name) // Loads an ability from a string
+    public  Node LoadAbility(string name) // Loads an ability from a string
     {
         var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
         var sceneNode = scene.Instantiate();

@@ -125,14 +125,15 @@ public partial class Enemy : Entity
 		state_machine = GetNode<StateMachine>("Controllers/StateMachine");
 		state_machine.GetEntityInfo(this);
 
+		hurtbox = GetNode<Hurtbox>("Armature/Skeleton3D/Chest/ChestSlot/Hurtbox");
+		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+
 		alert_area = GetNode<Area3D>("Areas/Alert");
 		alert_area.BodyEntered += OnAlertAreaBodyEntered;
 		alert_area.AreaEntered += OnAlertAreaEntered;
 		alert_area.BodyExited += OnAlertAreaBodyExited;
 
 		
-		
-
 		Array.Resize(ref interest, num_rays);
 		Array.Resize(ref danger, num_rays);
 		Array.Resize(ref ray_directions, num_rays);
@@ -152,6 +153,19 @@ public partial class Enemy : Entity
 		_customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;
 		_customSignals.FinishedCircling += HandleFinishedCircling;		
 	}
+
+	private void OnHurtboxBodyEntered(Area3D body)
+    {
+		GD.Print("Hitbox entered " + this.Name);
+		if(body is Hitbox box)
+		{
+			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
+			{
+				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
+				resource_system.Posture(box.posture_damage);
+			}
+		}
+    }
 
     private void HandleFinishedCircling()
     {

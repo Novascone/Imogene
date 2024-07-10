@@ -267,6 +267,7 @@ public partial class Slash : Ability
 			// pressed -= 1;
 			// player.attack_2_set = false;
 			player.can_move = false;
+			player.attacking = true;
 			// GD.Print(player.can_move);
 			if(pressed > 1)
 			{

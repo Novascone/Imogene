@@ -40,6 +40,7 @@ public partial class UI : Control
 	public bool over_pants;
 	public bool over_boots;
 	public bool over_slot;
+	public bool buttons_informed;
 
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	
@@ -53,6 +54,7 @@ public partial class UI : Control
 	public Control abilities;
 	private VBoxContainer character_Sheet_depth;
 	private VBoxContainer mats;
+	public HUD hud;
 
 	
 
@@ -69,8 +71,8 @@ public partial class UI : Control
 	private int health;
 	private int resource;
 	public bool inventory_open;
-	private bool abilities_open;
-	private bool abilities_secondary_ui_open;
+	public bool abilities_open;
+	public bool abilities_secondary_ui_open;
 	public Node3D player;
 
 
@@ -90,7 +92,7 @@ public partial class UI : Control
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
 		abilities = GetNode<Control>("Abilities");
-		
+		hud = GetNode<HUD>("HUD");
 		
 
 		// HUD icons
@@ -106,7 +108,7 @@ public partial class UI : Control
 		// _customSignals.UIHealth += HandleUIHealth;
 		// _customSignals.UIResource += HandleUIResource;
 		_customSignals.Interact += HandleInteract;
-		_customSignals.PlayerInfo += HandlePlayerInfo;
+		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		_customSignals.OverSlot += HandleOverSlot;
 		
 		_customSignals.AbilityUISecondaryOpen += HandleAbilityUISecondaryOpen;
@@ -119,7 +121,6 @@ public partial class UI : Control
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		PopulateButtons();
 
-		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 
 		FocusMode = FocusModeEnum.All;
 	}
@@ -159,6 +160,10 @@ public partial class UI : Control
 		// GD.Print("Hover over button ", hover_over_button.Name);
 		if(this_player != null)
 		{
+			if(!buttons_informed)
+			{
+				ConveyPlayerToButtons();
+			}
 			
 		}
 		if(inventory_open || abilities_open)
@@ -189,7 +194,8 @@ public partial class UI : Control
 			if(inventory_open)
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
-				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// this_player.can_move = true;
 				inventory_open = false;
 				character_inventory.Hide();
 				mats.Hide();
@@ -198,7 +204,8 @@ public partial class UI : Control
 			}
 			if(abilities_open && !abilities_secondary_ui_open)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// this_player.can_move = true;
 				abilities_open = false;
 				// abilities.Hide();
 				cursor.Hide();
@@ -214,7 +221,8 @@ public partial class UI : Control
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), true);
 				inventory_open = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
+				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
+				// this_player.can_move = false;
 				character_inventory.Show();
 				cursor.Show();
 				abilities_open = false;
@@ -224,7 +232,8 @@ public partial class UI : Control
 			{
 				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
 				inventory_open = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+				// this_player.can_move = true;
 				character_inventory.Hide();
 				mats.Hide();
 				character_Sheet_depth.Hide();
@@ -266,7 +275,9 @@ public partial class UI : Control
 						{
 							// GD.Print("Arm item that UI is sending " + hover_over_button.arm);
 							// GD.Print("inventory item: " + hover_over_button.inventory_item);
-							_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
+							// _customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
+							this_player.equipmentController.GetEquipableInfo((ArmsResource)hover_over_button.inventory_item);
+							
 						}
 					}
 					if(Input.IsActionJustPressed("InteractMenu") && !hover_over_button.is_empty ) // Handle grab object set icon of clicked object to a button attached to the cursor
@@ -332,7 +343,8 @@ public partial class UI : Control
 					clicked_on = false;
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
-					_customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (EquipableResource)grabbed_object.inventory_item);
+					// _customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (EquipableResource)grabbed_object.inventory_item);
+					this_player.equipmentController.GetEquipableInfo((ArmsResource)grabbed_object.inventory_item);
 				}
 				
 			}
@@ -387,9 +399,6 @@ public partial class UI : Control
 			cursor.Show();
 		}
 	}
-
-	
-
 	
     // private void HandleUIHealth(int amount)
     // {
@@ -431,8 +440,18 @@ public partial class UI : Control
 		for (int i = 0; i < inventory_size; i++)
 		{
 			InventoryButton current_inventory_button = inventory_button.Instantiate<InventoryButton>();
+			current_inventory_button.hud = hud;
 			item_grid_container.AddChild(current_inventory_button);
 		}
+	}
+	private void ConveyPlayerToButtons()
+	{
+		foreach(InventoryButton inventoryButton in item_grid_container.GetChildren().Cast<InventoryButton>())
+		{
+			inventoryButton.this_player = this_player;
+		}
+		buttons_informed = true;
+		// GD.Print("buttons informed");
 	}
 
 	public void AddItem(ItemResource item)
@@ -577,7 +596,8 @@ public partial class UI : Control
 	public void _on_abilities_label_button_down()
 	{
 		abilities_open = true;
-		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
+		// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
+		// this_player.can_move = false;
 		inventory_open = false;
 		character_inventory.Hide();
 		abilities.Show();
@@ -661,14 +681,15 @@ public partial class UI : Control
 		
 	}
 
-	
+	// private void HandlePlayerInfo(Player player)
+    // {
+    //     this_player = player;
+    // }
 
-	
-
-	private void HandlePlayerInfo(Player player)
-    {
-        this_player = player;
-    }
+	public void GetPlayerInfo(Player player)
+	{
+		this_player = player;
+	}
 
 	 private void HandleHideCursor()
     {
@@ -676,11 +697,6 @@ public partial class UI : Control
 		inventory_open = false;
     }
 
-    
-
-    
-
-	
 
     private void HandleAbilityUISecondaryOpen(bool secondary_open)
     {
@@ -712,6 +728,11 @@ public partial class UI : Control
         health -= health_update;
 		
     }
+
+	public void UIHealthUpdate(int health_update)
+	{
+		health -= health_update;
+	}
     private void HandleUIResourceUpdate(int resource_amount)
     {
         resource -= resource_amount;

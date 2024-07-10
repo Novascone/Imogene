@@ -21,7 +21,8 @@ public partial class Player : PlayerEntity
 	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
 	public bool test_abilities_assigned = false;
 	
-	// Crosses
+	// UI
+	public UI ui;
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 
@@ -60,7 +61,8 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
-	
+
+		ui = GetNode<UI>("UI/UI");
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
@@ -99,6 +101,10 @@ public partial class Player : PlayerEntity
 		foot_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootRight/FootRightSlot");
 		foot_right = new MeshInstance3D();
 		foot_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootLeft/FootLeftSlot");
+
+		hurtbox = GetNode<Hurtbox>("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox");
+		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+		
 		foot_left = new MeshInstance3D();
 
 
@@ -122,6 +128,19 @@ public partial class Player : PlayerEntity
 		GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
 		GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
+
+	private void OnHurtboxBodyEntered(Area3D body)
+    {
+		GD.Print("Hitbox entered " + this.Name);
+		if(body is Hitbox box)
+		{
+			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
+			{
+				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
+				resource_system.Posture(box.posture_damage);
+			}
+		}
+    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -177,7 +196,8 @@ public partial class Player : PlayerEntity
 			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			max_health_changed = false;
 			statController.UpdateStats();
-			_customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
+			// _customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
+			ui.GetPlayerInfo(this);
 			stats_updated = false;
 		}
 		

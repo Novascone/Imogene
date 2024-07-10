@@ -264,7 +264,14 @@ public partial class HUD : UI
 		if(consumable == 3){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Show(); consumable_4.Hide();}
 		if(consumable == 4){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Show();}
     }
-	 private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
+	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
+    {
+        if(consumable_slot == 1){consumable_1.Icon = item.icon;}
+		if(consumable_slot == 2){consumable_2.Icon = item.icon;}
+		if(consumable_slot == 3){consumable_3.Icon = item.icon;}
+		if(consumable_slot == 4){consumable_4.Icon = item.icon;}
+    }
+	public void EquipConsumableHUD(ConsumableResource item, int consumable_slot)
     {
         if(consumable_slot == 1){consumable_1.Icon = item.icon;}
 		if(consumable_slot == 2){consumable_2.Icon = item.icon;}

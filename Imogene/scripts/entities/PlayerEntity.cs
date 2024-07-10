@@ -117,7 +117,7 @@ public partial class PlayerEntity : Entity
 		vision  = (Area3D)GetNode("Areas/Vision");
 		interact_area = GetNode<Area3D>("Areas/InteractArea");
 
-		land_point = GetNode<MeshInstance3D>("LandPoint");
+		land_point = GetNode<MeshInstance3D>("UI/LandPoint");
 
 		vision.BodyEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
