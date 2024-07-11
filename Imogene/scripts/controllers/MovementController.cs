@@ -30,7 +30,7 @@ public partial class MovementController : Controller
 		ray_query.Exclude = player.exclude;
 		var ray = spaceState.IntersectRay(ray_query);
 		
-		if(player.ui.inventory_open || player.ui.abilities_open && !player.ui.abilities_secondary_ui_open || player.attacking) 
+		if(player.ui.inventory.Visible || player.ui.abilities_open && !player.ui.abilities_secondary_ui_open || player.attacking) 
 		{
 			player.can_move = false;
 		}

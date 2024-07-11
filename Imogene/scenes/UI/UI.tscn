@@ -1,9 +1,10 @@
-[gd_scene load_steps=83 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=84 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/StatSheetsStat.cs" id="3_8wocc"]
+[ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="3_es7la"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BasicStat.cs" id="4_1nitg"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
@@ -1044,7 +1045,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
-script = ExtResource("5_p8mmm")
+script = ExtResource("3_es7la")
 
 [node name="CharacterInventoryContainer" type="PanelContainer" parent="Inventory"]
 layout_mode = 1
@@ -1056,6 +1057,7 @@ offset_left = -916.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("5_p8mmm")
 
 [node name="FullInventory" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer"]
 layout_mode = 2
@@ -9813,6 +9815,7 @@ texture_progress = ExtResource("16_qax2o")
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BagSlots/TrashLabel" to="Inventory" method="_on_trash_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BagSlots/TrashLabel" to="Inventory" method="_on_trash_focus_exited"]
+[connection signal="area_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BagSlots/TrashLabel/TrashArea2D" to="Inventory/CharacterInventoryContainer" method="_on_trash_area_2d_area_entered"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/MatsLabel" to="Inventory" method="_on_mats_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/MatsLabel" to="Inventory" method="_on_mats_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/MatsGold/GoldLabel" to="Inventory" method="_on_gold_focus_entered"]

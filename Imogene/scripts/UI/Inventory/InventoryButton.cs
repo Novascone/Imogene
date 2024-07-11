@@ -39,6 +39,10 @@ public partial class InventoryButton : Button
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		if(this_player != null)
+		{
+			
+		}
 		// if(focused && inventory_item != null && Input.IsActionJustPressed("Interact"))
 		// {
 		// 	InventoryButtonPressed();

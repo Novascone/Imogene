@@ -1668,7 +1668,7 @@ bones/44/rotation = Quaternion(0.0619537, 0, 0.998079, 0)
 bones/44/scale = Vector3(1, 1, 1)
 
 [node name="MainHand" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.385408, -0.0482934, 0.921482, 0.131138, -0.99136, 0.00289288, 0.91338, 0.121957, 0.388411, 0.838026, 2.36489, 0.0799211)
+transform = Transform3D(-0.385408, -0.0482945, 0.921481, 0.131139, -0.99136, 0.00289178, 0.91338, 0.121957, 0.388411, 0.838025, 2.36489, 0.0799211)
 bone_name = "hand.L"
 bone_idx = 17
 
@@ -1689,7 +1689,7 @@ script = ExtResource("1_u7wlw")
 shape = SubResource("SphereShape3D_k185k")
 
 [node name="Chest" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.00136872, 0.022388, -0.999748, -0.0286486, 0.999338, 0.022418, 0.999589, 0.0286721, -0.000726324, -0.0632143, 3.25371, -0.00862912)
+transform = Transform3D(-0.00136873, 0.022388, -0.999748, -0.0286486, 0.999338, 0.022418, 0.999589, 0.0286721, -0.000726333, -0.0632143, 3.25371, -0.00862909)
 bone_name = "spine_3"
 bone_idx = 3
 
