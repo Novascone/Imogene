@@ -123,7 +123,7 @@ public partial class UI : Control
 		
 		
 
-		inventory.GetPlayerForInventory(this_player);
+		inventory.GetUIInfo(this);
 		inventory_info.GetUIInfo(this);
 		FocusMode = FocusModeEnum.All;
 	}
@@ -160,7 +160,7 @@ public partial class UI : Control
 		
 		// GD.Print(HasFocus());
 
-		GD.Print(over_trash);
+		// GD.Print(over_trash);
 
 		// GD.Print("Hover over button ", hover_over_button.Name);
 		

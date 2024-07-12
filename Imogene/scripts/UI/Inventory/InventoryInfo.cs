@@ -107,41 +107,14 @@ public partial class InventoryInfo : UI
 	private Button pants_slot;
 	private Button boots_slot;
 
-
-	private Button strength_label;
-	private Label strength_value;
-	private RichTextLabel strength_info;
-	private string strength_info_text = " Strength {0} \n * Primary stat for melee damage \n * Increases damage by {1} \n * Increases health by {2} \n * Increases critical hit damage by {3}";
-
-	private Button dexterity_label;
-	private Label dexterity_value;
-	private RichTextLabel dexterity_info;
-	private string dexterity_info_text = " Dexterity {0}  \n * Primary stat for ranged damage\n * Increases damage by {1} \n * Increases critical chance by {2}";
-
-	private Button intellect_label;
-	private Label intellect_value;
-	private RichTextLabel intellect_info;
-	private string intellect_info_text = " Intellect {0} \n * main stat for spell damage \n * Increases spell damage by {1} \n * Increases spell hit chance by {2}";
-
-	private Button vitality_label;
-	private Label vitality_value;
-	private RichTextLabel vitality_info;
-	private string vitality_info_text = " Vitality {0} \n * Primary stat for health \n * Increases health points by {1}";
-
-	private Button stamina_label;
-	private Label stamina_value;
-	private RichTextLabel stamina_info;
-	private string stamina_info_text = " Stamina {0} \n * Primary stat for resource and regeneration \n * Increases health and resource regeneration by {2} \n * Increases health by {3}";
-
-	private Button wisdom_label;
-	private Label wisdom_value;
-	private RichTextLabel wisdom_info;
-	private string wisdom_info_text = " Wisdom {0} \n * Primary stat for interaction \n * Increases hit chance by {1}";
-
-	private Button charisma_label;
-	private Label charisma_value;
-	private RichTextLabel charisma_info;
-	private string charisma_info_text = "  Charisma {0} \n * Primary stat for character interaction \n * Increases special interactions";
+	// Base stats
+	private StrengthStat strength_stat;
+	private DexterityStat dexterity_stat;
+	private IntellectStat intellect_stat;
+	private VitalityStat vitality_stat;
+	private StaminaStat stamina_stat;
+	private WisdomStat wisdom_stat;
+	private CharismaStat charisma_stat;
 
 	// Character details
 	private Button damage_label;
@@ -414,7 +387,7 @@ public partial class InventoryInfo : UI
 
 
 
-	private CustomSignals _customSignals;
+	// private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -434,33 +407,14 @@ public partial class InventoryInfo : UI
 		pants_slot = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Pants");
 		boots_slot = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor/Boots");
 
-		strength_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label");
-		strength_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Value");
-		strength_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label/Info/MarginContainer/PanelContainer/Label");
-
-		dexterity_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Label");
-		dexterity_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Value");
-		dexterity_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity/Label/Info/MarginContainer/PanelContainer/Label");
-
-		intellect_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Label");
-		intellect_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Value");
-		intellect_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect/Label/Info/MarginContainer/PanelContainer/Label");
-
-		vitality_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Label");
-		vitality_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Value");
-		vitality_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality/Label/Info/MarginContainer/PanelContainer/Label");
-
-		stamina_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Label");
-		stamina_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Value");
-		stamina_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina/Label/Info/MarginContainer/PanelContainer/Label");
-
-		wisdom_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Label");
-		wisdom_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Value");
-		wisdom_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom/Label/Info/MarginContainer/PanelContainer/Label");
-
-		charisma_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Label");
-		charisma_value = GetNode<Label>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Value");
-		charisma_info = GetNode<RichTextLabel>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma/Label/Info/MarginContainer/PanelContainer/Label");
+		
+		strength_stat = GetNode<StrengthStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength");
+		dexterity_stat = GetNode<DexterityStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity");
+		intellect_stat = GetNode<IntellectStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect");
+		vitality_stat = GetNode<VitalityStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality");
+		stamina_stat = GetNode<StaminaStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina");
+		wisdom_stat = GetNode<WisdomStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom");
+		charisma_stat = GetNode<CharismaStat>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma");
 
 		// Stats details
 		damage_label = GetNode<Button>("FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage/Label");
@@ -836,26 +790,16 @@ public partial class InventoryInfo : UI
 		// Basic stats
 		
 		// Base Stats
-		strength_value.Text = strength_UI;
-		strength_info.Text = string.Format(strength_info_text, strength_UI, 0, strength_UI, strength_UI); // 3 variable(s)
-
-		dexterity_value.Text = dexterity_UI;
-		dexterity_info.Text = string.Format(dexterity_info_text, dexterity_UI, 0, dexterity_UI); // 4 variable(s)
-
-		intellect_value.Text = intellect_UI;
-		intellect_info.Text = string.Format(intellect_info_text, intellect_UI, 0, 0); // 3 variable(s)
-
-		vitality_value.Text = vitality_UI;
-		vitality_info.Text = string.Format(vitality_info_text, vitality_UI, 2 * vitality_UI.ToInt()); // 2 variable(s)
-
-		stamina_value.Text = stamina_UI;
-		stamina_info.Text = string.Format(stamina_info_text, stamina_UI, stamina_UI, stamina_UI, stamina_UI); // 4 variable(s)
-
-		wisdom_value.Text = wisdom_UI;
-		wisdom_info.Text = string.Format(wisdom_info_text, wisdom_UI, 0); // 2 variable(s)
-
-		charisma_value.Text = charisma_UI;
-		charisma_info.Text = string.Format(charisma_info_text, charisma_UI); // 1 variable(s)
+		strength_stat.GetStatInfo(strength_UI);
+		dexterity_stat.GetStatInfo(dexterity_UI);
+		intellect_stat.GetStatInfo(intellect_UI);
+		vitality_stat.GetStatInfo(vitality_UI);
+		stamina_stat.GetStatInfo(stamina_UI);
+		wisdom_stat.GetStatInfo(wisdom_UI);
+		charisma_stat.GetStatInfo(charisma_UI);
+	
+		
+		
 
 		// Stats Summary
 		damage_value.Text = damage_UI;
@@ -1090,8 +1034,8 @@ public partial class InventoryInfo : UI
 	public void _on_trash_area_2d_area_entered(Area2D area)
 	{	
 		GD.Print("over_trash");
-		this_ui.over_trash = true;
-		GD.Print(this_ui.over_trash);
+		// this_ui.over_trash = true;
+		// GD.Print(this_ui.over_trash);
 	}
 
 	public void _on_trash_area_2d_area_exited(Area2D area)

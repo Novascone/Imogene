@@ -18,7 +18,7 @@ public partial class Inventory : UI
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		ui = (UI)GetParent();
+		
 		character_inventory = GetNode<InventoryInfo>("CharacterInventoryContainer");
 		inventory_button = ResourceLoader.Load<PackedScene>(item_button_path);
 		item_grid_container = GetNode<GridContainer>("CharacterInventoryContainer/FullInventory/CharacterInventory/Items/ItemsGrid");
@@ -225,9 +225,9 @@ public partial class Inventory : UI
 		}
 	}
 
-	public void GetPlayerForInventory(Player s)
+	public void GetUIInfo(UI i)
 	{
-		inventory_player = s;
+		ui = i;
 	}
 
 	private void SwapButtons(InventoryButton button1, InventoryButton button2)

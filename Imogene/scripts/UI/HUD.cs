@@ -54,7 +54,7 @@ public partial class HUD : UI
 	private bool l_cross_secondary_selected = false;
 	private bool r_cross_secondary_selected = false;
 	// Called when the node enters the scene tree for the first time.
-	private CustomSignals _customSignals; // Instance of CustomSignals
+	// private CustomSignals _customSignals; // Instance of CustomSignals
 	public override void _Ready()
 	{
 		l_cross_primary = GetNode<GridContainer>("BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary");

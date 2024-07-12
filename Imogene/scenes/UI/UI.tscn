@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=91 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
@@ -11,10 +11,17 @@
 [ext_resource type="Script" path="res://scripts/UI/Inventory/SummaryStat.cs" id="5_nvqbl"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/GearInfo.cs" id="6_rtdw8"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StrengthStat.cs" id="7_04r8y"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="7_l2ybp"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/DexterityStat.cs" id="8_ck3t7"]
 [ext_resource type="Script" path="res://scripts/UI/AbilitiesInterface.cs" id="9_4fs8w"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/IntellectStat.cs" id="9_salts"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityButton.cs" id="10_4bmju"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/VitalityStat.cs" id="10_4nt2a"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StaminaStat.cs" id="11_7rjpp"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/WisdomStat.cs" id="12_f56vc"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/CharismaStat.cs" id="13_e7l2h"]
 [ext_resource type="Script" path="res://scripts/UI/EnemyHealthUI.cs" id="15_okotv"]
 [ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="16_qax2o"]
 
@@ -4829,7 +4836,7 @@ size_flags_vertical = 3
 
 [node name="Strength" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("7_04r8y")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength"]
 layout_mode = 2
@@ -4870,10 +4877,6 @@ layout_mode = 2
 
 [node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
-text = " Strength null
- * Primary stat for melee damage 
- * Increases damage by null
- * Increases health by null"
 fit_content = true
 
 [node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label"]
@@ -4894,7 +4897,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Dexterity" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("8_ck3t7")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Dexterity"]
 layout_mode = 2
@@ -4960,7 +4963,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Intellect" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("9_salts")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Intellect"]
 layout_mode = 2
@@ -5024,7 +5027,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Vitality" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("10_4nt2a")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Vitality"]
 layout_mode = 2
@@ -5087,7 +5090,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Stamina" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("11_7rjpp")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Stamina"]
 layout_mode = 2
@@ -5152,7 +5155,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Wisdom" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("12_f56vc")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Wisdom"]
 layout_mode = 2
@@ -5216,7 +5219,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Charisma" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("13_e7l2h")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Charisma"]
 layout_mode = 2

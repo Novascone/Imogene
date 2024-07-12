@@ -55,7 +55,7 @@ public partial class AbilitiesInterface : UI
 
 	private PanelContainer assign_ability;
 	private Button selected_button;
-	private CustomSignals _customSignals; // Instance of CustomSignals
+	// private CustomSignals _customSignals; // Instance of CustomSignals
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
