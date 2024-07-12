@@ -9,7 +9,7 @@ public partial class Stat : Control
 	public Control info;
 	public RichTextLabel info_text;
 	public string set_info_text;
-	public string stat_number = "1";
+	public string stat_value = "1";
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,7 +20,7 @@ public partial class Stat : Control
 		info_text = GetNode<RichTextLabel>("Label/Info/MarginContainer/PanelContainer/Label");
 	}
 
-    public virtual void GetStatInfo(string stat_value)
+    public virtual void GetStatInfo(string stat_value_ui)
 	{
 		// stat_number = stat_value;
 		// value.Text = stat_value;

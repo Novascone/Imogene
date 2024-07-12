@@ -85,7 +85,11 @@ public partial class StatController : Controller
 		
 		entity.avg_res_dr = (entity.dr_phys + entity.dr_slash + entity.dr_thrust + entity.dr_blunt + entity.dr_bleed + entity.dr_poison + entity.dr_spell + entity.dr_fire + entity.dr_cold + entity.dr_poison + entity.dr_holy) / 11;
 
+		
 		entity.resistance = (float)Math.Round(entity.maximum_health * (entity.dr_armor * entity.avg_res_dr),2);
+		GD.Print("ave resistance: " + entity.avg_res_dr);
+		GD.Print("resistance: " + entity.resistance);
+		GD.Print("max health: " + entity.maximum_health);
 
 		// recovery
 

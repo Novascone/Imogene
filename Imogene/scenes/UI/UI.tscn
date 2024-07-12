@@ -1,29 +1,65 @@
-[gd_scene load_steps=91 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=128 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
-[ext_resource type="Script" path="res://scripts/UI/Inventory/StatSheetsStat.cs" id="3_8wocc"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="3_es7la"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
-[ext_resource type="Script" path="res://scripts/UI/Inventory/BasicStat.cs" id="4_1nitg"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
-[ext_resource type="Script" path="res://scripts/UI/Inventory/SummaryStat.cs" id="5_nvqbl"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/PhysicalMeleePowerStat.cs" id="5_m6p5a"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/SpellMeleePowerStat.cs" id="6_2n3kq"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/LevelStat.cs" id="6_jnsfc"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/GearInfo.cs" id="6_rtdw8"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StrengthStat.cs" id="7_04r8y"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="7_l2ybp"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/PhysicalRangedPowerStat.cs" id="7_nillj"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/SpellRangedPowerStat.cs" id="8_040ej"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/DexterityStat.cs" id="8_ck3t7"]
 [ext_resource type="Script" path="res://scripts/UI/AbilitiesInterface.cs" id="9_4fs8w"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/WisdomScalerStat.cs" id="9_r5sa2"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/IntellectStat.cs" id="9_salts"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityButton.cs" id="10_4bmju"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/VitalityStat.cs" id="10_4nt2a"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/CriticalHitChanceStat.cs" id="10_cge3b"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StaminaStat.cs" id="11_7rjpp"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/CriticalHitDamageStat.cs" id="11_oryk3"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/WisdomStat.cs" id="12_f56vc"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/AttackSpeedStat.cs" id="12_qlu4x"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/AttackSpeedIncreaseStat.cs" id="13_8ionh"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/CharismaStat.cs" id="13_e7l2h"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/DamageStat.cs" id="14_4raxh"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/CooldownReductionStat.cs" id="14_7wwfp"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/ResistanceStat.cs" id="15_clcws"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/ArmorStat.cs" id="15_lfleo"]
 [ext_resource type="Script" path="res://scripts/UI/EnemyHealthUI.cs" id="15_okotv"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/RecoveryStat.cs" id="16_0fdo3"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/PoiseStat.cs" id="16_ejjow"]
 [ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="16_qax2o"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/BlockAmountStat.cs" id="17_pxsek"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/RetaliationStat.cs" id="18_6dpb6"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/PhysicalResistanceStat.cs" id="19_tkrxf"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/ThrustResistanceStat.cs" id="20_loic3"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/SlashResistanceStat.cs" id="21_rp7oy"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/BluntResistanceStat.cs" id="22_4sdll"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/BleedResistanceStat.cs" id="23_c71f1"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/PoisonResistanceStat.cs" id="24_vyrlr"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/CurseResistanceStat.cs" id="25_sjo4r"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/SpellResistanceStat.cs" id="26_rosj8"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/FireResistanceStat.cs" id="27_p1r3i"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/ColdResistanceStat.cs" id="28_v3khq"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/LightningResistanceStat.cs" id="29_d8jh0"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/defense/HolyResistanceStat.cs" id="30_ycx66"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/health/MaximumHealthStat.cs" id="31_vmnv3"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/health/HealthBonusStat.cs" id="32_c6oj5"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/health/HealthRegenerationStat.cs" id="33_ccsru"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/health/HealthRetaliationStat.cs" id="34_qo1qc"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/resource/MaximumResourceStat.cs" id="35_i0rgo"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/resource/ResourceRegenerationStat.cs" id="36_fhbel"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/resource/ResourceCostReductionStat.cs" id="37_oq3h3"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/resource/PostureRegenerationStat.cs" id="38_d22rd"]
+[ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/misc/MovementSpeedStat.cs" id="39_mclj2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wudlh"]
 
@@ -45,6 +81,9 @@ size = Vector2(163, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_otp4f"]
 size = Vector2(221.75, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3rrp"]
+size = Vector2(163, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4wgv"]
 size = Vector2(220, 23)
@@ -1133,7 +1172,7 @@ text = "Offense"
 
 [node name="PhysicalMeleePower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("5_m6p5a")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower"]
 layout_mode = 2
@@ -1175,7 +1214,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Physical melee power {0} 
 \\n * Increases physical melee DPS by 1 every 15 points 
@@ -1203,7 +1242,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="SpellMeleePower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("6_2n3kq")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower"]
 layout_mode = 2
@@ -1249,7 +1288,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellMeleePower/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Spell melee power {0} 
 \\n Increases magic melee DPS and HPS by 1 every 15 points 
@@ -1276,7 +1315,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="PhysicalRangedPower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("7_nillj")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower"]
 layout_mode = 2
@@ -1320,7 +1359,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalRangedPower/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = " Physical ranged power {0} 
 \\n * Increases physical ranged dps by 1 every 15 points 
@@ -1347,7 +1386,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="SpellRangedPower" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("8_040ej")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower"]
 layout_mode = 2
@@ -1397,7 +1436,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Spell ranged power {0} \\n Increases magic ranged DPS and HPS by 1 every 15 points 
 \\n + 3 for every point of intellect + 2 for every point of dexterity
@@ -1423,7 +1462,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="WisdomScaler" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("9_r5sa2")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler"]
 layout_mode = 2
@@ -1469,7 +1508,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = " Thrust {0} \\n 
 * Percentage of melee damage inflicted as thrust \\n 
@@ -1493,669 +1532,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="ThrustDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Thrust Damage"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -199.52
-offset_top = -95.004
-offset_right = 217.48
-offset_bottom = -16.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = " Thrust {0} \\n 
-* Percentage of melee damage inflicted as thrust \\n 
-* Increased by skills and gear "
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="SlashDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Slash Damage"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -204.52
-offset_top = -96.004
-offset_right = 205.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Slash {0} 
-\\n * Percentage of melee damage inflicted as slash 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="BluntDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Blunt Damage"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -204.52
-offset_top = -101.004
-offset_right = 224.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Blunt {0} 
-\\n * Percentage of melee damage inflicted as slash 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label/Area2D"]
-position = Vector2(128, 9.25)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="BleedDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Bleed Damage"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -169.52
-offset_top = -94.004
-offset_right = 188.48
-offset_bottom = -15.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Bleed {0}
- \\n * Amount of damage inflicted as bleed \\n 
-* Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label/Area2D"]
-position = Vector2(128, 9)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="PoisonDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Poison"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label"]
-visible = false
-top_level = true
-z_index = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 122.0
-offset_top = -332.0
-offset_right = 162.0
-offset_bottom = -320.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -148.0
-offset_top = 137.0
-offset_right = 195.0
-offset_bottom = 216.0
-grow_horizontal = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Poison {0} 
-\\n * Amount of damage inflicted as poison 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="FireDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Fire Damage
-"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -182.52
-offset_top = -93.004
-offset_right = 203.48
-offset_bottom = -14.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Fire {0} 
-\\n * Percentage of spell damage inflicted as fire 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="ColdDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Cold Damage
-"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -182.52
-offset_top = -96.004
-offset_right = 203.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Cold {0} 
-\\n * Percentage of spell damage inflicted as cold 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="LightningDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Lightning
-"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -204.52
-offset_top = -96.004
-offset_right = 219.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Lightning {0} 
-\\n * Percentage of spell damage inflicted as lightning 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="HolyDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Holy Damage
-"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 122.0
-offset_top = -332.0
-offset_right = 162.0
-offset_bottom = -320.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -324.52
-offset_top = 227.496
-offset_right = 66.48
-offset_bottom = 306.496
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Holy {0} 
-\\n * Percentage of spell damage inflicted as holy 
-\\n * Increased by skills and gear"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
 [node name="CriticalHitChance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("10_cge3b")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance"]
 layout_mode = 2
@@ -2201,7 +1580,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Critical hit chance {0} 
 \\n * Percentage chance for a hit to be a critical hit 
@@ -2227,7 +1606,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="CriticalHitDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("11_oryk3")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage"]
 layout_mode = 2
@@ -2273,7 +1652,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Critical hit damage {0} 
 \\n * Multiplier applied to base damage if a hit is critical 
@@ -2299,7 +1678,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="AttackSpeed" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("12_qlu4x")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed"]
 layout_mode = 2
@@ -2345,7 +1724,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeed/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Attack speed {0} 
 \\n * Based off of weapon speed 
@@ -2371,7 +1750,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="AttackSpeedIncrease" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("13_8ionh")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease"]
 layout_mode = 2
@@ -2417,7 +1796,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Attack speed increase {0} 
 \\n * Percentage of attack speed
@@ -2444,7 +1823,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="CooldownReduction" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("14_7wwfp")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction"]
 layout_mode = 2
@@ -2490,7 +1869,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Cooldown reduction {0} 
 \\n * Cooldown reduction of all skills"
@@ -2509,79 +1888,6 @@ text = "null
 "
 
 [node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="PostureDamage" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Posture Damage"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -187.52
-offset_top = -101.004
-offset_right = 208.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Posture damage {0}
- \\n * Amount of enemy posture reduced every hit 
-\\n * Increased by skills and gear
-"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
@@ -2609,7 +1915,7 @@ text = "Defense
 
 [node name="Armor" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("15_lfleo")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor"]
 layout_mode = 2
@@ -2656,7 +1962,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Total Armor {0} 
 \\n * Reduces incoming damage by {1} 
@@ -2683,7 +1989,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Poise" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("16_ejjow")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise"]
 layout_mode = 2
@@ -2729,7 +2035,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Poise {0} 
 \\n * Reduces incoming posture damage and increases crowd control resistance
@@ -2755,7 +2061,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="BlockAmount" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("17_pxsek")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount"]
 layout_mode = 2
@@ -2801,7 +2107,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Block amount {0} 
 \\n * Amount of damage that can be blocked by weapon/shield
@@ -2827,7 +2133,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="Retaliation" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("18_6dpb6")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation"]
 layout_mode = 2
@@ -2873,7 +2179,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Retaliation {0} 
 \\n * Increases the amount of time you have to retaliate after being hit
@@ -2899,7 +2205,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="PhysicalResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("19_tkrxf")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance"]
 layout_mode = 2
@@ -2945,7 +2251,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Physical Resistance {0} 
 \\n * Reduces incoming physical damage 
@@ -2971,7 +2277,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="ThrustResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("20_loic3")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance"]
 layout_mode = 2
@@ -3017,7 +2323,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Thrust Resistance {0} 
 \\n * Reduces thrust effectiveness on character 
@@ -3043,7 +2349,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="SlashResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("21_rp7oy")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance"]
 layout_mode = 2
@@ -3089,7 +2395,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Slash Resistance {0} 
 \\n * Reduces Slash effectiveness on character 
@@ -3115,7 +2421,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="BluntResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("22_4sdll")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance"]
 layout_mode = 2
@@ -3161,7 +2467,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Blunt Resistance {0} 
 \\n * Reduces Blunt effectiveness on character 
@@ -3187,7 +2493,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="BleedResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("23_c71f1")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance"]
 layout_mode = 2
@@ -3233,7 +2539,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Bleed Resistance {0} 
 \\n * Reduces bleeding time 
@@ -3259,7 +2565,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="PoisonResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("24_vyrlr")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance"]
 layout_mode = 2
@@ -3305,7 +2611,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Poison Resistance {0} 
 \\n * Reduces Poisoned time and initial poison damage 
@@ -3331,7 +2637,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="CurseResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("25_sjo4r")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance"]
 layout_mode = 2
@@ -3377,7 +2683,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CurseResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Curse Resistance {0} 
 \\n * Reduces curse effectiveness 
@@ -3403,7 +2709,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="SpellResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("26_rosj8")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance"]
 layout_mode = 2
@@ -3449,7 +2755,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Spell Resistance {0} 
 \\n * Reduces incoming magic damage 
@@ -3476,7 +2782,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="FireResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("27_p1r3i")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance"]
 layout_mode = 2
@@ -3522,7 +2828,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Fire Resistance {0} 
 \\n * Reduces incoming fire damage 
@@ -3549,7 +2855,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="ColdResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("28_v3khq")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance"]
 layout_mode = 2
@@ -3595,7 +2901,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Cold Resistance {0} 
 \\n * Reduces incoming cold damage 
@@ -3622,7 +2928,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="LightningResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("29_d8jh0")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance"]
 layout_mode = 2
@@ -3668,7 +2974,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Lightning Resistance {0} 
 \\n * Reduces incoming lightning damage \\n * Increased by skills and gear
@@ -3694,7 +3000,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="HolyResistance" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("30_ycx66")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance"]
 layout_mode = 2
@@ -3740,7 +3046,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyResistance/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Holy Resistance {0} 
 \\n * Reduces incoming holy damage 
@@ -3788,7 +3094,7 @@ text = "Health
 
 [node name="MaximumHealth" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("31_vmnv3")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth"]
 layout_mode = 2
@@ -3834,7 +3140,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumHealth/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Maximum Health {0} 
 \\n * The total amount of health if health is reduced to zero you die
@@ -3860,7 +3166,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="HealthBonus" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("32_c6oj5")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus"]
 layout_mode = 2
@@ -3906,7 +3212,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Health bonus {0} 
 \\n * Bonus applied to total health 
@@ -3933,7 +3239,7 @@ size_flags_stretch_ratio = 0.05
 
 [node name="HealthRegeneration" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("33_ccsru")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration"]
 layout_mode = 2
@@ -3983,7 +3289,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Health regen {0} 
 \\n * Amount of health regenerated per second 
@@ -4008,9 +3314,322 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
+[node name="HealthRetaliation" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("34_qo1qc")
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Health on Retaliate"
+alignment = 0
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -243.52
+offset_top = -97.004
+offset_right = 261.48
+offset_bottom = -17.004
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "Health on Retaliation {0} 
+\\n * Amount of health you can regain during retaliation period 
+\\n * Increased by skills and gear
+"
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Resource" type="Panel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Resource"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resource
+"
+
+[node name="MaximumResource" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("35_i0rgo")
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Maximum Resource"
+alignment = 0
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -123.52
+offset_top = -92.004
+offset_right = 139.48
+offset_bottom = -13.004
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "Maximum resource {0} 
+\\n * Total amount of resource 
+\\n * Increased by skills and gear
+"
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="ResourceRegeneration" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("36_fhbel")
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Resource Regen"
+alignment = 0
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -182.52
+offset_top = -95.004
+offset_right = 210.48
+offset_bottom = -16.004
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "Resource regen {0} 
+\\n * Amount of resource regenerated per second 
+\\n * Increased by skills and gear
+"
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="ResourceCostReduction" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("37_oq3h3")
+
+[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"sheetbutton"
+text = "Resource Cost Reduction"
+alignment = 0
+
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563
+anchor_top = 0.667
+anchor_right = 0.563
+anchor_bottom = 0.667
+offset_left = -191.52
+offset_top = -100.004
+offset_right = 212.48
+offset_bottom = -21.004
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "Resource cost reduction {0} 
+\\n * Amount resource cost of skills are reduced by 
+\\n * Increased by skills and gear
+"
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Area2D"]
+position = Vector2(128, 8.5)
+shape = SubResource("RectangleShape2D_ys72g")
+
+[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
 [node name="PostureRegeneration" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("38_d22rd")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
 layout_mode = 2
@@ -4060,7 +3679,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Health regen {0} 
 \\n * Amount of health regenerated per second 
@@ -4081,319 +3700,6 @@ text = "null
 "
 
 [node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="HealthRetaliation" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Health on Retaliate"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -243.52
-offset_top = -97.004
-offset_right = 261.48
-offset_bottom = -17.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Health on Retaliation {0} 
-\\n * Amount of health you can regain during retaliation period 
-\\n * Increased by skills and gear
-"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Resource" type="Panel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_stretch_ratio = 0.7
-
-[node name="Label" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Resource"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -12.5
-offset_right = 20.0
-offset_bottom = 12.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Resource
-"
-
-[node name="MaximumResource" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Maximum Resource"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -123.52
-offset_top = -92.004
-offset_right = 139.48
-offset_bottom = -13.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Maximum resource {0} 
-\\n * Total amount of resource 
-\\n * Increased by skills and gear
-"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="ResourceRegeneration" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Resource Regen"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -182.52
-offset_top = -95.004
-offset_right = 210.48
-offset_bottom = -16.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Resource regen {0} 
-\\n * Amount of resource regenerated per second 
-\\n * Increased by skills and gear
-"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="ResourceCostReduction" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_8wocc")
-
-[node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.05
-
-[node name="Label" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_type_variation = &"sheetbutton"
-text = "Resource Cost Reduction"
-alignment = 0
-
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 12.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.563
-anchor_top = 0.667
-anchor_right = 0.563
-anchor_bottom = 0.667
-offset_left = -191.52
-offset_top = -100.004
-offset_right = 212.48
-offset_bottom = -21.004
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = "Resource cost reduction {0} 
-\\n * Amount resource cost of skills are reduced by 
-\\n * Increased by skills and gear
-"
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label/Area2D"]
-position = Vector2(128, 8.5)
-shape = SubResource("RectangleShape2D_ys72g")
-
-[node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
-layout_mode = 2
-theme_type_variation = &"statssheetlabel"
-text = "null
-"
-
-[node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
@@ -4421,7 +3727,7 @@ text = "Misc
 
 [node name="MovementSpeed" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("3_8wocc")
+script = ExtResource("39_mclj2")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed"]
 layout_mode = 2
@@ -4467,7 +3773,7 @@ theme_override_constants/margin_bottom = 5
 [node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label/Info/MarginContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 text = "Movement speed {0} 
 \\n * Movement speed of character 
@@ -4713,7 +4019,7 @@ size_flags_stretch_ratio = 2.0
 
 [node name="Level" type="HBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline"]
 layout_mode = 2
-script = ExtResource("4_1nitg")
+script = ExtResource("6_jnsfc")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level"]
 layout_mode = 2
@@ -4849,7 +4155,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../../RepLabel")
 theme_type_variation = &"FauxButton"
-text = "Strength:
+text = "
 "
 alignment = 0
 
@@ -4883,11 +4189,11 @@ fit_content = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength/Label/Area2D"]
 position = Vector2(82.5, 14)
-shape = SubResource("RectangleShape2D_287f3")
+shape = SubResource("RectangleShape2D_m3rrp")
 
 [node name="Value" type="Label" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength"]
 layout_mode = 2
-text = "null
+text = "
 "
 
 [node name="Spacer2" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/BaseStats/Strength"]
@@ -5291,7 +4597,7 @@ size_flags_vertical = 3
 [node name="Damage" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("5_nvqbl")
+script = ExtResource("14_4raxh")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Damage"]
 layout_mode = 2
@@ -5357,7 +4663,7 @@ size_flags_stretch_ratio = 0.05
 [node name="Resistance" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("5_nvqbl")
+script = ExtResource("15_clcws")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Resistance"]
 layout_mode = 2
@@ -5423,7 +4729,7 @@ size_flags_stretch_ratio = 0.05
 [node name="Recovery" type="VBoxContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("5_nvqbl")
+script = ExtResource("16_0fdo3")
 
 [node name="Spacer1" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Details/Recovery"]
 layout_mode = 2
@@ -9683,24 +8989,6 @@ texture_progress = ExtResource("16_qax2o")
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SpellRangedPower" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/WisdomScaler" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PoisonDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/FireDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ColdDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/LightningDamage" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HolyDamage" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitChance" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CriticalHitDamage" method="_on_label_focus_entered"]
@@ -9711,8 +8999,6 @@ texture_progress = ExtResource("16_qax2o")
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/AttackSpeedIncrease" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/CooldownReduction" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureDamage" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Armor" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Poise" method="_on_label_focus_entered"]
@@ -9751,8 +9037,6 @@ texture_progress = ExtResource("16_qax2o")
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthBonus" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRegeneration" method="_on_label_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/HealthRetaliation" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MaximumResource" method="_on_label_focus_entered"]
@@ -9761,6 +9045,8 @@ texture_progress = ExtResource("16_qax2o")
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceRegeneration" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ResourceCostReduction" method="_on_label_focus_exited"]
+[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_entered"]
+[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PostureRegeneration" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/MovementSpeed" method="_on_label_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/StatsOutline/Level" method="_on_label_focus_entered"]

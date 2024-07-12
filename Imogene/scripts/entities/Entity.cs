@@ -161,7 +161,7 @@ public partial class Entity : CharacterBody3D
 
 	// Health
 
-	public float maximum_health;
+	public float maximum_health = 100;
 	public float health_bonus = 0; // Health bonus from skills and gear
 	public float health_regen = 0; // Health regenerated every second 1 + (stamina/rec_lvl_scale * health_regen_bonus)
 	public float health_regen_bonus = 0; // Bonus to health regeneration from skills and gear

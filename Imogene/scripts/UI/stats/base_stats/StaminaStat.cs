@@ -15,12 +15,11 @@ public partial class StaminaStat : Stat
 	{
 	}
 
-	public override void GetStatInfo(string stat_value)
+	public override void GetStatInfo(string stat_value_ui)
 	{
-		stat_number = stat_value;
+		stat_value = stat_value_ui;
 		value.Text = stat_value;
-		GD.Print("stat number " + stat_number);
-		info_text.Text = string.Format(set_info_text, stat_number, stat_number, stat_number);
+		info_text.Text = string.Format(set_info_text, stat_value, stat_value, stat_value);
 		// stamina_info.Text = string.Format(stamina_info_text, stamina_UI, stamina_UI, stamina_UI, stamina_UI); // 4 variable(s)
 	}
 }
