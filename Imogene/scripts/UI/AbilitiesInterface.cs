@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class AbilitiesInterface : UI
 {
@@ -48,6 +49,8 @@ public partial class AbilitiesInterface : UI
 	
 	
 	public bool is_non_action_assignment_open;
+
+	private UI this_ui;
 
 	private PanelContainer current_ui;
 	private PanelContainer previous_ui;
@@ -131,6 +134,11 @@ public partial class AbilitiesInterface : UI
 		NavigateAbilities();
     }
 
+	public void GetUIInfo(UI i)
+	{
+		this_ui = i;
+	}
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
@@ -149,19 +157,22 @@ public partial class AbilitiesInterface : UI
 		}
 		if(current_ui.IsInGroup("assignment"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			this_ui.abilities_secondary_ui_open = true;
 			// button_to_be_assigned.Show();
 			// accept_cancel.Show();
 		}
 		else if(current_ui.IsInGroup("selection"))
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),true);
+			this_ui.abilities_secondary_ui_open = true;
 			// button_to_be_assigned.Hide();
 			
 		}
 		else
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
+			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
+			this_ui.abilities_secondary_ui_open = false;
 		}
 		
 		if(Input.IsActionJustPressed("B"))
@@ -349,9 +360,14 @@ public partial class AbilitiesInterface : UI
 	{
 		GD.Print("close");
 		Hide();
-		_customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
-		_customSignals.EmitSignal(nameof(CustomSignals.HideCursor));
-		_customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
+		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
+		this_ui.abilities_secondary_ui_open = false;
+		this_ui.CloseInterface();
+
+		// ********************************************** camera zoom out here *********************************************
+
+		// _customSignals.EmitSignal(nameof(CustomSignals.HideCursor));
+		// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}
 
 	

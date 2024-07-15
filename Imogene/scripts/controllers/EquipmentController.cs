@@ -429,6 +429,7 @@ public partial class EquipmentController : Controller
 		player.health_on_retaliate += item.health_retaliate;
 		player.resource_regen += item.resource_regen;
 		player.resource_cost_reduction += item.resource_cost_reduction;
+		player.ui.inventory_info.stats_updated = false;
 	}
 
 	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)

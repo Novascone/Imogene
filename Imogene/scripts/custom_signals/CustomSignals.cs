@@ -21,10 +21,10 @@ public partial class CustomSignals : Node
 	[Signal] public delegate void AddToAbilitySelectionEventHandler(string name, string type, Texture2D icon); // Adds abilities to their category in the UI
 	[Signal] public delegate void LCrossPrimaryOrSecondaryEventHandler(bool l_cross_primary_selected_signal); // Tells the UI if the player has selected the primary or secondary LCross
 	[Signal] public delegate void RCrossPrimaryOrSecondaryEventHandler(bool r_cross_primary_selected_signal); // Tells the UI if the player has selected the primary or secondary RCross
-	[Signal] public delegate void UIHealthEventHandler(int amount); // Gives the UI the players starting health 																				*** NEEDS TO BE UPDATED ***
-	[Signal] public delegate void UIResourceEventHandler(int amount); // Gives the UI the players starting resource																			*** NEEDS TO BE UPDATED ***
-	[Signal] public delegate void UIHealthUpdateEventHandler(int amount); // Updates the UI with the players new health 																		*** NEEDS TO BE UPDATED ***
-	[Signal] public delegate void UIResourceUpdateEventHandler(int amount); // Updates the UI with the players new resource 																	*** NEEDS TO BE UPDATED ***
+	// [Signal] public delegate void UIHealthEventHandler(int amount); // Gives the UI the players starting health 																				*** NEEDS TO BE UPDATED ***
+	// [Signal] public delegate void UIResourceEventHandler(int amount); // Gives the UI the players starting resource																			*** NEEDS TO BE UPDATED ***
+	// [Signal] public delegate void UIHealthUpdateEventHandler(int amount); // Updates the UI with the players new health 																		*** NEEDS TO BE UPDATED ***
+	// [Signal] public delegate void UIResourceUpdateEventHandler(int amount); // Updates the UI with the players new resource 																	*** NEEDS TO BE UPDATED ***
 	[Signal] public delegate void InteractEventHandler(Area3D area, bool in_interact_area, bool interacting); // Tells the UI if the player has entered an interact area
 	[Signal] public delegate void WhichConsumableEventHandler(int consumable); // Tells the UI if the player has entered an interact area
 	[Signal] public delegate void SendStatsEventHandler(

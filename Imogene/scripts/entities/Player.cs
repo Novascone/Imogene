@@ -22,7 +22,7 @@ public partial class Player : PlayerEntity
 	public bool test_abilities_assigned = false;
 	
 	// UI
-	public UI ui;
+	
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 
@@ -62,7 +62,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
 
-		ui = GetNode<UI>("UI/UI");
+		
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
@@ -156,6 +156,7 @@ public partial class Player : PlayerEntity
 			if(Input.IsActionJustPressed("D-PadLeft")) // Select crosses 
 			{
 				l_cross_primary_selected = !l_cross_primary_selected;
+				
 				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 			}
 			if(Input.IsActionJustPressed("D-PadRight"))
@@ -193,7 +194,7 @@ public partial class Player : PlayerEntity
 	{
 		if(max_health_changed)
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
+			// _customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			max_health_changed = false;
 			statController.UpdateStats();
 			// _customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);

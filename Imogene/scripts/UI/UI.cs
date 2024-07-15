@@ -47,8 +47,9 @@ public partial class UI : Control
 	public Inventory inventory;
 	public InventoryInfo inventory_info;
 	public PanelContainer interact_inventory;
-	public Control abilities;
+	public AbilitiesInterface abilities;
 	public VBoxContainer character_Sheet_depth;
+	public Panel armor;
 	public VBoxContainer mats;
 	public HUD hud;
 
@@ -90,11 +91,18 @@ public partial class UI : Control
 		inventory_info = GetNode<InventoryInfo>("Inventory/CharacterInventoryContainer");
 		interact_inventory = GetNode<PanelContainer>("InteractInventory");
 		character_Sheet_depth = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth");
+		armor = GetNode<Panel>("Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/CharacterSheet/CharacterOutline/Armor");
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
 		cursor_button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
-		abilities = GetNode<Control>("Abilities");
+		abilities = GetNode<AbilitiesInterface>("Abilities");
 		hud = GetNode<HUD>("HUD");
-		
+
+		foreach (GearInfo gear_button in armor.GetChildren())
+		{
+			gear_button.GetUIInfo(this);
+		}
+
+		abilities.GetUIInfo(this);		
 
 		// HUD icons
 		// health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
@@ -104,17 +112,17 @@ public partial class UI : Control
 
 		// Signals subscribed to
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.UIHealthUpdate += HandleUIHealthUpdate;
-		_customSignals.UIResourceUpdate += HandleUIResourceUpdate;
+		// _customSignals.UIHealthUpdate += HandleUIHealthUpdate;
+		// _customSignals.UIResourceUpdate += HandleUIResourceUpdate;
 		// _customSignals.UIHealth += HandleUIHealth;
 		// _customSignals.UIResource += HandleUIResource;
-		_customSignals.Interact += HandleInteract;
+		// _customSignals.Interact += HandleInteract;
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
-		_customSignals.OverSlot += HandleOverSlot;
+		// _customSignals.OverSlot += HandleOverSlot;
 		
-		_customSignals.AbilityUISecondaryOpen += HandleAbilityUISecondaryOpen;
+		// _customSignals.AbilityUISecondaryOpen += HandleAbilityUISecondaryOpen;
 		
-		_customSignals.HideCursor += HandleHideCursor;
+		// _customSignals.HideCursor += HandleHideCursor;
 
 		// inventory.ConveyPlayerToButtons();
 		
@@ -161,6 +169,7 @@ public partial class UI : Control
 		// GD.Print(HasFocus());
 
 		// GD.Print(over_trash);
+		GD.Print(abilities_secondary_ui_open);
 
 		// GD.Print("Hover over button ", hover_over_button.Name);
 		
@@ -357,41 +366,33 @@ public partial class UI : Control
 		
 	}
 
-	// private void HandlePlayerInfo(Player player)
-    // {
-    //     this_player = player;
-    // }
-
 	public void GetPlayerInfo(Player player)
 	{
 		this_player = player;
 	}
 
-	 private void HandleHideCursor()
-    {
-        abilities_open = false;
+	// private void HandleHideCursor()
+    // {
+    //     abilities_open = false;
+	// 	inventory_open = false;
+    // }
+
+	public void CloseInterface()
+	{
+		abilities_open = false;
 		inventory_open = false;
-    }
+	}
 
 
-    private void HandleAbilityUISecondaryOpen(bool secondary_open)
-    {
-        abilities_secondary_ui_open = secondary_open;
-    }
+    // private void HandleAbilityUISecondaryOpen(bool secondary_open)
+    // {
+    //     abilities_secondary_ui_open = secondary_open;
+    // }
 
 	public void TestFunction()
 	{
 		GD.Print("This is a test function");
 	}
-
-    
-
-    // private void UpdateHealth() // Updates UI health
-	// {
-	// 	// GD.Print("Health: ", health);
-	// 	health_icon.Value = health;
-	// 	// GD.Print("Health Icon Value: ", health_icon.MaxValue);
-	// }
 
 	private void UpdateResource() // Updates UI resource
 	{
@@ -414,9 +415,10 @@ public partial class UI : Control
         resource -= resource_amount;
     }
 
-	private void HandleInteract(Area3D area, bool in_interact_area, bool interacting)
-    {
 	
+	public void GetInteract(Area3D area, bool in_interact_area, bool interacting)
+	{
+		GD.Print("Getting interaction");
 		if(in_interact_area)
 		{
 			
@@ -449,23 +451,70 @@ public partial class UI : Control
 			interact_inventory.Hide();
 			
 		}
-		
-    }
+	}
 
-	private void HandleOverSlot(string slot)
-    {
-		// GD.Print("Over Head signal received");
-		over_slot = true;
-        if(slot == "Head")
-		{
-			over_head = true;
-		}
-		else
-		{
-			over_head = false;
-		}
-    }
+	// private void HandleOverSlot(string slot)
+    // {
+	// 	// GD.Print("Over Head signal received");
+	// 	over_slot = true;
+    //     if(slot == "Head")
+	// 	{
+	// 		over_head = true;
+	// 	}
+	// 	else
+	// 	{
+	// 		over_head = false;
+	// 	}
+    // }
 
+	// private void HandleInteract(Area3D area, bool in_interact_area, bool interacting)
+    // {
 	
+	// 	if(in_interact_area)
+	// 	{
+			
+	// 		HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+	// 		Label press = (Label)TextContainer.GetChild(0);
+	// 		Label object_to_interact = (Label)TextContainer.GetChild(1);
+	// 		press.Text = "A : ";
+	// 		object_to_interact.Text = "Interact with " + area.GetParent().Name;
+	// 		interact_bar.Show();
+	// 		player_in_interact_area = true;
+	// 		if(interacting)
+	// 		{
+	// 			interact_inventory.Show();
+	// 		}
+	// 		if(!interacting)
+	// 		{
+	// 			interact_inventory.Hide();
+	// 		}
+
+	// 	}
+	// 	else
+	// 	{
+	// 		interact_bar.Visible = false;
+	// 		player_in_interact_area = false;
+	// 		HBoxContainer TextContainer = (HBoxContainer)interact_bar.GetChild(0);
+	// 		Label press = (Label)TextContainer.GetChild(0);
+	// 		Label object_to_interact = (Label)TextContainer.GetChild(1);
+	// 		press.Text = null;
+	// 		object_to_interact.Text = null;
+	// 		interact_inventory.Hide();
+			
+	// 	}
+		
+    // }
+
+	 // private void UpdateHealth() // Updates UI health
+	// {
+	// 	// GD.Print("Health: ", health);
+	// 	health_icon.Value = health;
+	// 	// GD.Print("Health Icon Value: ", health_icon.MaxValue);
+	// }
+
+	// private void HandlePlayerInfo(Player player)
+    // {
+    //     this_player = player;
+    // }
 
 }

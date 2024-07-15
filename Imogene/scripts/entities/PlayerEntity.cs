@@ -102,7 +102,8 @@ public partial class PlayerEntity : Entity
 	// public Area3D hitbox; // Area where the player does damage
 	public MeshInstance3D land_point;
 	public Vector3 land_point_position;
-	
+
+	public UI ui;	
 	public CustomSignals _customSignals; // Custom signal instance
 
 	// Called when the node enters the scene tree for the first time.
@@ -112,6 +113,7 @@ public partial class PlayerEntity : Entity
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		main_hand_hitbox = GetNode<Hitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
+		ui = GetNode<UI>("UI/UI");
 		Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
 		
 		vision  = (Area3D)GetNode("Areas/Vision");
@@ -303,25 +305,29 @@ public partial class PlayerEntity : Entity
 		{
 			if(entered_interact)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				ui.GetInteract(area_interacting, in_interact_area, interacting);
 				entered_interact = false;
 			}
 			
 			if(Input.IsActionJustPressed("Interact") && !interacting)
 			{
 				interacting = true;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				ui.GetInteract(area_interacting, in_interact_area, interacting);
 			}
 			else if(Input.IsActionJustPressed("Interact") && interacting)
 			{
 				interacting = false;
-				_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+				ui.GetInteract(area_interacting, in_interact_area, interacting);
 			}
 		}
 		else if(left_interact)
 		{
 			interacting = false;
-			_customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+			// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+			ui.GetInteract(area_interacting, in_interact_area, interacting);
 			left_interact = false;
 		}
 
