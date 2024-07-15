@@ -101,10 +101,10 @@ public partial class UI : Control
 		{
 			gear_button.GetUIInfo(this);
 		}
+		
 
 		abilities.GetUIInfo(this);		
 
-		// HUD icons
 		// health_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelHealthContainer/HealthContainer/HealthIcon");
 		// resource_icon = GetNode<TextureProgressBar>("HUD/BottomHUD/PanelResourceContainer/ResourceContainer/ResourceIcon");
 		interact_bar = GetNode<PanelContainer>("HUD/InteractBar");
@@ -169,7 +169,7 @@ public partial class UI : Control
 		// GD.Print(HasFocus());
 
 		// GD.Print(over_trash);
-		GD.Print(abilities_secondary_ui_open);
+		
 
 		// GD.Print("Hover over button ", hover_over_button.Name);
 		

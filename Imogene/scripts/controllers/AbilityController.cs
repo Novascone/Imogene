@@ -35,7 +35,14 @@ public partial class AbilityController : Controller
 		player.abilities.Add(new_ability);
 		AddChild(new_ability);
 		new_ability.GetPlayerInfo(player);
-		_customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
+		foreach(AbilityCategory ability_category in player.ui.abilities.categories.GetChildren())
+		{
+			if (ability_category.IsInGroup(ability_resource.type))
+			{
+				ability_category.AddAbility(ability_resource);
+			}
+		}
+		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
 	public void AssignAbilities()
@@ -49,9 +56,22 @@ public partial class AbilityController : Controller
 		player.test_abilities_assigned = true;
 	}
 	
-	 private void AssignAbilityHelper(string button_name, AbilityResource abilityResource)
+	 private void AssignAbilityHelper(string button_name, AbilityResource ability_resource)
 	{
-			_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
+			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
+			player.ui.abilities.AbilityAssigned(ability_resource, button_name);
+			player.ui.hud.AbilityAssigned(ability_resource, button_name);
+			GD.Print("hud ability assigned");
+			foreach(Ability ability in player.abilities)
+			{
+				if(ability.Name == ability_resource.name)
+				{
+					ability.CheckAssignment(button_name);
+				}
+			}
 			GD.Print("Ability Assigned");
 	}
+
+	
+
 }

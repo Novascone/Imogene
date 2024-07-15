@@ -246,6 +246,10 @@ public partial class Slash : Ability
 			CheckAssignment(button_name);
 		}
     }
+	public void AbilityAssigned(AbilityResource ability_resource)
+	{
+		
+	}
 	public void DualWield()
 	{
 
