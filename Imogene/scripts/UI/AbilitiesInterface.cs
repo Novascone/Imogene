@@ -49,17 +49,16 @@ public partial class AbilitiesInterface : UI
 	public PanelContainer accept_cancel;
 	public VBoxContainer close_ability_binds;
 	public PanelContainer button_to_be_assigned_container;
-	public Button button_to_be_assigned;
-	public string button_to_be_assigned_text;
-	public Button button_to_be_assigned_icon;
-	
-	
-	public bool is_non_action_assignment_open;
 
-	public UI this_ui;
-	public bool ability_changed;
-	public string ability_to_change;
-	public string button_to_bind;
+	public Button button_to_be_assigned; // The button an ability will be assigned to in the interface
+	public string button_to_be_assigned_text; // The input associated with that button
+	public Button button_to_be_assigned_icon; // The icon of the ability that is going to be assigned
+	
+
+	public UI this_ui; // Reference to the UI
+	public bool ability_changed; // Boolean to let the Ability controller know an ability has been changed
+	public string ability_to_change; // Name of the ability that is going to change
+	public string button_to_bind; // New button the ability is bound to
 
 	private PanelContainer current_ui;
 	private PanelContainer previous_ui;
@@ -149,12 +148,7 @@ public partial class AbilitiesInterface : UI
 		
 	}
 
-    // private void HandleAbilityAccept()
-    // {
-    //     current_ui = ability_binds;
-	// 	previous_ui = melee_abilities;
-	// 	NavigateAbilities();
-    // }
+	// Set current and previous UIs
 	public void AbilityAccept()
     {
         current_ui = ability_binds;
@@ -169,14 +163,7 @@ public partial class AbilitiesInterface : UI
 		NavigateAbilities();
 	}
 
-	// private void HandleAbilityCancel()
-    // {
-    //     current_ui = ability_binds;
-	// 	previous_ui = melee_abilities;
-	// 	NavigateAbilities();
-    // }
-
-	public void GetUIInfo(UI i)
+	public void GetUIInfo(UI i) // Get UI info
 	{
 		this_ui = i;
 	}
@@ -341,6 +328,21 @@ public partial class AbilitiesInterface : UI
 		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_assign.Icon  = null;}
 		
 	}
+
+	// private void HandleAbilityAccept()
+    // {
+    //     current_ui = ability_binds;
+	// 	previous_ui = melee_abilities;
+	// 	NavigateAbilities();
+    // }
+
+	// private void HandleAbilityCancel()
+    // {
+    //     current_ui = ability_binds;
+	// 	previous_ui = melee_abilities;
+	// 	NavigateAbilities();
+    // }
+
 	// public void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
 	// {
 	// 	if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_assign.Icon  = icon;}

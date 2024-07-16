@@ -16,7 +16,7 @@ public partial class CrossAssignment : Button
 	{
 	}
 
-	public void _on_button_down()
+	public void _on_button_down() // Set the selected button and the input of that selected button
 	{
 		this_interface.selected_button = this;
 		if(Name == "LCrossPrimaryUpAssign"){ this_interface.button_to_be_assigned_text = "Primary RB";}

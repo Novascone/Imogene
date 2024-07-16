@@ -118,7 +118,7 @@ public partial class HUD : UI
 	}
 
 	
-	public void AbilityAssigned(AbilityResource ability_resource, string button_name)
+	public void AbilityAssigned(AbilityResource ability_resource, string button_name) // Assign ability in HUD
     {
 		GD.Print("got assignment in HUD");
 		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = ability_resource.icon;}
@@ -142,7 +142,7 @@ public partial class HUD : UI
 		if(button_name == "RCrossSecondaryDownAssign"){r_cross_secondary_down_action_button.Icon = ability_resource.icon;}
         
     }
-	public void AbilityRemoved(string button_name)
+	public void AbilityRemoved(string button_name) // Remove ability assignment from HUD
 	{
 		GD.Print(button_name);
 		
@@ -258,30 +258,15 @@ public partial class HUD : UI
 			}
     }
 
-	
-
-	// private void HandleWhichConsumable(int consumable) // Hides/ shows the current selected consumable
-    // {
-    //     if(consumable == 1){consumable_1.Show(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Hide();}
-	// 	if(consumable == 2){consumable_1.Hide(); consumable_2.Show(); consumable_3.Hide(); consumable_4.Hide();}
-	// 	if(consumable == 3){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Show(); consumable_4.Hide();}
-	// 	if(consumable == 4){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Show();}
-    // }
-	public void WhichConsumable(int consumable)
+	public void WhichConsumable(int consumable) // Show current consumable
 	{
 		if(consumable == 1){consumable_1.Show(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Hide();}
 		if(consumable == 2){consumable_1.Hide(); consumable_2.Show(); consumable_3.Hide(); consumable_4.Hide();}
 		if(consumable == 3){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Show(); consumable_4.Hide();}
 		if(consumable == 4){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Show();}
 	}
-	// private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
-    // {
-    //     if(consumable_slot == 1){consumable_1.Icon = item.icon;}
-	// 	if(consumable_slot == 2){consumable_2.Icon = item.icon;}
-	// 	if(consumable_slot == 3){consumable_3.Icon = item.icon;}
-	// 	if(consumable_slot == 4){consumable_4.Icon = item.icon;}
-    // }
-	public void EquipConsumableHUD(ConsumableResource item, int consumable_slot)
+	
+	public void EquipConsumableHUD(ConsumableResource item, int consumable_slot) // Assigns consumable in HUD
     {
         if(consumable_slot == 1){consumable_1.Icon = item.icon;}
 		if(consumable_slot == 2){consumable_2.Icon = item.icon;}
@@ -306,6 +291,22 @@ public partial class HUD : UI
 		}
 		
 	}
+
+	// private void HandleWhichConsumable(int consumable) // Hides/ shows the current selected consumable
+    // {
+    //     if(consumable == 1){consumable_1.Show(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Hide();}
+	// 	if(consumable == 2){consumable_1.Hide(); consumable_2.Show(); consumable_3.Hide(); consumable_4.Hide();}
+	// 	if(consumable == 3){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Show(); consumable_4.Hide();}
+	// 	if(consumable == 4){consumable_1.Hide(); consumable_2.Hide(); consumable_3.Hide(); consumable_4.Show();}
+    // }
+
+	// private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
+    // {
+    //     if(consumable_slot == 1){consumable_1.Icon = item.icon;}
+	// 	if(consumable_slot == 2){consumable_2.Icon = item.icon;}
+	// 	if(consumable_slot == 3){consumable_3.Icon = item.icon;}
+	// 	if(consumable_slot == 4){consumable_4.Icon = item.icon;}
+    // }
 
 	// private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
     // {

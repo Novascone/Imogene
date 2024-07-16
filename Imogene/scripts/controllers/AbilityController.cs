@@ -62,6 +62,7 @@ public partial class AbilityController : Controller
 				ability_category.AddAbility(ability_resource);
 			}
 		}
+		
 		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
