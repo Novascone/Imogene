@@ -29,7 +29,7 @@ public partial class AbilityButton : Button
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.ButtonToBeAssigned += HandleButtonToBeAssigned;
-		_customSignals.AbilityCancel += HandleAbilityCancel;
+		// _customSignals.AbilityCancel += HandleAbilityCancel;
 		// _customSignals.AvailableAbilities += HandleAvailableAbilities;
 	}
 
@@ -84,9 +84,15 @@ public partial class AbilityButton : Button
 		info.Hide();
 	}
 
-	private void HandleAbilityCancel()
+	public void AbilityCancel()
 	{
 		assign_button.Icon = null;
 		icon_button = null;
 	}
+
+	// private void HandleAbilityCancel()
+	// {
+	// 	assign_button.Icon = null;
+	// 	icon_button = null;
+	// }
 }

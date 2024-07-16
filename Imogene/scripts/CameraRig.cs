@@ -8,12 +8,14 @@ public partial class CameraRig : Node3D
 	private int default_camera_size = 21; // Controls camera zoom
 	private int zoom_camera_size = 10; // Controls camera zoom
 	private CustomSignals _customSignals;
+	private bool zoomed;
+	private Player player;
 	public override void _Ready()
 	{
 		camera = GetNode<Camera3D>("Camera");
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.CameraPosition += HandleCameraPosition;
-		_customSignals.ZoomCamera += HandleZoomCamera;
+		// _customSignals.CameraPosition += HandleCameraPosition;
+		// _customSignals.ZoomCamera += HandleZoomCamera;
 		
 	}
 
@@ -22,7 +24,28 @@ public partial class CameraRig : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		_customSignals.EmitSignal(nameof(CustomSignals.CameraPosition), camera.GlobalTransform.Origin); // Sends camera position
+		// _customSignals.EmitSignal(nameof(CustomSignals.CameraPosition), camera.GlobalTransform.Origin); // Sends camera position
+		if(!zoomed)
+		{
+			if (player.ui.inventory_open || player.ui.abilities_open)
+			{
+				camera.Size = zoom_camera_size;
+				zoomed = true;
+			}
+		}
+		else if (zoomed)
+		{
+			if(!player.ui.inventory_open && !player.ui.abilities_open)
+			{
+				camera.Size = default_camera_size;
+				zoomed = false;
+			}
+		}
+	}
+
+	public void GetPlayerInfo(Player s)
+	{
+		player = s;
 	}
 
 	private void HandleCameraPosition(Vector3 position){}
@@ -40,4 +63,6 @@ public partial class CameraRig : Node3D
 			camera.Size = default_camera_size;
 		}
 	}
+
+	
 }

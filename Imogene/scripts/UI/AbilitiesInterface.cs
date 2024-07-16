@@ -50,12 +50,16 @@ public partial class AbilitiesInterface : UI
 	public VBoxContainer close_ability_binds;
 	public PanelContainer button_to_be_assigned_container;
 	public Button button_to_be_assigned;
+	public string button_to_be_assigned_text;
 	public Button button_to_be_assigned_icon;
 	
 	
 	public bool is_non_action_assignment_open;
 
-	private UI this_ui;
+	public UI this_ui;
+	public bool ability_changed;
+	public string ability_to_change;
+	public string button_to_bind;
 
 	private PanelContainer current_ui;
 	private PanelContainer previous_ui;
@@ -127,7 +131,7 @@ public partial class AbilitiesInterface : UI
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.AbilityAccept += HandleAbilityAccept;
-		_customSignals.AbilityCancel += HandleAbilityCancel;
+		// _customSignals.AbilityCancel += HandleAbilityCancel;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
 		// _customSignals.AbilityRemoved += HandleAbilityRemoved;
 	}
@@ -158,12 +162,19 @@ public partial class AbilitiesInterface : UI
 		NavigateAbilities();
     }
 
-	private void HandleAbilityCancel()
-    {
-        current_ui = ability_binds;
+	public void AbilityCancel()
+	{
+		current_ui = ability_binds;
 		previous_ui = melee_abilities;
 		NavigateAbilities();
-    }
+	}
+
+	// private void HandleAbilityCancel()
+    // {
+    //     current_ui = ability_binds;
+	// 	previous_ui = melee_abilities;
+	// 	NavigateAbilities();
+    // }
 
 	public void GetUIInfo(UI i)
 	{
@@ -242,8 +253,10 @@ public partial class AbilitiesInterface : UI
 		previous_ui = ability_types;
 		current_ui = melee_abilities;
 		current_ability_category = melee_abilities;
-		current_ability_category.ButtonName(selected_button, selected_button.button_text);
+		current_ability_category.ButtonName(selected_button, button_to_be_assigned_text);
+
 		GD.Print("Assigning button name");
+		GD.Print("button text " + button_to_be_assigned_text);
 		current_ability_category.CurrentAbilityBoundOnCrossButton(selected_button.Icon);
 		
 		previous_ui.Hide();
@@ -258,9 +271,6 @@ public partial class AbilitiesInterface : UI
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityUISecondaryOpen),false);
 		this_ui.abilities_secondary_ui_open = false;
 		this_ui.CloseInterface();
-
-		// ********************************************** camera zoom out here *********************************************
-
 		// _customSignals.EmitSignal(nameof(CustomSignals.HideCursor));
 		// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 	}

@@ -22,8 +22,8 @@ public partial class Roll : Ability
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
-		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.AbilityRemoved += HandleAbilityRemoved;
+		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
+		// _customSignals.AbilityRemoved += HandleAbilityRemoved;
 
 		
     }
@@ -123,25 +123,25 @@ public partial class Roll : Ability
 		}
     }
 
-    private void HandleAbilityRemoved(string ability, string button_removed) // Unbinds the ability
-    {
-        if(this.Name == ability)
-		{
-			useable = false;
-			assigned_button = null;
-			cross_type = null;
-			cross = null;
-		}
-    }
+    // private void HandleAbilityRemoved(string ability, string button_removed) // Unbinds the ability
+    // {
+    //     if(this.Name == ability)
+	// 	{
+	// 		useable = false;
+	// 		assigned_button = null;
+	// 		cross_type = null;
+	// 		cross = null;
+	// 	}
+    // }
 
-    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon) // Binds the ability
-    {
-        if(this.Name == ability)
-		{
-			useable = true;
-			CheckAssignment(button_name);
-		}
-    }
+    // private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon) // Binds the ability
+    // {
+    //     if(this.Name == ability)
+	// 	{
+	// 		useable = true;
+	// 		CheckAssignment(button_name);
+	// 	}
+    // }
 
 	// private void HandlePlayerInfo(player s)
     // {

@@ -10,7 +10,7 @@ public partial class Player : PlayerEntity
 	// Player reference
 	public Player this_player; // Player
 	public RayCast3D raycast;
-	public Node3D camera_rig;
+	public CameraRig camera_rig;
 
 	// Abilities
 	private Target target_ability; // Target enemies
@@ -66,7 +66,7 @@ public partial class Player : PlayerEntity
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;
 
-		camera_rig = GetNode<Node3D>("CameraRig");
+		camera_rig = GetNode<CameraRig>("CameraRig");
 		camera_rig.TopLevel = true;
 
 		movementController = GetNode<MovementController>("Controllers/MovementController");
@@ -124,6 +124,8 @@ public partial class Player : PlayerEntity
 		statController.GetEntityInfo(this);
 		abilityController.GetPlayerInfo(this);
 		abilityController.LoadAbilities();
+		ui.GetPlayerInfo(this);
+		camera_rig.GetPlayerInfo(this);
 
 		GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
 		GD.Print("Hurtbox type " + hurtbox.GetType());
@@ -147,7 +149,7 @@ public partial class Player : PlayerEntity
     public override void _PhysicsProcess(double delta)
     {
 		CameraFollowsPlayer();
-		SignalEmitter(); // Emits signals to other parts of the game
+		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
 
@@ -157,12 +159,12 @@ public partial class Player : PlayerEntity
 			{
 				l_cross_primary_selected = !l_cross_primary_selected;
 				
-				_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+				// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 			}
 			if(Input.IsActionJustPressed("D-PadRight"))
 			{
 				r_cross_primary_selected = !r_cross_primary_selected;
-				_customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
+				// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
 			}
 			if(Input.IsActionJustPressed("D-PadUp"))
 			{
@@ -177,6 +179,7 @@ public partial class Player : PlayerEntity
 				}
 
 				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), consumable);
+				ui.hud.WhichConsumable(consumable);
 			}
 			if(Input.IsActionJustPressed("D-PadDown"))
 			{
@@ -190,20 +193,18 @@ public partial class Player : PlayerEntity
     }
 
 
-	public void SignalEmitter() // Emit signals
+	public void Updater() // Emit signals
 	{
-		if(max_health_changed)
+		if(stats_changed)
 		{
 			// _customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
-			max_health_changed = false;
+			stats_changed = false;
 			statController.UpdateStats();
 			// _customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
-			ui.GetPlayerInfo(this);
 			stats_updated = false;
 		}
-		
-		_customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
-		_customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
+		// _customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
+		// _customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
 	}
 
 	private void HandleRemoveEquipped() // Removes equiped items

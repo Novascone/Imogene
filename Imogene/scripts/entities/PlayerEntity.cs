@@ -9,7 +9,7 @@ using System.Transactions;
 public partial class PlayerEntity : Entity
 {
 
-	public bool max_health_changed = true; // Has the entities heath changed?
+	public bool stats_changed = true; // Has the entities heath changed?
 	public bool stats_updated = true; // Have the entities stats changed?
 	
 	// Equipment
@@ -114,6 +114,7 @@ public partial class PlayerEntity : Entity
 		rec_lvl_scale = 100 * (float)level;
 		main_hand_hitbox = GetNode<Hitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 		ui = GetNode<UI>("UI/UI");
+		
 		Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
 		
 		vision  = (Area3D)GetNode("Areas/Vision");

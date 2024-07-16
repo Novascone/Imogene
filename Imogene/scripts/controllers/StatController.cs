@@ -134,37 +134,37 @@ public partial class StatController : Controller
 		// GD.Print("posture_regen " + player.posture_regen);
 		// GD.Print("recovery " + player.recovery);
 		// GD.Print("Stats have been updated from the stat controller");
-		if(entity is Player)
-		{
-			SendStats();
-		}
+		// if(entity is Player)
+		// {
+		// 	SendStats();
+		// }
 		
 		
 	}
 
-	public void SendStats()
-	{
-		GD.Print("sending stats from stat controller");
-		_customSignals.EmitSignal(nameof(CustomSignals.SendStats),
-		entity.level, entity.strength, entity.dexterity, entity.intellect, entity.vitality, entity.stamina, entity.wisdom, entity.charisma, entity.total_dps,
+	// public void SendStats()
+	// {
+	// 	GD.Print("sending stats from stat controller");
+	// 	_customSignals.EmitSignal(nameof(CustomSignals.SendStats),
+	// 	entity.level, entity.strength, entity.dexterity, entity.intellect, entity.vitality, entity.stamina, entity.wisdom, entity.charisma, entity.total_dps,
 
-		entity.physical_melee_dps, entity.spell_melee_dps, entity.physical_ranged_dps, entity.spell_ranged_dps, entity.physical_melee_power, 
+	// 	entity.physical_melee_dps, entity.spell_melee_dps, entity.physical_ranged_dps, entity.spell_ranged_dps, entity.physical_melee_power, 
 
-		entity.spell_melee_power, entity.physical_ranged_power, entity.spell_ranged_power, entity.wisdom_scaler, entity.physical_melee_power_mod,
+	// 	entity.spell_melee_power, entity.physical_ranged_power, entity.spell_ranged_power, entity.wisdom_scaler, entity.physical_melee_power_mod,
 
-		entity.physical_ranged_power_mod, entity.spell_ranged_power_mod, entity.power_mod_avg, entity.damage_bonus, entity.combined_damage, entity.base_aps,
+	// 	entity.physical_ranged_power_mod, entity.spell_ranged_power_mod, entity.power_mod_avg, entity.damage_bonus, entity.combined_damage, entity.base_aps,
 
-		entity.aps_modifiers, entity.aps, entity.base_dps, entity.skill_mod, entity.crit_mod, entity.slash_damage, entity.thrust_damage, entity.blunt_damage, entity.bleed_damage,
+	// 	entity.aps_modifiers, entity.aps, entity.base_dps, entity.skill_mod, entity.crit_mod, entity.slash_damage, entity.thrust_damage, entity.blunt_damage, entity.bleed_damage,
 
-		entity.poison_damage, entity.fire_damage, entity.cold_damage, entity.lightning_damage, entity.holy_damage, entity.critical_hit_chance, entity.critical_hit_damage, entity.attack_speed_increase,
+	// 	entity.poison_damage, entity.fire_damage, entity.cold_damage, entity.lightning_damage, entity.holy_damage, entity.critical_hit_chance, entity.critical_hit_damage, entity.attack_speed_increase,
 
-		entity.cool_down_reduction, entity.posture_damage, entity.armor, entity.poise, entity.block_amount, entity.retaliation, entity.physical_resistance, entity.thrust_resistance, entity.slash_resistance,
+	// 	entity.cool_down_reduction, entity.posture_damage, entity.armor, entity.poise, entity.block_amount, entity.retaliation, entity.physical_resistance, entity.thrust_resistance, entity.slash_resistance,
 
-		entity.blunt_resistance, entity.bleed_resistance, entity.poison_resistance, entity.curse_resistance, entity.spell_resistance, entity.fire_resistance, entity.cold_resistance, entity.lightning_resistance,
+	// 	entity.blunt_resistance, entity.bleed_resistance, entity.poison_resistance, entity.curse_resistance, entity.spell_resistance, entity.fire_resistance, entity.cold_resistance, entity.lightning_resistance,
 		
-		entity.holy_resistance, entity.maximum_health, entity.health_bonus, entity.health_regen, entity.health_regen_bonus, entity.maximum_posture, entity.posture_regen, entity.posture_regen_bonus, entity.health_on_retaliate, entity.resistance,
+	// 	entity.holy_resistance, entity.maximum_health, entity.health_bonus, entity.health_regen, entity.health_regen_bonus, entity.maximum_posture, entity.posture_regen, entity.posture_regen_bonus, entity.health_on_retaliate, entity.resistance,
 
-		entity.maximum_resource, entity.resource_regen, entity.resource_cost_reduction, entity.recovery, entity.movement_speed, entity.maximum_gold
-																);
-	}
+	// 	entity.maximum_resource, entity.resource_regen, entity.resource_cost_reduction, entity.recovery, entity.movement_speed, entity.maximum_gold
+	// 															);
+	// }
 }

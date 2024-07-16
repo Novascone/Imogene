@@ -15,19 +15,19 @@ public partial class Jump : Ability
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.KeyBind += HandleKeyBind;
-		_customSignals.AbilityAssigned += HandleAbilityAssigned;
+		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
 
 		
     }
 
 
-	private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
-    {
-        if(this.Name == ability)
-		{
-			CheckAssignment(button_name);
-		}
-    }
+	// private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    // {
+    //     if(this.Name == ability)
+	// 	{
+	// 		CheckAssignment(button_name);
+	// 	}
+    // }
 
     // private void HandlePlayerInfo(player s)
     // {

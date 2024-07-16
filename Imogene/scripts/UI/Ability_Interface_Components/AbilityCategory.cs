@@ -111,6 +111,10 @@ public partial class AbilityCategory : PanelContainer
 	{
 		button_to_be_assigned.Icon = null;
 	}
+	public void AbilityCancel()
+	{
+		button_to_be_assigned.Icon = null;
+	}
 	// private void HandleAbilityAccept()
 	// {
 	// 	button_to_be_assigned.Icon = null;
@@ -228,7 +232,10 @@ public partial class AbilityCategory : PanelContainer
 		this_interface.AbilityAccept();
 		this_interface.AbilityAssigned(button_clicked.ability_resource, action_button_to_be_assigned.Name);
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAccept));
-		_customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, action_button_to_be_assigned.Name, button_clicked.Icon);
+		this_interface.ability_changed = true;
+		this_interface.ability_to_change = button_clicked.ability_name;
+		this_interface.button_to_bind = action_button_to_be_assigned.Name;
+		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, action_button_to_be_assigned.Name, button_clicked.Icon);
 
 		
 	}
@@ -236,6 +243,10 @@ public partial class AbilityCategory : PanelContainer
 	public void _on_cancel_button_down()
 	{
 		_customSignals.EmitSignal(nameof(CustomSignals.AbilityCancel));
+		this_interface.AbilityCancel();
+		AbilityCancel();
+		button_clicked.AbilityCancel();
+
 	}
 
 	public void _on_last_page_button_down()

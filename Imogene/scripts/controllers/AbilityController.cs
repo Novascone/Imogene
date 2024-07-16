@@ -14,12 +14,32 @@ public partial class AbilityController : Controller
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
-	public void LoadAbilities() // Loads abilities
+    public override void _Process(double delta)
+    {
+        if(player.ui.abilities.ability_changed)
+		{
+			foreach(Ability ability in player.abilities)
+			{
+				if (ability.Name == player.ui.abilities.ability_to_change)
+				{
+					ability.useable = true;
+					ability.CheckAssignment(player.ui.abilities.button_to_bind);
+				}
+			}
+			player.ui.abilities.ability_changed = false;
+			player.ui.abilities.ability_to_change = null;
+			player.ui.abilities.button_to_bind = null;
+		}
+    }
+
+    public void LoadAbilities() // Loads abilities
 	{
 		if(!player.abilities_loaded)
 		{
-			_customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), player.l_cross_primary_selected);
-			_customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), player.r_cross_primary_selected);
+			// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), player.l_cross_primary_selected);
+			// _customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), player.r_cross_primary_selected);
+			player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
+			player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
 			foreach(AbilityResource ability_resource in player.ability_resources)
 			{
 				LoadAbilitiesHelper(ability_resource);

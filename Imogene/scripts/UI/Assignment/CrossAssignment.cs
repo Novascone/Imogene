@@ -4,29 +4,11 @@ using System;
 public partial class CrossAssignment : Button
 {
 	public AbilitiesInterface this_interface;
-	public string button_text;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		if(Name == "LCrossPrimaryUpAssignment"){ button_text = "Primary RB";}
-		if(Name == "LCrossPrimaryLeftAssignment"){ button_text = "Primary LB";}
-		if(Name == "LCrossPrimaryRightAssignment"){ button_text = "Primary RT";}
-		if(Name == "LCrossPrimaryDownAssignment"){ button_text = "Primary LT";}
-
-		if(Name == "RCrossPrimaryUpAssignment"){ button_text = "Primary Y";}
-		if(Name == "RCrossPrimaryLeftAssignment"){ button_text = "Primary X";}
-		if(Name == "RCrossPrimaryRightAssignment"){ button_text = "Primary B";}
-		if(Name == "RCrossPrimaryDownAssignment"){ button_text = "Primary A";}
-
-		if(Name == "LCrossSecondaryUpAssignment"){ button_text = "Secondary RB";}
-		if(Name == "LCrossSecondaryLeftAssignment"){ button_text = "Secondary LB";}
-		if(Name == "LCrossSecondaryRightAssignment"){ button_text = "Secondary RT";}
-		if(Name == "LCrossSecondaryDownAssignment"){ button_text = "Secondary LT";}
-
-		if(Name == "RCrossSecondaryUpAssignment"){ button_text = "Secondary Y";}
-		if(Name == "RCrossSecondaryLeftAssignment"){ button_text = "Secondary X";}
-		if(Name == "RCrossSecondaryRightAssignment"){ button_text = "Secondary B";}
-		if(Name == "RCrossSecondaryDownAssignment"){ button_text = "Secondary A";}
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,6 +19,26 @@ public partial class CrossAssignment : Button
 	public void _on_button_down()
 	{
 		this_interface.selected_button = this;
+		if(Name == "LCrossPrimaryUpAssign"){ this_interface.button_to_be_assigned_text = "Primary RB";}
+		if(Name == "LCrossPrimaryLeftAssign"){ this_interface.button_to_be_assigned_text = "Primary LB";}
+		if(Name == "LCrossPrimaryRightAssign"){ this_interface.button_to_be_assigned_text = "Primary RT";}
+		if(Name == "LCrossPrimaryDownAssignment"){ this_interface.button_to_be_assigned_text = "Primary LT";}
+
+		if(Name == "RCrossPrimaryUpAssign"){ this_interface.button_to_be_assigned_text = "Primary Y";}
+		if(Name == "RCrossPrimaryLeftAssign"){ this_interface.button_to_be_assigned_text = "Primary X";}
+		if(Name == "RCrossPrimaryRightAssign"){ this_interface.button_to_be_assigned_text = "Primary B";}
+		if(Name == "RCrossPrimaryDownAssign"){ this_interface.button_to_be_assigned_text = "Primary A";}
+
+		if(Name == "LCrossSecondaryUpAssign"){ this_interface.button_to_be_assigned_text = "Secondary RB";}
+		if(Name == "LCrossSecondaryLeftAssign"){ this_interface.button_to_be_assigned_text = "Secondary LB";}
+		if(Name == "LCrossSecondaryRightAssign"){ this_interface.button_to_be_assigned_text = "Secondary RT";}
+		if(Name == "LCrossSecondaryDownAssign"){ this_interface.button_to_be_assigned_text = "Secondary LT";}
+
+		if(Name == "RCrossSecondaryUpAssign"){ this_interface.button_to_be_assigned_text = "Secondary Y";}
+		if(Name == "RCrossSecondaryLeftAssign"){ this_interface.button_to_be_assigned_text = "Secondary X";}
+		if(Name == "RCrossSecondaryRightAssign"){ this_interface.button_to_be_assigned_text = "Secondary B";}
+		if(Name == "RCrossSecondaryDownAssign"){ this_interface.button_to_be_assigned_text = "Secondary A";}
+		GD.Print("button text from cross assign: " + Name + " " + this_interface.button_to_be_assigned_text );
 		this_interface.AssignmentButtonNavigation();
 		// _customSignals.EmitSignal(nameof(CustomSignals.ButtonName), selected_button, "Primary RB");
 	

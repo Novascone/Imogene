@@ -20,8 +20,8 @@ public partial class Slash : Ability
 		held_timer = GetNode<Timer>("HeldTimer"); // Timer to see how long attack is held handles if the play is holding down the button
 		release_timer = GetNode<Timer>("ReleaseTimer");	// Timer that starts when the attack button is released
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.AbilityAssigned += HandleAbilityAssigned;
-		_customSignals.AbilityRemoved += HandleAbilityRemoved;
+		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
+		// _customSignals.AbilityRemoved += HandleAbilityRemoved;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -226,30 +226,6 @@ public partial class Slash : Ability
 			}
         }
     }
-
-    private void HandleAbilityRemoved(string ability, string button_removed)
-    {
-        if(this.Name == ability)
-		{
-			useable = false;
-			assigned_button = null;
-			cross_type = null;
-			cross = null;
-		}
-    }
-
-    private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
-    {
-        if(this.Name == ability)
-		{
-			useable = true;
-			CheckAssignment(button_name);
-		}
-    }
-	public void AbilityAssigned(AbilityResource ability_resource)
-	{
-		
-	}
 	public void DualWield()
 	{
 
@@ -318,5 +294,27 @@ public partial class Slash : Ability
 	{
 		held = false;
 	}
+
+	// private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
+    // {
+    //     if(this.Name == ability)
+	// 	{
+	// 		useable = true;
+	// 		CheckAssignment(button_name);
+	// 	}
+    // }
+
+	// private void HandleAbilityRemoved(string ability, string button_removed)
+    // {
+    //     if(this.Name == ability)
+	// 	{
+	// 		useable = false;
+	// 		assigned_button = null;
+	// 		cross_type = null;
+	// 		cross = null;
+	// 	}
+    // }
+
+    
     
 }
