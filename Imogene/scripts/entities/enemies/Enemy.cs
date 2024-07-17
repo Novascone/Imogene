@@ -149,8 +149,8 @@ public partial class Enemy : Entity
 		// damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignals.EnemyTargetedUI += HandleEnemyTargetedUI;
-		_customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;
+		// _customSignals.EnemyTargetedUI += HandleEnemyTargetedUI;
+		// _customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;
 		_customSignals.FinishedCircling += HandleFinishedCircling;		
 	}
 
@@ -172,17 +172,17 @@ public partial class Enemy : Entity
         state_machine.current_state.Exit("ForwardState");
     }
 
-    private void HandleEnemyUntargetedUI()
-    {
-        status_bar.Hide();
-		target_icon.Hide();
-    }
+    // private void HandleEnemyUntargetedUI()
+    // {
+    //     status_bar.Hide();
+	// 	target_icon.Hide();
+    // }
 
-    private void HandleEnemyTargetedUI(Enemy enemy)
-    {
-        status_bar.Show();
-		target_icon.Show();
-    }
+    // private void HandleEnemyTargetedUI(Enemy enemy)
+    // {
+    //     status_bar.Show();
+	// 	target_icon.Show();
+    // }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)

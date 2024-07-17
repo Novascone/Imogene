@@ -276,6 +276,7 @@ public partial class PlayerEntity : Entity
 				GD.Print("Targeted enemy " + targeted_enemy.identifier);
 				target_enemy_set = true;
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyTargetedUI), targeted_enemy);
+				ui.hud.enemy_health.EnemyTargeted(targeted_enemy);
 				targeted_enemy.targeted = true;
 				GD.Print( identifier + " is targeting " + targeted_enemy.identifier);
 			}
@@ -348,7 +349,8 @@ public partial class PlayerEntity : Entity
 				else if(targeting)
 				{
 					targeting = false;
-					_customSignals.EmitSignal(nameof(CustomSignals.EnemyUntargetedUI));
+					// _customSignals.EmitSignal(nameof(CustomSignals.EnemyUntargetedUI));
+					ui.hud.enemy_health.EnemyUntargeted();
 					targeted_enemy.targeted = false;
 					
 				}

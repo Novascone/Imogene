@@ -65,7 +65,7 @@ public partial class Inventory : UI
 			GD.Print(HasFocus());
 			if(ui.inventory_open || ui.abilities_open)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
+				// _customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
 				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				// this_player.can_move = true;
 				ui.inventory_open = false;
@@ -91,7 +91,7 @@ public partial class Inventory : UI
 			ui.GrabFocus();
 			if(!ui.inventory_open)
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), true);
+				// _customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), true);
 				ui.inventory_open = true;
 				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),true);
 				// this_player.can_move = false;
@@ -102,7 +102,7 @@ public partial class Inventory : UI
 			}
 			else
 			{
-				_customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
+				// _customSignals.EmitSignal(nameof(CustomSignals.ZoomCamera), false);
 				ui.inventory_open = false;
 				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				// this_player.can_move = true;

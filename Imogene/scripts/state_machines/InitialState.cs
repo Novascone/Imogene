@@ -16,7 +16,11 @@ public partial class InitialState : State
       GD.Print("Hello from Initial state");
 		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
-      Exit("ForwardState");
+      if(fsm.this_entity is not StandardEnemy)
+      {
+         Exit("ForwardState");
+      }
+      
       GD.Print("Exiting initial state");
       
    }

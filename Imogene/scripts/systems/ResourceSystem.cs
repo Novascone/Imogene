@@ -57,7 +57,7 @@ public partial class ResourceSystem : EntitySystem
 		if(entity is Enemy enemy)
 			{
 				enemy.posture_bar.Value = entity.posture;
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), entity.posture);
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), enemy, entity.posture);
 			}
 		if(entity.posture == 0)
 		{

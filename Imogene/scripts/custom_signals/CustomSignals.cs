@@ -101,8 +101,8 @@ public partial class CustomSignals : Node
 	// Object to UI
 	[Signal] public delegate void EnemyTargetedUIEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyUntargetedUIEventHandler();
-	[Signal] public delegate void EnemyHealthChangedUIEventHandler(float health);
-	[Signal] public delegate void EnemyPostureChangedUIEventHandler(float posture);
+	[Signal] public delegate void EnemyHealthChangedUIEventHandler(Enemy enemy, float health);
+	[Signal] public delegate void EnemyPostureChangedUIEventHandler(Enemy enemy, float posture);
 
 
 	// Object to object

@@ -50,7 +50,7 @@ public partial class DamageSystem : EntitySystem
 			if(entity is Enemy enemy)
 			{
 				enemy.health_bar.Value = entity.health;
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), entity.health);
+				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
 		}
 		else

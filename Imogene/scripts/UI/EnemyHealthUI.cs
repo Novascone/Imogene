@@ -7,6 +7,7 @@ public partial class EnemyHealthUI : Control
 	private ProgressBar enemy_health;
 	private TextureProgressBar enemy_posture;
 	private Label enemy_name;
+	private Enemy targeted_enemy;
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	public override void _Ready()
 	{
@@ -17,32 +18,63 @@ public partial class EnemyHealthUI : Control
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		_customSignals.EnemyHealthChangedUI += HandleEnemyHealthChangedUI;
 		_customSignals.EnemyPostureChangedUI += HandleEnemyPostureChangedUI;
-		_customSignals.EnemyTargetedUI += HandleEnemyTargeted;
-		_customSignals.EnemyUntargetedUI += HandleEnemyUntargeted;
+		// _customSignals.EnemyTargetedUI += HandleEnemyTargeted;
+		// _customSignals.EnemyUntargetedUI += HandleEnemyUntargeted;
 	}
 
-    private void HandleEnemyUntargeted()
-    {
-        Hide();
-    }
+    // private void HandleEnemyUntargeted()
+    // {
+    //     Hide();
+    // }
 
-    private void HandleEnemyTargeted(Enemy enemy)
+    // private void HandleEnemyTargeted(Enemy enemy)
+    // {
+    //     enemy_health.MaxValue = enemy.maximum_health;
+	// 	enemy_health.Value = enemy.health;
+	// 	enemy_name.Text = enemy.identifier;
+	// 	enemy_posture.MaxValue = enemy.maximum_posture;
+	// 	enemy_posture.Value = enemy.posture;
+	// 	Show();
+    // }
+	public void EnemyTargeted(Enemy enemy)
     {
+		targeted_enemy = enemy;
         enemy_health.MaxValue = enemy.maximum_health;
 		enemy_health.Value = enemy.health;
 		enemy_name.Text = enemy.identifier;
 		enemy_posture.MaxValue = enemy.maximum_posture;
 		enemy_posture.Value = enemy.posture;
+		targeted_enemy.target_icon.Show();
+		targeted_enemy.status_bar.Show();
+		
 		Show();
     }
-
-    private void HandleEnemyHealthChangedUI(float health)
+	public void EnemyUntargeted()
     {
-        enemy_health.Value = health;
+        Hide();
+		targeted_enemy.target_icon.Hide();
+		targeted_enemy.status_bar.Hide();
     }
-	private void HandleEnemyPostureChangedUI(float posture)
+
+
+
+    private void HandleEnemyHealthChangedUI(Enemy enemy, float health)
     {
-        enemy_posture.Value = posture;
+		if(enemy == targeted_enemy)
+		{
+			GD.Print("enemy is enemy");
+			enemy_health.Value = health;
+		}
+        
+    }
+	private void HandleEnemyPostureChangedUI(Enemy enemy, float posture)
+    {
+		if(enemy == targeted_enemy)
+		{
+			GD.Print("enemy is enemy");
+			enemy_posture.Value = posture;
+		}
+        
 		GD.Print("enemy max posture from UI " + enemy_posture.MaxValue);
     }
 

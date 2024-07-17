@@ -49,6 +49,8 @@ public partial class HUD : UI
 	public Button consumable_3;
 	public Button consumable_4;
 
+	public EnemyHealthUI enemy_health;
+
 	private bool l_cross_primary_selected = true;
 	private bool r_cross_primary_selected = true;
 	private bool l_cross_secondary_selected = false;
@@ -102,6 +104,8 @@ public partial class HUD : UI
 		consumable_2 = GetNode<Button>("BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable2");
 		consumable_3 = GetNode<Button>("BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable3");
 		consumable_4 = GetNode<Button>("BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable4");
+
+		enemy_health = GetNode<EnemyHealthUI>("EnemyHealth");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;

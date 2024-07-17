@@ -74,6 +74,12 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lnptr"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j84rj"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvckw"]
+bg_color = Color(1, 0, 0, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ys72g"]
 size = Vector2(280, 16.5)
 
@@ -240,12 +246,6 @@ size = Vector2(53, 54)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j84rj"]
-bg_color = Color(0, 0, 0, 0.501961)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvckw"]
-bg_color = Color(1, 0, 0, 1)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -1062,6 +1062,57 @@ layout_mode = 2
 [node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
+
+[node name="EnemyHealth" type="Control" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = -797.0
+offset_right = 100.0
+offset_bottom = -697.0
+grow_horizontal = 2
+script = ExtResource("15_okotv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyHealth"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+
+[node name="Control" type="Control" parent="HUD/EnemyHealth/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Label" type="Label" parent="HUD/EnemyHealth/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/EnemyHealth/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/background = SubResource("StyleBoxFlat_j84rj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kvckw")
+
+[node name="PostureBar" type="TextureProgressBar" parent="HUD/EnemyHealth/VBoxContainer"]
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+fill_mode = 6
+nine_patch_stretch = true
+texture_progress = ExtResource("16_qax2o")
 
 [node name="InteractInventory" type="PanelContainer" parent="."]
 visible = false
@@ -8950,56 +9001,6 @@ offset_left = -43.0
 offset_top = -43.0
 offset_right = -2.99999
 offset_bottom = -2.99998
-
-[node name="EnemyHealth" type="Control" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
-grow_horizontal = 2
-script = ExtResource("15_okotv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="EnemyHealth"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
-grow_horizontal = 2
-
-[node name="Control" type="Control" parent="EnemyHealth/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="Label" type="Label" parent="EnemyHealth/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="EnemyHealth/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_styles/background = SubResource("StyleBoxFlat_j84rj")
-theme_override_styles/fill = SubResource("StyleBoxFlat_kvckw")
-
-[node name="PostureBar" type="TextureProgressBar" parent="EnemyHealth/VBoxContainer"]
-custom_minimum_size = Vector2(200, 10)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-fill_mode = 6
-nine_patch_stretch = true
-texture_progress = ExtResource("16_qax2o")
 
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower" method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower/Label" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalMeleePower" method="_on_label_focus_exited"]
