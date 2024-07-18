@@ -10,7 +10,18 @@ public partial class InitialState : State
       base._Ready();
       name = "InitialState";
 	}
-   public override async void Enter()
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if(fsm.this_entity is Enemy enemy)
+        {
+            if(enemy.player_seen)
+            {
+               Exit("ChaseState");
+            }
+        }
+    }
+    public override async void Enter()
    {
      
       GD.Print("Hello from Initial state");

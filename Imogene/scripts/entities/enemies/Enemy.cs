@@ -19,7 +19,8 @@ public partial class Enemy : Entity
 	public Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
 
 	// Mob variables
-	private bool playerInAlert = false; 
+	public bool player_seen = false; 
+	public Player player_in_alert;
 	private float attack_dist = 2.5f;
 	private Label3D damage_label; 
 	private AnimationPlayer damage_numbers;
@@ -274,27 +275,29 @@ public partial class Enemy : Entity
 		if(area.IsInGroup("player")) 
 		{
 			// currentState = States.Chasing;
-			playerInAlert = true;
+			player_seen = true;
 			// GD.Print("Player Entered Alert");
 		}
     }
 
 	virtual public void OnAlertAreaBodyEntered(Node3D body) 
     {
-		if(body.IsInGroup("player")) 
+		if(body is Player player) 
 		{
 			// currentState = States.Chasing;
-			playerInAlert = true;
-			// GD.Print("Player Entered Alert");
+			player_seen = true;
+			player_in_alert = player;
+			GD.Print("Player Entered Alert");
 		}
 		
     }
 	
 	virtual public void OnAlertAreaBodyExited(Node3D body)
     {
-		if(body.IsInGroup("player"))
+		if(body is Player player)
 		{
-			playerInAlert = false;
+			player_seen = false;
+			player_in_alert = null;
 		}
     }
 

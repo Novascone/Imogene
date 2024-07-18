@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwsx4y3cqpgte"]
+[gd_scene load_steps=13 format=3 uid="uid://dwsx4y3cqpgte"]
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://scenes/objects/platform.tscn" id="4_atlgh"]
@@ -21,6 +21,10 @@ sky_material = SubResource("ProceduralSkyMaterial_iphw8")
 [sub_resource type="Environment" id="Environment_sd3p5"]
 background_mode = 2
 sky = SubResource("Sky_sjwia")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pvhmg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hh1qf"]
 
 [node name="Level" type="Node3D" groups=["terrain"]]
 
@@ -97,6 +101,7 @@ transform = Transform3D(-0.0215706, 0, -0.999767, 0, 1, 0, 0.999767, 0, -0.02157
 
 [node name="Platform18" parent="." instance=ExtResource("4_atlgh")]
 transform = Transform3D(-0.777201, 0, -0.629253, 0, 1, 0, 0.629253, 0, -0.777201, -3.43577, 10.6634, -1.10253)
+collision_mask = 128
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852181, -0.348481, 0.390318, 29.7696, 21.3021, 5.43859)
@@ -110,3 +115,14 @@ sky_mode = 1
 
 [node name="StandardEnemy" parent="." instance=ExtResource("4_wh0d4")]
 transform = Transform3D(-0.826914, 0, -0.562329, 0, 1, 0, 0.562329, 0, -0.826914, -14.0931, 0, -11.6462)
+
+[node name="Box2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.96641, 0, 2.68336, 0, 4, 0, -2.68336, 0, 2.96641, -8.73805, 1.85571, -4.70036)
+mesh = SubResource("BoxMesh_pvhmg")
+
+[node name="BoxTwo" type="StaticBody3D" parent="Box2"]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box2/BoxTwo"]
+shape = SubResource("BoxShape3D_hh1qf")

@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_anlxy"]
 
 [node name="Platform" type="Area3D"]
-collision_layer = 4
+collision_layer = 132
 collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
