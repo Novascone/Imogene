@@ -27,6 +27,10 @@ public partial class ChaseState: State
                 SetDanger();
                 ChooseDirection();
             }
+            else
+            {
+                
+            }
             
         
         }
