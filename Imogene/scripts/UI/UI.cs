@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Transactions;
 
 public partial class UI : Control
 {
@@ -48,10 +49,12 @@ public partial class UI : Control
 	public InventoryInfo inventory_info;
 	public PanelContainer interact_inventory;
 	public AbilitiesInterface abilities;
+	// public 
 	public VBoxContainer character_Sheet_depth;
 	public Panel armor;
 	public VBoxContainer mats;
 	public HUD hud;
+	public Journal journal;
 
 	
 
@@ -96,6 +99,7 @@ public partial class UI : Control
 		cursor_button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 		abilities = GetNode<AbilitiesInterface>("Abilities");
 		hud = GetNode<HUD>("HUD");
+		journal = GetNode<Journal>("Journal");
 
 		foreach (GearInfo gear_button in armor.GetChildren())
 		{
@@ -149,7 +153,27 @@ public partial class UI : Control
 			}
 			if(UI_element_open && eventJoypadButton.ButtonIndex == JoyButton.A)
 			{
-
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadDown)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadRight)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadLeft)
+			{
+				GD.Print("event accepted ");
 				AcceptEvent();
 			}
 		}
@@ -241,23 +265,29 @@ public partial class UI : Control
 			cursor.Show();
 		}
 	}
-	
+
+
     // private void HandleUIHealth(int amount)
     // {
-	// 	health = amount;
+    // 	health = amount;
     //     health_icon.MaxValue = amount;
     // }
-	//    private void HandleUIResource(int amount)
+    //    private void HandleUIResource(int amount)
     // {
     //     resource_icon.MaxValue = amount;
     // }
 
 
-	public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouseMotion mouseMotion)
 		{
 			mouse_pos = mouseMotion.Position;
+			if(cursor != null && !cursor.Visible && inventory_open)
+			{
+				cursor.Show();
+			}
+			
 		}
     }
 
@@ -286,6 +316,15 @@ public partial class UI : Control
 		inventory_open = false;
 		inventory.Hide();
 		abilities.Show();
+	}
+
+	public void _on_journal_label_button_down()
+	{
+		GD.Print("journal button down");
+		inventory_open = true;
+		
+		journal.Show();
+
 	}
 
 	public void _on_add_button_button_down()

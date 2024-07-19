@@ -99,6 +99,7 @@ public partial class Inventory : UI
 				ui.cursor.Show();
 				ui.abilities_open = false;
 				ui.abilities.Hide();
+				
 			}
 			else
 			{
@@ -107,6 +108,7 @@ public partial class Inventory : UI
 				// _customSignals.EmitSignal(nameof(CustomSignals.UIPreventingMovement),false);
 				// this_player.can_move = true;
 				Hide();
+				ui.journal.Hide();
 				ui.mats.Hide();
 				ui.character_Sheet_depth.Hide();
 				if(!abilities_open)

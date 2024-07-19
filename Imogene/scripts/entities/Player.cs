@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
 
 
 // Player class, handles movement, abilities, sends signals to the UI
@@ -25,6 +26,10 @@ public partial class Player : PlayerEntity
 	
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
+	public bool d_pad_right_pressed;
+	public bool d_pad_left_pressed;
+	public bool d_pad_up_pressed;
+	public bool d_pad_down_pressed;
 
 	// Controllers
 	public MovementController movementController;
@@ -144,6 +149,46 @@ public partial class Player : PlayerEntity
 		}
     }
 
+	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	{
+        
+        
+		if(@event.IsActionPressed("D-PadLeft"))
+		{
+			d_pad_left_pressed = true;
+		}
+		if(@event.IsActionReleased("D-PadLeft"))
+		{
+			d_pad_left_pressed = false;
+		}
+		if(@event.IsActionPressed("D-PadRight"))
+		{
+			d_pad_right_pressed = true;
+		}
+		if(@event.IsActionReleased("D-PadRight"))
+		{
+			d_pad_right_pressed = false;
+		}
+		if(@event.IsActionPressed("D-PadUp"))
+		{
+			d_pad_up_pressed = true;
+		}
+		if(@event.IsActionReleased("D-PadUp"))
+		{
+			d_pad_up_pressed = false;
+		}
+		if(@event.IsActionPressed("D-PadDown"))
+		{
+			d_pad_down_pressed = true;
+		}
+		if(@event.IsActionReleased("D-PadDown"))
+		{
+			d_pad_down_pressed = false;
+		}
+        
+		
+	}
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
@@ -155,18 +200,21 @@ public partial class Player : PlayerEntity
 
 		if(can_use_abilities)
 		{
-			if(Input.IsActionJustPressed("D-PadLeft")) // Select crosses 
+			if(d_pad_left_pressed) // Select crosses 
 			{
 				l_cross_primary_selected = !l_cross_primary_selected;
-				
+				ui.hud.LCrossPrimaryOrSecondary(l_cross_primary_selected);
+				d_pad_left_pressed = false;
 				// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
 			}
-			if(Input.IsActionJustPressed("D-PadRight"))
+			if(d_pad_right_pressed)
 			{
 				r_cross_primary_selected = !r_cross_primary_selected;
+				ui.hud.RCrossPrimaryOrSecondary(r_cross_primary_selected);
+				d_pad_right_pressed = false;
 				// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
 			}
-			if(Input.IsActionJustPressed("D-PadUp"))
+			if(d_pad_up_pressed)
 			{
 				// switch consumable
 				if(consumable < 4)
@@ -177,14 +225,16 @@ public partial class Player : PlayerEntity
 				{
 					consumable = 1;
 				}
+				d_pad_up_pressed = false;
 
 				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), consumable);
 				ui.hud.WhichConsumable(consumable);
 			}
-			if(Input.IsActionJustPressed("D-PadDown"))
+			if(d_pad_down_pressed)
 			{
 				// use consumable
 				consumables[consumable]?.UseItem();
+				d_pad_down_pressed = false;
 			}
 		}
 

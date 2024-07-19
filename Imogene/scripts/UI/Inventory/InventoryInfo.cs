@@ -183,7 +183,7 @@ public partial class InventoryInfo : UI
 	private Button trash_label;
 
 	private Button abilities_label;
-	private Button journal_quests_label;
+	private Button journal_label;
 	private Button achievements_label;
 	private Button social_label;
 	private Button options_label;
@@ -286,7 +286,7 @@ public partial class InventoryInfo : UI
 		trash_label = GetNode<Button>("FullInventory/CharacterInventory/BagSlots/TrashLabel");
 
 		abilities_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel");
-		journal_quests_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel");
+		journal_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/JournalLabel");
 		achievements_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/AchievementsLabel");
 		social_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/SocialLabel");
 		options_label = GetNode<Button>("FullInventory/CharacterInventory/BottomButtons/OptionsLabel");

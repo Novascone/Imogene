@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=132 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
@@ -61,6 +61,8 @@
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/resource/PostureRegenerationStat.cs" id="38_d22rd"]
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/misc/MovementSpeedStat.cs" id="39_mclj2"]
 [ext_resource type="Script" path="res://scripts/UI/Assignment/CrossAssignment.cs" id="54_xflt6"]
+[ext_resource type="Script" path="res://scripts/UI/Journal/Journal.cs" id="59_qwb4y"]
+[ext_resource type="Script" path="res://scripts/UI/Journal/JournalTab.cs" id="60_8a2gl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wudlh"]
 
@@ -244,6 +246,9 @@ size = Vector2(53, 54)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u1n63"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qoxfu"]
+size = Vector2(89, 190)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtd4h"]
 radius = 3.0
 
@@ -252,6 +257,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1918.0
 offset_bottom = 1076.0
+size_flags_vertical = 3
 script = ExtResource("1_qmnvm")
 
 [node name="HUD" type="Control" parent="."]
@@ -5858,7 +5864,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../OptionsLabel")
-focus_neighbor_right = NodePath("../JournalQuestsLabel")
+focus_neighbor_right = NodePath("../JournalLabel")
 text = "Abilities
 "
 script = ExtResource("7_l2ybp")
@@ -5899,17 +5905,15 @@ text = "[center]Abilities"
 position = Vector2(60, 73)
 shape = SubResource("RectangleShape2D_n4j6u")
 
-[node name="JournalQuestsLabel" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons"]
+[node name="JournalLabel" type="Button" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../AbilitiesLabel")
 text = "Journal
-&
-Quests
 "
 script = ExtResource("7_l2ybp")
 
-[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel"]
+[node name="Info" type="Control" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -5920,7 +5924,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel/Info"]
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel/Info"]
 layout_mode = 0
 offset_left = -82.5
 offset_top = -130.0
@@ -5931,17 +5935,18 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel/Info/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel/Info/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel/Info/MarginContainer/PanelContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel/Info/MarginContainer/PanelContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[center]Journal & Quests"
+text = "[center]Journal
+"
 
-[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel"]
+[node name="Area2D" type="Area2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel/Area2D"]
 position = Vector2(60, 75)
 shape = SubResource("RectangleShape2D_5okca")
 
@@ -8974,6 +8979,209 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Cancel"
 
+[node name="Journal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("59_qwb4y")
+
+[node name="PanelContainer" type="PanelContainer" parent="Journal"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestsTab" type="PanelContainer" parent="Journal/PanelContainer"]
+custom_minimum_size = Vector2(612, 0)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("60_8a2gl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/QuestsTab"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/QuestsTab/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Label" type="Label" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Quests"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/QuestsTab/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Quest" type="Button" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Quests"
+
+[node name="Area2D" type="Area2D" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer/Quest"]
+position = Vector2(24, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer/Quest/Area2D"]
+position = Vector2(26.5, 40)
+shape = SubResource("RectangleShape2D_qoxfu")
+
+[node name="Control" type="Control" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+
+[node name="BestiaryTab" type="PanelContainer" parent="Journal/PanelContainer"]
+custom_minimum_size = Vector2(612, 0)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("60_8a2gl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/BestiaryTab"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Label" type="Label" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Bestiary
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 210)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 1
+
+[node name="Bestiary" type="Button" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Besti-
+ary"
+
+[node name="Area2D" type="Area2D" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer/Bestiary"]
+position = Vector2(24, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer/Bestiary/Area2D"]
+position = Vector2(26.5, 40)
+shape = SubResource("RectangleShape2D_qoxfu")
+
+[node name="LoreTab" type="PanelContainer" parent="Journal/PanelContainer"]
+custom_minimum_size = Vector2(612, 0)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("60_8a2gl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/LoreTab"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/LoreTab/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Label" type="Label" parent="Journal/PanelContainer/LoreTab/HBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Lore
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/LoreTab/HBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 430)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 1
+
+[node name="Lore" type="Button" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Lore"
+
+[node name="Area2D" type="Area2D" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer/Lore"]
+position = Vector2(24, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer/Lore/Area2D"]
+position = Vector2(26.5, 40)
+shape = SubResource("RectangleShape2D_qoxfu")
+
+[node name="TutorialsTab" type="PanelContainer" parent="Journal/PanelContainer"]
+custom_minimum_size = Vector2(612, 0)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("60_8a2gl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/TutorialsTab"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Label" type="Label" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Tutorials
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 640)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 1
+
+[node name="Tutorials" type="Button" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Tutor-
+ials"
+
+[node name="Area2D" type="Area2D" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer/Tutorials"]
+position = Vector2(24, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer/Tutorials/Area2D"]
+position = Vector2(26.5, 40)
+shape = SubResource("RectangleShape2D_qoxfu")
+
 [node name="Cursor" type="Control" parent="."]
 anchors_preset = 0
 
@@ -9135,8 +9343,9 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel" to="." method="_on_abilities_label_button_down"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AbilitiesLabel" method="_on_focus_exited"]
-[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel" method="_on_focus_entered"]
-[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalQuestsLabel" method="_on_focus_exited"]
+[connection signal="button_down" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel" to="." method="_on_journal_label_button_down"]
+[connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/JournalLabel" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/AchievementsLabel" method="_on_focus_exited"]
 [connection signal="focus_entered" from="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SocialLabel" to="Inventory/CharacterInventoryContainer/FullInventory/CharacterInventory/BottomButtons/SocialLabel" method="_on_focus_entered"]
@@ -9247,4 +9456,8 @@ offset_bottom = -2.99998
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities" method="_on_accept_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities/VBoxContainer/PanelContainer/AssignedAndAccepted/HBoxContainer/Cancel" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities" method="_on_cancel_button_down"]
 [connection signal="button_down" from="Abilities/PanelContainer/AbilityContainer/PanelContainer/Passives/VBoxContainer/HBoxContainer2/Accept" to="Abilities/PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities" method="_on_accept_button_down"]
+[connection signal="button_down" from="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer/Quest" to="Journal" method="_on_quest_button_down"]
+[connection signal="button_down" from="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer/Bestiary" to="Journal" method="_on_bestiary_button_down"]
+[connection signal="button_down" from="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer/Lore" to="Journal" method="_on_lore_button_down"]
+[connection signal="button_down" from="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer/Tutorials" to="Journal" method="_on_tutorials_button_down"]
 [connection signal="area_entered" from="Cursor/CursorSprite/CursorArea2D" to="." method="_on_cursor_area_2d_area_entered"]
