@@ -9053,11 +9053,13 @@ offset_bottom = 40.0
 [node name="QuestsTab" type="PanelContainer" parent="Journal/PanelContainer"]
 custom_minimum_size = Vector2(612, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("60_8a2gl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/QuestsTab"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/QuestsTab/HBoxContainer"]
 layout_mode = 2
@@ -9076,6 +9078,7 @@ vertical_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/QuestsTab/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 
 [node name="Quest" type="Button" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 200)
@@ -9091,20 +9094,23 @@ position = Vector2(24, 61)
 position = Vector2(26.5, 40)
 shape = SubResource("RectangleShape2D_qoxfu")
 
-[node name="Control" type="Control" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="Journal/PanelContainer/QuestsTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="BestiaryTab" type="PanelContainer" parent="Journal/PanelContainer"]
 custom_minimum_size = Vector2(612, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("60_8a2gl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/BestiaryTab"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer"]
 layout_mode = 2
@@ -9123,12 +9129,13 @@ vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Spacer" type="Control" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 210)
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="Bestiary" type="Button" parent="Journal/PanelContainer/BestiaryTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 200)
@@ -9148,11 +9155,13 @@ shape = SubResource("RectangleShape2D_qoxfu")
 [node name="LoreTab" type="PanelContainer" parent="Journal/PanelContainer"]
 custom_minimum_size = Vector2(612, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("60_8a2gl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/LoreTab"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/LoreTab/HBoxContainer"]
 layout_mode = 2
@@ -9171,12 +9180,13 @@ vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/LoreTab/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Spacer" type="Control" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 430)
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="Lore" type="Button" parent="Journal/PanelContainer/LoreTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 200)
@@ -9195,11 +9205,13 @@ shape = SubResource("RectangleShape2D_qoxfu")
 [node name="TutorialsTab" type="PanelContainer" parent="Journal/PanelContainer"]
 custom_minimum_size = Vector2(612, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("60_8a2gl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Journal/PanelContainer/TutorialsTab"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer"]
 layout_mode = 2
@@ -9218,11 +9230,13 @@ vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Spacer" type="Control" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 640)
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 
 [node name="Tutorials" type="Button" parent="Journal/PanelContainer/TutorialsTab/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 200)
