@@ -137,23 +137,23 @@ public partial class Inventory : UI
 							hover_over_button.InventoryButtonPressed();
 							// hover_over_button = null;
 						}
-						if(hover_over_button.inventory_item.type == "generic")
-						{
-							_customSignals.EmitSignal(nameof(CustomSignals.ItemInfo), hover_over_button.inventory_item);
-						}
-						if(hover_over_button.inventory_item.type == "consumable")
-						{
-							_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (ConsumableResource)hover_over_button.inventory_item);
+						// if(hover_over_button.inventory_item.type == "generic")
+						// {
+						// 	_customSignals.EmitSignal(nameof(CustomSignals.ItemInfo), hover_over_button.inventory_item);
+						// }
+						// if(hover_over_button.inventory_item.type == "consumable")
+						// {
+						// 	_customSignals.EmitSignal(nameof(CustomSignals.ConsumableInfo), (ConsumableResource)hover_over_button.inventory_item);
 							
-						}
-						if(hover_over_button.inventory_item.type == "equipable")
-						{
-							// GD.Print("Arm item that UI is sending " + hover_over_button.arm);
-							// GD.Print("inventory item: " + hover_over_button.inventory_item);
-							// _customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
-							ui.this_player.equipmentController.GetEquipableInfo((ArmsResource)hover_over_button.inventory_item);
+						// }
+						// if(hover_over_button.inventory_item.type == "equipable")
+						// {
+						// 	// GD.Print("Arm item that UI is sending " + hover_over_button.arm);
+						// 	// GD.Print("inventory item: " + hover_over_button.inventory_item);
+						// 	// _customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), hover_over_button.inventory_item);
+						// 	ui.this_player.equipmentController.GetEquipableInfo((ArmsResource)hover_over_button.inventory_item);
 							
-						}
+						// }
 					}
 					if(Input.IsActionJustPressed("InteractMenu") && !hover_over_button.is_empty ) // Handle grab object set icon of clicked object to a button attached to the cursor
 					{
