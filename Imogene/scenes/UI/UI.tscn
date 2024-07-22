@@ -1,11 +1,15 @@
-[gd_scene load_steps=132 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=136 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_kmgx5"]
+[ext_resource type="Texture2D" uid="uid://bg5i3lilkmdlq" path="res://images/UI/Health_Bar.png" id="3_6q01r"]
+[ext_resource type="Texture2D" uid="uid://dw7f1a0i3aq2" path="res://images/UI/Posture_Bar.png" id="3_cl7su"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/Inventory.cs" id="3_es7la"]
 [ext_resource type="Script" path="res://scripts/UI/Cursor.cs" id="3_g3gm6"]
 [ext_resource type="PackedScene" uid="uid://bow7tls2d854x" path="res://scenes/UI/inventory_button.tscn" id="4_cpmgk"]
+[ext_resource type="Texture2D" uid="uid://dboo2klqspmvl" path="res://images/UI/Resource_Bar.png" id="4_i68uv"]
+[ext_resource type="Texture2D" uid="uid://264toflkejyp" path="res://images/UI/XP.png" id="4_tqk0g"]
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/PhysicalMeleePowerStat.cs" id="5_m6p5a"]
 [ext_resource type="Script" path="res://scripts/UI/Inventory/InventoryInfo.cs" id="5_p8mmm"]
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/SpellMeleePowerStat.cs" id="6_2n3kq"]
@@ -384,11 +388,17 @@ text = "4"
 icon_alignment = 1
 expand_icon = true
 
-[node name="Posture" type="Panel" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
+[node name="Posture" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
 custom_minimum_size = Vector2(500, 15)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 8
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Posture"]
+layout_mode = 2
+value = 33.0
+nine_patch_stretch = true
+texture_progress = ExtResource("3_cl7su")
 
 [node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer"]
 custom_minimum_size = Vector2(60, 0)
@@ -398,6 +408,12 @@ layout_mode = 2
 custom_minimum_size = Vector2(850, 10)
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/XP"]
+layout_mode = 2
+value = 44.0
+nine_patch_stretch = true
+texture_progress = ExtResource("4_tqk0g")
 
 [node name="BottomHUDHBox" type="HBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox"]
 layout_mode = 2
@@ -417,6 +433,13 @@ custom_minimum_size = Vector2(310, 60)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HitPoints"]
+layout_mode = 2
+value = 50.0
+rounded = true
+nine_patch_stretch = true
+texture_progress = ExtResource("3_6q01r")
 
 [node name="HealthBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer"]
 layout_mode = 2
@@ -964,6 +987,13 @@ custom_minimum_size = Vector2(310, 60)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/ResourcePoints"]
+layout_mode = 2
+value = 50.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_progress = ExtResource("4_i68uv")
 
 [node name="DamageBuffsDebuffs" type="PanelContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer"]
 layout_mode = 2
