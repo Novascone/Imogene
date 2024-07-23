@@ -210,14 +210,14 @@ public partial class Enemy : Entity
 			direction_moving_line_mesh.ClearSurfaces();
 		}
 
-		if (Input.IsActionJustPressed("one"))
-		{
-			state_machine.current_state.Exit("AvoidanceInterestsState");
-		}
-		if (Input.IsActionJustPressed("two"))
-		{
-			state_machine.current_state.Exit("HerdState");
-		}
+		// if (Input.IsActionJustPressed("one"))
+		// {
+		// 	state_machine.current_state.Exit("AvoidanceInterestsState");
+		// }
+		// if (Input.IsActionJustPressed("two"))
+		// {
+		// 	state_machine.current_state.Exit("HerdState");
+		// }
 	
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;

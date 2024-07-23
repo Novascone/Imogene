@@ -50,6 +50,10 @@ public partial class HUD : UI
 	public Button consumable_4;
 
 	public EnemyHealthUI enemy_health;
+	public TextureProgressBar health;
+	public TextureProgressBar resource;
+	public TextureProgressBar posture;
+	public TextureProgressBar xp;
 
 	private bool l_cross_primary_selected = true;
 	private bool r_cross_primary_selected = true;
@@ -106,6 +110,10 @@ public partial class HUD : UI
 		consumable_4 = GetNode<Button>("BottomHUD/BottomHUDVBox/HBoxContainer/Consumables/Consumable4");
 
 		enemy_health = GetNode<EnemyHealthUI>("EnemyHealth");
+		health = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HitPoints/TextureProgressBar");
+		posture = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/HBoxContainer/Posture/TextureProgressBar");
+		resource = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/ResourcePoints/TextureProgressBar");
+		xp = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/XP/TextureProgressBar");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;

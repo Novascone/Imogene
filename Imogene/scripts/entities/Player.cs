@@ -117,7 +117,10 @@ public partial class Player : PlayerEntity
 	
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
-		GD.Print("max health ", maximum_health);
+		maximum_health = health;
+		resource = maximum_resource / 2;
+
+		GD.Print("max health player ", maximum_health);
 		GD.Print("max resource ", maximum_resource);
 		GD.Print("physical resistance", physical_resistance);
 		GD.Print("spell resistance ", spell_resistance);
@@ -129,7 +132,17 @@ public partial class Player : PlayerEntity
 		statController.GetEntityInfo(this);
 		abilityController.GetPlayerInfo(this);
 		abilityController.LoadAbilities();
+
 		ui.GetPlayerInfo(this);
+		ui.hud.health.MaxValue = maximum_health;
+		ui.hud.health.Value = health;
+		ui.hud.resource.MaxValue = maximum_resource;
+		ui.hud.resource.Value = resource;
+		ui.hud.posture.MaxValue = maximum_posture;
+		ui.hud.posture.Value = 0;
+		ui.hud.xp.MaxValue = xp_to_level;
+		ui.hud.xp.Value = xp;
+
 		camera_rig.GetPlayerInfo(this);
 
 		GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
@@ -185,7 +198,24 @@ public partial class Player : PlayerEntity
 		{
 			d_pad_down_pressed = false;
 		}
-        
+		if(@event.IsActionPressed("one"))
+		{
+			damage_system.TakeDamage("Physical", 10, false);
+			GD.Print("Health test");
+			GD.Print("Health : " + health);
+		}
+		if(@event.IsActionPressed("two"))
+		{
+			resource_system.Resource(10);
+		}
+        if(@event.IsActionPressed("three"))
+		{
+			resource_system.Posture(5);
+		}
+		if(@event.IsActionPressed("four"))
+		{
+			xp_system.GainXP(11);
+		}
 		
 	}
 
@@ -193,6 +223,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
+		// GD.Print(resource);
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
@@ -237,6 +268,8 @@ public partial class Player : PlayerEntity
 				d_pad_down_pressed = false;
 			}
 		}
+
+		
 
 		CheckInteract(); // Check if the player can interact with anything
 		EnemyCheck(); // Check for enemy

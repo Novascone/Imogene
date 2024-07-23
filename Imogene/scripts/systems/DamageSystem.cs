@@ -4,6 +4,7 @@ using System;
 public partial class DamageSystem : EntitySystem
 {
 	
+	public Timer health_regen_timer;
 	public Timer dot_timer;
 	public Timer slow_timer;
 	public Timer stun_timer;
@@ -12,20 +13,24 @@ public partial class DamageSystem : EntitySystem
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
+		health_regen_timer = GetNode<Timer>("HealthRegenTimer");
+		health_regen_timer.Timeout += OnHealthRegenTickTimeout;
+
 		dot_timer = GetNode<Timer>("DoTTimer");
 		dot_timer.Timeout += OnDoTTickTimeout;
+
 		slow_timer = GetNode<Timer>("SlowTimer");
-
-		
-		stun_timer = GetNode<Timer>("StunTimer");
-
 		slow_timer.Timeout += OnSlowTickTimeout;
+
+		stun_timer = GetNode<Timer>("StunTimer");
 		stun_timer.Timeout += OnStunTickTimeout;
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
-	 public bool Crit()
+
+    public bool Crit()
 	{
 		float random_float = GD.Randf();
 		if(random_float < entity.critical_hit_chance)
@@ -52,6 +57,13 @@ public partial class DamageSystem : EntitySystem
 				enemy.health_bar.Value = entity.health;
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
+			if(entity is Player player)
+			{
+				player.ui.hud.health.Value = entity.health; 
+				GD.Print("UI health " + player.ui.hud.health.Value);
+				
+			}
+			HealthRegen();
 		}
 		else
 		{
@@ -114,6 +126,23 @@ public partial class DamageSystem : EntitySystem
 			
 		}
 	}
+
+	public void HealthRegen()
+	{
+		health_regen_timer.Start();
+	}
+
+	private void OnHealthRegenTickTimeout()
+    {
+        if(entity.health < entity.maximum_health)
+		{
+			entity.health += entity.health_regen;
+		}
+		if(entity is Player player)
+		{
+			player.ui.hud.health.Value = player.health;
+		}
+    }
 
 	public float DamageMitigation(string damage_type, float amount)
 	{

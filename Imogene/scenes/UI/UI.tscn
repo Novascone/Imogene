@@ -397,6 +397,7 @@ size_flags_vertical = 8
 [node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/HBoxContainer/Posture"]
 layout_mode = 2
 value = 33.0
+fill_mode = 6
 nine_patch_stretch = true
 texture_progress = ExtResource("3_cl7su")
 
@@ -436,7 +437,7 @@ size_flags_vertical = 0
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/Health/VBoxContainer/HitPoints"]
 layout_mode = 2
-value = 50.0
+value = 100.0
 rounded = true
 nine_patch_stretch = true
 texture_progress = ExtResource("3_6q01r")

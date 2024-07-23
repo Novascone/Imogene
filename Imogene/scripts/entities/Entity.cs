@@ -20,6 +20,7 @@ public partial class Entity : CharacterBody3D
 	// Systems
 	public DamageSystem damage_system;
 	public ResourceSystem resource_system;
+	public XPSystem xp_system;
 
 	// Booleans
 	public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
@@ -54,6 +55,8 @@ public partial class Entity : CharacterBody3D
 
     // Stats
     public int level = 1; // Level of the entity
+	public float xp = 0;
+	public float xp_to_level = 100;
     public float speed = 7.0f; // Speed of the entity
     public float fall_speed = 40.0f; // How fast the player falls 
     public float jump_speed = 30.0f; // How fast the player jumps
@@ -161,7 +164,7 @@ public partial class Entity : CharacterBody3D
 
 	// Health
 
-	public float maximum_health = 100;
+	public float maximum_health;
 	public float health_bonus = 0; // Health bonus from skills and gear
 	public float health_regen = 0; // Health regenerated every second 1 + (stamina/rec_lvl_scale * health_regen_bonus)
 	public float health_regen_bonus = 0; // Bonus to health regeneration from skills and gear
@@ -169,7 +172,7 @@ public partial class Entity : CharacterBody3D
 
 	// Resource
 
-	public float maximum_resource;
+	public float maximum_resource = 100;
 	public float resource_regen = 0; // Resource regenerated every second 1 + (stamina/rec_lvl_scale *  resource_regen_bonus)
 	public float resource_regen_bonus = 0; // Bonus to health regeneration from skills and gear
 	public float maximum_posture = 100;
@@ -211,6 +214,15 @@ public partial class Entity : CharacterBody3D
 
 		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
 		resource_system.GetEntityInfo(this);
+
+		if(this is Player)
+		{
+			xp_system = GetNode<XPSystem>("Systems/XPSystem");
+			xp_system.GetEntityInfo(this);
+		}
+		
+
+		
 
         
 		

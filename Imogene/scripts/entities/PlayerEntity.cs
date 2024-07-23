@@ -53,8 +53,8 @@ public partial class PlayerEntity : Entity
 
 	// Timers
 
-	public Timer health_regen_timer;
-	public Timer resource_regen_timer;
+	// public Timer health_regen_timer;
+	// public Timer resource_regen_timer;
 	
 
 	
@@ -115,13 +115,13 @@ public partial class PlayerEntity : Entity
 		main_hand_hitbox = GetNode<Hitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 		ui = GetNode<UI>("UI/UI");
 		
-		Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
+		// Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
 		
 		vision  = (Area3D)GetNode("Areas/Vision");
 		interact_area = GetNode<Area3D>("Areas/InteractArea");
 
 		land_point = GetNode<MeshInstance3D>("UI/LandPoint");
-
+		
 		vision.BodyEntered += OnVisionEntered;
 		vision.AreaExited += OnVisionExited;
 		interact_area.AreaEntered += OnInteractAreaEntered;

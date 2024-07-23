@@ -30,20 +30,20 @@ public partial class EquipmentController : Controller
 
     public override void _Input(InputEvent @event)
     {
-        if (Input.IsActionJustPressed("one"))
-		{
-			GD.Print("EquipHelmet Pressed");
-			if (!IsInstanceValid(currentHelm))
-			{
-				currentHelm = ArmPrefab.Instantiate() as MeshInstance3D;
-				SkeletonNode.AddChild(currentHelm);
-				currentHelm.Skeleton = SkeletonNode.GetPath();
-			}
-			else
-			{
-				currentHelm.QueueFree();
-			}
-		}
+        // if (Input.IsActionJustPressed("one"))
+		// {
+		// 	GD.Print("EquipHelmet Pressed");
+		// 	if (!IsInstanceValid(currentHelm))
+		// 	{
+		// 		currentHelm = ArmPrefab.Instantiate() as MeshInstance3D;
+		// 		SkeletonNode.AddChild(currentHelm);
+		// 		currentHelm.Skeleton = SkeletonNode.GetPath();
+		// 	}
+		// 	else
+		// 	{
+		// 		currentHelm.QueueFree();
+		// 	}
+		// }
     }
 
 	public void GetEquipableInfo(ArmsResource arm) // Gets info from equipable items

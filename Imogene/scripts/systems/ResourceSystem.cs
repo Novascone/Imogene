@@ -4,6 +4,7 @@ using System;
 public partial class ResourceSystem : EntitySystem
 {
 	public Timer posture_regen_timer;
+	public Timer resource_regen_timer;
 	private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -11,7 +12,27 @@ public partial class ResourceSystem : EntitySystem
 		posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
 		posture_regen_timer.Timeout += OnPostureRegenTickTimeout;
 
+		resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
+		resource_regen_timer.Timeout += OnResourceRegenTickTimeout;
+
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+	}
+
+    
+
+    public void Resource(float cost)
+	{
+		entity.resource -= cost;
+		if(entity is Player player)
+		{
+			player.ui.hud.resource.Value = entity.resource;
+		}
+		ResourceRegen();
+	}
+
+	public void ResourceRegen()
+	{
+		resource_regen_timer.Start();
 	}
 
 	public void Posture(float posture_damage)
@@ -33,6 +54,10 @@ public partial class ResourceSystem : EntitySystem
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), entity.posture);
 			
 			}
+			if(entity is Player player)
+			{
+				player.ui.hud.posture.Value += posture_damage;
+			}
 		}
 		PostureRegen();
 		
@@ -42,6 +67,20 @@ public partial class ResourceSystem : EntitySystem
 	{
 		posture_regen_timer.Start();
 	}
+
+	private void OnResourceRegenTickTimeout()
+    {
+        GD.Print("resource regenerating");
+		if(entity.resource < entity.maximum_resource /2)
+		{
+			entity.resource += entity.resource_regen;
+		}
+
+		if(entity is Player player)
+		{
+			player.ui.hud.resource.Value = entity.resource;
+		}
+    }
 
 	private void OnPostureRegenTickTimeout()
     {
@@ -55,10 +94,14 @@ public partial class ResourceSystem : EntitySystem
 			entity.posture = 0;
 		}
 		if(entity is Enemy enemy)
-			{
-				enemy.posture_bar.Value = entity.posture;
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), enemy, entity.posture);
-			}
+		{
+			enemy.posture_bar.Value = entity.posture;
+			_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), enemy, entity.posture);
+		}
+		if(entity is Player player)
+		{
+			player.ui.hud.posture.Value = entity.posture;
+		}
 		if(entity.posture == 0)
 		{
 			posture_regen_timer.Stop();
