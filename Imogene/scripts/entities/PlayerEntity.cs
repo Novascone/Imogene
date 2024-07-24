@@ -86,6 +86,7 @@ public partial class PlayerEntity : Entity
 	public bool entered_interact; // Has the entity entered the an interact area?
 	public bool left_interact; // has the entity left the interact area?
 	public bool interacting; // Is the entity interacting?
+	public bool is_climbing;
 	
 
 	// Ability Variables
@@ -162,6 +163,7 @@ public partial class PlayerEntity : Entity
 		}
 		if(Fall(delta))
 		{
+			GD.Print("falling");
 			land_point.Show();
 		}
 		else
@@ -173,7 +175,7 @@ public partial class PlayerEntity : Entity
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
-		if(!targeting)
+		if(!targeting && !is_climbing)
 		{
 			prev_y_rotation = GlobalRotation.Y;
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
@@ -185,6 +187,10 @@ public partial class PlayerEntity : Entity
 			{
 				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
+		}
+		else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing
+		{
+			GlobalRotation = GlobalRotation with {Y = current_y_rotation};
 		}
 	}
 

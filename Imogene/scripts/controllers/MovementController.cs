@@ -8,6 +8,7 @@ public partial class MovementController : Controller
 	Vector3 ray_origin;
 	Vector3 ray_target = new  Vector3(0, -4, 0);
 	int ray_range = 2000;
+	private float climb_speed = 4.0f;
 	
 	// Called when the node enters the scene tree for the first time.
 	private CustomSignals _customSignals; // Custom signal instance
@@ -53,22 +54,72 @@ public partial class MovementController : Controller
 
 		if(player.can_move) // Basic movement controller
 		{
-			if (Input.IsActionPressed("Right"))
+			if(!player.is_climbing)
 			{
-				player.direction.X -= 1.0f;		
+				player.speed = player.walk_speed;
+				if (Input.IsActionPressed("Right"))
+				{
+					player.direction.X -= 1.0f;	
+					// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
+				}
+				if (Input.IsActionPressed("Left"))
+				{
+					player.direction.X += 1.0f;
+					// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
+				}
+				if (Input.IsActionPressed("Backward"))
+				{
+					player.direction.Z -= 1.0f;
+					// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
+				}
+				if (Input.IsActionPressed("Forward"))
+				{
+					player.direction.Z += 1.0f;
+					// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
+				}
 			}
-			if (Input.IsActionPressed("Left"))
+			else
 			{
-				player.direction.X += 1.0f;
+				player.direction = Vector3.Zero;
+				player.speed = climb_speed;
+				if (Input.IsActionPressed("Right"))
+				{
+					player.direction.X -= 1.0f;	
+					// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
+				}
+				if (Input.IsActionPressed("Left"))
+				{
+					player.direction.X += 1.0f;
+					// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
+				}
+				if (Input.IsActionPressed("Backward"))
+				{
+					player.direction.Y -= 1.0f;
+					GD.Print("player moving down");
+					GD.Print("player velocity y " + player.velocity.Y);
+					// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
+				}
+				if (Input.IsActionPressed("Forward"))
+				{
+					player.direction.Y += 1.0f;
+					GD.Print("player moving up");
+					GD.Print("player velocity y " + player.velocity.Y);
+
+					// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
+				}
+				
+				var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
+				GD.Print("atan2 " + MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) );
+				var vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
+				var horizontal_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
+				player.direction = new Vector3(horizontal_input, vertical_input, 0).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 			}
-			if (Input.IsActionPressed("Backward"))
+
+			if(player.direction != Vector3.Zero && player.is_climbing)
 			{
-				player.direction.Z -= 1.0f;
+				player.current_y_rotation = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
 			}
-			if (Input.IsActionPressed("Forward"))
-			{
-				player.direction.Z += 1.0f;
-			}
+			
 		}
 		if(player.can_move == false)
 		{
@@ -83,6 +134,10 @@ public partial class MovementController : Controller
 		{
 			player.velocity.X = player.direction.X * player.speed;
 			player.velocity.Z = player.direction.Z * player.speed;
+			if(player.is_climbing)
+			{
+				player.velocity.Y = player.direction.Y * player.speed;
+			}
 		}
 		player.Velocity = player.velocity;
 		player.land_point.GlobalPosition = player.land_point_position;

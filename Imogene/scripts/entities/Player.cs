@@ -11,6 +11,8 @@ public partial class Player : PlayerEntity
 	// Player reference
 	public Player this_player; // Player
 	public RayCast3D raycast;
+	public RayCast3D near_wall;
+	public RayCast3D on_wall;
 	public CameraRig camera_rig;
 
 	// Abilities
@@ -106,6 +108,9 @@ public partial class Player : PlayerEntity
 		foot_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootRight/FootRightSlot");
 		foot_right = new MeshInstance3D();
 		foot_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootLeft/FootLeftSlot");
+
+		near_wall = GetNode<RayCast3D>("Controllers/WallCheck/NearWall");
+		on_wall = GetNode<RayCast3D>("Controllers/WallCheck/OnWall");
 
 		hurtbox = GetNode<Hurtbox>("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
@@ -223,7 +228,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print(resource);
+		
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 // The base class for all entities in game
 // All stats are used for players
@@ -58,6 +59,7 @@ public partial class Entity : CharacterBody3D
 	public float xp = 0;
 	public float xp_to_level = 100;
     public float speed = 7.0f; // Speed of the entity
+	public float walk_speed = 7.0f;
     public float fall_speed = 40.0f; // How fast the player falls 
     public float jump_speed = 30.0f; // How fast the player jumps
 	public float health = 200; // Prelim health number
@@ -253,8 +255,24 @@ public partial class Entity : CharacterBody3D
 	{
 		if(!IsOnFloor())
 		{
-			velocity.Y -= fall_speed * (float)delta;
-            return true;
+			if(this is Player player)
+			{
+				if(!player.is_climbing)
+				{
+					velocity.Y -= fall_speed * (float)delta;
+            		return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				velocity.Y -= fall_speed * (float)delta;
+            	return true;
+			}
+			
 		}
 		else
 		{

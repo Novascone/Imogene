@@ -6,6 +6,7 @@ public partial class Jump : Ability
 	bool off_floor;
 	private Timer coyote = new Timer();
 	private bool coyote_elapsed = false;
+	private bool is_climbing;
 	int timer = 0;
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
@@ -48,13 +49,51 @@ public partial class Jump : Ability
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
 		}
+		Climb();
 		if(player.can_use_abilities && button_pressed && CheckCross() || player.jumping)
 		{
 			AddToAbilityList(this);
-			Execute();
+			
+			if(!player.is_climbing)
+			{
+				GD.Print("Player is not climbing");
+				Execute();
+			}
+			
 		}
 		
+		
     }
+
+	public void Climb() // Checks if player is near wall and sets state to climb if the player presses the climb button
+	{
+		if(player.near_wall.IsColliding())
+		{
+			if(player.on_wall.IsColliding())
+			{
+				if(Input.IsActionJustPressed("climb") && !player.is_climbing)
+				{
+					GD.Print("setting climbing to true");
+					player.is_climbing = true;
+				}
+				else if(Input.IsActionJustPressed("climb") && player.is_climbing)
+				{
+					GD.Print("Setting climbing to false");
+					player.is_climbing = false;
+				}
+				
+			}
+			else
+			{
+				Clamber();
+			}
+		}
+	}
+
+	public void Clamber() // Need to write to boost the player over the edge when climbing, and for use clambering over other objects
+	{
+		GD.Print("Clamber now");
+	}
 
     // Called when the node enters the scene tree for the first time.
     public override void Execute()
@@ -77,14 +116,15 @@ public partial class Jump : Ability
 			player.velocity.Y = 0;
 			RemoveFromAbilityList(this);
 		}
-        if(!player.IsOnFloor())
+		if(!player.IsOnFloor())
 		{
 			player.tree.Set("parameters/Master/Main/conditions/jumping", false);
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
 			// GD.Print("still jumping");
 			player.jumping = true;
 		}
+	}
 		
-    }
+    
 	
 }

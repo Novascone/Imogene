@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://bceqvbbwwyv54"]
+
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player.tscn" id="1_c64ih"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_cftuu"]
+vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_npvuk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mr34a"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v0psr"]
+
+[sub_resource type="Sky" id="Sky_sjwia"]
+sky_material = SubResource("ProceduralSkyMaterial_v0psr")
+
+[sub_resource type="Environment" id="Environment_xtkwb"]
+background_mode = 2
+sky = SubResource("Sky_sjwia")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fm7eq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rmnpj"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_cftuu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 31.3423, 0, 0, 0)
+mesh = SubResource("BoxMesh_npvuk")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
+shape = SubResource("BoxShape3D_mr34a")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xtkwb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852181, -0.348481, 0.390318, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.905882, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 1.09
+shadow_enabled = true
+sky_mode = 1
+
+[node name="player" parent="." instance=ExtResource("1_c64ih")]
+
+[node name="ClimbingCylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -13.0606, 8.69332, -10.716)
+mesh = SubResource("CylinderMesh_fm7eq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingCylinder"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingCylinder/StaticBody3D"]
+shape = SubResource("CylinderShape3D_rmnpj")

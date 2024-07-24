@@ -15,12 +15,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iphw8"]
 
-[sub_resource type="Sky" id="Sky_sjwia"]
+[sub_resource type="Sky" id="Sky_i2yqe"]
 sky_material = SubResource("ProceduralSkyMaterial_iphw8")
 
 [sub_resource type="Environment" id="Environment_sd3p5"]
 background_mode = 2
-sky = SubResource("Sky_sjwia")
+sky = SubResource("Sky_i2yqe")
 
 [sub_resource type="BoxMesh" id="BoxMesh_pvhmg"]
 
