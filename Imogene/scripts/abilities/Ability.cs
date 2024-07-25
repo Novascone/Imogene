@@ -22,6 +22,7 @@ public partial class Ability : Node3D
     public bool cross_selected;
     public Player player;
     public bool button_pressed;
+    public bool button_released;
 
     public bool useable = true;
     public bool in_use = false;
@@ -47,10 +48,13 @@ public partial class Ability : Node3D
             if(@event.IsActionPressed(assigned_button))
             {
                 button_pressed = true;
+                button_released = false;
             }
             if(@event.IsActionReleased(assigned_button))
             {
                 button_pressed = false;
+                button_released = true;
+                GD.Print("button released");
             }
         }
 		

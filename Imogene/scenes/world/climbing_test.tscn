@@ -57,6 +57,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -13.0606, 8.69332, -10.716
 mesh = SubResource("CylinderMesh_fm7eq")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ClimbingCylinder"]
+collision_layer = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingCylinder/StaticBody3D"]
 shape = SubResource("CylinderShape3D_rmnpj")

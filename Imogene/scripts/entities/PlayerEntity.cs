@@ -87,6 +87,7 @@ public partial class PlayerEntity : Entity
 	public bool left_interact; // has the entity left the interact area?
 	public bool interacting; // Is the entity interacting?
 	public bool is_climbing;
+	public bool is_clambering;
 	
 
 	// Ability Variables

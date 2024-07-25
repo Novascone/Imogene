@@ -55,6 +55,9 @@ public partial class Player : PlayerEntity
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
 
+	public float move_forward_clamber = 0;
+	public float vertical_input;
+
 	
 
 	public override void _Ready()

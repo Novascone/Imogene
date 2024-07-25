@@ -9,6 +9,7 @@ public partial class MovementController : Controller
 	Vector3 ray_target = new  Vector3(0, -4, 0);
 	int ray_range = 2000;
 	private float climb_speed = 4.0f;
+	private float clamber_speed = 10.0f;
 	
 	// Called when the node enters the scene tree for the first time.
 	private CustomSignals _customSignals; // Custom signal instance
@@ -81,7 +82,15 @@ public partial class MovementController : Controller
 			else
 			{
 				player.direction = Vector3.Zero;
-				player.speed = climb_speed;
+				if(!player.is_clambering)
+				{
+					player.speed = climb_speed;
+				}
+				else
+				{
+					player.speed = clamber_speed;
+				}
+				
 				if (Input.IsActionPressed("Right"))
 				{
 					player.direction.X -= 1.0f;	
@@ -109,10 +118,13 @@ public partial class MovementController : Controller
 				}
 				
 				var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
-				GD.Print("atan2 " + MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) );
-				var vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
+				
+				
+					player.vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
+				
+				
 				var horizontal_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
-				player.direction = new Vector3(horizontal_input, vertical_input, 0).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+				player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 			}
 
 			if(player.direction != Vector3.Zero && player.is_climbing)
