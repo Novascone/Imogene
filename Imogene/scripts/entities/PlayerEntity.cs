@@ -186,7 +186,7 @@ public partial class PlayerEntity : Entity
 			current_y_rotation = GlobalRotation.Y;
 			if(prev_y_rotation != current_y_rotation)
 			{
-				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 		else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing

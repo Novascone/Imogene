@@ -135,6 +135,7 @@ public partial class Jump : Ability
 		{
 			if(player.on_wall.IsColliding())
 			{
+				GD.Print(player.near_wall.GetCollider());
 				if(button_held && !player.is_climbing)
 				{
 					GD.Print("setting climbing to true");
@@ -154,6 +155,7 @@ public partial class Jump : Ability
 				Clamber();
 			}
 		}
+		
 	}
 
 	public void Clamber() // Need to write to boost the player over the edge when climbing, and for use clambering over other objects
