@@ -164,7 +164,7 @@ public partial class PlayerEntity : Entity
 		}
 		if(Fall(delta))
 		{
-			GD.Print("falling");
+			// GD.Print("falling");
 			land_point.Show();
 		}
 		else

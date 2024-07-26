@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Net.Http;
 
 // Movement Controller
 // Moves the player character around the world, sets basic animations, implements the landing icon, applies smooth rotation, handles looking at enemies, and prevents movement when UI is open
@@ -20,7 +21,7 @@ public partial class MovementController : Controller
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+	public override async void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
 
@@ -89,6 +90,21 @@ public partial class MovementController : Controller
 				else
 				{
 					player.speed = clamber_speed;
+					// GD.Print("Setting tween");
+					// var vertical_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0);
+					// var vertical_move_time = 0.4;
+					// var vm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In);
+
+					// vm_tween.TweenProperty(player, "GlobalTransform:Origin", vertical_movement, vertical_move_time);
+
+					// await ToSignal(vm_tween, Tween.SignalName.Finished);
+
+					// var forward_movement = player.GlobalTransform.Origin + -player.Basis.Z;
+					// var horizontal_move_time = 0.2;
+					// var fm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear);
+
+					// fm_tween.TweenProperty(player, "GlobalTransform:Origin", forward_movement, horizontal_move_time);
+
 				}
 				
 				if (Input.IsActionPressed("Right"))
@@ -124,6 +140,11 @@ public partial class MovementController : Controller
 				
 				
 				var horizontal_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
+				if(!player.is_clambering)
+				{
+					player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+
+				}
 				player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 			}
 
