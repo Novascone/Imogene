@@ -21,7 +21,7 @@ public partial class MovementController : Controller
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override async void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
 
@@ -90,21 +90,6 @@ public partial class MovementController : Controller
 				else
 				{
 					player.speed = clamber_speed;
-					// GD.Print("Setting tween");
-					// var vertical_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0);
-					// var vertical_move_time = 0.4;
-					// var vm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In);
-
-					// vm_tween.TweenProperty(player, "GlobalTransform:Origin", vertical_movement, vertical_move_time);
-
-					// await ToSignal(vm_tween, Tween.SignalName.Finished);
-
-					// var forward_movement = player.GlobalTransform.Origin + -player.Basis.Z;
-					// var horizontal_move_time = 0.2;
-					// var fm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear);
-
-					// fm_tween.TweenProperty(player, "GlobalTransform:Origin", forward_movement, horizontal_move_time);
-
 				}
 				
 				if (Input.IsActionPressed("Right"))

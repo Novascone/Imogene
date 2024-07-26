@@ -10,7 +10,8 @@ public partial class Jump : Ability
 	private bool coyote_elapsed = false;
 	private bool is_climbing;
 	private bool button_held;
-	int held_threshold = 0;
+	int held_threshold = 10;
+	int frames_held = 0;
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
@@ -51,7 +52,7 @@ public partial class Jump : Ability
 		player.is_clambering = false;
 		player.jumping = false;
 		player.move_forward_clamber = 0;
-		held_threshold = 0;
+		frames_held = 0;
 		button_held = false;
 		button_released = false;
     }
@@ -71,7 +72,7 @@ public partial class Jump : Ability
     // }
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print("jumping " + player.jumping);
+		GD.Print(frames_held);
 		if(!player.IsOnFloor() && !coyote_elapsed)
 		{
 			// GD.Print("coyote timer started");
@@ -88,15 +89,13 @@ public partial class Jump : Ability
 		
 		if(button_pressed)
 		{
-			held_threshold += 1; // If the button is pressed start counting the amount of frames its pressed
-			// if(held.TimeLeft == 0)
-			// {
-			// 	held.Start();
-			// 	GD.Print("held started");
-			// }
+			frames_held += 1; // If the button is pressed start counting the amount of frames its pressed
 		}
-
-		if(held_threshold > 10)
+		if(button_released)
+		{
+			frames_held = 0;
+		}
+		if(frames_held > held_threshold)
 		{
 			button_held = true;
 		}
@@ -104,25 +103,31 @@ public partial class Jump : Ability
 		
 		
 		Climb();
+
 		if(player.can_use_abilities && CheckCross() || player.jumping)
 		{
 			
 			AddToAbilityList(this);
-			if(!player.is_climbing && held_threshold < 10 && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
+			if(!player.is_climbing && frames_held < held_threshold && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
 			{
 				// GD.Print("Player is not climbing");
 				// GD.Print("held threshold going into jump " + held_threshold);
 				Execute(); // Jump
-				held_threshold = 0; // Reset the frames the button has been held
+				frames_held = 0; // Reset the frames the button has been held
 			}
-			else if(held_threshold > 10) // If the button has been held for more than 10 frames
+			else if(frames_held > held_threshold) // If the button has been held for more than 10 frames
 			{
 				GD.Print("button held");
 				if(!player.on_wall.IsColliding()) // If the player is not near a wall reset how many frames the button has been held
 				{
-					held_threshold = 0;
-					button_held = false;
+					frames_held = 0;
+					if(!player.is_climbing)
+					{
+						button_held = false;
+					}
+					
 				}
+
 			}
 			
 		}
@@ -142,11 +147,13 @@ public partial class Jump : Ability
 				{
 					GD.Print("setting climbing to true");
 					player.is_climbing = true;
+					button_held = false;
+					frames_held = 0;
 				}
 				else if(Input.IsActionJustPressed(assigned_button) && player.is_climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
 				{
 					GD.Print("Setting climbing to false");
-					held_threshold = 0;
+					frames_held = 0;
 					button_held = false;
 					player.is_climbing = false;
 				}
@@ -161,33 +168,41 @@ public partial class Jump : Ability
 				
 			}
 		}
+		else
+		{
+			player.is_climbing = false;
+		}
 		
 	}
 
 	public async void Clamber()
 	{
-		GD.Print("Clamber now");
-		player.speed = 10f;
-		player.is_clambering = true;
-		var vertical_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0);
-		var vertical_move_time = 0.2;
-		var vm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In);
+		GD.Print("Player can clamber");
+		if(frames_held >= held_threshold)
+		{
+			GD.Print("Clamber now");
+			player.speed = 10f;
+			player.is_clambering = true;
+			var upward_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0); // Move the plater up bt 1.85 units
+			var upward_move_time = 0.2; // set how long the tween to take to move upward
+			var upward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In); // Create the tween and sets its transition and ease
 
-		vm_tween.TweenProperty(player, "global_transform:origin", vertical_movement, vertical_move_time);
+			upward_tween.TweenProperty(player, "global_transform:origin", upward_movement, upward_move_time); // Tell the tween which object should be moved and what property of that object should be changed, how it should be changed, and how long it should take
 
-		await ToSignal(vm_tween, Tween.SignalName.Finished);
+			await ToSignal(upward_tween, Tween.SignalName.Finished); // Wait for vertical movement tween to complete
 
-		var forward_movement = player.GlobalTransform.Origin + (-player.Transform.Basis.Z * 2f);
-		var horizontal_move_time = 0.4;
-		var fm_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear);
+			var forward_movement = player.GlobalTransform.Origin + (-player.Transform.Basis.Z * 2f); // Get the players forward vector and multiply it by 2 for the forward movement
+			var forward_move_time = 0.4; // Set forward move time
+			var forward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear); // Create tween set transition type
 
-		fm_tween.TweenProperty(player, "global_transform:origin", forward_movement, horizontal_move_time);
-		// player.velocity.Y = 20; // give the player extra Y velocity
-		player.move_forward_clamber = -1; // Make the player move in the direction they are facing
-		// GD.Print(player.Velocity.Y);
-		clamber.Start(); // Start the clamber timer
-		// GD.Print("Clamber start");
-		// player.velocity.Z = 10;
+			forward_tween.TweenProperty(player, "global_transform:origin", forward_movement, forward_move_time); // Same as the upward tween
+			// player.velocity.Y = 20; // give the player extra Y velocity
+			player.move_forward_clamber = -1; // Make the player move in the direction they are facing
+			// GD.Print(player.Velocity.Y);
+			clamber.Start(); // Start the clamber timer
+			// GD.Print("Clamber start");
+			// player.velocity.Z = 10;
+			}
 	}
 
     // Called when the node enters the scene tree for the first time.
