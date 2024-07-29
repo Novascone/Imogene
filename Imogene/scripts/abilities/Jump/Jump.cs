@@ -72,7 +72,7 @@ public partial class Jump : Ability
     // }
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print(frames_held);
+		// GD.Print(frames_held);
 		if(!player.IsOnFloor() && !coyote_elapsed)
 		{
 			// GD.Print("coyote timer started");

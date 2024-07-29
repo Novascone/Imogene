@@ -15,10 +15,10 @@ public partial class InitialState : State
     {
         if(fsm.this_entity is Enemy enemy)
         {
-            if(enemy.player_seen)
-            {
-               Exit("ChaseState");
-            }
+            // if(enemy.player_seen)
+            // {
+            //    Exit("ChaseState");
+            // }
         }
     }
     public override async void Enter()

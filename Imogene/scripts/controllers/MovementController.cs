@@ -11,7 +11,7 @@ public partial class MovementController : Controller
 	int ray_range = 2000;
 	private float climb_speed = 4.0f;
 	private float clamber_speed = 10.0f;
-	
+	private float _t = 0.2f;
 	// Called when the node enters the scene tree for the first time.
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
@@ -24,7 +24,6 @@ public partial class MovementController : Controller
 	public override void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
-
 		ray_origin = player.GlobalTransform.Origin;
 		ray_target = player.GlobalTransform.Origin + new Vector3(0, -20, 0);
 		var spaceState = player.GetWorld3D().DirectSpaceState;
@@ -118,6 +117,7 @@ public partial class MovementController : Controller
 					// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 				}
 				
+				
 				var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 				
 				
@@ -157,6 +157,53 @@ public partial class MovementController : Controller
 				player.velocity.Y = player.direction.Y * player.speed;
 			}
 		}
+		var difference_vector_forward = -player.Transform.Basis.Z - player.direction;
+		difference_vector_forward = difference_vector_forward.Round();
+
+		var difference_vector_backward = player.Transform.Basis.Z - player.direction;
+		difference_vector_backward = difference_vector_backward.Round();
+
+		var difference_vector_right = player.Transform.Basis.X - player.direction;
+		difference_vector_right = difference_vector_right.Round();
+
+		var difference_vector_left = -player.Transform.Basis.X - player.direction;
+		difference_vector_left = difference_vector_left.Round();
+		
+		if(player.targeting)
+		{
+			if(player.Velocity != Vector3.Zero)
+			{
+				if(difference_vector_forward == Vector3.Zero)
+				{
+					// GD.Print("player moving forward");
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 1, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+				}
+				if(difference_vector_backward == Vector3.Zero)
+				{
+					// GD.Print("player moving backward");
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, -1, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+				}
+				if(difference_vector_right == Vector3.Zero)
+				{
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 1, _t);
+				}
+				if(difference_vector_left == Vector3.Zero)
+				{
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, -1, _t);
+				}
+			}
+			else
+			{
+				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
+				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+			}
+		}
+			
+		
 		player.Velocity = player.velocity;
 		player.land_point.GlobalPosition = player.land_point_position;
 		player.tree.Set("parameters/Master/Main/IW/blend_position", player.blend_direction);
@@ -164,6 +211,25 @@ public partial class MovementController : Controller
 		player.tree.Set("parameters/Master/Ability/Ability_1/Melee_Recovery_1/Slash/One_Handed_Slash_recovery_1/One_Handed_Medium_Recovery/Walk_Recovery/blend_position", player.blend_direction); // Set blend position
 		// tree.Set("parameters/Master/Attack/AttackSpeed/scale", attack_speed);
 		player.MoveAndSlide();
+		// if(player.direction == -player.Transform.Basis.Z)
+		// {
+		// 	GD.Print("Player is walking forwards");
+		// }
+		// GD.Print("player.Transform.Basis.Z " + -player.Transform.Basis.Z);
+		// GD.Print("player direction " + player.direction);
+		
+		// if(player.direction.IsEqualApprox(player.Transform.Basis.Z))
+		// {
+		// 	GD.Print("player moving backward");
+		// }
+		// if(player.direction.IsEqualApprox(player.Transform.Basis.X))
+		// {
+		// 	GD.Print("player moving right");
+		// }
+		// if(player.direction.IsEqualApprox(-player.Transform.Basis.X))
+		// {
+		// 	GD.Print("player moving left");
+		// }
 	}
 	// private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
     // {

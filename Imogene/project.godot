@@ -263,3 +263,10 @@ climb={
 3d_physics/layer_5="enemyhurtbox"
 3d_physics/layer_6="playervision"
 3d_physics/layer_7="Interact"
+
+[shader_globals]
+
+border_color={
+"type": "color",
+"value": Color(0.937174, 0, 0.0662989, 1)
+}
