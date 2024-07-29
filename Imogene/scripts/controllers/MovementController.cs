@@ -173,8 +173,8 @@ public partial class MovementController : Controller
 		{
 			if(player.Velocity != Vector3.Zero)
 			{
-				if(difference_vector_forward == Vector3.Zero)
-				{
+				if(difference_vector_forward == Vector3.Zero) // If the difference between the players forward facing direction (-Transform.Basis.Z) and the direction the play is moving in (direction) rounds to zero, play the walk forward animation, repeat for all animations
+				{ 
 					// GD.Print("player moving forward");
 					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 1, _t);
 					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
