@@ -114,7 +114,7 @@ sky_mode = 1
 [node name="player" parent="." instance=ExtResource("4_j8e3h")]
 
 [node name="StandardEnemy" parent="." instance=ExtResource("4_wh0d4")]
-transform = Transform3D(-0.826914, 0, -0.562329, 0, 1, 0, 0.562329, 0, -0.826914, -14.0931, 0, -11.6462)
+transform = Transform3D(-0.826914, 0, -0.562329, 0, 1, 0, 0.562329, 0, -0.826914, -13.1125, 0, -10.71)
 
 [node name="Box2" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.96641, 0, 2.68336, 0, 4, 0, -2.68336, 0, 2.96641, -8.73805, 1.85571, -4.70036)
@@ -126,3 +126,6 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Box2/BoxTwo"]
 shape = SubResource("BoxShape3D_hh1qf")
+
+[node name="StandardEnemy2" parent="." instance=ExtResource("4_wh0d4")]
+transform = Transform3D(-0.754469, 0, -0.656336, 0, 1, 0, 0.656336, 0, -0.754469, -8.51639, 0, -13.4632)

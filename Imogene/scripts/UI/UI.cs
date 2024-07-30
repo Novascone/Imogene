@@ -457,7 +457,7 @@ public partial class UI : Control
 	
 	public void GetInteract(Area3D area, bool in_interact_area, bool interacting)
 	{
-		GD.Print("Getting interaction");
+		// GD.Print("Getting interaction");
 		if(in_interact_area)
 		{
 			

@@ -125,7 +125,7 @@ public partial class PlayerEntity : Entity
 		land_point = GetNode<MeshInstance3D>("UI/LandPoint");
 		
 		vision.BodyEntered += OnVisionEntered;
-		vision.AreaExited += OnVisionExited;
+		vision.BodyExited += OnVisionExited;
 		interact_area.AreaEntered += OnInteractAreaEntered;
 		interact_area.AreaExited += OnInteractAreaExited;
 
@@ -199,20 +199,20 @@ public partial class PlayerEntity : Entity
 	{
 		if(body is Enemy enemy)
 		{
-			GD.Print("Entity entered vision");
+			// GD.Print("Entity entered vision");
 		
 			if(body.IsInGroup("enemy")) 
 			{
 				GD.Print(body.Name + " entered vision ");
 				enemy_in_vision = true;
-				Vector3 dist_vec = position - body.GlobalPosition;
+				Vector3 enemy_position = enemy.GlobalTransform.Origin;
 				if(targeting && mob_pos.Count > 0)
 				{
 					mob_index += 1; // increments index when enemy enters so the player stays looking at the current enemy
 				}
 				if(!mob_pos.ContainsKey(enemy))
 				{
-					mob_pos.Add(enemy, dist_vec); // adds mob to list and how close it is to the player
+					mob_pos.Add(enemy, enemy_position); // adds mob to list and how close it is to the player
 					Sort(); // sorts the enemies by position
 				}
 		
@@ -222,31 +222,39 @@ public partial class PlayerEntity : Entity
 
 	private void OnVisionExited(Node3D body) // handler for area exited signal
 	{
+		
 		if (body is Enemy enemy)
 		{
 			if(enemy.IsInGroup("enemy")) 
-		{
-			if (mob_pos.Count == 1)
 			{
-				mob_index = 0; // resets index when all enemies leave
-				mob_pos.Remove(enemy);
-				sorted_mob_pos.Clear();
-				mobs_in_order.Clear();
-			}
-			else if(mob_pos.Count > 0)
-			{
-				if(mob_index > 0) 
+				if (mob_pos.Count == 1)
 				{
-					mob_index -= 1; // decrements index when enemy leaves so the player keeps looking at the current enemy
+					mob_index = 0; // resets index when all enemies leave
+					mob_pos.Remove(enemy);
+					GD.Print("removed " + enemy.Name);
+					sorted_mob_pos.Clear();
+					mobs_in_order.Clear();
+				}
+				else if(mob_pos.Count > 0)
+				{
+					if(mob_index > 0) 
+					{
+						mob_index -= 1; // decrements index when enemy leaves so the player keeps looking at the current enemy
+					}
+					
+					mob_pos.Remove(enemy);
+					Sort();
+					GD.Print("removed " + enemy.Name);
+					
 				}
 				
-				mob_pos.Remove(enemy);
-				
 			}
-			
+			if(enemy == targeted_enemy)
+			{
+				ui.hud.enemy_health.EnemyUntargeted();
+				targeted_enemy.targeted = false;
+			}
 		}
-		}
-		
 		
 	}
 	
@@ -262,6 +270,10 @@ public partial class PlayerEntity : Entity
 				if(mob_index < mob_pos.Count - 1)
 				{
 					mob_index += 1;
+					mobs_in_order[mob_index -1].targeted = false;
+					GD.Print("mob to be untargeted" + mobs_in_order[mob_index - 1].Name);
+					ui.hud.enemy_health.EnemyUntargeted();
+					GD.Print(mobs_in_order[mob_index - 1].targeted);
 				}
 				
 			}
@@ -271,6 +283,10 @@ public partial class PlayerEntity : Entity
 				if(mob_index > 0)
 				{
 					mob_index -= 1;
+					mobs_in_order[mob_index + 1].targeted = false;
+					GD.Print("mob to be untargeted" + mobs_in_order[mob_index + 1].Name);
+					ui.hud.enemy_health.EnemyUntargeted();
+					GD.Print(mobs_in_order[mob_index + 1].targeted);
 				}
 				
 			}
@@ -367,7 +383,8 @@ public partial class PlayerEntity : Entity
 	}
 	private void Sort() // Sort mobs by distance
 	{
-		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, position);
+		GD.Print("Sorting");
+		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, GlobalTransform.Origin);
 		mobs_in_order = new List<Enemy>(sorted_mob_pos.Keys);
 	}
 
