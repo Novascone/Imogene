@@ -21,11 +21,103 @@ public partial class EquipmentController : Controller
 	// private Player player;
 	private CustomSignals _customSignals; // Custom signal instance
 
+	
+	public bool d_pad_right_pressed;
+	public bool d_pad_right_released;
+	public bool d_pad_left_pressed;
+	public bool d_pad_left_released;
+	public bool d_pad_up_pressed;
+	public bool d_pad_up_released;
+	public bool d_pad_down_pressed;
+	public bool d_pad_down_released;
+	public int d_pad_frames_held;
+	public int d_pad_frames_held_threshold = 10;
+	public bool d_pad_held;
+
+
 	public override void _Ready()
 	{
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.EquipableInfo += HandleEquipableInfo;
 		_customSignals.EquipConsumable += HandleEquipConsumable;
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		// GD.Print(d_pad_frames_held);
+		if(d_pad_frames_held > d_pad_frames_held_threshold)
+		{
+			d_pad_held = true;
+		}
+		else
+		{
+			d_pad_held = false;
+		}
+		if(player.can_use_abilities)
+		{
+			if(d_pad_left_pressed || d_pad_right_pressed)
+			{
+				d_pad_frames_held += 1;
+			}
+			
+			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_left_released) // If the left D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
+			{
+				player.l_cross_primary_selected = !player.l_cross_primary_selected;
+				player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
+				d_pad_left_released = false;
+				d_pad_frames_held = 0;
+				d_pad_held = false;
+				// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+			}
+			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_left_released) // If the frames held was greater than or equal to the threshold switch off-hand
+			{
+				GD.Print("Switch off-hand");
+				d_pad_left_released = false;
+				d_pad_frames_held = 0;
+			}
+				
+			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_right_released) // If the right D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
+			{
+				
+				player.r_cross_primary_selected = !player.r_cross_primary_selected;
+				player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
+				d_pad_right_released = false;
+				d_pad_frames_held = 0;
+				d_pad_held = false;
+				// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
+			}
+			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_right_released) // If the frames held was greater than or equal to the threshold switch main-hand
+			{
+				GD.Print("Switch main-hand");
+				d_pad_right_released = false;
+				d_pad_frames_held = 0;
+			}
+				
+			if(d_pad_up_pressed)
+			{
+				// switch consumable
+				if(player.consumable < 4)
+				{
+					player.consumable += 1;
+				}
+				else if(player.consumable == 4)
+				{
+					player.consumable = 1;
+				}
+				d_pad_up_pressed = false;
+
+				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), player.consumable);
+				player.ui.hud.WhichConsumable(player.consumable);
+			}
+			if(d_pad_down_pressed)
+			{
+				// use consumable
+				player.consumables[player.consumable]?.UseItem();
+				d_pad_down_pressed = false;
+			}
+
+			
+		}
 	}
 
     public override void _Input(InputEvent @event)
@@ -45,6 +137,74 @@ public partial class EquipmentController : Controller
 		// 	}
 		// }
     }
+
+	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	{
+        
+        
+		if(@event.IsActionPressed("D-PadLeft"))
+		{
+			d_pad_left_pressed = true;
+			d_pad_left_released = false;
+		}
+		if(@event.IsActionReleased("D-PadLeft"))
+		{
+			d_pad_left_pressed = false;
+			d_pad_left_released = true;
+			
+		}
+		if(@event.IsActionPressed("D-PadRight"))
+		{
+			d_pad_right_pressed = true;
+			d_pad_right_released = false;
+			
+		}
+		if(@event.IsActionReleased("D-PadRight"))
+		{
+			d_pad_right_pressed = false;
+			d_pad_right_released = true;
+			
+		}
+		if(@event.IsActionPressed("D-PadUp"))
+		{
+			d_pad_up_pressed = true;
+			d_pad_up_released = false;
+		}
+		if(@event.IsActionReleased("D-PadUp"))
+		{
+			d_pad_up_pressed = false;
+			d_pad_up_released = true;
+		}
+		if(@event.IsActionPressed("D-PadDown"))
+		{
+			d_pad_down_pressed = true;
+			d_pad_down_released = false;
+		}
+		if(@event.IsActionReleased("D-PadDown"))
+		{
+			d_pad_down_pressed = false;
+			d_pad_down_released = true;
+		}
+		if(@event.IsActionPressed("one"))
+		{
+			player.damage_system.TakeDamage("Physical", 10, false);
+			GD.Print("Health test");
+			GD.Print("Health : " + player.health);
+		}
+		if(@event.IsActionPressed("two"))
+		{
+			player.resource_system.Resource(10);
+		}
+        if(@event.IsActionPressed("three"))
+		{
+			player.resource_system.Posture(5);
+		}
+		if(@event.IsActionPressed("four"))
+		{
+			player.xp_system.GainXP(11);
+		}
+		
+	}
 
 	public void GetEquipableInfo(ArmsResource arm) // Gets info from equipable items
     {

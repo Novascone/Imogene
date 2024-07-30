@@ -25,13 +25,9 @@ public partial class Player : PlayerEntity
 	public bool test_abilities_assigned = false;
 	
 	// UI
-	
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
-	public bool d_pad_right_pressed;
-	public bool d_pad_left_pressed;
-	public bool d_pad_up_pressed;
-	public bool d_pad_down_pressed;
+	
 
 	// Controllers
 	public MovementController movementController;
@@ -72,9 +68,11 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
 
-		
 		l_cross_primary_selected = true;
-		r_cross_primary_selected = true;
+		r_cross_primary_selected = true;		
+
+		
+		
 
 		camera_rig = GetNode<CameraRig>("CameraRig");
 		camera_rig.TopLevel = true;
@@ -170,62 +168,7 @@ public partial class Player : PlayerEntity
 		}
     }
 
-	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
-	{
-        
-        
-		if(@event.IsActionPressed("D-PadLeft"))
-		{
-			d_pad_left_pressed = true;
-		}
-		if(@event.IsActionReleased("D-PadLeft"))
-		{
-			d_pad_left_pressed = false;
-		}
-		if(@event.IsActionPressed("D-PadRight"))
-		{
-			d_pad_right_pressed = true;
-		}
-		if(@event.IsActionReleased("D-PadRight"))
-		{
-			d_pad_right_pressed = false;
-		}
-		if(@event.IsActionPressed("D-PadUp"))
-		{
-			d_pad_up_pressed = true;
-		}
-		if(@event.IsActionReleased("D-PadUp"))
-		{
-			d_pad_up_pressed = false;
-		}
-		if(@event.IsActionPressed("D-PadDown"))
-		{
-			d_pad_down_pressed = true;
-		}
-		if(@event.IsActionReleased("D-PadDown"))
-		{
-			d_pad_down_pressed = false;
-		}
-		if(@event.IsActionPressed("one"))
-		{
-			damage_system.TakeDamage("Physical", 10, false);
-			GD.Print("Health test");
-			GD.Print("Health : " + health);
-		}
-		if(@event.IsActionPressed("two"))
-		{
-			resource_system.Resource(10);
-		}
-        if(@event.IsActionPressed("three"))
-		{
-			resource_system.Posture(5);
-		}
-		if(@event.IsActionPressed("four"))
-		{
-			xp_system.GainXP(11);
-		}
-		
-	}
+	
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -237,47 +180,6 @@ public partial class Player : PlayerEntity
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
 
-		if(can_use_abilities)
-		{
-			if(d_pad_left_pressed) // Select crosses 
-			{
-				l_cross_primary_selected = !l_cross_primary_selected;
-				ui.hud.LCrossPrimaryOrSecondary(l_cross_primary_selected);
-				d_pad_left_pressed = false;
-				// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
-			}
-			if(d_pad_right_pressed)
-			{
-				r_cross_primary_selected = !r_cross_primary_selected;
-				ui.hud.RCrossPrimaryOrSecondary(r_cross_primary_selected);
-				d_pad_right_pressed = false;
-				// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
-			}
-			if(d_pad_up_pressed)
-			{
-				// switch consumable
-				if(consumable < 4)
-				{
-					consumable += 1;
-				}
-				else if(consumable == 4)
-				{
-					consumable = 1;
-				}
-				d_pad_up_pressed = false;
-
-				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), consumable);
-				ui.hud.WhichConsumable(consumable);
-			}
-			if(d_pad_down_pressed)
-			{
-				// use consumable
-				consumables[consumable]?.UseItem();
-				d_pad_down_pressed = false;
-			}
-		}
-
-		
 
 		CheckInteract(); // Check if the player can interact with anything
 		EnemyCheck(); // Check for enemy

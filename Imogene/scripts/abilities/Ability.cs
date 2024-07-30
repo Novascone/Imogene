@@ -23,6 +23,9 @@ public partial class Ability : Node3D
     public Player player;
     public bool button_pressed;
     public bool button_released;
+    public bool button_held;
+    public int frames_held;
+    public int frames_held_threshold = 10;
 
     public bool useable = true;
     public bool in_use = false;
@@ -35,6 +38,7 @@ public partial class Ability : Node3D
     {
       
     }
+    
 
     public void CheckCanUse()
     {
@@ -53,7 +57,18 @@ public partial class Ability : Node3D
             if(@event.IsActionReleased(assigned_button))
             {
                 button_pressed = false;
-                button_released = true;
+                if(CheckCross())
+                {
+                    if(frames_held < frames_held_threshold)
+                    {
+                        button_released = true;
+                    }
+                    else
+                    {
+                        frames_held = 0;
+                    }                    
+                }
+                
                 GD.Print("button released");
             }
         }

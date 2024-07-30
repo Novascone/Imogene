@@ -9,9 +9,9 @@ public partial class Jump : Ability
 	private Timer held = new Timer();
 	private bool coyote_elapsed = false;
 	private bool is_climbing;
-	private bool button_held;
-	int held_threshold = 10;
-	int frames_held = 0;
+	// private bool button_held;
+	// int frames_held_threshold = 10;
+	// int frames_held = 0;
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
     {
@@ -55,6 +55,7 @@ public partial class Jump : Ability
 		frames_held = 0;
 		button_held = false;
 		button_released = false;
+		player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
     }
 
 
@@ -72,7 +73,7 @@ public partial class Jump : Ability
     // }
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print(frames_held);
+
 		if(!player.IsOnFloor() && !coyote_elapsed)
 		{
 			// GD.Print("coyote timer started");
@@ -91,11 +92,7 @@ public partial class Jump : Ability
 		{
 			frames_held += 1; // If the button is pressed start counting the amount of frames its pressed
 		}
-		if(button_released)
-		{
-			frames_held = 0;
-		}
-		if(frames_held > held_threshold)
+		if(frames_held > frames_held_threshold)
 		{
 			button_held = true;
 		}
@@ -108,22 +105,25 @@ public partial class Jump : Ability
 		{
 			
 			AddToAbilityList(this);
-			if(!player.is_climbing && frames_held < held_threshold && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
+			if(!player.is_climbing && frames_held < frames_held_threshold && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
 			{
 				// GD.Print("Player is not climbing");
 				// GD.Print("held threshold going into jump " + held_threshold);
 				Execute(); // Jump
 				frames_held = 0; // Reset the frames the button has been held
 			}
-			else if(frames_held > held_threshold) // If the button has been held for more than 10 frames
+			else if(frames_held > frames_held_threshold) // If the button has been held for more than 10 frames
 			{
 				GD.Print("button held");
+				
 				if(!player.on_wall.IsColliding()) // If the player is not near a wall reset how many frames the button has been held
 				{
-					frames_held = 0;
+					
 					if(!player.is_climbing)
 					{
+						button_released = false;
 						button_held = false;
+						// frames_held = 0;
 					}
 					
 				}
@@ -178,7 +178,7 @@ public partial class Jump : Ability
 	public async void Clamber()
 	{
 		GD.Print("Player can clamber");
-		if(frames_held >= held_threshold)
+		if(frames_held >= frames_held_threshold)
 		{
 			GD.Print("Clamber now");
 			player.speed = 10f;
