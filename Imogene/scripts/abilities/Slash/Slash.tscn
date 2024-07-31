@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://2syxxwi1wgte"]
+[gd_scene load_steps=3 format=3 uid="uid://2syxxwi1wgte"]
 
 [ext_resource type="Script" path="res://scripts/abilities/Slash/Slash.cs" id="1_abkjy"]
+[ext_resource type="Resource" uid="uid://b6lduigl5eopg" path="res://scripts/abilities/Slash/Slash.tres" id="2_o05mu"]
 
 [node name="Slash" type="Node3D"]
 script = ExtResource("1_abkjy")
+resource = ExtResource("2_o05mu")
 
 [node name="SwingTimer" type="Timer" parent="."]
 wait_time = 1.2

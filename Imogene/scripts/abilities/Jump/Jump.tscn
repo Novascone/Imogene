@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://tc6t72t7b5mb"]
+[gd_scene load_steps=3 format=3 uid="uid://tc6t72t7b5mb"]
 
 [ext_resource type="Script" path="res://scripts/abilities/Jump/Jump.cs" id="1_a1rch"]
+[ext_resource type="Resource" uid="uid://cdf6dyd00vj52" path="res://scripts/abilities/Jump/Jump.tres" id="2_80k6r"]
 
 [node name="Jump" type="Node3D"]
 script = ExtResource("1_a1rch")
+resource = ExtResource("2_80k6r")
 
 [node name="Coyote" type="Timer" parent="."]
 wait_time = 0.5

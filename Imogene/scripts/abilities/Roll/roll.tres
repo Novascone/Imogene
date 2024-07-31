@@ -10,4 +10,4 @@ name = "Roll"
 description = "Roll in the direction facing at an increased speed"
 ability_path = ""
 icon = ExtResource("1_kysu5")
-type = ""
+type = "movement"

@@ -169,7 +169,12 @@ public partial class MovementController : Controller
 
 			if(player.direction != Vector3.Zero && player.is_climbing)
 			{
+				player.prev_y_rotation = player.GlobalRotation.Y;
 				player.current_y_rotation = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
+				if(player.prev_y_rotation != player.current_y_rotation)
+				{
+					player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+				}
 			}
 			
 		}

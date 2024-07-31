@@ -85,6 +85,8 @@ public partial class Enemy : Entity
 	// Switch variable
 	public bool switch_to_state2;
 
+	public bool in_soft_target_small;
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -190,6 +192,8 @@ public partial class Enemy : Entity
 	{
 		// GD.Print("Max Health " + maximum_health);
 		// GD.Print("Health " + health);
+		
+		// GD.Print(Name + " In soft small " + in_soft_target_small);
 
 		ray_origin = ray_position.GlobalPosition;
 		var direction = Vector3.Zero;

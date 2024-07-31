@@ -12,7 +12,7 @@ using System.ComponentModel;
 public partial class Ability : Node3D
 {
     [Export] public string description { get; set; }
-    [Export] public Resource resource { get; set; }
+    [Export] public AbilityResource resource { get; set; }
     [Export] public string ability_type { get; set; }
     
     public string cross{ get; set; }
@@ -100,6 +100,10 @@ public partial class Ability : Node3D
         else
         {
             player.ability_in_use = null;
+        }
+        if(resource.type == "melee")
+        {
+            player.targeting_system.looking_at_soft = false;
         }
 
         in_use = false;

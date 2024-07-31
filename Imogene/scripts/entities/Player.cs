@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
@@ -16,6 +17,8 @@ public partial class Player : PlayerEntity
 	public RayCast3D on_wall;
 	public CameraRig camera_rig;
 	public Area3D vision; // Area where the player can target enemies
+	public Area3D soft_target_small;
+	public Area3D soft_target_large;
 
 	// Abilities
 	// private Target target_ability; // Target enemies
@@ -24,6 +27,7 @@ public partial class Player : PlayerEntity
 	public bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
 	public Ability ability_in_use; // The ability that the player is currently using
 	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
+	public Ability[] ability_list;
 	public bool test_abilities_assigned = false;
 	
 	// UI
@@ -89,9 +93,22 @@ public partial class Player : PlayerEntity
 
 
 		vision  = (Area3D)GetNode("Areas/Vision");
+
+		soft_target_small = GetNode<Area3D>("Areas/SoftTargetSmall");
+		soft_target_large = GetNode<Area3D>("Areas/SoftTargetLarge");
+
 		vision.BodyEntered += OnVisionEntered;
 		vision.BodyExited += OnVisionExited;
 
+		soft_target_small.BodyEntered += OnSoftTargetSmallEntered;
+		soft_target_small.BodyExited += OnSoftTargetSmallExited;
+
+		soft_target_large.BodyEntered += OnSoftTargetLargeEntered;
+		soft_target_large.BodyExited += OnSoftTargetLargeExited;
+		
+
+
+		
 		head_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Head/HeadSlot");
 		helm = new MeshInstance3D();
 		shoulder_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/ShoulderRight/ShoulderRightSlot");
@@ -165,7 +182,10 @@ public partial class Player : PlayerEntity
 		GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
-	private void OnHurtboxBodyEntered(Area3D body)
+    
+
+
+    private void OnHurtboxBodyEntered(Area3D body)
     {
 		GD.Print("Hitbox entered " + this.Name);
 		if(body is Hitbox box)
@@ -189,10 +209,16 @@ public partial class Player : PlayerEntity
 		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
-
-
 		CheckInteract(); // Check if the player can interact with anything
-		targeting_system.EnemyCheck(); // Check for enemy
+		
+
+		if(abilities_in_use.Count > 1)
+		{
+			ability_list = new Ability[abilities_in_use.Count];
+			abilities_in_use.CopyTo(ability_list, 0);
+			GD.Print(ability_list[0].resource.type);
+		}
+		
     }
 
 	private void OnVisionEntered(Node3D body) // handler for area entered signal
@@ -200,7 +226,7 @@ public partial class Player : PlayerEntity
 		if(body is Enemy enemy)
 		{
 			// GD.Print("Entity entered vision");
-			targeting_system.EnemyEntered(enemy);
+			targeting_system.EnemyEnteredVision(enemy);
 		}
 	}
 
@@ -209,11 +235,42 @@ public partial class Player : PlayerEntity
 		
 		if (body is Enemy enemy)
 		{
-			targeting_system.EnemyExited(enemy);
+			targeting_system.EnemyExitedVision(enemy);
 			
 		}
 		
 	}
+
+	private void OnSoftTargetSmallEntered(Node3D body)
+    {
+        if(body is Enemy enemy)
+		{
+			targeting_system.EnemyEnteredSoftSmall(enemy);
+		}
+    }
+	private void OnSoftTargetSmallExited(Node3D body)
+    {
+       if(body is Enemy enemy)
+		{
+			targeting_system.EnemyExitedSoftSmall(enemy);
+		}
+    }
+
+	private void OnSoftTargetLargeEntered(Node3D body)
+    {
+       if(body is Enemy enemy)
+		{
+			targeting_system.EnemyEnteredSoftLarge(enemy);
+		}
+    }
+
+	private void OnSoftTargetLargeExited(Node3D body)
+    {
+       if(body is Enemy enemy)
+		{
+			targeting_system.EnemyExitedSoftLarge(enemy);
+		}
+    }
 
 	
 
@@ -232,10 +289,14 @@ public partial class Player : PlayerEntity
 				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
-		else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing
-		{
-			GlobalRotation = GlobalRotation with {Y = current_y_rotation};
-		}
+		// else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing
+		// {
+		// 	prev_y_rotation = GlobalRotation.Y;
+		// 	if(prev_y_rotation != current_y_rotation)
+		// 	{
+		// 	GlobalRotation = GlobalRotation with {Y = current_y_rotation};
+		// 	}
+		// }
 	}
 
 	public void Updater() // Emit signals
