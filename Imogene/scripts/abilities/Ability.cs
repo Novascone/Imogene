@@ -49,25 +49,24 @@ public partial class Ability : Node3D
 	{
         if(assigned_button != null)
         {
-            if(@event.IsActionPressed(assigned_button))
+            if(@event.IsActionPressed(assigned_button) && CheckCross())
             {
                 button_pressed = true;
                 button_released = false;
             }
-            if(@event.IsActionReleased(assigned_button))
+            if(@event.IsActionReleased(assigned_button) && CheckCross())
             {
                 button_pressed = false;
-                if(CheckCross())
+                if(frames_held < frames_held_threshold)
                 {
-                    if(frames_held < frames_held_threshold)
-                    {
-                        button_released = true;
-                    }
-                    else
-                    {
-                        frames_held = 0;
-                    }                    
+                    button_released = true;
                 }
+                else
+                {
+                    frames_held = 0;
+                    button_released = false;
+                }                   
+                
                 
                 GD.Print("button released");
             }

@@ -104,25 +104,59 @@ public partial class MovementController : Controller
 				if (Input.IsActionPressed("Backward"))
 				{
 					player.direction.Y -= 1.0f;
-					GD.Print("player moving down");
-					GD.Print("player velocity y " + player.velocity.Y);
 					// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
 				}
 				if (Input.IsActionPressed("Forward"))
 				{
 					player.direction.Y += 1.0f;
-					GD.Print("player moving up");
-					GD.Print("player velocity y " + player.velocity.Y);
-
 					// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 				}
+
+				if(player.direction.Y == 1.0 && player.direction.X == 0.0)
+				{
+					GD.Print("player is moving up");
+					// Put animation here
+				}
+				if(player.direction.Y == 0.0 && player.direction.X == 1.0)
+				{
+					GD.Print("player is moving to the left");
+					// Put animation here
+				}
+				if(player.direction.Y == 1.0 && player.direction.X == 1.0)
+				{
+					GD.Print("player is moving up and to the left");
+					// Put animation here
+				}
+				if(player.direction.Y == 0.0 && player.direction.X == -1.0)
+				{
+					GD.Print("player is moving to the right");
+					// Put animation here
+				}
+				if(player.direction.Y == 1.0 && player.direction.X == -1.0)
+				{
+					GD.Print("player is moving up and to the right");
+					// Put animation here
+				}
+				if(player.direction.Y == -1.0 && player.direction.X == 0.0)
+				{
+					GD.Print("player is moving down");
+					// Put animation here
+				}
+				if(player.direction.Y == -1.0 && player.direction.X == 1.0)
+				{
+					GD.Print("player is moving down and to the left");
+					// Put animation here
+				}
+				if(player.direction.Y == -1.0 && player.direction.X == -1.0)
+				{
+					GD.Print("player is moving down and to the right");
+					// Put animation here
+				}
 				
-				
+		
 				var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 				
-				
-					player.vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
-				
+				player.vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
 				
 				var horizontal_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 				if(!player.is_clambering)
@@ -146,7 +180,7 @@ public partial class MovementController : Controller
 		}
 
 		player.SmoothRotation(); // Rotate the player character smoothly
-		player.LookAtOver(); // Look at mob and handle switching
+		player.targeting_system.LookAtOver(); // Look at mob and handle switching
 
 		if(!player.using_movement_ability)
 		{
@@ -160,14 +194,32 @@ public partial class MovementController : Controller
 		var difference_vector_forward = -player.Transform.Basis.Z - player.direction;
 		difference_vector_forward = difference_vector_forward.Round();
 
-		var difference_vector_backward = player.Transform.Basis.Z - player.direction;
-		difference_vector_backward = difference_vector_backward.Round();
+		var difference_vector_left = -player.Transform.Basis.X - player.direction;
+		difference_vector_left = difference_vector_left.Round();
+
+		var difference_vector_forward_left = -player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
+		difference_vector_forward_left = difference_vector_forward_left.Round();
 
 		var difference_vector_right = player.Transform.Basis.X - player.direction;
 		difference_vector_right = difference_vector_right.Round();
 
-		var difference_vector_left = -player.Transform.Basis.X - player.direction;
-		difference_vector_left = difference_vector_left.Round();
+		var difference_vector_forward_right = -player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
+		difference_vector_forward_right = difference_vector_forward_right.Round();
+
+		var difference_vector_backward = player.Transform.Basis.Z - player.direction;
+		difference_vector_backward = difference_vector_backward.Round();
+
+		var difference_vector_backward_left = player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
+		difference_vector_backward_left = difference_vector_backward_left.Round();
+
+		var difference_vector_backward_right = player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
+		difference_vector_backward_right = difference_vector_backward_right.Round();
+
+		
+
+		
+
+		
 		
 		if(player.targeting)
 		{
@@ -178,6 +230,30 @@ public partial class MovementController : Controller
 					// GD.Print("player moving forward");
 					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 1, _t);
 					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+					
+				}
+				if(difference_vector_left == Vector3.Zero)
+				{
+					// GD.Print("Player moving left");
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, -1, _t);
+					
+				}
+				if(difference_vector_forward_left == Vector3.Zero)
+				{
+					// GD.Print("Player moving forward left");
+					// put new animation here
+				}
+				if(difference_vector_right == Vector3.Zero)
+				{
+					// GD.Print("Player moving left");
+					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
+					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 1, _t);
+				}
+				if(difference_vector_forward_right == Vector3.Zero)
+				{
+					// GD.Print("Player moving forward right");
+					// put new animation here
 				}
 				if(difference_vector_backward == Vector3.Zero)
 				{
@@ -185,16 +261,18 @@ public partial class MovementController : Controller
 					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, -1, _t);
 					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
 				}
-				if(difference_vector_right == Vector3.Zero)
+				if(difference_vector_backward_left == Vector3.Zero)
 				{
-					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 1, _t);
+					// GD.Print("Player moving backward left");
+					// put new animation here
 				}
-				if(difference_vector_left == Vector3.Zero)
+				if(difference_vector_backward_right == Vector3.Zero)
 				{
-					player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-					player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, -1, _t);
+					// GD.Print("Player moving backward right");
+					// put new animation here
 				}
+				
+				
 			}
 			else
 			{

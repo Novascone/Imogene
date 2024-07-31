@@ -22,6 +22,7 @@ public partial class Entity : CharacterBody3D
 	public DamageSystem damage_system;
 	public ResourceSystem resource_system;
 	public XPSystem xp_system;
+	public TargetingSystem targeting_system;
 
 	// Booleans
 	public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
@@ -217,10 +218,14 @@ public partial class Entity : CharacterBody3D
 		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
 		resource_system.GetEntityInfo(this);
 
-		if(this is Player)
+		if(this is Player player)
 		{
 			xp_system = GetNode<XPSystem>("Systems/XPSystem");
 			xp_system.GetEntityInfo(this);
+
+			targeting_system = GetNode<TargetingSystem>("Systems/TargetingSystem");
+			targeting_system.GetPlayerInfo(player);
+
 		}
 		
 

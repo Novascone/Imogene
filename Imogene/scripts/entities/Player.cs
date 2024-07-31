@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 
 
@@ -14,9 +15,10 @@ public partial class Player : PlayerEntity
 	public RayCast3D near_wall;
 	public RayCast3D on_wall;
 	public CameraRig camera_rig;
+	public Area3D vision; // Area where the player can target enemies
 
 	// Abilities
-	private Target target_ability; // Target enemies
+	// private Target target_ability; // Target enemies
 	public List<AbilityResource> ability_resources = new List<AbilityResource>(); // List of Ability Resources to load abilities from. Each AbilityResource Contains int id, string name, string ability_path, Texture2D icon, string type as well as 5 PackedScenes containing modifiers for the ability
 	public List<Ability> abilities = new List<Ability>(); // List of abilities the player has access to. The Abilities are loaded from a PackedScene which is a Node3D with a script attached to it
 	public bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
@@ -54,6 +56,9 @@ public partial class Player : PlayerEntity
 	public float move_forward_clamber = 0;
 	public float vertical_input;
 
+	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
+	
+
 	
 
 	public override void _Ready()
@@ -81,6 +86,11 @@ public partial class Player : PlayerEntity
 		abilityController = GetNode<AbilityController>("Controllers/AbilityController");
 		statController = GetNode<StatController>("Controllers/StatController");
 		equipmentController = GetNode<EquipmentController>("Controllers/EquipmentController");
+
+
+		vision  = (Area3D)GetNode("Areas/Vision");
+		vision.BodyEntered += OnVisionEntered;
+		vision.BodyExited += OnVisionExited;
 
 		head_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Head/HeadSlot");
 		helm = new MeshInstance3D();
@@ -182,9 +192,51 @@ public partial class Player : PlayerEntity
 
 
 		CheckInteract(); // Check if the player can interact with anything
-		EnemyCheck(); // Check for enemy
+		targeting_system.EnemyCheck(); // Check for enemy
     }
 
+	private void OnVisionEntered(Node3D body) // handler for area entered signal
+	{
+		if(body is Enemy enemy)
+		{
+			// GD.Print("Entity entered vision");
+			targeting_system.EnemyEntered(enemy);
+		}
+	}
+
+	private void OnVisionExited(Node3D body) // handler for area exited signal
+	{
+		
+		if (body is Enemy enemy)
+		{
+			targeting_system.EnemyExited(enemy);
+			
+		}
+		
+	}
+
+	
+
+	public void SmoothRotation() // Rotates the player character smoothly with lerp
+	{
+		if(!targeting && !is_climbing)
+		{
+			prev_y_rotation = GlobalRotation.Y;
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
+			{
+				LookAt(GlobalPosition + direction);
+			}
+			current_y_rotation = GlobalRotation.Y;
+			if(prev_y_rotation != current_y_rotation)
+			{
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+			}
+		}
+		else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing
+		{
+			GlobalRotation = GlobalRotation with {Y = current_y_rotation};
+		}
+	}
 
 	public void Updater() // Emit signals
 	{
