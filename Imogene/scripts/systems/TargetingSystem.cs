@@ -14,6 +14,8 @@ public partial class TargetingSystem : EntitySystem
 	public	Dictionary<Enemy, Vector3> mob_pos = new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
 	public Dictionary<Enemy,Vector3> sorted_mob_pos; // Sorted Dictionary of mob positions
 	public List<Enemy> mobs_in_order; // List of mobs in order
+	public List<Enemy> mobs_in_order_to_right = new List<Enemy>();
+	public List<Enemy> mobs_in_order_to_left = new List<Enemy>();
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
 	public List<Vector3> mob_distance_from_player; // Distance from targeted mob to player
 	public Enemy strong_targeted_enemy;
@@ -56,9 +58,30 @@ public partial class TargetingSystem : EntitySystem
 		{
 			// if(player.ability_list != null)
 			// {
-			GD.Print(mobs_in_order.Count);
+			// GD.Print(mobs_in_order.Count);
 			// }
-			
+			GD.Print("mobs to the left " + mobs_in_order_to_left.Count);
+			GD.Print("mobs to the right " + mobs_in_order_to_right.Count);
+			foreach(Enemy enemy in mobs_in_order_to_right)
+			{
+				
+				var angle_between_player_and_enemy = Mathf.RadToDeg(-(-player.Transform.Basis.X.AngleTo(player.GlobalPosition.DirectionTo(enemy.GlobalPosition))));
+				GD.Print("this enemy is to the right " + enemy.Name + " with angle " + angle_between_player_and_enemy);
+			}
+			foreach(Enemy enemy in mobs_in_order_to_left)
+			{
+				var angle_between_player_and_enemy = Mathf.RadToDeg(-(-player.Transform.Basis.X.AngleTo(player.GlobalPosition.DirectionTo(enemy.GlobalPosition))));
+				GD.Print("this enemy is to the left " + enemy.Name + " with angle " + angle_between_player_and_enemy);
+			}
+			// var angle_between_player_and_enemy = Mathf.RadToDeg(-(-player.Transform.Basis.Z.AngleTo(-player.Transform.Basis.Z.DirectionTo(mobs_in_order[0].GlobalPosition))));
+			// if(angle_between_player_and_enemy >= 0 && angle_between_player_and_enemy < 90)
+			// {
+			// 	GD.Print("closest enemy is to the left of player");
+			// }
+			// else if(angle_between_player_and_enemy > 90 && angle_between_player_and_enemy <= 180)
+			// {
+			// 	GD.Print("closest enemy is to the right of player");
+			// }
 			
 		}
 		// GD.Print("enemy in vision " + enemy_in_vision);
@@ -195,6 +218,7 @@ public partial class TargetingSystem : EntitySystem
 			// target_ability.Execute(this);
 			if(Input.IsActionJustPressed("TargetNext"))
 			{
+				//sort()
 				target_enemy_set = false;
 				if(mob_index < mob_pos.Count - 1)
 				{
@@ -209,6 +233,7 @@ public partial class TargetingSystem : EntitySystem
 			else if (Input.IsActionJustPressed("TargetLast"))
 			{
 				target_enemy_set = false;
+				//Sort();
 				if(mob_index > 0)
 				{
 					mob_index -= 1;
@@ -292,6 +317,43 @@ public partial class TargetingSystem : EntitySystem
 		// GD.Print("Sorting");
 		sorted_mob_pos = Vector3DictionarySorter.SortByDistance(mob_pos, player.GlobalTransform.Origin);
 		mobs_in_order = new List<Enemy>(sorted_mob_pos.Keys);
+		foreach(Enemy enemy in mobs_in_order)
+		{
+			var angle_between_player_and_enemy = Mathf.RadToDeg(-(-player.Transform.Basis.X.AngleTo(player.GlobalPosition.DirectionTo(enemy.GlobalPosition))));
+			if(angle_between_player_and_enemy >= 0 && angle_between_player_and_enemy < 90)
+			{
+				if(!mobs_in_order_to_right.Contains(enemy))
+				{
+					mobs_in_order_to_right.Add(enemy);
+				}
+				if(mobs_in_order_to_left.Contains(enemy))
+				{
+					mobs_in_order_to_left.Remove(enemy);
+				}
+			}
+			else if (angle_between_player_and_enemy >= 90 && angle_between_player_and_enemy < 180)
+			{
+				if(!mobs_in_order_to_left.Contains(enemy))
+				{
+					mobs_in_order_to_left.Add(enemy);
+				}
+				if(mobs_in_order_to_right.Contains(enemy))
+				{
+					mobs_in_order_to_right.Remove(enemy);
+				}
+			}
+			else
+			{
+				if(mobs_in_order_to_right.Contains(enemy))                                                                                                                                                                                                                                    
+				{
+					mobs_in_order_to_right.Remove(enemy);
+				}
+				if(mobs_in_order_to_left.Contains(enemy))
+				{
+					mobs_in_order_to_left.Remove(enemy);
+				}
+			}
+		}
 		// foreach( Enemy enemy in mobs_in_order)
 		// {
 		// 	GD.Print(mob_pos.Count);
