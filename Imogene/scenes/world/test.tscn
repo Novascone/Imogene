@@ -129,3 +129,6 @@ shape = SubResource("BoxShape3D_hh1qf")
 
 [node name="StandardEnemy2" parent="." instance=ExtResource("4_wh0d4")]
 transform = Transform3D(-0.754469, 0, -0.656336, 0, 1, 0, 0.656336, 0, -0.754469, -8.51639, 0, -13.4632)
+
+[node name="StandardEnemy3" parent="." instance=ExtResource("4_wh0d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8121, 0, -8.04192)

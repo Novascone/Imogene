@@ -185,7 +185,7 @@ public partial class MovementController : Controller
 		}
 
 		player.SmoothRotation(); // Rotate the player character smoothly
-		player.targeting_system.LookAtOver(); // Look at mob and handle switching
+		player.targeting_system.LookAtEnemy(); // Look at mob and handle switching
 
 		if(!player.using_movement_ability)
 		{
