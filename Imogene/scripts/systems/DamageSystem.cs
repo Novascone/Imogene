@@ -1,13 +1,21 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class DamageSystem : EntitySystem
 {
-	
+	// Timers
 	public Timer health_regen_timer;
 	public Timer dot_timer;
 	public Timer slow_timer;
 	public Timer stun_timer;
+
+	// Damage numbers parameters
+	private Node3D spawn_point;
+	private float spread = 90;
+	private float height = 60;
+	PackedScene damage_number_3d_template;
+	private Queue<DamageNumber3D> damage_number_3d_pool = new Queue<DamageNumber3D>();
 	
 	private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
@@ -26,7 +34,31 @@ public partial class DamageSystem : EntitySystem
 		stun_timer = GetNode<Timer>("StunTimer");
 		stun_timer.Timeout += OnStunTickTimeout;
 
+		damage_number_3d_template = GD.Load<PackedScene>("res://scenes/UI/DamageNumber3D.tscn");
+
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+	}
+	public void SpawnDamageNumber(float value, bool is_critical)
+	{
+		DamageNumber3D damage_number = GetDamageNumber();
+		Vector3 position = spawn_point.GlobalTransform.Origin;
+		AddChild(damage_number, true);
+		damage_number.SetValuesAndAnimate(value, is_critical, position, height, spread);
+	}
+
+	public DamageNumber3D GetDamageNumber()
+	{
+		if(damage_number_3d_pool.Count > 0)
+		{
+			return damage_number_3d_pool.Dequeue();
+		}
+
+		else
+		{
+			DamageNumber3D new_damage_number = (DamageNumber3D)damage_number_3d_template.Instantiate();
+			new_damage_number.TreeExiting += () => damage_number_3d_pool.Enqueue(new_damage_number);
+			return new_damage_number;
+		}
 	}
 
 
@@ -48,13 +80,16 @@ public partial class DamageSystem : EntitySystem
 		
 		amount = DamageMitigation(damage_type, amount);
 		GD.Print("Amount of damage " + amount);
+		GD.Print("Is critical " + is_critical);
 		if(entity.health - amount > 0)
 		{
 			entity.health -= amount;
-			entity.health = MathF.Round(entity.health,2);
+			entity.health = MathF.Round(entity.health);
 			if(entity is Enemy enemy)
 			{
 				enemy.health_bar.Value = entity.health;
+				spawn_point = enemy.head;
+				SpawnDamageNumber(amount, is_critical);
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
 			if(entity is Player player)
@@ -158,30 +193,30 @@ public partial class DamageSystem : EntitySystem
 			{
 				mitigated_damage *= 1 - entity.dr_slash;
 				GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 				
 			}
 			if(damage_type == "Thrust")
 			{
 				mitigated_damage *= 1 - entity.dr_thrust;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Blunt")
 			{
 				mitigated_damage *= 1 - entity.dr_blunt;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 		}
 		if(damage_type == "Bleed")
 		{
 			mitigated_damage *= 1 - entity.dr_bleed;
 			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
-			return MathF.Round(mitigated_damage,2);
+			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Poison")
 		{
 			mitigated_damage *= 1 - entity.dr_poison;
-			return MathF.Round(mitigated_damage,2);
+			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
 		{
@@ -189,32 +224,32 @@ public partial class DamageSystem : EntitySystem
 			if(damage_type == "Fire")
 			{
 				mitigated_damage *= 1 - entity.dr_fire;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Cold")
 			{
 				mitigated_damage *= 1 - entity.dr_cold;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Lightning")
 			{
 				mitigated_damage *= 1 - entity.dr_lightning;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Holy")
 			{
 				mitigated_damage *= 1 - entity.dr_holy;
-				return MathF.Round(mitigated_damage,2);
+				return MathF.Round(mitigated_damage);
 			}
 		}
-		return MathF.Round(mitigated_damage,2);
+		return MathF.Round(mitigated_damage);
 	}
 
 	public void DoT(string damage_type, float amount, int duration)
 	{
 		dot_timer.Start();
 		entity.dot_in_seconds = amount / duration;
-		entity.dot_in_seconds = MathF.Round(entity.dot_in_seconds, 2);
+		entity.dot_in_seconds = MathF.Round(entity.dot_in_seconds);
 		entity.taking_dot = true;
 		// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
 	}
@@ -226,7 +261,7 @@ public partial class DamageSystem : EntitySystem
 		if(entity.health > 0)
 		{
 			entity.health -= entity.dot_in_seconds;
-			entity.health = MathF.Round(entity.health,2);
+			entity.health = MathF.Round(entity.health);
 			if(entity is Enemy enemy)
 			{
 				enemy.health_bar.Value = entity.health;

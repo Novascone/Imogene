@@ -33,6 +33,7 @@ public partial class Roll : Ability
 		if(player.can_use_abilities && useable && button_pressed && CheckCross())
 		{
 			AddToAbilityList(this); // Adds this ability to the players currently used abilities 
+			// GD.Print("adding roll to list");
 			player.using_movement_ability = true;
 			roll_timer.Start(); // Starts roll timer which is exactly the same time as the roll animation
 			Execute();

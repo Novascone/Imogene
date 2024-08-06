@@ -27,7 +27,7 @@ public partial class Player : PlayerEntity
 	public bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
 	public Ability ability_in_use; // The ability that the player is currently using
 	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
-	public Ability[] ability_list;
+	public List<Ability> ability_list = new List<Ability>();
 	public bool test_abilities_assigned = false;
 	
 	// UI
@@ -48,6 +48,7 @@ public partial class Player : PlayerEntity
 
 	// Player animation
 	public AnimationTree tree; // Animation control
+	public AnimationPlayer animation_player;
 
 
 	// Ability Resources
@@ -61,6 +62,8 @@ public partial class Player : PlayerEntity
 	public float vertical_input;
 
 	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
+
+	public CollisionShape3D hitbox_collision;
 	
 
 	
@@ -105,6 +108,10 @@ public partial class Player : PlayerEntity
 
 		soft_target_large.BodyEntered += OnSoftTargetLargeEntered;
 		soft_target_large.BodyExited += OnSoftTargetLargeExited;
+
+		hitbox_collision = GetNode<CollisionShape3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox/CollisionShape3D");
+
+
 		
 
 
@@ -147,6 +154,7 @@ public partial class Player : PlayerEntity
 
 
 		tree = GetNode<AnimationTree>("Animation/AnimationTree");
+		animation_player = GetNode<AnimationPlayer>("Animation/AnimationPlayer");
 	
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
@@ -204,7 +212,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+		GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
@@ -212,12 +220,15 @@ public partial class Player : PlayerEntity
 		CheckInteract(); // Check if the player can interact with anything
 		
 
-		if(abilities_in_use.Count > 1)
-		{
-			ability_list = new Ability[abilities_in_use.Count];
-			abilities_in_use.CopyTo(ability_list, 0);
-			GD.Print(ability_list[0].resource.type);
-		}
+		// if(abilities_in_use.Count > 1)
+		// {
+		// 	GD.Print("Ability being used " + ability_in_use.Name + " ability type " + ability_in_use.resource.type);
+		// }
+		// else
+		// {
+		// 	ability_in_use = null;
+		// 	GD.Print("No ability being used");
+		// }
 		
     }
 

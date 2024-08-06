@@ -20,9 +20,19 @@ public partial class DamageNumber3D : Node3D
 	{
 	}
 
-	public void SetValuesAndAnimate(float value, Vector3 start_pos, float height, float spread)
+	public void SetValuesAndAnimate(float value, bool critical, Vector3 start_pos, float height, float spread)
 	{
 		label.Text = value.ToString();
+		if(critical)
+		{
+			label.AddThemeColorOverride("font_color", new Color(Colors.Yellow, 1.0f));
+			GD.Print("Is critical from DamageNumber3D");
+		}
+		else
+		{
+			label.AddThemeColorOverride("font_color", new Color(Colors.White, 1.0f));
+			GD.Print("Is not critical from DamageNumber3D");
+		}
 		animation_player.Play("RiseAndFade");
 
 		Tween tween = GetTree().CreateTween();

@@ -26,7 +26,7 @@ public partial class Slash : Ability
 
     public override void _PhysicsProcess(double delta)
     {
-		
+		// GD.Print("action 2 set "  + player.action_2_set);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;
@@ -52,6 +52,7 @@ public partial class Slash : Ability
 		{
 			// GD.Print(held);
 			AddToAbilityList(this); // Adds ability to list of abilities the player is using
+			// GD.Print("adding slash to list");
 			
 			if(held == false && pressed == 0) // Starts timer to see if the action is being held down
 			{
@@ -112,6 +113,7 @@ public partial class Slash : Ability
 
 		// player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
 		player.main_hand_hitbox.AddToGroup("ActiveHitbox");
+		
 		// player.hitbox.Monitoring = true;
 		// player.main_hand_hitbox.damage_type = "Slash";
 		player.main_hand_hitbox.damage_type = "Cold";
@@ -215,14 +217,14 @@ public partial class Slash : Ability
 				player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
 				player.action_1_set = false;
 				if(player.action_2_set)
-					{
-						// player.can_move = false;
-					}
-					else
-					{
-						// player.can_move = true;
-						RemoveFromAbilityList(this);
-					}
+				{
+					// player.can_move = false;
+				}
+				else
+				{
+					// player.can_move = true;
+					RemoveFromAbilityList(this);
+				}
 			}
         }
     }
@@ -239,6 +241,8 @@ public partial class Slash : Ability
 			// GD.Print("Setting swing 1");
 			player.action_1_set = true;
 			// GD.Print("Setting animations");
+			GD.Print("Playing hitbox animation");
+			// player.animation_player.Play("Attack_1_Hitbox_Activation");
 			player.tree.Set("parameters/Master/conditions/using_ability", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/conditions/melee", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/conditions/Slash", true);
@@ -249,11 +253,11 @@ public partial class Slash : Ability
 			player.can_move = false;
 			player.attacking = true;
 			// GD.Print(player.can_move);
-			if(pressed > 1)
-			{
-				player.action_2_set = true;
-				// GD.Print("Attack 2 set");
-			}
+			// if(pressed > 1)
+			// {
+			// 	player.action_2_set = true;
+			// 	// GD.Print("Attack 2 set");
+			// }
 			
 		}
 	}

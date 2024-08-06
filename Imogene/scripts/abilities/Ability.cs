@@ -81,6 +81,7 @@ public partial class Ability : Node3D
 
     public void AddToAbilityList(Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
+        GD.Print("adding ability to list");
         if(!player.abilities_in_use.Contains(ability))
         {
             player.abilities_in_use.AddFirst(ability);
@@ -91,7 +92,7 @@ public partial class Ability : Node3D
     }
     public void RemoveFromAbilityList(Ability ability) // Removes ability from abilities used
     {
-        
+        GD.Print("removing ability from list");
         player.abilities_in_use.Remove(ability);
         if(player.abilities_in_use.Count > 0)
         {

@@ -59,8 +59,18 @@ public partial class damage_number_3d_demo : Node3D
 		Vector3 position = spawn_point.GlobalTransform.Origin;
 		float height = height_value.Text.ToFloat();
 		float spread = spread_value.Text.ToFloat();
+		bool is_crit;
+		float random_number = GD.Randf();
+		if(random_number > 0.5f)
+		{
+			is_crit = true;
+		}
+		else
+		{
+			is_crit = false;
+		}
 		AddChild(damage_number, true);
-		damage_number.SetValuesAndAnimate(value, position, height, spread);
+		damage_number.SetValuesAndAnimate(value, is_crit, position, height, spread);
 	}
 
 	public DamageNumber3D GetDamageNumber()

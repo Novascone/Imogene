@@ -104,11 +104,14 @@ public partial class Jump : Ability
 		if(player.can_use_abilities && CheckCross() || player.jumping)
 		{
 			
-			AddToAbilityList(this);
+			
+			
 			if(!player.is_climbing && frames_held < frames_held_threshold && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
 			{
 				// GD.Print("Player is not climbing");
 				// GD.Print("held threshold going into jump " + held_threshold);
+				AddToAbilityList(this);
+				// GD.Print("adding jump to list");
 				Execute(); // Jump
 				frames_held = 0; // Reset the frames the button has been held
 			}

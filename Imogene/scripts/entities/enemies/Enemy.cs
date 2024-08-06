@@ -25,6 +25,7 @@ public partial class Enemy : Entity
 	private Label3D damage_label; 
 	private AnimationPlayer damage_numbers;
 	public Area3D alert_area;
+	public BoneAttachment3D head;
 	
 	// Ray cast variables
 	[Export] public int look_ahead = 5; // How far the rays will project
@@ -131,6 +132,8 @@ public partial class Enemy : Entity
 		hurtbox = GetNode<Hurtbox>("Armature/Skeleton3D/Chest/ChestSlot/Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxBodyEntered;
 
+		head = GetNode<BoneAttachment3D>("Armature/Skeleton3D/Head");
+
 		alert_area = GetNode<Area3D>("Areas/Alert");
 		alert_area.BodyEntered += OnAlertAreaBodyEntered;
 		alert_area.AreaEntered += OnAlertAreaEntered;
@@ -162,7 +165,7 @@ public partial class Enemy : Entity
 		GD.Print("Hitbox entered " + this.Name);
 		if(body is Hitbox box)
 		{
-			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
+			if(body is Hitbox)
 			{
 				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
 				resource_system.Posture(box.posture_damage);

@@ -9,6 +9,7 @@ public partial class TargetingSystem : EntitySystem
 	
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
 	public bool enemy_in_soft_small = false;
+	public Enemy closest_enemy_soft_small;
 	public bool enemy_in_soft_large = false;
 	public	Dictionary<Enemy, Vector3> mobs= new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
 	public Dictionary<Enemy,Vector3> sorted_mobs; // Sorted Dictionary of mob positions
@@ -33,11 +34,16 @@ public partial class TargetingSystem : EntitySystem
 		{	
 			enemy_in_vision = false;
 		}
+		if(enemy_in_soft_small)
+		{
+			closest_enemy_soft_small = mobs_in_order[0];
+		}
 
 		if(!looking_at_soft) // If player is not rotation toward the soft target
 		{
 			Sort(); // sorts the enemies by position
 		}
+
 	}
 
 	public void EnemyEnteredVision(Enemy enemy)
@@ -78,6 +84,7 @@ public partial class TargetingSystem : EntitySystem
 		if(mobs_in_small == 0)
 		{
 			enemy_in_soft_small = false;
+			closest_enemy_soft_small = null;
 		}
 	}
 
@@ -239,16 +246,17 @@ public partial class TargetingSystem : EntitySystem
 
 	public void SoftTargetRotation() // Smoothly rotate to soft target
 	{
-		if(!player.targeting && enemy_in_soft_small)
+		if(!player.targeting && closest_enemy_soft_small != null)
 		{
-			if(player.abilities_in_use.Count > 1)
+			if(player.abilities_in_use.Count > 0)
 			{
-				if(player.ability_list[0].resource.type == "melee")
+				if(player.ability_in_use.resource.type == "melee")
 				{
 					looking_at_soft = true;
 					// GD.Print("Look at closest enemy");
 					
 					mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
+					GD.Print("rotating to soft target " + mobs_in_order[0].Name);
 					player.prev_y_rotation = player.GlobalRotation.Y;
 					player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
 					player.current_y_rotation = player.GlobalRotation.Y;
