@@ -37,7 +37,19 @@ public partial class TargetingSystem : EntitySystem
 		if(enemy_in_soft_small)
 		{
 			closest_enemy_soft_small = mobs_in_order[0];
+			closest_enemy_soft_small.soft_target = true;
+			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
+			foreach(Enemy enemy in mobs_in_order)
+			{
+				if(enemy != closest_enemy_soft_small)
+				{
+					enemy.soft_target = false;
+					player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+				}
+			}
+			
 		}
+		
 
 		if(!looking_at_soft) // If player is not rotation toward the soft target
 		{
@@ -72,6 +84,8 @@ public partial class TargetingSystem : EntitySystem
 	public void EnemyExitedSoftSmall(Enemy enemy) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
 	{
 		enemy.in_soft_target_small = false;
+		enemy.soft_target = false;
+		player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 		var mobs_in_small = 0;
 
 		foreach(Enemy enemy_in_mobs in mobs.Keys)

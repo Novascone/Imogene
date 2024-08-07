@@ -71,7 +71,8 @@ public partial class Enemy : Entity
 	public ProgressBar health_bar;
 	public TextureProgressBar posture_bar;
 	public Sprite3D status_bar;
-	public Sprite3D target_icon;
+	public Sprite3D hard_target_icon;
+	public Sprite3D soft_target_icon;
 
 	
 
@@ -87,6 +88,7 @@ public partial class Enemy : Entity
 	public bool switch_to_state2;
 
 	public bool in_soft_target_small;
+	public bool soft_target;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -94,10 +96,11 @@ public partial class Enemy : Entity
 	{
 		base._Ready();
 		statController = GetNode<StatController>("Controllers/StatController");
-		health_bar = GetNode<ProgressBar>("UI/HealthBarViewport/VBoxContainer/ProgressBar");
-		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarViewport/VBoxContainer/TextureProgressBar");
+		health_bar = GetNode<ProgressBar>("UI/HealthBarSubViewport/VBoxContainer/ProgressBar");
+		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarSubViewport/VBoxContainer/TextureProgressBar");
 		status_bar = GetNode<Sprite3D>("UI/StatusBar");
-		target_icon = GetNode<Sprite3D>("UI/TargetIcon");
+		hard_target_icon = GetNode<Sprite3D>("UI/HardTargetIcon");
+		soft_target_icon = GetNode<Sprite3D>("UI/SoftTargetIcon");
 		maximum_health = health;
 		health_bar.MaxValue = health;
 		health_bar.Value = health;

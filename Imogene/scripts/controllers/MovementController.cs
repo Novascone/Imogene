@@ -20,8 +20,13 @@ public partial class MovementController : Controller
 		// _customSignals.UIPreventingMovement += HandleUIPreventingMovement;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+    public override void _Input(InputEvent @event)
+    {
+        
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
 		ray_origin = player.GlobalTransform.Origin;

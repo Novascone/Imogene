@@ -44,7 +44,7 @@ public partial class EnemyHealthUI : Control
 		enemy_name.Text = enemy.identifier;
 		enemy_posture.MaxValue = enemy.maximum_posture;
 		enemy_posture.Value = enemy.posture;
-		targeted_enemy.target_icon.Show();
+		targeted_enemy.hard_target_icon.Show();
 		targeted_enemy.status_bar.Show();
 		
 		Show();
@@ -52,9 +52,22 @@ public partial class EnemyHealthUI : Control
 	public void EnemyUntargeted()
     {
         Hide();
-		targeted_enemy.target_icon.Hide();
+		targeted_enemy.hard_target_icon.Hide();
 		targeted_enemy.status_bar.Hide();
     }
+
+	public void SetSoftTargetIcon(Enemy enemy)
+	{
+		if(enemy.soft_target)
+		{
+			enemy.soft_target_icon.Show();
+		}
+		else
+		{
+			enemy.soft_target_icon.Hide();
+		}
+		
+	}
 
 
 
