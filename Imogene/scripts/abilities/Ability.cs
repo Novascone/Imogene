@@ -25,7 +25,7 @@ public partial class Ability : Node3D
     public bool button_released;
     public bool button_held;
     public int frames_held;
-    public int frames_held_threshold = 10;
+    public int frames_held_threshold = 20;
 
     public bool useable = true;
     public bool in_use = false;
