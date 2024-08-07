@@ -12,6 +12,7 @@ public partial class Player : PlayerEntity
 
 	// Player reference
 	public Player this_player; // Player
+	public MeshInstance3D player_mesh;
 	public RayCast3D raycast;
 	public RayCast3D near_wall;
 	public RayCast3D on_wall;
@@ -111,6 +112,7 @@ public partial class Player : PlayerEntity
 
 		hitbox_collision = GetNode<CollisionShape3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox/CollisionShape3D");
 
+		player_mesh = GetNode<MeshInstance3D>("Character_GameRig/retop_prelim_pc");
 
 		
 
@@ -212,7 +214,7 @@ public partial class Player : PlayerEntity
 
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
+		// GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
 		abilityController.AssignAbilities();
@@ -232,7 +234,8 @@ public partial class Player : PlayerEntity
 		
     }
 
-	private void OnVisionEntered(Node3D body) // handler for area entered signal
+    
+    private void OnVisionEntered(Node3D body) // handler for area entered signal
 	{
 		if(body is Enemy enemy)
 		{
@@ -340,10 +343,16 @@ public partial class Player : PlayerEntity
 
 	public void CameraFollowsPlayer()
 	{
+		// var camera_transform = new Transform3D();
+		// var pos = GlobalTransform.Origin;
+		// camera_transform.Origin = pos;
+		// camera_rig.GlobalTransform = camera_transform;
+
 		var camera_transform = new Transform3D();
-		var pos = GlobalTransform.Origin;
+		var pos = player_mesh.GlobalTransform.Origin;
 		camera_transform.Origin = pos;
 		camera_rig.GlobalTransform = camera_transform;
+		
 	}
 
 	

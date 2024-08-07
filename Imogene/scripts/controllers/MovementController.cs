@@ -20,10 +20,6 @@ public partial class MovementController : Controller
 		// _customSignals.UIPreventingMovement += HandleUIPreventingMovement;
 	}
 
-    public override void _Input(InputEvent @event)
-    {
-        
-    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
@@ -319,14 +315,35 @@ public partial class MovementController : Controller
 		// 	GD.Print("player moving left");
 		// }
 	}
-	// private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
+
+    // public override void _Process(double delta)
     // {
-	// 	if(player != null)
+    //     var fps = Engine.GetFramesPerSecond();
+	// 	var lerp_interval = player.direction.Normalized() / (float)fps;
+	// 	var lerp_position = player.GlobalTransform.Origin + lerp_interval;
+	// 	GD.Print("fps " + fps);
+	// 	if(fps > 60)
 	// 	{
-	// 		player.can_move = !ui_preventing_movement;
-	// 		player.can_use_abilities = !ui_preventing_movement;
-	// 		player.velocity = Vector3.Zero;
+	// 		player.player_mesh.TopLevel = true;
+	// 		var mesh_transform = player.player_mesh.GlobalTransform;
+	// 		mesh_transform.Origin = player.player_mesh.GlobalTransform.Origin.Lerp(lerp_position, (float)(20 * delta));
+	// 		GD.Print("Lerping mesh");
+	// 		player.player_mesh.GlobalTransform = mesh_transform;
 	// 	}
-        
+	// 	else
+	// 	{
+	// 		player.player_mesh.GlobalTransform = player.GlobalTransform;
+	// 		player.player_mesh.TopLevel = false;
+	// 	}
+    // }
+    // private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
+    // {
+    // 	if(player != null)
+    // 	{
+    // 		player.can_move = !ui_preventing_movement;
+    // 		player.can_use_abilities = !ui_preventing_movement;
+    // 		player.velocity = Vector3.Zero;
+    // 	}
+
     // }
 }

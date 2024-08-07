@@ -13,7 +13,6 @@ config_version=5
 config/name="Imogene"
 run/main_scene="res://scenes/world/test.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
-run/max_fps=60
 config/icon="res://icon.svg"
 
 [autoload]
@@ -22,7 +21,7 @@ CustomSignals="*res://scripts/custom_signals/CustomSignals.cs"
 
 [display]
 
-window/size/viewport_width=1920
+window/size/viewport_width=1980
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
@@ -31,6 +30,10 @@ window/vsync/vsync_mode=0
 [dotnet]
 
 project/assembly_name="Imogene"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
 
 [gui]
 
@@ -263,6 +266,10 @@ climb={
 3d_physics/layer_5="enemyhurtbox"
 3d_physics/layer_6="playervision"
 3d_physics/layer_7="Interact"
+
+[physics]
+
+common/physics_jitter_fix=0.0
 
 [shader_globals]
 
