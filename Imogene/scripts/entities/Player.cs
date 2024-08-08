@@ -168,6 +168,11 @@ public partial class Player : PlayerEntity
 		GD.Print("physical resistance", physical_resistance);
 		GD.Print("spell resistance ", spell_resistance);
 		exclude.Add(vision.GetRid());
+		exclude.Add(soft_target_small.GetRid());
+		exclude.Add(soft_target_large.GetRid());
+		exclude.Add(interact_area.GetRid());
+		exclude.Add(hurtbox.GetRid());
+		exclude.Add(GetRid());
 		// exclude.Add(hitbox.GetRid());
 		GD.Print("exclude: " + exclude);
 		movementController.GetPlayerInfo(this);

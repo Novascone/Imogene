@@ -130,66 +130,47 @@ public partial class MovementController : Controller
 
 	public void BasicMovement() // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
-		// player.speed = player.walk_speed;
 		if (Input.IsActionPressed("Right"))
 		{
 			player.direction.X -= 1.0f;	
-			if(Input.GetActionStrength("Right") > 0.5)
-			{
-				// GD.Print("running");
-				player.speed = player.run_speed;
-			}
-			else
-			{
-				// GD.Print("Walking");
-				player.speed = player.walk_speed;
-			}
-			// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
 		}
 		if (Input.IsActionPressed("Left"))
 		{
 			player.direction.X += 1.0f;
-			if(Input.GetActionStrength("Left") > 0.5)
-			{
-				// GD.Print("running");
-				player.speed = player.run_speed;
-			}
-			else
-			{
-				// GD.Print("Walking");
-				player.speed = player.walk_speed;
-			}
-			// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
 		}
 		if (Input.IsActionPressed("Backward"))
 		{
 			player.direction.Z -= 1.0f;
-			if(Input.GetActionStrength("Backward") > 0.5)
-			{
-				// GD.Print("running");
-				player.speed = player.run_speed;
-			}
-			else
-			{
-				// GD.Print("Walking");
-				player.speed = player.walk_speed;
-			}
-			// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
 		}
 		if (Input.IsActionPressed("Forward"))
 		{
 			player.direction.Z += 1.0f;
-			if(Input.GetActionStrength("Forward") > 0.5)
-			{
-				// GD.Print("running");
-				player.speed = player.run_speed;
-			}
-			else
-			{
-				// GD.Print("Walking");
-				player.speed = player.walk_speed;
-			}
-			// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
+		}
+
+		GetInputStrength();
+	}
+
+	public void GetInputStrength()
+	{
+		if(Input.GetActionStrength("Right") + Input.GetActionStrength("Forward") >= 0.75)
+		{
+			player.speed = player.run_speed;
+		}
+		else if(Input.GetActionStrength("Right") + Input.GetActionStrength("Backward") >= 0.75 )
+		{
+			player.speed = player.run_speed;
+		}
+		else if(Input.GetActionStrength("Left") + Input.GetActionStrength("Forward") >= 0.75)
+		{
+			player.speed = player.run_speed;
+		}
+		else if( Input.GetActionStrength("Left") + Input.GetActionStrength("Backward") >= 0.75)
+		{
+			player.speed = player.run_speed;
+		}
+		else
+		{
+			player.speed = player.walk_speed;
 		}
 	}
 

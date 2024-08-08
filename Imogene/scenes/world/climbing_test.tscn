@@ -14,12 +14,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v0psr"]
 
-[sub_resource type="Sky" id="Sky_sjwia"]
+[sub_resource type="Sky" id="Sky_6jw8o"]
 sky_material = SubResource("ProceduralSkyMaterial_v0psr")
 
 [sub_resource type="Environment" id="Environment_xtkwb"]
 background_mode = 2
-sky = SubResource("Sky_sjwia")
+sky = SubResource("Sky_6jw8o")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lxpmr"]
 frequency = 0.005
