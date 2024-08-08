@@ -169,7 +169,7 @@ public partial class TargetingSystem : EntitySystem
 		}
 		
 		SoftTargetRotation();
-		SetDefaultBlendDirection();
+		// SetDefaultBlendDirection();
 		
 	}
 
@@ -280,24 +280,6 @@ public partial class TargetingSystem : EntitySystem
 					}
 					
 				}
-			}
-		}
-	}
-
-	public void SetDefaultBlendDirection() // Set the default walking direction
-	{
-		if(!enemy_in_vision || !player.targeting)
-		{
-			player.targeting = false;
-			if(player.direction != Vector3.Zero)
-			{
-				player.blend_direction.X = 0;
-				player.blend_direction.Y = 1;
-			}
-			else
-			{
-				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, 0.1f);
 			}
 		}
 	}

@@ -36,10 +36,10 @@ public partial class Slash : Ability
 		{
 			player.speed = 3.0f;
 		}
-		else
-		{
-			player.speed = 7.0f;
-		}
+		// else
+		// {
+		// 	player.speed = player.walk_speed;
+		// }
 		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held) // Resets the amount of times pressed if the button is not held and pressed is greater than 2
 		{
 			// GD.Print("Pressed was greater than two and the swing timer expired it has been reset");

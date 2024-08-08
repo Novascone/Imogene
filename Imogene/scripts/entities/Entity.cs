@@ -59,8 +59,9 @@ public partial class Entity : CharacterBody3D
     public int level = 1; // Level of the entity
 	public float xp = 0;
 	public float xp_to_level = 100;
-    public float speed = 7.0f; // Speed of the entity
-	public float walk_speed = 7.0f;
+    public float speed; // Speed of the entity
+	public float walk_speed = 3.5f;
+	public float run_speed = 6.0f;
     public float fall_speed = 40.0f; // How fast the player falls 
     public float jump_speed = 30.0f; // How fast the player jumps
 	public float health = 200; // Prelim health number
