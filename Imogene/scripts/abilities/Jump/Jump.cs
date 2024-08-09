@@ -56,6 +56,7 @@ public partial class Jump : Ability
 		button_held = false;
 		button_released = false;
 		player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
+		
     }
 
 
@@ -184,20 +185,20 @@ public partial class Jump : Ability
 		if(frames_held >= frames_held_threshold)
 		{
 			GD.Print("Clamber now");
-			player.speed = 10f;
+			// player.speed = 10f;
 			player.is_clambering = true;
 			var upward_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0); // Move the plater up bt 1.85 units
-			var upward_move_time = 0.2; // set how long the tween to take to move upward
+			var upward_move_time = 0.4; // set how long the tween to take to move upward
 			var upward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In); // Create the tween and sets its transition and ease
-
+			upward_tween.SetProcessMode(0);
 			upward_tween.TweenProperty(player, "global_transform:origin", upward_movement, upward_move_time); // Tell the tween which object should be moved and what property of that object should be changed, how it should be changed, and how long it should take
 
 			await ToSignal(upward_tween, Tween.SignalName.Finished); // Wait for vertical movement tween to complete
 
 			var forward_movement = player.GlobalTransform.Origin + (-player.Transform.Basis.Z * 2f); // Get the players forward vector and multiply it by 2 for the forward movement
-			var forward_move_time = 0.4; // Set forward move time
+			var forward_move_time = 0.2; // Set forward move time
 			var forward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear); // Create tween set transition type
-
+			forward_tween.SetProcessMode(0);
 			forward_tween.TweenProperty(player, "global_transform:origin", forward_movement, forward_move_time); // Same as the upward tween
 			// player.velocity.Y = 20; // give the player extra Y velocity
 			player.move_forward_clamber = -1; // Make the player move in the direction they are facing

@@ -24,12 +24,36 @@ public partial class TargetingSystem : EntitySystem
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
 	public bool looking_at_soft = false;
 
+	public bool target_pressed;
+	public bool target_released;
+	public int frames_held;
+	public int held_threshold = 20;
+	public bool soft_target_on = true;
+
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		EnemyCheck(); // Check if enemy is targeted
 
+		if(target_pressed)
+		{
+			frames_held += 1;
+		}
+		else if(target_released)
+		{
+			if(frames_held > 0)
+			{
+				GD.Print(frames_held);
+			}
+			if(frames_held >= held_threshold)
+			{
+				soft_target_on = !soft_target_on;
+				GD.Print("Soft target on " + soft_target_on);
+			}
+			
+			frames_held = 0;
+		}
 		if(mobs.Count == 0) // Reset enemy_in_vision
 		{	
 			enemy_in_vision = false;
@@ -38,7 +62,11 @@ public partial class TargetingSystem : EntitySystem
 		{
 			closest_enemy_soft_small = mobs_in_order[0];
 			closest_enemy_soft_small.soft_target = true;
-			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
+			if(soft_target_on)
+			{
+				player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
+			}
+			
 			foreach(Enemy enemy in mobs_in_order)
 			{
 				if(enemy != closest_enemy_soft_small)
@@ -85,7 +113,10 @@ public partial class TargetingSystem : EntitySystem
 	{
 		enemy.in_soft_target_small = false;
 		enemy.soft_target = false;
-		player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+		if(soft_target_on)
+		{
+			player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+		}
 		var mobs_in_small = 0;
 
 		foreach(Enemy enemy_in_mobs in mobs.Keys)
@@ -130,11 +161,31 @@ public partial class TargetingSystem : EntitySystem
 		}
 	}
 
+	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	{
+       
+		if(@event.IsActionPressed("Target"))
+		{
+			target_pressed = true;
+			target_released = false;
+		}
+		if(@event.IsActionReleased("Target"))
+		{
+			target_pressed = false;
+			target_released = true;
+			
+		}
+        
+	}
+
+	
+
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
-		if(enemy_in_vision)
+		
+		if(enemy_in_vision && frames_held > 1)
 		{
-			if(Input.IsActionJustPressed("Target"))
+			if(frames_held < held_threshold && target_released)
 			{
 				if(!player.targeting) // has player look at the closest enemy when targeting
 				{
@@ -149,6 +200,11 @@ public partial class TargetingSystem : EntitySystem
 				}
 				
 			}
+		}
+		if (frames_held > held_threshold && enemy_in_soft_small)
+		{
+			closest_enemy_soft_small.soft_target = false;
+			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
 		}
 	}
 
@@ -260,7 +316,7 @@ public partial class TargetingSystem : EntitySystem
 
 	public void SoftTargetRotation() // Smoothly rotate to soft target
 	{
-		if(!player.targeting && closest_enemy_soft_small != null)
+		if(!player.targeting && closest_enemy_soft_small != null && soft_target_on)
 		{
 			if(player.abilities_in_use.Count > 0)
 			{

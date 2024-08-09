@@ -20,6 +20,7 @@ public partial class Player : PlayerEntity
 	public Area3D vision; // Area where the player can target enemies
 	public Area3D soft_target_small;
 	public Area3D soft_target_large;
+	public CollisionShape3D collision;
 
 	// Abilities
 	// private Target target_ability; // Target enemies
@@ -113,6 +114,8 @@ public partial class Player : PlayerEntity
 		hitbox_collision = GetNode<CollisionShape3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox/CollisionShape3D");
 
 		player_mesh = GetNode<MeshInstance3D>("Character_GameRig/retop_prelim_pc");
+
+		collision = GetNode<CollisionShape3D>("CollisionShape3D");
 
 		
 
