@@ -165,7 +165,7 @@ public partial class Enemy : Entity
 
 	private void OnHurtboxBodyEntered(Area3D body)
     {
-		GD.Print("Hitbox entered " + this.Name);
+		// GD.Print("Hitbox entered " + this.Name);
 		if(body is Hitbox box)
 		{
 			if(body is Hitbox)

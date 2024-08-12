@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cb2txsfg88bc3"]
+
+[ext_resource type="Texture2D" uid="uid://cdevi0u2qlhth" path="res://images/icons/hit_scan.png" id="1_ix7ex"]
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/AbilityResource.cs" id="1_x5gag"]
+
+[resource]
+script = ExtResource("1_x5gag")
+id = 0
+name = "Hitscan"
+description = "Hitscan projectile"
+ability_path = ""
+icon = ExtResource("1_ix7ex")
+type = "melee"

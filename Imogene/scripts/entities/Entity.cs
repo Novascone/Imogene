@@ -250,13 +250,7 @@ public partial class Entity : CharacterBody3D
         throw new NotImplementedException();
     }
 
-    public  Node LoadAbility(string name) // Loads an ability from a string
-    {
-        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
-        var sceneNode = scene.Instantiate();
-        return sceneNode;
-    }
-
+    
     public bool Fall(double delta) // bring the player back to the ground
 	{
 		if(!IsOnFloor())

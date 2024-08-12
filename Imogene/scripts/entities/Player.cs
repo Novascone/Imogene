@@ -21,6 +21,7 @@ public partial class Player : PlayerEntity
 	public Area3D soft_target_small;
 	public Area3D soft_target_large;
 	public CollisionShape3D collision;
+	public Marker3D cast_point;
 
 	// Abilities
 	// private Target target_ability; // Target enemies
@@ -54,11 +55,12 @@ public partial class Player : PlayerEntity
 
 
 	// Ability Resources
-	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Roll/roll.tres");
+	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Roll/Roll.tres");
 	public AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Slash/Slash.tres");
 	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Thrust/Thrust.tres");
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
+	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Hitscan/Hitscan.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -81,11 +83,12 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
+		ability_resources.Add(hitscan);
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		
 
-		
+		cast_point = GetNode<Marker3D>("Character_GameRig/Skeleton3D/MainHand/CastPoint");
 		
 
 		camera_rig = GetNode<CameraRig>("CameraRig");
@@ -166,10 +169,10 @@ public partial class Player : PlayerEntity
 		maximum_health = health;
 		resource = maximum_resource / 2;
 
-		GD.Print("max health player ", maximum_health);
-		GD.Print("max resource ", maximum_resource);
-		GD.Print("physical resistance", physical_resistance);
-		GD.Print("spell resistance ", spell_resistance);
+		// GD.Print("max health player ", maximum_health);
+		// GD.Print("max resource ", maximum_resource);
+		// GD.Print("physical resistance", physical_resistance);
+		// GD.Print("spell resistance ", spell_resistance);
 		exclude.Add(vision.GetRid());
 		exclude.Add(soft_target_small.GetRid());
 		exclude.Add(soft_target_large.GetRid());
@@ -177,7 +180,7 @@ public partial class Player : PlayerEntity
 		exclude.Add(hurtbox.GetRid());
 		exclude.Add(GetRid());
 		// exclude.Add(hitbox.GetRid());
-		GD.Print("exclude: " + exclude);
+		// GD.Print("exclude: " + exclude);
 		movementController.GetPlayerInfo(this);
 		equipmentController.GetPlayerInfo(this);
 		statController.GetEntityInfo(this);
@@ -196,8 +199,8 @@ public partial class Player : PlayerEntity
 
 		camera_rig.GetPlayerInfo(this);
 
-		GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
-		GD.Print("Hurtbox type " + hurtbox.GetType());
+		// GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
+		// GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
     
@@ -205,7 +208,7 @@ public partial class Player : PlayerEntity
 
     private void OnHurtboxBodyEntered(Area3D body)
     {
-		GD.Print("Hitbox entered " + this.Name);
+		// GD.Print("Hitbox entered " + this.Name);
 		if(body is Hitbox box)
 		{
 			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
@@ -228,7 +231,7 @@ public partial class Player : PlayerEntity
 		abilityController.AssignAbilities();
 		position = GlobalPosition;
 		CheckInteract(); // Check if the player can interact with anything
-		
+	
 
 		// if(abilities_in_use.Count > 1)
 		// {

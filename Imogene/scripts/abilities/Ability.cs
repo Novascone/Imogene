@@ -66,9 +66,7 @@ public partial class Ability : Node3D
                     frames_held = 0;
                     button_released = false;
                 }                   
-                
-                
-                GD.Print("button released");
+                // GD.Print("button released");
             }
         }
 		

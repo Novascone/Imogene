@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dt8weibfv80xk"]
 
-[ext_resource type="Script" path="res://scripts/Effects/DissolveCollisionItem.cs" id="1_458db"]
+[ext_resource type="Script" path="res://scripts/effects/DissolveCollisionItem.cs" id="1_458db"]
 [ext_resource type="Shader" path="res://shaders/instance_transparency.gdshader" id="2_8uvcp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_wgu1v"]

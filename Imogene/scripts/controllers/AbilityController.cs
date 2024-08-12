@@ -30,7 +30,23 @@ public partial class AbilityController : Controller
 			player.ui.abilities.ability_to_change = null;
 			player.ui.abilities.button_to_bind = null;
 		}
+		// if(Input.IsActionJustPressed("five"))
+		// {
+		// 	AddAbilityResource("Hitscan");
+		// }
     }
+
+	public void AddAbilityResource(string ability_name)
+	{
+		AbilityResource ability_resource = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/" + ability_name + "/" + ability_name + ".tres");
+		player.ability_resources.Add(ability_resource);
+		LoadAbilitiesHelper(ability_resource);
+		GD.Print("Added " + ability_name);
+		foreach(Ability ability in player.abilities)
+		{
+			GD.Print(ability.Name);
+		}
+	}
 
     public void LoadAbilities() // Loads abilities
 	{
@@ -51,7 +67,7 @@ public partial class AbilityController : Controller
 
     private void LoadAbilitiesHelper(AbilityResource ability_resource) // Adds ability to abilities list
     {
-       	Ability new_ability = (Ability)player.LoadAbility(ability_resource.name);
+       	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
 		player.abilities.Add(new_ability);
 		AddChild(new_ability);
 		new_ability.GetPlayerInfo(player);
@@ -66,6 +82,14 @@ public partial class AbilityController : Controller
 		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
+	public  Node LoadAbility(string name) // Loads an ability from a string
+    {
+        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
+        var sceneNode = scene.Instantiate();
+        return sceneNode;
+    }
+
+
 	public void AssignAbilities()
 	{	
 		if(!player.test_abilities_assigned)
@@ -73,6 +97,7 @@ public partial class AbilityController : Controller
 			AssignAbilityHelper("RCrossPrimaryRightAssign", player.roll);
 			AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
 			AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
+			AssignAbilityHelper("LCrossPrimaryRightAssign", player.hitscan);
 		}
 		player.test_abilities_assigned = true;
 	}
