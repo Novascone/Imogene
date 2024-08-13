@@ -178,6 +178,7 @@ public partial class Player : PlayerEntity
 		exclude.Add(soft_target_large.GetRid());
 		exclude.Add(interact_area.GetRid());
 		exclude.Add(hurtbox.GetRid());
+		exclude.Add(main_hand_hitbox.GetRid());
 		exclude.Add(GetRid());
 		// exclude.Add(hitbox.GetRid());
 		// GD.Print("exclude: " + exclude);

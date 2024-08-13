@@ -228,14 +228,6 @@ public partial class Entity : CharacterBody3D
 			targeting_system.GetPlayerInfo(player);
 
 		}
-		
-
-		
-
-        
-		
-		
-
 		// Timers
 		
 		cast_timer = GetNode<Timer>("Systems/CastTimer");

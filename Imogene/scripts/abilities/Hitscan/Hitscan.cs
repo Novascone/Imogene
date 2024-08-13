@@ -5,18 +5,21 @@ public partial class Hitscan : Ability
 {
 	public int range = 100;
 	public Sprite3D cast_marker;
-	PackedScene scene;
+	public PackedScene scene;
+	public Timer cast_timer;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		scene = GD.Load<PackedScene>("res://scenes/debug/cast_marker.tscn");
+		cast_timer = GetNode<Timer>("CastTimer");
 		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(player.can_use_abilities && useable && button_pressed && CheckCross())
+		if(player.can_use_abilities && useable && button_pressed && CheckCross() && cast_timer.TimeLeft == 0)
 		{
 			Execute();
 		}
@@ -25,6 +28,7 @@ public partial class Hitscan : Ability
 	public override void Execute()
 	{
 		// GD.Print("Casting");
+		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
 		HitscanCollision(collision);
 	}
@@ -34,6 +38,8 @@ public partial class Hitscan : Ability
 		Vector3 ray_origin = player.GlobalTransform.Origin;
 		Vector3 ray_end = ray_origin + -player.Transform.Basis.Z * range;
 		var new_intersection = PhysicsRayQueryParameters3D.Create(ray_origin, ray_end);
+		new_intersection.CollisionMask = 16;
+		new_intersection.CollideWithAreas = true;
 		new_intersection.Exclude = player.exclude;
 		var intersection = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection);
 
@@ -41,7 +47,7 @@ public partial class Hitscan : Ability
 		{
 			Vector3 collision_point = intersection["position"].AsVector3();
 			Node3D collider = (Node3D)intersection["collider"];
-			// GD.Print("collided with" + collider.Name);
+			GD.Print("collided with" + collider.Name);
 			
 			return collision_point;
 		}
@@ -55,6 +61,8 @@ public partial class Hitscan : Ability
 	{
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
 		var new_intersection = PhysicsRayQueryParameters3D.Create(player.cast_point.GlobalTransform.Origin, collision_point + cast_direction * 2);
+		new_intersection.CollisionMask = 16;
+		new_intersection.CollideWithAreas = true;
 		new_intersection.Exclude = player.exclude;
 		var cast_collision = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection);
 
@@ -67,7 +75,7 @@ public partial class Hitscan : Ability
 			var world = GetTree().Root;
 			world.AddChild(cast_marker);
 			cast_marker.GlobalTranslate(cast_collision["position"].AsVector3());
-			// GD.Print("collided with" + collider.Name);
+			GD.Print("collided with" + collider.Name);
 			
 			
 		}
@@ -75,9 +83,14 @@ public partial class Hitscan : Ability
 
 	public void HitscanDamage(Node3D collider)
 	{
-		if(collider.IsInGroup("enemy"))
+		if(collider is	Hurtbox hurtbox)
 		{
-			// GD.Print("enemy hit");
+			
+			if(hurtbox.Owner is Enemy enemy)
+			{
+				enemy.damage_system.TakeDamage("cold",10.0f,false);
+			}
+			
 		}
 	}
 }
