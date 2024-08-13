@@ -126,14 +126,14 @@ public partial class Enemy : Entity
 		direction_lines = GetNode<MeshInstance3D>("Debug/DirectionLines");
 		direction_moving_line = GetNode<MeshInstance3D>("Debug/DirectionMovingLine");
 
-		main_hand_hitbox = GetNode<Hitbox>("Armature/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
+		main_hand_hitbox = GetNode<MeleeHitbox>("Armature/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 
 		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		state_machine = GetNode<StateMachine>("Controllers/StateMachine");
 		state_machine.GetEntityInfo(this);
 
 		hurtbox = GetNode<Hurtbox>("Armature/Skeleton3D/Chest/ChestSlot/Hurtbox");
-		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+		hurtbox.BodyEntered += OnHurtboxBodyEntered;
 
 		head = GetNode<BoneAttachment3D>("Armature/Skeleton3D/Head");
 
@@ -163,15 +163,23 @@ public partial class Enemy : Entity
 		_customSignals.FinishedCircling += HandleFinishedCircling;		
 	}
 
-	private void OnHurtboxBodyEntered(Area3D body)
+	private void OnHurtboxBodyEntered(Node3D body)
     {
-		// GD.Print("Hitbox entered " + this.Name);
-		if(body is Hitbox box)
+		GD.Print("hurtbox entered by " + body);
+		if(body is MeleeHitbox melee_box)
 		{
-			if(body is Hitbox)
+			if(body is MeleeHitbox)
 			{
-				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
-				resource_system.Posture(box.posture_damage);
+				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
+				resource_system.Posture(melee_box.posture_damage);
+			}
+		}
+		else if(body is RangedHitbox ranged_box)
+		{
+			if(body is RangedHitbox)
+			{
+				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
+				resource_system.Posture(ranged_box.posture_damage);
 			}
 		}
     }

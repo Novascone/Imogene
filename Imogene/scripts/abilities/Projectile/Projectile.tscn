@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct07s1yunm3bp"]
+
+[ext_resource type="Script" path="res://scripts/abilities/Projectile/Projectile.cs" id="1_yrhtv"]
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_yrhtv")
+
+[node name="CastTimer" type="Timer" parent="."]
+one_shot = true

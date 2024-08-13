@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class Hitscan : Ability
+public partial class Hitscan : Ranged
 {
-	public int range = 100;
+	
 	public Sprite3D cast_marker;
 	public PackedScene scene;
 	public Timer cast_timer;
@@ -33,29 +33,7 @@ public partial class Hitscan : Ability
 		HitscanCollision(collision);
 	}
 
-	public Vector3 GetPlayerCollision()
-	{
-		Vector3 ray_origin = player.GlobalTransform.Origin;
-		Vector3 ray_end = ray_origin + -player.Transform.Basis.Z * range;
-		var new_intersection = PhysicsRayQueryParameters3D.Create(ray_origin, ray_end);
-		new_intersection.CollisionMask = 16;
-		new_intersection.CollideWithAreas = true;
-		new_intersection.Exclude = player.exclude;
-		var intersection = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection);
-
-		if(intersection.Count > 0)
-		{
-			Vector3 collision_point = intersection["position"].AsVector3();
-			Node3D collider = (Node3D)intersection["collider"];
-			GD.Print("collided with" + collider.Name);
-			
-			return collision_point;
-		}
-		else
-		{
-			return ray_end;
-		}
-	}
+	
 
 	public void HitscanCollision(Vector3 collision_point)
 	{

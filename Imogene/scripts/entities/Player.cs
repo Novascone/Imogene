@@ -61,6 +61,7 @@ public partial class Player : PlayerEntity
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
 	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Hitscan/Hitscan.tres");
+	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Projectile/Projectile.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -84,6 +85,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
 		ability_resources.Add(hitscan);
+		ability_resources.Add(projectile);
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		
@@ -207,12 +209,12 @@ public partial class Player : PlayerEntity
     
 
 
-    private void OnHurtboxBodyEntered(Area3D body)
+    private void OnHurtboxBodyEntered(Node3D body)
     {
 		// GD.Print("Hitbox entered " + this.Name);
-		if(body is Hitbox box)
+		if(body is MeleeHitbox box)
 		{
-			if(body.IsInGroup("ActiveHitbox") && body is Hitbox)
+			if(body.IsInGroup("ActiveHitbox") && body is MeleeHitbox)
 			{
 				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
 				resource_system.Posture(box.posture_damage);

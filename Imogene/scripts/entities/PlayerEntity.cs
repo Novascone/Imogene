@@ -105,7 +105,7 @@ public partial class PlayerEntity : Entity
 		base._Ready();
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
-		main_hand_hitbox = GetNode<Hitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
+		main_hand_hitbox = GetNode<MeleeHitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 		ui = GetNode<UI>("UI/UI");
 		
 		// Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");

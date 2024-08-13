@@ -14,8 +14,8 @@ public partial class Entity : CharacterBody3D
 	[Export] public string identifier;
 
 	// Hit and hurt boxes
-	public Hitbox main_hand_hitbox;
-	public Hitbox off_hand_hitbox;
+	public MeleeHitbox main_hand_hitbox;
+	public MeleeHitbox off_hand_hitbox;
 	public Hurtbox hurtbox;
 
 	// Systems

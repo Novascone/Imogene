@@ -98,6 +98,7 @@ public partial class AbilityController : Controller
 			AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
 			AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
 			AssignAbilityHelper("LCrossPrimaryRightAssign", player.hitscan);
+			AssignAbilityHelper("LCrossPrimaryLeftAssign", player.projectile);
 		}
 		player.test_abilities_assigned = true;
 	}
