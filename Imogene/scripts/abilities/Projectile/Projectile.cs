@@ -36,7 +36,10 @@ public partial class Projectile : Ranged
 	{
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate();
+		player.exclude.Add(projectile.GetRid());
+		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid());
 		player.cast_point.AddChild(projectile);
+		
 		if(player.damage_system.Crit())
 		{
 			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
@@ -52,5 +55,10 @@ public partial class Projectile : Ranged
 		}
 		projectile.damage_type = "cold";
 		projectile.LinearVelocity = cast_direction * projectile_velocity;
+	}
+
+	public void RemoveFromExclusion(Rid projectile_rid)
+	{
+		player.exclude.Remove(projectile_rid);
 	}
 }
