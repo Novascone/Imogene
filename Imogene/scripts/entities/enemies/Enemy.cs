@@ -88,6 +88,7 @@ public partial class Enemy : Entity
 	public bool switch_to_state2;
 
 	public bool in_soft_target_small;
+	public bool in_soft_target_large;
 	public bool soft_target;
 
 

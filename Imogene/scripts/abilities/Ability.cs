@@ -31,8 +31,11 @@ public partial class Ability : Node3D
     public bool in_use = false;
     public int pressed = 0;
     public bool animation_finished = false;
+    public bool ready_to_use;
 
     private CustomSignals _customSignals; // Custom signal instance
+
+    public TargetingSystem targeting_system;
 
     public override void _Ready()
     {
@@ -115,6 +118,7 @@ public partial class Ability : Node3D
     public void GetPlayerInfo(Player playerinfo) // Handles the player info
     {
         player = playerinfo;
+        targeting_system = player.targeting_system;
         player.tree.AnimationFinished += OnAnimationFinished;
     }
 

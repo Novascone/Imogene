@@ -206,9 +206,6 @@ public partial class Player : PlayerEntity
 		// GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
-    
-
-
     private void OnHurtboxBodyEntered(Node3D body)
     {
 		// GD.Print("Hitbox entered " + this.Name);

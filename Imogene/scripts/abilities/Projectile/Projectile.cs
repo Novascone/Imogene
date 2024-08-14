@@ -5,31 +5,71 @@ public partial class Projectile : Ranged
 {
 
 	public Timer cast_timer;
+	public Timer wait_for_rotation_timer;
 	public PackedScene projectile_to_load;
+	public bool can_cast;
 	public int projectile_velocity = 25;
+	private bool targeting_system_loaded = false;
+	
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		projectile_to_load = GD.Load<PackedScene>("res://scripts/abilities/Projectile/projectile_to_load.tscn");
 		cast_timer = GetNode<Timer>("CastTimer");
-	}
+		wait_for_rotation_timer = GetNode<Timer>("WaitForRotation");
+		
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+    }
+
+    private void HandlePlayerFacingEnemy()
+    {
+        GD.Print("Player facing enemy");
+    }
+
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(double delta)
 	{
-		if(player.can_use_abilities && useable && button_pressed && CheckCross() && cast_timer.TimeLeft == 0)
+		// if(player.abilities_in_use.Contains(this))
+		// {
+		// 	PlayerFacingEnemy();
+		// }
+		if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
 		{
-			Execute();
+			ready_to_use = true;
 		}
+		if(ready_to_use)
+		{
+			if(player.can_use_abilities && useable && CheckCross() && cast_timer.TimeLeft == 0)
+			{
+				if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
+				{
+					player.targeting_system.SoftTargetRotation();
+					if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+					{
+						Execute();
+					}
+				}
+				else
+				{
+					GD.Print("execute with out targeting");
+					Execute();
+				}
+			}
+		
+		}		
 	}
 
 	public override void Execute()
 	{
 		// GD.Print("Casting");
+		ready_to_use = false;
+		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
 		LaunchProjectile(collision);
-		
+
 	}
 
 	public void LaunchProjectile(Vector3 collision_point)
@@ -61,4 +101,10 @@ public partial class Projectile : Ranged
 	{
 		player.exclude.Remove(projectile_rid);
 	}
+
+	public void _on_cast_timer_timeout()
+	{
+		RemoveFromAbilityList(this);
+	}
+
 }

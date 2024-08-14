@@ -48,52 +48,114 @@ public partial class Slash : Ability
 			player.can_move = true;
 			player.attacking = false;
 		}
-		if(player.can_use_abilities && useable && button_pressed && CheckCross()) 
+		if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
 		{
-			// GD.Print(held);
-			AddToAbilityList(this); // Adds ability to list of abilities the player is using
-			// GD.Print("adding slash to list");
-			
-			if(held == false && pressed == 0) // Starts timer to see if the action is being held down
-			{
-				held_timer.Start();
-			}
-			if(held)
-			{
-				pressed += 1;
-			}
-			else if(Input.IsActionJustPressed(assigned_button))  // Executes the ability, and increments how many times it is pressed
-			{
-				if(swing_timer.TimeLeft == 0)
-				{
-					pressed += 1;
-					Execute();
-				}
-				else if(swing_timer.TimeLeft > 0)
-				{
-					pressed += 1;
-					// GD.Print("Pressed while swinging");
-					Execute();
-				}
-				if(secondary_swing_timer.TimeLeft == 0 && pressed > 1)
-				{
-					secondary_swing_timer.Start();
-					// GD.Print("Secondary timer started");
-					held = true;
-				}
-				{
-
-				}
-				if(swing_timer.TimeLeft == 0)
-				{
-					// GD.Print("Timer started");
-					swing_timer.Start();
-				}
-
-			}
-			
-			
+			ready_to_use = true;
 		}
+		if(ready_to_use)
+		{
+			if(player.can_use_abilities && useable && CheckCross() && swing_timer.TimeLeft == 0)
+			{
+				if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && player.targeting_system.enemy_in_soft_small)
+				{
+					player.targeting_system.SoftTargetRotation();
+					if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+					{
+						Execute();
+					}
+				}
+				else
+				{
+					Execute();
+				}
+				// if(held == false && pressed == 0) // Starts timer to see if the action is being held down
+				// {
+				// 	held_timer.Start();
+				// }
+				// if(held)
+				// {
+				// 	pressed += 1;
+				// }
+				// else if(Input.IsActionJustPressed(assigned_button))  // Executes the ability, and increments how many times it is pressed
+				// {
+				// 	if(swing_timer.TimeLeft == 0)
+				// 	{
+				// 		pressed += 1;
+				// 		Execute();
+				// 	}
+				// 	else if(swing_timer.TimeLeft > 0)
+				// 	{
+				// 		pressed += 1;
+				// 		// GD.Print("Pressed while swinging");
+				// 		Execute();
+				// 	}
+				// 	if(secondary_swing_timer.TimeLeft == 0 && pressed > 1)
+				// 	{
+				// 		secondary_swing_timer.Start();
+				// 		// GD.Print("Secondary timer started");
+				// 		held = true;
+				// 	}
+				// 	{
+
+				// 	}
+				// 	if(swing_timer.TimeLeft == 0)
+				// 	{
+				// 		// GD.Print("Timer started");
+				// 		swing_timer.Start();
+				// 	}
+
+				// }
+				
+			}
+			
+		
+		}		
+		// if(player.can_use_abilities && useable && button_pressed && CheckCross()) 
+		// {
+		// 	// GD.Print(held);
+		// 	AddToAbilityList(this); // Adds ability to list of abilities the player is using
+		// 	// GD.Print("adding slash to list");
+			
+		// 	if(held == false && pressed == 0) // Starts timer to see if the action is being held down
+		// 	{
+		// 		held_timer.Start();
+		// 	}
+		// 	if(held)
+		// 	{
+		// 		pressed += 1;
+		// 	}
+		// 	else if(Input.IsActionJustPressed(assigned_button))  // Executes the ability, and increments how many times it is pressed
+		// 	{
+		// 		if(swing_timer.TimeLeft == 0)
+		// 		{
+		// 			pressed += 1;
+		// 			Execute();
+		// 		}
+		// 		else if(swing_timer.TimeLeft > 0)
+		// 		{
+		// 			pressed += 1;
+		// 			// GD.Print("Pressed while swinging");
+		// 			Execute();
+		// 		}
+		// 		if(secondary_swing_timer.TimeLeft == 0 && pressed > 1)
+		// 		{
+		// 			secondary_swing_timer.Start();
+		// 			// GD.Print("Secondary timer started");
+		// 			held = true;
+		// 		}
+		// 		{
+
+		// 		}
+		// 		if(swing_timer.TimeLeft == 0)
+		// 		{
+		// 			// GD.Print("Timer started");
+		// 			swing_timer.Start();
+		// 		}
+
+		// 	}
+			
+			
+		// }
 		if(Input.IsActionJustReleased(assigned_button)) // Resets timers if button is released
 		{
 			// held = false;\
@@ -106,6 +168,9 @@ public partial class Slash : Ability
 	{
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
+		AddToAbilityList(this);
+		ready_to_use = false;
+		// player.targeting_system.SoftTargetRotation();
 		if(player.weapon_type == "one_handed")
 		{
 			OneHanded();
@@ -243,6 +308,7 @@ public partial class Slash : Ability
 			// GD.Print("Setting animations");
 			GD.Print("Playing hitbox animation");
 			// player.animation_player.Play("Attack_1_Hitbox_Activation");
+			
 			player.tree.Set("parameters/Master/conditions/using_ability", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/conditions/melee", true);
 			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/conditions/Slash", true);
