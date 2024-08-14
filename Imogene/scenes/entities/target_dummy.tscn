@@ -1536,7 +1536,7 @@ mesh = SubResource("CapsuleMesh_2je73")
 mesh = SubResource("CylinderMesh_3vnrb")
 
 [node name="MainHand" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.385731, -0.0483064, 0.921346, 0.129647, -0.991557, 0.00229064, 0.913457, 0.120334, 0.388737, 0.839072, 2.31682, 0.0850274)
+transform = Transform3D(-0.385731, -0.0483069, 0.921346, 0.129647, -0.991558, 0.00228995, 0.913457, 0.120333, 0.388737, 0.839072, 2.31682, 0.0850274)
 bone_name = "hand.L"
 bone_idx = 17
 
@@ -1557,7 +1557,7 @@ script = ExtResource("2_16pxi")
 shape = SubResource("SphereShape3D_0gcm8")
 
 [node name="Chest" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.00344853, 0.0223283, -0.999745, -0.0286486, 0.999338, 0.022418, 0.999584, 0.0287186, -0.00280647, -0.063214, 3.25441, -0.00875117)
+transform = Transform3D(-0.00344852, 0.0223283, -0.999745, -0.0286486, 0.999338, 0.022418, 0.999584, 0.0287186, -0.00280646, -0.063214, 3.25441, -0.00875119)
 bone_name = "spine_3"
 bone_idx = 3
 
@@ -1574,7 +1574,7 @@ transform = Transform3D(1.8, -7.92031e-15, -1.16415e-10, -1.5786e-14, 1.8, 7.105
 shape = SubResource("CapsuleShape3D_m5yct")
 
 [node name="Head" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.0288109, -0.182386, -0.982805, -0.638255, 0.760043, -0.122336, 0.769286, 0.623755, -0.138306, -0.0302402, 4.07905, 0.0882423)
+transform = Transform3D(-0.0288109, -0.182386, -0.982805, -0.638255, 0.760042, -0.122336, 0.769286, 0.623756, -0.138306, -0.0302401, 4.07905, 0.0882424)
 bone_name = "head"
 bone_idx = 5
 

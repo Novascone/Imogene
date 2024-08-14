@@ -134,6 +134,7 @@ public partial class Enemy : Entity
 
 		hurtbox = GetNode<Hurtbox>("Armature/Skeleton3D/Chest/ChestSlot/Hurtbox");
 		hurtbox.BodyEntered += OnHurtboxBodyEntered;
+		hurtbox.AreaEntered += OnHurtboxAreaEntered;
 
 		head = GetNode<BoneAttachment3D>("Armature/Skeleton3D/Head");
 
@@ -163,18 +164,24 @@ public partial class Enemy : Entity
 		_customSignals.FinishedCircling += HandleFinishedCircling;		
 	}
 
-	private void OnHurtboxBodyEntered(Node3D body)
+    private void OnHurtboxAreaEntered(Area3D area)
     {
-		GD.Print("hurtbox entered by " + body);
-		if(body is MeleeHitbox melee_box)
+        if(area is MeleeHitbox melee_box)
 		{
-			if(body is MeleeHitbox)
+			GD.Print("hurtbox entered by " + melee_box);
+			if(area is MeleeHitbox)
 			{
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
 				resource_system.Posture(melee_box.posture_damage);
 			}
 		}
-		else if(body is RangedHitbox ranged_box)
+		
+    }
+
+    private void OnHurtboxBodyEntered(Node3D body)
+    {
+		
+		if(body is RangedHitbox ranged_box)
 		{
 			if(body is RangedHitbox)
 			{

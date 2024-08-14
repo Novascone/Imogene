@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://ds2svqsgmx87v"]
+[gd_scene load_steps=138 format=3 uid="uid://ds2svqsgmx87v"]
 
 [ext_resource type="Script" path="res://scripts/UI/UI.cs" id="1_qmnvm"]
 [ext_resource type="Script" path="res://scripts/UI/HUD.cs" id="2_5xxmo"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/SpellRangedPowerStat.cs" id="8_040ej"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/DexterityStat.cs" id="8_ck3t7"]
 [ext_resource type="Script" path="res://scripts/UI/AbilitiesInterface.cs" id="9_4fs8w"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="9_qepu0"]
 [ext_resource type="Script" path="res://scripts/UI/stats/depth_stat/offense/WisdomScalerStat.cs" id="9_r5sa2"]
 [ext_resource type="Script" path="res://scripts/UI/stats/base_stats/IntellectStat.cs" id="9_salts"]
 [ext_resource type="Script" path="res://scripts/UI/Ability_Interface_Components/AbilityCategory.cs" id="9_twx0n"]
@@ -85,6 +86,8 @@ bg_color = Color(0, 0, 0, 0.501961)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvckw"]
 bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s0go8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ys72g"]
 size = Vector2(280, 16.5)
@@ -266,16 +269,11 @@ script = ExtResource("1_qmnvm")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -600.0
-offset_top = -279.0
-offset_right = 600.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 script = ExtResource("2_5xxmo")
 
 [node name="InteractBar" type="PanelContainer" parent="HUD"]
@@ -1150,6 +1148,35 @@ size_flags_vertical = 0
 fill_mode = 6
 nine_patch_stretch = true
 texture_progress = ExtResource("16_qax2o")
+
+[node name="TopRightHUD" type="PanelContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 300.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_s0go8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/TopRightHUD"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HUD/TopRightHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopRightHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SoftTargetIndicator" type="TextureRect" parent="HUD/TopRightHUD/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("9_qepu0")
+expand_mode = 1
 
 [node name="InteractInventory" type="PanelContainer" parent="."]
 visible = false

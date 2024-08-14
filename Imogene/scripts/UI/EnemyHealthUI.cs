@@ -7,7 +7,7 @@ public partial class EnemyHealthUI : Control
 	private ProgressBar enemy_health;
 	private TextureProgressBar enemy_posture;
 	private Label enemy_name;
-	private Enemy targeted_enemy;
+	public Enemy targeted_enemy;
 	private CustomSignals _customSignals; // Instance of CustomSignals
 	public override void _Ready()
 	{
@@ -46,19 +46,27 @@ public partial class EnemyHealthUI : Control
 		enemy_posture.Value = enemy.posture;
 		targeted_enemy.hard_target_icon.Show();
 		targeted_enemy.status_bar.Show();
+		targeted_enemy.soft_target_icon.Show();
 		
 		Show();
     }
 	public void EnemyUntargeted()
     {
         Hide();
-		targeted_enemy.hard_target_icon.Hide();
-		targeted_enemy.status_bar.Hide();
+		if(targeted_enemy != null)
+		{
+			targeted_enemy.hard_target_icon.Hide();
+			targeted_enemy.status_bar.Hide();
+			targeted_enemy.soft_target_icon.Hide();
+			targeted_enemy.targeted = false;
+			targeted_enemy = null;
+		}
+		
     }
 
 	public void SetSoftTargetIcon(Enemy enemy)
 	{
-		if(enemy.soft_target)
+		if(enemy.soft_target || enemy.targeted)
 		{
 			enemy.soft_target_icon.Show();
 		}

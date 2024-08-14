@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 
 public partial class TargetingSystem : EntitySystem
 {
@@ -35,7 +36,10 @@ public partial class TargetingSystem : EntitySystem
 	public override void _PhysicsProcess(double delta)
 	{
 		EnemyCheck(); // Check if enemy is targeted
-
+		if(player.ui.hud.enemy_health.targeted_enemy != null)
+		{
+			GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
+		}
 		if(target_pressed)
 		{
 			frames_held += 1;
@@ -49,6 +53,14 @@ public partial class TargetingSystem : EntitySystem
 			if(frames_held >= held_threshold)
 			{
 				soft_target_on = !soft_target_on;
+				if(!soft_target_on)
+				{
+					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 0.1f);
+				}
+				else
+				{
+					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 1.0f);
+				}
 				GD.Print("Soft target on " + soft_target_on);
 			}
 			
@@ -62,7 +74,7 @@ public partial class TargetingSystem : EntitySystem
 		{
 			closest_enemy_soft_small = mobs_in_order[0];
 			closest_enemy_soft_small.soft_target = true;
-			if(soft_target_on)
+			if(soft_target_on && !player.targeting)
 			{
 				player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
 			}
@@ -128,6 +140,7 @@ public partial class TargetingSystem : EntitySystem
 		}
 		if(mobs_in_small == 0)
 		{
+			player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 			enemy_in_soft_small = false;
 			closest_enemy_soft_small = null;
 		}

@@ -59,6 +59,8 @@ public partial class HUD : UI
 	private bool r_cross_primary_selected = true;
 	private bool l_cross_secondary_selected = false;
 	private bool r_cross_secondary_selected = false;
+
+	public TextureRect soft_target_indicator;
 	// Called when the node enters the scene tree for the first time.
 	// private CustomSignals _customSignals; // Instance of CustomSignals
 	public override void _Ready()
@@ -114,6 +116,8 @@ public partial class HUD : UI
 		posture = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/HBoxContainer/Posture/TextureProgressBar");
 		resource = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/BottomHUDHBox/Resource/VBoxContainer/ResourcePoints/TextureProgressBar");
 		xp = GetNode<TextureProgressBar>("BottomHUD/BottomHUDVBox/XP/TextureProgressBar");
+
+		soft_target_indicator = GetNode<TextureRect>("TopRightHUD/VBoxContainer/HBoxContainer/SoftTargetIndicator");
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
