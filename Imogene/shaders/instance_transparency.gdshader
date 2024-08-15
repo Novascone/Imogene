@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode depth_prepass_alpha; 
+render_mode depth_prepass_alpha;
 
 instance uniform float opacity:hint_range(0.0, 1.0) = 1.0;
 uniform sampler2D _abeldo:source_color;

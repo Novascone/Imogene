@@ -35,15 +35,26 @@ public partial class Ability : Node3D
 
     private CustomSignals _customSignals; // Custom signal instance
 
-    public TargetingSystem targeting_system;
+    public States state;
+
+    public enum States
+    {
+        not_queued,
+        queued
+    }
+
 
     public override void _Ready()
     {
       
     }
     
+    public void QueueAbility()
+    {
+        
+    }
 
-    public void CheckCanUse()
+    public void CheckCanUseAbility()
     {
        
     }
@@ -115,10 +126,9 @@ public partial class Ability : Node3D
     {
         
     }
-    public void GetPlayerInfo(Player playerinfo) // Handles the player info
+    public void GetPlayerInfo(Player player_info) // Handles the player info
     {
-        player = playerinfo;
-        targeting_system = player.targeting_system;
+        player = player_info;
         player.tree.AnimationFinished += OnAnimationFinished;
     }
 

@@ -77,6 +77,11 @@ public partial class EnemyHealthUI : Control
 		
 	}
 
+	public void RemoveSoftTargetIcon(Enemy enemy)
+	{
+		enemy.soft_target_icon.Hide();
+	}
+
 
 
     private void HandleEnemyHealthChangedUI(Enemy enemy, float health)

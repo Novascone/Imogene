@@ -90,6 +90,7 @@ public partial class Enemy : Entity
 	public bool in_soft_target_small;
 	public bool in_soft_target_large;
 	public bool soft_target;
+	public bool in_player_vision;
 
 
 	// Called when the node enters the scene tree for the first time.

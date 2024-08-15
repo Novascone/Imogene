@@ -21,6 +21,7 @@ public partial class TargetingSystem : EntitySystem
 	public Dictionary<Enemy,Vector3> sorted_right;
 	public Dictionary<Enemy, Vector3> mobs_to_right = new Dictionary<Enemy, Vector3>();
 	public List<Enemy> mobs_in_order_to_right;
+	public List<Enemy> enemies_in_vision = new List<Enemy>();
 	public Enemy mob_looking_at;
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
 	public bool looking_at_soft = false;
@@ -38,6 +39,19 @@ public partial class TargetingSystem : EntitySystem
 	public override void _PhysicsProcess(double delta)
 	{
 		EnemyCheck(); // Check if enemy is targeted
+		// if(enemies_in_vision != null)
+		// {
+		// 	foreach(Enemy enemy1 in enemies_in_vision)
+		// 	{
+		// 		GD.Print("Enemy " + enemy1.Name + " in vision");
+		// 	}
+		// }
+		if(closest_enemy_soft != null)
+		{
+			GD.Print("Closest enemy in soft in vision " + closest_enemy_soft.in_player_vision);
+		}
+		
+		
 		if(player.ui.hud.enemy_health.targeted_enemy != null)
 		{
 			GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
@@ -100,7 +114,15 @@ public partial class TargetingSystem : EntitySystem
 			closest_enemy_soft.soft_target = true;
 			if(soft_target_on && !player.targeting)
 			{
-				player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft);
+				if(closest_enemy_soft.in_player_vision || enemy_in_soft_small)
+				{
+					player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft);
+				}
+				else
+				{
+					player.ui.hud.enemy_health.RemoveSoftTargetIcon(closest_enemy_soft);
+				}
+				
 			}
 			
 			foreach(Enemy enemy in mobs_in_order)
@@ -120,10 +142,11 @@ public partial class TargetingSystem : EntitySystem
 	public void EnemyEnteredVision(Enemy enemy)
 	{
 		
-		if(enemy.IsInGroup("enemy")) 
-		{
-			enemy_in_vision = true;
-		}
+		
+		enemy_in_vision = true;
+		enemy.in_player_vision = true;
+		enemies_in_vision.Add(enemy);
+		
 	}
 
 	public void EnemyExitedVision(Enemy enemy)
@@ -132,6 +155,8 @@ public partial class TargetingSystem : EntitySystem
 		{
 			player.ui.hud.enemy_health.EnemyUntargeted();
 		}
+		enemy.in_player_vision = false;
+		enemies_in_vision.Remove(enemy);
 	}
 
 	public void EnemyEnteredSoftSmall(Enemy enemy) // Called when enemy enters the small soft target zone
@@ -232,7 +257,7 @@ public partial class TargetingSystem : EntitySystem
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
 		
-		if(enemy_in_vision && frames_held > 1)
+		if(enemies_in_vision.Count > 0 && frames_held > 1)
 		{
 			if(frames_held < held_threshold && target_released)
 			{
@@ -259,7 +284,7 @@ public partial class TargetingSystem : EntitySystem
 
 	public void LookAtEnemy() // Look at enemy and switch between enemies
 	{
-		if(player.targeting && enemy_in_vision && (mobs_in_order.Count > 0))
+		if(player.targeting && enemies_in_vision.Count > 0 && (mobs_in_order.Count > 0))
 		{
 			if(Input.IsActionJustPressed("TargetRight"))
 			{

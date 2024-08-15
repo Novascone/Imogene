@@ -15,14 +15,13 @@ height = 0.148494
 radius = 0.213906
 
 [node name="ProjectileToLoad" type="RigidBody3D"]
-top_level = true
 collision_layer = 16
 collision_mask = 16
 mass = 0.1
 gravity_scale = 0.0
 continuous_cd = true
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_gkmni")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

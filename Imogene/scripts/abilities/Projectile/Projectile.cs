@@ -35,21 +35,30 @@ public partial class Projectile : Ranged
 		// {
 		// 	PlayerFacingEnemy();
 		// }
-		if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
-			ready_to_use = true;
+			state = States.queued;
 		}
-		if(ready_to_use)
+		if(state == States.queued)
 		{
 			if(player.can_use_abilities && useable && CheckCross() && cast_timer.TimeLeft == 0)
 			{
+
 				if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
 				{
-					player.targeting_system.SoftTargetRotation();
-					if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+					if(player.targeting_system.enemy_in_soft_small || player.targeting_system.closest_enemy_soft.in_player_vision)
+					{
+						player.targeting_system.SoftTargetRotation();
+						if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+						{
+							Execute();
+						}
+					}
+					else
 					{
 						Execute();
 					}
+					
 				}
 				else
 				{
@@ -64,7 +73,7 @@ public partial class Projectile : Ranged
 	public override void Execute()
 	{
 		// GD.Print("Casting");
-		ready_to_use = false;
+		state = States.not_queued;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
@@ -77,9 +86,10 @@ public partial class Projectile : Ranged
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate();
 		player.exclude.Add(projectile.GetRid());
-		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid());
+		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid(), projectile);
 		player.cast_point.AddChild(projectile);
-		
+		projectile.TopLevel = true;
+
 		if(player.damage_system.Crit())
 		{
 			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
@@ -97,14 +107,17 @@ public partial class Projectile : Ranged
 		projectile.LinearVelocity = cast_direction * projectile_velocity;
 	}
 
-	public void RemoveFromExclusion(Rid projectile_rid)
+	public void RemoveFromExclusion(Rid projectile_rid, RangedHitbox projectile)
 	{
 		player.exclude.Remove(projectile_rid);
+		
+		
 	}
 
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
+		
 	}
 
 }
