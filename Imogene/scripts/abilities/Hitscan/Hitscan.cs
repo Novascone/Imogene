@@ -19,36 +19,20 @@ public partial class Hitscan : Ranged
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
-			ready_to_use = true;
+			QueueAbility();
 		}
-		if(ready_to_use)
+		if(cast_timer.TimeLeft == 0)
 		{
-			if(player.can_use_abilities && useable && CheckCross() && cast_timer.TimeLeft == 0)
-			{
-				if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
-				{
-					player.targeting_system.SoftTargetRotation();
-					if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-					{
-						Execute();
-					}
-				}
-				else
-				{
-					GD.Print("execute with out targeting");
-					Execute();
-				}
-			}
-		
-		}		
+			CheckCanUseAbility();
+		}			
 	}
 
 	public override void Execute()
 	{
 		// GD.Print("Casting");
-		ready_to_use = false;
+		state = States.not_queued;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();

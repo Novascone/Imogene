@@ -42,21 +42,48 @@ public partial class Ability : Node3D
         not_queued,
         queued
     }
-
-
-    public override void _Ready()
-    {
-      
-    }
-    
     public void QueueAbility()
     {
-        
+        this.state = States.queued;
     }
 
     public void CheckCanUseAbility()
     {
-       
+        if(state == States.queued)
+		{
+         if(player.can_use_abilities && useable && CheckCross())
+            {
+                // if(resource.type == "movement") // implement later
+                // {
+                //     Execute();
+                // }
+                if(Name == "Jump" || Name == "Roll")
+                {
+                    Execute();
+                }
+                else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
+                {
+                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash"))
+                    {
+                        player.targeting_system.SoftTargetRotation();
+                        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+                        {
+                            Execute();
+                        }
+                    }
+                    else
+                    {
+                        Execute();
+                    }
+                    
+                }
+                else
+                {
+                    GD.Print("execute with out targeting");
+                    Execute();
+                }
+            }
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI

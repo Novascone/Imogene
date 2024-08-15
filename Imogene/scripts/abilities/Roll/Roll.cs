@@ -30,14 +30,11 @@ public partial class Roll : Ability
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(player.can_use_abilities && useable && button_pressed && CheckCross())
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
-			AddToAbilityList(this); // Adds this ability to the players currently used abilities 
-			// GD.Print("adding roll to list");
-			player.using_movement_ability = true;
-			roll_timer.Start(); // Starts roll timer which is exactly the same time as the roll animation
-			Execute();
+			QueueAbility();
 		}
+		CheckCanUseAbility();
 		if(rolling)
 		{
 			player.Rotation = temp_rotation; // Gets the rotation of the player the moment they roll
@@ -61,6 +58,10 @@ public partial class Roll : Ability
 	}
 	public override void Execute()
 	{
+		AddToAbilityList(this);
+		state = States.not_queued;
+		roll_timer.Start(); 
+		player.using_movement_ability = true;
 		if(!rolling)
 		{
 			temp_rotation = player.Rotation;

@@ -48,26 +48,34 @@ public partial class Slash : Ability
 			player.can_move = true;
 			player.attacking = false;
 		}
-		if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
-			ready_to_use = true;
+			QueueAbility();
 		}
-		if(ready_to_use)
+		if(swing_timer.TimeLeft == 0)
 		{
-			if(player.can_use_abilities && useable && CheckCross() && swing_timer.TimeLeft == 0)
-			{
-				if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && player.targeting_system.enemy_in_soft_small)
-				{
-					player.targeting_system.SoftTargetRotation();
-					if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-					{
-						Execute();
-					}
-				}
-				else
-				{
-					Execute();
-				}
+			CheckCanUseAbility();
+		}		
+		// if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
+		// {
+		// 	ready_to_use = true;
+		// }
+		// if(ready_to_use)
+		// {
+		// 	if(player.can_use_abilities && useable && CheckCross() && swing_timer.TimeLeft == 0)
+		// 	{
+		// 		if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && player.targeting_system.enemy_in_soft_small)
+		// 		{
+		// 			player.targeting_system.SoftTargetRotation();
+		// 			if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+		// 			{
+		// 				Execute();
+		// 			}
+		// 		}
+		// 		else
+		// 		{
+		// 			Execute();
+		// 		}
 				// if(held == false && pressed == 0) // Starts timer to see if the action is being held down
 				// {
 				// 	held_timer.Start();
@@ -106,10 +114,10 @@ public partial class Slash : Ability
 
 				// }
 				
-			}
+		// 	}
 			
 		
-		}		
+		// }		
 		// if(player.can_use_abilities && useable && button_pressed && CheckCross()) 
 		// {
 		// 	// GD.Print(held);
@@ -169,7 +177,7 @@ public partial class Slash : Ability
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
 		AddToAbilityList(this);
-		ready_to_use = false;
+		state = States.not_queued;
 		// player.targeting_system.SoftTargetRotation();
 		if(player.weapon_type == "one_handed")
 		{

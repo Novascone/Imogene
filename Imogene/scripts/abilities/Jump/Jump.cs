@@ -98,23 +98,19 @@ public partial class Jump : Ability
 			button_held = true;
 		}
 		
-		
-		
 		Climb();
 
 		if(player.can_use_abilities && CheckCross() || player.jumping)
 		{
 			
-			
-			
-			if(!player.is_climbing && frames_held < frames_held_threshold && button_released) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
+			if(!player.is_climbing && frames_held < frames_held_threshold && button_released && state == States.not_queued) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
 			{
+				QueueAbility();
 				// GD.Print("Player is not climbing");
 				// GD.Print("held threshold going into jump " + held_threshold);
-				AddToAbilityList(this);
+				
 				// GD.Print("adding jump to list");
-				Execute(); // Jump
-				frames_held = 0; // Reset the frames the button has been held
+				
 			}
 			else if(frames_held > frames_held_threshold) // If the button has been held for more than 10 frames
 			{
@@ -133,7 +129,7 @@ public partial class Jump : Ability
 				}
 
 			}
-			
+			CheckCanUseAbility();
 		}
 		// GD.Print(held_threshold);
 		// GD.Print(button_pressed);
@@ -212,7 +208,9 @@ public partial class Jump : Ability
     // Called when the node enters the scene tree for the first time.
     public override void Execute()
     {	
-		
+		AddToAbilityList(this);
+		state = States.not_queued;
+		frames_held = 0; // Reset the frames the button has been held
 		if((player.IsOnFloor() || coyote.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			GD.Print("start jumping");
