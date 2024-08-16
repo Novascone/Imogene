@@ -27,31 +27,77 @@ public partial class Slash : Ability
     public override void _PhysicsProcess(double delta)
     {
 		// GD.Print("action 2 set "  + player.action_2_set);
-		base._PhysicsProcess(delta);
-		if(player.can_move == false)
-		{
-			player.velocity.X = 0;
-			player.velocity.Z = 0;
-		}
-		if(player.recovery_1 || player.recovery_2) // If player is in recovery slow down the speed of the player
-		{
-			player.speed = 3.0f;
-		}
-		// else
+		
+		// if(CheckHeld())
+        // {
+        //     player.movementController.rotation_only = true;
+        //     GD.Print("Ability is making player only able to rotate");
+        // }
+        // else
+        // {
+        //     player.movementController.rotation_only = false;
+        // }
+		// GD.Print("slash held " + button_held);
+		// if(player.can_move == false)
 		// {
-		// 	player.speed = player.walk_speed;
+		// 	player.velocity.X = 0;
+		// 	player.velocity.Z = 0;
 		// }
-		if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held) // Resets the amount of times pressed if the button is not held and pressed is greater than 2
-		{
-			// GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
-			pressed = 0;
-			// GD.Print("Pressed: " + pressed);
-			player.can_move = true;
-			player.attacking = false;
-		}
+		// if(player.recovery_1 || player.recovery_2) // If player is in recovery slow down the speed of the player
+		// {
+		// 	player.speed = 3.0f;
+		// }
+		// // else
+		// // {
+		// // 	player.speed = player.walk_speed;
+		// // }
+		// if(swing_timer.TimeLeft == 0 && pressed >= 2 && !held) // Resets the amount of times pressed if the button is not held and pressed is greater than 2
+		// {
+		// 	// GD.Print("Pressed was greater than two and the swing timer expired it has been reset");
+		// 	pressed = 0;
+		// 	// GD.Print("Pressed: " + pressed);
+		// 	player.can_move = true;
+		// 	player.attacking = false;
+		// }
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		// {
+		// 	QueueAbility();
+		// }
+		// else if (CheckHeld())
+		// {
+		// 	if(swing_timer.TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 		GD.Print("using and holding ability");
+		// 	}		
+		// }
+		// if(swing_timer.TimeLeft == 0)
+		// {
+		// 	CheckCanUseAbility();
+		// }		
+		// if(CheckHeld())
+		// {
+		// 	player.movementController.rotation_only = true;
+		// 	GD.Print("Ability is making player only able to rotate");
+		// }
+		// if(Input.IsActionJustReleased(assigned_button))
+		// {
+		// 	player.movementController.rotation_only = false;
+		// }
+		// GD.Print("Projectile held " + button_held);
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
+		}
+		else if (CheckHeld())
+		{
+			if(swing_timer.TimeLeft == 0)
+			{
+				QueueAbility();
+				CheckCanUseAbility();
+				GD.Print("using and holding ability");
+			}		
 		}
 		if(swing_timer.TimeLeft == 0)
 		{
@@ -177,8 +223,10 @@ public partial class Slash : Ability
 	{
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
-		AddToAbilityList(this);
 		state = States.not_queued;
+		player.movementController.movement_input_allowed = false;
+		AddToAbilityList(this);
+		
 		// player.targeting_system.SoftTargetRotation();
 		if(player.weapon_type == "one_handed")
 		{
@@ -270,7 +318,8 @@ public partial class Slash : Ability
 		{
 			
 			player.recovery_1 = true;
-			player.can_move = true;
+			// player.can_move = true;
+			player.movementController.movement_input_allowed = true;
 			player.attacking = false;
 			// player.hitbox.Monitoring = false;
 			player.action_1_set = false;
@@ -325,7 +374,7 @@ public partial class Slash : Ability
 			player.tree.Set("parameters/Master/Ability/Ability_1/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", true);
 			// pressed -= 1;
 			// player.attack_2_set = false;
-			player.can_move = false;
+			// player.can_move = false;
 			player.attacking = true;
 			// GD.Print(player.can_move);
 			// if(pressed > 1)
@@ -345,6 +394,7 @@ public partial class Slash : Ability
 	public void _on_swing_timer_timeout() // decrements presses on primary swing timer timeout
 	{
 		// GD.Print("timeout");
+		
 		if(pressed > 0)
 		{
 			// GD.Print("Pressed was at: " + pressed);

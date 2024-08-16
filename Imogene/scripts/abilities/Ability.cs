@@ -44,7 +44,11 @@ public partial class Ability : Node3D
     }
     public void QueueAbility()
     {
-        this.state = States.queued;
+        if(this.state == States.not_queued)
+        {
+            this.state = States.queued;
+        }
+        
     }
 
     public void CheckCanUseAbility()
@@ -52,42 +56,51 @@ public partial class Ability : Node3D
         if(state == States.queued)
 		{
          if(player.can_use_abilities && useable && CheckCross())
+        {
+            // if(resource.type == "movement") // implement later
+            // {
+            //     Execute();
+            // }
+            if(Name == "Jump" || Name == "Roll")
             {
-                // if(resource.type == "movement") // implement later
-                // {
-                //     Execute();
-                // }
-                if(Name == "Jump" || Name == "Roll")
+                Execute();
+            }
+            else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && !CheckHeld())
+            {
+                if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
                 {
-                    Execute();
-                }
-                else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
-                {
-                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
+                    if(Name != "Roll" || Name != "Jump")
                     {
-                        if(Name != "Roll" || Name != "Jump")
-                        {
-                            player.movementController.movement_input_allowed = false;
-                        }
-                        player.targeting_system.SoftTargetRotation();
-                        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-                        {
-                            Execute();
-                            // player.movementController.movement_input_allowed = true;
-                        }
+                        player.movementController.movement_input_allowed = false;
                     }
-                    else
+                    player.targeting_system.SoftTargetRotation();
+                    if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
                     {
                         Execute();
+                        // player.movementController.movement_input_allowed = true;
                     }
-                    
                 }
                 else
                 {
-                    GD.Print("execute with out targeting");
                     Execute();
                 }
+                
             }
+            else if(!button_held)
+            {
+                GD.Print("execute with out targeting");
+                Execute();
+            }
+            else if(button_held)
+            {
+                GD.Print("Button is held, waiting for player to complete rotation");
+                if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+                {
+                    Execute();
+                    // player.movementController.movement_input_allowed = true;
+                }
+            }
+        }
         }
     }
 
@@ -113,6 +126,7 @@ public partial class Ability : Node3D
 
     public bool CheckHeld()
     {
+        GD.Print(Name + " calling checkheld");
         
             if(frames_held < frames_held_threshold)
             {
@@ -137,6 +151,7 @@ public partial class Ability : Node3D
     public override void _PhysicsProcess(double delta)
     {
         // GD.Print(Name + " held " + CheckHeld());
+       
     }
 
     public virtual void Execute() // Default execute

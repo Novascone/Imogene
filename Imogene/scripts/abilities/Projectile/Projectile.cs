@@ -35,14 +35,36 @@ public partial class Projectile : Ranged
 		// {
 		// 	PlayerFacingEnemy();
 		// }
+		
+		if(CheckHeld())
+		{
+			player.movementController.rotation_only = true;
+			GD.Print("Ability is making player only able to rotate");
+		}
+		if(Input.IsActionJustReleased(assigned_button))
+		{
+			player.movementController.rotation_only = false;
+		}
+		
+		// GD.Print("Projectile held " + button_held);
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
+		}
+		else if (CheckHeld())
+		{
+			if(cast_timer.TimeLeft == 0)
+			{
+				QueueAbility();
+				CheckCanUseAbility();
+				GD.Print("using and holding ability");
+			}		
 		}
 		if(cast_timer.TimeLeft == 0)
 		{
 			CheckCanUseAbility();
 		}		
+		
 	}
 
 	public override void Execute()

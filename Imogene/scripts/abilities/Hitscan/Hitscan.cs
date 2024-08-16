@@ -19,20 +19,41 @@ public partial class Hitscan : Ranged
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		if(CheckHeld())
+		{
+			player.movementController.rotation_only = true;
+			GD.Print("Ability is making player only able to rotate");
+		}
+		if(Input.IsActionJustReleased(assigned_button))
+		{
+			player.movementController.rotation_only = false;
+		}
+		
+		// GD.Print("Projectile held " + button_held);
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
 		}
+		else if (CheckHeld())
+		{
+			if(cast_timer.TimeLeft == 0)
+			{
+				QueueAbility();
+				CheckCanUseAbility();
+				GD.Print("using and holding ability");
+			}		
+		}
 		if(cast_timer.TimeLeft == 0)
 		{
 			CheckCanUseAbility();
-		}			
+		}	
 	}
 
 	public override void Execute()
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
+		player.movementController.movement_input_allowed = false;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
@@ -81,5 +102,6 @@ public partial class Hitscan : Ranged
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
+		player.movementController.movement_input_allowed = true;
 	}
 }

@@ -28,6 +28,7 @@ public partial class MovementController : Controller
     public override void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
+		GD.Print("player rotation only " + rotation_only);
 		var landing_ray = LandPosition();
 
 		
@@ -73,7 +74,8 @@ public partial class MovementController : Controller
 
 		player.SmoothRotation(); // Rotate the player character smoothly
 		player.targeting_system.LookAtEnemy(); // Look at mob and handle switching
-
+		
+		
 		if(!player.using_movement_ability && !rotation_only)
 		{
 			player.velocity.X = player.direction.X * player.speed;
@@ -158,7 +160,9 @@ public partial class MovementController : Controller
 			}
 			if(Input.IsActionJustPressed("five"))
 			{
+				GD.Print("five");
 				rotation_only = !rotation_only;
+				GD.Print("five rotation only " + rotation_only);
 			}
 		}
 		if(Input.IsActionJustPressed("six"))
