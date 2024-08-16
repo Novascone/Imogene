@@ -49,6 +49,7 @@ public partial class Projectile : Ranged
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
+		player.movementController.movement_input_allowed = false;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
@@ -92,7 +93,7 @@ public partial class Projectile : Ranged
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
-		
+		player.movementController.movement_input_allowed = true;
 	}
 
 }

@@ -63,12 +63,17 @@ public partial class Ability : Node3D
                 }
                 else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on)
                 {
-                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash"))
+                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
                     {
+                        if(Name != "Roll" || Name != "Jump")
+                        {
+                            player.movementController.movement_input_allowed = false;
+                        }
                         player.targeting_system.SoftTargetRotation();
                         if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
                         {
                             Execute();
+                            // player.movementController.movement_input_allowed = true;
                         }
                     }
                     else
@@ -98,20 +103,41 @@ public partial class Ability : Node3D
             if(@event.IsActionReleased(assigned_button) && CheckCross())
             {
                 button_pressed = false;
-                if(frames_held < frames_held_threshold)
-                {
-                    button_released = true;
-                }
-                else
-                {
-                    frames_held = 0;
-                    button_released = false;
-                }                   
+                button_released = true;
+                              
                 // GD.Print("button released");
             }
         }
 		
 	}
+
+    public bool CheckHeld()
+    {
+        
+            if(frames_held < frames_held_threshold)
+            {
+                button_held = false;
+            }
+            else
+            {
+                button_held = true;
+            }
+            if(button_pressed && !button_released)
+            {
+                frames_held += 1;
+            }
+            else
+            {
+                frames_held = 0;
+            }
+                
+            return button_held;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        // GD.Print(Name + " held " + CheckHeld());
+    }
 
     public virtual void Execute() // Default execute
     {

@@ -27,6 +27,7 @@ public partial class Slash : Ability
     public override void _PhysicsProcess(double delta)
     {
 		// GD.Print("action 2 set "  + player.action_2_set);
+		base._PhysicsProcess(delta);
 		if(player.can_move == false)
 		{
 			player.velocity.X = 0;

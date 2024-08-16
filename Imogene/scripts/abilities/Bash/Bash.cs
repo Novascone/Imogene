@@ -6,6 +6,12 @@ using System;
 
 public partial class Bash : Ability
 {
+
+	public override void _PhysicsProcess(double delta)
+    {
+        
+    }
+    // publ
 	// public override void Execute(player s)
 	// {
 	// 	if(s.weapon_type == "one_handed_hammer" || s.weapon_type == "two_handed_hammer" ||  s.weapon_type == "fist")

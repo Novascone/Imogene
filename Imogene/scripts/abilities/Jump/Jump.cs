@@ -74,7 +74,7 @@ public partial class Jump : Ability
     // }
     public override void _PhysicsProcess(double delta)
     {
-
+		base._PhysicsProcess(delta);
 		if(!player.IsOnFloor() && !coyote_elapsed)
 		{
 			// GD.Print("coyote timer started");
@@ -89,21 +89,21 @@ public partial class Jump : Ability
 			player.velocity.Z = 0;
 		}
 		
-		if(button_pressed)
-		{
-			frames_held += 1; // If the button is pressed start counting the amount of frames its pressed
-		}
-		if(frames_held > frames_held_threshold)
-		{
-			button_held = true;
-		}
+		// if(button_pressed)
+		// {
+		// 	frames_held += 1; // If the button is pressed start counting the amount of frames its pressed
+		// }
+		// if(frames_held > frames_held_threshold)
+		// {
+		// 	button_held = true;
+		// }
 		
 		Climb();
 
 		if(player.can_use_abilities && CheckCross() || player.jumping)
 		{
 			
-			if(!player.is_climbing && frames_held < frames_held_threshold && button_released && state == States.not_queued) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
+			if(!player.is_climbing && !CheckHeld() && button_released && state == States.not_queued) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
 			{
 				QueueAbility();
 				// GD.Print("Player is not climbing");
@@ -112,10 +112,8 @@ public partial class Jump : Ability
 				// GD.Print("adding jump to list");
 				
 			}
-			else if(frames_held > frames_held_threshold) // If the button has been held for more than 10 frames
+			else if(CheckHeld()) // If the button has been held for more than 10 frames
 			{
-				GD.Print("button held");
-				
 				if(!player.on_wall.IsColliding()) // If the player is not near a wall reset how many frames the button has been held
 				{
 					
@@ -143,7 +141,7 @@ public partial class Jump : Ability
 			if(player.on_wall.IsColliding())
 			{
 				// GD.Print(player.near_wall.GetCollider());
-				if(button_held && !player.is_climbing)
+				if(CheckHeld() && !player.is_climbing)
 				{
 					GD.Print("setting climbing to true");
 					player.is_climbing = true;

@@ -13,6 +13,8 @@ public partial class MovementController : Controller
 	private float climb_speed = 4.0f;
 	private float clamber_speed = 10.0f;
 	private float _t = 0.2f;
+	public bool rotation_only;
+	public bool movement_input_allowed = true;
 	// Called when the node enters the scene tree for the first time.
 	private CustomSignals _customSignals; // Custom signal instance
 	public override void _Ready()
@@ -27,6 +29,8 @@ public partial class MovementController : Controller
 	{
 		player.Fall(delta);
 		var landing_ray = LandPosition();
+
+		
 
 		if(player.ui.inventory.Visible || player.ui.abilities_open && !player.ui.abilities_secondary_ui_open || player.attacking) 
 		{
@@ -70,7 +74,7 @@ public partial class MovementController : Controller
 		player.SmoothRotation(); // Rotate the player character smoothly
 		player.targeting_system.LookAtEnemy(); // Look at mob and handle switching
 
-		if(!player.using_movement_ability)
+		if(!player.using_movement_ability && !rotation_only)
 		{
 			player.velocity.X = player.direction.X * player.speed;
 			player.velocity.Z = player.direction.Z * player.speed;
@@ -78,6 +82,10 @@ public partial class MovementController : Controller
 			{
 				player.velocity.Y = player.direction.Y * player.speed;
 			}
+		}
+		else
+		{
+			player.velocity.Lerp(Vector3.Zero, 0.1f);
 		}
 		
 		if(player.targeting && player.targeting_system.enemy_in_vision)
@@ -130,22 +138,36 @@ public partial class MovementController : Controller
 
 	public void BasicMovement() // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
-		if (Input.IsActionPressed("Right"))
+		if(movement_input_allowed)
 		{
-			player.direction.X -= 1.0f;	
+			if (Input.IsActionPressed("Right"))
+			{
+				player.direction.X -= 1.0f;	
+			}
+			if (Input.IsActionPressed("Left"))
+			{
+				player.direction.X += 1.0f;
+			}
+			if (Input.IsActionPressed("Backward"))
+			{
+				player.direction.Z -= 1.0f;
+			}
+			if (Input.IsActionPressed("Forward"))
+			{
+				player.direction.Z += 1.0f;
+			}
+			if(Input.IsActionJustPressed("five"))
+			{
+				rotation_only = !rotation_only;
+			}
 		}
-		if (Input.IsActionPressed("Left"))
+		if(Input.IsActionJustPressed("six"))
 		{
-			player.direction.X += 1.0f;
+			movement_input_allowed = !movement_input_allowed;
+			GD.Print("player movement_input allowed" + movement_input_allowed);
 		}
-		if (Input.IsActionPressed("Backward"))
-		{
-			player.direction.Z -= 1.0f;
-		}
-		if (Input.IsActionPressed("Forward"))
-		{
-			player.direction.Z += 1.0f;
-		}
+		
+		
 
 		GetInputStrength();
 	}
