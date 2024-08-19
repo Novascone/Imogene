@@ -5,9 +5,7 @@ public partial class Projectile : Ranged
 {
 
 	public Timer cast_timer;
-	public Timer wait_for_rotation_timer;
 	public PackedScene projectile_to_load;
-	public bool can_cast;
 	public int projectile_velocity = 25;
 	private bool targeting_system_loaded = false;
 	
@@ -17,51 +15,34 @@ public partial class Projectile : Ranged
 	{
 		projectile_to_load = GD.Load<PackedScene>("res://scripts/abilities/Projectile/projectile_to_load.tscn");
 		cast_timer = GetNode<Timer>("CastTimer");
-		wait_for_rotation_timer = GetNode<Timer>("WaitForRotation");
-		
-
     }
-
-    private void HandlePlayerFacingEnemy()
-    {
-        GD.Print("Player facing enemy");
-    }
-
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
 	{
-		// if(player.abilities_in_use.Contains(this))
-		// {
-		// 	PlayerFacingEnemy();
-		// }
-		
-		
-		if(CheckHeld())
+
+		if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
 		{
 			player.movement_controller.rotation_only = true;
-			GD.Print("Ability is making player only able to rotate");
 		}
-		if(Input.IsActionJustReleased(assigned_button))
+		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{
 			player.movement_controller.rotation_only = false;
 		}
-		
-		// GD.Print("Projectile held " + button_held);
-		if(button_pressed && state == States.not_queued)
+
+		if(button_pressed && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			QueueAbility();	
 		}
-		else if (CheckHeld())
+		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
 			if(cast_timer.TimeLeft == 0)
 			{
 				QueueAbility();
 				CheckCanUseAbility();
-				GD.Print("using and holding ability");
 			}		
 		}
-		if(cast_timer.TimeLeft == 0)
+		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
 		{
 			CheckCanUseAbility();
 		}		
@@ -70,55 +51,50 @@ public partial class Projectile : Ranged
 
 	public override void Execute()
 	{
-		// GD.Print("Casting");
 		state = States.not_queued;
-		player.movement_controller.movement_input_allowed = false;
-		AddToAbilityList(this);
+		player.movement_controller.movement_input_allowed = false; // disable player movement
+		AddToAbilityList(this); // Add ability to list
 		cast_timer.Start();
-		Vector3 collision = GetPlayerCollision();
-		LaunchProjectile(collision);
+		Vector3 collision = GetPlayerCollision(); // Get the collision from the player to whats in front of it
+		LaunchProjectile(collision); // Shoot projectile from cast point to the player collision point
 		
 
 	}
 
 	public void LaunchProjectile(Vector3 collision_point)
 	{
-		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
-		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate();
+		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized(); // Get position the projectile needs to go to
+		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate(); // Instantiate the projectile
 		
-		player.exclude.Add(projectile.GetRid());
-		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid(), projectile);
-		GetTree().Root.AddChild(projectile);
-		projectile.GlobalPosition = player.cast_point.GlobalPosition;
-		projectile.GlobalRotation = player.GlobalRotation;
-		// player.cast_point.AddChild(projectile);
-		// projectile.TopLevel = true;
+		player.exclude.Add(projectile.GetRid()); // Add the projectile to the players exclude array
+		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid(), projectile); // When the projectile exits the scene remove it from the exclusion array 
+		GetTree().Root.AddChild(projectile); // Add projectile to the scene
+		projectile.GlobalPosition = player.cast_point.GlobalPosition; // give the projectile the cast point position
+		projectile.GlobalRotation = player.GlobalRotation; // give the projectile the player rotation
 
-		if(player.damage_system.Crit())
+		if(player.damage_system.Crit()) // check if the play will crit
 		{
-			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
-			projectile.posture_damage = player.posture_damage / 3;
+			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2); // Set projectile damage
+			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
 			projectile.is_critical = true;
 		}
 		else
 		{
 			
-			projectile.damage = player.damage;
-			projectile.posture_damage = player.posture_damage / 3;
+			projectile.damage = player.damage; // Set projectile damage
+			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
 			projectile.is_critical = false;
 		}
-		projectile.damage_type = "cold";
-		projectile.LinearVelocity = cast_direction * projectile_velocity;
+		projectile.damage_type = "cold"; // Set projectile damage type
+		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 	}
 
-	public void RemoveFromExclusion(Rid projectile_rid, RangedHitbox projectile)
+	public void RemoveFromExclusion(Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array
 	{
 		player.exclude.Remove(projectile_rid);
-		
-		
 	}
 
-	public void _on_cast_timer_timeout()
+	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement
 	{
 		RemoveFromAbilityList(this);
 		player.movement_controller.movement_input_allowed = true;

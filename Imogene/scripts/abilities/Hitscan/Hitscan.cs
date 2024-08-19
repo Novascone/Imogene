@@ -56,20 +56,18 @@ public partial class Hitscan : Ranged
 		player.movement_controller.movement_input_allowed = false;
 		AddToAbilityList(this);
 		cast_timer.Start();
-		Vector3 collision = GetPlayerCollision();
-		HitscanCollision(collision);
+		Vector3 collision = GetPlayerCollision(); // Get collision point of raycast from player to object in from of them or 
+		HitscanCollision(collision); // Create a raycast from cast point to player collision
 	}
-
-	
 
 	public void HitscanCollision(Vector3 collision_point)
 	{
-		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
-		var new_intersection = PhysicsRayQueryParameters3D.Create(player.cast_point.GlobalTransform.Origin, collision_point + cast_direction * 2);
-		new_intersection.CollisionMask = 16;
-		new_intersection.CollideWithAreas = true;
-		new_intersection.Exclude = player.exclude;
-		var cast_collision = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection);
+		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized(); // Get the direction for the new raycast to go
+		var new_intersection = PhysicsRayQueryParameters3D.Create(player.cast_point.GlobalTransform.Origin, collision_point + cast_direction * 2); // Create a new raycast with the origin being the cast point and the end being the collision point with direction and increase length
+		new_intersection.CollisionMask = 16; // set Collision mask to 5
+		new_intersection.CollideWithAreas = true; // Set raycast to collide with areas
+		new_intersection.Exclude = player.exclude; // Add player exclude
+		var cast_collision = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection); // Get raycast collision
 
 		if(cast_collision.Count > 0)
 		{
@@ -86,7 +84,7 @@ public partial class Hitscan : Ranged
 		}
 	}
 
-	public void HitscanDamage(Node3D collider)
+	public void HitscanDamage(Node3D collider) // Apply damage from hitscan if the collider is an enemy hurtbox
 	{
 		if(collider is	Hurtbox hurtbox)
 		{

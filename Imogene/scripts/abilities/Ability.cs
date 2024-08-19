@@ -64,7 +64,7 @@ public partial class Ability : Node3D
                 // {
                 //     Execute();
                 // }
-                if(Name == "Jump" || Name == "Roll")
+                if(resource.type == "movement")
                 {
                     Execute();
                 }

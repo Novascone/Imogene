@@ -253,7 +253,6 @@ public partial class TargetingSystem : EntitySystem
 	}
 
 	
-
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
 		

@@ -4,46 +4,17 @@ using System;
 public partial class Jump : Ability
 {
 	bool off_floor;
-	private Timer coyote = new Timer();
+	private Timer coyote_timer = new Timer();
 	private Timer clamber = new Timer();
-	private Timer held = new Timer();
-	private bool coyote_elapsed = false;
 	private bool is_climbing;
-	// private bool button_held;
-	// int frames_held_threshold = 10;
-	// int frames_held = 0;
-	private CustomSignals _customSignals; // Custom signal instance
+
 	public override void _Ready()
     {
-		coyote = GetNode<Timer>("Coyote");
-
+		coyote_timer = GetNode<Timer>("Coyote"); // Timer for coyote jump
 		clamber = GetNode<Timer>("Clamber");
+
 		clamber.Timeout += OnClamberTimeout;
-
-		held = GetNode<Timer>("Held");
-		// held.Timeout += OnHeldTimeout;
-		
-		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.PlayerInfo += HandlePlayerInfo;
-		// _customSignals.KeyBind += HandleKeyBind;
-		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
-
-		
     }
-
-    // private void OnHeldTimeout()
-    // {
-		
-		// if(held_threshold > 10)
-		// {
-		// 	GD.Print("timeout Button held");
-		// 	button_held = true;
-		// }
-		// GD.Print("timeout");
-		
-		
-        
-   // }
 
     private void OnClamberTimeout() // The player is forced to move forward and up until the Clamber timer times out
     {
@@ -59,58 +30,21 @@ public partial class Jump : Ability
 		
     }
 
-
-    // private void HandleAbilityAssigned(string ability, string button_name, Texture2D icon)
-    // {
-    //     if(this.Name == ability)
-    // 	{
-    // 		CheckAssignment(button_name);
-    // 	}
-    // }
-
-    // private void HandlePlayerInfo(player s)
-    // {
-    //     player = s;
-    // }
     public override void _PhysicsProcess(double delta)
     {
-		base._PhysicsProcess(delta);
-		if(!player.IsOnFloor() && !coyote_elapsed)
+		if(!player.IsOnFloor() && !player.jumping && coyote_timer.TimeLeft == 0) // Start the coyote timer if it hasn't started, and the play is not on the floor and is not jumping
 		{
-			// GD.Print("coyote timer started");
-			coyote.Start();
-			coyote_elapsed = true;
+			coyote_timer.Start();
 		}
-		// GD.Print(coyote.TimeLeft);
-		// GD.Print(in_use);
-		if(player.can_move == false)
-		{
-			player.velocity.X = 0;
-			player.velocity.Z = 0;
-		}
-		
-		// if(button_pressed)
-		// {
-		// 	frames_held += 1; // If the button is pressed start counting the amount of frames its pressed
-		// }
-		// if(frames_held > frames_held_threshold)
-		// {
-		// 	button_held = true;
-		// }
-		
+	
 		Climb();
 
 		if(player.can_use_abilities && CheckCross() || player.jumping)
 		{
 			
-			if(!player.is_climbing && !CheckHeld() && button_released && state == States.not_queued) // If the player is not climbing and the button has been held for less than 10 frames, and the button has been released
+			if(!player.is_climbing && !CheckHeld() && button_released && state == States.not_queued) // If the player is not climbing and the button is not held, and the button has been released
 			{
 				QueueAbility();
-				// GD.Print("Player is not climbing");
-				// GD.Print("held threshold going into jump " + held_threshold);
-				
-				// GD.Print("adding jump to list");
-				
 			}
 			else if(CheckHeld()) // If the button has been held for more than 10 frames
 			{
@@ -121,17 +55,11 @@ public partial class Jump : Ability
 					{
 						button_released = false;
 						button_held = false;
-						// frames_held = 0;
 					}
-					
 				}
-
 			}
 			CheckCanUseAbility();
 		}
-		// GD.Print(held_threshold);
-		// GD.Print(button_pressed);
-		
     }
 
 	public void Climb() // Checks if player is near wall and sets state to climb if the player presses the climb button
@@ -163,7 +91,6 @@ public partial class Jump : Ability
 				{
 					Clamber(); // If the to ray cast is no longer making contact, clamber
 				}
-				
 			}
 		}
 		else
@@ -178,8 +105,6 @@ public partial class Jump : Ability
 		GD.Print("Player can clamber");
 		if(frames_held >= frames_held_threshold)
 		{
-			GD.Print("Clamber now");
-			// player.speed = 10f;
 			player.is_clambering = true;
 			var upward_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0); // Move the plater up bt 1.85 units
 			var upward_move_time = 0.4; // set how long the tween to take to move upward
@@ -194,22 +119,19 @@ public partial class Jump : Ability
 			var forward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear); // Create tween set transition type
 			forward_tween.SetProcessMode(0);
 			forward_tween.TweenProperty(player, "global_transform:origin", forward_movement, forward_move_time); // Same as the upward tween
-			// player.velocity.Y = 20; // give the player extra Y velocity
+
 			player.move_forward_clamber = -1; // Make the player move in the direction they are facing
-			// GD.Print(player.Velocity.Y);
 			clamber.Start(); // Start the clamber timer
-			// GD.Print("Clamber start");
-			// player.velocity.Z = 10;
+
 			}
 	}
 
-    // Called when the node enters the scene tree for the first time.
     public override void Execute()
     {	
 		AddToAbilityList(this);
 		state = States.not_queued;
 		frames_held = 0; // Reset the frames the button has been held
-		if((player.IsOnFloor() || coyote.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
+		if((player.IsOnFloor() || coyote_timer.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			GD.Print("start jumping");
 			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
@@ -219,7 +141,6 @@ public partial class Jump : Ability
 		else if(player.IsOnFloor())
 		{
 			// GD.Print("stop jumping");
-			coyote_elapsed = false;
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
@@ -235,7 +156,4 @@ public partial class Jump : Ability
 			player.jumping = true;
 		}
 	}
-		
-    
-	
 }

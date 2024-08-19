@@ -62,6 +62,7 @@ public partial class Player : PlayerEntity
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
 	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Hitscan/Hitscan.tres");
 	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Projectile/Projectile.tres");
+	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Dash/Dash.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -86,6 +87,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(jump);
 		ability_resources.Add(hitscan);
 		ability_resources.Add(projectile);
+		ability_resources.Add(dash);
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		

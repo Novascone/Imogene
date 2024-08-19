@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://yksb2c1fvuso"]
+
+[ext_resource type="Texture2D" uid="uid://ct7mol4ik8ptj" path="res://images/icons/dash_icon.png" id="1_f37m5"]
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/AbilityResource.cs" id="2_73b8f"]
+
+[resource]
+script = ExtResource("2_73b8f")
+id = 0
+name = "Dash"
+description = "quickly move in a direction"
+ability_path = ""
+icon = ExtResource("1_f37m5")
+type = "movement"
