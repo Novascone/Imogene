@@ -7,6 +7,7 @@ using System.Net.Http;
 // Moves the player character around the world, sets basic animations, implements the landing icon, applies smooth rotation, handles looking at enemies, and prevents movement when UI is open
 public partial class MovementController : Controller
 {
+
 	Vector3 ray_origin;
 	Vector3 ray_target = new  Vector3(0, -4, 0);
 	int ray_range = 2000;
@@ -14,6 +15,7 @@ public partial class MovementController : Controller
 	private float clamber_speed = 10.0f;
 	private float _t = 0.2f;
 	public bool rotation_only;
+	public bool rotation_finished;
 	public bool movement_input_allowed = true;
 	// Called when the node enters the scene tree for the first time.
 	private CustomSignals _customSignals; // Custom signal instance
@@ -28,10 +30,9 @@ public partial class MovementController : Controller
     public override void _PhysicsProcess(double delta)
 	{
 		player.Fall(delta);
-		GD.Print("player rotation only " + rotation_only);
+		// GD.Print("player rotation only " + rotation_only);
 		var landing_ray = LandPosition();
 
-		
 
 		if(player.ui.inventory.Visible || player.ui.abilities_open && !player.ui.abilities_secondary_ui_open || player.attacking) 
 		{
@@ -136,7 +137,6 @@ public partial class MovementController : Controller
 		// }
 	}
 
-	
 
 	public void BasicMovement() // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{

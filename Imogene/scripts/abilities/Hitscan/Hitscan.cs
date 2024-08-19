@@ -21,16 +21,16 @@ public partial class Hitscan : Ranged
 	{
 		if(CheckHeld())
 		{
-			player.movementController.rotation_only = true;
+			player.movement_controller.rotation_only = true;
 			GD.Print("Ability is making player only able to rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button))
 		{
-			player.movementController.rotation_only = false;
+			player.movement_controller.rotation_only = false;
 		}
 		
 		// GD.Print("Projectile held " + button_held);
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		if(button_pressed && state == States.not_queued)
 		{
 			QueueAbility();
 		}
@@ -53,7 +53,7 @@ public partial class Hitscan : Ranged
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
-		player.movementController.movement_input_allowed = false;
+		player.movement_controller.movement_input_allowed = false;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
@@ -102,6 +102,6 @@ public partial class Hitscan : Ranged
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
-		player.movementController.movement_input_allowed = true;
+		player.movement_controller.movement_input_allowed = true;
 	}
 }

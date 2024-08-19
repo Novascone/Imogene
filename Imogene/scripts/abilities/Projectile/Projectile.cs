@@ -36,20 +36,21 @@ public partial class Projectile : Ranged
 		// 	PlayerFacingEnemy();
 		// }
 		
+		
 		if(CheckHeld())
 		{
-			player.movementController.rotation_only = true;
+			player.movement_controller.rotation_only = true;
 			GD.Print("Ability is making player only able to rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button))
 		{
-			player.movementController.rotation_only = false;
+			player.movement_controller.rotation_only = false;
 		}
 		
 		// GD.Print("Projectile held " + button_held);
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		if(button_pressed && state == States.not_queued)
 		{
-			QueueAbility();
+			QueueAbility();	
 		}
 		else if (CheckHeld())
 		{
@@ -71,11 +72,12 @@ public partial class Projectile : Ranged
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
-		player.movementController.movement_input_allowed = false;
+		player.movement_controller.movement_input_allowed = false;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision();
 		LaunchProjectile(collision);
+		
 
 	}
 
@@ -83,10 +85,14 @@ public partial class Projectile : Ranged
 	{
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized();
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate();
+		
 		player.exclude.Add(projectile.GetRid());
 		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid(), projectile);
-		player.cast_point.AddChild(projectile);
-		projectile.TopLevel = true;
+		GetTree().Root.AddChild(projectile);
+		projectile.GlobalPosition = player.cast_point.GlobalPosition;
+		projectile.GlobalRotation = player.GlobalRotation;
+		// player.cast_point.AddChild(projectile);
+		// projectile.TopLevel = true;
 
 		if(player.damage_system.Crit())
 		{
@@ -115,7 +121,7 @@ public partial class Projectile : Ranged
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
-		player.movementController.movement_input_allowed = true;
+		player.movement_controller.movement_input_allowed = true;
 	}
 
 }

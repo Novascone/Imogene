@@ -86,7 +86,7 @@ public partial class Slash : Ability
 		// 	player.movementController.rotation_only = false;
 		// }
 		// GD.Print("Projectile held " + button_held);
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		if(button_pressed && state == States.not_queued)
 		{
 			QueueAbility();
 		}
@@ -224,7 +224,7 @@ public partial class Slash : Ability
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
 		state = States.not_queued;
-		player.movementController.movement_input_allowed = false;
+		player.movement_controller.movement_input_allowed = false;
 		AddToAbilityList(this);
 		
 		// player.targeting_system.SoftTargetRotation();
@@ -319,7 +319,7 @@ public partial class Slash : Ability
 			
 			player.recovery_1 = true;
 			// player.can_move = true;
-			player.movementController.movement_input_allowed = true;
+			player.movement_controller.movement_input_allowed = true;
 			player.attacking = false;
 			// player.hitbox.Monitoring = false;
 			player.action_1_set = false;

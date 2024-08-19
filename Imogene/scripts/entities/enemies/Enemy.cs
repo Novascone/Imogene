@@ -65,7 +65,7 @@ public partial class Enemy : Entity
 	private CustomSignals _customSignals;
 	private Vector3 camera_position; // Position of camera
 
-	public StatController statController;
+	public StatController stat_controller;
 
 	// UI
 	public ProgressBar health_bar;
@@ -97,7 +97,7 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
-		statController = GetNode<StatController>("Controllers/StatController");
+		stat_controller = GetNode<StatController>("Controllers/StatController");
 		health_bar = GetNode<ProgressBar>("UI/HealthBarSubViewport/VBoxContainer/ProgressBar");
 		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarSubViewport/VBoxContainer/TextureProgressBar");
 		status_bar = GetNode<Sprite3D>("UI/StatusBar");
@@ -117,8 +117,8 @@ public partial class Enemy : Entity
 		slash_resistance = 3;
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
-		statController.GetEntityInfo(this);
-		statController.UpdateStats();
+		stat_controller.GetEntityInfo(this);
+		stat_controller.UpdateStats();
 		GD.Print("Posture Regen " + posture_regen);
 
 		ray_position = GetNode<Node3D>("Controllers/RayPosition");

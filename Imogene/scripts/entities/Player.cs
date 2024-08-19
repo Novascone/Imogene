@@ -39,10 +39,10 @@ public partial class Player : PlayerEntity
 	
 
 	// Controllers
-	public MovementController movementController;
-	public AbilityController abilityController;
-	public StatController statController;
-	public EquipmentController equipmentController;
+	public MovementController movement_controller;
+	public AbilityController ability_controller;
+	public StatController stat_controller;
+	public EquipmentController equipment_controller;
 
 	//Player consumables
 	public int consumable = 1;
@@ -96,10 +96,10 @@ public partial class Player : PlayerEntity
 		camera_rig = GetNode<CameraRig>("CameraRig");
 		camera_rig.TopLevel = true;
 
-		movementController = GetNode<MovementController>("Controllers/MovementController");
-		abilityController = GetNode<AbilityController>("Controllers/AbilityController");
-		statController = GetNode<StatController>("Controllers/StatController");
-		equipmentController = GetNode<EquipmentController>("Controllers/EquipmentController");
+		movement_controller = GetNode<MovementController>("Controllers/MovementController");
+		ability_controller = GetNode<AbilityController>("Controllers/AbilityController");
+		stat_controller = GetNode<StatController>("Controllers/StatController");
+		equipment_controller = GetNode<EquipmentController>("Controllers/EquipmentController");
 
 
 		vision  = (Area3D)GetNode("Areas/Vision");
@@ -184,11 +184,11 @@ public partial class Player : PlayerEntity
 		exclude.Add(GetRid());
 		// exclude.Add(hitbox.GetRid());
 		// GD.Print("exclude: " + exclude);
-		movementController.GetPlayerInfo(this);
-		equipmentController.GetPlayerInfo(this);
-		statController.GetEntityInfo(this);
-		abilityController.GetPlayerInfo(this);
-		abilityController.LoadAbilities();
+		movement_controller.GetPlayerInfo(this);
+		equipment_controller.GetPlayerInfo(this);
+		stat_controller.GetEntityInfo(this);
+		ability_controller.GetPlayerInfo(this);
+		ability_controller.LoadAbilities();
 
 		ui.GetPlayerInfo(this);
 		ui.hud.health.MaxValue = maximum_health;
@@ -228,7 +228,7 @@ public partial class Player : PlayerEntity
 		// GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
-		abilityController.AssignAbilities();
+		ability_controller.AssignAbilities();
 		position = GlobalPosition;
 		CheckInteract(); // Check if the player can interact with anything
 	
@@ -330,7 +330,7 @@ public partial class Player : PlayerEntity
 		{
 			// _customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
 			stats_changed = false;
-			statController.UpdateStats();
+			stat_controller.UpdateStats();
 			// _customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
 			stats_updated = false;
 		}

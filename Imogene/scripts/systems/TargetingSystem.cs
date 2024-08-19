@@ -46,10 +46,10 @@ public partial class TargetingSystem : EntitySystem
 		// 		GD.Print("Enemy " + enemy1.Name + " in vision");
 		// 	}
 		// }
-		if(closest_enemy_soft != null)
-		{
-			GD.Print("Closest enemy in soft in vision " + closest_enemy_soft.in_player_vision);
-		}
+		// if(closest_enemy_soft != null)
+		// {
+		// 	GD.Print("Closest enemy in soft in vision " + closest_enemy_soft.in_player_vision);
+		// }
 		
 		
 		if(player.ui.hud.enemy_health.targeted_enemy != null)

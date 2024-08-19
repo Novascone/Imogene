@@ -229,7 +229,7 @@ public partial class EquipmentController : Controller
 				// Arm item_to_add = equpipable.arm_item;
 				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
 				AddEquipableStats(arm);
-				player.statController.UpdateStats();
+				player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}
@@ -250,7 +250,7 @@ public partial class EquipmentController : Controller
 			GD.Print("Shoulder equipped");
 			GD.Print("Adding stats");
 				AddEquipableStats(arm);
-				player.statController.UpdateStats();
+				player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}
@@ -268,7 +268,7 @@ public partial class EquipmentController : Controller
 				// Arm item_to_add = equpipable.arm_item;
 				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
 				AddEquipableStats(arm);
-				player.statController.UpdateStats();
+				player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}

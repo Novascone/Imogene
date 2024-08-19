@@ -220,7 +220,7 @@ public partial class Inventory : UI
 					InventoryButton button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 					button.Visible = false;
 					// _customSignals.EmitSignal(nameof(CustomSignals.EquipableInfo), (EquipableResource)grabbed_object.inventory_item);
-					this_player.equipmentController.GetEquipableInfo((ArmsResource)grabbed_object.inventory_item);
+					this_player.equipment_controller.GetEquipableInfo((ArmsResource)grabbed_object.inventory_item);
 				}
 				
 			}

@@ -30,7 +30,7 @@ public partial class Roll : Ability
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		if(button_pressed && state == States.not_queued)
 		{
 			QueueAbility();
 		}

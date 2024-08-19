@@ -44,6 +44,7 @@ public partial class Ability : Node3D
     }
     public void QueueAbility()
     {
+        GD.Print("queueing ability");
         if(this.state == States.not_queued)
         {
             this.state = States.queued;
@@ -53,54 +54,57 @@ public partial class Ability : Node3D
 
     public void CheckCanUseAbility()
     {
+        
         if(state == States.queued)
 		{
          if(player.can_use_abilities && useable && CheckCross())
-        {
-            // if(resource.type == "movement") // implement later
-            // {
-            //     Execute();
-            // }
-            if(Name == "Jump" || Name == "Roll")
             {
-                Execute();
-            }
-            else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && !CheckHeld())
-            {
-                if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
+                button_pressed = false;
+                // if(resource.type == "movement") // implement later
+                // {
+                //     Execute();
+                // }
+                if(Name == "Jump" || Name == "Roll")
                 {
-                    if(Name != "Roll" || Name != "Jump")
+                    Execute();
+                }
+                else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && !CheckHeld())
+                {
+                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
                     {
-                        player.movementController.movement_input_allowed = false;
+                        if(Name != "Roll" || Name != "Jump")
+                        {
+                            player.movement_controller.movement_input_allowed = false;
+                        }
+                        player.targeting_system.SoftTargetRotation();
+                        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+                        {
+                            GD.Print("Execute normally");
+                            Execute();
+                            // player.movementController.movement_input_allowed = true;
+                        }
                     }
-                    player.targeting_system.SoftTargetRotation();
+                    else
+                    {
+                        Execute();
+                    }
+                    
+                }
+                else if(!button_held)
+                {
+                    GD.Print("execute with out targeting");
+                    Execute();
+                }
+                else if(button_held)
+                {
+                    GD.Print("Button is held, waiting for player to complete rotation");
                     if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
                     {
                         Execute();
                         // player.movementController.movement_input_allowed = true;
                     }
                 }
-                else
-                {
-                    Execute();
-                }
-                
             }
-            else if(!button_held)
-            {
-                GD.Print("execute with out targeting");
-                Execute();
-            }
-            else if(button_held)
-            {
-                GD.Print("Button is held, waiting for player to complete rotation");
-                if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-                {
-                    Execute();
-                    // player.movementController.movement_input_allowed = true;
-                }
-            }
-        }
         }
     }
 
@@ -111,6 +115,7 @@ public partial class Ability : Node3D
             if(@event.IsActionPressed(assigned_button) && CheckCross())
             {
                 button_pressed = true;
+                frames_held = 1;
                 button_released = false;
             }
             if(@event.IsActionReleased(assigned_button) && CheckCross())
@@ -126,7 +131,7 @@ public partial class Ability : Node3D
 
     public bool CheckHeld()
     {
-        GD.Print(Name + " calling checkheld");
+        // GD.Print(Name + " calling checkheld");
         
             if(frames_held < frames_held_threshold)
             {
@@ -136,7 +141,7 @@ public partial class Ability : Node3D
             {
                 button_held = true;
             }
-            if(button_pressed && !button_released)
+            if(frames_held > 0 && !button_released)
             {
                 frames_held += 1;
             }
