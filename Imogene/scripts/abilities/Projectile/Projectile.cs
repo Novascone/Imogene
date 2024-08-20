@@ -7,7 +7,6 @@ public partial class Projectile : Ranged
 	public Timer cast_timer;
 	public PackedScene projectile_to_load;
 	public int projectile_velocity = 25;
-	private bool targeting_system_loaded = false;
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -15,6 +14,8 @@ public partial class Projectile : Ranged
 	{
 		projectile_to_load = GD.Load<PackedScene>("res://scripts/abilities/Projectile/projectile_to_load.tscn");
 		cast_timer = GetNode<Timer>("CastTimer");
+		rotate_on_soft = true;
+		rotate_on_held = true;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,7 +31,7 @@ public partial class Projectile : Ranged
 			player.movement_controller.rotation_only = false;
 		}
 
-		if(button_pressed && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			QueueAbility();	
 		}
@@ -51,6 +52,7 @@ public partial class Projectile : Ranged
 
 	public override void Execute()
 	{
+		button_pressed = false;
 		state = States.not_queued;
 		player.movement_controller.movement_input_allowed = false; // disable player movement
 		AddToAbilityList(this); // Add ability to list

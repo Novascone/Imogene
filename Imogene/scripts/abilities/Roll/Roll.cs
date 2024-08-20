@@ -20,6 +20,7 @@ public partial class Roll : Ability
 		roll_timer = GetNode<Timer>("RollTimer");
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		rotate_on_soft = false;
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
@@ -30,7 +31,7 @@ public partial class Roll : Ability
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(button_pressed && state == States.not_queued)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
 		}

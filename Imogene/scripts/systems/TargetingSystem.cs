@@ -31,6 +31,8 @@ public partial class TargetingSystem : EntitySystem
 	public int held_threshold = 20;
 	public bool soft_target_on = true;
 	public bool player_rotating;
+	public bool soft_targeting;
+	public bool enemy_to_soft_target;
 	
 
 
@@ -38,72 +40,19 @@ public partial class TargetingSystem : EntitySystem
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		EnemyCheck(); // Check if enemy is targeted
-		// if(enemies_in_vision != null)
-		// {
-		// 	foreach(Enemy enemy1 in enemies_in_vision)
-		// 	{
-		// 		GD.Print("Enemy " + enemy1.Name + " in vision");
-		// 	}
-		// }
-		// if(closest_enemy_soft != null)
-		// {
-		// 	GD.Print("Closest enemy in soft in vision " + closest_enemy_soft.in_player_vision);
-		// }
-		
-		
+		EnemyCheck();
+		SoftTargetCheck();
 		if(player.ui.hud.enemy_health.targeted_enemy != null)
 		{
 			GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
 		}
-		if(target_pressed)
-		{
-			frames_held += 1;
-		}
-		else if(target_released)
-		{
-			if(frames_held > 0)
-			{
-				GD.Print(frames_held);
-			}
-			if(frames_held >= held_threshold)
-			{
-				soft_target_on = !soft_target_on;
-				if(!soft_target_on)
-				{
-					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 0.1f);
-				}
-				else
-				{
-					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 1.0f);
-				}
-				GD.Print("Soft target on " + soft_target_on);
-			}
-			
-			frames_held = 0;
-		}
+		SoftTargetToggle();
+		
 		if(mobs.Count == 0) // Reset enemy_in_vision
 		{	
 			enemy_in_vision = false;
 		}
-		// if(enemy_in_soft_small)
-		// {
-		// 	closest_enemy_soft_small = mobs_in_order[0];
-		// 	closest_enemy_soft_small.soft_target = true;
-		// 	if(soft_target_on && !player.targeting)
-		// 	{
-		// 		player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft_small);
-		// 	}
-			
-		// 	foreach(Enemy enemy in mobs_in_order)
-		// 	{
-		// 		if(enemy != closest_enemy_soft_small)
-		// 		{
-		// 			enemy.soft_target = false;
-		// 			player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
-		// 		}
-		// 	}
-		// }
+	
 		if(!looking_at_soft) // If player is not rotation toward the soft target
 		{
 			Sort(); // sorts the enemies by position
@@ -134,19 +83,42 @@ public partial class TargetingSystem : EntitySystem
 				}
 			}
 		}
+	}
 
-		
-
+	public void SoftTargetToggle()
+	{
+		if(target_pressed)
+		{
+			frames_held += 1;
+		}
+		else if(target_released)
+		{
+			if(frames_held > 0)
+			{
+				GD.Print(frames_held);
+			}
+			if(frames_held >= held_threshold)
+			{
+				soft_target_on = !soft_target_on;
+				if(!soft_target_on)
+				{
+					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 0.1f);
+				}
+				else
+				{
+					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 1.0f);
+				}
+			}
+			
+			frames_held = 0;
+		}
 	}
 
 	public void EnemyEnteredVision(Enemy enemy)
 	{
-		
-		
 		enemy_in_vision = true;
 		enemy.in_player_vision = true;
 		enemies_in_vision.Add(enemy);
-		
 	}
 
 	public void EnemyExitedVision(Enemy enemy)
@@ -237,7 +209,6 @@ public partial class TargetingSystem : EntitySystem
 
 	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
-       
 		if(@event.IsActionPressed("Target"))
 		{
 			target_pressed = true;
@@ -249,7 +220,6 @@ public partial class TargetingSystem : EntitySystem
 			target_released = true;
 			
 		}
-        
 	}
 
 	
@@ -278,6 +248,30 @@ public partial class TargetingSystem : EntitySystem
 		{
 			closest_enemy_soft.soft_target = false;
 			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft);
+		}
+		if(closest_enemy_soft != null)
+		{
+			if(enemy_in_soft_small || closest_enemy_soft.in_player_vision)
+			{
+				enemy_to_soft_target = true;
+			}
+			else
+			{
+				enemy_to_soft_target = false;
+			}
+		}
+		
+	}
+
+	public void SoftTargetCheck()
+	{
+		if(!player.targeting && soft_target_on)
+		{
+			soft_targeting = true;
+		}
+		else
+		{
+			soft_targeting = false;
 		}
 	}
 

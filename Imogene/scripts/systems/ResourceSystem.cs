@@ -23,6 +23,7 @@ public partial class ResourceSystem : EntitySystem
     public void Resource(float cost)
 	{
 		entity.resource -= cost;
+		GD.Print("Cost " + cost);
 		if(entity is Player player)
 		{
 			player.ui.hud.resource.Value = entity.resource;
@@ -71,9 +72,10 @@ public partial class ResourceSystem : EntitySystem
 	private void OnResourceRegenTickTimeout()
     {
         GD.Print("resource regenerating");
-		if(entity.resource < entity.maximum_resource /2)
+		if(entity.resource < entity.maximum_resource)
 		{
 			entity.resource += entity.resource_regen;
+			GD.Print("Resource " + entity.resource);
 		}
 
 		if(entity is Player player)

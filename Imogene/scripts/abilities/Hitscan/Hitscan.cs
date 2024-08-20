@@ -13,6 +13,8 @@ public partial class Hitscan : Ranged
 	{
 		scene = GD.Load<PackedScene>("res://scenes/debug/cast_marker.tscn");
 		cast_timer = GetNode<Timer>("CastTimer");
+		rotate_on_soft = true;
+		rotate_on_held = true;
 		
 	}
 
@@ -30,7 +32,7 @@ public partial class Hitscan : Ranged
 		}
 		
 		// GD.Print("Projectile held " + button_held);
-		if(button_pressed && state == States.not_queued)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
 		}

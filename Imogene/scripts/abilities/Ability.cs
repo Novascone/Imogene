@@ -33,6 +33,14 @@ public partial class Ability : Node3D
     public bool animation_finished = false;
     public bool ready_to_use;
 
+    public int resource_cost;
+    public int charges;
+    public int charges_used;
+    public float cast_time;
+    public Timer cooldown_timer;
+    public bool rotate_on_soft;
+    public bool rotate_on_held;
+
     private CustomSignals _customSignals; // Custom signal instance
 
     public States state;
@@ -44,58 +52,65 @@ public partial class Ability : Node3D
     }
     public void QueueAbility()
     {
-        GD.Print("queueing ability");
-        if(this.state == States.not_queued)
+        if(player.can_use_abilities)
         {
-            this.state = States.queued;
+            if(UIButton())
+            {
+                GD.Print("this is a UI button");
+                if(button_pressed)
+                {
+                    if(this.state == States.not_queued)
+                    {   
+                        if(CanAfford() && CheckCross())
+                        {
+                            GD.Print("queueing ability");
+                            this.state = States.queued;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(this.state == States.not_queued)
+                {   
+                    if(CanAfford() && CheckCross())
+                    {
+                        GD.Print("queueing ability");
+                        this.state = States.queued;
+                    }
+                }
+            }
         }
-        
     }
 
     public void CheckCanUseAbility()
     {
         
         if(state == States.queued)
-		{
-         if(player.can_use_abilities && useable && CheckCross())
+        {
+            if(!button_held)
             {
-                button_pressed = false;
-                // if(resource.type == "movement") // implement later
-                // {
-                //     Execute();
-                // }
-                if(resource.type == "movement")
+                if(rotate_on_soft)
                 {
-                    Execute();
-                }
-                else if(!player.targeting && player.targeting_system.closest_enemy_soft != null && player.targeting_system.soft_target_on && !CheckHeld())
-                {
-                    if(player.targeting_system.enemy_in_soft_small || (player.targeting_system.closest_enemy_soft.in_player_vision && Name != "Slash" ))
+                    if(player.targeting_system.soft_targeting && player.targeting_system.enemy_to_soft_target)
                     {
-                        if(Name != "Roll" || Name != "Jump")
-                        {
-                            player.movement_controller.movement_input_allowed = false;
-                        }
-                        player.targeting_system.SoftTargetRotation();
-                        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-                        {
-                            GD.Print("Execute normally");
-                            Execute();
-                            // player.movementController.movement_input_allowed = true;
-                        }
+                        GD.Print("Rotate soft ability");
+                        SoftRotateAbility();
                     }
                     else
                     {
                         Execute();
                     }
-                    
                 }
-                else if(!button_held)
+                else
                 {
-                    GD.Print("execute with out targeting");
+                    GD.Print("Execute non rotation");
                     Execute();
                 }
-                else if(button_held)
+            }
+            else if (button_held)
+            {
+                if(rotate_on_held)
                 {
                     GD.Print("Button is held, waiting for player to complete rotation");
                     if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
@@ -104,8 +119,64 @@ public partial class Ability : Node3D
                         // player.movementController.movement_input_allowed = true;
                     }
                 }
+                else
+                {
+                    Execute();
+                }
+            }
+
+        }
+    }
+
+    public bool CanAfford()
+    {
+        if(charges - charges_used >= 0 && charges != 0)
+        {
+            GD.Print("Can afford because of charges");
+            return true;
+        }
+        else if(player.resource - resource_cost >= 0 || resource_cost == 0)
+        {
+            if(cooldown_timer != null)
+            {
+                if(cooldown_timer.TimeLeft == 0)
+                {
+                    GD.Print("Can afford because of cooldown");
+                    return true;
+                }
+                else
+                {
+                    GD.Print("Can't afford because of cooldown");
+                    return false;
+                }
+            }
+            else
+            {
+                GD.Print("Can afford because of resource");
+                return true;
             }
         }
+        else
+        {
+            GD.Print("Can't afford because resource cost");
+            return false;
+        }
+    
+    }
+
+    public void SoftRotateAbility()
+    {
+        
+        player.movement_controller.movement_input_allowed = false;
+        GD.Print("Setting player movement to false");
+        player.targeting_system.SoftTargetRotation();
+        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+        {
+            GD.Print("Execute rotation");
+            Execute();
+            // player.movementController.movement_input_allowed = true;
+        }
+        
     }
 
     public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
@@ -114,20 +185,35 @@ public partial class Ability : Node3D
         {
             if(@event.IsActionPressed(assigned_button) && CheckCross())
             {
+                GD.Print("Assigned button " + assigned_button);
+                // GD.Print(this.Name + "Action strength " + );
                 button_pressed = true;
                 frames_held = 1;
                 button_released = false;
+                GD.Print(this.Name + " has been pressed");
             }
             if(@event.IsActionReleased(assigned_button) && CheckCross())
             {
                 button_pressed = false;
                 button_released = true;
-                              
+                GD.Print(this.Name + " has been released");              
                 // GD.Print("button released");
             }
         }
 		
 	}
+
+    public bool UIButton()
+    {
+        if(assigned_button == "B")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public bool CheckHeld()
     {

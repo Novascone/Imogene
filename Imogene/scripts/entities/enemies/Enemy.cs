@@ -170,7 +170,7 @@ public partial class Enemy : Entity
     {
         if(area is MeleeHitbox melee_box)
 		{
-			GD.Print("hurtbox entered by " + melee_box);
+			GD.Print(Name + " hurtbox entered by " + melee_box.Name);
 			if(area is MeleeHitbox)
 			{
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);

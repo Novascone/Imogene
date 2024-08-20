@@ -15,7 +15,7 @@ public partial class Dash : Ability
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(button_pressed && state == States.not_queued)
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
 		{
 			QueueAbility();
 		}

@@ -22,6 +22,7 @@ public partial class Player : PlayerEntity
 	public Area3D soft_target_large;
 	public CollisionShape3D collision;
 	public Marker3D cast_point;
+	public Node3D surrounding_hitbox;
 
 	// Abilities
 	// private Target target_ability; // Target enemies
@@ -63,6 +64,7 @@ public partial class Player : PlayerEntity
 	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Hitscan/Hitscan.tres");
 	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Projectile/Projectile.tres");
 	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Dash/Dash.tres");
+	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Whirlwind/Whirlwind.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -88,6 +90,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(hitscan);
 		ability_resources.Add(projectile);
 		ability_resources.Add(dash);
+		ability_resources.Add(whirlwind);
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		
@@ -122,6 +125,8 @@ public partial class Player : PlayerEntity
 
 		player_mesh = GetNode<MeshInstance3D>("Character_GameRig/retop_prelim_pc");
 
+		surrounding_hitbox = GetNode<Node3D>("Character_GameRig/Skeleton3D/Chest/ChestSlot/SurroundingHitbox");
+
 		collision = GetNode<CollisionShape3D>("CollisionShape3D");
 
 		
@@ -136,6 +141,7 @@ public partial class Player : PlayerEntity
 		shoulder_left = new MeshInstance3D();
 		chest_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Chest/ChestSlot");
 		chest = new MeshInstance3D();
+
 		mark_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Mark/MarkSlot");
 		mark = new MeshInstance3D();
 		belt_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Belt/BeltSlot");
@@ -171,7 +177,7 @@ public partial class Player : PlayerEntity
 		_customSignals.RemoveEquipped += HandleRemoveEquipped;
 		
 		maximum_health = health;
-		resource = maximum_resource / 2;
+		resource = maximum_resource;
 
 		// GD.Print("max health player ", maximum_health);
 		// GD.Print("max resource ", maximum_resource);
@@ -230,6 +236,7 @@ public partial class Player : PlayerEntity
 		// GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
 		CameraFollowsPlayer();
 		Updater(); // Emits signals to other parts of the game
+		CanUseAbilities();
 		ability_controller.AssignAbilities();
 		position = GlobalPosition;
 		CheckInteract(); // Check if the player can interact with anything
@@ -338,6 +345,18 @@ public partial class Player : PlayerEntity
 		}
 		// _customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
 		// _customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
+	}
+
+	public void CanUseAbilities()
+	{
+		if (ui.inventory_open)
+		{
+			can_use_abilities = false;
+		}
+		else
+		{
+			can_use_abilities = true;
+		}
 	}
 
 	private void HandleRemoveEquipped() // Removes equiped items
