@@ -56,15 +56,15 @@ public partial class Player : PlayerEntity
 
 
 	// Ability Resources
-	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Roll/Roll.tres");
-	public AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Slash/Slash.tres");
-	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Thrust/Thrust.tres");
-	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Bash/Bash.tres");
-	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Jump/Jump.tres");
-	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Hitscan/Hitscan.tres");
-	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Projectile/Projectile.tres");
-	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Dash/Dash.tres");
-	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Whirlwind/Whirlwind.tres");
+	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Roll/Roll.tres");
+	public AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Slash/Slash.tres");
+	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Thrust/Thrust.tres");
+	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Bash/Bash.tres");
+	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Jump/Jump.tres");
+	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Hitscan/Hitscan.tres");
+	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Projectile/Projectile.tres");
+	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Dash/Dash.tres");
+	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Brigian/Active/Whirlwind/Whirlwind.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -240,7 +240,17 @@ public partial class Player : PlayerEntity
 		ability_controller.AssignAbilities();
 		position = GlobalPosition;
 		CheckInteract(); // Check if the player can interact with anything
-	
+		// if(ability_in_use != null)
+		// {
+		// 	// GD.Print("Ability in use " + ability_in_use.Name);
+			
+		// 	foreach(Ability ability in abilities_in_use)
+		// 	{
+		// 		GD.Print("ability in use " + ability.Name);
+		// 	}
+			
+		// }
+		
 
 		// if(abilities_in_use.Count > 1)
 		// {

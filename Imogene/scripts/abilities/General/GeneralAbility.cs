@@ -1,10 +1,8 @@
 using Godot;
 using System;
 
-public partial class WhirlwindHitbox : MeleeHitbox
+public partial class GeneralAbility : Ability
 {
-
-	// Keep track of each enemy that enters the hitbox and only apply damage to them once
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

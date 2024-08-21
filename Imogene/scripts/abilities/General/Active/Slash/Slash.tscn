@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://2syxxwi1wgte"]
+
+[ext_resource type="Script" path="res://scripts/abilities/General/Active/Slash/Slash.cs" id="1_abkjy"]
+[ext_resource type="Resource" uid="uid://b6lduigl5eopg" path="res://scripts/abilities/General/Active/Slash/Slash.tres" id="2_o05mu"]
+
+[node name="Slash" type="Node3D"]
+script = ExtResource("1_abkjy")
+resource = ExtResource("2_o05mu")
+ability_type = "melee"
+
+[node name="SwingTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="HeldTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SecondarySwingTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="ReleaseTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
+[connection signal="timeout" from="HeldTimer" to="." method="_on_held_timer_timeout"]
+[connection signal="timeout" from="SecondarySwingTimer" to="." method="_on_secondary_swing_timer_timeout"]
+[connection signal="timeout" from="ReleaseTimer" to="." method="_on_release_timer_timeout"]

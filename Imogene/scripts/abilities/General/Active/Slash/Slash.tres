@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b6lduigl5eopg"]
+
+[ext_resource type="Texture2D" uid="uid://bdxbifpl5u8m3" path="res://images/icons/slash_icon.png" id="1_uisj3"]
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/AbilityResource.cs" id="2_uaaau"]
+
+[resource]
+script = ExtResource("2_uaaau")
+id = 0
+class_type = "General"
+ability_type = "Active"
+name = "Slash"
+description = "Swing weapon in a slashing motion"
+ability_path = ""
+icon = ExtResource("1_uisj3")
+type = "melee"

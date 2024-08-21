@@ -67,7 +67,7 @@ public partial class AbilityController : Controller
 
     private void LoadAbilitiesHelper(AbilityResource ability_resource) // Adds ability to abilities list
     {
-       	Ability new_ability = (Ability)LoadAbility(ability_resource.name);
+       	Ability new_ability = (Ability)LoadAbility(ability_resource.name, ability_resource.class_type, ability_resource.ability_type);
 		player.abilities.Add(new_ability);
 		AddChild(new_ability);
 		new_ability.GetPlayerInfo(player);
@@ -82,9 +82,9 @@ public partial class AbilityController : Controller
 		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
 
-	public  Node LoadAbility(string name) // Loads an ability from a string
+	public  Node LoadAbility(string name, string class_type, string ability_type) // Loads an ability from a string
     {
-        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + name + "/" + name + ".tscn");
+        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + class_type + "/" + ability_type + "/" + name + "/" + name + ".tscn");
         var sceneNode = scene.Instantiate();
         return sceneNode;
     }

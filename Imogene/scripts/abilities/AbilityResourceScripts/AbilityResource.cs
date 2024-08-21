@@ -8,6 +8,10 @@ public partial class AbilityResource : Resource
 	[Export]
     public int id { get; set; }
     [Export]
+    public string class_type { get; set; }
+    [Export]
+    public string ability_type { get; set; }
+    [Export]
     public string name { get; set; }
     [Export]
     public string description { get; set; }

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cfwsl8xnnwq0x"]
+
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="1_p20rk"]
+[ext_resource type="Script" path="res://scripts/abilities/AbilityResourceScripts/RollResource.cs" id="2_wuti6"]
+
+[resource]
+script = ExtResource("2_wuti6")
+id = 0
+class_type = "General"
+ability_type = "Active"
+name = "Roll"
+description = "Roll in the direction facing at an increased speed"
+ability_path = ""
+icon = ExtResource("1_p20rk")
+type = "movement"
