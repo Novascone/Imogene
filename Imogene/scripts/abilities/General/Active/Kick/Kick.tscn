@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://4g7ro4et2y7n"]
+
+[ext_resource type="Script" path="res://scripts/abilities/General/Active/Kick/Kick.cs" id="1_owx1m"]
+[ext_resource type="Resource" uid="uid://b1f4uipcda5qw" path="res://scripts/abilities/General/Active/Kick/Kick.tres" id="2_8yrhf"]
+
+[node name="Kick" type="Node3D"]
+script = ExtResource("1_owx1m")
+resource = ExtResource("2_8yrhf")
+
+[node name="ChargeTimer1" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ChargeTimer2" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="CastTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="timeout" from="ChargeTimer1" to="." method="_on_charge_timer_1_timeout"]
+[connection signal="timeout" from="ChargeTimer2" to="." method="_on_charge_timer_2_timeout"]
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]

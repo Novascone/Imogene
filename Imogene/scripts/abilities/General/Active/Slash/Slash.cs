@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.X86;
 
 
-public partial class Slash : GeneralAbility
+public partial class Slash : Ability
 {
 	Timer swing_timer;
 	Timer secondary_swing_timer;
@@ -21,6 +21,9 @@ public partial class Slash : GeneralAbility
 		release_timer = GetNode<Timer>("ReleaseTimer");	// Timer that starts when the attack button is released
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		rotate_on_soft = true;
+		rotate_on_held = false;
+		rotate_on_soft_close = true;
+		rotate_on_soft_far = false;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
 		// _customSignals.AbilityRemoved += HandleAbilityRemoved;
     }

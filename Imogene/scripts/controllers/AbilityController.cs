@@ -94,13 +94,14 @@ public partial class AbilityController : Controller
 	{	
 		if(!player.test_abilities_assigned)
 		{
-			AssignAbilityHelper("RCrossPrimaryRightAssign", player.roll);
+			AssignAbilityHelper("RCrossPrimaryRightAssign", player.small_fireball);
 			AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
 			AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
 			AssignAbilityHelper("LCrossPrimaryRightAssign", player.hitscan);
 			AssignAbilityHelper("LCrossPrimaryLeftAssign", player.projectile);
 			AssignAbilityHelper("RCrossPrimaryLeftAssign", player.dash);
 			AssignAbilityHelper("LCrossPrimaryDownAssign", player.whirlwind);
+			AssignAbilityHelper("RCrossPrimaryUpAssign", player.kick);
 		}
 		player.test_abilities_assigned = true;
 	}

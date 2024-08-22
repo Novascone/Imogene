@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Dash : GeneralAbility
+public partial class Dash : Ability
 {
 
 	private Timer dash_timer;

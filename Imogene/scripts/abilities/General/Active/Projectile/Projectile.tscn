@@ -12,7 +12,4 @@ resource = ExtResource("2_5or5s")
 wait_time = 0.5
 one_shot = true
 
-[node name="WaitForRotation" type="Timer" parent="."]
-one_shot = true
-
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]

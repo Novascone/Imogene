@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MeleeHitbox : Area3D
 {
@@ -8,5 +9,8 @@ public partial class MeleeHitbox : Area3D
 	[Export] public float damage { get; set; }
 	[Export] public float posture_damage { get; set; }
 	public bool is_critical;
+	[Export] public string effect_1;
+	[Export] public string effect_2;
+	[Export] public string effect_3;
 	
 }

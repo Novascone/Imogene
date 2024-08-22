@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Roll : GeneralAbility
+public partial class Roll : Ability
 {
 	private Vector3 roll_velocity = Vector3.Zero; // The velocity of the player when rolling
 	private bool roll_right = false;

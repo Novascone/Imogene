@@ -39,6 +39,8 @@ public partial class Ability : Node3D
     public float cast_time;
     public Timer cooldown_timer;
     public bool rotate_on_soft;
+    public bool rotate_on_soft_far;
+    public bool rotate_on_soft_close;
     public bool rotate_on_held;
 
     private CustomSignals _customSignals; // Custom signal instance
@@ -130,10 +132,20 @@ public partial class Ability : Node3D
 
     public bool CanAfford()
     {
-        if(charges - charges_used >= 0 && charges != 0)
+        if(charges - charges_used >= 0 && charges > 0)
         {
-            GD.Print("Can afford because of charges");
-            return true;
+           
+            if(charges - charges_used != 0)
+            {
+                 GD.Print("Knock back* Can afford because of charges");
+                return true;
+            }
+            else
+            {
+                GD.Print("Knock back* Can not afford because of charges");
+                return false;
+            }
+            
         }
         else if(player.resource - resource_cost >= 0 || resource_cost == 0)
         {
@@ -167,16 +179,35 @@ public partial class Ability : Node3D
 
     public void SoftRotateAbility()
     {
-        
-        player.movement_controller.movement_input_allowed = false;
-        GD.Print("Setting player movement to false");
-        player.targeting_system.SoftTargetRotation();
-        if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+        if(!rotate_on_soft_far && player.targeting_system.enemy_close)
         {
-            GD.Print("Execute rotation");
-            Execute();
-            // player.movementController.movement_input_allowed = true;
+            player.movement_controller.movement_input_allowed = false;
+            GD.Print("Setting player movement to false");
+            player.targeting_system.SoftTargetRotation();
+            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+            {
+                GD.Print("Execute rotation");
+                Execute();
+                // player.movementController.movement_input_allowed = true;
+            }
         }
+        else if (rotate_on_soft_far && player.targeting_system.enemy_far)
+        {
+            player.movement_controller.movement_input_allowed = false;
+            GD.Print("Setting player movement to false");
+            player.targeting_system.SoftTargetRotation();
+            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+            {
+                GD.Print("Execute rotation");
+                Execute();
+                // player.movementController.movement_input_allowed = true;
+            }
+        }
+        else
+        {
+            Execute();
+        }
+        
         
     }
 
@@ -274,10 +305,9 @@ public partial class Ability : Node3D
         {
             player.ability_in_use = null;
         }
-        if(resource.type == "melee")
-        {
-            player.targeting_system.looking_at_soft = false;
-        }
+        
+        
+        
 
         in_use = false;
     }

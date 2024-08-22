@@ -1,12 +1,13 @@
 using Godot;
 using System;
 
-public partial class Projectile : Ranged
+public partial class Projectile : RangedAbility
 {
 
 	public Timer cast_timer;
 	public PackedScene projectile_to_load;
 	public int projectile_velocity = 25;
+	public string damage_type = "cold";
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -16,6 +17,8 @@ public partial class Projectile : Ranged
 		cast_timer = GetNode<Timer>("CastTimer");
 		rotate_on_soft = true;
 		rotate_on_held = true;
+		rotate_on_soft_far = true;
+		rotate_on_soft_close = true;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,18 +55,16 @@ public partial class Projectile : Ranged
 
 	public override void Execute()
 	{
-		button_pressed = false;
+		
 		state = States.not_queued;
 		player.movement_controller.movement_input_allowed = false; // disable player movement
 		AddToAbilityList(this); // Add ability to list
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision(); // Get the collision from the player to whats in front of it
 		LaunchProjectile(collision); // Shoot projectile from cast point to the player collision point
-		
-
 	}
 
-	public void LaunchProjectile(Vector3 collision_point)
+	public virtual void LaunchProjectile(Vector3 collision_point)
 	{
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized(); // Get position the projectile needs to go to
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate(); // Instantiate the projectile
@@ -87,7 +88,7 @@ public partial class Projectile : Ranged
 			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
 			projectile.is_critical = false;
 		}
-		projectile.damage_type = "cold"; // Set projectile damage type
+		projectile.damage_type = damage_type; // Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 	}
 

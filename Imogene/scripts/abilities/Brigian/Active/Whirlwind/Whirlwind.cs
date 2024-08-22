@@ -60,7 +60,7 @@ public partial class Whirlwind : Ability
 
 	public override void Execute()
 	{
-		button_pressed = false;
+		
 		GD.Print("execute");
 		state = States.not_queued;
 		AddToAbilityList(this); // Add ability to list

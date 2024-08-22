@@ -7,11 +7,11 @@ using System.Runtime;
 public partial class TargetingSystem : EntitySystem
 {
 
-	
+	// Enemies
 	public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
-	public bool enemy_in_soft_small = false;
-	public Enemy closest_enemy_soft;
-	public bool enemy_in_soft_large = false;
+	public bool enemy_close = false;
+	public bool enemy_far = false;
+	public Enemy closest_enemy;
 	public	Dictionary<Enemy, Vector3> mobs= new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
 	public Dictionary<Enemy,Vector3> sorted_mobs; // Sorted Dictionary of mob positions
 	public List<Enemy> mobs_in_order; // List of mobs in order
@@ -24,7 +24,9 @@ public partial class TargetingSystem : EntitySystem
 	public List<Enemy> enemies_in_vision = new List<Enemy>();
 	public Enemy mob_looking_at;
 	public Vector3 mob_to_LookAt_pos; // Position of the mob that the player wants to face 
-	public bool looking_at_soft = false;
+
+	// Targeting
+	public bool rotating_to_soft_target = false;
 	public bool target_pressed;
 	public bool target_released;
 	public int frames_held;
@@ -53,36 +55,43 @@ public partial class TargetingSystem : EntitySystem
 			enemy_in_vision = false;
 		}
 	
-		if(!looking_at_soft) // If player is not rotation toward the soft target
+		if(!rotating_to_soft_target) // If player is not rotation toward the soft target
 		{
 			Sort(); // sorts the enemies by position
 		}
-		if(enemy_in_soft_large)
+		if(enemy_far)
 		{
-			closest_enemy_soft = mobs_in_order[0];
-			closest_enemy_soft.soft_target = true;
+			closest_enemy = mobs_in_order[0];
+			closest_enemy.soft_target = true;
 			if(soft_target_on && !player.targeting)
 			{
-				if(closest_enemy_soft.in_player_vision || enemy_in_soft_small)
+				if(closest_enemy.in_player_vision || enemy_close)
 				{
-					player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft);
+					player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
 				}
 				else
 				{
-					player.ui.hud.enemy_health.RemoveSoftTargetIcon(closest_enemy_soft);
+					player.ui.hud.enemy_health.RemoveSoftTargetIcon(closest_enemy);
 				}
 				
 			}
 			
 			foreach(Enemy enemy in mobs_in_order)
 			{
-				if(enemy != closest_enemy_soft)
+				if(enemy != closest_enemy)
 				{
 					enemy.soft_target = false;
 					player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				}
 			}
+			// GD.Print("Closest enemy soft " + closest_enemy_soft.Name);
 		}
+		if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+		{
+			rotating_to_soft_target = false;
+			// player.movementController.movement_input_allowed = true;
+		}
+		
 	}
 
 	public void SoftTargetToggle()
@@ -133,8 +142,9 @@ public partial class TargetingSystem : EntitySystem
 
 	public void EnemyEnteredSoftSmall(Enemy enemy) // Called when enemy enters the small soft target zone
 	{
+		
 		enemy.in_soft_target_small = true;
-		enemy_in_soft_small = true;
+		enemy_close = true;
 	}
 
 	public void EnemyExitedSoftSmall(Enemy enemy) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
@@ -153,15 +163,16 @@ public partial class TargetingSystem : EntitySystem
 		}
 		if(mobs_in_small == 0)
 		{
-			enemy_in_soft_small = false;
-			closest_enemy_soft = null;
+			enemy_close = false;
+			closest_enemy = null;
 		}
 	}
 
 	public void EnemyEnteredSoftLarge(Enemy	enemy) // Called when enemy enters the large soft zone, adds enemy to the dictionary of enemies
 	{
+		GD.Print(enemy.Name + " entered soft");
 		enemy.in_soft_target_large = true;
-		enemy_in_soft_large = true;
+		enemy_far = true;
 		Vector3 enemy_position = enemy.GlobalTransform.Origin;
 		if(!mobs.ContainsKey(enemy))
 		{
@@ -179,7 +190,7 @@ public partial class TargetingSystem : EntitySystem
 				mobs.Remove(enemy);
 				sorted_mobs.Clear();
 				mobs_in_order.Clear();
-				enemy_in_soft_large = false;
+				enemy_far = false;
 			}
 			else if(mobs.Count > 0)
 			{
@@ -197,8 +208,8 @@ public partial class TargetingSystem : EntitySystem
 			if(mobs_in_large == 0)
 			{
 				player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
-				enemy_in_soft_small = false;
-				closest_enemy_soft = null;
+				enemy_close = false;
+				closest_enemy = null;
 			}
 			if(soft_target_on)
 			{
@@ -244,14 +255,14 @@ public partial class TargetingSystem : EntitySystem
 				
 			}
 		}
-		if (frames_held > held_threshold && enemy_in_soft_small)
+		if (frames_held > held_threshold && enemy_close)
 		{
-			closest_enemy_soft.soft_target = false;
-			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy_soft);
+			closest_enemy.soft_target = false;
+			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
 		}
-		if(closest_enemy_soft != null)
+		if(closest_enemy != null)
 		{
-			if(enemy_in_soft_small || closest_enemy_soft.in_player_vision)
+			if(enemy_close || closest_enemy.in_player_vision)
 			{
 				enemy_to_soft_target = true;
 			}
@@ -383,7 +394,7 @@ public partial class TargetingSystem : EntitySystem
 
 	public void SoftTarget() // Smoothly rotate to soft target
 	{
-		if(!player.targeting && closest_enemy_soft != null && soft_target_on)
+		if(!player.targeting && closest_enemy != null && soft_target_on)
 		{
 			if(player.abilities_in_use.Count > 0)
 			{
@@ -405,8 +416,9 @@ public partial class TargetingSystem : EntitySystem
 
 	public void SoftTargetRotation()
 	{
-		looking_at_soft = true;
-		// GD.Print("Look at closest enemy");
+		
+		rotating_to_soft_target = true;
+		GD.Print("Look at closest enemy");
 		
 		mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 		GD.Print("rotating to soft target " + mobs_in_order[0].Name);

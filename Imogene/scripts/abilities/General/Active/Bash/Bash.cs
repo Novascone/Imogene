@@ -4,7 +4,7 @@ using System;
 // 																********************************************** MARKED FOR REWORK ************************************************************
 
 
-public partial class Bash : GeneralAbility
+public partial class Bash : Ability
 {
 
 	public override void _PhysicsProcess(double delta)

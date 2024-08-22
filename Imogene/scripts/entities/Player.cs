@@ -56,7 +56,6 @@ public partial class Player : PlayerEntity
 
 
 	// Ability Resources
-	public AbilityResource roll = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Roll/Roll.tres");
 	public AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Slash/Slash.tres");
 	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Thrust/Thrust.tres");
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Bash/Bash.tres");
@@ -65,6 +64,8 @@ public partial class Player : PlayerEntity
 	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Projectile/Projectile.tres");
 	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Dash/Dash.tres");
 	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Brigian/Active/Whirlwind/Whirlwind.tres");
+	public AbilityResource small_fireball = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/SmallFireball/SmallFireball.tres");
+	public AbilityResource kick = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Kick/Kick.tres");
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -82,7 +83,7 @@ public partial class Player : PlayerEntity
 		base._Ready();
 		this_player = this;
 
-		ability_resources.Add(roll);
+		ability_resources.Add(small_fireball);
 		ability_resources.Add(slash);
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
@@ -91,6 +92,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(projectile);
 		ability_resources.Add(dash);
 		ability_resources.Add(whirlwind);
+		ability_resources.Add(kick);
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		

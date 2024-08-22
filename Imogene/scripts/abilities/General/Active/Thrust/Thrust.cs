@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Thrust : GeneralAbility
+public partial class Thrust : Ability
 {
 
     public override void _PhysicsProcess(double delta)

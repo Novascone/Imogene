@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Jump : GeneralAbility
+public partial class Jump : Ability
 {
 	bool off_floor;
 	private Timer coyote_timer = new Timer();

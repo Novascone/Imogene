@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Hitscan : Ranged
+public partial class Hitscan : RangedAbility
 {
 	
 	public Sprite3D cast_marker;

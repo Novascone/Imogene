@@ -175,6 +175,10 @@ public partial class Enemy : Entity
 			{
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
 				resource_system.Posture(melee_box.posture_damage);
+				if(melee_box.effect_1 != "")
+				{
+					GD.Print(Name + " has " + melee_box.effect_1 + " applied");
+				}
 			}
 		}
 		

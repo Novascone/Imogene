@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Runtime.CompilerServices;
 
-public partial class Ranged : Ability
+public partial class RangedAbility : Ability
 {
 	public int range = 100;
 	public bool is_enemy;
