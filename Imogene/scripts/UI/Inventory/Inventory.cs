@@ -160,8 +160,8 @@ public partial class Inventory : UI
 						
 						clicked_on = true;
 						grabbed_object = hover_over_button;
-						GD.Print("Object grabbed");
-						GD.Print(grabbed_object.is_empty);
+						// GD.Print("Object grabbed");
+						// GD.Print(grabbed_object.is_empty);
 						last_cursor_clicked_pos = GetTree().Root.GetMousePosition();
 						if(hover_over_button is InventoryButton)
 						{
@@ -179,7 +179,7 @@ public partial class Inventory : UI
 					{
 						if(over_trash) // Delete item if over trash
 						{
-							GD.Print("delete");
+							// GD.Print("delete");
 							clicked_on = false;
 							DeleteItem(grabbed_object);
 							InventoryButton button = ui.cursor_button;
@@ -272,8 +272,8 @@ public partial class Inventory : UI
 	public void AddItem(ItemResource item)
 	{
 		ItemResource current_item = item.Copy();
-		GD.Print("Add item");
-		GD.Print("Item name " + item.name);
+		// GD.Print("Add item");
+		// GD.Print("Item name " + item.name);
 		for (int i = 0; i < items.Count; i++)
 		{
 			if(items[i].id == current_item.id && items[i].quantity != items[i].stack_size)

@@ -29,7 +29,7 @@ public partial class GearInfo : Button
 		{
 			// _customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "Head");
 			this_ui.over_head = true;
-			GD.Print(this.Name);
+			// GD.Print(this.Name);
 		}
 		info.Show();
 	}
@@ -39,7 +39,7 @@ public partial class GearInfo : Button
 		{
 			// _customSignals.EmitSignal(nameof(CustomSignals.OverSlot), "Head");
 			this_ui.over_head = false;
-			GD.Print(this.Name);
+			// GD.Print(this.Name);
 		}
 		info.Hide();
 	}
@@ -50,7 +50,7 @@ public partial class GearInfo : Button
 		{
 			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
 			{
-				GD.Print("event accepted ");
+				// GD.Print("event accepted ");
 				AcceptEvent();
 			}
 		}
