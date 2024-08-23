@@ -34,14 +34,7 @@ public partial class MovementController : Controller
 		var landing_ray = LandPosition();
 
 
-		if(player.ui.inventory.Visible || player.ui.abilities_open && !player.ui.abilities_secondary_ui_open || player.attacking) 
-		{
-			player.can_move = false;
-		}
-		else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
-		{
-			player.can_move = true;
-		}
+		
 		
 		if(landing_ray.Count > 0)
 		{
@@ -55,7 +48,7 @@ public partial class MovementController : Controller
 			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, 0.1f);
 		}
 
-		if(player.can_move) // Basic movement controller
+		if(CanMove()) // Basic movement controller
 		{
 			if(!player.is_climbing)
 			{
@@ -67,7 +60,7 @@ public partial class MovementController : Controller
 			}
 			
 		}
-		if(player.can_move == false)
+		if(!CanMove())
 		{
 			player.velocity.X = 0;
 			player.velocity.Z = 0;
@@ -140,7 +133,7 @@ public partial class MovementController : Controller
 
 	public void BasicMovement() // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
-		if(movement_input_allowed)
+		if(!InputPrevented())
 		{
 			if (Input.IsActionPressed("Right"))
 			{
@@ -172,8 +165,11 @@ public partial class MovementController : Controller
 		}
 		
 		
-
-		GetInputStrength();
+		if(!SpeedAltered())
+		{
+			GetInputStrength();
+		}
+		
 	}
 
 	public void GetInputStrength()
@@ -199,6 +195,79 @@ public partial class MovementController : Controller
 			player.speed = player.walk_speed;
 		}
 	}
+
+	public bool InputPrevented()
+	{
+		if(player.ability_in_use != null)
+		{
+			if(player.ability_in_use.stop_movement_input)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		if(player.targeting_system.rotating_to_soft_target)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+
+	public bool CanMove()
+	{
+		
+		if(player.movement_effects.Count != 0)
+		{
+			foreach(StatusEffect effect in player.movement_effects)
+			{
+				if (effect.resource.prevents_movement)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		}
+
+		if(player.ui.inventory.Visible) 
+		{
+			return false;
+		}
+		else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
+		{
+			return true;
+		}
+
+		return true;
+		
+	}
+
+	public bool SpeedAltered()
+	{
+		if(player.movement_effects.Count != 0)
+		{
+			foreach(StatusEffect effect in player.movement_effects)
+			{
+				if (effect.resource.alters_speed)
+				{
+					return true;
+				}
+				else 
+				{
+					return false;
+				}
+			}
+		}
+
+		return false;
+	}
+	
 
 	public void TargetingMovement() // Calculates which direction the player is moving in relative to its local direction
 	{

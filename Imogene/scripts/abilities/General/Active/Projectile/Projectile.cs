@@ -61,7 +61,7 @@ public partial class Projectile : RangedAbility
 	{
 		
 		state = States.not_queued;
-		player.movement_controller.movement_input_allowed = false; // disable player movement
+		stop_movement_input = true; // disable player movement
 		AddToAbilityList(this); // Add ability to list
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision(); // Get the collision from the player to whats in front of it
@@ -105,7 +105,7 @@ public partial class Projectile : RangedAbility
 	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement
 	{
 		RemoveFromAbilityList(this);
-		player.movement_controller.movement_input_allowed = true;
+		stop_movement_input = false;
 	}
 
 }

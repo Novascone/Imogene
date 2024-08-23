@@ -46,6 +46,8 @@ public partial class Ability : Node3D
     public bool rotate_on_soft_close;
     public bool rotate_on_held;
 
+    public bool stop_movement_input;
+
     private CustomSignals _customSignals; // Custom signal instance
 
     public States state;
@@ -183,8 +185,6 @@ public partial class Ability : Node3D
     {
         if(!rotate_on_soft_far && player.targeting_system.enemy_close)
         {
-            player.movement_controller.movement_input_allowed = false;
-            GD.Print("Setting player movement to false");
             player.targeting_system.SoftTargetRotation();
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
             {
@@ -195,7 +195,6 @@ public partial class Ability : Node3D
         }
         else if (rotate_on_soft_far && player.targeting_system.enemy_far)
         {
-            player.movement_controller.movement_input_allowed = false;
             // GD.Print("Setting player movement to false");
             player.targeting_system.SoftTargetRotation();
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)

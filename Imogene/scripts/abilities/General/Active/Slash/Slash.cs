@@ -228,7 +228,7 @@ public partial class Slash : Ability
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
 		state = States.not_queued;
-		player.movement_controller.movement_input_allowed = false;
+		stop_movement_input = true;
 		AddToAbilityList(this);
 		
 		// player.targeting_system.SoftTargetRotation();
@@ -323,7 +323,7 @@ public partial class Slash : Ability
 			
 			player.recovery_1 = true;
 			// player.can_move = true;
-			player.movement_controller.movement_input_allowed = true;
+			stop_movement_input = true;
 			player.attacking = false;
 			// player.hitbox.Monitoring = false;
 			player.action_1_set = false;

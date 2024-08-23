@@ -55,7 +55,7 @@ public partial class Hitscan : RangedAbility
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
-		player.movement_controller.movement_input_allowed = false;
+		stop_movement_input = true;
 		AddToAbilityList(this);
 		cast_timer.Start();
 		Vector3 collision = GetPlayerCollision(); // Get collision point of raycast from player to object in from of them or 
@@ -102,6 +102,6 @@ public partial class Hitscan : RangedAbility
 	public void _on_cast_timer_timeout()
 	{
 		RemoveFromAbilityList(this);
-		player.movement_controller.movement_input_allowed = true;
+		stop_movement_input = false;
 	}
 }

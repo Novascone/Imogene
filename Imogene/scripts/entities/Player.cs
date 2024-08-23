@@ -72,6 +72,8 @@ public partial class Player : PlayerEntity
 
 	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
 
+	public bool ability_preventing_movement;
+
 	public CollisionShape3D hitbox_collision;
 	
 

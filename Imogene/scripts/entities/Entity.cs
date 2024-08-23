@@ -206,7 +206,11 @@ public partial class Entity : CharacterBody3D
     public int gold = 0;
 
 	// Status effects
-	public List<StatusEffect> status_effects = new List<StatusEffect>();
+	public List<StatusEffect> movement_effects = new List<StatusEffect>();
+	public List<StatusEffect> health_effects = new List<StatusEffect>();
+	public List<StatusEffect> damage_effects = new List<StatusEffect>();
+	public List<StatusEffect> general_effects = new List<StatusEffect>();
+	public List<StatusEffect> tradeoff_effects = new List<StatusEffect>();
 
 
     // public Vector3 enemy_position;
