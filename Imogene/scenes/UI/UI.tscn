@@ -717,7 +717,6 @@ text = "LB"
 horizontal_alignment = 2
 
 [node name="Control5" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
-custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -740,7 +739,6 @@ text = "RT"
 horizontal_alignment = 2
 
 [node name="Control8" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
-custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -763,10 +761,12 @@ text = "LT"
 horizontal_alignment = 2
 
 [node name="Control9" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
-custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox/LCross/LCrossPrimary"]
+layout_mode = 2
 
 [node name="Control" type="Control" parent="HUD/BottomHUD/BottomHUDVBox/BottomHUDHBox"]
 layout_mode = 2

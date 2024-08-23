@@ -70,7 +70,7 @@ public partial class StatController : Controller
 
 		// mitigation
 		entity.dr_armor = (float)Math.Round(entity.armor/entity.dr_lvl_scale, 2);
-		GD.Print("dr_armor of " + entity.dr_armor + " for " + entity.identifier);
+		// GD.Print("dr_armor of " + entity.dr_armor + " for " + entity.identifier);
 		entity.dr_phys = (float)Math.Round(entity.physical_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_slash = (float)Math.Round(entity.slash_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_thrust = (float)Math.Round(entity.thrust_resistance/entity.dr_lvl_scale, 2);
@@ -87,9 +87,9 @@ public partial class StatController : Controller
 
 		
 		entity.resistance = (float)Math.Round(entity.maximum_health * (entity.dr_armor * entity.avg_res_dr),2);
-		GD.Print("ave resistance: " + entity.avg_res_dr);
-		GD.Print("resistance: " + entity.resistance);
-		GD.Print("max health: " + entity.maximum_health + " of " + entity.Name);
+		// GD.Print("ave resistance: " + entity.avg_res_dr);
+		// GD.Print("resistance: " + entity.resistance);
+		// GD.Print("max health: " + entity.maximum_health + " of " + entity.Name);
 
 		// recovery
 

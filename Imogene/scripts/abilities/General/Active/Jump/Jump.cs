@@ -74,12 +74,12 @@ public partial class Jump : Ability
 				// GD.Print(player.near_wall.GetCollider());
 				if(CheckHeld() && !player.is_climbing)
 				{
-					GD.Print("setting climbing to true");
+					// GD.Print("setting climbing to true");
 					player.is_climbing = true;
 				}
 				else if(Input.IsActionJustPressed(assigned_button) && player.is_climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
 				{
-					GD.Print("Setting climbing to false");
+					// GD.Print("Setting climbing to false");
 					player.is_climbing = false;
 				}
 				
@@ -101,7 +101,7 @@ public partial class Jump : Ability
 
 	public async void Clamber()
 	{
-		GD.Print("Player can clamber");
+		// GD.Print("Player can clamber");
 		if(CheckHeld())
 		{
 			player.is_clambering = true;
@@ -131,7 +131,7 @@ public partial class Jump : Ability
 		state = States.not_queued;
 		if((player.IsOnFloor() || coyote_timer.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
-			GD.Print("start jumping");
+			// GD.Print("start jumping");
 			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player.velocity.Y = player.jump_speed;			
 			player.jumping = true;
@@ -145,16 +145,16 @@ public partial class Jump : Ability
 		{
 			if(player.ability_in_use.resource.type != "movement")
 			{
-				GD.Print("Can not jump because the ability in use is not movement");
+				// GD.Print("Can not jump because the ability in use is not movement");
 				return false;
 			}
 			else
 			{
-				GD.Print("Can jump because the ability in use is movement");
+				// GD.Print("Can jump because the ability in use is movement");
 				return true;
 			}
 		}
-		GD.Print("Can jump because no other ability is being used");
+		// GD.Print("Can jump because no other ability is being used");
 		return true;
 
 	}
@@ -163,7 +163,7 @@ public partial class Jump : Ability
 	{
 		if(player.IsOnFloor())
 		{
-			GD.Print("stop jumping");
+			// GD.Print("stop jumping");
 			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;

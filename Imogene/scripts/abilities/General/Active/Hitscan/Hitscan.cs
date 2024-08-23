@@ -24,7 +24,7 @@ public partial class Hitscan : RangedAbility
 		if(CheckHeld())
 		{
 			player.movement_controller.rotation_only = true;
-			GD.Print("Ability is making player only able to rotate");
+			// GD.Print("Ability is making player only able to rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button))
 		{
@@ -42,7 +42,7 @@ public partial class Hitscan : RangedAbility
 			{
 				QueueAbility();
 				CheckCanUseAbility();
-				GD.Print("using and holding ability");
+				// GD.Print("using and holding ability");
 			}		
 		}
 		if(cast_timer.TimeLeft == 0)
@@ -80,7 +80,7 @@ public partial class Hitscan : RangedAbility
 			var world = GetTree().Root;
 			world.AddChild(cast_marker);
 			cast_marker.GlobalTranslate(cast_collision["position"].AsVector3());
-			GD.Print("collided with" + collider.Name);
+			// GD.Print("collided with" + collider.Name);
 			
 			
 		}

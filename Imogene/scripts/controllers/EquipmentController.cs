@@ -247,8 +247,8 @@ public partial class EquipmentController : Controller
 			player.shoulder_right_slot.AddChild(player.right_node);
 			player.shoulder_left_slot.AddChild(player.left_node);
 			// shoulder_right_slot.Hide();
-			GD.Print("Shoulder equipped");
-			GD.Print("Adding stats");
+			// GD.Print("Shoulder equipped");
+			// GD.Print("Adding stats");
 				AddEquipableStats(arm);
 				player.stat_controller.UpdateStats();
 				player.PrintStats();
@@ -256,7 +256,7 @@ public partial class EquipmentController : Controller
 		}
 		if(arm.slot == "chest")
 		{
-			GD.Print("chest equipped");
+			// GD.Print("chest equipped");
 			resource_path = arm.resource_path;
 			PackedScene resource = GD.Load<PackedScene>(resource_path);
 			player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
@@ -264,7 +264,7 @@ public partial class EquipmentController : Controller
 			player.chest_slot.AddChild(player.main_node);
 			// if(equpipable.equipable_type is "Arm")
 			// {
-				GD.Print("Adding stats");
+				// GD.Print("Adding stats");
 				// Arm item_to_add = equpipable.arm_item;
 				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
 				AddEquipableStats(arm);
@@ -558,7 +558,7 @@ public partial class EquipmentController : Controller
 	public void AddEquipableStats(ArmsResource item)
 	{
 
-		GD.Print("Adding equipable stats from the gear controller");
+		// GD.Print("Adding equipable stats from the gear controller");
 		player.strength += item.strength;
 		player.dexterity += item.dexterity;
 		player.intellect += item.intellect;
@@ -595,12 +595,12 @@ public partial class EquipmentController : Controller
 	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
     {
         player.consumables[consumable_slot] = item;
-		GD.Print(player.consumables[consumable_slot].name);
+		// GD.Print(player.consumables[consumable_slot].name);
     }
 	public void GetEquipConsumable(ConsumableResource item, int consumable_slot)
     {
         player.consumables[consumable_slot] = item;
-		GD.Print(player.consumables[consumable_slot].name);
+		// GD.Print(player.consumables[consumable_slot].name);
     }
 
     

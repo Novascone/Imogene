@@ -136,7 +136,7 @@ public partial class HUD : UI
 	
 	public void AbilityAssigned(AbilityResource ability_resource, string button_name) // Assign ability in HUD
     {
-		GD.Print("got assignment in HUD");
+		// GD.Print("got assignment in HUD");
 		if(button_name == "LCrossPrimaryUpAssign"){l_cross_primary_up_action_button.Icon = ability_resource.icon;}
 		if(button_name == "LCrossPrimaryRightAssign"){l_cross_primary_right_action_button.Icon = ability_resource.icon;}
 		if(button_name == "LCrossPrimaryLeftAssign"){l_cross_primary_left_action_button.Icon = ability_resource.icon;}

@@ -113,7 +113,7 @@ public partial class ContextSteering : CharacterBody3D
 		{
 			float angle = i * 2 * MathF.PI / num_rays; // <-- circle divided into number of rays
 			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
-			GD.Print(ray_directions[i]);
+			// GD.Print(ray_directions[i]);
 		}
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");

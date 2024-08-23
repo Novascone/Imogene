@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 
@@ -14,6 +15,8 @@ public partial class Ability : Node3D
     [Export] public string description { get; set; }
     [Export] public AbilityResource resource { get; set; }
     [Export] public string ability_type { get; set; }
+
+
     
     public string cross{ get; set; }
     public string cross_type { get; set; }
@@ -58,7 +61,7 @@ public partial class Ability : Node3D
         {
             if(UIButton())
             {
-                GD.Print("this is a UI button");
+                // GD.Print("this is a UI button");
                 if(button_pressed)
                 {
                     if(this.state == States.not_queued)
@@ -87,7 +90,6 @@ public partial class Ability : Node3D
 
     public void CheckCanUseAbility()
     {
-        
         if(state == States.queued)
         {
             if(!button_held)
@@ -96,7 +98,7 @@ public partial class Ability : Node3D
                 {
                     if(player.targeting_system.soft_targeting && player.targeting_system.enemy_to_soft_target)
                     {
-                        GD.Print("Rotate soft ability");
+                        // GD.Print("Rotate soft ability");
                         SoftRotateAbility();
                     }
                     else
@@ -106,7 +108,7 @@ public partial class Ability : Node3D
                 }
                 else
                 {
-                    GD.Print("Execute non rotation");
+                    // GD.Print("Execute non rotation");
                     Execute();
                 }
             }
@@ -114,7 +116,7 @@ public partial class Ability : Node3D
             {
                 if(rotate_on_held)
                 {
-                    GD.Print("Button is held, waiting for player to complete rotation");
+                    // GD.Print("Button is held, waiting for player to complete rotation");
                     if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
                     {
                         Execute();
@@ -186,7 +188,7 @@ public partial class Ability : Node3D
             player.targeting_system.SoftTargetRotation();
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
             {
-                GD.Print("Execute rotation");
+                // GD.Print("Execute rotation");
                 Execute();
                 // player.movementController.movement_input_allowed = true;
             }
@@ -194,11 +196,11 @@ public partial class Ability : Node3D
         else if (rotate_on_soft_far && player.targeting_system.enemy_far)
         {
             player.movement_controller.movement_input_allowed = false;
-            GD.Print("Setting player movement to false");
+            // GD.Print("Setting player movement to false");
             player.targeting_system.SoftTargetRotation();
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
             {
-                GD.Print("Execute rotation");
+                // GD.Print("Execute rotation");
                 Execute();
                 // player.movementController.movement_input_allowed = true;
             }
@@ -217,18 +219,18 @@ public partial class Ability : Node3D
         {
             if(@event.IsActionPressed(assigned_button) && CheckCross())
             {
-                GD.Print("Assigned button " + assigned_button);
+                // GD.Print("Assigned button " + assigned_button);
                 // GD.Print(this.Name + "Action strength " + );
                 button_pressed = true;
                 frames_held = 1;
                 button_released = false;
-                GD.Print(this.Name + " has been pressed");
+                // GD.Print(this.Name + " has been pressed");
             }
             if(@event.IsActionReleased(assigned_button) && CheckCross())
             {
                 button_pressed = false;
                 button_released = true;
-                GD.Print(this.Name + " has been released");              
+                // GD.Print(this.Name + " has been released");              
                 // GD.Print("button released");
             }
         }
@@ -279,12 +281,12 @@ public partial class Ability : Node3D
 
     public virtual void Execute() // Default execute
     {
-        GD.Print("access ability child");
+        // GD.Print("access ability child");
     }
 
     public void AddToAbilityList(Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
-        GD.Print("adding ability to list");
+        // GD.Print("adding ability to list");
         if(!player.abilities_in_use.Contains(ability))
         {
             player.abilities_in_use.AddFirst(ability);
@@ -295,7 +297,7 @@ public partial class Ability : Node3D
     }
     public void RemoveFromAbilityList(Ability ability) // Removes ability from abilities used
     {
-        GD.Print("removing ability from list");
+        // GD.Print("removing ability from list");
         player.abilities_in_use.Remove(ability);
         if(player.abilities_in_use.Count > 0)
         {

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c3odvo1nfs285"]
+
+[ext_resource type="Script" path="res://scripts/status_effects/status_effect_resources/StatusEffectResource.cs" id="1_li58b"]
+
+[resource]
+script = ExtResource("1_li58b")
+id = 0
+name = "Slow"
+description = "Slows the target"
+ability_path = ""
+type = "Crowd Control"

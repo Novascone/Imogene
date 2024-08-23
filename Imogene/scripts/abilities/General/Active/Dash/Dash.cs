@@ -46,7 +46,7 @@ public partial class Dash : Ability
 		} 
 		else // If the player is not moving dash backwards
 		{
-			GD.Print("Direction behind player " + player.GlobalTransform.Basis.Z);
+			// GD.Print("Direction behind player " + player.GlobalTransform.Basis.Z);
 			player.velocity = player.GlobalTransform.Basis.Z * dash_speed;
 		}
 		

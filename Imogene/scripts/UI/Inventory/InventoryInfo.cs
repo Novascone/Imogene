@@ -304,8 +304,8 @@ public partial class InventoryInfo : UI
 
 	public void SetPlayerStats()
 	{
-		GD.Print("receiving stats");
-		GD.Print("Strength received: " + this_ui.this_player.strength);
+		// GD.Print("receiving stats");
+		// GD.Print("Strength received: " + this_ui.this_player.strength);
 		level_UI = this_ui.this_player.level.ToString();
 		strength_UI = this_ui.this_player.strength.ToString();
 		dexterity_UI = this_ui.this_player.dexterity.ToString();
@@ -543,7 +543,7 @@ public partial class InventoryInfo : UI
 
 	public void _on_trash_area_2d_area_entered(Area2D area)
 	{	
-		GD.Print("over_trash");
+		// GD.Print("over_trash");
 		// this_ui.over_trash = true;
 		// GD.Print(this_ui.over_trash);
 	}

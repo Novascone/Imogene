@@ -244,21 +244,21 @@ public partial class Slash : Ability
 		// player.main_hand_hitbox.damage_type = "Slash";
 		player.main_hand_hitbox.damage_type = "Cold";
 		// player.main_hand_hitbox.damage_type = "Lightning";
-		GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
+		// GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
 		if(player.damage_system.Crit())
 		{
 			GD.Print("Critical!");
 			player.main_hand_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);
 			player.main_hand_hitbox.posture_damage = player.posture_damage;
 			player.main_hand_hitbox.is_critical = true;
-			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
+			// GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
 		}
 		else
 		{
 			player.main_hand_hitbox.damage = player.damage;
 			player.main_hand_hitbox.posture_damage = player.posture_damage;
 			player.main_hand_hitbox.is_critical = false;
-			GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
+			// GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
 		}
 		
 		
@@ -292,7 +292,7 @@ public partial class Slash : Ability
 			// player.hitbox.Monitoring = false;
 			// player.can_move = true;
 			// player.hitbox.RemoveFromGroup("player_hitbox");
-			GD.Print(pressed);
+			// GD.Print(pressed);
 			
 			if(pressed != 2)
 			{
@@ -368,7 +368,7 @@ public partial class Slash : Ability
 			// GD.Print("Setting swing 1");
 			player.action_1_set = true;
 			// GD.Print("Setting animations");
-			GD.Print("Playing hitbox animation");
+			// GD.Print("Playing hitbox animation");
 			// player.animation_player.Play("Attack_1_Hitbox_Activation");
 			
 			player.tree.Set("parameters/Master/conditions/using_ability", true);

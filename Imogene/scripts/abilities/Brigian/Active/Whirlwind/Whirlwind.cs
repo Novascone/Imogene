@@ -34,7 +34,7 @@ public partial class Whirlwind : Ability
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			
-			GD.Print("Queuing whirlwind");
+			// GD.Print("Queuing whirlwind");
 			QueueAbility();	
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
@@ -51,7 +51,7 @@ public partial class Whirlwind : Ability
 		}		
 		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
 		{
-			GD.Print("Remove hit box");
+			// GD.Print("Remove hit box");
 			RemoveHitbox();
 			RemoveMesh();
 		}	
@@ -61,7 +61,7 @@ public partial class Whirlwind : Ability
 	public override void Execute()
 	{
 		
-		GD.Print("execute");
+		// GD.Print("execute");
 		state = States.not_queued;
 		AddToAbilityList(this); // Add ability to list
 		
@@ -97,7 +97,7 @@ public partial class Whirlwind : Ability
 		player.surrounding_hitbox.AddChild(whirlwind_hitbox);
 		if(whirlwind_mesh == null)
 		{
-			GD.Print("Add mesh");
+			// GD.Print("Add mesh");
 			whirlwind_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
 			player.surrounding_hitbox.AddChild(whirlwind_mesh);
 		}
@@ -117,7 +117,7 @@ public partial class Whirlwind : Ability
 
 	public void RemoveMesh()
 	{
-		GD.Print("remove mesh");
+		// GD.Print("remove mesh");
 		if(whirlwind_mesh != null)
 		{
 			player.surrounding_hitbox.RemoveChild(whirlwind_mesh);

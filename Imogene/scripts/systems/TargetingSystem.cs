@@ -418,10 +418,10 @@ public partial class TargetingSystem : EntitySystem
 	{
 		
 		rotating_to_soft_target = true;
-		GD.Print("Look at closest enemy");
+		// GD.Print("Look at closest enemy");
 		
 		mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
-		GD.Print("rotating to soft target " + mobs_in_order[0].Name);
+		// GD.Print("rotating to soft target " + mobs_in_order[0].Name);
 		player.prev_y_rotation = player.GlobalRotation.Y;
 		player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
 		player.current_y_rotation = player.GlobalRotation.Y;

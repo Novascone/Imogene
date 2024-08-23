@@ -13,12 +13,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yqmdm"]
 
-[sub_resource type="Sky" id="Sky_sjwia"]
+[sub_resource type="Sky" id="Sky_6r6up"]
 sky_material = SubResource("ProceduralSkyMaterial_yqmdm")
 
 [sub_resource type="Environment" id="Environment_t4bu4"]
 background_mode = 2
-sky = SubResource("Sky_sjwia")
+sky = SubResource("Sky_6r6up")
 
 [node name="Node3D" type="Node3D"]
 

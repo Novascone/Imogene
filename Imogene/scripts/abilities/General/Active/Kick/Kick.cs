@@ -29,7 +29,7 @@ public partial class Kick : Ability
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			
-			GD.Print("Queuing kick");
+			// GD.Print("Queuing kick");
 			QueueAbility();	
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
@@ -92,7 +92,7 @@ public partial class Kick : Ability
 		player.belt_slot.AddChild(kick_hitbox);
 		if(kick_mesh == null)
 		{
-			GD.Print("Add mesh");
+			// GD.Print("Add mesh");
 			kick_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
 			player.belt_slot.AddChild(kick_mesh);
 		}
@@ -111,7 +111,7 @@ public partial class Kick : Ability
 
 	public void RemoveMesh()
 	{
-		GD.Print("remove mesh");
+		// GD.Print("remove mesh");
 		if(kick_mesh != null)
 		{
 			kick_mesh.QueueFree();
@@ -124,7 +124,7 @@ public partial class Kick : Ability
 		
 		if(charges_used > 0)
 		{
-			GD.Print("charge refilled");
+			// GD.Print("charge refilled");
 			charges_used -= 1;
 		}
 		
@@ -135,14 +135,14 @@ public partial class Kick : Ability
 		
 		if(charges_used > 0)
 		{
-			GD.Print("charge refilled");
+			// GD.Print("charge refilled");
 			charges_used -= 1;
 		}
 		
 	}
 	public void _on_cast_timer_timeout()
 	{
-		GD.Print("cast timer timeout");
+		// GD.Print("cast timer timeout");
 		RemoveHitbox();
 		RemoveMesh();
 	}

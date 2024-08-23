@@ -26,12 +26,12 @@ public partial class DamageNumber3D : Node3D
 		if(critical)
 		{
 			label.AddThemeColorOverride("font_color", new Color(Colors.Yellow, 1.0f));
-			GD.Print("Is critical from DamageNumber3D");
+			// GD.Print("Is critical from DamageNumber3D");
 		}
 		else
 		{
 			label.AddThemeColorOverride("font_color", new Color(Colors.White, 1.0f));
-			GD.Print("Is not critical from DamageNumber3D");
+			// GD.Print("Is not critical from DamageNumber3D");
 		}
 		animation_player.Play("RiseAndFade");
 

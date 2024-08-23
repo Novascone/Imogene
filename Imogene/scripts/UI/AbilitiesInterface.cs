@@ -91,7 +91,7 @@ public partial class AbilitiesInterface : UI
 
 		foreach(AbilityCategory ability_category in categories.GetChildren().Cast<AbilityCategory>())
 		{
-			GD.Print(ability_category.Name);
+			// GD.Print(ability_category.Name);
 			ability_category.GetAbilityInterfaceInfo(this);
 		}
 		

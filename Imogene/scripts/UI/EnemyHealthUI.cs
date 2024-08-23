@@ -88,7 +88,7 @@ public partial class EnemyHealthUI : Control
     {
 		if(enemy == targeted_enemy)
 		{
-			GD.Print("enemy is enemy");
+			// GD.Print("enemy is enemy");
 			enemy_health.Value = health;
 		}
         
@@ -97,11 +97,11 @@ public partial class EnemyHealthUI : Control
     {
 		if(enemy == targeted_enemy)
 		{
-			GD.Print("enemy is enemy");
+			// GD.Print("enemy is enemy");
 			enemy_posture.Value = posture;
 		}
         
-		GD.Print("enemy max posture from UI " + enemy_posture.MaxValue);
+		// GD.Print("enemy max posture from UI " + enemy_posture.MaxValue);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

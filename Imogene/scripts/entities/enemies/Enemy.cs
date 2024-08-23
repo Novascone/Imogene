@@ -119,7 +119,7 @@ public partial class Enemy : Entity
 		rec_lvl_scale = 100 * (float)level;
 		stat_controller.GetEntityInfo(this);
 		stat_controller.UpdateStats();
-		GD.Print("Posture Regen " + posture_regen);
+		// GD.Print("Posture Regen " + posture_regen);
 
 		ray_position = GetNode<Node3D>("Controllers/RayPosition");
 		tree = GetNode<AnimationTree>("Animation/AnimationTree");
@@ -154,7 +154,7 @@ public partial class Enemy : Entity
 		{
 			float angle = i * 2 * MathF.PI / num_rays; // <-- circle divided into number of rays
 			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
-			GD.Print(ray_directions[i]);
+			// GD.Print(ray_directions[i]);
 		}
 
 		// damage_numbers = GetNode<AnimationPlayer>("Damage_Number_3D/AnimationPlayer");
@@ -170,14 +170,14 @@ public partial class Enemy : Entity
     {
         if(area is MeleeHitbox melee_box)
 		{
-			GD.Print(Name + " hurtbox entered by " + melee_box.Name);
+			// GD.Print(Name + " hurtbox entered by " + melee_box.Name);
 			if(area is MeleeHitbox)
 			{
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
 				resource_system.Posture(melee_box.posture_damage);
 				if(melee_box.effect_1 != "")
 				{
-					GD.Print(Name + " has " + melee_box.effect_1 + " applied");
+					// GD.Print(Name + " has " + melee_box.effect_1 + " applied");
 				}
 			}
 		}
@@ -189,6 +189,11 @@ public partial class Enemy : Entity
 		
 		if(body is RangedHitbox ranged_box)
 		{
+			foreach(StatusEffect status_effect in ranged_box.effects)
+			{
+				GD.Print("Applying " + status_effect.Name + " to " + Name);
+				status_effect.Apply(this);
+			}
 			if(body is RangedHitbox)
 			{
 				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);

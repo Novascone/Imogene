@@ -16,7 +16,7 @@ public partial class StateMachine : Node3D
 		foreach(State state in GetChildren())
 		{
 			state.fsm = this;
-			GD.Print("state " + state.name + " set");
+			// GD.Print("state " + state.name + " set");
 			states[state.name] = state;
 
 			if(current_state != null)
@@ -34,7 +34,7 @@ public partial class StateMachine : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public void ChangeTo(string state_name)
 	{
-		GD.Print("State machine changing");
+		// GD.Print("State machine changing");
 		history.Add(current_state.name);
 		SetState(state_name);
 	}

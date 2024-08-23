@@ -24,7 +24,7 @@ public partial class InitialState : State
     public override async void Enter()
    {
      
-      GD.Print("Hello from Initial state");
+      // GD.Print("Hello from Initial state");
 		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
       if(fsm.this_entity is not StandardEnemy && fsm.this_entity is not TargetDummy)
@@ -32,7 +32,7 @@ public partial class InitialState : State
          Exit("ForwardState");
       }
       
-      GD.Print("Exiting initial state");
+      // GD.Print("Exiting initial state");
       
    }
 

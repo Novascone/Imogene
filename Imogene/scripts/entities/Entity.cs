@@ -205,6 +205,10 @@ public partial class Entity : CharacterBody3D
     // Possessions
     public int gold = 0;
 
+	// Status effects
+	public List<StatusEffect> status_effects = new List<StatusEffect>();
+
+
     // public Vector3 enemy_position;
 
 

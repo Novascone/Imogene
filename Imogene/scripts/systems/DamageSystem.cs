@@ -79,8 +79,8 @@ public partial class DamageSystem : EntitySystem
 	{
 		
 		amount = DamageMitigation(damage_type, amount);
-		GD.Print("Amount of damage " + amount);
-		GD.Print("Is critical " + is_critical);
+		// GD.Print("Amount of damage " + amount);
+		// GD.Print("Is critical " + is_critical);
 		if(entity.health - amount > 0)
 		{
 			entity.health -= amount;
@@ -95,7 +95,7 @@ public partial class DamageSystem : EntitySystem
 			if(entity is Player player)
 			{
 				player.ui.hud.health.Value = entity.health; 
-				GD.Print("UI health " + player.ui.hud.health.Value);
+				// GD.Print("UI health " + player.ui.hud.health.Value);
 				
 			}
 			HealthRegen();
@@ -106,8 +106,8 @@ public partial class DamageSystem : EntitySystem
 			GD.Print("dead");
 		}
 
-		GD.Print(entity.identifier + " took " + amount + " of " + damage_type + " damage") ;
-		GD.Print(entity.identifier + " " + entity.health);
+		// GD.Print(entity.identifier + " took " + amount + " of " + damage_type + " damage") ;
+		// GD.Print(entity.identifier + " " + entity.health);
 
 		if(is_critical)
 		{
@@ -116,7 +116,7 @@ public partial class DamageSystem : EntitySystem
 				if(entity.taking_dot)
 				{
 					entity.dot_duration += 5;
-					GD.Print("Already taking DoT added more to duration");
+					// GD.Print("Already taking DoT added more to duration");
 				}
 				else
 				{
@@ -132,7 +132,7 @@ public partial class DamageSystem : EntitySystem
 					entity.dot_damage_type = damage_type;
 				}
 				DoT(entity.dot_damage_type, DamageMitigation(entity.dot_damage_type,(float)(amount * 5)), entity.dot_duration);
-				GD.Print("The hit is critical");
+				// GD.Print("The hit is critical");
 			}
 			if(damage_type == "Cold")
 			{
@@ -182,17 +182,17 @@ public partial class DamageSystem : EntitySystem
 	public float DamageMitigation(string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
-		GD.Print(mitigated_damage + " of damage going into mitigation ");
+		// GD.Print(mitigated_damage + " of damage going into mitigation ");
 		mitigated_damage *= 1 - entity.dr_armor;
-		GD.Print("Damage reduced by armor to " + mitigated_damage);
+		// GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
 			mitigated_damage *= 1 - entity.dr_phys;
-			GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
+			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
 				mitigated_damage *= 1 - entity.dr_slash;
-				GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
+				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
 				return MathF.Round(mitigated_damage);
 				
 			}

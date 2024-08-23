@@ -41,11 +41,11 @@ public partial class AbilityController : Controller
 		AbilityResource ability_resource = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/" + ability_name + "/" + ability_name + ".tres");
 		player.ability_resources.Add(ability_resource);
 		LoadAbilitiesHelper(ability_resource);
-		GD.Print("Added " + ability_name);
-		foreach(Ability ability in player.abilities)
-		{
-			GD.Print(ability.Name);
-		}
+		// GD.Print("Added " + ability_name);
+		// foreach(Ability ability in player.abilities)
+		// {
+		// 	GD.Print(ability.Name);
+		// }
 	}
 
     public void LoadAbilities() // Loads abilities
@@ -111,7 +111,7 @@ public partial class AbilityController : Controller
 			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
 			player.ui.abilities.AbilityAssigned(ability_resource, button_name);
 			player.ui.hud.AbilityAssigned(ability_resource, button_name);
-			GD.Print("hud ability assigned");
+			// GD.Print("hud ability assigned");
 			foreach(Ability ability in player.abilities)
 			{
 				if(ability.Name == ability_resource.name)
@@ -119,7 +119,7 @@ public partial class AbilityController : Controller
 					ability.CheckAssignment(button_name);
 				}
 			}
-			GD.Print("Ability Assigned");
+			// GD.Print("Ability Assigned");
 	}
 
 	

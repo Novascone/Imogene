@@ -7,7 +7,7 @@ public partial class Dissolve : Node3D
 	{
 		if(body is Player player)
 		{
-			GD.Print("player entered");
+			// GD.Print("player entered");
 			var tween = CreateTween().SetEase(Tween.EaseType.In);
 			Callable call_dissolve = new Callable(this, MethodName.SetDissolve);
 			tween.TweenMethod(call_dissolve, 1.0, 0.0,0.7);

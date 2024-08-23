@@ -40,14 +40,14 @@ public partial class ResourceSystem : EntitySystem
 	{
 		if(entity.posture < entity.maximum_posture)
 		{
-			GD.Print(entity.identifier + " taking posture damage of " + posture_damage);
+			// GD.Print(entity.identifier + " taking posture damage of " + posture_damage);
 			entity.posture += posture_damage;
 			if(entity.posture >= entity.maximum_posture)
 			{
 				entity.posture_broken = true;
 				entity.damage_system.Stun();
 			}
-			GD.Print("posture " + entity.posture);
+			// GD.Print("posture " + entity.posture);
 			
 			if(entity is Enemy enemy)
 			{
@@ -71,7 +71,7 @@ public partial class ResourceSystem : EntitySystem
 
 	private void OnResourceRegenTickTimeout()
     {
-        GD.Print("resource regenerating");
+        // GD.Print("resource regenerating");
 		if(entity.resource < entity.maximum_resource)
 		{
 			entity.resource += entity.resource_regen;
@@ -86,7 +86,7 @@ public partial class ResourceSystem : EntitySystem
 
 	private void OnPostureRegenTickTimeout()
     {
-		GD.Print("posture regenerating");
+		// GD.Print("posture regenerating");
 		if(entity.posture > 0)
 		{
 			entity.posture -= entity.posture_regen;

@@ -6,6 +6,8 @@ public partial class Projectile : RangedAbility
 
 	public Timer cast_timer;
 	public PackedScene projectile_to_load;
+	public PackedScene slow_effect;
+	public StatusEffect slow;
 	public int projectile_velocity = 25;
 	public string damage_type = "cold";
 	
@@ -14,6 +16,8 @@ public partial class Projectile : RangedAbility
 	public override void _Ready()
 	{
 		projectile_to_load = GD.Load<PackedScene>("res://scripts/abilities/General/Active/Projectile/projectile_to_load.tscn");
+		slow_effect = GD.Load<PackedScene>("res://scripts/status_effects/De-buffs/Slow/Slow.tscn");
+		slow = (StatusEffect)slow_effect.Instantiate();
 		cast_timer = GetNode<Timer>("CastTimer");
 		rotate_on_soft = true;
 		rotate_on_held = true;
@@ -90,6 +94,7 @@ public partial class Projectile : RangedAbility
 		}
 		projectile.damage_type = damage_type; // Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
+		projectile.effects.Add(slow);
 	}
 
 	public void RemoveFromExclusion(Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array
