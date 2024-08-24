@@ -16,7 +16,7 @@ public partial class StatusEffectController : Controller
 			if(enemy.movement_controller.movement_stopped_check && enemy.movement_controller.speed_altered_check)
 			{
 				
-				IncrementMovementEffectsCount();
+				UpdateMovementEffectsCount();
 			}
 		}
 	}
@@ -46,12 +46,12 @@ public partial class StatusEffectController : Controller
 		entity.movement_effects.Remove(effect);
 	}
 
-	public void IncrementMovementEffectsCount()
+	public void UpdateMovementEffectsCount()
 	{
 		if(entity.movement_effects.Count > entity.previous_movement_effects_count)
 		{
 			GD.Print("Incrementing");
-			entity.previous_movement_effects_count += 1;
+			entity.previous_movement_effects_count = entity.movement_effects.Count;
 		}
 		
 	}
