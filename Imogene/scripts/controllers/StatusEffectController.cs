@@ -20,10 +20,6 @@ public partial class StatusEffectController : Controller
 			entity.movement_effects.Add(effect);
 			effect.current_stacks += 1;
 			GD.Print("current stacks " + effect.current_stacks);
-			if(entity is Enemy enemy)
-			{
-				enemy.movement_controller.SpeedAltered();
-			}
 			
 		}
 		else if (effect.current_stacks < effect.max_stacks)
