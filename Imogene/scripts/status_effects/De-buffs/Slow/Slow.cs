@@ -9,6 +9,8 @@ public partial class Slow : StatusEffect
 		base._Ready();
 		duration = 5;
 		duration_timer.WaitTime = duration;
+		effect_type = "movement";
+		max_stacks = 5;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,8 +34,6 @@ public partial class Slow : StatusEffect
 		{
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
 		}
-		current_stacks += 1;
-		GD.Print("current stacks " + current_stacks);
 		if(entity.speed >= entity.walk_speed)
 		{
 			entity.speed *= 0.7f;
@@ -52,6 +52,8 @@ public partial class Slow : StatusEffect
         if(current_stacks == 1)
 		{
 			this_entity.speed = this_entity.walk_speed;
+			this_entity.movement_effects.Remove(this);
+			this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 			GD.Print("entity speed reset to " + this_entity.speed);
 			// RemoveStatusEffect(this);
 		}

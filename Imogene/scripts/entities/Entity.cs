@@ -24,6 +24,10 @@ public partial class Entity : CharacterBody3D
 	public XPSystem xp_system;
 	public TargetingSystem targeting_system;
 
+
+	// Controllers
+	public StatusEffectController status_effect_controller;
+
 	// Booleans
 	public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
     public bool jumping = false;
@@ -207,10 +211,15 @@ public partial class Entity : CharacterBody3D
 
 	// Status effects
 	public List<StatusEffect> movement_effects = new List<StatusEffect>();
+	public int previous_movement_effects_count;
 	public List<StatusEffect> health_effects = new List<StatusEffect>();
+	public int previous_health_effects_count;
 	public List<StatusEffect> damage_effects = new List<StatusEffect>();
+	public int previous_damage_effects_count;
 	public List<StatusEffect> general_effects = new List<StatusEffect>();
+	public int previous_general_effects_count;
 	public List<StatusEffect> tradeoff_effects = new List<StatusEffect>();
+	public int previous_tradeoff_effects_count;
 
 
     // public Vector3 enemy_position;

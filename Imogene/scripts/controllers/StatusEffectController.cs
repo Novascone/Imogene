@@ -13,15 +13,32 @@ public partial class StatusEffectController : Controller
 	{
 	}
 
-	// public void AddStatusEffect(StatusEffect effect)
-	// {
-	// 	if(!entity.status_effects.Contains(effect))
-	// 	{
-	// 		entity.status_effects.Add(effect);
-	// 	}
-	// 	else if (effect.current_stacks < effect.max_stacks)
-	// 	{
-	// 		effect.current_stacks += 1;
-	// 	}
-	// }
+	public void AddMovementEffect(StatusEffect effect)
+	{
+		if(!entity.movement_effects.Contains(effect))
+		{
+			entity.movement_effects.Add(effect);
+			effect.current_stacks += 1;
+			GD.Print("current stacks " + effect.current_stacks);
+			if(entity is Enemy enemy)
+			{
+				enemy.movement_controller.SpeedAltered();
+			}
+			
+		}
+		else if (effect.current_stacks < effect.max_stacks)
+		{
+			effect.current_stacks += 1;
+			GD.Print("current stacks " + effect.current_stacks);
+		}
+		else
+		{
+			GD.Print("Can not add more stacks");
+		}
+	}
+
+	public void RemoveMovementEffect(StatusEffect effect)
+	{
+		entity.movement_effects.Remove(effect);
+	}
 }

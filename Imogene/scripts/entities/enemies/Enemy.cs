@@ -66,6 +66,8 @@ public partial class Enemy : Entity
 	private Vector3 camera_position; // Position of camera
 
 	public StatController stat_controller;
+	public EnemyMovementController movement_controller;
+	
 
 	// UI
 	public ProgressBar health_bar;
@@ -98,6 +100,8 @@ public partial class Enemy : Entity
 	{
 		base._Ready();
 		stat_controller = GetNode<StatController>("Controllers/StatController");
+		movement_controller = GetNode<EnemyMovementController>("Controllers/MovementController");
+		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
 		health_bar = GetNode<ProgressBar>("UI/HealthBarSubViewport/VBoxContainer/ProgressBar");
 		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarSubViewport/VBoxContainer/TextureProgressBar");
 		status_bar = GetNode<Sprite3D>("UI/StatusBar");
@@ -119,6 +123,8 @@ public partial class Enemy : Entity
 		rec_lvl_scale = 100 * (float)level;
 		stat_controller.GetEntityInfo(this);
 		stat_controller.UpdateStats();
+		movement_controller.GetEntityInfo(this);
+		status_effect_controller.GetEntityInfo(this);
 		// GD.Print("Posture Regen " + posture_regen);
 
 		ray_position = GetNode<Node3D>("Controllers/RayPosition");
@@ -193,6 +199,11 @@ public partial class Enemy : Entity
 			{
 				GD.Print("Applying " + status_effect.Name + " to " + Name);
 				status_effect.Apply(this);
+				if(status_effect.effect_type == "movement")
+				{
+					previous_movement_effects_count = movement_effects.Count;
+					status_effect_controller.AddMovementEffect(status_effect);
+				}
 			}
 			if(body is RangedHitbox)
 			{

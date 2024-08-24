@@ -23,6 +23,7 @@ sky = SubResource("Sky_sjwia")
 [node name="testing_grounds" type="Node3D"]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(0.597243, 0, 0, 0, 1, 0, 0, 0, 0.700777, 0, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_vx77o")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
