@@ -9,5 +9,5 @@ name = "Slow"
 description = "Slows the target"
 ability_path = ""
 type = "Crowd Control"
-prevents_movement = false
+prevents_movement = true
 alters_speed = true

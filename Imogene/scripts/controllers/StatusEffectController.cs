@@ -11,6 +11,14 @@ public partial class StatusEffectController : Controller
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		if(entity is Enemy enemy)
+		{
+			if(enemy.movement_controller.movement_stopped_check && enemy.movement_controller.speed_altered_check)
+			{
+				
+				IncrementMovementEffectsCount();
+			}
+		}
 	}
 
 	public void AddMovementEffect(StatusEffect effect)
@@ -36,5 +44,15 @@ public partial class StatusEffectController : Controller
 	public void RemoveMovementEffect(StatusEffect effect)
 	{
 		entity.movement_effects.Remove(effect);
+	}
+
+	public void IncrementMovementEffectsCount()
+	{
+		if(entity.movement_effects.Count > entity.previous_movement_effects_count)
+		{
+			GD.Print("Incrementing");
+			entity.previous_movement_effects_count += 1;
+		}
+		
 	}
 }
