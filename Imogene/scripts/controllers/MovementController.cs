@@ -165,7 +165,7 @@ public partial class MovementController : Controller
 		}
 		
 		
-		if(!SpeedAltered())
+		if(!StatusEffectsAffectingSpeed())
 		{
 			GetInputStrength();
 		}
@@ -216,23 +216,36 @@ public partial class MovementController : Controller
 		return false;
 	}
 	
+	public bool StatusEffectsPreventingMovement()
+	{
+		if(player.status_effect_controller.frozen || player.status_effect_controller.stunned || player.status_effect_controller.hamstrung || player.status_effect_controller.hexed)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public bool StatusEffectsAffectingSpeed()
+	{
+		if (player.status_effect_controller.on_fire || player.status_effect_controller.stealth || player.status_effect_controller.transpose || player.status_effect_controller.bull || player.status_effect_controller.slowed || player.status_effect_controller.chilled)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	public bool CanMove()
 	{
 		
-		if(player.movement_effects.Count != 0)
+		if(StatusEffectsPreventingMovement())
 		{
-			foreach(StatusEffect effect in player.movement_effects)
-			{
-				if (effect.resource.prevents_movement)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
+			return false;
 		}
 
 		if(player.ui.inventory.Visible) 
@@ -248,25 +261,25 @@ public partial class MovementController : Controller
 		
 	}
 
-	public bool SpeedAltered()
-	{
-		if(player.movement_effects.Count != 0)
-		{
-			foreach(StatusEffect effect in player.movement_effects)
-			{
-				if (effect.resource.alters_speed)
-				{
-					return true;
-				}
-				else 
-				{
-					return false;
-				}
-			}
-		}
+	// public bool SpeedAltered()
+	// {
+	// 	if(player.movement_effects.Count != 0)
+	// 	{
+	// 		foreach(StatusEffect effect in player.movement_effects)
+	// 		{
+	// 			if (effect.resource.alters_speed)
+	// 			{
+	// 				return true;
+	// 			}
+	// 			else 
+	// 			{
+	// 				return false;
+	// 			}
+	// 		}
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 	
 
 	public void TargetingMovement() // Calculates which direction the player is moving in relative to its local direction

@@ -199,11 +199,10 @@ public partial class Enemy : Entity
 			{
 				GD.Print("Applying " + status_effect.Name + " to " + Name);
 				status_effect.Apply(this);
-				if(status_effect.effect_type == "movement")
-				{
-					previous_movement_effects_count = movement_effects.Count;
-					status_effect_controller.AddMovementEffect(status_effect);
-				}
+				// if(status_effect.effect_type == "movement")
+				// {
+				// 	previous_movement_effects_count = movement_effects.Count;
+				// }
 			}
 			if(body is RangedHitbox)
 			{

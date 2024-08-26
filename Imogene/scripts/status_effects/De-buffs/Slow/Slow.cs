@@ -20,6 +20,7 @@ public partial class Slow : StatusEffect
 
 	public override void Apply(Entity entity)
 	{
+		
 		if(this_entity == null)
 		{
 			 this_entity = entity;
@@ -34,6 +35,7 @@ public partial class Slow : StatusEffect
 		{
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
 		}
+		entity.status_effect_controller.AddStatusEffect(this);
 		if(entity.speed >= entity.walk_speed)
 		{
 			entity.speed *= 0.7f;
@@ -52,8 +54,8 @@ public partial class Slow : StatusEffect
         if(current_stacks == 1)
 		{
 			this_entity.speed = this_entity.walk_speed;
-			this_entity.movement_effects.Remove(this);
-			this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
+			this_entity.status_effect_controller.RemoveStatusEffect(this);
+			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 			GD.Print("entity speed reset to " + this_entity.speed);
 			// RemoveStatusEffect(this);
 		}
@@ -64,6 +66,5 @@ public partial class Slow : StatusEffect
 		}
 		current_stacks -= 1;
 		GD.Print("current stacks " + current_stacks);
-		
     }
 }

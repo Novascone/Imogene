@@ -33,6 +33,8 @@ public partial class Entity : CharacterBody3D
     public bool jumping = false;
     public bool using_movement_ability;
     public bool on_floor;
+	public bool hale;
+	public bool weak;
     public bool attacking; // Boolean to keep track of if the entity is attacking
     public bool animation_triggered;
 	public bool targeted;
@@ -210,17 +212,8 @@ public partial class Entity : CharacterBody3D
     public int gold = 0;
 
 	// Status effects
-	public List<StatusEffect> movement_effects = new List<StatusEffect>();
-	public int previous_movement_effects_count;
-	public List<StatusEffect> health_effects = new List<StatusEffect>();
-	public int previous_health_effects_count;
-	public List<StatusEffect> damage_effects = new List<StatusEffect>();
-	public int previous_damage_effects_count;
-	public List<StatusEffect> general_effects = new List<StatusEffect>();
-	public int previous_general_effects_count;
-	public List<StatusEffect> tradeoff_effects = new List<StatusEffect>();
-	public int previous_tradeoff_effects_count;
-
+	public List<StatusEffect> status_effects = new List<StatusEffect>();
+	
 
     // public Vector3 enemy_position;
 
@@ -235,6 +228,9 @@ public partial class Entity : CharacterBody3D
 
 		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
 		resource_system.GetEntityInfo(this);
+
+		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
+		status_effect_controller.GetEntityInfo(this);
 
 		if(this is Player player)
 		{

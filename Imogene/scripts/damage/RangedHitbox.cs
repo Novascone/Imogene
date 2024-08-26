@@ -7,7 +7,6 @@ public partial class RangedHitbox : RigidBody3D
 	[Export] public string damage_type { get; set; }
 	[Export] public float damage { get; set; }
 	[Export] public float posture_damage { get; set; }
-
 	public List<StatusEffect> effects = new List<StatusEffect>();
 	public bool is_critical;
 

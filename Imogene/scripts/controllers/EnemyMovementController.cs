@@ -15,61 +15,36 @@ public partial class EnemyMovementController : Controller
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(entity.movement_effects.Count > entity.previous_movement_effects_count)
+		if(StatusEffectsPreventingMovement())
 		{
-			movement_check_completed = false;
+			GD.Print(entity.Name + " can't move");
+		}
+		
+		
+	}
+
+	public bool StatusEffectsPreventingMovement()
+	{
+		if(entity.status_effect_controller.frozen || entity.status_effect_controller.stunned || entity.status_effect_controller.hamstrung || entity.status_effect_controller.hexed)
+		{
+			return true;
 		}
 		else
 		{
-			movement_check_completed = true;
+			return false;
 		}
-		CanMove();
-		SpeedAltered();
-		
 	}
 
-	public bool CanMove()
+	public bool StatusEffectsAffectingSpeed()
 	{
-		if(entity.movement_effects.Count > entity.previous_movement_effects_count)
+		if (entity.status_effect_controller.on_fire || entity.status_effect_controller.stealth || entity.status_effect_controller.transpose || entity.status_effect_controller.bull || entity.status_effect_controller.slowed || entity.status_effect_controller.chilled)
 		{
-			movement_stopped_check = true;
-			foreach(StatusEffect effect in entity.movement_effects)
-			{
-				if (effect.resource.prevents_movement)
-				{
-					GD.Print("Movement disabled");
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
+			return true;
 		}
-		return true;
-		
-	}
-
-	public bool SpeedAltered()
-	{
-		if(entity.movement_effects.Count > entity.previous_movement_effects_count)
+		else
 		{
-			speed_altered_check = true;
-			foreach(StatusEffect effect in entity.movement_effects)
-			{
-				if (effect.resource.alters_speed)
-				{
-					GD.Print("Speed is being altered by movement effect");
-					return true;
-				}
-				else 
-				{
-					return false;
-				}
-			}
+			return false;
 		}
-
-		return false;
 	}
 
 	

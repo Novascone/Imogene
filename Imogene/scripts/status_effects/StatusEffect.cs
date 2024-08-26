@@ -37,7 +37,7 @@ public partial class StatusEffect : Node3D
 
 	public void CheckCanApplyStatusEffect()
 	{
-
+			
 	}
 
 	public virtual void Apply(Entity entity)

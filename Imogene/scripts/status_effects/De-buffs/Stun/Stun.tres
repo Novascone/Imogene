@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://4qocptd7l5m7"]
+
+[ext_resource type="Script" path="res://scripts/status_effects/status_effect_resources/StatusEffectResource.cs" id="1_gr0v5"]
+
+[resource]
+script = ExtResource("1_gr0v5")
+id = 0
+name = "Stun"
+description = "Stuns the target"
+ability_path = ""
+type = "Crowd Control"
+prevents_movement = true
+alters_speed = false
