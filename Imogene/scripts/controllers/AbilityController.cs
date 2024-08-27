@@ -4,6 +4,8 @@ using System;
 // Load abilities for the player, and sends the abilities the player has to the UI 
 public partial class AbilityController : Controller
 {
+
+	public bool can_use_abilities;
 	// Called when the node enters the scene tree for the first time.
 	
 	private CustomSignals _customSignals; // Custom signal instance
@@ -16,20 +18,33 @@ public partial class AbilityController : Controller
 
     public override void _Process(double delta)
     {
-        if(player.ui.abilities.ability_changed)
+		if (player != null)
 		{
-			foreach(Ability ability in player.abilities)
+			if(player.ui.abilities.ability_changed)
 			{
-				if (ability.Name == player.ui.abilities.ability_to_change)
+				foreach(Ability ability in player.abilities)
 				{
-					ability.useable = true;
-					ability.CheckAssignment(player.ui.abilities.button_to_bind);
+					if (ability.Name == player.ui.abilities.ability_to_change)
+					{
+						ability.useable = true;
+						ability.CheckAssignment(player.ui.abilities.button_to_bind);
+					}
 				}
+				player.ui.abilities.ability_changed = false;
+				player.ui.abilities.ability_to_change = null;
+				player.ui.abilities.button_to_bind = null;
 			}
-			player.ui.abilities.ability_changed = false;
-			player.ui.abilities.ability_to_change = null;
-			player.ui.abilities.button_to_bind = null;
+			if(StatusEffectPreventingAbilities())
+			{
+				can_use_abilities = false;
+				GD.Print("player can not use abilities because of a status effect");
+			}
+			else
+			{
+				can_use_abilities = true;
+			}
 		}
+        
 		// if(Input.IsActionJustPressed("five"))
 		// {
 		// 	AddAbilityResource("Hitscan");
@@ -97,7 +112,7 @@ public partial class AbilityController : Controller
 			AssignAbilityHelper("RCrossPrimaryRightAssign", player.small_fireball);
 			AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
 			AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
-			AssignAbilityHelper("LCrossPrimaryRightAssign", player.hitscan);
+			AssignAbilityHelper("LCrossPrimaryRightAssign", player.effects_test);
 			AssignAbilityHelper("LCrossPrimaryLeftAssign", player.projectile);
 			AssignAbilityHelper("RCrossPrimaryLeftAssign", player.dash);
 			AssignAbilityHelper("LCrossPrimaryDownAssign", player.whirlwind);
@@ -120,6 +135,15 @@ public partial class AbilityController : Controller
 				}
 			}
 			// GD.Print("Ability Assigned");
+	}
+
+	public bool StatusEffectPreventingAbilities()
+	{
+		if(player.status_effect_controller.dazed || player.status_effect_controller.frozen || player.status_effect_controller.feared || player.status_effect_controller.hexed || player.status_effect_controller.staggered)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	

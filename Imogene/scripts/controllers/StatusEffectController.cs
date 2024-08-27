@@ -73,39 +73,113 @@ public partial class StatusEffectController : Controller
 	{
 		if(slowed) { GD.Print(entity.Name + " is slowed"); }
 
+		if(dazed) { GD.Print(entity.Name + " is dazed"); }
+
 		if(stunned) { GD.Print(entity.Name + " is stunned"); }
+
+		if(chilled) { GD.Print(entity.Name + " is chilled"); }
+
+		if(frozen) { GD.Print(entity.Name + " is frozen"); }
 	}
 
 	public void AddStatusEffect(StatusEffect effect)
 	{
+		GD.Print("adding status effect");
+		QueueStatusEffect(effect);
+		if(effect.state == StatusEffect.States.queued)
+		{
+			GD.Print("effect queued");
+			ApplyStatusEffect(effect);
+		}
+		
+		
+	}
+
+	public bool SlowingEffectApplied( StatusEffect effect)
+	{
+		if(slowed || chilled || tethered)
+		{
+			if(entity.status_effects.Contains(effect))
+			{
+				return false;
+			}
+			GD.Print("slowing effect applied");
+			return true;
+		}
+		
+		return false;
+	}
+
+	public bool StoppingEffectApplied(StatusEffect effect)
+	{
+		if(frozen || feared || hamstrung || stunned || hexed)
+		{
+			if(entity.status_effects.Contains(effect))
+			{
+				return false;
+			}
+			return true;
+		}
+		
+		return false;
+	}
+
+	public void RemoveStatusEffect(StatusEffect effect)
+	{
+		GD.Print("removing " + effect.Name);
+		entity.status_effects.Remove(effect);
+		GD.Print("resetting stacks of " + effect.Name);
+		SetEffectBooleans(effect);
+	}
+
+	public void QueueStatusEffect(StatusEffect effect)
+	{
+		GD.Print("trying to queue status effect");
+		if(effect.state == StatusEffect.States.not_queued)
+		{   
+			GD.Print("status effect not queued");
+			if(effect.resource.prevents_movement && !StoppingEffectApplied(effect))
+			{
+				effect.state = StatusEffect.States.queued;
+				GD.Print("queueing status effect");
+			}
+			else if(effect.resource.alters_speed && !SlowingEffectApplied(effect))
+			{
+				effect.state = StatusEffect.States.queued;
+				GD.Print("queueing status effect");
+			}
+			else
+			{
+				effect.state = StatusEffect.States.queued;
+			}
+
+		}
+	}
+
+	public void ApplyStatusEffect(StatusEffect effect)
+	{
+		GD.Print("effects count " + entity.status_effects.Count);
 		if(!entity.status_effects.Contains(effect))
 		{
-			entity.status_effects.Add(effect);
-			SetEffectBooleans(effect);
-			effect.current_stacks += 1;
+			effect.Apply(entity);
 			GD.Print("current stacks " + effect.current_stacks);
-			
 		}
-		else if (effect.current_stacks < effect.max_stacks)
+		else if (effect.current_stacks < effect.max_stacks && entity.status_effects.Contains(effect))
 		{
-			effect.current_stacks += 1;
+			effect.Apply(entity);
+			
 			GD.Print("current stacks " + effect.current_stacks);
 		}
 		else
 		{
 			GD.Print("Can not add more stacks");
 		}
-		
-	}
-
-	public void RemoveStatusEffect(StatusEffect effect)
-	{
-		entity.status_effects.Remove(effect);
-		SetEffectBooleans(effect);
+	
 	}
 
 	public void SetEffectBooleans(StatusEffect effect)
 	{
+	
 		// Set movement effect booleans
 
 		// if(effect is unstoppable) { unstoppable = !unstoppable; }
@@ -118,11 +192,11 @@ public partial class StatusEffectController : Controller
 
 		if(effect is Slow) { slowed = !slowed; }
 
-		// if(effect is Daze) { Dazed = !Dazed; }
+		if(effect is Daze) { dazed = !dazed; }
 
-		// if(effect is Chill) { chilled = !chilled; }
+		if(effect is Chill) { chilled = !chilled; }
 
-		// if(effect is Freeze) { frozen = !frozen; }
+		if(effect is Freeze) { frozen = !frozen; }
 
 		// if(effect is Fear) { feared = !feared; }
 

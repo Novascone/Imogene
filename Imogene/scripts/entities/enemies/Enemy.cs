@@ -67,6 +67,7 @@ public partial class Enemy : Entity
 
 	public StatController stat_controller;
 	public EnemyMovementController movement_controller;
+	public EnemyAbilityController ability_controller;
 	
 
 	// UI
@@ -102,6 +103,7 @@ public partial class Enemy : Entity
 		stat_controller = GetNode<StatController>("Controllers/StatController");
 		movement_controller = GetNode<EnemyMovementController>("Controllers/MovementController");
 		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
+		ability_controller = GetNode<EnemyAbilityController>("Controllers/AbilityController");
 		health_bar = GetNode<ProgressBar>("UI/HealthBarSubViewport/VBoxContainer/ProgressBar");
 		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarSubViewport/VBoxContainer/TextureProgressBar");
 		status_bar = GetNode<Sprite3D>("UI/StatusBar");
@@ -125,6 +127,7 @@ public partial class Enemy : Entity
 		stat_controller.UpdateStats();
 		movement_controller.GetEntityInfo(this);
 		status_effect_controller.GetEntityInfo(this);
+		ability_controller.GetEntityInfo(this);
 		// GD.Print("Posture Regen " + posture_regen);
 
 		ray_position = GetNode<Node3D>("Controllers/RayPosition");
@@ -179,12 +182,18 @@ public partial class Enemy : Entity
 			// GD.Print(Name + " hurtbox entered by " + melee_box.Name);
 			if(area is MeleeHitbox)
 			{
+				foreach(StatusEffect status_effect in melee_box.effects)
+				{
+					GD.Print("Applying " + status_effect.Name + " to " + Name);
+					// status_effect.Apply(this);
+					status_effect_controller.AddStatusEffect(status_effect);
+					// if(status_effect.effect_type == "movement")
+					// {
+					// 	previous_movement_effects_count = movement_effects.Count;
+					// }
+				}
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
 				resource_system.Posture(melee_box.posture_damage);
-				if(melee_box.effect_1 != "")
-				{
-					// GD.Print(Name + " has " + melee_box.effect_1 + " applied");
-				}
 			}
 		}
 		

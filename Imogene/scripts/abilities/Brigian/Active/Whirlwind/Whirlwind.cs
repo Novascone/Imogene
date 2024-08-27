@@ -13,8 +13,8 @@ public partial class Whirlwind : Ability
 	public override void _Ready()
 	{
 		tick_timer = GetNode<Timer>("TickTimer");
-		hitbox_to_load = GD.Load<PackedScene>("res://scenes/abilities/whirlwind/whirlwind_hitbox.tscn");
-		mesh_to_load = GD.Load<PackedScene>("res://scenes/abilities/whirlwind/whirlwind_mesh.tscn");
+		hitbox_to_load = GD.Load<PackedScene>("res://scripts/abilities/Brigian/Active/Whirlwind/whirlwind_hitbox.tscn");
+		mesh_to_load = GD.Load<PackedScene>("res://scripts/abilities/Brigian/Active/Whirlwind/whirlwind_mesh.tscn");
 		resource_cost = 10;
 		rotate_on_soft = false;
 	}

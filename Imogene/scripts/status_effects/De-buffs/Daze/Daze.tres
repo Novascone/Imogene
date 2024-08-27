@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bwoiuuws2fqs4"]
+
+[ext_resource type="Script" path="res://scripts/status_effects/status_effect_resources/StatusEffectResource.cs" id="1_nnh23"]
+
+[resource]
+script = ExtResource("1_nnh23")
+id = 0
+name = "Daze"
+description = ""
+ability_path = ""
+type = ""
+prevents_movement = false
+alters_speed = false

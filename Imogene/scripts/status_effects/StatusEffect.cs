@@ -12,6 +12,7 @@ public partial class StatusEffect : Node3D
 	public int max_stacks;
 	public int current_stacks;
 	public Entity this_entity;
+	public States state;
 
 	public enum States
     {
@@ -30,20 +31,15 @@ public partial class StatusEffect : Node3D
 	{
 	}
 
-	public void QueueStatusEffect()
-	{
-		
-	}
-
-	public void CheckCanApplyStatusEffect()
-	{
-			
-	}
+	
 
 	public virtual void Apply(Entity entity)
 	{
 		GD.Print("Apply status effect");
 	}
+
+	
+
 
 	// public void AddStatusEffect(StatusEffect effect)
 	// {

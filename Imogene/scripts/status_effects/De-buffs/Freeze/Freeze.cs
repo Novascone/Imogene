@@ -1,12 +1,11 @@
 using Godot;
 using System;
 
-public partial class Stun : StatusEffect
+public partial class Freeze : StatusEffect
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		// base._Ready();
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 1;
@@ -16,6 +15,7 @@ public partial class Stun : StatusEffect
 	public override void _PhysicsProcess(double delta)
 	{
 	}
+
 
 	public override void Apply(Entity entity)
 	{
@@ -30,28 +30,24 @@ public partial class Stun : StatusEffect
 		}
 		if(current_stacks == 0)
 		{
-			GD.Print("Stunning");
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
+			current_stacks += 1;
 			entity.status_effects.Add(this);
+			GD.Print("Frozen");
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
 			entity.status_effect_controller.SetEffectBooleans(this);
 		}
-		current_stacks += 1;
 		
 	}
 
 	private void timer_timeout()
     {
 		GD.Print("timer timeout");
-     
+		current_stacks -= 1;
 		this_entity.status_effect_controller.RemoveStatusEffect(this);
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-		GD.Print("entity can now move ");
+		GD.Print("entity is no longer frozen");
 		// RemoveStatusEffect(this);
-		if(current_stacks > 0)
-		{
-			current_stacks -= 1;
-		}
-		
-		GD.Print("current stacks " + current_stacks);
+		GD.Print("current stacks of " + this.Name + " " + current_stacks);
     }
+
 }

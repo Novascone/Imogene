@@ -60,7 +60,7 @@ public partial class Player : PlayerEntity
 	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Thrust/Thrust.tres");
 	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Bash/Bash.tres");
 	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Jump/Jump.tres");
-	public AbilityResource hitscan = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Hitscan/Hitscan.tres");
+	public AbilityResource effects_test = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/EffectTest/EffectTest.tres");
 	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Projectile/Projectile.tres");
 	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Dash/Dash.tres");
 	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Brigian/Active/Whirlwind/Whirlwind.tres");
@@ -90,7 +90,7 @@ public partial class Player : PlayerEntity
 		ability_resources.Add(thrust);
 		ability_resources.Add(bash);
 		ability_resources.Add(jump);
-		ability_resources.Add(hitscan);
+		ability_resources.Add(effects_test);
 		ability_resources.Add(projectile);
 		ability_resources.Add(dash);
 		ability_resources.Add(whirlwind);
@@ -170,7 +170,9 @@ public partial class Player : PlayerEntity
 		on_wall = GetNode<RayCast3D>("Controllers/WallCheck/OnWall");
 
 		hurtbox = GetNode<Hurtbox>("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox");
-		hurtbox.AreaEntered += OnHurtboxBodyEntered;
+		hurtbox.AreaEntered += OnHurtboxAreaEntered;
+		hurtbox.BodyEntered += OnHurtboxBodyEntered;
+		
 		
 		foot_left = new MeshInstance3D();
 
@@ -218,15 +220,45 @@ public partial class Player : PlayerEntity
 		// GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
+    private void OnHurtboxAreaEntered(Area3D area)
+    {
+        if(area is MeleeHitbox melee_box)
+		{
+			if(area.IsInGroup("ActiveHitbox") && area is MeleeHitbox)
+			{
+				foreach(StatusEffect status_effect in melee_box.effects)
+				{
+					GD.Print("Applying " + status_effect.Name + " to " + Name);
+					status_effect.Apply(this);
+					// if(status_effect.effect_type == "movement")
+					// {
+					// 	previous_movement_effects_count = movement_effects.Count;
+					// }
+				}
+				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
+				resource_system.Posture(melee_box.posture_damage);
+			}
+		}
+    }
+
     private void OnHurtboxBodyEntered(Node3D body)
     {
 		// GD.Print("Hitbox entered " + this.Name);
-		if(body is MeleeHitbox box)
+		if(body is RangedHitbox ranged_box)
 		{
-			if(body.IsInGroup("ActiveHitbox") && body is MeleeHitbox)
+			if(body.IsInGroup("ActiveHitbox") && body is RangedHitbox)
 			{
-				damage_system.TakeDamage(box.damage_type, box.damage, box.is_critical);
-				resource_system.Posture(box.posture_damage);
+				foreach(StatusEffect status_effect in ranged_box.effects)
+				{
+					GD.Print("Applying " + status_effect.Name + " to " + Name);
+					status_effect.Apply(this);
+					// if(status_effect.effect_type == "movement")
+					// {
+					// 	previous_movement_effects_count = movement_effects.Count;
+					// }
+				}
+				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
+				resource_system.Posture(ranged_box.posture_damage);
 			}
 		}
     }

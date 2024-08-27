@@ -34,8 +34,11 @@ public partial class Slow : StatusEffect
 		if(current_stacks == 0)
 		{
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
+			entity.status_effects.Add(this);
+			entity.status_effect_controller.SetEffectBooleans(this);
 		}
-		entity.status_effect_controller.AddStatusEffect(this);
+		current_stacks += 1;
+		
 		if(entity.speed >= entity.walk_speed)
 		{
 			entity.speed *= 0.7f;
@@ -64,7 +67,11 @@ public partial class Slow : StatusEffect
 			GD.Print("creating another timer");
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
 		}
-		current_stacks -= 1;
+		if(current_stacks > 0)
+		{
+			current_stacks -= 1;
+		}
+		
 		GD.Print("current stacks " + current_stacks);
     }
 }

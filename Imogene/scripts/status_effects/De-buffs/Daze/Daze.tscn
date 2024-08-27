@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cu6ndremfq872"]
+
+[ext_resource type="Script" path="res://scripts/status_effects/De-buffs/Daze/Daze.cs" id="1_gll3r"]
+[ext_resource type="Resource" uid="uid://bwoiuuws2fqs4" path="res://scripts/status_effects/De-buffs/Daze/Daze.tres" id="2_6fjq6"]
+
+[node name="Daze" type="Node3D"]
+script = ExtResource("1_gll3r")
+resource = ExtResource("2_6fjq6")

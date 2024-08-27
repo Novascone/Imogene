@@ -15,8 +15,8 @@ public partial class Kick : Ability
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		hitbox_to_load = GD.Load<PackedScene>("res://scenes/abilities/kick/kick_hitbox.tscn");
-		mesh_to_load = GD.Load<PackedScene>("res://scenes/abilities/kick/kick_mesh.tscn");
+		hitbox_to_load = GD.Load<PackedScene>("res://scripts/abilities/General/Active/Kick/kick_hitbox.tscn");
+		mesh_to_load = GD.Load<PackedScene>("res://scripts/abilities/General/Active/Kick/kick_mesh.tscn");
 		charge_timer_1 = GetNode<Timer>("ChargeTimer1");
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
 		cast_timer = GetNode<Timer>("CastTimer");

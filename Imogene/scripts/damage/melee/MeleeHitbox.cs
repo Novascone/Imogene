@@ -9,6 +9,7 @@ public partial class MeleeHitbox : Area3D
 	[Export] public float damage { get; set; }
 	[Export] public float posture_damage { get; set; }
 	public bool is_critical;
+	public List<StatusEffect> effects = new List<StatusEffect>();
 	[Export] public string effect_1;
 	[Export] public string effect_2;
 	[Export] public string effect_3;

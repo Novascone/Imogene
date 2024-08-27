@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Stun : StatusEffect
+public partial class Daze : StatusEffect
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -30,12 +30,12 @@ public partial class Stun : StatusEffect
 		}
 		if(current_stacks == 0)
 		{
-			GD.Print("Stunning");
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
+			GD.Print("Dazed");
+			current_stacks += 1;
 			entity.status_effects.Add(this);
 			entity.status_effect_controller.SetEffectBooleans(this);
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
 		}
-		current_stacks += 1;
 		
 	}
 
@@ -45,7 +45,7 @@ public partial class Stun : StatusEffect
      
 		this_entity.status_effect_controller.RemoveStatusEffect(this);
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-		GD.Print("entity can now move ");
+		GD.Print("entity can attack");
 		// RemoveStatusEffect(this);
 		if(current_stacks > 0)
 		{
@@ -54,4 +54,6 @@ public partial class Stun : StatusEffect
 		
 		GD.Print("current stacks " + current_stacks);
     }
+
+	
 }

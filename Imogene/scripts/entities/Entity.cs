@@ -28,6 +28,7 @@ public partial class Entity : CharacterBody3D
 	// Controllers
 	public StatusEffectController status_effect_controller;
 
+
 	// Booleans
 	public bool can_move = true; // Boolean to keep track of if the entity is allowed to move
     public bool jumping = false;

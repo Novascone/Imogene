@@ -24,6 +24,7 @@ public partial class Ability : Node3D
     public string action_button { get; set; }
     public bool cross_selected;
     public Player player;
+    public Entity entity;
     public bool button_pressed;
     public bool button_released;
     public bool button_held;
@@ -92,7 +93,7 @@ public partial class Ability : Node3D
 
     public void CheckCanUseAbility()
     {
-        if(state == States.queued)
+        if(state == States.queued && player.ability_controller.can_use_abilities)
         {
             if(!button_held)
             {
@@ -133,6 +134,8 @@ public partial class Ability : Node3D
 
         }
     }
+
+    
 
     public bool CanAfford()
     {

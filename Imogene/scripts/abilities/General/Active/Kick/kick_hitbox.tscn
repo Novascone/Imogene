@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctnpdc67bk5gr"]
 
-[ext_resource type="Script" path="res://scripts/damage/melee/KickHitbox.cs" id="1_wra82"]
+[ext_resource type="Script" path="res://scripts/abilities/General/Active/Kick/KickHitbox.cs" id="1_wra82"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vgb1t"]
 radius = 2.0

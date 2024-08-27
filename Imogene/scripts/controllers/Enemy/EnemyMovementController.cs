@@ -17,7 +17,7 @@ public partial class EnemyMovementController : Controller
 	{
 		if(StatusEffectsPreventingMovement())
 		{
-			GD.Print(entity.Name + " can't move");
+			// GD.Print(entity.Name + " can't move");
 		}
 		
 		
