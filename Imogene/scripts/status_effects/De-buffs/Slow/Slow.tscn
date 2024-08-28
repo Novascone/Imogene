@@ -6,6 +6,7 @@
 [node name="Slow" type="Node3D"]
 script = ExtResource("1_j0uhf")
 resource = ExtResource("2_xulnu")
+alters_speed = true
 
 [node name="DurationTimer" type="Timer" parent="."]
 one_shot = true

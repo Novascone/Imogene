@@ -207,7 +207,7 @@ public partial class Enemy : Entity
 			foreach(StatusEffect status_effect in ranged_box.effects)
 			{
 				GD.Print("Applying " + status_effect.Name + " to " + Name);
-				status_effect.Apply(this);
+				status_effect_controller.AddStatusEffect(status_effect);
 				// if(status_effect.effect_type == "movement")
 				// {
 				// 	previous_movement_effects_count = movement_effects.Count;

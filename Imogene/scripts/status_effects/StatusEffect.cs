@@ -7,11 +7,13 @@ public partial class StatusEffect : Node3D
 	[Export] public string description { get; set; }
     [Export] public StatusEffectResource resource { get; set; }
     [Export] public string effect_type { get; set; }
-	public Timer duration_timer;
+	[Export] public bool alters_speed;
+	[Export] public bool prevents_movement;
+	public bool applied;
+ 	public Timer duration_timer;
 	public int duration;
 	public int max_stacks;
 	public int current_stacks;
-	public Entity this_entity;
 	public States state;
 
 	public enum States
@@ -29,13 +31,21 @@ public partial class StatusEffect : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		if(current_stacks > 0)
+		{
+			applied = true;
+		}
+		else
+		{
+			applied = false;
+		}
 	}
 
 	
 
 	public virtual void Apply(Entity entity)
 	{
-		GD.Print("Apply status effect");
+		GD.Print("Base status effect apply");
 	}
 
 	

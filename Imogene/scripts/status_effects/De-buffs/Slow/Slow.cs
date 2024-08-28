@@ -6,9 +6,7 @@ public partial class Slow : StatusEffect
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base._Ready();
 		duration = 5;
-		duration_timer.WaitTime = duration;
 		effect_type = "movement";
 		max_stacks = 5;
 	}
@@ -16,26 +14,20 @@ public partial class Slow : StatusEffect
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		base._PhysicsProcess(delta);
 	}
 
 	public override void Apply(Entity entity)
 	{
+
+		// GD.Print(entity.Name + " Speed before slow " + entity.speed);
+		// GD.Print("Applying slow");
 		
-		if(this_entity == null)
-		{
-			 this_entity = entity;
-		}
-		GD.Print(entity.Name + " Speed before slow " + entity.speed);
-		GD.Print("Applying slow");
-		if(GetParent() == null)
-		{
-			entity.AddChild(this);
-		}
 		if(current_stacks == 0)
 		{
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
-			entity.status_effects.Add(this);
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
 			entity.status_effect_controller.SetEffectBooleans(this);
+			GD.Print("Adding slow to " + entity.Name);
 		}
 		current_stacks += 1;
 		
@@ -51,27 +43,29 @@ public partial class Slow : StatusEffect
 		GD.Print(entity.Name + " Speed after slow " + entity.speed);
 	}
 
-	private void timer_timeout()
+	private void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout");
         if(current_stacks == 1)
 		{
-			this_entity.speed = this_entity.walk_speed;
-			this_entity.status_effect_controller.RemoveStatusEffect(this);
+			entity.speed = entity.walk_speed;
+			GD.Print("removing slow from " + entity.Name);
+			entity.status_effect_controller.RemoveStatusEffect(this);
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-			GD.Print("entity speed reset to " + this_entity.speed);
+			GD.Print("entity speed reset to " + entity.speed);
 			// RemoveStatusEffect(this);
 		}
 		else
 		{
 			GD.Print("creating another timer");
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
 		}
 		if(current_stacks > 0)
 		{
 			current_stacks -= 1;
+			GD.Print("decrementing stacks");
 		}
 		
-		GD.Print("current stacks " + current_stacks);
+		GD.Print("current stacks of slow " + current_stacks);
     }
 }

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://pfe1jopmwi2x"]
 
 [ext_resource type="PackedScene" uid="uid://lv1lgsac8cay" path="res://scenes/entities/target_dummy.tscn" id="1_y1ekm"]
-[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/player.tscn" id="2_fgw80"]
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/Player/player.tscn" id="2_fgw80"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vx77o"]
 vertices = PackedVector3Array(-38.6838, 0.491906, -39.8947, -38.6838, 0.491906, 39.8553, 38.5662, 0.491906, 39.8553, 38.5662, 0.491906, -39.8947)
@@ -53,3 +53,6 @@ transform = Transform3D(0.572311, 0, 0.403063, 0, 0.7, 0, -0.403063, 0, 0.572311
 
 [node name="player" parent="." instance=ExtResource("2_fgw80")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 10.5576)
+
+[node name="TargetDummy2" parent="." instance=ExtResource("1_y1ekm")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.44871, 0, -1.12566)

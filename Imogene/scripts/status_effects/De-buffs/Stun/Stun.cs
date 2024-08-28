@@ -20,10 +20,6 @@ public partial class Stun : StatusEffect
 	public override void Apply(Entity entity)
 	{
 		
-		if(this_entity == null)
-		{
-			 this_entity = entity;
-		}
 		if(GetParent() == null)
 		{
 			entity.AddChild(this);
@@ -31,19 +27,18 @@ public partial class Stun : StatusEffect
 		if(current_stacks == 0)
 		{
 			GD.Print("Stunning");
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout();
-			entity.status_effects.Add(this);
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
 			entity.status_effect_controller.SetEffectBooleans(this);
 		}
 		current_stacks += 1;
 		
 	}
 
-	private void timer_timeout()
+	private void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout");
      
-		this_entity.status_effect_controller.RemoveStatusEffect(this);
+		entity.status_effect_controller.RemoveStatusEffect(this);
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 		GD.Print("entity can now move ");
 		// RemoveStatusEffect(this);

@@ -14,5 +14,11 @@ public partial class TargetDummy : Enemy
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		// if(Name == "TargetDummy2")
+		// {
+		// 	GD.Print("Effects count" + status_effects.Count);
+		// 	GD.Print(" effect already applied " + status_effect_controller.effect_already_applied );
+		// }
+		
 	}
 }
