@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
+
 
 // Movement Controller
 // Moves the player character around the world, sets basic animations, implements the landing icon, applies smooth rotation, handles looking at enemies, and prevents movement when UI is open
@@ -13,210 +15,96 @@ public partial class MovementController : Controller
 	int ray_range = 2000;
 	private float climb_speed = 4.0f;
 	private float clamber_speed = 10.0f;
-	private float _t = 0.2f;
 	public bool rotation_only;
 	public bool rotation_finished;
 	public bool movement_input_allowed = true;
-	// Called when the node enters the scene tree for the first time.
-	private CustomSignals _customSignals; // Custom signal instance
-	public override void _Ready()
+	
+	
+
+	public void MovePlayer(Player player, float input_strength, double delta)
 	{
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.UIPreventingMovement += HandleUIPreventingMovement;
-	}
-
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(double delta)
-	{
-		player.Fall(delta);
-		// GD.Print("player rotation only " + rotation_only);
-		var landing_ray = LandPosition();
-
-
-		
-		
-		if(landing_ray.Count > 0)
-		{
-			player.land_point_position = landing_ray["position"].AsVector3();
-			player.land_point.Show();
-		}
-
-		if(player.velocity == Vector3.Zero) // If not moving return to Idle slowly (hence the lerp)
-		{
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, 0.1f);
-		}
-
-		if(CanMove()) // Basic movement controller
+		if(CanMove(player))
 		{
 			if(!player.is_climbing)
 			{
-				BasicMovement();
+				StandardMovement(player, input_strength, delta);
 			}
 			else
 			{
-				ClimbingMovement();
+				ClimbingMovement(player);
 			}
+			if(!rotation_only)
+			{
+				player.velocity.X = player.direction.X * player.speed;
+				player.velocity.Z = player.direction.Z * player.speed;
+			}
+			else
+			{
+				player.velocity.Lerp(Vector3.Zero, 0.1f);
+			}
+			player.Velocity = player.velocity;
+	}
 			
-		}
-		if(!CanMove())
-		{
-			player.velocity.X = 0;
-			player.velocity.Z = 0;
-		}
-
-		player.SmoothRotation(); // Rotate the player character smoothly
-		player.targeting_system.LookAtEnemy(); // Look at mob and handle switching
-		
-		
-		if(!player.using_movement_ability && !rotation_only)
-		{
-			player.velocity.X = player.direction.X * player.speed;
-			player.velocity.Z = player.direction.Z * player.speed;
-			if(player.is_climbing)
-			{
-				player.velocity.Y = player.direction.Y * player.speed;
-			}
-		}
-		else
-		{
-			player.velocity.Lerp(Vector3.Zero, 0.1f);
-		}
-		
-		if(player.targeting && player.targeting_system.enemy_in_vision)
-		{
-			if(player.Velocity != Vector3.Zero)
-			{
-				TargetingMovement();
-			}
-			else
-			{
-				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
-			}
-		}
-		else
-		{
-			SetDefaultBlendDirection();
-		}
-		
-		
-		player.Velocity = player.velocity;
-		player.land_point.GlobalPosition = player.land_point_position;
-		player.tree.Set("parameters/Master/Main/IW/blend_position", player.blend_direction);
-		player.tree.Set("parameters/Master/Ability/Ability_1/Recovery_1/Walk_Recovery/blend_position", player.blend_direction);
-		player.tree.Set("parameters/Master/Ability/Ability_1/Melee_Recovery_1/Slash/One_Handed_Slash_recovery_1/One_Handed_Medium_Recovery/Walk_Recovery/blend_position", player.blend_direction); // Set blend position
-		// tree.Set("parameters/Master/Attack/AttackSpeed/scale", attack_speed);
-		player.MoveAndSlide();
-		// if(player.direction == -player.Transform.Basis.Z)
-		// {
-		// 	GD.Print("Player is walking forwards");
-		// }
-		// GD.Print("player.Transform.Basis.Z " + -player.Transform.Basis.Z);
-		// GD.Print("player direction " + player.direction);
-		
-		// if(player.direction.IsEqualApprox(player.Transform.Basis.Z))
-		// {
-		// 	GD.Print("player moving backward");
-		// }
-		// if(player.direction.IsEqualApprox(player.Transform.Basis.X))
-		// {
-		// 	GD.Print("player moving right");
-		// }
-		// if(player.direction.IsEqualApprox(-player.Transform.Basis.X))
-		// {
-		// 	GD.Print("player moving left");
-		// }
 	}
 
-
-	public void BasicMovement() // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
-	{
-		if(!InputPrevented())
+    private void StandardMovement(Player player, float input_strength, double delta)
+    {
+        if(player.IsOnFloor())
 		{
-			if (Input.IsActionPressed("Right"))
-			{
-				player.direction.X -= 1.0f;	
-			}
-			if (Input.IsActionPressed("Left"))
-			{
-				player.direction.X += 1.0f;
-			}
-			if (Input.IsActionPressed("Backward"))
-			{
-				player.direction.Z -= 1.0f;
-			}
-			if (Input.IsActionPressed("Forward"))
-			{
-				player.direction.Z += 1.0f;
-			}
-			if(Input.IsActionJustPressed("five"))
-			{
-				GD.Print("five");
-				rotation_only = !rotation_only;
-				GD.Print("five rotation only " + rotation_only);
-			}
-		}
-		if(Input.IsActionJustPressed("six"))
-		{
-			movement_input_allowed = !movement_input_allowed;
-			GD.Print("player movement_input allowed" + movement_input_allowed);
-		}
-		
-		
-		if(!StatusEffectsAffectingSpeed())
-		{
-			GetInputStrength();
-		}
-		
-	}
-
-	public void GetInputStrength()
-	{
-		if(Input.GetActionStrength("Right") + Input.GetActionStrength("Forward") >= 0.75)
-		{
-			player.speed = player.run_speed;
-		}
-		else if(Input.GetActionStrength("Right") + Input.GetActionStrength("Backward") >= 0.75 )
-		{
-			player.speed = player.run_speed;
-		}
-		else if(Input.GetActionStrength("Left") + Input.GetActionStrength("Forward") >= 0.75)
-		{
-			player.speed = player.run_speed;
-		}
-		else if( Input.GetActionStrength("Left") + Input.GetActionStrength("Backward") >= 0.75)
+		if(input_strength > 0.75f)
 		{
 			player.speed = player.run_speed;
 		}
 		else
 		{
-			player.speed = player.walk_speed;
+			player.speed = player.walk_speed; 
+		}
+		}
+		else
+		{
+			player.speed = Mathf.Lerp(player.speed, 2.0f, 0.1f);
+		}
+
+		if(!player.IsOnFloor())
+		{
+			player.velocity.Y += (float)(SetGravity(player) * delta);
+		}
+		
+		LookForward(player,player.direction);
+    }
+
+    public float SetGravity(Player player)
+	{
+		if(player.Velocity.Y > 0)
+		{
+
+			return player.jump_gravity;
+		}
+		else
+		{
+			return player.fall_gravity;
 		}
 	}
 
-	public bool InputPrevented()
+	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
 	{
-		if(player.ability_in_use != null)
+		// GD.Print("Rotating smoothly");
+		if(!player.targeting && !player.is_climbing)
 		{
-			if(player.ability_in_use.stop_movement_input)
+			player.prev_y_rotation = player.GlobalRotation.Y;
+			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
 			{
-				return true;
+				player.LookAt(player.GlobalPosition + direction with { Y = 0 });
 			}
-			else
+			player.current_y_rotation = player.GlobalRotation.Y;
+			if(player.prev_y_rotation != player.current_y_rotation)
 			{
-				return false;
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
-		if(player.targeting_system.rotating_to_soft_target)
-		{
-			return true;
-		}
-		return false;
 	}
-	
-	public bool StatusEffectsPreventingMovement()
+
+	public bool StatusEffectsPreventingMovement(Player player)
 	{
 		if(player.status_effect_controller.frozen || player.status_effect_controller.stunned || player.status_effect_controller.hamstrung || player.status_effect_controller.hexed)
 		{
@@ -228,7 +116,7 @@ public partial class MovementController : Controller
 		}
 	}
 
-	public bool StatusEffectsAffectingSpeed()
+	public bool StatusEffectsAffectingSpeed(Player player)
 	{
 		if (player.status_effect_controller.on_fire || player.status_effect_controller.stealth || player.status_effect_controller.transpose || player.status_effect_controller.bull || player.status_effect_controller.slowed || player.status_effect_controller.chilled)
 		{
@@ -240,10 +128,10 @@ public partial class MovementController : Controller
 		}
 	}
 
-	public bool CanMove()
+	public bool CanMove(Player player)
 	{
 		
-		if(StatusEffectsPreventingMovement())
+		if(StatusEffectsPreventingMovement(player))
 		{
 			return false;
 		}
@@ -261,105 +149,12 @@ public partial class MovementController : Controller
 		
 	}
 
-	// public bool SpeedAltered()
-	// {
-	// 	if(player.movement_effects.Count != 0)
-	// 	{
-	// 		foreach(StatusEffect effect in player.movement_effects)
-	// 		{
-	// 			if (effect.resource.alters_speed)
-	// 			{
-	// 				return true;
-	// 			}
-	// 			else 
-	// 			{
-	// 				return false;
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return false;
-	// }
-	
-
-	public void TargetingMovement() // Calculates which direction the player is moving in relative to its local direction
-	{
-		var difference_vector_forward = -player.Transform.Basis.Z - player.direction;
-		difference_vector_forward = difference_vector_forward.Round();
-
-		var difference_vector_left = -player.Transform.Basis.X - player.direction;
-		difference_vector_left = difference_vector_left.Round();
-
-		var difference_vector_forward_left = -player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
-		difference_vector_forward_left = difference_vector_forward_left.Round();
-
-		var difference_vector_right = player.Transform.Basis.X - player.direction;
-		difference_vector_right = difference_vector_right.Round();
-
-		var difference_vector_forward_right = -player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
-		difference_vector_forward_right = difference_vector_forward_right.Round();
-
-		var difference_vector_backward = player.Transform.Basis.Z - player.direction;
-		difference_vector_backward = difference_vector_backward.Round();
-
-		var difference_vector_backward_left = player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
-		difference_vector_backward_left = difference_vector_backward_left.Round();
-
-		var difference_vector_backward_right = player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
-		difference_vector_backward_right = difference_vector_backward_right.Round();
-
-		if(difference_vector_forward == Vector3.Zero) // If the difference between the players forward facing direction (-Transform.Basis.Z) and the direction the play is moving in (direction) rounds to zero, play the walk forward animation, repeat for all animations
-		{ 
-			// GD.Print("player moving forward");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 1, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
-			
-		}
-		if(difference_vector_left == Vector3.Zero)
-		{
-			// GD.Print("Player moving left");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, -1, _t);
-			
-		}
-		if(difference_vector_forward_left == Vector3.Zero)
-		{
-			// GD.Print("Player moving forward left");
-			// put new animation here
-		}
-		if(difference_vector_right == Vector3.Zero)
-		{
-			// GD.Print("Player moving left");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 1, _t);
-		}
-		if(difference_vector_forward_right == Vector3.Zero)
-		{
-			// GD.Print("Player moving forward right");
-			// put new animation here
-		}
-		if(difference_vector_backward == Vector3.Zero)
-		{
-			// GD.Print("player moving backward");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, -1, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
-		}
-		if(difference_vector_backward_left == Vector3.Zero)
-		{
-			// GD.Print("Player moving backward left");
-			// put new animation here
-		}
-		if(difference_vector_backward_right == Vector3.Zero)
-		{
-			// GD.Print("Player moving backward right");
-			// put new animation here
-		}
-	}
-
-	public void ClimbingMovement() // Takes climbing input and moves the character when climbing
+	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
 		{
-			player.direction = Vector3.Zero;
+			GD.Print("Climbing movement");
+			// player.direction = Vector3.Zero;
+			player.velocity.Y = player.direction.Y * player.speed;
 			if(!player.is_clambering)
 			{
 				player.speed = climb_speed;
@@ -369,70 +164,9 @@ public partial class MovementController : Controller
 				player.speed = clamber_speed;
 			}
 			
-			if (Input.IsActionPressed("Right"))
-			{
-				player.direction.X -= 1.0f;	
-				// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
-			}
-			if (Input.IsActionPressed("Left"))
-			{
-				player.direction.X += 1.0f;
-				// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
-			}
-			if (Input.IsActionPressed("Backward"))
-			{
-				player.direction.Y -= 1.0f;
-				// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
-			}
-			if (Input.IsActionPressed("Forward"))
-			{
-				player.direction.Y += 1.0f;
-				// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
-			}
-
-			if(player.direction.Y == 1.0 && player.direction.X == 0.0)
-			{
-				GD.Print("player is moving up");
-				// Put animation here
-			}
-			if(player.direction.Y == 0.0 && player.direction.X == 1.0)
-			{
-				GD.Print("player is moving to the left");
-				// Put animation here
-			}
-			if(player.direction.Y == 1.0 && player.direction.X == 1.0)
-			{
-				GD.Print("player is moving up and to the left");
-				// Put animation here
-			}
-			if(player.direction.Y == 0.0 && player.direction.X == -1.0)
-			{
-				GD.Print("player is moving to the right");
-				// Put animation here
-			}
-			if(player.direction.Y == 1.0 && player.direction.X == -1.0)
-			{
-				GD.Print("player is moving up and to the right");
-				// Put animation here
-			}
-			if(player.direction.Y == -1.0 && player.direction.X == 0.0)
-			{
-				GD.Print("player is moving down");
-				// Put animation here
-			}
-			if(player.direction.Y == -1.0 && player.direction.X == 1.0)
-			{
-				GD.Print("player is moving down and to the left");
-				// Put animation here
-			}
-			if(player.direction.Y == -1.0 && player.direction.X == -1.0)
-			{
-				GD.Print("player is moving down and to the right");
-				// Put animation here
-			}
 		}
 
-		ClimbingRotation();
+		ClimbingRotation(player);
 
 		if(player.direction != Vector3.Zero && player.is_climbing)
 		{
@@ -445,7 +179,7 @@ public partial class MovementController : Controller
 		}
 	}
 
-	public void ClimbingRotation() // Sets the rotation of the player when climbing
+	public void ClimbingRotation(Player player) // Sets the rotation of the player when climbing
 	{
 		var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 		
@@ -460,32 +194,6 @@ public partial class MovementController : Controller
 		player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 	}
 
-	public void SetDefaultBlendDirection() // Set the default walking direction
-	{
-		
-		player.targeting = false;
-		if(player.direction != Vector3.Zero)
-		{
-			if(player.speed == player.run_speed)
-			{
-				player.blend_direction.X = 0;
-				player.blend_direction.Y = 1;
-			}
-			else if (player.speed == player.walk_speed)
-			{
-				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0.5f, 0.1f);
-			}
-			
-		}
-		else
-		{
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, 0.1f);
-		}
-		
-	}
-
 	public Godot.Collections.Dictionary LandPosition() // Sends out raycast to determine where the player will land
 	{
 		ray_origin = player.GlobalTransform.Origin;
@@ -498,34 +206,4 @@ public partial class MovementController : Controller
 		return ray;
 	}
 
-    // public override void _Process(double delta)
-    // {
-    //     var fps = Engine.GetFramesPerSecond();
-	// 	var lerp_interval = player.direction.Normalized() / (float)fps;
-	// 	var lerp_position = player.GlobalTransform.Origin + lerp_interval;
-	// 	GD.Print("fps " + fps);
-	// 	if(fps > 60)
-	// 	{
-	// 		player.player_mesh.TopLevel = true;
-	// 		var mesh_transform = player.player_mesh.GlobalTransform;
-	// 		mesh_transform.Origin = player.player_mesh.GlobalTransform.Origin.Lerp(lerp_position, (float)(20 * delta));
-	// 		GD.Print("Lerping mesh");
-	// 		player.player_mesh.GlobalTransform = mesh_transform;
-	// 	}
-	// 	else
-	// 	{
-	// 		player.player_mesh.GlobalTransform = player.GlobalTransform;
-	// 		player.player_mesh.TopLevel = false;
-	// 	}
-    // }
-    // private void HandleUIPreventingMovement(bool ui_preventing_movement) // Check if UI is preventing movement
-    // {
-    // 	if(player != null)
-    // 	{
-    // 		player.can_move = !ui_preventing_movement;
-    // 		player.can_use_abilities = !ui_preventing_movement;
-    // 		player.velocity = Vector3.Zero;
-    // 	}
-
-    // }
 }

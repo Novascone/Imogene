@@ -41,12 +41,12 @@ public partial class Roll : Ability
 			player.Rotation = temp_rotation; // Gets the rotation of the player the moment they roll
 			if(roll_timer.TimeLeft > 0.65) // Sets the speed of the player during the roll, depending on where they are in the roll
 			{
-				player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
+				// player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
 				// GD.Print("Speeding up");
 			}
 			else
 			{
-				player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
+				// player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
 				// GD.Print("Slowing Down");
 			}
 			

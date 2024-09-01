@@ -35,12 +35,14 @@ public partial class Player : PlayerEntity
 	public bool test_abilities_assigned = false;
 	
 	// UI
+	[Export] public UI ui;
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 	
 
 	// Controllers
-	public MovementController movement_controller;
+	[Export] public InputController input_controller;
+	[Export] public MovementController movement_controller;
 	public AbilityController ability_controller;
 	public StatController stat_controller;
 	public EquipmentController equipment_controller;
@@ -76,6 +78,14 @@ public partial class Player : PlayerEntity
 
 	public CollisionShape3D hitbox_collision;
 	
+	public float jump_height = 30;
+	public float jump_time_to_peak = 2f;
+	public float jump_time_to_decent = 1.9f;
+
+	public float jump_velocity ;
+	public float jump_gravity;
+	public float fall_gravity;
+
 
 	
 
@@ -84,7 +94,9 @@ public partial class Player : PlayerEntity
 		
 		base._Ready();
 		this_player = this;
-
+		jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
+		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
+		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
 		ability_resources.Add(small_fireball);
 		ability_resources.Add(slash);
 		ability_resources.Add(thrust);
@@ -198,12 +210,16 @@ public partial class Player : PlayerEntity
 		exclude.Add(GetRid());
 		// exclude.Add(hitbox.GetRid());
 		// GD.Print("exclude: " + exclude);
-		movement_controller.GetPlayerInfo(this);
+		// movement_controller.GetPlayerInfo(this);
 		equipment_controller.GetPlayerInfo(this);
 		stat_controller.GetEntityInfo(this);
 		ability_controller.GetPlayerInfo(this);
 		ability_controller.LoadAbilities();
 
+		ability_controller.SubscribeToUI(ui);
+
+		
+		
 		ui.GetPlayerInfo(this);
 		ui.hud.health.MaxValue = maximum_health;
 		ui.hud.health.Value = health;
@@ -214,7 +230,15 @@ public partial class Player : PlayerEntity
 		ui.hud.xp.MaxValue = xp_to_level;
 		ui.hud.xp.Value = xp;
 
+		
+
+		
+
 		camera_rig.GetPlayerInfo(this);
+
+		
+
+		
 
 		// GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
 		// GD.Print("Hurtbox type " + hurtbox.GetType());
@@ -265,6 +289,8 @@ public partial class Player : PlayerEntity
 
 	
 
+	
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 
     public override void _PhysicsProcess(double delta)
@@ -275,7 +301,10 @@ public partial class Player : PlayerEntity
 		CanUseAbilities();
 		ability_controller.AssignAbilities();
 		position = GlobalPosition;
-		CheckInteract(); // Check if the player can interact with anything
+		// CheckInteract(); // Check if the player can interact with anything
+		input_controller.SetInput(this);
+		movement_controller.MovePlayer(this, input_controller.input_strength, delta);
+		MoveAndSlide();
 		// if(ability_in_use != null)
 		// {
 		// 	// GD.Print("Ability in use " + ability_in_use.Name);
@@ -299,6 +328,8 @@ public partial class Player : PlayerEntity
 		// }
 		
     }
+
+	
 
     
     private void OnVisionEntered(Node3D body) // handler for area entered signal
@@ -354,8 +385,9 @@ public partial class Player : PlayerEntity
 
 	
 
-	public void SmoothRotation() // Rotates the player character smoothly with lerp
+	public void SmoothRotation(Vector3 direction) // Rotates the player character smoothly with lerp
 	{
+		GD.Print("Rotating smoothly");
 		if(!targeting && !is_climbing)
 		{
 			prev_y_rotation = GlobalRotation.Y;

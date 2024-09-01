@@ -1,0 +1,127 @@
+[gd_scene load_steps=3 format=3 uid="uid://da1qmuahqfbk2"]
+
+[ext_resource type="Script" path="res://scripts/UI/Assignment/CrossAssignment.cs" id="1_m31bs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0v1t"]
+size = Vector2(54, 56)
+
+[node name="LCrossPrimary" type="GridContainer"]
+custom_minimum_size = Vector2(330, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+columns = 3
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryUpAssign" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeftAssign")
+focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
+mouse_filter = 1
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_m31bs")
+
+[node name="Area2D" type="Area2D" parent="LCrossPrimaryUpAssign"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LCrossPrimaryUpAssign/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_h0v1t")
+
+[node name="Control3" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryLeftAssign" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryRightAssign")
+focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
+focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_m31bs")
+
+[node name="Area2D" type="Area2D" parent="LCrossPrimaryLeftAssign"]
+position = Vector2(29.6122, 29.6355)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LCrossPrimaryLeftAssign/Area2D"]
+position = Vector2(0.387817, 0.364502)
+shape = SubResource("RectangleShape2D_h0v1t")
+
+[node name="Control5" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossPrimaryRightAssign" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeftAssign")
+focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
+focus_neighbor_right = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RCrossPrimaryLeftAssign")
+focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_m31bs")
+
+[node name="Area2D" type="Area2D" parent="LCrossPrimaryRightAssign"]
+position = Vector2(29.9016, 19.3901)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LCrossPrimaryRightAssign/Area2D"]
+position = Vector2(0.0983887, 11.6099)
+shape = SubResource("RectangleShape2D_h0v1t")
+
+[node name="Control8" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossPrimaryDownAssign" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../LCrossPrimaryLeftAssign")
+focus_neighbor_top = NodePath("../LCrossPrimaryUpAssign")
+focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
+focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_m31bs")
+
+[node name="Area2D" type="Area2D" parent="LCrossPrimaryDownAssign"]
+position = Vector2(33.3204, 35.571)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LCrossPrimaryDownAssign/Area2D"]
+position = Vector2(-3.32043, -4.57104)
+shape = SubResource("RectangleShape2D_h0v1t")
+
+[node name="Control9" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="button_down" from="LCrossPrimaryUpAssign" to="LCrossPrimaryUpAssign" method="_on_button_down"]
+[connection signal="button_down" from="LCrossPrimaryLeftAssign" to="LCrossPrimaryLeftAssign" method="_on_button_down"]
+[connection signal="button_down" from="LCrossPrimaryRightAssign" to="LCrossPrimaryRightAssign" method="_on_button_down"]
+[connection signal="button_down" from="LCrossPrimaryDownAssign" to="LCrossPrimaryDownAssign" method="_on_button_down"]

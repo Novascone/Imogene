@@ -1,0 +1,26 @@
+using Godot;
+using System;
+
+public partial class ClassCategory : Control
+{
+	[Export] public Control basic;
+	[Export] public Control kernel;
+	[Export] public Control defensive;
+	[Export] public Control mastery;
+	[Export] public Control movement;
+	[Export] public Control specialized;
+	[Export] public Control unique;
+	[Export] public Control toy;
+	
+
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+}

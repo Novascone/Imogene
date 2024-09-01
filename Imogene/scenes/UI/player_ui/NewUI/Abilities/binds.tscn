@@ -1,0 +1,175 @@
+[gd_scene load_steps=4 format=3 uid="uid://dffakp3c6a4tl"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/AbilityBinds/Binds.cs" id="1_u4d07"]
+[ext_resource type="PackedScene" uid="uid://dhhl1nbomlijl" path="res://scenes/UI/player_ui/NewUI/Abilities/NewCross.tscn" id="2_306if"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_km65b"]
+size = Vector2(54, 54)
+
+[node name="Binds" type="VBoxContainer" node_paths=PackedStringArray("l_cross_primary_assignment", "r_cross_primary_assignment", "l_cross_secondary_assignment", "r_cross_secondary_assignment", "passives") groups=["page"]]
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 5
+script = ExtResource("1_u4d07")
+l_cross_primary_assignment = NodePath("GridContainer/VBoxContainer/HBoxContainer/LCrossPrimary")
+r_cross_primary_assignment = NodePath("GridContainer/VBoxContainer2/HBoxContainer/RCrossPrimary")
+l_cross_secondary_assignment = NodePath("GridContainer/VBoxContainer3/HBoxContainer/LCrossSecondary")
+r_cross_secondary_assignment = NodePath("GridContainer/VBoxContainer4/HBoxContainer/RCrossSecondary")
+passives = NodePath("PassivesContainer")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LCrossPrimary" parent="GridContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_306if")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GridContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GridContainer/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="RCrossPrimary" parent="GridContainer/VBoxContainer2/HBoxContainer" instance=ExtResource("2_306if")]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="LCrossSecondary" parent="GridContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("2_306if")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GridContainer/VBoxContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GridContainer/VBoxContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="RCrossSecondary" parent="GridContainer/VBoxContainer4/HBoxContainer" instance=ExtResource("2_306if")]
+layout_mode = 2
+
+[node name="PassivesContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PassivesContainer"]
+layout_mode = 2
+text = "Passive
+"
+horizontal_alignment = 1
+
+[node name="PassiveRow1" type="HBoxContainer" parent="PassivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 120
+
+[node name="Passive1" type="Button" parent="PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow1/Passive1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow1/Passive1/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")
+
+[node name="Passive2" type="Button" parent="PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow1/Passive2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow1/Passive2/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")
+
+[node name="Passive3" type="Button" parent="PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow1/Passive3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow1/Passive3/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")
+
+[node name="Passive4" type="Button" parent="PassivesContainer/PassiveRow1"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow1/Passive4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow1/Passive4/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")
+
+[node name="PassiveRow2" type="HBoxContainer" parent="PassivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/separation = 100
+
+[node name="Passive5" type="Button" parent="PassivesContainer/PassiveRow2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow2/Passive5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow2/Passive5/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")
+
+[node name="Passive6" type="Button" parent="PassivesContainer/PassiveRow2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Area2D" type="Area2D" parent="PassivesContainer/PassiveRow2/Passive6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassivesContainer/PassiveRow2/Passive6/Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_km65b")

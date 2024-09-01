@@ -12,6 +12,8 @@ public partial class UI : Control
 	
 	
 	[Export] public int inventory_size { get; set; } = 70;
+	[Export] public HUD hud;
+	[Export] public AbilitiesInterface abilities;
 	public Vector2 last_cursor_clicked_pos;
 
 	
@@ -48,12 +50,11 @@ public partial class UI : Control
 	public Inventory inventory;
 	public InventoryInfo inventory_info;
 	public PanelContainer interact_inventory;
-	public AbilitiesInterface abilities;
 	// public 
 	public VBoxContainer character_Sheet_depth;
 	public Panel armor;
 	public VBoxContainer mats;
-	public HUD hud;
+	
 	public Journal journal;
 
 	
@@ -98,7 +99,7 @@ public partial class UI : Control
 		mats = GetNode<VBoxContainer>("Inventory/CharacterInventoryContainer/FullInventory/Mats");
 		cursor_button = GetNode<Area2D>("Cursor/CursorSprite/CursorArea2D").GetNode<InventoryButton>("CursorButton");
 		abilities = GetNode<AbilitiesInterface>("Abilities");
-		hud = GetNode<HUD>("HUD");
+		
 		journal = GetNode<Journal>("Journal");
 
 		foreach (GearInfo gear_button in armor.GetChildren())

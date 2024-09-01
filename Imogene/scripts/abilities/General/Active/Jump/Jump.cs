@@ -14,6 +14,7 @@ public partial class Jump : Ability
 		clamber = GetNode<Timer>("Clamber");
 		rotate_on_soft = false;
 		clamber.Timeout += OnClamberTimeout;
+		stop_movement_input = false;
     }
 
     private void OnClamberTimeout() // The player is forced to move forward and up until the Clamber timer times out
@@ -133,7 +134,8 @@ public partial class Jump : Ability
 		{
 			// GD.Print("start jumping");
 			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
-			player.velocity.Y = player.jump_speed;			
+			player.velocity.Y = player.jump_velocity;
+			GD.Print("Player velocity from jump " + player.velocity.Y);			
 			player.jumping = true;
 		}
 		

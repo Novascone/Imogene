@@ -91,6 +91,7 @@ public partial class TargetingSystem : EntitySystem
 			rotating_to_soft_target = false;
 			// player.movementController.movement_input_allowed = true;
 		}
+		LookAtEnemy();
 		
 	}
 
@@ -170,7 +171,7 @@ public partial class TargetingSystem : EntitySystem
 
 	public void EnemyEnteredSoftLarge(Enemy	enemy) // Called when enemy enters the large soft zone, adds enemy to the dictionary of enemies
 	{
-		GD.Print(enemy.Name + " entered soft");
+		// GD.Print(enemy.Name + " entered soft");
 		enemy.in_soft_target_large = true;
 		enemy_far = true;
 		Vector3 enemy_position = enemy.GlobalTransform.Origin;

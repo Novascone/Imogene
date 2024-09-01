@@ -1,0 +1,185 @@
+[gd_scene load_steps=4 format=3 uid="uid://cswv6f0pgc28e"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/Categories/ClassCategory.cs" id="1_qpumw"]
+[ext_resource type="PackedScene" uid="uid://yatijfm1xdmc" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/Class/ability_page.tscn" id="2_txclu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4h1h3"]
+size = Vector2(266, 80)
+
+[node name="Class" type="MarginContainer" node_paths=PackedStringArray("basic", "kernel", "defensive", "mastery", "movement", "specialized", "unique", "toy")]
+offset_right = 630.0
+offset_bottom = 490.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_qpumw")
+basic = NodePath("BasicAbilities")
+kernel = NodePath("KernelAbilities")
+defensive = NodePath("DefensiveAbilities")
+mastery = NodePath("MasteryAbilities")
+movement = NodePath("MovementAbilites")
+specialized = NodePath("SpecializedAbilites")
+unique = NodePath("UniqueAbilites")
+toy = NodePath("ToyAbilites")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 2
+
+[node name="Basic" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Basic"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Basic"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Basic/Area2D"]
+position = Vector2(149, 51)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Kernel" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Kernel"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Kernel"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Kernel/Area2D"]
+position = Vector2(153, 52)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Defensive" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Defensive"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Defensive"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Defensive/Area2D"]
+position = Vector2(150, 50)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Mastery" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Mastery"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Mastery"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Mastery/Area2D"]
+position = Vector2(151.25, 50)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Movement" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Movement"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Movement"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Movement/Area2D"]
+position = Vector2(151.25, 50)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Specialized" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Specialized
+"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Specialized"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Specialized/Area2D"]
+position = Vector2(153, 52)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Unique" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Unique"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Unique"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Unique/Area2D"]
+position = Vector2(152, 50)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Toy" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Toy"
+
+[node name="Area2D" type="Area2D" parent="GridContainer/Toy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Toy/Area2D"]
+position = Vector2(152, 50)
+shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="BasicAbilities" parent="." instance=ExtResource("2_txclu")]
+layout_mode = 2
+title_text = "Basic"
+
+[node name="KernelAbilities" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Kernel"
+
+[node name="DefensiveAbilities" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Defensive"
+
+[node name="MasteryAbilities" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Mastery"
+
+[node name="MovementAbilites" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Movement"
+
+[node name="SpecializedAbilites" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Specialized"
+
+[node name="UniqueAbilites" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Unique"
+
+[node name="ToyAbilites" parent="." instance=ExtResource("2_txclu")]
+visible = false
+layout_mode = 2
+title_text = "Toy"

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5espcc1s6xmk"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/ActivePassives.cs" id="1_8pry4"]
+[ext_resource type="PackedScene" uid="uid://7py5yrnfrye5" path="res://scenes/UI/player_ui/NewUI/Abilities/active_passive_slot.tscn" id="1_uwds6"]
+
+[node name="ActivePassives" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+script = ExtResource("1_8pry4")
+
+[node name="ActivePassiveSlot1" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot2" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot3" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot4" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot5" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot6" parent="." instance=ExtResource("1_uwds6")]
+layout_mode = 2

@@ -21,6 +21,8 @@ public partial class AbilityCategory : PanelContainer
 	private List<AbilityButton> abilities = new List<AbilityButton>(); // List of ability buttons
 	private List<Button> modifiers = new List<Button>(); // List of modifiers
 	private CustomSignals _customSignals;
+
+	[Signal] public delegate void AbilityChangedEventHandler(string previous_ability, string new_ability );
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -176,12 +178,14 @@ public partial class AbilityCategory : PanelContainer
 	{	
 		GD.Print("accept button down");
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityRemoved),button_clicked.ability_name, button_clicked.button_assigned);
+		EmitSignal(nameof(AbilityChanged),button_clicked.ability_name, action_button_to_be_assigned.Name);
 		this_interface.AbilityRemoved(button_clicked.button_assigned);
 		AbilityAccept();
 		this_interface.AbilityAccept();
 		this_interface.AbilityAssigned(button_clicked.ability_resource, action_button_to_be_assigned.Name);
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAccept));
 		this_interface.ability_changed = true;
+		
 		this_interface.ability_to_change = button_clicked.ability_name;
 		this_interface.button_to_bind = action_button_to_be_assigned.Name;
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), button_clicked.ability_name, action_button_to_be_assigned.Name, button_clicked.Icon);

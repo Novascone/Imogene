@@ -257,33 +257,33 @@ public partial class Entity : CharacterBody3D
     }
 
     
-    public bool Fall(double delta) // bring the player back to the ground
-	{
-		if(!IsOnFloor())
-		{
-			if(this is Player player)
-			{
-				if(!player.is_climbing)
-				{
-					velocity.Y -= fall_speed * (float)delta;
-            		return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				velocity.Y -= fall_speed * (float)delta;
-            	return true;
-			}
+    // public bool Fall(double delta) // bring the player back to the ground
+	// {
+	// 	if(!IsOnFloor())
+	// 	{
+	// 		if(this is Player player)
+	// 		{
+	// 			if(!player.is_climbing)
+	// 			{
+	// 				velocity.Y -= fall_speed * (float)delta;
+    //         		return true;
+	// 			}
+	// 			else
+	// 			{
+	// 				return false;
+	// 			}
+	// 		}
+	// 		else
+	// 		{
+	// 			velocity.Y -= fall_speed * (float)delta;
+    //         	return true;
+	// 		}
 			
-		}
-		else
-		{
-            return false;
-		}
+	// 	}
+	// 	else
+	// 	{
+    //         return false;
+	// 	}
 		
-	}
+	// }
 }

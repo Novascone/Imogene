@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://co3w4qm4qhs02"]
+
+[ext_resource type="Script" path="res://scripts/controllers/Enemy/EnemyMovementController.cs" id="1_wffa1"]
+[ext_resource type="Script" path="res://scripts/controllers/StatController.cs" id="2_26svl"]
+[ext_resource type="Script" path="res://scripts/controllers/StatusEffectController.cs" id="3_54ugr"]
+[ext_resource type="Script" path="res://scripts/controllers/Enemy/EnemyAbilityController.cs" id="4_ibg3k"]
+[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.cs" id="5_dueu5"]
+[ext_resource type="Script" path="res://scripts/state_machines/InitialState.cs" id="6_dkvnj"]
+[ext_resource type="Script" path="res://scripts/state_machines/ForwardState.cs" id="7_kuhgl"]
+[ext_resource type="Script" path="res://scripts/state_machines/CircleState.cs" id="8_qs2lf"]
+[ext_resource type="Script" path="res://scripts/state_machines/AvoidanceInterestsState.cs" id="9_tgduh"]
+[ext_resource type="Script" path="res://scripts/state_machines/HerdState.cs" id="10_y7sy3"]
+[ext_resource type="Script" path="res://scripts/state_machines/ChaseState.cs" id="11_afm7f"]
+
+[node name="Controllers" type="Node3D"]
+
+[node name="MovementController" type="Node" parent="."]
+script = ExtResource("1_wffa1")
+
+[node name="StatController" type="Node" parent="."]
+script = ExtResource("2_26svl")
+
+[node name="StatusEffectController" type="Node" parent="."]
+script = ExtResource("3_54ugr")
+
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("4_ibg3k")
+
+[node name="RayPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18038, 0)
+
+[node name="StateMachine" type="Node3D" parent="."]
+script = ExtResource("5_dueu5")
+
+[node name="InitialState" type="Node3D" parent="StateMachine"]
+script = ExtResource("6_dkvnj")
+
+[node name="ForwardState" type="Node3D" parent="StateMachine"]
+script = ExtResource("7_kuhgl")
+
+[node name="CircleState" type="Node3D" parent="StateMachine"]
+script = ExtResource("8_qs2lf")
+
+[node name="CircleTimer" type="Timer" parent="StateMachine/CircleState"]
+wait_time = 4.0
+one_shot = true
+
+[node name="AvoidanceInterestsState" type="Node3D" parent="StateMachine"]
+script = ExtResource("9_tgduh")
+
+[node name="HerdState" type="Node3D" parent="StateMachine"]
+script = ExtResource("10_y7sy3")
+
+[node name="ChaseState" type="Node3D" parent="StateMachine"]
+script = ExtResource("11_afm7f")
+
+[connection signal="timeout" from="StateMachine/CircleState/CircleTimer" to="StateMachine/CircleState" method="_on_circle_timer_timeout"]

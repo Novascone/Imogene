@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 
-public partial class AbilitiesInterface : UI
+public partial class AbilitiesInterface : Control
 {
 	// Left Cross Primary
 	private GridContainer l_cross_primary;
@@ -39,7 +39,7 @@ public partial class AbilitiesInterface : UI
 
 	public PanelContainer ability_binds;
 	public PanelContainer ability_types;
-	public AbilityCategory melee_abilities;
+	// public AbilityCategory melee_abilities;
 	public PanelContainer ranged_abilities;
 	public PanelContainer movement_abilities;
 	public PanelContainer defense_abilities;
@@ -57,6 +57,7 @@ public partial class AbilitiesInterface : UI
 
 	public UI this_ui; // Reference to the UI
 	public bool ability_changed; // Boolean to let the Ability controller know an ability has been changed
+	
 	public string ability_to_change; // Name of the ability that is going to change
 	public string button_to_bind; // New button the ability is bound to
 
@@ -69,6 +70,7 @@ public partial class AbilitiesInterface : UI
 	private PanelContainer assign_ability;
 	public Control categories;
 	public CrossAssignment selected_button;
+	[Export] public AbilityCategory melee_abilities;
 	// private CustomSignals _customSignals; // Instance of CustomSignals
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -76,7 +78,7 @@ public partial class AbilitiesInterface : UI
 
 		ability_binds = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/Binds/AbilityBinds");
 		ability_types = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/Types/AbilityTypes");
-		melee_abilities = GetNode<AbilityCategory>("PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities");
+		// melee_abilities = GetNode<AbilityCategory>("PanelContainer/AbilityContainer/PanelContainer/Categories/MeleeAbilities");
 		// current_ability_category = melee_abilities;
 		// ranged_abilities = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/RangedAbilities");
 		// movement_abilities = GetNode<PanelContainer>("PanelContainer/AbilityContainer/PanelContainer/MovementAbilities");
@@ -128,7 +130,7 @@ public partial class AbilitiesInterface : UI
 
 		assign_ability = GetNode<PanelContainer>("AssignAbility");
 
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		// _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		// _customSignals.AbilityAccept += HandleAbilityAccept;
 		// _customSignals.AbilityCancel += HandleAbilityCancel;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
@@ -268,7 +270,7 @@ public partial class AbilitiesInterface : UI
 		AbilityResource ability = ResourceLoader.Load<AbilityResource>("res://resources/roll.tres");
 		// selected_button.Icon = ability.icon;
 		// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), ability.name, selected_button.Name , ability.icon);
-		_customSignals.EmitSignal(nameof(CustomSignals.AddToAbilitySelection), ability.name, ability.type, ability.icon);
+		// _customSignals.EmitSignal(nameof(CustomSignals.AddToAbilitySelection), ability.name, ability.type, ability.icon);
 	}
 
 	

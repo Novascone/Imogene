@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://ey6wymo6kewe"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/NewAbilities.cs" id="1_k050e"]
+[ext_resource type="PackedScene" uid="uid://dffakp3c6a4tl" path="res://scenes/UI/player_ui/NewUI/Abilities/binds.tscn" id="2_jcc34"]
+[ext_resource type="PackedScene" uid="uid://s6e25bsdm7fw" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/categories.tscn" id="3_fvdln"]
+[ext_resource type="PackedScene" uid="uid://4usjhrjsl1ki" path="res://scenes/UI/player_ui/NewUI/Abilities/passives.tscn" id="4_88coj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y3424"]
+size = Vector2(144, 29)
+
+[node name="NewAbilities" type="VBoxContainer"]
+offset_right = 1000.0
+offset_bottom = 834.0
+script = ExtResource("1_k050e")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Title" type="Panel" parent="."]
+custom_minimum_size = Vector2(815, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Title"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 25.5
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Abilities"
+horizontal_alignment = 1
+
+[node name="AbilityBinds" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Control" type="Control" parent="AbilityBinds"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Binds" parent="AbilityBinds" instance=ExtResource("2_jcc34")]
+layout_mode = 2
+
+[node name="Close" type="VBoxContainer" parent="AbilityBinds"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Close" type="Button" parent="AbilityBinds/Close"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[node name="Area2D" type="Area2D" parent="AbilityBinds/Close/Close"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AbilityBinds/Close/Close/Area2D"]
+position = Vector2(75, 16.5)
+shape = SubResource("RectangleShape2D_y3424")
+
+[node name="Control" type="Control" parent="AbilityBinds/Close"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AbilityCategories" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Categories" parent="AbilityCategories" instance=ExtResource("3_fvdln")]
+layout_mode = 2
+
+[node name="Close" type="VBoxContainer" parent="AbilityCategories"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Control" type="Control" parent="AbilityCategories/Close"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="AbilityCategories/Close"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[node name="Area2D" type="Area2D" parent="AbilityCategories/Close/Close"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AbilityCategories/Close/Close/Area2D"]
+position = Vector2(75, 16.5)
+shape = SubResource("RectangleShape2D_y3424")
+
+[node name="Passives" parent="." instance=ExtResource("4_88coj")]
+layout_mode = 2
+
+[connection signal="button_down" from="AbilityBinds/Close/Close" to="AbilityBinds/Binds" method="_on_close_button_down"]

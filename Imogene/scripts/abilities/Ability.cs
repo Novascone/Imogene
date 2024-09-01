@@ -122,6 +122,7 @@ public partial class Ability : Node3D
                     // GD.Print("Button is held, waiting for player to complete rotation");
                     if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
                     {
+                        GD.Print("Rotating on held");
                         Execute();
                         // player.movementController.movement_input_allowed = true;
                     }

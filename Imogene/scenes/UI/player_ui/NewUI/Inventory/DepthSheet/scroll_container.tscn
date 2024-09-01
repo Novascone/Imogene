@@ -1,0 +1,297 @@
+[gd_scene load_steps=37 format=3 uid="uid://1in75rdt30fc"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/Inventory/DepthScroller.cs" id="1_wqqpl"]
+[ext_resource type="PackedScene" uid="uid://bcofoc2v0qdtw" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/physical_melee_power.tscn" id="2_5dscf"]
+[ext_resource type="PackedScene" uid="uid://bxtrg3rgkyuki" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/spell_melee_power.tscn" id="3_eeulx"]
+[ext_resource type="PackedScene" uid="uid://bacowo2bq860u" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/physical_ranged_power.tscn" id="4_o2vkb"]
+[ext_resource type="PackedScene" uid="uid://bvd3g7bbtsx2h" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/spell_ranged_power.tscn" id="5_ph2oh"]
+[ext_resource type="PackedScene" uid="uid://crhbfxnmrr28r" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/wisdom_scaler.tscn" id="6_a28w4"]
+[ext_resource type="PackedScene" uid="uid://kud4x3vdh8f" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/critical_hit_chance.tscn" id="7_cpn0w"]
+[ext_resource type="PackedScene" uid="uid://fcw2mcgssgdg" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/critical_hit_damage.tscn" id="8_f32hh"]
+[ext_resource type="PackedScene" uid="uid://bvilvdkpw1jsu" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/attack_speed.tscn" id="9_jmi4q"]
+[ext_resource type="PackedScene" uid="uid://d2y2btjgiqqij" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/attack_speed_increase.tscn" id="10_thaar"]
+[ext_resource type="PackedScene" uid="uid://cffxphebx347c" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/cooldown_reduction.tscn" id="11_brqix"]
+[ext_resource type="PackedScene" uid="uid://b80r6igw6pp6x" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/armor.tscn" id="12_scooy"]
+[ext_resource type="PackedScene" uid="uid://dqkm4hk5fe7hn" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/poise.tscn" id="13_7hawn"]
+[ext_resource type="PackedScene" uid="uid://dxvy0jjmqrusn" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/block_amount.tscn" id="14_pqbtv"]
+[ext_resource type="PackedScene" uid="uid://c4ai3tnwy0i67" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/retaliation.tscn" id="15_j7chq"]
+[ext_resource type="PackedScene" uid="uid://dhf0nnhf72h18" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/physical_resistance.tscn" id="16_qoqw1"]
+[ext_resource type="PackedScene" uid="uid://ctqy31wcmfro3" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/pierce_resistance.tscn" id="17_50ckj"]
+[ext_resource type="PackedScene" uid="uid://bgiwx545otgim" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/slash_resistance.tscn" id="18_r5voc"]
+[ext_resource type="PackedScene" uid="uid://b2ll8ae47x7n3" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/blunt_resistance.tscn" id="19_nskil"]
+[ext_resource type="PackedScene" uid="uid://dsjrh4bhsx2qu" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/bleed_resistance.tscn" id="20_1t3uq"]
+[ext_resource type="PackedScene" uid="uid://ble3yrgjj01t0" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/poison_resistance.tscn" id="21_hw2g0"]
+[ext_resource type="PackedScene" uid="uid://dtw326lqso667" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/curse_resistance.tscn" id="22_x34aq"]
+[ext_resource type="PackedScene" uid="uid://c7yffx585sw47" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/spell_resistance.tscn" id="23_qvtvu"]
+[ext_resource type="PackedScene" uid="uid://bgxhki2ukl636" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/fire_resistance.tscn" id="24_nc4y3"]
+[ext_resource type="PackedScene" uid="uid://dkjs362kopvyu" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/cold_resistance.tscn" id="25_iab47"]
+[ext_resource type="PackedScene" uid="uid://b8f18wfchd2t6" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/lightning_resistance.tscn" id="26_6qam3"]
+[ext_resource type="PackedScene" uid="uid://cknoxl7ipanip" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/holy_resistance.tscn" id="27_0qrux"]
+[ext_resource type="PackedScene" uid="uid://btmc04hp1fhcf" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/maximum_health.tscn" id="28_feo0a"]
+[ext_resource type="PackedScene" uid="uid://g36su1dtevxj" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/health_bonus.tscn" id="29_wehdt"]
+[ext_resource type="PackedScene" uid="uid://blsj18n6or068" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/health_regeneration.tscn" id="30_fib8k"]
+[ext_resource type="PackedScene" uid="uid://bavdr18gmefsb" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/health_retaliation.tscn" id="31_rfj12"]
+[ext_resource type="PackedScene" uid="uid://eoa342ty7rbm" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/maximum_resource.tscn" id="32_dyndx"]
+[ext_resource type="PackedScene" uid="uid://c04s7pnkyalq5" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/resource_regeneration.tscn" id="33_en8nh"]
+[ext_resource type="PackedScene" uid="uid://bsv1wtafcjume" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/resource_cost_reduction.tscn" id="34_krpxy"]
+[ext_resource type="PackedScene" uid="uid://drjic6r0o42fv" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/posture_regeneration.tscn" id="35_nct7w"]
+[ext_resource type="PackedScene" uid="uid://vm8jakcr50yg" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/movement_speed.tscn" id="36_oprs7"]
+
+[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "physical_melee_power", "spell_melee_power", "physical_ranged_power", "spell_ranged_power", "wisdom_scaler", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
+clip_contents = false
+custom_minimum_size = Vector2(291, 1080)
+offset_right = 291.0
+offset_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+follow_focus = true
+script = ExtResource("1_wqqpl")
+vbox = NodePath("VBoxContainer")
+physical_melee_power = NodePath("VBoxContainer/PhysicalMeleePower")
+spell_melee_power = NodePath("VBoxContainer/SpellMeleePower")
+physical_ranged_power = NodePath("VBoxContainer/PhysicalRangedPower")
+spell_ranged_power = NodePath("VBoxContainer/SpellRangedPower")
+wisdom_scaler = NodePath("VBoxContainer/WisdomScaler")
+critical_hit_chance = NodePath("VBoxContainer/CriticalHitChance")
+critical_hit_damage = NodePath("VBoxContainer/CriticalHitDamage")
+attack_speed = NodePath("VBoxContainer/AttackSpeed")
+attack_speed_increase = NodePath("VBoxContainer/AttackSpeedIncrease")
+cool_down_reduction = NodePath("VBoxContainer/CooldownReduction")
+armor = NodePath("VBoxContainer/Armor")
+poise = NodePath("VBoxContainer/Poise")
+block_amount = NodePath("VBoxContainer/BlockAmount")
+retaliation = NodePath("VBoxContainer/Retaliation")
+physical_resistance = NodePath("VBoxContainer/PhysicalResistance")
+pierce_resistance = NodePath("VBoxContainer/PierceResistance")
+slash_resistance = NodePath("VBoxContainer/SlashResistance")
+blunt_resistance = NodePath("VBoxContainer/BluntResistance")
+bleed_resistance = NodePath("VBoxContainer/BleedResistance")
+poison_resistance = NodePath("VBoxContainer/PoisonResistance")
+curse_resistance = NodePath("VBoxContainer/CurseResistance")
+spell_resistance = NodePath("VBoxContainer/SpellResistance")
+fire_resistance = NodePath("VBoxContainer/FireResistance")
+cold_resistance = NodePath("VBoxContainer/ColdResistance")
+lightning_resistance = NodePath("VBoxContainer/LightningResistance")
+holy_resistance = NodePath("VBoxContainer/HolyResistance")
+maximum_health = NodePath("VBoxContainer/MaximumHealth")
+health_bonus = NodePath("VBoxContainer/HealthBonus")
+health_regeneration = NodePath("VBoxContainer/HealthRegeneration")
+health_retaliation = NodePath("VBoxContainer/HealthRetaliation")
+maximum_resource = NodePath("VBoxContainer/MaximumResource")
+resource_regeneration = NodePath("VBoxContainer/ResourceRegeneration")
+resource_cost_reduction = NodePath("VBoxContainer/ResourceCostReduction")
+posture_regeneration = NodePath("VBoxContainer/PostureRegeneration")
+movement_speed = NodePath("VBoxContainer/MovementSpeed")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Offense" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="VBoxContainer/Offense"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Offense"
+
+[node name="PhysicalMeleePower" parent="VBoxContainer" instance=ExtResource("2_5dscf")]
+layout_mode = 2
+
+[node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("3_eeulx")]
+layout_mode = 2
+
+[node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("4_o2vkb")]
+layout_mode = 2
+
+[node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("5_ph2oh")]
+layout_mode = 2
+
+[node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("6_a28w4")]
+layout_mode = 2
+
+[node name="CriticalHitChance" parent="VBoxContainer" instance=ExtResource("7_cpn0w")]
+layout_mode = 2
+
+[node name="CriticalHitDamage" parent="VBoxContainer" instance=ExtResource("8_f32hh")]
+layout_mode = 2
+
+[node name="AttackSpeed" parent="VBoxContainer" instance=ExtResource("9_jmi4q")]
+layout_mode = 2
+
+[node name="AttackSpeedIncrease" parent="VBoxContainer" instance=ExtResource("10_thaar")]
+layout_mode = 2
+
+[node name="CooldownReduction" parent="VBoxContainer" instance=ExtResource("11_brqix")]
+layout_mode = 2
+
+[node name="Defense" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="VBoxContainer/Defense"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Defense
+"
+
+[node name="Armor" parent="VBoxContainer" instance=ExtResource("12_scooy")]
+layout_mode = 2
+
+[node name="Poise" parent="VBoxContainer" instance=ExtResource("13_7hawn")]
+layout_mode = 2
+
+[node name="BlockAmount" parent="VBoxContainer" instance=ExtResource("14_pqbtv")]
+layout_mode = 2
+
+[node name="Retaliation" parent="VBoxContainer" instance=ExtResource("15_j7chq")]
+layout_mode = 2
+
+[node name="PhysicalResistance" parent="VBoxContainer" instance=ExtResource("16_qoqw1")]
+layout_mode = 2
+
+[node name="PierceResistance" parent="VBoxContainer" instance=ExtResource("17_50ckj")]
+layout_mode = 2
+
+[node name="SlashResistance" parent="VBoxContainer" instance=ExtResource("18_r5voc")]
+layout_mode = 2
+
+[node name="BluntResistance" parent="VBoxContainer" instance=ExtResource("19_nskil")]
+layout_mode = 2
+
+[node name="BleedResistance" parent="VBoxContainer" instance=ExtResource("20_1t3uq")]
+layout_mode = 2
+
+[node name="PoisonResistance" parent="VBoxContainer" instance=ExtResource("21_hw2g0")]
+layout_mode = 2
+
+[node name="CurseResistance" parent="VBoxContainer" instance=ExtResource("22_x34aq")]
+layout_mode = 2
+
+[node name="SpellResistance" parent="VBoxContainer" instance=ExtResource("23_qvtvu")]
+layout_mode = 2
+
+[node name="FireResistance" parent="VBoxContainer" instance=ExtResource("24_nc4y3")]
+layout_mode = 2
+
+[node name="ColdResistance" parent="VBoxContainer" instance=ExtResource("25_iab47")]
+layout_mode = 2
+
+[node name="LightningResistance" parent="VBoxContainer" instance=ExtResource("26_6qam3")]
+layout_mode = 2
+
+[node name="HolyResistance" parent="VBoxContainer" instance=ExtResource("27_0qrux")]
+layout_mode = 2
+
+[node name="Health" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="VBoxContainer/Health"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Health
+"
+
+[node name="MaximumHealth" parent="VBoxContainer" instance=ExtResource("28_feo0a")]
+layout_mode = 2
+
+[node name="HealthBonus" parent="VBoxContainer" instance=ExtResource("29_wehdt")]
+layout_mode = 2
+
+[node name="HealthRegeneration" parent="VBoxContainer" instance=ExtResource("30_fib8k")]
+layout_mode = 2
+
+[node name="HealthRetaliation" parent="VBoxContainer" instance=ExtResource("31_rfj12")]
+layout_mode = 2
+
+[node name="Resource" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="VBoxContainer/Resource"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resource
+"
+
+[node name="MaximumResource" parent="VBoxContainer" instance=ExtResource("32_dyndx")]
+layout_mode = 2
+
+[node name="ResourceRegeneration" parent="VBoxContainer" instance=ExtResource("33_en8nh")]
+layout_mode = 2
+
+[node name="ResourceCostReduction" parent="VBoxContainer" instance=ExtResource("34_krpxy")]
+layout_mode = 2
+
+[node name="PostureRegeneration" parent="VBoxContainer" instance=ExtResource("35_nct7w")]
+layout_mode = 2
+
+[node name="Misc" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+
+[node name="Label" type="Label" parent="VBoxContainer/Misc"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.5
+offset_right = 20.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Misc
+"
+
+[node name="MovementSpeed" parent="VBoxContainer" instance=ExtResource("36_oprs7")]
+layout_mode = 2

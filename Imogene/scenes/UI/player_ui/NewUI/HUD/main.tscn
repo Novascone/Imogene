@@ -1,0 +1,150 @@
+[gd_scene load_steps=10 format=3 uid="uid://bbt7k8rgaosvh"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewHUD/MainHUD.cs" id="1_2qdvp"]
+[ext_resource type="PackedScene" uid="uid://cxepayivi603r" path="res://scenes/UI/player_ui/NewUI/HUD/posture.tscn" id="2_262hg"]
+[ext_resource type="PackedScene" uid="uid://lbw8dy2dusf1" path="res://scenes/UI/player_ui/NewUI/HUD/xp.tscn" id="3_o3q3x"]
+[ext_resource type="PackedScene" uid="uid://dd7p7bmo27kl3" path="res://scenes/UI/player_ui/NewUI/HUD/health.tscn" id="4_jqyj1"]
+[ext_resource type="PackedScene" uid="uid://cghvdlhroyxr" path="res://scenes/UI/player_ui/NewUI/HUD/hud_cross.tscn" id="5_axhn2"]
+[ext_resource type="PackedScene" uid="uid://xgdub2ncuvaf" path="res://scenes/UI/player_ui/NewUI/HUD/resource.tscn" id="6_q4sql"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tj56n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vw7lu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s65oj"]
+
+[node name="Main" type="PanelContainer"]
+custom_minimum_size = Vector2(1200, 210)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -279.0
+offset_right = 600.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tj56n")
+script = ExtResource("1_2qdvp")
+
+[node name="BottomHUDVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomHUDVBox"]
+layout_mode = 2
+
+[node name="Usables" type="Control" parent="BottomHUDVBox/HBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Usable1" type="Button" parent="BottomHUDVBox/HBoxContainer/Usables"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "1"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Usable2" type="Button" parent="BottomHUDVBox/HBoxContainer/Usables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "2"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Usable3" type="Button" parent="BottomHUDVBox/HBoxContainer/Usables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "3"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Usable4" type="Button" parent="BottomHUDVBox/HBoxContainer/Usables"]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "4"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Posture" parent="BottomHUDVBox/HBoxContainer" instance=ExtResource("2_262hg")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="BottomHUDVBox/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="XP" parent="BottomHUDVBox" instance=ExtResource("3_o3q3x")]
+layout_mode = 2
+
+[node name="BottomHUDHBox" type="HBoxContainer" parent="BottomHUDVBox"]
+layout_mode = 2
+size_flags_stretch_ratio = 8.0
+
+[node name="Health" parent="BottomHUDVBox/BottomHUDHBox" instance=ExtResource("4_jqyj1")]
+layout_mode = 2
+
+[node name="LCross" type="PanelContainer" parent="BottomHUDVBox/BottomHUDHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vw7lu")
+
+[node name="LCrossSecondary" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_axhn2")]
+layout_mode = 2
+
+[node name="LCrossPrimary" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_axhn2")]
+modulate = Color(1, 1, 1, 0.0980392)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="BottomHUDVBox/BottomHUDHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="RCross" type="PanelContainer" parent="BottomHUDVBox/BottomHUDHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_s65oj")
+
+[node name="RCrossSecondary" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("5_axhn2")]
+modulate = Color(1, 1, 1, 0.0980392)
+layout_mode = 2
+
+[node name="RCrossPrimary" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("5_axhn2")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Resource" parent="BottomHUDVBox/BottomHUDHBox" instance=ExtResource("6_q4sql")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="BottomHUDVBox"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2

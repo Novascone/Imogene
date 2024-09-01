@@ -1,0 +1,121 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1fqv3fphkrr5"]
+
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="1_galp0"]
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_5av2t"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="3_1i26d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shoep"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olk4s"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_364rp"]
+viewport_path = NodePath("HealthBarSubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7gwtr"]
+viewport_path = NodePath("HardTargetIconSubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ywf43"]
+viewport_path = NodePath("SoftTargetSubViewport")
+
+[node name="UI" type="Node3D"]
+
+[node name="HealthBarSubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HealthBarSubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -100.0
+offset_right = 128.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBarSubViewport/VBoxContainer"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_shoep")
+theme_override_styles/fill = SubResource("StyleBoxFlat_olk4s")
+value = 50.0
+show_percentage = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HealthBarSubViewport/VBoxContainer"]
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+fill_mode = 6
+nine_patch_stretch = true
+texture_progress = ExtResource("1_galp0")
+
+[node name="StatusBar" type="Sprite3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.28259, 0)
+visible = false
+billboard = 1
+texture = SubResource("ViewportTexture_364rp")
+
+[node name="HardTargetIconSubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(30, 30)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="HardTargetIconSubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5av2t")
+expand_mode = 1
+
+[node name="HardTargetIcon" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.42857, 0)
+visible = false
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_7gwtr")
+
+[node name="SoftTargetSubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(30, 30)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="SoftTargetSubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_1i26d")
+expand_mode = 1
+
+[node name="SoftTargetIcon" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.92857, 0)
+visible = false
+billboard = 1
+texture = SubResource("ViewportTexture_ywf43")

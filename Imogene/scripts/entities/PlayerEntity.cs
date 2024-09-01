@@ -96,7 +96,7 @@ public partial class PlayerEntity : Entity
 	public MeshInstance3D land_point;
 	public Vector3 land_point_position;
 
-	public UI ui;	
+	// public UI ui;	
 	public CustomSignals _customSignals; // Custom signal instance
 
 	// Called when the node enters the scene tree for the first time.
@@ -106,7 +106,7 @@ public partial class PlayerEntity : Entity
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
 		main_hand_hitbox = GetNode<MeleeHitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
-		ui = GetNode<UI>("UI/UI");
+		// ui = GetNode<UI>("UI/UI");
 		
 		// Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
 		
@@ -145,51 +145,51 @@ public partial class PlayerEntity : Entity
     public override void _Process(double delta)
 	{
 		
-		direction = Vector3.Zero;
-		if(Fall(delta))
-		{
-			// GD.Print("falling");
-			land_point.Show();
-		}
-		else
-		{
-			land_point.Hide();
-		}
+		// direction = Vector3.Zero;
+		// if(Fall(delta))
+		// {
+		// 	// GD.Print("falling");
+		// 	land_point.Show();
+		// }
+		// else
+		// {
+		// 	land_point.Hide();
+		// }
 	}
 
-	public void CheckInteract() // Checks if within interact and handles input
-	{
-		if(in_interact_area)
-		{
-			if(entered_interact)
-			{
-				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
-				ui.GetInteract(area_interacting, in_interact_area, interacting);
-				entered_interact = false;
-			}
+	// public void CheckInteract() // Checks if within interact and handles input
+	// {
+	// 	if(in_interact_area)
+	// 	{
+	// 		if(entered_interact)
+	// 		{
+	// 			// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+	// 			ui.GetInteract(area_interacting, in_interact_area, interacting);
+	// 			entered_interact = false;
+	// 		}
 			
-			if(Input.IsActionJustPressed("Interact") && !interacting)
-			{
-				interacting = true;
-				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
-				ui.GetInteract(area_interacting, in_interact_area, interacting);
-			}
-			else if(Input.IsActionJustPressed("Interact") && interacting)
-			{
-				interacting = false;
-				// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
-				ui.GetInteract(area_interacting, in_interact_area, interacting);
-			}
-		}
-		else if(left_interact)
-		{
-			interacting = false;
-			// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
-			ui.GetInteract(area_interacting, in_interact_area, interacting);
-			left_interact = false;
-		}
+	// 		if(Input.IsActionJustPressed("Interact") && !interacting)
+	// 		{
+	// 			interacting = true;
+	// 			// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+	// 			ui.GetInteract(area_interacting, in_interact_area, interacting);
+	// 		}
+	// 		else if(Input.IsActionJustPressed("Interact") && interacting)
+	// 		{
+	// 			interacting = false;
+	// 			// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+	// 			ui.GetInteract(area_interacting, in_interact_area, interacting);
+	// 		}
+	// 	}
+	// 	else if(left_interact)
+	// 	{
+	// 		interacting = false;
+	// 		// _customSignals.EmitSignal(nameof(CustomSignals.Interact), area_interacting, in_interact_area, interacting);
+	// 		ui.GetInteract(area_interacting, in_interact_area, interacting);
+	// 		left_interact = false;
+	// 	}
 
-	}
+	// }
 
 
 

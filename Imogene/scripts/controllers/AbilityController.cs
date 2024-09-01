@@ -6,6 +6,7 @@ public partial class AbilityController : Controller
 {
 
 	public bool can_use_abilities;
+	UI ui;
 	// Called when the node enters the scene tree for the first time.
 	
 	private CustomSignals _customSignals; // Custom signal instance
@@ -14,26 +15,13 @@ public partial class AbilityController : Controller
 	{
 		
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		
 	}
 
     public override void _Process(double delta)
     {
 		if (player != null)
 		{
-			if(player.ui.abilities.ability_changed)
-			{
-				foreach(Ability ability in player.abilities)
-				{
-					if (ability.Name == player.ui.abilities.ability_to_change)
-					{
-						ability.useable = true;
-						ability.CheckAssignment(player.ui.abilities.button_to_bind);
-					}
-				}
-				player.ui.abilities.ability_changed = false;
-				player.ui.abilities.ability_to_change = null;
-				player.ui.abilities.button_to_bind = null;
-			}
 			if(StatusEffectPreventingAbilities())
 			{
 				can_use_abilities = false;
@@ -146,6 +134,26 @@ public partial class AbilityController : Controller
 		return false;
 	}
 
-	
+	public void SubscribeToUI(UI ui)
+	{
+		ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
+	}
 
+    private void OnAbilityChanged(string new_ability, string new_button_assignment)
+    {
+        GD.Print("Got ability changed signal!");
+		GD.Print("new button assignment " + new_button_assignment+ " new ability " + new_ability);
+		foreach(Ability ability in player.abilities)
+		{
+			if (ability.Name == new_ability)
+			{
+				ability.useable = true;
+				ability.CheckAssignment(new_button_assignment);
+			}
+		}
+		player.ui.abilities.ability_changed = false;
+		player.ui.abilities.ability_to_change = null;
+		player.ui.abilities.button_to_bind = null;
+		
+    }
 }
