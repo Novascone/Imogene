@@ -5,7 +5,7 @@ public partial class CharismaStat : Stat
 {
 	public override void _Ready()
 	{
-		base._Ready();
+		label.Text = Name + ":";
 		set_info_text =  "  Charisma {0} \n * Primary stat for character interaction \n * Increases special interactions";
 	}
 

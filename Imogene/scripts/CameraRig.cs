@@ -25,22 +25,22 @@ public partial class CameraRig : Node3D
 	{
 		// _customSignals.EmitSignal(nameof(CustomSignals.CameraPosition), camera.GlobalTransform.Origin); // Sends camera position
 		// Check if zoomed, zoom if needed
-		if(!zoomed)
-		{
-			if (player.ui.inventory_open || player.ui.abilities_open)
-			{
-				camera.Size = zoom_camera_size;
-				zoomed = true;
-			}
-		}
-		else if (zoomed)
-		{
-			if(!player.ui.inventory_open && !player.ui.abilities_open)
-			{
-				camera.Size = default_camera_size;
-				zoomed = false;
-			}
-		}
+		// if(!zoomed)
+		// {
+		// 	if (player.ui.inventory_open || player.ui.abilities_open)
+		// 	{
+		// 		camera.Size = zoom_camera_size;
+		// 		zoomed = true;
+		// 	}
+		// }
+		// else if (zoomed)
+		// {
+		// 	if(!player.ui.inventory_open && !player.ui.abilities_open)
+		// 	{
+		// 		camera.Size = default_camera_size;
+		// 		zoomed = false;
+		// 	}
+		// }
 	}
 
 	public void GetPlayerInfo(Player s) // Get player info

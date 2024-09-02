@@ -4,20 +4,16 @@ using System;
 public partial class Stat : Control
 {
 
-    public Button label;
-	public Label value;
-	public Control info;
-	public RichTextLabel info_text;
+    [Export] public Button label;
+	[Export] public Label value;
+	[Export] public Control info;
+	[Export] public RichTextLabel info_text;
 	public string set_info_text;
 	public string stat_value = "1";
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        label = GetNode<Button>("Label");
-		value = GetNode<Label>("Value");
-		value.Text = "20";
-		info = GetNode<Control>("Label/Info");
-		info_text = GetNode<RichTextLabel>("Label/Info/MarginContainer/PanelContainer/Label");
+       
 	}
 
     public virtual void GetStatInfo(string stat_value_ui)
@@ -44,6 +40,21 @@ public partial class Stat : Control
 			}
 		}
 		
+	}
+	public void _on_area_2d_area_entered(Area2D area)
+	{
+		if(area.IsInGroup("cursor"))
+		{
+			label.GrabFocus();
+		}
+	}
+
+	public void _on_area_2d_area_exited(Area2D area)
+	{
+		if(area.IsInGroup("cursor"))
+		{
+			label.ReleaseFocus();
+		}
 	}
 
     public void _on_label_focus_entered()

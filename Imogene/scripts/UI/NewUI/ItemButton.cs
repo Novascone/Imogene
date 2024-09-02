@@ -19,7 +19,7 @@ public partial class ItemButton : Button
 	{
 		if(area.IsInGroup("cursor"))
 		{
-			EmitSignal(nameof(CursorHovering), this);
+			GrabFocus();
 		}
 	}
 
@@ -27,7 +27,7 @@ public partial class ItemButton : Button
 	{
 		if(area.IsInGroup("cursor"))
 		{
-			EmitSignal(nameof(CursorLeft), this);
+			ReleaseFocus();
 		}
 	}
 }

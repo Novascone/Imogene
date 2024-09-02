@@ -57,8 +57,8 @@ public partial class AbilityController : Controller
 		{
 			// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), player.l_cross_primary_selected);
 			// _customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), player.r_cross_primary_selected);
-			player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
-			player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
+			// player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
+			// player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
 			foreach(AbilityResource ability_resource in player.ability_resources)
 			{
 				LoadAbilitiesHelper(ability_resource);
@@ -74,13 +74,13 @@ public partial class AbilityController : Controller
 		player.abilities.Add(new_ability);
 		AddChild(new_ability);
 		new_ability.GetPlayerInfo(player);
-		foreach(AbilityCategory ability_category in player.ui.abilities.categories.GetChildren())
-		{
-			if (ability_category.IsInGroup(ability_resource.type))
-			{
-				ability_category.AddAbility(ability_resource);
-			}
-		}
+		// foreach(AbilityCategory ability_category in player.ui.abilities.categories.GetChildren())
+		// {
+		// 	if (ability_category.IsInGroup(ability_resource.type))
+		// 	{
+		// 		ability_category.AddAbility(ability_resource);
+		// 	}
+		// }
 		
 		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
     }
@@ -112,8 +112,8 @@ public partial class AbilityController : Controller
 	 private void AssignAbilityHelper(string button_name, AbilityResource ability_resource)
 	{
 			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
-			player.ui.abilities.AbilityAssigned(ability_resource, button_name);
-			player.ui.hud.AbilityAssigned(ability_resource, button_name);
+			// player.ui.abilities.AbilityAssigned(ability_resource, button_name);
+			// player.ui.hud.AbilityAssigned(ability_resource, button_name);
 			// GD.Print("hud ability assigned");
 			foreach(Ability ability in player.abilities)
 			{
@@ -136,7 +136,7 @@ public partial class AbilityController : Controller
 
 	public void SubscribeToUI(UI ui)
 	{
-		ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
+		// ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
 	}
 
     private void OnAbilityChanged(string new_ability, string new_button_assignment)
@@ -151,9 +151,9 @@ public partial class AbilityController : Controller
 				ability.CheckAssignment(new_button_assignment);
 			}
 		}
-		player.ui.abilities.ability_changed = false;
-		player.ui.abilities.ability_to_change = null;
-		player.ui.abilities.button_to_bind = null;
+		// player.ui.abilities.ability_changed = false;
+		// player.ui.abilities.ability_to_change = null;
+		// player.ui.abilities.button_to_bind = null;
 		
     }
 }

@@ -43,9 +43,7 @@ offset_bottom = 1080.0
 
 [node name="NewAbilities" parent="." instance=ExtResource("4_77sew")]
 visible = false
-layout_mode = 2
-offset_left = 582.5
-offset_right = 1582.5
+layout_mode = 1
 
 [node name="NewJournal" parent="." instance=ExtResource("4_cu10v")]
 visible = false

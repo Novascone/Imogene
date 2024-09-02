@@ -4,19 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://q4fdinjsppia" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/character_outline.tscn" id="2_cuxs3"]
 [ext_resource type="PackedScene" uid="uid://ccindx3yp61uk" path="res://scenes/UI/player_ui/NewUI/Inventory/BottomButtons/bottom_buttons.tscn" id="3_64plo"]
 [ext_resource type="PackedScene" uid="uid://bq07pugqwxxgg" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/items.tscn" id="3_j3h2y"]
+[ext_resource type="PackedScene" uid="uid://i8rexh5m0xrf" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/mats_label.tscn" id="4_ajoqv"]
+[ext_resource type="PackedScene" uid="uid://cyqtt3a7dcrvv" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/gold_label.tscn" id="5_3to8r"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtarg"]
-size = Vector2(118, 35)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vyf8"]
-size = Vector2(476.75, 29)
-
-[node name="MainInventory" type="VBoxContainer" node_paths=PackedStringArray("items")]
+[node name="MainInventory" type="VBoxContainer" node_paths=PackedStringArray("items", "mats", "bottom_buttons")]
 offset_right = 612.0
 offset_bottom = 1080.0
 size_flags_horizontal = 10
 script = ExtResource("1_he5l0")
 items = NodePath("Items")
+mats = NodePath("MatsGold/Mats")
+bottom_buttons = NodePath("BottomButtons")
 
 [node name="InventoryTitle" type="Panel" parent="."]
 custom_minimum_size = Vector2(0, 50)
@@ -42,7 +40,6 @@ vertical_alignment = 1
 
 [node name="CharacterOutline" parent="." instance=ExtResource("2_cuxs3")]
 layout_mode = 2
-size_flags_vertical = 1
 
 [node name="Items" parent="." instance=ExtResource("3_j3h2y")]
 layout_mode = 2
@@ -53,89 +50,13 @@ layout_mode = 2
 size_flags_stretch_ratio = 0.07
 theme_override_constants/separation = 0
 
-[node name="MatsLabel" type="Button" parent="MatsGold"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.25
-text = "Mats
-"
-
-[node name="Info" type="Control" parent="MatsGold/MatsLabel"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 166.0
-offset_right = 166.0
-offset_bottom = 25.0
-
-[node name="MarginContainer" type="MarginContainer" parent="MatsGold/MatsLabel/Info"]
-layout_mode = 0
-offset_left = -281.0
-offset_top = -104.0
-offset_right = 47.0
-offset_bottom = -25.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="MatsGold/MatsLabel/Info/MarginContainer"]
+[node name="Mats" parent="MatsGold" instance=ExtResource("4_ajoqv")]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="MatsGold/MatsLabel/Info/MarginContainer/PanelContainer"]
+[node name="Gold" parent="MatsGold" instance=ExtResource("5_3to8r")]
 layout_mode = 2
-text = " Materials
- * Look at materials the character has
- "
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="MatsGold/MatsLabel"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MatsGold/MatsLabel/Area2D"]
-position = Vector2(62, 20.5)
-shape = SubResource("RectangleShape2D_qtarg")
-
-[node name="GoldLabel" type="Button" parent="MatsGold"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FauxButton"
-text = "Gold
-"
-
-[node name="Info" type="Control" parent="MatsGold/GoldLabel"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 166.0
-offset_right = 166.0
-offset_bottom = 25.0
-
-[node name="MarginContainer" type="MarginContainer" parent="MatsGold/GoldLabel/Info"]
-layout_mode = 0
-offset_left = -82.0
-offset_top = -87.0
-offset_right = 246.0
-offset_bottom = -8.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="MatsGold/GoldLabel/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="MatsGold/GoldLabel/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = " Gold
- * Currence to buy services and goods
- "
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="MatsGold/GoldLabel"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MatsGold/GoldLabel/Area2D"]
-position = Vector2(246.375, 19)
-shape = SubResource("RectangleShape2D_8vyf8")
 
 [node name="BottomButtons" parent="." instance=ExtResource("3_64plo")]
 layout_mode = 2
+
+[connection signal="button_down" from="MatsGold/Mats" to="." method="_on_mats_button_down"]

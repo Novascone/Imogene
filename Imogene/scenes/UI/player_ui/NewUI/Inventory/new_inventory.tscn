@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bcjfs8lc5v5hs" path="res://scenes/UI/player_ui/NewUI/Inventory/DepthSheet/depth_sheet.tscn" id="4_xqf6c"]
 [ext_resource type="PackedScene" uid="uid://bkjmtb18np0jd" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/main_inventory.tscn" id="39_2vx7p"]
 
-[node name="NewInventory" type="HBoxContainer" node_paths=PackedStringArray("main", "depth_sheet", "mats", "temp_buttons")]
+[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("main", "depth_sheet", "mats", "temp_buttons")]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -15,22 +15,25 @@ offset_left = -612.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("1_7bn67")
-main = NodePath("MainInventory")
-depth_sheet = NodePath("DepthSheet")
-mats = NodePath("Mats")
-temp_buttons = NodePath("TempButtons")
+main = NodePath("NewInventory/MainInventory")
+depth_sheet = NodePath("NewInventory/DepthSheet")
+mats = NodePath("NewInventory/Mats")
+temp_buttons = NodePath("NewInventory/TempButtons")
 
-[node name="TempButtons" parent="." instance=ExtResource("2_8psl5")]
+[node name="NewInventory" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TempButtons" parent="NewInventory" instance=ExtResource("2_8psl5")]
 visible = false
 layout_mode = 2
 
-[node name="Mats" parent="." instance=ExtResource("4_8al3d")]
+[node name="Mats" parent="NewInventory" instance=ExtResource("4_8al3d")]
 visible = false
 layout_mode = 2
 
-[node name="DepthSheet" parent="." instance=ExtResource("4_xqf6c")]
+[node name="DepthSheet" parent="NewInventory" instance=ExtResource("4_xqf6c")]
 visible = false
 layout_mode = 2
 
-[node name="MainInventory" parent="." instance=ExtResource("39_2vx7p")]
+[node name="MainInventory" parent="NewInventory" instance=ExtResource("39_2vx7p")]
 layout_mode = 2

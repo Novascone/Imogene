@@ -5,7 +5,7 @@ public partial class WisdomStat : Stat
 {
 	public override void _Ready()
 	{
-		base._Ready();
+		label.Text = Name + ":";
 		set_info_text =  " Wisdom {0} \n * Primary stat for interaction ";
 	}
 

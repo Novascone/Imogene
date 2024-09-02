@@ -5,13 +5,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdrn2"]
 size = Vector2(55, 54)
 
-[node name="Neck" type="Button"]
+[node name="Neck" type="Button" node_paths=PackedStringArray("info")]
 custom_minimum_size = Vector2(60, 60)
 size_flags_horizontal = 0
 size_flags_vertical = 4
 focus_neighbor_left = NodePath("../../Column2/Head")
 focus_neighbor_bottom = NodePath("../Bracers")
 script = ExtResource("1_1gjro")
+info = NodePath("Info")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -50,3 +51,5 @@ horizontal_alignment = 1
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

@@ -6,7 +6,7 @@ public partial class VitalityStat : Stat
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base._Ready();
+		label.Text = Name + ":";
 		set_info_text =  " Vitality {0} \n * Primary stat for health \n * Increases health points by {1}";
 	}
 

@@ -24,10 +24,10 @@ public partial class ResourceSystem : EntitySystem
 	{
 		entity.resource -= cost;
 		GD.Print("Cost " + cost);
-		if(entity is Player player)
-		{
-			player.ui.hud.resource.Value = entity.resource;
-		}
+		// if(entity is Player player)
+		// {
+		// 	player.ui.hud.resource.Value = entity.resource;
+		// }
 		ResourceRegen();
 	}
 
@@ -55,10 +55,10 @@ public partial class ResourceSystem : EntitySystem
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), entity.posture);
 			
 			}
-			if(entity is Player player)
-			{
-				player.ui.hud.posture.Value += posture_damage;
-			}
+			// if(entity is Player player)
+			// {
+			// 	player.ui.hud.posture.Value += posture_damage;
+			// }
 		}
 		PostureRegen();
 		
@@ -78,10 +78,10 @@ public partial class ResourceSystem : EntitySystem
 			GD.Print("Resource " + entity.resource);
 		}
 
-		if(entity is Player player)
-		{
-			player.ui.hud.resource.Value = entity.resource;
-		}
+		// if(entity is Player player)
+		// {
+		// 	player.ui.hud.resource.Value = entity.resource;
+		// }
     }
 
 	private void OnPostureRegenTickTimeout()
@@ -100,10 +100,10 @@ public partial class ResourceSystem : EntitySystem
 			enemy.posture_bar.Value = entity.posture;
 			_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), enemy, entity.posture);
 		}
-		if(entity is Player player)
-		{
-			player.ui.hud.posture.Value = entity.posture;
-		}
+		// if(entity is Player player)
+		// {
+		// 	player.ui.hud.posture.Value = entity.posture;
+		// }
 		if(entity.posture == 0)
 		{
 			posture_regen_timer.Stop();

@@ -97,11 +97,11 @@ public partial class StatController : Controller
 		entity.resource_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * entity.resource_regen_bonus, 2);
 		entity.posture_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * (1 + entity.poise/100), 2);
 		entity.recovery = (float)Math.Round((entity.health_regen + entity.resource_regen + entity.posture_regen) / 3, 2);
-		if(player != null)
-		{
-			player.ui.hud.health.MaxValue = entity.maximum_health;
+		// if(player != null)
+		// {
+		// 	player.ui.hud.health.MaxValue = entity.maximum_health;
 
-		}
+		// }
 		
 
 		// GD.Print("combined damage " + combined_damage);

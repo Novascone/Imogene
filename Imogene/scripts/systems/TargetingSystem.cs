@@ -44,10 +44,10 @@ public partial class TargetingSystem : EntitySystem
 	{
 		EnemyCheck();
 		SoftTargetCheck();
-		if(player.ui.hud.enemy_health.targeted_enemy != null)
-		{
-			GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
-		}
+		// if(player.ui.hud.enemy_health.targeted_enemy != null)
+		// {
+		// 	GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
+		// }
 		SoftTargetToggle();
 		
 		if(mobs.Count == 0) // Reset enemy_in_vision
@@ -67,11 +67,11 @@ public partial class TargetingSystem : EntitySystem
 			{
 				if(closest_enemy.in_player_vision || enemy_close)
 				{
-					player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
+					// player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
 				}
 				else
 				{
-					player.ui.hud.enemy_health.RemoveSoftTargetIcon(closest_enemy);
+					// player.ui.hud.enemy_health.RemoveSoftTargetIcon(closest_enemy);
 				}
 				
 			}
@@ -81,7 +81,7 @@ public partial class TargetingSystem : EntitySystem
 				if(enemy != closest_enemy)
 				{
 					enemy.soft_target = false;
-					player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+					// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				}
 			}
 			// GD.Print("Closest enemy soft " + closest_enemy_soft.Name);
@@ -110,14 +110,14 @@ public partial class TargetingSystem : EntitySystem
 			if(frames_held >= held_threshold)
 			{
 				soft_target_on = !soft_target_on;
-				if(!soft_target_on)
-				{
-					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 0.1f);
-				}
-				else
-				{
-					player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 1.0f);
-				}
+				// if(!soft_target_on)
+				// {
+				// 	player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 0.1f);
+				// }
+				// else
+				// {
+				// 	player.ui.hud.soft_target_indicator.Modulate = new Color(Colors.White, 1.0f);
+				// }
 			}
 			
 			frames_held = 0;
@@ -133,10 +133,10 @@ public partial class TargetingSystem : EntitySystem
 
 	public void EnemyExitedVision(Enemy enemy)
 	{
-		if(enemy == mob_looking_at)
-		{
-			player.ui.hud.enemy_health.EnemyUntargeted();
-		}
+		// if(enemy == mob_looking_at)
+		// {
+		// 	player.ui.hud.enemy_health.EnemyUntargeted();
+		// }
 		enemy.in_player_vision = false;
 		enemies_in_vision.Remove(enemy);
 	}
@@ -208,13 +208,13 @@ public partial class TargetingSystem : EntitySystem
 			}
 			if(mobs_in_large == 0)
 			{
-				player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				enemy_close = false;
 				closest_enemy = null;
 			}
 			if(soft_target_on)
 			{
-				player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
+				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public partial class TargetingSystem : EntitySystem
 				else if(player.targeting)
 				{
 					player.targeting = false;
-					player.ui.hud.enemy_health.EnemyUntargeted();
+					// player.ui.hud.enemy_health.EnemyUntargeted();
 				}
 				
 			}
@@ -259,7 +259,7 @@ public partial class TargetingSystem : EntitySystem
 		if (frames_held > held_threshold && enemy_close)
 		{
 			closest_enemy.soft_target = false;
-			player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
+			// player.ui.hud.enemy_health.SetSoftTargetIcon(closest_enemy);
 		}
 		if(closest_enemy != null)
 		{
@@ -313,7 +313,7 @@ public partial class TargetingSystem : EntitySystem
 		if(mobs_in_order_to_right.Count >= 1)
 		{
 			mob_looking_at.targeted = false;
-			player.ui.hud.enemy_health.EnemyUntargeted();
+			// player.ui.hud.enemy_health.EnemyUntargeted();
 			if(mobs_in_order_to_right.Contains(mob_looking_at))
 			{
 				if(mob_looking_at == mobs_in_order_to_right[0])
@@ -350,7 +350,7 @@ public partial class TargetingSystem : EntitySystem
 		if(mobs_in_order_to_left.Count >= 1)
 		{
 			mob_looking_at.targeted = false;
-			player.ui.hud.enemy_health.EnemyUntargeted();
+			// player.ui.hud.enemy_health.EnemyUntargeted();
 			if(mobs_in_order_to_left.Contains(mob_looking_at))
 			{
 				if(mob_looking_at == mobs_in_order_to_left[0])
@@ -385,7 +385,7 @@ public partial class TargetingSystem : EntitySystem
 	{
 		player.prev_y_rotation = player.GlobalRotation.Y;
 		player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
-		player.ui.hud.enemy_health.EnemyTargeted(mob_looking_at);
+		// player.ui.hud.enemy_health.EnemyTargeted(mob_looking_at);
 		player.current_y_rotation = player.GlobalRotation.Y;
 		if(player.prev_y_rotation != player.current_y_rotation)
 		{

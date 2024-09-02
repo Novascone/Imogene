@@ -3,11 +3,13 @@ using System;
 
 public partial class BottomButton : Button
 {
-	private Control info;
+	[Export] public Control info;
+	[Export] public RichTextLabel info_text;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		info = GetNode<Control>("Info");
+		Text = Name;
+		info_text.Text = Name;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,17 +26,22 @@ public partial class BottomButton : Button
 		info.Hide();
 	}
 
-	public override void _GuiInput(InputEvent @event)
+	public void _on_area_2d_area_entered(Area2D area)
 	{
-		if(@event is InputEventJoypadButton eventJoypadButton)
+		if(area.IsInGroup("cursor"))
 		{
-			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
+			GD.Print("cursor entered " + Name);
+			GrabFocus();
 		}
-		
+	}
+
+	public void _on_area_2d_area_exited(Area2D area)
+	{
+		if(area.IsInGroup("cursor"))
+		{
+			GD.Print("cursor exited " + Name);
+			ReleaseFocus();
+		}
 	}
 
 

@@ -62,8 +62,8 @@ public partial class EquipmentController : Controller
 			
 			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_left_released) // If the left D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
 			{
-				player.l_cross_primary_selected = !player.l_cross_primary_selected;
-				player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
+				// player.l_cross_primary_selected = !player.l_cross_primary_selected;
+				// player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
 				d_pad_left_released = false;
 				d_pad_frames_held = 0;
 				d_pad_held = false;
@@ -79,8 +79,8 @@ public partial class EquipmentController : Controller
 			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_right_released) // If the right D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
 			{
 				
-				player.r_cross_primary_selected = !player.r_cross_primary_selected;
-				player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
+				// player.r_cross_primary_selected = !player.r_cross_primary_selected;
+				// player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
 				d_pad_right_released = false;
 				d_pad_frames_held = 0;
 				d_pad_held = false;
@@ -107,7 +107,7 @@ public partial class EquipmentController : Controller
 				d_pad_up_pressed = false;
 
 				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), player.consumable);
-				player.ui.hud.WhichConsumable(player.consumable);
+				// player.ui.hud.WhichConsumable(player.consumable);
 			}
 			if(d_pad_down_pressed)
 			{
@@ -589,7 +589,7 @@ public partial class EquipmentController : Controller
 		player.health_on_retaliate += item.health_retaliate;
 		player.resource_regen += item.resource_regen;
 		player.resource_cost_reduction += item.resource_cost_reduction;
-		player.ui.inventory_info.stats_updated = false;
+		// player.ui.inventory_info.stats_updated = false;
 	}
 
 	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)

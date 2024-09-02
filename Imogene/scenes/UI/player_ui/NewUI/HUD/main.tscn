@@ -1,11 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://bbt7k8rgaosvh"]
+[gd_scene load_steps=13 format=3 uid="uid://bbt7k8rgaosvh"]
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewHUD/MainHUD.cs" id="1_2qdvp"]
 [ext_resource type="PackedScene" uid="uid://cxepayivi603r" path="res://scenes/UI/player_ui/NewUI/HUD/posture.tscn" id="2_262hg"]
 [ext_resource type="PackedScene" uid="uid://lbw8dy2dusf1" path="res://scenes/UI/player_ui/NewUI/HUD/xp.tscn" id="3_o3q3x"]
 [ext_resource type="PackedScene" uid="uid://dd7p7bmo27kl3" path="res://scenes/UI/player_ui/NewUI/HUD/health.tscn" id="4_jqyj1"]
-[ext_resource type="PackedScene" uid="uid://cghvdlhroyxr" path="res://scenes/UI/player_ui/NewUI/HUD/hud_cross.tscn" id="5_axhn2"]
+[ext_resource type="PackedScene" uid="uid://dvdgsyi02o40v" path="res://scenes/UI/player_ui/NewUI/HUD/left_primary_hud_cross.tscn" id="5_ek1y1"]
+[ext_resource type="PackedScene" uid="uid://kje4rweonowi" path="res://scenes/UI/player_ui/NewUI/HUD/left_Secondary_hud_cross.tscn" id="6_esw3u"]
 [ext_resource type="PackedScene" uid="uid://xgdub2ncuvaf" path="res://scenes/UI/player_ui/NewUI/HUD/resource.tscn" id="6_q4sql"]
+[ext_resource type="PackedScene" uid="uid://7qmq1da2g8qt" path="res://scenes/UI/player_ui/NewUI/HUD/right_primary_hud_cross.tscn" id="7_sopk2"]
+[ext_resource type="PackedScene" uid="uid://c3g7rot31amkm" path="res://scenes/UI/player_ui/NewUI/HUD/right_secondary_hud_cross.tscn" id="8_cifg1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tj56n"]
 
@@ -13,7 +16,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s65oj"]
 
-[node name="Main" type="PanelContainer"]
+[node name="Main" type="PanelContainer" node_paths=PackedStringArray("l_cross_primary", "l_cross_secondary", "r_cross_primary", "r_cross_secondary")]
 custom_minimum_size = Vector2(1200, 210)
 anchors_preset = 7
 anchor_left = 0.5
@@ -29,6 +32,10 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tj56n")
 script = ExtResource("1_2qdvp")
+l_cross_primary = NodePath("BottomHUDVBox/BottomHUDHBox/LCross/LeftPrimaryHUDCross")
+l_cross_secondary = NodePath("BottomHUDVBox/BottomHUDHBox/LCross/LeftSecondaryHUDCross")
+r_cross_primary = NodePath("BottomHUDVBox/BottomHUDHBox/RCross/RightPrimaryHUDCross")
+r_cross_secondary = NodePath("BottomHUDVBox/BottomHUDHBox/RCross/RightSecondaryHUDCross")
 
 [node name="BottomHUDVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -116,13 +123,13 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vw7lu")
 
-[node name="LCrossSecondary" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_axhn2")]
+[node name="LeftPrimaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_ek1y1")]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="LCrossPrimary" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_axhn2")]
+[node name="LeftSecondaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("6_esw3u")]
 modulate = Color(1, 1, 1, 0.0980392)
 layout_mode = 2
-size_flags_horizontal = 0
 
 [node name="Control" type="Control" parent="BottomHUDVBox/BottomHUDHBox"]
 layout_mode = 2
@@ -134,11 +141,12 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_s65oj")
 
-[node name="RCrossSecondary" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("5_axhn2")]
-modulate = Color(1, 1, 1, 0.0980392)
+[node name="RightPrimaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("7_sopk2")]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="RCrossPrimary" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("5_axhn2")]
+[node name="RightSecondaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("8_cifg1")]
+modulate = Color(1, 1, 1, 0.0980392)
 layout_mode = 2
 size_flags_horizontal = 0
 

@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://drmvtwh0j8666"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/AbilityBinds/CrossBinds.cs" id="1_cx6ga"]
+[ext_resource type="PackedScene" uid="uid://bp5y21kspghkw" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/r_cross_bind_button.tscn" id="2_y6tpl"]
+
+[node name="RCrossPrimaryBind" type="GridContainer" node_paths=PackedStringArray("up", "left", "right", "down")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+script = ExtResource("1_cx6ga")
+up = NodePath("Up")
+left = NodePath("Left")
+right = NodePath("Right")
+down = NodePath("Down")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Up" parent="." instance=ExtResource("2_y6tpl")]
+layout_mode = 2
+button_bind = "Y"
+side = "Right"
+level = "Primary"
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Left" parent="." instance=ExtResource("2_y6tpl")]
+layout_mode = 2
+button_bind = "X"
+side = "Right"
+level = "Primary"
+
+[node name="Control3" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Right" parent="." instance=ExtResource("2_y6tpl")]
+layout_mode = 2
+button_bind = "B"
+side = "Right"
+level = "Primary"
+
+[node name="Control4" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Down" parent="." instance=ExtResource("2_y6tpl")]
+layout_mode = 2
+button_bind = "A"

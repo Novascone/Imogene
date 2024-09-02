@@ -92,12 +92,11 @@ public partial class DamageSystem : EntitySystem
 				SpawnDamageNumber(amount, is_critical);
 				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
-			if(entity is Player player)
-			{
-				player.ui.hud.health.Value = entity.health; 
-				// GD.Print("UI health " + player.ui.hud.health.Value);
-				
-			}
+			// if(entity is Player player)
+			// {
+			// 	player.ui.hud.health.Value = entity.health; 
+			// 	// GD.Print("UI health " + player.ui.hud.health.Value);
+			// }
 			HealthRegen();
 		}
 		else
@@ -173,10 +172,10 @@ public partial class DamageSystem : EntitySystem
 		{
 			entity.health += entity.health_regen;
 		}
-		if(entity is Player player)
-		{
-			player.ui.hud.health.Value = player.health;
-		}
+		// if(entity is Player player)
+		// {
+		// 	player.ui.hud.health.Value = player.health;
+		// }
     }
 
 	public float DamageMitigation(string damage_type, float amount)

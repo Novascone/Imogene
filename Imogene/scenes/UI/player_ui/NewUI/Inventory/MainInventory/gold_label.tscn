@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyqtt3a7dcrvv"]
+
+[ext_resource type="Script" path="res://scripts/UI/NewUI/Inventory/GenericInventoryButton.cs" id="1_xegfv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vyf8"]
+size = Vector2(476.75, 29)
+
+[node name="GoldLabel" type="Button" node_paths=PackedStringArray("info", "info_text")]
+offset_right = 490.0
+offset_bottom = 41.0
+size_flags_horizontal = 3
+theme_type_variation = &"FauxButton"
+text = "Gold
+"
+script = ExtResource("1_xegfv")
+info = NodePath("Info")
+info_text = NodePath("Info/MarginContainer/PanelContainer/Label")
+
+[node name="Info" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 166.0
+offset_right = 166.0
+offset_bottom = 25.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Info"]
+layout_mode = 0
+offset_left = -82.0
+offset_top = -87.0
+offset_right = 246.0
+offset_bottom = -8.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Info/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = " Gold
+ * Currence to buy services and goods
+ "
+fit_content = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(246.375, 19)
+shape = SubResource("RectangleShape2D_8vyf8")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

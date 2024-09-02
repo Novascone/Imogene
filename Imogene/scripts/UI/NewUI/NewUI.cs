@@ -15,33 +15,16 @@ public partial class NewUI : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach(ItemButton item_button in inventory.main.items.GetChildren())
-		{
-			item_button.CursorHovering += HandleCursorOverItemButton;
-			item_button.CursorLeft += HandleCursorLeftItemButton;
-		}
+		inventory.main.bottom_buttons.abilities.ButtonDown += OnAbilitiesButtonDown;
 	}
 
-    
-
-    private void HandleCursorOverItemButton(ItemButton item_button)
+    private void OnAbilitiesButtonDown()
     {
-        GD.Print("cursor over item button");
-		hovered_button = item_button;
-		hovered_button.GrabFocus();
-		GD.Print(hovered_button.Name);
+        abilities.Show();
+		inventory.Hide();
     }
 
-	private void HandleCursorLeftItemButton(ItemButton item_button)
-    {
-        GD.Print("cursor left item button");
-		if(hovered_button == item_button)
-		{
-			hovered_button.ReleaseFocus();
-			hovered_button = null;
-		}
-		
-    }
+
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -52,6 +35,7 @@ public partial class NewUI : Control
 		{
 			inventory.Visible = !inventory.Visible;
 		}
+		
 	}
 
 	

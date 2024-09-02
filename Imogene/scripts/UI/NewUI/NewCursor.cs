@@ -37,22 +37,18 @@ public partial class NewCursor : Sprite2D
 		if (Input.IsActionPressed("CursorLeft"))
 		{
 			mouse_direction.X -= 1.0f;
-			GD.Print("moving cursor left");
 		}
 		if (Input.IsActionPressed("CursorRight"))
 		{
 			mouse_direction.X += 1.0f;
-			GD.Print("moving cursor right");
 		}
 		if (Input.IsActionPressed("CursorUp"))
 		{
 			mouse_direction.Y -= 1.0f;
-			GD.Print("moving cursor up");
 		}
 		if (Input.IsActionPressed("CursorDown"))
 		{
 			mouse_direction.Y += 1.0f;
-			GD.Print("moving cursor down");
 		}
 		if(mouse_direction != Vector2.Zero)
 		{

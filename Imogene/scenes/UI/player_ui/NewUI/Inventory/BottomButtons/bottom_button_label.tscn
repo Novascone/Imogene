@@ -1,21 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://2k0jomchvhql"]
+[gd_scene load_steps=3 format=3 uid="uid://cdic0qe5uu3o1"]
 
-[ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="1_18xvf"]
+[ext_resource type="Script" path="res://scripts/UI/Inventory/BottomButton.cs" id="1_mef14"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmr00"]
-size = Vector2(91, 138)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7eua"]
+size = Vector2(116, 198)
 
-[node name="AbilitiesLabel" type="Button"]
+[node name="BottomButtonLabel" type="Button" node_paths=PackedStringArray("info")]
 custom_minimum_size = Vector2(100, 150)
-offset_right = 100.0
-offset_bottom = 150.0
+offset_right = 128.0
+offset_bottom = 207.0
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../OptionsLabel")
 focus_neighbor_right = NodePath("../JournalLabel")
-text = "Abilitities
+text = "BottomButtonLabel
 "
 text_overrun_behavior = 3
-script = ExtResource("1_18xvf")
+script = ExtResource("1_mef14")
+info = NodePath("Info")
 
 [node name="Info" type="Control" parent="."]
 visible = false
@@ -50,8 +51,8 @@ text = "[center]Abilities"
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(50, 74)
-shape = SubResource("RectangleShape2D_kmr00")
+position = Vector2(64, 103)
+shape = SubResource("RectangleShape2D_p7eua")
 
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
-[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

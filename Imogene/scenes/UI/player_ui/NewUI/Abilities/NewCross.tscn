@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhhl1nbomlijl"]
+[gd_scene load_steps=4 format=3 uid="uid://dhhl1nbomlijl"]
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/AbilityBinds/CrossBinds.cs" id="1_dop5q"]
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/AbilityBinds/CrossBindButton.cs" id="2_r8dxi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vb2se"]
 size = Vector2(56, 56)
@@ -24,6 +25,7 @@ layout_mode = 2
 [node name="Up" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+script = ExtResource("2_r8dxi")
 
 [node name="Area2D" type="Area2D" parent="Up"]
 
@@ -37,6 +39,7 @@ layout_mode = 2
 [node name="Left" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+script = ExtResource("2_r8dxi")
 
 [node name="Area2D" type="Area2D" parent="Left"]
 
@@ -50,6 +53,7 @@ layout_mode = 2
 [node name="Right" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+script = ExtResource("2_r8dxi")
 
 [node name="Area2D" type="Area2D" parent="Right"]
 
@@ -63,9 +67,15 @@ layout_mode = 2
 [node name="Down" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+script = ExtResource("2_r8dxi")
 
 [node name="Area2D" type="Area2D" parent="Down"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Down/Area2D"]
 position = Vector2(30, 30)
 shape = SubResource("RectangleShape2D_vb2se")
+
+[connection signal="button_down" from="Up" to="Up" method="_on_button_down"]
+[connection signal="button_down" from="Left" to="Left" method="_on_button_down"]
+[connection signal="button_down" from="Right" to="Right" method="_on_button_down"]
+[connection signal="button_down" from="Down" to="Down" method="_on_button_down"]

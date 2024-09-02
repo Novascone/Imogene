@@ -136,14 +136,14 @@ public partial class MovementController : Controller
 			return false;
 		}
 
-		if(player.ui.inventory.Visible) 
-		{
-			return false;
-		}
-		else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
-		{
-			return true;
-		}
+		// if(player.ui.inventory.Visible) 
+		// {
+		// 	return false;
+		// }
+		// else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
+		// {
+		// 	return true;
+		// }
 
 		return true;
 		

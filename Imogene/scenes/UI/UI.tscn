@@ -1192,7 +1192,6 @@ layout_mode = 2
 columns = 4
 
 [node name="Inventory" type="Control" parent="."]
-visible = false
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 1
 anchors_preset = 11

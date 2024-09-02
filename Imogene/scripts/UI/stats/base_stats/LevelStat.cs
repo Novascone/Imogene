@@ -6,7 +6,7 @@ public partial class LevelStat : Stat
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base._Ready();
+		label.Text = Name + ":";
 		set_info_text =  " Level {0} \n * Level of character";
 	}
 

@@ -1,19 +1,22 @@
-[gd_scene load_steps=30 format=3 uid="uid://q4fdinjsppia"]
+[gd_scene load_steps=31 format=3 uid="uid://q4fdinjsppia"]
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/Inventory/CharacterOutline.cs" id="1_7c54v"]
-[ext_resource type="PackedScene" uid="uid://bicnne5vr0s6l" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/level.tscn" id="2_d6vec"]
-[ext_resource type="PackedScene" uid="uid://dtrrvlkgjbv3b" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/strength.tscn" id="3_q1pu0"]
-[ext_resource type="PackedScene" uid="uid://173wxptdidu1" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/dexterity.tscn" id="4_i4j4j"]
-[ext_resource type="PackedScene" uid="uid://dc7aqvhv24ivo" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/intellect.tscn" id="5_l81n2"]
-[ext_resource type="PackedScene" uid="uid://bq8onyvrhd68m" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/vitality.tscn" id="6_pilua"]
-[ext_resource type="PackedScene" uid="uid://blvjmmtxbdxye" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/stamina.tscn" id="7_hdqlb"]
-[ext_resource type="PackedScene" uid="uid://defg8toqyk676" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/wisdom.tscn" id="8_j0w72"]
-[ext_resource type="PackedScene" uid="uid://xa3tmji6obv0" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/charisma.tscn" id="9_2fs74"]
-[ext_resource type="PackedScene" uid="uid://cvfdwuy2yaggc" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/damage.tscn" id="10_78d40"]
-[ext_resource type="PackedScene" uid="uid://cbix83ljpsc38" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/resistance.tscn" id="11_8kpg2"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/LevelStat.cs" id="3_8xm4e"]
+[ext_resource type="PackedScene" uid="uid://8aj38jxuqw66" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/base_stat_label.tscn" id="3_ewnx4"]
+[ext_resource type="PackedScene" uid="uid://c7afornn586dj" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/outline_button.tscn" id="4_g66vt"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StrengthStat.cs" id="4_ygnmo"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/DexterityStat.cs" id="5_ufeug"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/IntellectStat.cs" id="6_pkyrb"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/VitalityStat.cs" id="7_5lqh7"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/StaminaStat.cs" id="8_1vm7q"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/WisdomStat.cs" id="8_yxamx"]
+[ext_resource type="Script" path="res://scripts/UI/stats/base_stats/CharismaStat.cs" id="9_we4gu"]
+[ext_resource type="PackedScene" uid="uid://b81j85oqiivla" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/summary_stat_label.tscn" id="10_vghec"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/DamageStat.cs" id="11_q85tt"]
 [ext_resource type="PackedScene" uid="uid://bltlndmkefkxt" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/shoulder.tscn" id="12_1a5db"]
-[ext_resource type="PackedScene" uid="uid://dv0bfcfw2lhyj" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/recovery.tscn" id="12_x2htx"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/ResistanceStat.cs" id="12_jpeqr"]
 [ext_resource type="PackedScene" uid="uid://cx77ycj2tvuta" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/head.tscn" id="12_xmh1a"]
+[ext_resource type="Script" path="res://scripts/UI/stats/summary_stats/RecoveryStat.cs" id="13_jo62v"]
 [ext_resource type="PackedScene" uid="uid://0mdvjau7kw8w" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/gloves.tscn" id="13_wuqsw"]
 [ext_resource type="PackedScene" uid="uid://dq7cayo2vlyni" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/ring_1.tscn" id="14_pmlhx"]
 [ext_resource type="PackedScene" uid="uid://deeumsjr2j6x1" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/main_hand.tscn" id="15_kvh73"]
@@ -28,29 +31,12 @@
 [ext_resource type="PackedScene" uid="uid://cqf6ui62jdgrk" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/off_hand.tscn" id="25_usurc"]
 [ext_resource type="PackedScene" uid="uid://c0rchsocdrwdr" path="res://scenes/UI/player_ui/NewUI/Inventory/MainInventory/CharacterOutline/off_hand_secondary.tscn" id="26_q62pn"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbwhp"]
-size = Vector2(221.75, 27)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_shjiu"]
-size = Vector2(220, 23)
-
-[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("level", "strength", "dexterity", "intellect", "vitality", "stamina", "wisdom", "charisma", "damage", "resistance", "recovery", "shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
+[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
 offset_right = 593.0
 offset_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_7c54v")
-level = NodePath("StatsOutline/Level")
-strength = NodePath("StatsOutline/BaseStats/Strength")
-dexterity = NodePath("StatsOutline/BaseStats/Dexterity")
-intellect = NodePath("StatsOutline/BaseStats/Intellect")
-vitality = NodePath("StatsOutline/BaseStats/Vitality")
-stamina = NodePath("StatsOutline/BaseStats/Stamina")
-wisdom = NodePath("StatsOutline/BaseStats/Wisdom")
-charisma = NodePath("StatsOutline/BaseStats/Charisma")
-damage = NodePath("StatsOutline/Details/Damage")
-resistance = NodePath("StatsOutline/Details/Resistance")
-recovery = NodePath("StatsOutline/Details/Recovery")
 shoulders = NodePath("Armor/Column1/MarginContainer/Shoulders")
 gloves = NodePath("Armor/Column1/HBoxContainer/VBoxContainer/Gloves")
 ring_1 = NodePath("Armor/Column1/HBoxContainer/VBoxContainer/Ring1")
@@ -78,8 +64,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Level" parent="StatsOutline" instance=ExtResource("2_d6vec")]
+[node name="Level" parent="StatsOutline" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("3_8xm4e")
 
 [node name="Spacer1" type="Control" parent="StatsOutline"]
 layout_mode = 2
@@ -87,48 +74,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="RepLabel" type="Button" parent="StatsOutline"]
+[node name="Reputation" parent="StatsOutline" instance=ExtResource("4_g66vt")]
 layout_mode = 2
-focus_neighbor_bottom = NodePath("../BaseStats/Strength/Label")
-theme_type_variation = &"StatsButton"
-text = "Reputation
-"
-
-[node name="Info" type="Control" parent="StatsOutline/RepLabel"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 166.0
-offset_right = 166.0
-offset_bottom = 25.0
-
-[node name="MarginContainer" type="MarginContainer" parent="StatsOutline/RepLabel/Info"]
-layout_mode = 0
-offset_left = -230.0
-offset_top = -118.0
-offset_right = 317.0
-offset_bottom = -16.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="StatsOutline/RepLabel/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="StatsOutline/RepLabel/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = " Reputation of character among factions
- * Special skills based on reputation gained after reaching max level 
-
- "
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="StatsOutline/RepLabel"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StatsOutline/RepLabel/Area2D"]
-position = Vector2(116.125, 16.5)
-shape = SubResource("RectangleShape2D_xbwhp")
 
 [node name="Spacer2" type="Control" parent="StatsOutline"]
 layout_mode = 2
@@ -140,26 +87,33 @@ size_flags_stretch_ratio = 4.0
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Strength" parent="StatsOutline/BaseStats" instance=ExtResource("3_q1pu0")]
+[node name="Strength" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("4_ygnmo")
 
-[node name="Dexterity" parent="StatsOutline/BaseStats" instance=ExtResource("4_i4j4j")]
+[node name="Dexterity" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("5_ufeug")
 
-[node name="Intellect" parent="StatsOutline/BaseStats" instance=ExtResource("5_l81n2")]
+[node name="Intellect" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("6_pkyrb")
 
-[node name="Vitality" parent="StatsOutline/BaseStats" instance=ExtResource("6_pilua")]
+[node name="Vitality" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("7_5lqh7")
 
-[node name="Stamina" parent="StatsOutline/BaseStats" instance=ExtResource("7_hdqlb")]
+[node name="Stamina" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("8_1vm7q")
 
-[node name="Wisdom" parent="StatsOutline/BaseStats" instance=ExtResource("8_j0w72")]
+[node name="Wisdom" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("8_yxamx")
 
-[node name="Charisma" parent="StatsOutline/BaseStats" instance=ExtResource("9_2fs74")]
+[node name="Charisma" parent="StatsOutline/BaseStats" instance=ExtResource("3_ewnx4")]
 layout_mode = 2
+script = ExtResource("9_we4gu")
 
 [node name="Spacer3" type="Control" parent="StatsOutline"]
 layout_mode = 2
@@ -169,59 +123,24 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Damage" parent="StatsOutline/Details" instance=ExtResource("10_78d40")]
+[node name="Damage" parent="StatsOutline/Details" instance=ExtResource("10_vghec")]
 layout_mode = 2
+script = ExtResource("11_q85tt")
 
-[node name="Resistance" parent="StatsOutline/Details" instance=ExtResource("11_8kpg2")]
+[node name="Resistance" parent="StatsOutline/Details" instance=ExtResource("10_vghec")]
 layout_mode = 2
+script = ExtResource("12_jpeqr")
 
-[node name="Recovery" parent="StatsOutline/Details" instance=ExtResource("12_x2htx")]
+[node name="Recovery" parent="StatsOutline/Details" instance=ExtResource("10_vghec")]
 layout_mode = 2
+script = ExtResource("13_jo62v")
 
-[node name="SheetLabel" type="Button" parent="StatsOutline"]
+[node name="Sheet" parent="StatsOutline" instance=ExtResource("4_g66vt")]
 layout_mode = 2
-theme_type_variation = &"StatsButton"
-text = "Sheet
-"
-
-[node name="Info" type="Control" parent="StatsOutline/SheetLabel"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 166.0
-offset_right = 166.0
-offset_bottom = 25.0
-
-[node name="MarginContainer" type="MarginContainer" parent="StatsOutline/SheetLabel/Info"]
-layout_mode = 0
-offset_left = -165.0
-offset_top = -94.0
-offset_right = 66.0
-offset_bottom = -15.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="StatsOutline/SheetLabel/Info/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="StatsOutline/SheetLabel/Info/MarginContainer/PanelContainer"]
-layout_mode = 2
-text = " Character Sheet
- * Deeper details on stats 
- "
-fit_content = true
-
-[node name="Area2D" type="Area2D" parent="StatsOutline/SheetLabel"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StatsOutline/SheetLabel/Area2D"]
-position = Vector2(117, 17.5)
-shape = SubResource("RectangleShape2D_shjiu")
 
 [node name="Armor" type="HBoxContainer" parent="."]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_override_constants/separation = 10
 
 [node name="Column1" type="VBoxContainer" parent="Armor"]

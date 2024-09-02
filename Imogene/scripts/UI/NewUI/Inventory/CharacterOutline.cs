@@ -16,6 +16,9 @@ public partial class CharacterOutline : Controller
 	[Export] public Control resistance;
 	[Export] public Control recovery;
 
+	[Export] public Control reputation;
+	[Export] public Control sheet;
+
 	// Armor
 	[Export] public Control shoulders;
 	[Export] public Control gloves;

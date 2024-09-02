@@ -6,9 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4h1h3"]
 size = Vector2(266, 80)
 
-[node name="General" type="MarginContainer" node_paths=PackedStringArray("melee", "ranged", "defensive", "movement", "unique", "toy")]
-offset_right = 604.0
-offset_bottom = 308.0
+[node name="General" type="MarginContainer" node_paths=PackedStringArray("melee", "ranged", "defensive", "movement", "unique", "toy", "buttons")]
+offset_right = 1000.0
+offset_bottom = 518.0
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -21,15 +22,18 @@ defensive = NodePath("Defensive")
 movement = NodePath("Movement")
 unique = NodePath("Unique")
 toy = NodePath("Toy")
+buttons = NodePath("VBoxContainer")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
 theme_override_constants/h_separation = 30
-theme_override_constants/v_separation = 30
+theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="Melee" type="Button" parent="GridContainer"]
+[node name="Melee" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -37,13 +41,13 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Melee"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Melee"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Melee"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Melee/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Melee/Area2D"]
 position = Vector2(149, 51)
 shape = SubResource("RectangleShape2D_4h1h3")
 
-[node name="Ranged" type="Button" parent="GridContainer"]
+[node name="Ranged" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -51,13 +55,13 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Ranged"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Ranged"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Ranged"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Ranged/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Ranged/Area2D"]
 position = Vector2(153, 52)
 shape = SubResource("RectangleShape2D_4h1h3")
 
-[node name="Defensive" type="Button" parent="GridContainer"]
+[node name="Defensive" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -65,13 +69,13 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Defensive"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Defensive"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Defensive"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Defensive/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Defensive/Area2D"]
 position = Vector2(150, 50)
 shape = SubResource("RectangleShape2D_4h1h3")
 
-[node name="Movement" type="Button" parent="GridContainer"]
+[node name="Movement" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -79,13 +83,13 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Movement"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Movement"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Movement"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Movement/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Movement/Area2D"]
 position = Vector2(151.25, 50)
 shape = SubResource("RectangleShape2D_4h1h3")
 
-[node name="Unique" type="Button" parent="GridContainer"]
+[node name="Unique" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -93,13 +97,13 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Unique"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Unique"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Unique"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Unique/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Unique/Area2D"]
 position = Vector2(152, 50)
 shape = SubResource("RectangleShape2D_4h1h3")
 
-[node name="Toy" type="Button" parent="GridContainer"]
+[node name="Toy" type="Button" parent="VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -107,11 +111,15 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Toy"
 
-[node name="Area2D" type="Area2D" parent="GridContainer/Toy"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Toy"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GridContainer/Toy/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Toy/Area2D"]
 position = Vector2(152, 50)
 shape = SubResource("RectangleShape2D_4h1h3")
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
 
 [node name="Melee" parent="." instance=ExtResource("2_gledf")]
 visible = false
@@ -142,3 +150,10 @@ title_text = "Unique"
 visible = false
 layout_mode = 2
 title_text = "Toy"
+
+[connection signal="button_down" from="VBoxContainer/GridContainer/Melee" to="." method="_on_melee_button_down"]
+[connection signal="button_down" from="VBoxContainer/GridContainer/Ranged" to="." method="_on_ranged_button_down"]
+[connection signal="button_down" from="VBoxContainer/GridContainer/Defensive" to="." method="_on_defensive_button_down"]
+[connection signal="button_down" from="VBoxContainer/GridContainer/Movement" to="." method="_on_movement_button_down"]
+[connection signal="button_down" from="VBoxContainer/GridContainer/Unique" to="." method="_on_unique_button_down"]
+[connection signal="button_down" from="VBoxContainer/GridContainer/Toy" to="." method="_on_toy_button_down"]

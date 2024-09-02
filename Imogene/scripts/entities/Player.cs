@@ -35,7 +35,7 @@ public partial class Player : PlayerEntity
 	public bool test_abilities_assigned = false;
 	
 	// UI
-	[Export] public UI ui;
+	[Export] public NewUI ui;
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
 	
@@ -216,19 +216,19 @@ public partial class Player : PlayerEntity
 		ability_controller.GetPlayerInfo(this);
 		ability_controller.LoadAbilities();
 
-		ability_controller.SubscribeToUI(ui);
+		// ability_controller.SubscribeToUI(ui);
 
 		
 		
-		ui.GetPlayerInfo(this);
-		ui.hud.health.MaxValue = maximum_health;
-		ui.hud.health.Value = health;
-		ui.hud.resource.MaxValue = maximum_resource;
-		ui.hud.resource.Value = resource;
-		ui.hud.posture.MaxValue = maximum_posture;
-		ui.hud.posture.Value = 0;
-		ui.hud.xp.MaxValue = xp_to_level;
-		ui.hud.xp.Value = xp;
+		// ui.GetPlayerInfo(this);
+		// ui.hud.health.MaxValue = maximum_health;
+		// ui.hud.health.Value = health;
+		// ui.hud.resource.MaxValue = maximum_resource;
+		// ui.hud.resource.Value = resource;
+		// ui.hud.posture.MaxValue = maximum_posture;
+		// ui.hud.posture.Value = 0;
+		// ui.hud.xp.MaxValue = xp_to_level;
+		// ui.hud.xp.Value = xp;
 
 		
 
@@ -427,14 +427,14 @@ public partial class Player : PlayerEntity
 
 	public void CanUseAbilities()
 	{
-		if (ui.inventory_open)
-		{
-			can_use_abilities = false;
-		}
-		else
-		{
-			can_use_abilities = true;
-		}
+		// if (ui.inventory_open)
+		// {
+		// 	can_use_abilities = false;
+		// }
+		// else
+		// {
+		// 	can_use_abilities = true;
+		// }
 	}
 
 	private void HandleRemoveEquipped() // Removes equiped items

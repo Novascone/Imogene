@@ -3,10 +3,10 @@ using System;
 
 public partial class Binds : Control
 {
-	[Export] public Control l_cross_primary_assignment;
-	[Export] public Control r_cross_primary_assignment;
-	[Export] public Control l_cross_secondary_assignment;
-	[Export] public Control r_cross_secondary_assignment;
+	[Export] public CrossBinds l_cross_primary_assignment;
+	[Export] public CrossBinds r_cross_primary_assignment;
+	[Export] public CrossBinds l_cross_secondary_assignment;
+	[Export] public CrossBinds r_cross_secondary_assignment;
 	[Export] public Control passives;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

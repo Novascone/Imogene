@@ -102,10 +102,10 @@ public partial class UI : Control
 		
 		journal = GetNode<Journal>("Journal");
 
-		foreach (GearInfo gear_button in armor.GetChildren())
-		{
-			gear_button.GetUIInfo(this);
-		}
+		// foreach (GearInfo gear_button in armor.GetChildren())
+		// {
+		// 	gear_button.GetUIInfo(this);
+		// }
 		
 
 		abilities.GetUIInfo(this);		
