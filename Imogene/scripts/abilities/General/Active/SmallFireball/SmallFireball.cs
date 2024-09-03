@@ -11,7 +11,7 @@ public partial class SmallFireball : Projectile
 		base._Ready();
 		projectile_to_load = GD.Load<PackedScene>("res://scripts/abilities/General/Active/SmallFireball/fireball_projectile.tscn");
 		projectile_velocity = 15;
-		damage_type = "fire";
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

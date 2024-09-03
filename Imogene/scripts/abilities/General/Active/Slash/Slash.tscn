@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://2syxxwi1wgte"]
 
 [ext_resource type="Script" path="res://scripts/abilities/General/Active/Slash/Slash.cs" id="1_abkjy"]
-[ext_resource type="Resource" uid="uid://b6lduigl5eopg" path="res://scripts/abilities/General/Active/Slash/Slash.tres" id="2_o05mu"]
+[ext_resource type="Texture2D" uid="uid://bdxbifpl5u8m3" path="res://images/icons/slash_icon.png" id="2_3detj"]
 
 [node name="Slash" type="Node3D"]
 script = ExtResource("1_abkjy")
-resource = ExtResource("2_o05mu")
-ability_type = "melee"
+damage_type = 1
+icon = ExtResource("2_3detj")
 
 [node name="SwingTimer" type="Timer" parent="."]
 wait_time = 1.2

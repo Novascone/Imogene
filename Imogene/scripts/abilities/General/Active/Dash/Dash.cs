@@ -15,47 +15,64 @@ public partial class Dash : Ability
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
-		{
-			QueueAbility();
-		}
-		else if (CheckHeld())
-		{
-			if(dash_timer.TimeLeft == 0)
-			{
-				QueueAbility();
-				CheckCanUseAbility();
-			}		
-		}
-		if(dash_timer.TimeLeft == 0)
-		{
-			CheckCanUseAbility();
-		}		
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		// {
+		// 	QueueAbility();
+		// }
+		// else if (CheckHeld())
+		// {
+		// 	if(dash_timer.TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 	}		
+		// }
+		// if(dash_timer.TimeLeft == 0)
+		// {
+		// 	CheckCanUseAbility();
+		// }		
 	}
 
-    public override void Execute()
+    public override void Execute(Player player)
     {
+		GD.Print("Executing dash");
         state = States.not_queued;
 		player.using_movement_ability = true;
-		AddToAbilityList(this);
 		dash_timer.Start();
 		if(player.direction != Vector3.Zero) // If the player is moving, dash in that direction
 		{
-			// player.velocity.X = player.direction.X * dash_speed; 
-			// player.velocity.Z = player.direction.Z * dash_speed;
+			player.velocity.X = player.direction.X * dash_speed; 
+			player.velocity.Z = player.direction.Z * dash_speed;
 		} 
 		else // If the player is not moving dash backwards
 		{
 			// GD.Print("Direction behind player " + player.GlobalTransform.Basis.Z);
-			// player.velocity = player.GlobalTransform.Basis.Z * dash_speed;
+			player.velocity = player.GlobalTransform.Basis.Z * dash_speed;
 		}
+		GD.Print("player velocity " + player.velocity);
 		
     }
 
-	public void _on_dash_timer_timeout() // When the dash timer times out remove the ability and reset the player velocity
+    public override void FrameCheck(Player player)
+    {
+        if (CheckHeld())
+		{
+			if(dash_timer.TimeLeft == 0)
+			{
+				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityCheck), this);
+			}		
+		}
+		if(dash_timer.TimeLeft == 0)
+		{
+			EmitSignal(nameof(AbilityCheck), this);
+		}		
+    }
+
+    public void _on_dash_timer_timeout() // When the dash timer times out remove the ability and reset the player velocity
 	{
-		RemoveFromAbilityList(this);
-		player.using_movement_ability = false;
+		EmitSignal(nameof(AbilityFinished),this);
+		// player.using_movement_ability = false;
 		// player.velocity.X = player.direction.X * player.run_speed; 
 		// player.velocity.Z = player.direction.Z * player.run_speed;
 	}

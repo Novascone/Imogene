@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/CameraRig.cs" id="5_hnriw"]
 [ext_resource type="Script" path="res://scripts/controllers/MovementController.cs" id="6_ivokt"]
 [ext_resource type="Script" path="res://scripts/controllers/StatController.cs" id="7_o0fpq"]
-[ext_resource type="Script" path="res://scripts/controllers/AbilityController.cs" id="8_4yuvk"]
+[ext_resource type="Script" path="res://scripts/controllers/AbilityAssigner.cs" id="8_4yuvk"]
 [ext_resource type="Script" path="res://scripts/damage/melee/MeleeHitbox.cs" id="9_l4is8"]
 [ext_resource type="Script" path="res://scripts/controllers/EquipmentController.cs" id="9_osd41"]
 [ext_resource type="PackedScene" uid="uid://ds2svqsgmx87v" path="res://scenes/UI/UI.tscn" id="10_ns3v6"]

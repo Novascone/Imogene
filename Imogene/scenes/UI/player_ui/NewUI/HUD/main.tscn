@@ -124,6 +124,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vw7lu")
 
 [node name="LeftPrimaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("5_ek1y1")]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -142,6 +143,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_s65oj")
 
 [node name="RightPrimaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("7_sopk2")]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
 

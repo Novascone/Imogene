@@ -10,6 +10,11 @@ offset_bottom = 687.0
 size_flags_vertical = 0
 script = ExtResource("1_r2lj0")
 
+[node name="Control1" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+
 [node name="GeneralPassives" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -17,7 +22,7 @@ size_flags_horizontal = 4
 [node name="GeneralPassives" parent="GeneralPassives" instance=ExtResource("3_fp4rg")]
 layout_mode = 2
 
-[node name="Control5" type="Control" parent="."]
+[node name="Control2" type="Control" parent="."]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 0

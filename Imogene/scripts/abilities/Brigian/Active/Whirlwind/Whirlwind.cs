@@ -19,58 +19,16 @@ public partial class Whirlwind : Ability
 		rotate_on_soft = false;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
-	{
-		// if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
-		// {
-		// 	player.movement_controller.rotation_only = true;
-		// }
-		// if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
-		// {
-		// 	player.movement_controller.rotation_only = false;
-		// }
-		
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
-		{
-			
-			// GD.Print("Queuing whirlwind");
-			QueueAbility();	
-		}
-		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
-		{
-			if(tick_timer.TimeLeft == 0)
-			{
-				QueueAbility();
-				CheckCanUseAbility();
-			}		
-		}
-		if(tick_timer.TimeLeft == 0) // If not held check if ability can be used
-		{
-			CheckCanUseAbility();
-		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
-		{
-			// GD.Print("Remove hit box");
-			RemoveHitbox();
-			RemoveMesh();
-		}	
-		
-	}
-
-	public override void Execute()
+	public override void Execute(Player player)
 	{
 		
-		// GD.Print("execute");
 		state = States.not_queued;
-		AddToAbilityList(this); // Add ability to list
 		
-			// player.resource_system.Resource(channel_resource_cost);
 		tick_timer.Start();
 		
 		if(whirlwind_hitbox == null)
 		{
-			AddHitbox();
+			AddHitbox(player);
 		}
 		
 		player.resource_system.Resource(resource_cost);
@@ -87,11 +45,34 @@ public partial class Whirlwind : Ability
 			whirlwind_hitbox.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
 			whirlwind_hitbox.is_critical = false;
 		}
-		whirlwind_hitbox.damage_type = "physical"; // Set projectile damage type
-		
+		whirlwind_hitbox.damage_type = damage_type.ToString(); // Set projectile damage type		
 	}
 
-	public void AddHitbox()
+    public override void FrameCheck(Player player)
+    {
+		
+        if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		{
+			if(tick_timer.TimeLeft == 0)
+			{
+				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityCheck), this);
+			}		
+		}
+		if(tick_timer.TimeLeft == 0) // If not held check if ability can be used
+		{
+			EmitSignal(nameof(AbilityCheck),this);
+		}		
+		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
+		{
+			// GD.Print("Remove hit box");
+			RemoveHitbox();
+			RemoveMesh(player);
+			EmitSignal(nameof(AbilityFinished),this);
+		}	
+    }
+
+    public void AddHitbox(Player player)
 	{
 		whirlwind_hitbox = (WhirlwindHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
 		player.surrounding_hitbox.AddChild(whirlwind_hitbox);
@@ -110,12 +91,10 @@ public partial class Whirlwind : Ability
 			whirlwind_hitbox.QueueFree();
 			whirlwind_hitbox = null;
 		}
-		
-		RemoveFromAbilityList(this);
 		tick_timer.Stop();
 	}
 
-	public void RemoveMesh()
+	public void RemoveMesh(Player player)
 	{
 		// GD.Print("remove mesh");
 		if(whirlwind_mesh != null)
@@ -125,8 +104,6 @@ public partial class Whirlwind : Ability
 		}
 		
 	}
-
-	
 
 	public void _on_tick_timer_timeout()
 	{

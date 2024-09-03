@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfctyyhexl1xg"]
+[gd_scene load_steps=2 format=3 uid="uid://bf8paulijqr0g"]
 
 [ext_resource type="Script" path="res://scripts/controllers/AbilityController.cs" id="1_pviii"]
 

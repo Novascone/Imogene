@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/controllers/MovementController.cs" id="1_bvsiu"]
 [ext_resource type="Script" path="res://scripts/controllers/StatController.cs" id="2_deavj"]
-[ext_resource type="Script" path="res://scripts/controllers/AbilityController.cs" id="3_wav14"]
+[ext_resource type="Script" path="res://scripts/controllers/AbilityAssigner.cs" id="3_wav14"]
 [ext_resource type="Script" path="res://scripts/controllers/EquipmentController.cs" id="4_hr57o"]
 [ext_resource type="Script" path="res://scripts/controllers/StatusEffectController.cs" id="5_ccukg"]
 

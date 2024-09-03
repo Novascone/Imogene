@@ -30,7 +30,6 @@ public partial class BottomButton : Button
 	{
 		if(area.IsInGroup("cursor"))
 		{
-			GD.Print("cursor entered " + Name);
 			GrabFocus();
 		}
 	}
@@ -39,7 +38,6 @@ public partial class BottomButton : Button
 	{
 		if(area.IsInGroup("cursor"))
 		{
-			GD.Print("cursor exited " + Name);
 			ReleaseFocus();
 		}
 	}

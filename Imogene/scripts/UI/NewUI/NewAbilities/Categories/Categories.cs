@@ -7,7 +7,13 @@ public partial class Categories : Control
 	[Export] public ClassCategory class_category;
 	[Export] public GeneralCategory general_category;
 	[Export] public Label ability_type_title;
-	[Export] public Control passives;
+	[Export] public Control assigned_passives;
+	[Export] public Passives class_passives;
+	[Export] public Passives general_passives;
+	[Export] public Control page_container;
+	public bool active;
+	public bool passive;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,40 +22,71 @@ public partial class Categories : Control
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		
 	}
 
-	public void _on_general_button_down()
+   
+    public void _on_general_button_down()
 	{
-		class_category.Hide();
-		foreach(Control control in class_category.GetChildren())
+		if(active)
 		{
-			if(control is AbilityPage ability_page)
-			{
-				ability_page.Hide();
-			}
-			else
-			{
-				control.Show();
-			}
+			class_category.Hide();
+			class_category.ResetPage();
+			general_category.ResetPage();
+			general_category.Show();
 		}
-		general_category.Show();
+		else if(passive)
+		{
+			assigned_passives.Show();
+			class_passives.Hide();
+			class_passives.ResetPage();
+			general_passives.Show();
+		}
+		
 	}
 
 	public void _on_class_button_down()
 	{
-		general_category.Hide();
-		foreach(Control control in general_category.GetChildren())
+		if(active)
 		{
-			if(control is AbilityPage ability_page)
+			general_category.Hide();
+			general_category.ResetPage();
+			class_category.ResetPage();
+			class_category.Show();
+		}
+		else if(passive)
+		{
+			assigned_passives.Show();
+			general_passives.Hide();
+			general_passives.ResetPage();
+			class_passives.Show();
+		}
+	}
+
+	public void ResetPage()
+	{
+		foreach(Control control in page_container.GetChildren())
+		{
+			if(control is ClassCategory class_category)
 			{
-				ability_page.Hide();
+				class_category.Hide();
+				class_category.ResetPage();
 			}
-			else
+			if(control is GeneralCategory general_category)
 			{
-				control.Show();
+				general_category.Hide();
+				general_category.ResetPage();
+			}
+			if(control is Passives passives)
+			{
+				passives.Hide();
+				passives.ResetPage();
+			}
+			if(control is ActivePassives active_passives)
+			{
+				active_passives.Hide();
 			}
 		}
-		class_category.Show();
 	}
 	
 }

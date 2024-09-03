@@ -74,5 +74,20 @@ public partial class ClassCategory : Control
 		toy.Show();
 		buttons.Hide();
 	}
+
+	public void ResetPage()
+	{
+		foreach(Control control in GetChildren())
+		{
+			if(control is AbilityPage ability_page)
+			{
+				ability_page.Hide();
+			}
+			else
+			{
+				control.Show();
+			}
+		}
+	}
 	
 }

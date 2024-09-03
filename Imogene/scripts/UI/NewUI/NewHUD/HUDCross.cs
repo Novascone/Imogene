@@ -3,14 +3,14 @@ using System;
 
 public partial class HUDCross : Node
 {
-	[Export] Button up;
-	[Export] Label up_label;
-	[Export] Button left;
-	[Export] Label left_label;
-	[Export] Button right;
-	[Export] Label right_label;
-	[Export] Button down;
-	[Export] Label down_label;
+	[Export] public Button up;
+	[Export] public Label up_label;
+	[Export] public Button left;
+	[Export] public Label left_label;
+	[Export] public Button right;
+	[Export]public Label right_label;
+	[Export] public Button down;
+	[Export] public Label down_label;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

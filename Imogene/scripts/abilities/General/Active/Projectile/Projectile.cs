@@ -9,7 +9,7 @@ public partial class Projectile : RangedAbility
 	public PackedScene slow_effect;
 	public StatusEffect slow;
 	public int projectile_velocity = 25;
-	public string damage_type = "cold";
+	
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -29,52 +29,61 @@ public partial class Projectile : RangedAbility
     public override void _PhysicsProcess(double delta)
 	{
 
-		if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
+		
+		
+	}
+
+	public override void Execute(Player player)
+	{
+		GD.Print("Execute projectile");
+		state = States.not_queued;
+		
+		cast_timer.Start();
+		Vector3 collision = GetPlayerCollision(player); // Get the collision from the player to whats in front of it
+		LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
+	}
+
+    public override void FrameCheck(Player player)
+    {
+        if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
 		{
 			player.movement_controller.rotation_only = true;
+			GD.Print("player can only rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{
+			if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+			{
+				EmitSignal(nameof(AbilityFinished),this);
+			}
+			
 			player.movement_controller.rotation_only = false;
 		}
-
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
-			QueueAbility();	
+			EmitSignal(nameof(AbilityQueue),this);
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
 			if(cast_timer.TimeLeft == 0)
 			{
-				QueueAbility();
-				CheckCanUseAbility();
+				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityCheck),this);
 			}		
 		}
 		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
 		{
-			CheckCanUseAbility();
+			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		
-	}
+    }
 
-	public override void Execute()
-	{
-		
-		state = States.not_queued;
-		stop_movement_input = true; // disable player movement
-		AddToAbilityList(this); // Add ability to list
-		cast_timer.Start();
-		Vector3 collision = GetPlayerCollision(); // Get the collision from the player to whats in front of it
-		LaunchProjectile(collision); // Shoot projectile from cast point to the player collision point
-	}
-
-	public virtual void LaunchProjectile(Vector3 collision_point)
+    public virtual void LaunchProjectile(Player player, Vector3 collision_point)
 	{
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized(); // Get position the projectile needs to go to
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate(); // Instantiate the projectile
 		
 		player.exclude.Add(projectile.GetRid()); // Add the projectile to the players exclude array
-		projectile.TreeExited  += () => RemoveFromExclusion(projectile.GetRid(), projectile); // When the projectile exits the scene remove it from the exclusion array 
+		projectile.TreeExited  += () => RemoveFromExclusion(player, projectile.GetRid(), projectile); // When the projectile exits the scene remove it from the exclusion array 
 		GetTree().Root.AddChild(projectile); // Add projectile to the scene
 		projectile.GlobalPosition = player.cast_point.GlobalPosition; // give the projectile the cast point position
 		projectile.GlobalRotation = player.GlobalRotation; // give the projectile the player rotation
@@ -92,19 +101,23 @@ public partial class Projectile : RangedAbility
 			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
 			projectile.is_critical = false;
 		}
-		projectile.damage_type = damage_type; // Set projectile damage type
+		// Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 		projectile.effects.Add(slow);
 	}
 
-	public void RemoveFromExclusion(Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array
+	public void RemoveFromExclusion(Player player, Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array
 	{
 		player.exclude.Remove(projectile_rid);
 	}
 
 	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement
 	{
-		RemoveFromAbilityList(this);
+		if(button_released)
+		{
+			EmitSignal(nameof(AbilityFinished),this);
+		}
+		
 		stop_movement_input = false;
 	}
 

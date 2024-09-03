@@ -19,54 +19,55 @@ public partial class Jump : Ability
 
     private void OnClamberTimeout() // The player is forced to move forward and up until the Clamber timer times out
     {
-		GD.Print("clamber timeout");
-        player.is_climbing = false;
-		player.is_clambering = false;
-		player.jumping = false;
-		player.move_forward_clamber = 0;
-		frames_held = 0;
-		button_held = false;
-		player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
+		// GD.Print("clamber timeout");
+        // player.is_climbing = false;
+		// player.is_clambering = false;
+		// player.jumping = false;
+		// player.move_forward_clamber = 0;
+		// frames_held = 0;
+		// button_held = false;
+		// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 		
     }
 
     public override void _PhysicsProcess(double delta)
     {
-		if(!player.IsOnFloor() && !player.jumping && coyote_timer.TimeLeft == 0) // Start the coyote timer if it hasn't started, and the play is not on the floor and is not jumping
-		{
-			coyote_timer.Start();
-		}
+
+		// if(!player.IsOnFloor() && !player.jumping && coyote_timer.TimeLeft == 0) // Start the coyote timer if it hasn't started, and the play is not on the floor and is not jumping
+		// {
+		// 	coyote_timer.Start();
+		// }
 	
-		Climb();
-		if(player.jumping)
-		{
-			CheckGround();
-		}
+		// Climb();
+		// if(player.jumping)
+		// {
+		// 	CheckGround();
+		// }
 		
 
-		if(player.can_use_abilities && CheckCross() || player.jumping)
-		{
-			if(!player.near_wall.IsColliding())
-			{
-				if(!player.is_climbing && !CheckHeld() && Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // If the player is not climbing and the button is not held, and the button has been released
-				{
-					if(CanJump()){QueueAbility();}
-				}
-				CheckCanUseAbility();
-			}
-			else if (player.near_wall.IsColliding())
-			{
-				if(!player.is_climbing && !CheckHeld() && Input.IsActionJustReleased(assigned_button) && state == States.not_queued) // If the player is not climbing and the button is not held, and the button has been released
-				{
-					if(CanJump()){QueueAbility();}
-				}
-				CheckCanUseAbility();
-			}
+		// if(player.can_use_abilities && CheckCross() || player.jumping)
+		// {
+		// 	if(!player.near_wall.IsColliding())
+		// 	{
+		// 		if(!player.is_climbing && !CheckHeld() && Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // If the player is not climbing and the button is not held, and the button has been released
+		// 		{
+		// 			if(CanJump()){QueueAbility();}
+		// 		}
+		// 		CheckCanUseAbility();
+		// 	}
+		// 	else if (player.near_wall.IsColliding())
+		// 	{
+		// 		if(!player.is_climbing && !CheckHeld() && Input.IsActionJustReleased(assigned_button) && state == States.not_queued) // If the player is not climbing and the button is not held, and the button has been released
+		// 		{
+		// 			if(CanJump()){QueueAbility();}
+		// 		}
+		// 		CheckCanUseAbility();
+		// 	}
 			
-		}
+		// }
     }
 
-	public void Climb() // Checks if player is near wall and sets state to climb if the player presses the climb button
+	public void Climb(Player player) // Checks if player is near wall and sets state to climb if the player presses the climb button
 	{
 		if(player.near_wall.IsColliding())
 		{
@@ -89,7 +90,7 @@ public partial class Jump : Ability
 			{
 				if(!player.is_clambering)
 				{
-					Clamber(); // If the to ray cast is no longer making contact, clamber
+					Clamber(player); // If the to ray cast is no longer making contact, clamber
 				}
 			}
 		}
@@ -100,7 +101,7 @@ public partial class Jump : Ability
 		
 	}
 
-	public async void Clamber()
+	public async void Clamber(Player player)
 	{
 		// GD.Print("Player can clamber");
 		if(CheckHeld())
@@ -126,26 +127,47 @@ public partial class Jump : Ability
 			}
 	}
 
-    public override void Execute()
+    public override void Execute(Player player)
     {	
-		AddToAbilityList(this);
 		state = States.not_queued;
-		if((player.IsOnFloor() || coyote_timer.TimeLeft > 0) && !player.jumping) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
+		if(player.IsOnFloor() || coyote_timer.TimeLeft > 0) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			// GD.Print("start jumping");
-			player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
+			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player.velocity.Y = player.jump_velocity;
 			GD.Print("Player velocity from jump " + player.velocity.Y);			
 			player.jumping = true;
 		}
+		else
+		{
+			GD.Print("Player is not on floor and can't jump");
+		}
+		EmitSignal(nameof(AbilityFinished),this);
+		// else if(!player.IsOnFloor())
+		// {
+		// 	GD.Print("player is not on the floor");
+		// }
+		// else if(player.jumping)
+		// {
+		// 	GD.Print("Player is jumping");
+		// }
 		
 	}
 
-	public bool CanJump()
+    public override void FrameCheck(Player player)
+    {
+		GD.Print("Jump frame execution");
+		
+		CheckGround(player);
+		
+       
+    }
+
+    public bool CanJump(Player player)
 	{
 		if(player.ability_in_use != null)
 		{
-			if(player.ability_in_use.resource.type != "movement")
+			if(player.ability_in_use.general_ability_type != Ability.GeneralAbilityType.Movement)
 			{
 				// GD.Print("Can not jump because the ability in use is not movement");
 				return false;
@@ -161,23 +183,25 @@ public partial class Jump : Ability
 
 	}
 
-	public void CheckGround()
+	public void CheckGround(Player player)
 	{
-		if(player.IsOnFloor())
+		if(player.IsOnFloor() && player.velocity.Y <= 0)
 		{
-			// GD.Print("stop jumping");
-			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
+			GD.Print("stop jumping");
+			// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
 			player.jumping = false;
-			player.velocity.Y = 0;
-			RemoveFromAbilityList(this);
+			EmitSignal(nameof(AbilityFinished),this);
+			
 		}
 		else if(!player.IsOnFloor())
 		{
-			player.tree.Set("parameters/Master/Main/conditions/jumping", false);
-			player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
+			// player.tree.Set("parameters/Master/Main/conditions/jumping", false);
+			// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
 			// GD.Print("still jumping");
 			player.jumping = true;
 		}
 	}
+
+	
 }

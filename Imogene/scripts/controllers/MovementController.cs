@@ -33,15 +33,16 @@ public partial class MovementController : Controller
 			{
 				ClimbingMovement(player);
 			}
-			if(!rotation_only)
+			if(!player.using_movement_ability && !rotation_only)
 			{
 				player.velocity.X = player.direction.X * player.speed;
 				player.velocity.Z = player.direction.Z * player.speed;
 			}
-			else
+			else if(rotation_only)
 			{
-				player.velocity.Lerp(Vector3.Zero, 0.1f);
+				player.velocity = Vector3.Zero;
 			}
+			
 			player.Velocity = player.velocity;
 	}
 			

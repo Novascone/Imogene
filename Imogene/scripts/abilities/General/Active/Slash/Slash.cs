@@ -90,23 +90,23 @@ public partial class Slash : Ability
 		// 	player.movementController.rotation_only = false;
 		// }
 		// GD.Print("Projectile held " + button_held);
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
-		{
-			QueueAbility();
-		}
-		else if (CheckHeld())
-		{
-			if(swing_timer.TimeLeft == 0)
-			{
-				QueueAbility();
-				CheckCanUseAbility();
-				GD.Print("using and holding ability");
-			}		
-		}
-		if(swing_timer.TimeLeft == 0)
-		{
-			CheckCanUseAbility();
-		}		
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		// {
+		// 	QueueAbility();
+		// }
+		// else if (CheckHeld())
+		// {
+		// 	if(swing_timer.TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 		GD.Print("using and holding ability");
+		// 	}		
+		// }
+		// if(swing_timer.TimeLeft == 0)
+		// {
+		// 	CheckCanUseAbility();
+		// }		
 		// if(Input.IsActionJustPressed(assigned_button) && !ready_to_use)
 		// {
 		// 	ready_to_use = true;
@@ -223,18 +223,17 @@ public partial class Slash : Ability
 		}
     }
     
-    public override void Execute() // checks weapon type sets animations enables the hitbox 
+    public override void Execute(Player player) // checks weapon type sets animations enables the hitbox 
 	{
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
 		state = States.not_queued;
 		stop_movement_input = true;
-		AddToAbilityList(this);
 		
 		// player.targeting_system.SoftTargetRotation();
 		if(player.weapon_type == "one_handed")
 		{
-			OneHanded();
+			OneHanded(player);
 		}
 
 		// player.hitbox.AddToGroup("player_hitbox"); // Adds weapon to attacking group
@@ -266,7 +265,7 @@ public partial class Slash : Ability
 	
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{
-			OneHanded();
+			OneHanded(player);
 
 		}
 	
@@ -284,11 +283,11 @@ public partial class Slash : Ability
         if(animName == "Slash_And_Bash_Dual_Wield_Swing_2")
         {
 		
-            player.recovery_2 = true;
-			player.tree.Set("parameters/Master/conditions/using_ability", false);
-			player.tree.Set("parameters/Master/Ability/conditions/not_attacking", true);
-			player.tree.Set("parameters/Master/Ability/conditions/no_second", true);
-			player.tree.Set("parameters/Master/Ability/conditions/second_action", false);
+            // player.recovery_2 = true;
+			// player.tree.Set("parameters/Master/conditions/using_ability", false);
+			// player.tree.Set("parameters/Master/Ability/conditions/not_attacking", true);
+			// player.tree.Set("parameters/Master/Ability/conditions/no_second", true);
+			// player.tree.Set("parameters/Master/Ability/conditions/second_action", false);
 			// player.hitbox.Monitoring = false;
 			// player.can_move = true;
 			// player.hitbox.RemoveFromGroup("player_hitbox");
@@ -308,50 +307,49 @@ public partial class Slash : Ability
         }
         if(animName == "Slash_And_Bash_Dual_Wield_Recovery_2")
         {
-            player.action_1_set = false;
-			player.recovery_1 = false;
-			player.recovery_2 = false;
-			player.action_2_set = false;
-			if(!player.action_1_set)
-			{
-				RemoveFromAbilityList(this);
-			}
+            // player.action_1_set = false;
+			// player.recovery_1 = false;
+			// player.recovery_2 = false;
+			// player.action_2_set = false;
+			
+			EmitSignal(nameof(AbilityFinished),this);
+			
 			
         }
 		if(animName == "Slash_And_Bash_Dual_Wield_Swing_1")
 		{
 			
-			player.recovery_1 = true;
-			// player.can_move = true;
-			stop_movement_input = true;
-			player.attacking = false;
-			// player.hitbox.Monitoring = false;
-			player.action_1_set = false;
-			player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
+			// player.recovery_1 = true;
+			// // player.can_move = true;
+			// stop_movement_input = true;
+			// player.attacking = false;
+			// // player.hitbox.Monitoring = false;
+			// player.action_1_set = false;
+			// player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
 		}
 		if(animName == "Slash_And_Bash_Dual_Wield_Recovery_1")
         {
             if(pressed <= 1 && release_timer.TimeLeft == 0)
 			{
 				// GD.Print("slash 1 recovery finished");
-				player.tree.Set("parameters/Master/conditions/using_ability", false);
-				player.tree.Set("parameters/Master/Attacking/Ability/conditions/melee", false);
-				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/conditions/Slash", false);
-				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/conditions/One_Handed", false);
-				player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
+				// player.tree.Set("parameters/Master/conditions/using_ability", false);
+				// player.tree.Set("parameters/Master/Attacking/Ability/conditions/melee", false);
+				// player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/conditions/Slash", false);
+				// player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/conditions/One_Handed", false);
+				// player.tree.Set("parameters/Master/Attacking/Ability/Melee_1/Slash/One_Handed_Slash_1/conditions/Medium", false);
 				// player.hitbox.Monitoring = false;
-				player.recovery_1 = false;
-				player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
-				player.action_1_set = false;
-				if(player.action_2_set)
-				{
-					// player.can_move = false;
-				}
-				else
-				{
+				// player.recovery_1 = false;
+				// player.main_hand_hitbox.RemoveFromGroup("ActiveHitbox");
+				// player.action_1_set = false;
+				// if(player.action_2_set)
+				// {
+				// 	// player.can_move = false;
+				// }
+				// else
+				// {
 					// player.can_move = true;
-					RemoveFromAbilityList(this);
-				}
+					EmitSignal(nameof(AbilityFinished),this);
+				// }
 			}
         }
     }
@@ -360,7 +358,7 @@ public partial class Slash : Ability
 
 	}
 
-	public void OneHanded()
+	public void OneHanded(Player player)
 	{
 		if(!player.action_1_set) // Sets swing 1 animation for one handed
 		{

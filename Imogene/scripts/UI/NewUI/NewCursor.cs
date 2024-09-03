@@ -25,8 +25,6 @@ public partial class NewCursor : Sprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		ShowCursor();
-		HideCursor();
 	}
 
 	public void ControllerCursor() // Control the cursor with the joysticks
@@ -56,18 +54,5 @@ public partial class NewCursor : Sprite2D
 		}
 		Position = GetViewport().GetMousePosition();
 	}
-	private void ShowCursor()
-	{
-		if(Input.IsActionJustPressed("CursorUp") || Input.IsActionJustPressed("CursorDown") || Input.IsActionJustPressed("CursorLeft") || Input.IsActionJustPressed("CursorRight"))
-		{
-			Show();
-		}
-	}
-	public void HideCursor() // Hide cursor is the player wants to navigate with the D-Pad
-	{
-		if(Input.IsActionJustPressed("D-PadUp") || Input.IsActionJustPressed("D-PadDown") || Input.IsActionJustPressed("D-PadLeft") || Input.IsActionJustPressed("D-PadRight"))
-		{
-			Hide();
-		}
-	}
+	
 }

@@ -44,6 +44,10 @@ public partial class InputController : Controller
 			}
 			
 		}
+		else
+		{
+			GD.Print("Input prevented");
+		}
 		
 	}
 

@@ -31,35 +31,34 @@ public partial class Roll : Ability
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
-		{
-			QueueAbility();
-		}
-		CheckCanUseAbility();
-		if(rolling)
-		{
-			player.Rotation = temp_rotation; // Gets the rotation of the player the moment they roll
-			if(roll_timer.TimeLeft > 0.65) // Sets the speed of the player during the roll, depending on where they are in the roll
-			{
-				// player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
-				// GD.Print("Speeding up");
-			}
-			else
-			{
-				// player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
-				// GD.Print("Slowing Down");
-			}
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued)
+		// {
+		// 	QueueAbility();
+		// }
+		// CheckCanUseAbility();
+		// if(rolling)
+		// {
+		// 	player.Rotation = temp_rotation; // Gets the rotation of the player the moment they roll
+		// 	if(roll_timer.TimeLeft > 0.65) // Sets the speed of the player during the roll, depending on where they are in the roll
+		// 	{
+		// 		// player.velocity = player.velocity.Lerp(roll_velocity, 0.3f);	
+		// 		// GD.Print("Speeding up");
+		// 	}
+		// 	else
+		// 	{
+		// 		// player.velocity = player.velocity.Lerp(Vector3.Zero, 0.2f);
+		// 		// GD.Print("Slowing Down");
+		// 	}
 			
-		}
-		else
-		{
-			temp_rotation = Vector3.Zero; // reset
-		}
+		// }
+		// else
+		// {
+		// 	temp_rotation = Vector3.Zero; // reset
+		// }
 		
 	}
-	public override void Execute()
+	public override void Execute(Player player)
 	{
-		AddToAbilityList(this);
 		state = States.not_queued;
 		roll_timer.Start(); 
 		player.using_movement_ability = true;
@@ -120,9 +119,9 @@ public partial class Roll : Ability
 		{
 			// GD.Print("Roll finished");
 			rolling = false;
-			player.using_movement_ability = false;
-			player.tree.Set("parameters/Master/Main/conditions/rolling", false);
-			RemoveFromAbilityList(this);
+			// player.using_movement_ability = false;
+			// player.tree.Set("parameters/Master/Main/conditions/rolling", false);
+			EmitSignal(nameof(AbilityFinished),this);
 		}
     }
 

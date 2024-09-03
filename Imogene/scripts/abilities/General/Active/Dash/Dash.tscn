@@ -1,11 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://cee5atmb5c3k2"]
 
 [ext_resource type="Script" path="res://scripts/abilities/General/Active/Dash/Dash.cs" id="1_1lce2"]
-[ext_resource type="Resource" uid="uid://yksb2c1fvuso" path="res://scripts/abilities/General/Active/Dash/Dash.tres" id="2_pumph"]
+[ext_resource type="Texture2D" uid="uid://ct7mol4ik8ptj" path="res://images/icons/dash_icon.png" id="2_uumms"]
 
 [node name="Dash" type="Node3D"]
 script = ExtResource("1_1lce2")
-resource = ExtResource("2_pumph")
+general_ability_type = 3
+icon = ExtResource("2_uumms")
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.25

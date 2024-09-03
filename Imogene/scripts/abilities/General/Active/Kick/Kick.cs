@@ -26,36 +26,35 @@ public partial class Kick : Ability
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
-		{
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		// {
 			
-			// GD.Print("Queuing kick");
-			QueueAbility();	
-		}
-		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
-		{
-			if(cast_timer. TimeLeft == 0)
-			{
-				QueueAbility();
-				CheckCanUseAbility();
-			}
+		// 	// GD.Print("Queuing kick");
+		// 	QueueAbility();	
+		// }
+		// else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		// {
+		// 	if(cast_timer. TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 	}
 			
 		
-		}
-		if(cast_timer.TimeLeft == 0)
-		{
-			CheckCanUseAbility();
-		}
+		// }
+		// if(cast_timer.TimeLeft == 0)
+		// {
+		// 	CheckCanUseAbility();
+		// }
 		
 		
 	}
 
-	public override void Execute()
+	public override void Execute(Player player)
 	{
 
 		state = States.not_queued;
 		charges_used += 1;
-		AddToAbilityList(this); // Add ability to list
 		cast_timer.Start();
 		if(charge_timer_1.TimeLeft == 0)
 		{
@@ -67,7 +66,7 @@ public partial class Kick : Ability
 		}
 		
 		
-		AddHitbox();
+		AddHitbox(player);
 		
 		if(player.damage_system.Crit()) // check if the play will crit
 		{
@@ -86,15 +85,33 @@ public partial class Kick : Ability
 		
 	}
 
-	public void AddHitbox()
+    public override void FrameCheck(Player player)
+    {
+        if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		{
+			if(cast_timer. TimeLeft == 0)
+			{
+				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityCheck), this);
+			}
+			
+		
+		}
+		if(cast_timer.TimeLeft == 0)
+		{
+			EmitSignal(nameof(AbilityCheck), this);
+		}
+    }
+
+    public void AddHitbox(Player player)
 	{
 		kick_hitbox = (KickHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
-		player.belt_slot.AddChild(kick_hitbox);
+		player.surrounding_hitbox.AddChild(kick_hitbox);
 		if(kick_mesh == null)
 		{
 			// GD.Print("Add mesh");
 			kick_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
-			player.belt_slot.AddChild(kick_mesh);
+			player.surrounding_hitbox.AddChild(kick_mesh);
 		}
 	}
 
@@ -106,7 +123,7 @@ public partial class Kick : Ability
 			kick_hitbox= null;
 		}
 		
-		RemoveFromAbilityList(this);
+		EmitSignal(nameof(AbilityFinished),this);
 	}
 
 	public void RemoveMesh()
@@ -145,5 +162,6 @@ public partial class Kick : Ability
 		// GD.Print("cast timer timeout");
 		RemoveHitbox();
 		RemoveMesh();
+		EmitSignal(nameof(AbilityFinished),this);
 	}
 }

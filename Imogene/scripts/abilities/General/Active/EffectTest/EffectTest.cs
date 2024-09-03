@@ -27,48 +27,90 @@ public partial class EffectTest : Ability
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
-		{
+		// if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		// {
 			
-			// GD.Print("Queuing whirlwind");
-			QueueAbility();	
+		// 	// GD.Print("Queuing whirlwind");
+		// 	QueueAbility();	
+		// }
+		// else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		// {
+		// 	if(duration_timer.TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 	}		
+		// }
+		// if(duration_timer.TimeLeft == 0) // If not held check if ability can be used
+		// {
+		// 	CheckCanUseAbility();
+		// }		
+		// if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
+		// {
+		// 	// GD.Print("Remove hit box");
+		// 	RemoveHitbox();
+		// 	RemoveMesh();
+		// }	
+	}
+
+	public override void Execute(Player player)
+	{
+		
+		// GD.Print("execute");
+		state = States.not_queued;
+		duration_timer.Start();
+		
+		if(effect_test_hitbox == null)
+		{
+			AddHitbox(player);
 		}
-		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+	}
+
+    public override void FrameCheck(Player player)
+    {
+
+		// else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		// {
+		// 	if(duration_timer.TimeLeft == 0)
+		// 	{
+		// 		QueueAbility();
+		// 		CheckCanUseAbility();
+		// 	}		
+		// }
+		// if(duration_timer.TimeLeft == 0) // If not held check if ability can be used
+		// {
+		// 	CheckCanUseAbility();
+		// }		
+		// if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
+		// {
+		// 	// GD.Print("Remove hit box");
+		// 	RemoveHitbox();
+		// 	RemoveMesh();
+		// }	
+
+		if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
 			if(duration_timer.TimeLeft == 0)
 			{
-				QueueAbility();
-				CheckCanUseAbility();
+				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}
 		if(duration_timer.TimeLeft == 0) // If not held check if ability can be used
 		{
-			CheckCanUseAbility();
+			EmitSignal(nameof(AbilityCheck),this);
 		}		
 		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			RemoveHitbox();
-			RemoveMesh();
+			RemoveMesh(player);
+			EmitSignal(nameof(AbilityFinished),this);
 		}	
-	}
+        
+    }
 
-	public override void Execute()
-	{
-		
-		// GD.Print("execute");
-		state = States.not_queued;
-		AddToAbilityList(this); // Add ability to list
-		
-		duration_timer.Start();
-		
-		if(effect_test_hitbox == null)
-		{
-			AddHitbox();
-		}
-	}
-
-	public void AddHitbox()
+    public void AddHitbox(Player player)
 	{
 		effect_test_hitbox = (EffectTestHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
 		player.surrounding_hitbox.AddChild(effect_test_hitbox);
@@ -89,11 +131,11 @@ public partial class EffectTest : Ability
 			effect_test_hitbox = null;
 		}
 		
-		RemoveFromAbilityList(this);
+		EmitSignal(nameof(AbilityFinished),this);
 		duration_timer.Stop();
 	}
 
-	public void RemoveMesh()
+	public void RemoveMesh(Player player)
 	{
 		// GD.Print("remove mesh");
 		if(effect_test_mesh != null)

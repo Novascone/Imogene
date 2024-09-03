@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xewhd"]
 
-[node name="NewHUD" type="Control" node_paths=PackedStringArray("enemy_health", "interact_bar", "top_right")]
+[node name="NewHUD" type="Control" node_paths=PackedStringArray("enemy_health", "main", "interact_bar", "top_right")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_tocw1")
 enemy_health = NodePath("NewEnemyHealth")
+main = NodePath("Main")
 interact_bar = NodePath("InteractBar")
 top_right = NodePath("TopRightHUD")
 

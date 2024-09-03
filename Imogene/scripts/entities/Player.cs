@@ -26,8 +26,6 @@ public partial class Player : PlayerEntity
 
 	// Abilities
 	// private Target target_ability; // Target enemies
-	public List<AbilityResource> ability_resources = new List<AbilityResource>(); // List of Ability Resources to load abilities from. Each AbilityResource Contains int id, string name, string ability_path, Texture2D icon, string type as well as 5 PackedScenes containing modifiers for the ability
-	public List<Ability> abilities = new List<Ability>(); // List of abilities the player has access to. The Abilities are loaded from a PackedScene which is a Node3D with a script attached to it
 	public bool abilities_loaded = false; // Bool to check if abilities are loaded and to load them/ send out the proper signals
 	public Ability ability_in_use; // The ability that the player is currently using
 	public LinkedList<Ability> abilities_in_use = new LinkedList<Ability>();
@@ -43,7 +41,8 @@ public partial class Player : PlayerEntity
 	// Controllers
 	[Export] public InputController input_controller;
 	[Export] public MovementController movement_controller;
-	public AbilityController ability_controller;
+	[Export] public AbilityAssigner ability_assigner;
+	[Export] public AbilityController ability_controller;
 	public StatController stat_controller;
 	public EquipmentController equipment_controller;
 
@@ -56,18 +55,8 @@ public partial class Player : PlayerEntity
 	public AnimationTree tree; // Animation control
 	public AnimationPlayer animation_player;
 
-
-	// Ability Resources
-	public AbilityResource slash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Slash/Slash.tres");
-	public AbilityResource thrust = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Thrust/Thrust.tres");
-	public AbilityResource bash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Bash/Bash.tres");
-	public AbilityResource jump = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Jump/Jump.tres");
-	public AbilityResource effects_test = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/EffectTest/EffectTest.tres");
-	public AbilityResource projectile = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Projectile/Projectile.tres");
-	public AbilityResource dash = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Dash/Dash.tres");
-	public AbilityResource whirlwind = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/Brigian/Active/Whirlwind/Whirlwind.tres");
-	public AbilityResource small_fireball = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/SmallFireball/SmallFireball.tres");
-	public AbilityResource kick = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/General/Active/Kick/Kick.tres");
+	// Abilities
+	[Export] public Node abilities;
 
 	public float move_forward_clamber = 0;
 	public float vertical_input;
@@ -93,20 +82,32 @@ public partial class Player : PlayerEntity
 	{
 		
 		base._Ready();
-		this_player = this;
+
+		
+
+		Ability jump = (Ability)ability_assigner.LoadAbility(this, "Jump", "General", "Active");
+		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
+		Ability effect_test = (Ability)ability_assigner.LoadAbility(this, "EffectTest", "General", "Active");
+		Ability kick = (Ability)ability_assigner.LoadAbility(this, "Kick", "General", "Active");
+		Ability projectile = (Ability)ability_assigner.LoadAbility(this, "Projectile", "General", "Active");
+		Ability whirlwind = (Ability)ability_assigner.LoadAbility(this, "Whirlwind", "Brigian", "Active");
+		Ability hitscan = (Ability)ability_assigner.LoadAbility(this, "Hitscan", "General", "Active");
+		Ability dash = (Ability)ability_assigner.LoadAbility(this, "Dash", "General", "Active");
+		
+		ability_assigner.AssignAbility(this, jump, "A", "Right", "Primary");
+		// ability_assigner.AssignAbility(this, slash, "RB", "Left", "Primary");
+		ability_assigner.AssignAbility(this, effect_test, "RT", "Left", "Primary");
+		ability_assigner.AssignAbility(this, kick, "LB", "Left", "Primary");
+		ability_assigner.AssignAbility(this, projectile, "LT", "Left", "Primary");
+		ability_assigner.AssignAbility(this, whirlwind, "X", "Right", "Primary");
+		ability_assigner.AssignAbility(this, hitscan, "Y", "Right", "Primary");
+		ability_assigner.AssignAbility(this, dash, "RB", "Left", "Primary");
+
+
 		jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
 		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
 		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
-		ability_resources.Add(small_fireball);
-		ability_resources.Add(slash);
-		ability_resources.Add(thrust);
-		ability_resources.Add(bash);
-		ability_resources.Add(jump);
-		ability_resources.Add(effects_test);
-		ability_resources.Add(projectile);
-		ability_resources.Add(dash);
-		ability_resources.Add(whirlwind);
-		ability_resources.Add(kick);
+		
 
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		
@@ -118,7 +119,6 @@ public partial class Player : PlayerEntity
 		camera_rig.TopLevel = true;
 
 		movement_controller = GetNode<MovementController>("Controllers/MovementController");
-		ability_controller = GetNode<AbilityController>("Controllers/AbilityController");
 		stat_controller = GetNode<StatController>("Controllers/StatController");
 		equipment_controller = GetNode<EquipmentController>("Controllers/EquipmentController");
 
@@ -147,36 +147,6 @@ public partial class Player : PlayerEntity
 
 		
 
-
-		
-		head_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Head/HeadSlot");
-		helm = new MeshInstance3D();
-		shoulder_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/ShoulderRight/ShoulderRightSlot");
-		shoulder_right = new MeshInstance3D();
-		shoulder_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/ShoulderLeft/ShoulderLeftSlot");
-		shoulder_left = new MeshInstance3D();
-		chest_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Chest/ChestSlot");
-		chest = new MeshInstance3D();
-
-		mark_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Mark/MarkSlot");
-		mark = new MeshInstance3D();
-		belt_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/Belt/BeltSlot");
-		belt = new MeshInstance3D();
-		glove_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/GloveRight/GloveRightSlot");
-		glove_right = new MeshInstance3D();
-		glove_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/GloveLeft/GloveLeftSlot");
-		glove_left = new MeshInstance3D();
-		main_hand_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot");
-		main_hand = new MeshInstance3D();
-		off_hand_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/OffHand/OffHandSlot");
-		off_hand = new MeshInstance3D();
-		leg_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/LegRight/LegRightSlot");
-		leg_right = new MeshInstance3D();
-		leg_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/LegLeft/LegLeftSlot");
-		leg_left = new MeshInstance3D();
-		foot_right_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootRight/FootRightSlot");
-		foot_right = new MeshInstance3D();
-		foot_left_slot = GetNode<Node3D>("Character_GameRig/Skeleton3D/FootLeft/FootLeftSlot");
 
 		near_wall = GetNode<RayCast3D>("Controllers/WallCheck/NearWall");
 		on_wall = GetNode<RayCast3D>("Controllers/WallCheck/OnWall");
@@ -213,8 +183,8 @@ public partial class Player : PlayerEntity
 		// movement_controller.GetPlayerInfo(this);
 		equipment_controller.GetPlayerInfo(this);
 		stat_controller.GetEntityInfo(this);
-		ability_controller.GetPlayerInfo(this);
-		ability_controller.LoadAbilities();
+		ability_assigner.GetAbilities(this);
+		ability_assigner.AssignAbilities(this);
 
 		// ability_controller.SubscribeToUI(ui);
 
@@ -296,11 +266,17 @@ public partial class Player : PlayerEntity
     public override void _PhysicsProcess(double delta)
     {
 		// GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
+		if(ability_in_use != null)
+		{
+			GD.Print("ability in use" + ability_in_use);
+			ability_in_use.FrameCheck(this);
+		}
+
+		GD.Print("using movement ability " + using_movement_ability);
+		GD.Print("player velocity " + Velocity);
+
+		
 		CameraFollowsPlayer();
-		Updater(); // Emits signals to other parts of the game
-		CanUseAbilities();
-		ability_controller.AssignAbilities();
-		position = GlobalPosition;
 		// CheckInteract(); // Check if the player can interact with anything
 		input_controller.SetInput(this);
 		movement_controller.MovePlayer(this, input_controller.input_strength, delta);
@@ -327,6 +303,40 @@ public partial class Player : PlayerEntity
 		// 	GD.Print("No ability being used");
 		// }
 		
+    }
+
+	 internal void OnAbilityPressed(Ability ability)
+    {
+        GD.Print(ability.Name + " has been pressed and the player has received the signal");
+		ability_controller.QueueAbility(this, ability);
+		ability_controller.CheckCanUseAbility(this, ability);
+    }
+
+	internal void OnAbilityQueue(Ability ability)
+    {
+		GD.Print("Queueing ability again");
+        ability_controller.QueueAbility(this, ability);
+    }
+
+    internal void OnAbilityCheck(Ability ability)
+    {
+		GD.Print("Checking ability again");
+        ability_controller.CheckCanUseAbility(this, ability);
+    }
+
+	internal void OnAbilityReleased(Ability ability)
+    {
+        GD.Print("Ability released");
+    }
+
+	internal void OnAbilityFinished(Ability ability)
+    {
+		GD.Print("Removing ability from list");
+        ability_controller.RemoveFromAbilityList(this, ability);
+		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
+		{
+			using_movement_ability = false;
+		}
     }
 
 	
@@ -411,31 +421,6 @@ public partial class Player : PlayerEntity
 		// }
 	}
 
-	public void Updater() // Emit signals
-	{
-		if(stats_changed)
-		{
-			// _customSignals.EmitSignal(nameof(CustomSignals.UIHealth), health);
-			stats_changed = false;
-			stat_controller.UpdateStats();
-			// _customSignals.EmitSignal(nameof(CustomSignals.PlayerInfo), this_player);
-			stats_updated = false;
-		}
-		// _customSignals.EmitSignal(nameof(CustomSignals.PlayerPosition), GlobalPosition); // Sends player position to enemy
-		// _customSignals.EmitSignal(nameof(CustomSignals.Targeting), targeting, mob_to_LookAt_pos);
-	}
-
-	public void CanUseAbilities()
-	{
-		// if (ui.inventory_open)
-		// {
-		// 	can_use_abilities = false;
-		// }
-		// else
-		// {
-		// 	can_use_abilities = true;
-		// }
-	}
 
 	private void HandleRemoveEquipped() // Removes equiped items
     {
@@ -465,5 +450,5 @@ public partial class Player : PlayerEntity
 		
 	}
 
-	
+    
 }

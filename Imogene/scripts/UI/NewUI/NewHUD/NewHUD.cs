@@ -1,4 +1,5 @@
 using Godot;
+using GodotPlugins.Game;
 using System;
 
 public partial class NewHUD : Control
@@ -6,7 +7,7 @@ public partial class NewHUD : Control
 {
 
 	[Export] public NewEnemyHealth enemy_health;
-	[Export] public PanelContainer main;
+	[Export] public MainHUD main;
 	[Export] public PanelContainer interact_bar;
 	[Export] public Control top_right;
 	

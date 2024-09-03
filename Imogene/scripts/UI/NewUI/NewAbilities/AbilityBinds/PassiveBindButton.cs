@@ -1,11 +1,9 @@
 using Godot;
 using System;
 
-public partial class Passives : Control
+public partial class PassiveBindButton : Control
 {
-	[Export] public Control general_passives;
-	[Export] public Control class_passives;
-	[Export] public Control class_title;
+	[Signal] public delegate void PassiveBindButtonPressedEventHandler(PassiveBindButton passive_bind_button);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,8 +14,8 @@ public partial class Passives : Control
 	{
 	}
 
-	public void ResetPage()
+	public void _on_button_down()
 	{
-		
+		EmitSignal(nameof(PassiveBindButtonPressed), this);
 	}
 }

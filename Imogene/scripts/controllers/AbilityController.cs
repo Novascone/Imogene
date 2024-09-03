@@ -1,159 +1,220 @@
 using Godot;
 using System;
-// Ability controller
-// Load abilities for the player, and sends the abilities the player has to the UI 
-public partial class AbilityController : Controller
-{
 
-	public bool can_use_abilities;
-	UI ui;
+public partial class AbilityController : Node
+{
+	public bool can_use_abilities = true;
+	
 	// Called when the node enters the scene tree for the first time.
-	
-	private CustomSignals _customSignals; // Custom signal instance
-	
 	public override void _Ready()
 	{
 		
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		
 	}
 
-    public override void _Process(double delta)
+	 public void QueueAbility(Player player, Ability ability)
     {
-		if (player != null)
-		{
-			if(StatusEffectPreventingAbilities())
-			{
-				can_use_abilities = false;
-				GD.Print("player can not use abilities because of a status effect");
-			}
-			else
-			{
-				can_use_abilities = true;
-			}
-		}
-        
-		// if(Input.IsActionJustPressed("five"))
-		// {
-		// 	AddAbilityResource("Hitscan");
-		// }
+        if(can_use_abilities)
+        {
+            if(ability.UIButton())
+            {
+                // GD.Print("this is a UI button");
+                if(ability.button_pressed)
+                {
+                    if(ability.state == Ability.States.not_queued)
+                    {   
+                        if(CanAfford(player, ability)) // Check cross was here
+                        {
+                            GD.Print("queueing ability");
+                            ability.state = Ability.States.queued;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(ability.state == Ability.States.not_queued)
+                {   
+                    if(CanAfford(player, ability)) // Check cross was here
+                    {
+                        GD.Print("queueing ability");
+                        ability.state = Ability.States.queued;
+                    }
+                }
+            }
+        }
     }
 
-	public void AddAbilityResource(string ability_name)
-	{
-		AbilityResource ability_resource = ResourceLoader.Load<AbilityResource>("res://scripts/abilities/" + ability_name + "/" + ability_name + ".tres");
-		player.ability_resources.Add(ability_resource);
-		LoadAbilitiesHelper(ability_resource);
-		// GD.Print("Added " + ability_name);
-		// foreach(Ability ability in player.abilities)
-		// {
-		// 	GD.Print(ability.Name);
-		// }
-	}
-
-    public void LoadAbilities() // Loads abilities
-	{
-		if(!player.abilities_loaded)
-		{
-			// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), player.l_cross_primary_selected);
-			// _customSignals.EmitSignal(nameof(CustomSignals.RCrossPrimaryOrSecondary), player.r_cross_primary_selected);
-			// player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
-			// player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
-			foreach(AbilityResource ability_resource in player.ability_resources)
-			{
-				LoadAbilitiesHelper(ability_resource);
-			}
-
-		}
-		player.abilities_loaded = true;
-   }
-
-    private void LoadAbilitiesHelper(AbilityResource ability_resource) // Adds ability to abilities list
+	public void CheckCanUseAbility(Player player, Ability ability)
     {
-       	Ability new_ability = (Ability)LoadAbility(ability_resource.name, ability_resource.class_type, ability_resource.ability_type);
-		player.abilities.Add(new_ability);
-		AddChild(new_ability);
-		new_ability.GetPlayerInfo(player);
-		// foreach(AbilityCategory ability_category in player.ui.abilities.categories.GetChildren())
-		// {
-		// 	if (ability_category.IsInGroup(ability_resource.type))
-		// 	{
-		// 		ability_category.AddAbility(ability_resource);
-		// 	}
-		// }
-		
-		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
+        if(ability.state == Ability.States.queued)
+        {
+            if(!ability.button_held)
+            {
+                if(ability.rotate_on_soft)
+                {
+                    if(player.targeting_system.soft_targeting && player.targeting_system.enemy_to_soft_target)
+                    {
+                        GD.Print("Rotate soft ability");
+                        SoftRotateAbility(player, ability);
+						
+                    }
+                    else
+                    {
+						GD.Print("Executing");
+                        ability.Execute(player);
+						AddToAbilityList(player, ability);
+						
+                    }
+                }
+                else
+                {
+                    // GD.Print("Execute non rotation");
+					GD.Print("Executing");
+                    ability.Execute(player);
+					AddToAbilityList(player, ability);
+                }
+            }
+            else if (ability.button_held)
+            {
+                if(ability.rotate_on_held)
+                {
+					
+					AddToAbilityList(player, ability);
+                    GD.Print("Button is held, waiting for player to complete rotation");
+                    if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+                    {
+                        GD.Print("Rotating on held");
+                        ability.Execute(player);
+						
+                        // player.movementController.movement_input_allowed = true;
+                    }
+                }
+                else
+                {
+					GD.Print("Executing");
+                    ability.Execute(player);
+					AddToAbilityList(player, ability);
+                }
+            }
+
+        }
     }
 
-	public  Node LoadAbility(string name, string class_type, string ability_type) // Loads an ability from a string
+	public bool CanAfford(Player player, Ability ability)
     {
-        var scene = GD.Load<PackedScene>("res://scripts/abilities/" + class_type + "/" + ability_type + "/" + name + "/" + name + ".tscn");
-        var sceneNode = scene.Instantiate();
-        return sceneNode;
+        if(ability.charges - ability.charges_used >= 0 && ability.charges > 0)
+        {
+           
+            if(ability.charges - ability.charges_used != 0)
+            {
+                 GD.Print("Knock back* Can afford because of charges");
+                return true;
+            }
+            else
+            {
+                GD.Print("Knock back* Can not afford because of charges");
+                return false;
+            }
+            
+        }
+        else if(player.resource - ability.resource_cost >= 0 || ability.resource_cost == 0)
+        {
+            if(ability.cooldown_timer != null)
+            {
+                if(ability.cooldown_timer.TimeLeft == 0)
+                {
+                    GD.Print("Can afford because of cooldown");
+                    return true;
+                }
+                else
+                {
+                    GD.Print("Can't afford because of cooldown");
+                    return false;
+                }
+            }
+            else
+            {
+                GD.Print("Can afford because of resource");
+                return true;
+            }
+        }
+        else
+        {
+            GD.Print("Can't afford because resource cost");
+            return false;
+        }
+    
+    }
+
+	public void SoftRotateAbility(Player player, Ability ability)
+    {
+        if(!ability.rotate_on_soft_far && player.targeting_system.enemy_close)
+        {
+			AddToAbilityList(player, ability);
+            player.targeting_system.SoftTargetRotation();
+			ability.stop_movement_input = true;
+			GD.Print("Rotating player");
+            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+            {
+                GD.Print("Execute rotation");
+				// GD.Print("Executing");
+                ability.Execute(player);
+				ability.stop_movement_input = false;
+                // player.movementController.movement_input_allowed = true;
+            }
+        }
+        else if (ability.rotate_on_soft_far && player.targeting_system.enemy_far)
+        {
+            // GD.Print("Setting player movement to false");
+			GD.Print("Rotating player");
+			AddToAbilityList(player, ability);
+			ability.stop_movement_input = true; // Not allowing player to move while they are being rotated
+            player.targeting_system.SoftTargetRotation();
+            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+            {
+                GD.Print("Execute rotation");
+				// GD.Print("Executing");
+                ability.Execute(player);
+				ability.stop_movement_input = false; // Allowing player to move after being rotated
+				
+                // player.movementController.movement_input_allowed = true;
+            }
+        }
+        else
+        {
+			GD.Print("Executing");
+            ability.Execute(player);
+			AddToAbilityList(player, ability);
+        }
+    }
+
+	public void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
+    {
+        // GD.Print("adding ability to list");
+        if(!player.abilities_in_use.Contains(ability))
+        {
+            player.abilities_in_use.AddFirst(ability);
+            ability.in_use = true;
+        }
+
+        player.ability_in_use = player.abilities_in_use.First.Value;
+    }
+
+    public void RemoveFromAbilityList(Player player, Ability ability) // Removes ability from abilities used
+    {
+        // GD.Print("removing ability from list");
+        player.abilities_in_use.Remove(ability);
+        if(player.abilities_in_use.Count > 0)
+        {
+            player.ability_in_use = player.abilities_in_use.First.Value;
+        }
+        else
+        {
+            player.ability_in_use = null;
+        }
+        ability.in_use = false;
     }
 
 
-	public void AssignAbilities()
-	{	
-		if(!player.test_abilities_assigned)
-		{
-			AssignAbilityHelper("RCrossPrimaryRightAssign", player.small_fireball);
-			AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
-			AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
-			AssignAbilityHelper("LCrossPrimaryRightAssign", player.effects_test);
-			AssignAbilityHelper("LCrossPrimaryLeftAssign", player.projectile);
-			AssignAbilityHelper("RCrossPrimaryLeftAssign", player.dash);
-			AssignAbilityHelper("LCrossPrimaryDownAssign", player.whirlwind);
-			AssignAbilityHelper("RCrossPrimaryUpAssign", player.kick);
-		}
-		player.test_abilities_assigned = true;
-	}
-	
-	 private void AssignAbilityHelper(string button_name, AbilityResource ability_resource)
-	{
-			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
-			// player.ui.abilities.AbilityAssigned(ability_resource, button_name);
-			// player.ui.hud.AbilityAssigned(ability_resource, button_name);
-			// GD.Print("hud ability assigned");
-			foreach(Ability ability in player.abilities)
-			{
-				if(ability.Name == ability_resource.name)
-				{
-					ability.CheckAssignment(button_name);
-				}
-			}
-			// GD.Print("Ability Assigned");
-	}
-
-	public bool StatusEffectPreventingAbilities()
-	{
-		if(player.status_effect_controller.dazed || player.status_effect_controller.frozen || player.status_effect_controller.feared || player.status_effect_controller.hexed || player.status_effect_controller.staggered)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	public void SubscribeToUI(UI ui)
-	{
-		// ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
-	}
-
-    private void OnAbilityChanged(string new_ability, string new_button_assignment)
-    {
-        GD.Print("Got ability changed signal!");
-		GD.Print("new button assignment " + new_button_assignment+ " new ability " + new_ability);
-		foreach(Ability ability in player.abilities)
-		{
-			if (ability.Name == new_ability)
-			{
-				ability.useable = true;
-				ability.CheckAssignment(new_button_assignment);
-			}
-		}
-		// player.ui.abilities.ability_changed = false;
-		// player.ui.abilities.ability_to_change = null;
-		// player.ui.abilities.button_to_bind = null;
-		
-    }
+    
 }

@@ -3,13 +3,17 @@
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewHUD/HUDCross.cs" id="1_p28xl"]
 [ext_resource type="PackedScene" uid="uid://tycrnxtx81ri" path="res://scenes/UI/player_ui/NewUI/HUD/right_cross_hud_button.tscn" id="2_00buh"]
 
-[node name="RightPrimaryHUDCross" type="GridContainer"]
+[node name="RightPrimaryHUDCross" type="GridContainer" node_paths=PackedStringArray("up", "left", "right", "down")]
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_constants/h_separation = -1
 theme_override_constants/v_separation = -1
 columns = 3
 script = ExtResource("1_p28xl")
+up = NodePath("Up")
+left = NodePath("Left")
+right = NodePath("Right")
+down = NodePath("Down")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(60, 60)
