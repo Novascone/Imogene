@@ -15,7 +15,7 @@ public partial class Whirlwind : Ability
 		tick_timer = GetNode<Timer>("TickTimer");
 		hitbox_to_load = GD.Load<PackedScene>("res://scripts/abilities/Brigian/Active/Whirlwind/whirlwind_hitbox.tscn");
 		mesh_to_load = GD.Load<PackedScene>("res://scripts/abilities/Brigian/Active/Whirlwind/whirlwind_mesh.tscn");
-		resource_cost = 10;
+		resource_change = -10;
 		rotate_on_soft = false;
 	}
 
@@ -31,7 +31,6 @@ public partial class Whirlwind : Ability
 			AddHitbox(player);
 		}
 		
-		player.resource_system.Resource(resource_cost);
 		if(player.damage_system.Crit()) // check if the play will crit
 		{
 			whirlwind_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2); // Set projectile damage
@@ -63,9 +62,10 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.resource + resource_change < 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
+			
 			RemoveHitbox();
 			RemoveMesh(player);
 			EmitSignal(nameof(AbilityFinished),this);

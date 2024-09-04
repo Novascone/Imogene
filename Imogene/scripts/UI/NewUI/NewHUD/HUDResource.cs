@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class HUDResource : Node
+public partial class HUDResource : Control
 {
-	[Export] public Control resource_points;
+	[Export] public TextureProgressBar resource_points;
 	[Export] public Control resource_damage_buffs;
 	[Export] public Control resource_damage_debuffs;
 	

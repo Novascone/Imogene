@@ -123,8 +123,7 @@ public partial class Enemy : Entity
 		slash_resistance = 3;
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
-		stat_controller.GetEntityInfo(this);
-		stat_controller.UpdateStats();
+		stat_controller.UpdateStats(this);
 		movement_controller.GetEntityInfo(this);
 		status_effect_controller.GetEntityInfo(this);
 		ability_controller.GetEntityInfo(this);
@@ -193,7 +192,7 @@ public partial class Enemy : Entity
 					// }
 				}
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
-				resource_system.Posture(melee_box.posture_damage);
+				resource_system.Posture(this, melee_box.posture_damage);
 			}
 		}
 		
@@ -216,7 +215,7 @@ public partial class Enemy : Entity
 			if(body is RangedHitbox)
 			{
 				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
-				resource_system.Posture(ranged_box.posture_damage);
+				resource_system.Posture(this, ranged_box.posture_damage);
 			}
 		}
     }

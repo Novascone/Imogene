@@ -4,6 +4,7 @@ using System;
 public partial class AbilityController : Node
 {
 	public bool can_use_abilities = true;
+    [Signal] public delegate void ResourceEffectEventHandler(Player player, float resource_change);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -13,35 +14,36 @@ public partial class AbilityController : Node
 
 	 public void QueueAbility(Player player, Ability ability)
     {
-        if(can_use_abilities)
+        if(!player.ui.preventing_movement && can_use_abilities)
         {
-            if(ability.UIButton())
-            {
-                // GD.Print("this is a UI button");
-                if(ability.button_pressed)
+        
+            if(ability.state == Ability.States.not_queued)
+            {   
+                if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
                 {
-                    if(ability.state == Ability.States.not_queued)
-                    {   
-                        if(CanAfford(player, ability)) // Check cross was here
-                        {
-                            GD.Print("queueing ability");
-                            ability.state = Ability.States.queued;
-                        }
-                    }
+                    GD.Print("queueing ability");
+                    ability.state = Ability.States.queued;
                 }
             }
-            else
-            {
-                if(ability.state == Ability.States.not_queued)
-                {   
-                    if(CanAfford(player, ability)) // Check cross was here
-                    {
-                        GD.Print("queueing ability");
-                        ability.state = Ability.States.queued;
-                    }
-                }
-            }
+            
         }
+
+        // if(ability.UIButton())
+        // {
+        //     GD.Print("this is a UI button");
+        //     GD.Print(ability.button_pressed);
+        //     if(ability.button_pressed)
+        //     {
+        //         if(ability.state == Ability.States.not_queued)
+        //         {   
+        //             if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
+        //             {
+        //                 GD.Print("queueing ability");
+        //                 ability.state = Ability.States.queued;
+        //             }
+        //         }
+        //     }
+        // }
     }
 
 	public void CheckCanUseAbility(Player player, Ability ability)
@@ -62,8 +64,8 @@ public partial class AbilityController : Node
                     {
 						GD.Print("Executing");
                         ability.Execute(player);
+                        if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 						AddToAbilityList(player, ability);
-						
                     }
                 }
                 else
@@ -71,6 +73,7 @@ public partial class AbilityController : Node
                     // GD.Print("Execute non rotation");
 					GD.Print("Executing");
                     ability.Execute(player);
+                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 					AddToAbilityList(player, ability);
                 }
             }
@@ -85,7 +88,8 @@ public partial class AbilityController : Node
                     {
                         GD.Print("Rotating on held");
                         ability.Execute(player);
-						
+						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                        AddToAbilityList(player, ability);
                         // player.movementController.movement_input_allowed = true;
                     }
                 }
@@ -93,11 +97,68 @@ public partial class AbilityController : Node
                 {
 					GD.Print("Executing");
                     ability.Execute(player);
+                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 					AddToAbilityList(player, ability);
                 }
             }
 
         }
+    }
+
+    public bool CheckCross(Player player, Ability ability) // Checks what cross the ability is assigned to
+    {
+        if(ability.cross == "Left")
+		{
+			if(player.l_cross_primary_selected)
+			{
+				if(ability.level == "Primary")
+				{
+					return true;
+				}
+                else
+                {
+                    return false;
+                }
+			}
+			else
+			{
+				if(ability.level == "Secondary")
+                {
+                    return true;
+                }
+				else
+                {
+                    return false;
+                }
+			}
+		}
+		else if(ability.cross == "Right")
+		{
+			if(player.r_cross_primary_selected)
+			{
+				if(ability.level == "Primary")
+				{
+					return true;
+				}
+                else
+                {
+                    return false;
+                }
+			}
+			else
+			{
+                if(ability.level == "Secondary")
+                {
+                    return true;
+                }
+				else
+                {
+                    return false;
+                }
+			}
+		}
+
+        return false;
     }
 
 	public bool CanAfford(Player player, Ability ability)
@@ -117,7 +178,7 @@ public partial class AbilityController : Node
             }
             
         }
-        else if(player.resource - ability.resource_cost >= 0 || ability.resource_cost == 0)
+        else if(player.resource - ability.resource_change >= 0 || ability.resource_change == 0)
         {
             if(ability.cooldown_timer != null)
             {
@@ -159,6 +220,7 @@ public partial class AbilityController : Node
                 GD.Print("Execute rotation");
 				// GD.Print("Executing");
                 ability.Execute(player);
+                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 				ability.stop_movement_input = false;
                 // player.movementController.movement_input_allowed = true;
             }
@@ -175,6 +237,7 @@ public partial class AbilityController : Node
                 GD.Print("Execute rotation");
 				// GD.Print("Executing");
                 ability.Execute(player);
+                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 				ability.stop_movement_input = false; // Allowing player to move after being rotated
 				
                 // player.movementController.movement_input_allowed = true;
@@ -184,6 +247,7 @@ public partial class AbilityController : Node
         {
 			GD.Print("Executing");
             ability.Execute(player);
+            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 			AddToAbilityList(player, ability);
         }
     }
@@ -214,6 +278,8 @@ public partial class AbilityController : Node
         }
         ability.in_use = false;
     }
+
+    
 
 
     

@@ -1,42 +1,43 @@
 using Godot;
 using System;
 
-public partial class ResourceSystem : EntitySystem
+public partial class ResourceSystem : Node
 {
 	public Timer posture_regen_timer;
 	public Timer resource_regen_timer;
 	private CustomSignals _customSignals;
+
+	[Signal] public delegate void ResourceChangeEventHandler(float resource);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
-		posture_regen_timer.Timeout += OnPostureRegenTickTimeout;
-
 		resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
-		resource_regen_timer.Timeout += OnResourceRegenTickTimeout;
+		
+		
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
     
 
-    public void Resource(float cost)
+    public void Resource(Player player, float resource_change)
 	{
-		entity.resource -= cost;
-		GD.Print("Cost " + cost);
-		// if(entity is Player player)
-		// {
-		// 	player.ui.hud.resource.Value = entity.resource;
-		// }
-		ResourceRegen();
+		player.resource += resource_change;
+		GD.Print("Cost " + resource_change);
+		
+		EmitSignal(nameof(ResourceChange), player.resource);
+		
+		ResourceRegen(player);
 	}
 
-	public void ResourceRegen()
+	public void ResourceRegen(Player player)
 	{
+		resource_regen_timer.Timeout += () => OnResourceRegenTickTimeout(player);
 		resource_regen_timer.Start();
 	}
 
-	public void Posture(float posture_damage)
+	public void Posture(Entity entity, float posture_damage)
 	{
 		if(entity.posture < entity.maximum_posture)
 		{
@@ -60,22 +61,23 @@ public partial class ResourceSystem : EntitySystem
 			// 	player.ui.hud.posture.Value += posture_damage;
 			// }
 		}
-		PostureRegen();
+		PostureRegen(entity);
 		
 	}
 
-	public void PostureRegen()
+	public void PostureRegen(Entity entity)
 	{
+		posture_regen_timer.Timeout += () => OnPostureRegenTickTimeout(entity);
 		posture_regen_timer.Start();
 	}
 
-	private void OnResourceRegenTickTimeout()
+	private void OnResourceRegenTickTimeout(Player player)
     {
         // GD.Print("resource regenerating");
-		if(entity.resource < entity.maximum_resource)
+		if(player.resource < player.maximum_resource)
 		{
-			entity.resource += entity.resource_regen;
-			GD.Print("Resource " + entity.resource);
+			player.resource += player.resource_regen;
+			GD.Print("Resource " + player.resource);
 		}
 
 		// if(entity is Player player)
@@ -84,7 +86,9 @@ public partial class ResourceSystem : EntitySystem
 		// }
     }
 
-	private void OnPostureRegenTickTimeout()
+	
+
+	private void OnPostureRegenTickTimeout(Entity entity)
     {
 		// GD.Print("posture regenerating");
 		if(entity.posture > 0)
@@ -108,5 +112,11 @@ public partial class ResourceSystem : EntitySystem
 		{
 			posture_regen_timer.Stop();
 		}
+    }
+
+    internal void HandleResourceEffect(Player player, float resource_change)
+    {
+        GD.Print("resource system has received resource change");
+        Resource(player, resource_change);
     }
 }

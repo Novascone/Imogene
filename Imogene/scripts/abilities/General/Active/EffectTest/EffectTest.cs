@@ -100,7 +100,7 @@ public partial class EffectTest : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.resource - resource_cost <= 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.resource + resource_change <= 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			RemoveHitbox();

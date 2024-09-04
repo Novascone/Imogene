@@ -13,11 +13,7 @@ public partial class CameraRig : Node3D
 	
 	public override void _Ready()
 	{
-		camera = GetNode<Camera3D>("Camera");
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.CameraPosition += HandleCameraPosition;
-		// _customSignals.ZoomCamera += HandleZoomCamera;
-		
+		camera = GetNode<Camera3D>("Camera");	
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,9 +39,21 @@ public partial class CameraRig : Node3D
 		// }
 	}
 
-	public void GetPlayerInfo(Player s) // Get player info
+	public void Zoom()
 	{
-		player = s;
+		if(!zoomed)
+		{
+			camera.Size = zoom_camera_size;
+			zoomed = true;
+		}
+		else if (zoomed)
+		{
+
+			camera.Size = default_camera_size;
+			zoomed = false;
+
+		}
 	}
+
 
 }

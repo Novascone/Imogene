@@ -16,7 +16,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s65oj"]
 
-[node name="Main" type="PanelContainer" node_paths=PackedStringArray("l_cross_primary", "l_cross_secondary", "r_cross_primary", "r_cross_secondary")]
+[node name="Main" type="PanelContainer" node_paths=PackedStringArray("health", "l_cross_primary", "l_cross_secondary", "r_cross_primary", "r_cross_secondary", "resource")]
 custom_minimum_size = Vector2(1200, 210)
 anchors_preset = 7
 anchor_left = 0.5
@@ -32,10 +32,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tj56n")
 script = ExtResource("1_2qdvp")
+health = NodePath("BottomHUDVBox/BottomHUDHBox/Health")
 l_cross_primary = NodePath("BottomHUDVBox/BottomHUDHBox/LCross/LeftPrimaryHUDCross")
 l_cross_secondary = NodePath("BottomHUDVBox/BottomHUDHBox/LCross/LeftSecondaryHUDCross")
 r_cross_primary = NodePath("BottomHUDVBox/BottomHUDHBox/RCross/RightPrimaryHUDCross")
 r_cross_secondary = NodePath("BottomHUDVBox/BottomHUDHBox/RCross/RightSecondaryHUDCross")
+resource = NodePath("BottomHUDVBox/BottomHUDHBox/Resource")
 
 [node name="BottomHUDVBox" type="VBoxContainer" parent="."]
 layout_mode = 2

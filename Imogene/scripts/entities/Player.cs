@@ -43,7 +43,7 @@ public partial class Player : PlayerEntity
 	[Export] public MovementController movement_controller;
 	[Export] public AbilityAssigner ability_assigner;
 	[Export] public AbilityController ability_controller;
-	public StatController stat_controller;
+	[Export] public StatController stat_controller;
 	public EquipmentController equipment_controller;
 
 	//Player consumables
@@ -84,7 +84,7 @@ public partial class Player : PlayerEntity
 		base._Ready();
 
 		
-
+		resource = maximum_resource/2;
 		Ability jump = (Ability)ability_assigner.LoadAbility(this, "Jump", "General", "Active");
 		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
 		Ability effect_test = (Ability)ability_assigner.LoadAbility(this, "EffectTest", "General", "Active");
@@ -101,7 +101,7 @@ public partial class Player : PlayerEntity
 		ability_assigner.AssignAbility(this, projectile, "LT", "Left", "Primary");
 		ability_assigner.AssignAbility(this, whirlwind, "X", "Right", "Primary");
 		ability_assigner.AssignAbility(this, hitscan, "Y", "Right", "Primary");
-		ability_assigner.AssignAbility(this, dash, "RB", "Left", "Primary");
+		ability_assigner.AssignAbility(this, dash, "B", "Right", "Primary");
 
 
 		jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
@@ -119,7 +119,6 @@ public partial class Player : PlayerEntity
 		camera_rig.TopLevel = true;
 
 		movement_controller = GetNode<MovementController>("Controllers/MovementController");
-		stat_controller = GetNode<StatController>("Controllers/StatController");
 		equipment_controller = GetNode<EquipmentController>("Controllers/EquipmentController");
 
 
@@ -154,6 +153,14 @@ public partial class Player : PlayerEntity
 		hurtbox = GetNode<Hurtbox>("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox");
 		hurtbox.AreaEntered += OnHurtboxAreaEntered;
 		hurtbox.BodyEntered += OnHurtboxBodyEntered;
+
+		input_controller.CrossChanged += HandleCrossChanged;
+		stat_controller.StatsUpdate += ui.HandleUpdatedStats;
+		ui.InventoryToggle += HandleInventoryToggle;
+
+		ability_controller.ResourceEffect += resource_system.HandleResourceEffect;
+		stat_controller.UpdateStats(this);
+		
 		
 		
 		foot_left = new MeshInstance3D();
@@ -182,7 +189,6 @@ public partial class Player : PlayerEntity
 		// GD.Print("exclude: " + exclude);
 		// movement_controller.GetPlayerInfo(this);
 		equipment_controller.GetPlayerInfo(this);
-		stat_controller.GetEntityInfo(this);
 		ability_assigner.GetAbilities(this);
 		ability_assigner.AssignAbilities(this);
 
@@ -202,9 +208,7 @@ public partial class Player : PlayerEntity
 
 		
 
-		
-
-		camera_rig.GetPlayerInfo(this);
+	
 
 		
 
@@ -213,6 +217,8 @@ public partial class Player : PlayerEntity
 		// GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
 		// GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
+
+    
 
     private void OnHurtboxAreaEntered(Area3D area)
     {
@@ -230,7 +236,7 @@ public partial class Player : PlayerEntity
 					// }
 				}
 				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
-				resource_system.Posture(melee_box.posture_damage);
+				resource_system.Posture(this, melee_box.posture_damage);
 			}
 		}
     }
@@ -252,7 +258,7 @@ public partial class Player : PlayerEntity
 					// }
 				}
 				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
-				resource_system.Posture(ranged_box.posture_damage);
+				resource_system.Posture(this, ranged_box.posture_damage);
 			}
 		}
     }
@@ -272,9 +278,7 @@ public partial class Player : PlayerEntity
 			ability_in_use.FrameCheck(this);
 		}
 
-		GD.Print("using movement ability " + using_movement_ability);
-		GD.Print("player velocity " + Velocity);
-
+		// GD.Print("ui preventing movement " + ui.preventing_movement);
 		
 		CameraFollowsPlayer();
 		// CheckInteract(); // Check if the player can interact with anything
@@ -303,6 +307,24 @@ public partial class Player : PlayerEntity
 		// 	GD.Print("No ability being used");
 		// }
 		
+    }
+
+	private void HandleCrossChanged(string cross)
+    {
+		ui.SwitchCrosses(cross);
+		if(cross == "Left")
+		{
+			l_cross_primary_selected = !l_cross_primary_selected;
+		}
+		else if(cross == "Right")
+		{
+			r_cross_primary_selected = !r_cross_primary_selected;
+		}
+    }
+
+	private void HandleInventoryToggle()
+    {
+		camera_rig.Zoom();
     }
 
 	 internal void OnAbilityPressed(Ability ability)

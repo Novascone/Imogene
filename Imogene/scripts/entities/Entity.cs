@@ -228,7 +228,7 @@ public partial class Entity : CharacterBody3D
 		damage_system.GetEntityInfo(this);
 
 		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
-		resource_system.GetEntityInfo(this);
+		
 
 		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
 		status_effect_controller.GetEntityInfo(this);

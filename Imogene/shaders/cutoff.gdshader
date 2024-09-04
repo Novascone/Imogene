@@ -11,21 +11,21 @@ void vertex(){
 }
 
 void fragment() {
-	
+
 	vec3 planeNormal = normalize(-cutplane[1].xyz);
 	float planeDistance = dot(planeNormal, cutplane[3].xyz);
 	float vertexDistance = dot(planeNormal, wvtx);
 	float dist = vertexDistance - planeDistance;
-	
+
 	vec4 clip_pos = PROJECTION_MATRIX * vec4(VERTEX, 1.0);
 	vec2 uv = clip_pos.xy/5.0;
-	
+
 	uv+=TIME * 0.03;
 	float noise = texture(_noise, uv).r;
 	dist+= noise*0.3;
-	
+
 	if(dist < 0.0) discard;
-	
+
 	float border_dist = smoothstep(0.0, 0.3
 	, dist);
 	vec4 alb_color = texture(_albedo, UV);

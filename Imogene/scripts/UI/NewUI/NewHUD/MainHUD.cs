@@ -9,12 +9,15 @@ public partial class MainHUD : Control
 	[Export] public Control useable_4;
 	[Export] public Control posture;
 	[Export] public Control xp;
-	[Export] public Control health;
+	[Export] public HUDHealth health;
 	[Export] public HUDCross l_cross_primary;
 	[Export] public HUDCross l_cross_secondary;
 	[Export] public HUDCross r_cross_primary;
 	[Export] public HUDCross r_cross_secondary;
-	[Export] public Control resource;
+	[Export] public HUDResource resource;
+
+	public bool l_cross_primary_selected = true;
+	public bool r_cross_primary_selected = true;
 
 	public string left_up = "RB";
 	public string left_left = "LB";
@@ -51,6 +54,114 @@ public partial class MainHUD : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public void SwitchCrosses(string cross)
+	{
+		if(cross == "Left")
+		{
+			MoveCrosses(cross);
+			l_cross_primary_selected = !l_cross_primary_selected;
+		}
+		else if(cross == "Right")
+		{
+			MoveCrosses(cross);
+			r_cross_primary_selected = !r_cross_primary_selected;
+		}
+
+	}
+
+	public void UpdateHUDStats(Player player)
+	{
+		
+		health.hit_points.MaxValue = player.maximum_health;
+		health.hit_points.Value = player.health;
+		resource.resource_points.MaxValue = player.maximum_resource;
+		resource.resource_points.Value = player.resource;
+		
+	}
+
+	public void MoveCrosses(string cross)
+	{
+		if(cross == "Left")
+		{
+			if(l_cross_primary_selected)
+			{
+				l_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_primary.up.label.Hide();
+				l_cross_primary.left.label.Hide();
+				l_cross_primary.right.label.Hide();
+				l_cross_primary.down.label.Hide();
+				l_cross_primary.ZIndex = 0;
+
+				l_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				l_cross_secondary.up.label.Show();
+				l_cross_secondary.left.label.Show();
+				l_cross_secondary.right.label.Show();
+				l_cross_secondary.down.label.Show();
+				l_cross_secondary.ZIndex = 1;
+			}
+			else
+			{
+				l_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				l_cross_primary.Modulate = new Color(Colors.White, 1f);
+				l_cross_primary.up.label.Show();
+				l_cross_primary.left.label.Show();
+				l_cross_primary.right.label.Show();
+				l_cross_primary.down.label.Show();
+				l_cross_primary.ZIndex = 1;
+
+				l_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				l_cross_secondary.up.label.Hide();
+				l_cross_secondary.left.label.Hide();
+				l_cross_secondary.right.label.Hide();
+				l_cross_secondary.down.label.Hide();
+				l_cross_secondary.ZIndex = 0;
+			}
+		}
+		else if (cross == "Right")
+		{
+			if(r_cross_primary_selected)
+			{
+				r_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_primary.up.label.Hide();
+				r_cross_primary.left.label.Hide();
+				r_cross_primary.right.label.Hide();
+				r_cross_primary.down.label.Hide();
+				r_cross_primary.ZIndex = 0;
+
+				r_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
+				r_cross_secondary.up.label.Show();
+				r_cross_secondary.left.label.Show();
+				r_cross_secondary.right.label.Show();
+				r_cross_secondary.down.label.Show();
+				r_cross_secondary.ZIndex = 1;
+			}
+			else
+			{
+				r_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				r_cross_primary.Modulate = new Color(Colors.White, 1f);
+				r_cross_primary.up.label.Show();
+				r_cross_primary.left.label.Show();
+				r_cross_primary.right.label.Show();
+				r_cross_primary.down.label.Show();
+				r_cross_primary.ZIndex = 1;
+
+				r_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
+				r_cross_secondary.up.label.Hide();
+				r_cross_secondary.left.label.Hide();
+				r_cross_secondary.right.label.Hide();
+				r_cross_secondary.down.label.Hide();
+				r_cross_secondary.ZIndex = 0;
+			}
+		}
+		
 	}
 
 	public void AssignAbility(Ability ability)

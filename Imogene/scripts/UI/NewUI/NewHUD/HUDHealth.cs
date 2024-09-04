@@ -3,7 +3,7 @@ using System;
 
 public partial class HUDHealth : Control
 {
-	[Export] public Control hit_points;
+	[Export] public TextureProgressBar hit_points;
 	[Export] public Control health_movement_debuffs;
 	[Export] public Control health__movement_buffs;
 

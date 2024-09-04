@@ -8,6 +8,8 @@ public partial class NewAbilities : Control
 	[Export] public Passives assigned_passives;
 	public CrossBindButton button_selected;
 	public PassiveBindButton passive_button_pressed;
+
+	[Signal] public delegate void AbilitiesClosedEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -78,6 +80,7 @@ public partial class NewAbilities : Control
 		ResetPage();
 		categories.ResetPage();
 		Hide();
+		EmitSignal(nameof(AbilitiesClosed));
 	}
 
 	public void ResetPage()

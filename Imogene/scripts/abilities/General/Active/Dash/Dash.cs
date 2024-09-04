@@ -35,7 +35,7 @@ public partial class Dash : Ability
 
     public override void Execute(Player player)
     {
-		GD.Print("Executing dash");
+		
         state = States.not_queued;
 		player.using_movement_ability = true;
 		dash_timer.Start();
@@ -49,7 +49,7 @@ public partial class Dash : Ability
 			// GD.Print("Direction behind player " + player.GlobalTransform.Basis.Z);
 			player.velocity = player.GlobalTransform.Basis.Z * dash_speed;
 		}
-		GD.Print("player velocity " + player.velocity);
+		
 		
     }
 
@@ -72,6 +72,7 @@ public partial class Dash : Ability
     public void _on_dash_timer_timeout() // When the dash timer times out remove the ability and reset the player velocity
 	{
 		EmitSignal(nameof(AbilityFinished),this);
+		
 		// player.using_movement_ability = false;
 		// player.velocity.X = player.direction.X * player.run_speed; 
 		// player.velocity.Z = player.direction.Z * player.run_speed;

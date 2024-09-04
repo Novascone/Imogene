@@ -3,22 +3,14 @@ using System;
 
 // Stat controller
 // Updates and sends stats for the player, more information on how the stats are calculated in the Imogene_Journal
-public partial class StatController : Controller
+public partial class StatController : Node
 {
 
-	private CustomSignals _customSignals; // Custom signal instance
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-	}
+	
+	[Signal] public delegate void StatsUpdateEventHandler(Player player);
+	
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	// public override void _Process(double delta)
-	// {
-	// }
-
-	public void UpdateStats() // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
+	public void UpdateStats(Entity entity) // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
 	{
 
 
@@ -97,6 +89,11 @@ public partial class StatController : Controller
 		entity.resource_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * entity.resource_regen_bonus, 2);
 		entity.posture_regen = (float)Math.Round(1 + entity.stamina/entity.rec_lvl_scale * (1 + entity.poise/100), 2);
 		entity.recovery = (float)Math.Round((entity.health_regen + entity.resource_regen + entity.posture_regen) / 3, 2);
+
+		if(entity is Player player)
+		{
+			EmitSignal(nameof(StatsUpdate), player);
+		}
 		// if(player != null)
 		// {
 		// 	player.ui.hud.health.MaxValue = entity.maximum_health;

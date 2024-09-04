@@ -9,7 +9,9 @@ public partial class NewUI : Control
 	[Export] public NewJournal journal;
 	[Export] public NewCursor cursor;
 
-	public bool ui_preventing_movement;
+	[Signal] public delegate void InventoryToggleEventHandler();
+
+	public bool preventing_movement;
 
 	public Button hovered_button;
 
@@ -18,13 +20,21 @@ public partial class NewUI : Control
 	public override void _Ready()
 	{
 		inventory.main.bottom_buttons.abilities.ButtonDown += OnAbilitiesButtonDown;
+		abilities.AbilitiesClosed += OnAbilitiesClosed;
 	}
+
+    private void OnAbilitiesClosed()
+    {
+        EmitSignal(nameof(InventoryToggle));
+		preventing_movement = false;
+		cursor.Visible = !cursor.Visible;
+    }
 
     private void OnAbilitiesButtonDown()
     {
         abilities.Show();
 		inventory.Hide();
-		UIElementOpen();
+		preventing_movement = true;
     }
 
 
@@ -32,15 +42,28 @@ public partial class NewUI : Control
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		cursor.ControllerCursor();
+		if(preventing_movement)
+		{
+			cursor.ControllerCursor();
+		}
 		
 		if(Input.IsActionJustPressed("Inventory"))
 		{
-			inventory.Visible = !inventory.Visible;
+			preventing_movement = !preventing_movement;
+			if(!abilities.Visible)
+			{
+				inventory.Visible = !inventory.Visible;
+			}
+			if(abilities.Visible)
+			{
+				abilities.ResetPage();
+				abilities.Visible = !abilities.Visible;
+			}
 			cursor.Visible = !cursor.Visible;
+			EmitSignal(nameof(InventoryToggle));
 		}
 
-		if(ui_preventing_movement)
+		if(preventing_movement)
 		{
 			if(Input.IsActionJustPressed("CursorUp") || Input.IsActionJustPressed("CursorDown") || Input.IsActionJustPressed("CursorLeft") || Input.IsActionJustPressed("CursorRight"))
 			{
@@ -59,22 +82,35 @@ public partial class NewUI : Control
 		hud.main.AssignAbility(ability);
 	}
 
+	public void SwitchCrosses(string cross)
+	{
+		hud.main.SwitchCrosses(cross);
+	}
+
 	public void UIElementOpen()
 	{
+		
 		foreach(Control control in GetChildren())
 		{
 			if(control.IsInGroup("prevents_movement"))
 			{
+				GD.Print("checking ui prevents movement");
 				if(control.Visible)
 				{
-					ui_preventing_movement = true;
+					GD.Print("UI preventing movement ");
+					preventing_movement = true;
 				}
-				else
+				else if(!preventing_movement)
 				{
-					ui_preventing_movement = false;
+					GD.Print("UI not preventing movement ");
+					preventing_movement = false;
 				}
 			}
 		}
 	}
-	
+
+    internal void HandleUpdatedStats(Player player)
+    {
+        hud.main.UpdateHUDStats(player);
+    }
 }

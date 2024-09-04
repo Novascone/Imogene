@@ -51,7 +51,7 @@ public partial class Ability : Node3D
     public bool animation_finished = false;
     public bool ready_to_use;
 
-    public int resource_cost;
+    public int resource_change;
     public int charges;
     public int charges_used;
     public float cast_time;
@@ -110,13 +110,6 @@ public partial class Ability : Node3D
 		
 	}
 
-    public override void _PhysicsProcess(double delta)
-    {
-        if(Input.IsActionJustPressed(assigned_button))
-        {
-            EmitSignal(nameof(AbilityPressed), this);
-        }
-    }
 
     public bool UIButton()
     {
@@ -170,61 +163,4 @@ public partial class Ability : Node3D
     {
         // throw new NotImplementedException();
     }
-
-    public bool CheckCross(Player player) // Checks what cross the ability is assigned to
-    {
-        if(cross == "Left")
-		{
-			if(player.l_cross_primary_selected)
-			{
-				if(level == "Primary")
-				{
-					return true;
-				}
-                else
-                {
-                    return false;
-                }
-			}
-			else
-			{
-				if(level == "Secondary")
-                {
-                    return true;
-                }
-				else
-                {
-                    return false;
-                }
-			}
-		}
-		else if(cross == "Right")
-		{
-			if(player.r_cross_primary_selected)
-			{
-				if(level == "Primary")
-				{
-					return true;
-				}
-                else
-                {
-                    return false;
-                }
-			}
-			else
-			{
-                if(level == "Secondary")
-                {
-                    return true;
-                }
-				else
-                {
-                    return false;
-                }
-			}
-		}
-
-        return false;
-    }
-
 }

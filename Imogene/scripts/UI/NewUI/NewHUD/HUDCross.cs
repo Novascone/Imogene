@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public partial class HUDCross : Node
+public partial class HUDCross : Control
 {
-	[Export] public Button up;
+	[Export] public HUDButton up;
 	[Export] public Label up_label;
-	[Export] public Button left;
+	[Export] public HUDButton left;
 	[Export] public Label left_label;
-	[Export] public Button right;
+	[Export] public HUDButton right;
 	[Export]public Label right_label;
-	[Export] public Button down;
+	[Export] public HUDButton down;
 	[Export] public Label down_label;
 	
 	// Called when the node enters the scene tree for the first time.

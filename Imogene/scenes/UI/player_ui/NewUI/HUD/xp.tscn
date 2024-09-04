@@ -8,6 +8,5 @@ size_flags_horizontal = 4
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 2
-value = 44.0
 nine_patch_stretch = true
 texture_progress = ExtResource("1_es0ud")

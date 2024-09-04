@@ -45,79 +45,79 @@ public partial class EquipmentController : Controller
 	public override void _PhysicsProcess(double delta)
 	{
 		// GD.Print(d_pad_frames_held);
-		if(d_pad_frames_held > d_pad_frames_held_threshold)
-		{
-			d_pad_held = true;
-		}
-		else
-		{
-			d_pad_held = false;
-		}
-		if(player.can_use_abilities)
-		{
-			if(d_pad_left_pressed || d_pad_right_pressed)
-			{
-				d_pad_frames_held += 1;
-			}
+		// if(d_pad_frames_held > d_pad_frames_held_threshold)
+		// {
+		// 	d_pad_held = true;
+		// }
+		// else
+		// {
+		// 	d_pad_held = false;
+		// }
+		// if(player.can_use_abilities)
+		// {
+		// 	if(d_pad_left_pressed || d_pad_right_pressed)
+		// 	{
+		// 		d_pad_frames_held += 1;
+		// 	}
 			
-			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_left_released) // If the left D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
-			{
-				// player.l_cross_primary_selected = !player.l_cross_primary_selected;
-				// player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
-				d_pad_left_released = false;
-				d_pad_frames_held = 0;
-				d_pad_held = false;
-				// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
-			}
-			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_left_released) // If the frames held was greater than or equal to the threshold switch off-hand
-			{
-				GD.Print("Switch off-hand");
-				d_pad_left_released = false;
-				d_pad_frames_held = 0;
-			}
+		// 	if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_left_released) // If the left D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
+		// 	{
+		// 		// player.l_cross_primary_selected = !player.l_cross_primary_selected;
+		// 		// player.ui.hud.LCrossPrimaryOrSecondary(player.l_cross_primary_selected);
+		// 		d_pad_left_released = false;
+		// 		d_pad_frames_held = 0;
+		// 		d_pad_held = false;
+		// 		// _customSignals.EmitSignal(nameof(CustomSignals.LCrossPrimaryOrSecondary), l_cross_primary_selected);
+		// 	}
+		// 	else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_left_released) // If the frames held was greater than or equal to the threshold switch off-hand
+		// 	{
+		// 		GD.Print("Switch off-hand");
+		// 		d_pad_left_released = false;
+		// 		d_pad_frames_held = 0;
+		// 	}
 				
-			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_right_released) // If the right D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
-			{
+		// 	if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_right_released) // If the right D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
+		// 	{
 				
-				// player.r_cross_primary_selected = !player.r_cross_primary_selected;
-				// player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
-				d_pad_right_released = false;
-				d_pad_frames_held = 0;
-				d_pad_held = false;
-				// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
-			}
-			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_right_released) // If the frames held was greater than or equal to the threshold switch main-hand
-			{
-				GD.Print("Switch main-hand");
-				d_pad_right_released = false;
-				d_pad_frames_held = 0;
-			}
+		// 		// player.r_cross_primary_selected = !player.r_cross_primary_selected;
+		// 		// player.ui.hud.RCrossPrimaryOrSecondary(player.r_cross_primary_selected);
+		// 		d_pad_right_released = false;
+		// 		d_pad_frames_held = 0;
+		// 		d_pad_held = false;
+		// 		// _customSignals.EmitSignal(nameof(CustomSignals.	RCrossPrimaryOrSecondary), r_cross_primary_selected);
+		// 	}
+		// 	else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_right_released) // If the frames held was greater than or equal to the threshold switch main-hand
+		// 	{
+		// 		GD.Print("Switch main-hand");
+		// 		d_pad_right_released = false;
+		// 		d_pad_frames_held = 0;
+		// 	}
 				
-			if(d_pad_up_pressed)
-			{
-				// switch consumable
-				if(player.consumable < 4)
-				{
-					player.consumable += 1;
-				}
-				else if(player.consumable == 4)
-				{
-					player.consumable = 1;
-				}
-				d_pad_up_pressed = false;
+		// 	if(d_pad_up_pressed)
+		// 	{
+		// 		// switch consumable
+		// 		if(player.consumable < 4)
+		// 		{
+		// 			player.consumable += 1;
+		// 		}
+		// 		else if(player.consumable == 4)
+		// 		{
+		// 			player.consumable = 1;
+		// 		}
+		// 		d_pad_up_pressed = false;
 
-				_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), player.consumable);
-				// player.ui.hud.WhichConsumable(player.consumable);
-			}
-			if(d_pad_down_pressed)
-			{
-				// use consumable
-				player.consumables[player.consumable]?.UseItem();
-				d_pad_down_pressed = false;
-			}
+		// 		_customSignals.EmitSignal(nameof(CustomSignals.WhichConsumable), player.consumable);
+		// 		// player.ui.hud.WhichConsumable(player.consumable);
+		// 	}
+		// 	if(d_pad_down_pressed)
+		// 	{
+		// 		// use consumable
+		// 		player.consumables[player.consumable]?.UseItem();
+		// 		d_pad_down_pressed = false;
+		// 	}
 
 			
-		}
+		// }
 	}
 
     public override void _Input(InputEvent @event)
@@ -185,24 +185,24 @@ public partial class EquipmentController : Controller
 			d_pad_down_pressed = false;
 			d_pad_down_released = true;
 		}
-		if(@event.IsActionPressed("one"))
-		{
-			player.damage_system.TakeDamage("Physical", 10, false);
-			GD.Print("Health test");
-			GD.Print("Health : " + player.health);
-		}
-		if(@event.IsActionPressed("two"))
-		{
-			player.resource_system.Resource(10);
-		}
-        if(@event.IsActionPressed("three"))
-		{
-			player.resource_system.Posture(5);
-		}
-		if(@event.IsActionPressed("four"))
-		{
-			player.xp_system.GainXP(11);
-		}
+		// if(@event.IsActionPressed("one"))
+		// {
+		// 	player.damage_system.TakeDamage("Physical", 10, false);
+		// 	GD.Print("Health test");
+		// 	GD.Print("Health : " + player.health);
+		// }
+		// if(@event.IsActionPressed("two"))
+		// {
+		// 	player.resource_system.Resource(10);
+		// }
+        // if(@event.IsActionPressed("three"))
+		// {
+		// 	player.resource_system.Posture(5);
+		// }
+		// if(@event.IsActionPressed("four"))
+		// {
+		// 	player.xp_system.GainXP(11);
+		// }
 		
 	}
 
@@ -229,7 +229,7 @@ public partial class EquipmentController : Controller
 				// Arm item_to_add = equpipable.arm_item;
 				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
 				AddEquipableStats(arm);
-				player.stat_controller.UpdateStats();
+				// player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}
@@ -250,7 +250,7 @@ public partial class EquipmentController : Controller
 			// GD.Print("Shoulder equipped");
 			// GD.Print("Adding stats");
 				AddEquipableStats(arm);
-				player.stat_controller.UpdateStats();
+				// player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}
@@ -268,7 +268,7 @@ public partial class EquipmentController : Controller
 				// Arm item_to_add = equpipable.arm_item;
 				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
 				AddEquipableStats(arm);
-				player.stat_controller.UpdateStats();
+				// player.stat_controller.UpdateStats();
 				player.PrintStats();
 			// }
 		}
