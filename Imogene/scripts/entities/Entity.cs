@@ -14,19 +14,19 @@ public partial class Entity : CharacterBody3D
 	[Export] public string identifier;
 
 	// Hit and hurt boxes
-	public MeleeHitbox main_hand_hitbox;
-	public MeleeHitbox off_hand_hitbox;
-	public Hurtbox hurtbox;
+	[Export] public MeleeHitbox main_hand_hitbox;
+	[Export] public MeleeHitbox off_hand_hitbox;
+	[Export] public Hurtbox hurtbox;
 
 	// Systems
-	public DamageSystem damage_system;
-	public ResourceSystem resource_system;
-	public XPSystem xp_system;
-	public TargetingSystem targeting_system;
+	[Export] public DamageSystem damage_system;
+	[Export] public ResourceSystem resource_system;
+	[Export] public XPSystem xp_system;
+	
 
 
 	// Controllers
-	public StatusEffectController status_effect_controller;
+	[Export] public StatusEffectController status_effect_controller;
 
 
 	// Booleans
@@ -58,9 +58,6 @@ public partial class Entity : CharacterBody3D
 	// Stun
 	public int stun_duration;
 	public bool stunned;
-
-	// Cast
-	public Timer cast_timer;
 
     // Stats
     public int level = 1; // Level of the entity
@@ -208,6 +205,8 @@ public partial class Entity : CharacterBody3D
 	public float prev_y_rotation; // Rotation before current rotation
 	public float current_y_rotation; // Current rotation
 
+	public string weapon_type;
+
 
     // Possessions
     public int gold = 0;
@@ -238,14 +237,11 @@ public partial class Entity : CharacterBody3D
 			xp_system = GetNode<XPSystem>("Systems/XPSystem");
 			xp_system.GetEntityInfo(this);
 
-			targeting_system = GetNode<TargetingSystem>("Systems/TargetingSystem");
-			targeting_system.GetPlayerInfo(player);
+			// targeting_system.GetPlayerInfo(player);
 
 		}
 		// Timers
-		
-		cast_timer = GetNode<Timer>("Systems/CastTimer");
-		cast_timer.Timeout += OnCastTickTimeout;
+
 
 		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
     }

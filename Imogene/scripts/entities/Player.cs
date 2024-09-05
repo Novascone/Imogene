@@ -7,22 +7,19 @@ using System.Runtime.Intrinsics.Arm;
 
 // Player class, handles movement, abilities, sends signals to the UI
 
-public partial class Player : PlayerEntity
+public partial class Player : Entity
 {
 
 	// Player reference
-	public Player this_player; // Player
 	public MeshInstance3D player_mesh;
 	public RayCast3D raycast;
-	public RayCast3D near_wall;
-	public RayCast3D on_wall;
-	public CameraRig camera_rig;
-	public Area3D vision; // Area where the player can target enemies
-	public Area3D soft_target_small;
-	public Area3D soft_target_large;
-	public CollisionShape3D collision;
-	public Marker3D cast_point;
-	public Node3D surrounding_hitbox;
+	[Export] public RayCast3D near_wall;
+	[Export] public RayCast3D on_wall;
+	[Export] public CameraRig camera_rig;
+	
+	
+	[Export] public Marker3D cast_point;
+	[Export] public Node3D surrounding_hitbox;
 
 	// Abilities
 	// private Target target_ability; // Target enemies
@@ -36,6 +33,9 @@ public partial class Player : PlayerEntity
 	[Export] public NewUI ui;
 	public bool l_cross_primary_selected; // Bool that tracks which left cross the player is using 
 	public bool r_cross_primary_selected; // Bool that tracks which right cross the player is using 
+
+	// Areas
+	[Export] public Areas areas;
 	
 
 	// Controllers
@@ -44,7 +44,12 @@ public partial class Player : PlayerEntity
 	[Export] public AbilityAssigner ability_assigner;
 	[Export] public AbilityController ability_controller;
 	[Export] public StatController stat_controller;
-	public EquipmentController equipment_controller;
+	[Export] public EquipmentController equipment_controller;
+
+	// Systems
+	[Export] public VisionSystem vision_system;
+	[Export] public InteractSystem interact_system;
+	[Export] public TargetingSystem targeting_system;
 
 	//Player consumables
 	public int consumable = 1;
@@ -52,8 +57,8 @@ public partial class Player : PlayerEntity
 
 
 	// Player animation
-	public AnimationTree tree; // Animation control
-	public AnimationPlayer animation_player;
+	[Export] public AnimationTree tree; // Animation control
+	[Export] public AnimationPlayer animation_player;
 
 	// Abilities
 	[Export] public Node abilities;
@@ -61,11 +66,9 @@ public partial class Player : PlayerEntity
 	public float move_forward_clamber = 0;
 	public float vertical_input;
 
-	public bool targeting = false; // Is the entity targeting?= 1 - (50 * level / (50 * level + poison_resistance));
-
 	public bool ability_preventing_movement;
 
-	public CollisionShape3D hitbox_collision;
+	// public CollisionShape3D hitbox_collision;
 	
 	public float jump_height = 30;
 	public float jump_time_to_peak = 2f;
@@ -75,6 +78,40 @@ public partial class Player : PlayerEntity
 	public float jump_gravity;
 	public float fall_gravity;
 
+	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animation
+	
+	
+	// Objects to exclude from ray casting
+	public Godot.Collections.Array<Rid> exclude = new Godot.Collections.Array<Rid>();
+
+	[Export] public MeshInstance3D land_point;
+	public Vector3 land_point_position;
+
+	
+
+	// Targeting variables
+	
+	
+	// Interact variables
+	public Area3D interact_area; // Radius of where the player can interact
+	public Area3D area_interacting;
+	public bool in_interact_area; // Is the entity in an interact area
+	public bool entered_interact; // Has the entity entered the an interact area?
+	public bool left_interact; // has the entity left the interact area?
+	public bool interacting; // Is the entity interacting?
+	public bool is_climbing;
+	public bool is_clambering;
+	
+
+	// Ability Variables
+	public bool recovery_1 = false;
+	public bool recovery_2 = false;
+	public bool action_1_set;
+	public bool action_2_set;
+	public bool using_ability; // Is the entity using an ability?
+	public bool can_use_abilities = true;
+
+
 
 	
 
@@ -82,7 +119,9 @@ public partial class Player : PlayerEntity
 	{
 		
 		base._Ready();
-
+		dr_lvl_scale = 50 * (float)level;
+		rec_lvl_scale = 100 * (float)level;
+	
 		
 		resource = maximum_resource/2;
 		Ability jump = (Ability)ability_assigner.LoadAbility(this, "Jump", "General", "Active");
@@ -112,45 +151,19 @@ public partial class Player : PlayerEntity
 		l_cross_primary_selected = true;
 		r_cross_primary_selected = true;		
 
-		cast_point = GetNode<Marker3D>("Character_GameRig/Skeleton3D/MainHand/CastPoint");
-		
 
-		camera_rig = GetNode<CameraRig>("CameraRig");
 		camera_rig.TopLevel = true;
 
 		movement_controller = GetNode<MovementController>("Controllers/MovementController");
 		equipment_controller = GetNode<EquipmentController>("Controllers/EquipmentController");
 
 
-		vision  = (Area3D)GetNode("Areas/Vision");
+		vision_system.SubscribeToAreaSignals(this);
+		interact_system.SubscribeToInteractSignals(this);
+		ui.hud.SubscribeToTargetingSignals(this);
+		ui.hud.SubscribeToInteractSignals(this);
 
-		soft_target_small = GetNode<Area3D>("Areas/SoftTargetSmall");
-		soft_target_large = GetNode<Area3D>("Areas/SoftTargetLarge");
-
-		vision.BodyEntered += OnVisionEntered;
-		vision.BodyExited += OnVisionExited;
-
-		soft_target_small.BodyEntered += OnSoftTargetSmallEntered;
-		soft_target_small.BodyExited += OnSoftTargetSmallExited;
-
-		soft_target_large.BodyEntered += OnSoftTargetLargeEntered;
-		soft_target_large.BodyExited += OnSoftTargetLargeExited;
-
-		hitbox_collision = GetNode<CollisionShape3D>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox/CollisionShape3D");
-
-		player_mesh = GetNode<MeshInstance3D>("Character_GameRig/retop_prelim_pc");
-
-		surrounding_hitbox = GetNode<Node3D>("Character_GameRig/Skeleton3D/Chest/ChestSlot/SurroundingHitbox");
-
-		collision = GetNode<CollisionShape3D>("CollisionShape3D");
-
-		
-
-
-		near_wall = GetNode<RayCast3D>("Controllers/WallCheck/NearWall");
-		on_wall = GetNode<RayCast3D>("Controllers/WallCheck/OnWall");
-
-		hurtbox = GetNode<Hurtbox>("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox");
+	
 		hurtbox.AreaEntered += OnHurtboxAreaEntered;
 		hurtbox.BodyEntered += OnHurtboxBodyEntered;
 
@@ -161,64 +174,25 @@ public partial class Player : PlayerEntity
 		ability_controller.ResourceEffect += resource_system.HandleResourceEffect;
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+
 		
 		stat_controller.UpdateStats(this);
 		
-		
-		
-		foot_left = new MeshInstance3D();
 
-
-		tree = GetNode<AnimationTree>("Animation/AnimationTree");
-		animation_player = GetNode<AnimationPlayer>("Animation/AnimationPlayer");
-	
-		_customSignals.RemoveEquipped += HandleRemoveEquipped;
-		
 		maximum_health = health;
 		resource = maximum_resource;
 
-		// GD.Print("max health player ", maximum_health);
-		// GD.Print("max resource ", maximum_resource);
-		// GD.Print("physical resistance", physical_resistance);
-		// GD.Print("spell resistance ", spell_resistance);
-		exclude.Add(vision.GetRid());
-		exclude.Add(soft_target_small.GetRid());
-		exclude.Add(soft_target_large.GetRid());
-		exclude.Add(interact_area.GetRid());
+		exclude.Add(areas.vision.GetRid());
+		exclude.Add(areas.near.GetRid());
+		exclude.Add(areas.far.GetRid());
+		exclude.Add(areas.interact.GetRid());
 		exclude.Add(hurtbox.GetRid());
 		exclude.Add(main_hand_hitbox.GetRid());
 		exclude.Add(GetRid());
-		// exclude.Add(hitbox.GetRid());
-		// GD.Print("exclude: " + exclude);
-		// movement_controller.GetPlayerInfo(this);
+
 		equipment_controller.GetPlayerInfo(this);
 		ability_assigner.GetAbilities(this);
 		ability_assigner.AssignAbilities(this);
-
-		// ability_controller.SubscribeToUI(ui);
-
-		
-		
-		// ui.GetPlayerInfo(this);
-		// ui.hud.health.MaxValue = maximum_health;
-		// ui.hud.health.Value = health;
-		// ui.hud.resource.MaxValue = maximum_resource;
-		// ui.hud.resource.Value = resource;
-		// ui.hud.posture.MaxValue = maximum_posture;
-		// ui.hud.posture.Value = 0;
-		// ui.hud.xp.MaxValue = xp_to_level;
-		// ui.hud.xp.Value = xp;
-
-		
-
-	
-
-		
-
-		
-
-		// GD.Print("This should be physical: " + main_hand_hitbox.damage_type);
-		// GD.Print("Hurtbox type " + hurtbox.GetType());
 	}
 
     
@@ -292,34 +266,12 @@ public partial class Player : PlayerEntity
 			ability_in_use.FrameCheck(this);
 		}
 
-		// GD.Print("ui preventing movement " + ui.preventing_movement);
 		
 		CameraFollowsPlayer();
-		// CheckInteract(); // Check if the player can interact with anything
 		input_controller.SetInput(this);
 		movement_controller.MovePlayer(this, input_controller.input_strength, delta);
+		targeting_system.Target(this);
 		MoveAndSlide();
-		// if(ability_in_use != null)
-		// {
-		// 	// GD.Print("Ability in use " + ability_in_use.Name);
-			
-		// 	foreach(Ability ability in abilities_in_use)
-		// 	{
-		// 		GD.Print("ability in use " + ability.Name);
-		// 	}
-			
-		// }
-		
-
-		// if(abilities_in_use.Count > 1)
-		// {
-		// 	GD.Print("Ability being used " + ability_in_use.Name + " ability type " + ability_in_use.resource.type);
-		// }
-		// else
-		// {
-		// 	ability_in_use = null;
-		// 	GD.Print("No ability being used");
-		// }
 		
     }
 
@@ -367,7 +319,7 @@ public partial class Player : PlayerEntity
 
 	internal void OnAbilityFinished(Ability ability)
     {
-		GD.Print("Removing ability from list");
+		// GD.Print("Removing ability from list");
         ability_controller.RemoveFromAbilityList(this, ability);
 		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
 		{
@@ -375,66 +327,11 @@ public partial class Player : PlayerEntity
 		}
     }
 
-	
-
-    
-    private void OnVisionEntered(Node3D body) // handler for area entered signal
-	{
-		if(body is Enemy enemy)
-		{
-			// GD.Print("Entity entered vision");
-			targeting_system.EnemyEnteredVision(enemy);
-		}
-	}
-
-	private void OnVisionExited(Node3D body) // handler for area exited signal
-	{
-		
-		if (body is Enemy enemy)
-		{
-			targeting_system.EnemyExitedVision(enemy);
-			
-		}
-		
-	}
-
-	private void OnSoftTargetSmallEntered(Node3D body)
-    {
-        if(body is Enemy enemy)
-		{
-			targeting_system.EnemyEnteredSoftSmall(enemy);
-		}
-    }
-	private void OnSoftTargetSmallExited(Node3D body)
-    {
-       if(body is Enemy enemy)
-		{
-			targeting_system.EnemyExitedSoftSmall(enemy);
-		}
-    }
-
-	private void OnSoftTargetLargeEntered(Node3D body)
-    {
-       if(body is Enemy enemy)
-		{
-			targeting_system.EnemyEnteredSoftLarge(enemy);
-		}
-    }
-
-	private void OnSoftTargetLargeExited(Node3D body)
-    {
-       if(body is Enemy enemy)
-		{
-			targeting_system.EnemyExitedSoftLarge(enemy);
-		}
-    }
-
-	
 
 	public void SmoothRotation(Vector3 direction) // Rotates the player character smoothly with lerp
 	{
 		GD.Print("Rotating smoothly");
-		if(!targeting && !is_climbing)
+		if(!targeting_system.targeting && !is_climbing)
 		{
 			prev_y_rotation = GlobalRotation.Y;
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + direction)) // looks at direction the player is moving
@@ -447,40 +344,15 @@ public partial class Player : PlayerEntity
 				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
-		// else if(is_climbing) // Use the rotation that is calculated in MovementController when the player is climbing
-		// {
-		// 	prev_y_rotation = GlobalRotation.Y;
-		// 	if(prev_y_rotation != current_y_rotation)
-		// 	{
-		// 	GlobalRotation = GlobalRotation with {Y = current_y_rotation};
-		// 	}
-		// }
 	}
 
 
-	private void HandleRemoveEquipped() // Removes equiped items
-    {
-		GD.Print("remove equipped");
-        head_slot.RemoveChild(main_node);
-    }
-
-	public void PrintStats()
-	{
-		GD.Print("Strength: " + strength);
-		GD.Print("Dexterity: " + dexterity);
-		GD.Print("intellect: " + intellect);
-		GD.Print("Physical Resistance: " + physical_resistance);
-	}
+	
 
 	public void CameraFollowsPlayer()
 	{
-		// var camera_transform = new Transform3D();
-		// var pos = GlobalTransform.Origin;
-		// camera_transform.Origin = pos;
-		// camera_rig.GlobalTransform = camera_transform;
-
 		var camera_transform = new Transform3D();
-		var pos = player_mesh.GlobalTransform.Origin;
+		var pos = GlobalTransform.Origin;
 		camera_transform.Origin = pos;
 		camera_rig.GlobalTransform = camera_transform;
 		

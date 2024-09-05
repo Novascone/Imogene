@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewHUD/NewHUD.cs" id="1_tocw1"]
 [ext_resource type="PackedScene" uid="uid://bbt7k8rgaosvh" path="res://scenes/UI/player_ui/NewUI/HUD/main.tscn" id="2_u3lmc"]
-[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="5_euy2t"]
+[ext_resource type="PackedScene" uid="uid://cl2ybmgii70wf" path="res://scenes/UI/player_ui/NewUI/HUD/top_right_hud.tscn" id="3_vvsen"]
+[ext_resource type="PackedScene" uid="uid://dke068oqxby8u" path="res://scenes/UI/player_ui/NewUI/HUD/interact_bar.tscn" id="4_7yqre"]
 [ext_resource type="PackedScene" uid="uid://dhoyscwvfrkr" path="res://scenes/UI/player_ui/NewUI/HUD/new_enemy_health.tscn" id="7_j1xyr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xewhd"]
 
 [node name="NewHUD" type="Control" node_paths=PackedStringArray("enemy_health", "main", "interact_bar", "top_right")]
 layout_mode = 3
@@ -18,87 +17,34 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_tocw1")
 enemy_health = NodePath("NewEnemyHealth")
-main = NodePath("Main")
-interact_bar = NodePath("InteractBar")
+main = NodePath("VBoxContainer/Main")
+interact_bar = NodePath("VBoxContainer/InteractBar")
 top_right = NodePath("TopRightHUD")
 
-[node name="InteractBar" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -53.0
-offset_top = 262.0
-offset_right = 53.0
-offset_bottom = 287.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="InteractBar"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Press" type="Label" parent="InteractBar/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.0
-text = "Y: "
-horizontal_alignment = 1
-
-[node name="Object" type="Label" parent="InteractBar/HBoxContainer"]
-layout_mode = 2
-size_flags_stretch_ratio = 0.0
-text = " Interact"
-horizontal_alignment = 1
-
-[node name="Main" parent="." instance=ExtResource("2_u3lmc")]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 390.0
-offset_top = 801.0
-offset_right = 1590.0
-offset_bottom = 1080.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="TopRightHUD" type="PanelContainer" parent="."]
+[node name="TopRightHUD" parent="." instance=ExtResource("3_vvsen")]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 200.0
-grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_xewhd")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TopRightHUD"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="TopRightHUD/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TopRightHUD/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SoftTargetIndicator" type="TextureRect" parent="TopRightHUD/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_vertical = 0
-texture = ExtResource("5_euy2t")
-expand_mode = 1
 
 [node name="NewEnemyHealth" parent="." instance=ExtResource("7_j1xyr")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="InteractBar" parent="VBoxContainer" instance=ExtResource("4_7yqre")]
+visible = false
+layout_mode = 2
+
+[node name="Main" parent="VBoxContainer" instance=ExtResource("2_u3lmc")]
+layout_mode = 2

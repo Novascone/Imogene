@@ -92,7 +92,7 @@ public partial class AnimationController : Controller
 	public void SetDefaultBlendDirection() // Set the default walking direction
 	{
 		
-		player.targeting = false;
+		// player.targeting = false;
 		if(player.direction != Vector3.Zero)
 		{
 			if(player.speed == player.run_speed)

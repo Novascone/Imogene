@@ -10,8 +10,10 @@ public partial class NewUI : Control
 	[Export] public NewCursor cursor;
 
 	[Signal] public delegate void InventoryToggleEventHandler();
+	[Signal] public delegate void CapturingInputEventHandler();
 
 	public bool preventing_movement;
+	public bool capturing_input;
 
 	public Button hovered_button;
 
@@ -23,7 +25,20 @@ public partial class NewUI : Control
 		abilities.AbilitiesClosed += OnAbilitiesClosed;
 		abilities.categories.AbilityReassigned += OnAbilityReassigned;
 		abilities.categories.ClearAbilityIcon += OnClearAbilityIcon;
+		hud.HUDPreventingInput += OnHudPreventingInput;
 	}
+
+    private void OnHudPreventingInput(bool preventing_input)
+    {
+        if(preventing_input)
+		{
+			capturing_input = true;
+		}
+		else if (!preventing_input)
+		{
+			capturing_input = false;
+		}
+    }
 
     private void OnClearAbilityIcon(string ability_name_old, string ability_name_new)
     {
@@ -51,6 +66,44 @@ public partial class NewUI : Control
 		inventory.Hide();
 		preventing_movement = true;
     }
+
+	public override void _Input(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(CheckUIComponentOpen() && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.A)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadDown)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadRight)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadLeft)
+			{
+				GD.Print("event accepted ");
+				AcceptEvent();
+			}
+		}
+		
+	}
 
 
 
@@ -129,4 +182,26 @@ public partial class NewUI : Control
     {
         hud.main.UpdateHUDStats(player);
     }
+
+	public bool CheckUIComponentOpen()
+	{
+		foreach(Control control in GetChildren())
+		{
+			if(control.Name != "Cursor" && control != hud)
+			{
+				if(control.Visible)
+				{
+					return true;
+				}
+			}
+			else if(control == hud)
+			{
+				if(hud.interact_bar.Visible)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

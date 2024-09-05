@@ -37,10 +37,12 @@ public partial class Projectile : RangedAbility
 	{
 		GD.Print("Execute projectile");
 		state = States.not_queued;
-		
-		cast_timer.Start();
-		Vector3 collision = GetPlayerCollision(player); // Get the collision from the player to whats in front of it
-		LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
+		if(cast_timer.TimeLeft == 0)
+		{
+			cast_timer.Start();
+			Vector3 collision = GetPlayerCollision(player); // Get the collision from the player to whats in front of it
+			LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
+		}
 	}
 
     public override void FrameCheck(Player player)

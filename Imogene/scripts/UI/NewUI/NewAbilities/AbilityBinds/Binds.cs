@@ -35,7 +35,8 @@ public partial class Binds : Control
 
 	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon)
 	{
-		if(CheckAssignment(cross, level, bind) == "LPrimeCrossUp"){
+		if(CheckAssignment(cross, level, bind) == "LPrimeCrossUp") // Finds the assignment of an ability and sets the name and Icon for it
+		{
 			l_cross_primary_assignment.up.Icon = icon;
 			l_cross_primary_assignment.up.ability_name = ability_name;
 		}
@@ -114,118 +115,14 @@ public partial class Binds : Control
 			r_cross_secondary_assignment.down.Icon = icon;
 			r_cross_secondary_assignment.down.ability_name = ability_name;
 		}
-
-
-		// if(cross == "Left")
-		// {
-		// 	if(level == "Primary")
-		// 	{
-		// 		if(bind == left_up)
-		// 		{
-		// 			l_cross_primary_assignment.up.Icon = icon;
-		// 			l_cross_primary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_left)
-		// 		{
-		// 			l_cross_primary_assignment.left.Icon = icon;
-		// 			l_cross_primary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_right)
-		// 		{
-		// 			l_cross_primary_assignment.right.Icon = icon;
-		// 			l_cross_primary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_down)
-		// 		{
-		// 			l_cross_primary_assignment.down.Icon = icon;
-		// 			l_cross_primary_assignment.down.ability_name = ability_name;
-		// 		}
-
-		// 	}
-		// 	else if(level == "Secondary")
-		// 	{
-		// 		if(bind == left_up)
-		// 		{
-		// 			l_cross_secondary_assignment.up.Icon = icon;
-		// 			l_cross_secondary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_left)
-		// 		{
-		// 			l_cross_secondary_assignment.left.Icon = icon;
-		// 			l_cross_secondary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_right)
-		// 		{
-		// 			l_cross_secondary_assignment.right.Icon = icon;
-		// 			l_cross_secondary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_down)
-		// 		{
-		// 			l_cross_secondary_assignment.down.Icon = icon;
-		// 			l_cross_secondary_assignment.down.ability_name = ability_name;
-		// 		}
-		// 	}
-		// }
-		// else if(cross== "Right")
-		// {
-		// 	if(level == "Primary")
-		// 	{
-		// 		if(bind == right_up)
-		// 		{
-		// 			r_cross_primary_assignment.up.Icon = icon;
-		// 			r_cross_primary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_left)
-		// 		{
-		// 			r_cross_primary_assignment.left.Icon = icon;
-		// 			r_cross_primary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_right)
-		// 		{
-		// 			r_cross_primary_assignment.right.Icon = icon;
-		// 			r_cross_primary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_down)
-		// 		{
-		// 			r_cross_primary_assignment.down.Icon = icon;
-		// 			r_cross_primary_assignment.down.ability_name = ability_name;
-		// 		}
-
-		// 	}
-		// 	else if(level == "Secondary")
-		// 	{
-		// 		if(bind == right_up)
-		// 		{
-		// 			r_cross_secondary_assignment.up.Icon = icon;
-		// 			r_cross_secondary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_left)
-		// 		{
-		// 			r_cross_secondary_assignment.left.Icon = icon;
-		// 			r_cross_secondary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_right)
-		// 		{
-		// 			r_cross_secondary_assignment.right.Icon = icon;
-		// 			r_cross_secondary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_down)
-		// 		{
-		// 			r_cross_secondary_assignment.down.Icon = icon;
-		// 			r_cross_secondary_assignment.down.ability_name = ability_name;
-		// 		}
-		// 	}
-		// }
 	}
 
-	public void ClearAbility(string ability_name_old, string ability_name_new)
+	public void ClearAbility(string ability_name_old, string ability_name_new) // Clears Icons and names from both the old and the new ability, the clear ability signal is fired first, so both abilities are cleared before reassignment
 	{
-		foreach(Control control in l_cross_primary_assignment.GetChildren())
+		foreach(Control control in l_cross_primary_assignment.GetChildren()) // Goes through each cross and clears the name and icon if the ability name matches
 		{
 			if(control is CrossBindButton cross_bind_button)
 			{
-				
-				
 				if(cross_bind_button.ability_name == ability_name_old || cross_bind_button.ability_name == ability_name_new)
 				{
 					GD.Print("Looking in L Cross " + cross_bind_button.ability_name);
@@ -272,7 +169,7 @@ public partial class Binds : Control
 		}
 	}
 
-	public string CheckAssignment(string cross, string level, string bind)
+	public string CheckAssignment(string cross, string level, string bind) // Checks the assignment of an ability
 	{
 		if(cross == "Left")
 		{

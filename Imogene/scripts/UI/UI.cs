@@ -141,45 +141,6 @@ public partial class UI : Control
 		FocusMode = FocusModeEnum.All;
 	}
 
-   
-	
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if(@event is InputEventJoypadButton eventJoypadButton)
-		{
-			if(inventory_open && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(UI_element_open && eventJoypadButton.ButtonIndex == JoyButton.A)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadDown)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadRight)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(inventory_open && eventJoypadButton.ButtonIndex == JoyButton.DpadLeft)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-		}
-		
-	}
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://ci6cc2tdf4nvh"]
 
-[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/Categories/AssignedAccepted.cs" id="1_g04cj"]
+[ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/Categories/NewAssignment.cs" id="1_g04cj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvmu8"]
 
-[node name="AssignedAndAccepted" type="VBoxContainer" node_paths=PackedStringArray("assigned_label", "assigned", "accept", "cancel")]
+[node name="NewAssignment" type="VBoxContainer" node_paths=PackedStringArray("assigned_label", "assigned", "accept", "cancel")]
 size_flags_vertical = 0
 script = ExtResource("1_g04cj")
-assigned_label = NodePath("ButtonToBeAssigned/VBoxContainer/ButtonToBeAssignedLabel")
-assigned = NodePath("ButtonToBeAssigned/VBoxContainer/ButtonToBeAssigned")
+assigned_label = NodePath("ButtonToBeAssigned/VBoxContainer/ActionBar")
+assigned = NodePath("ButtonToBeAssigned/VBoxContainer/Ability")
 accept = NodePath("HBoxContainer/Accept")
 cancel = NodePath("HBoxContainer/Cancel")
 
@@ -21,7 +21,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_vvmu8")
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="ButtonToBeAssignedLabel" type="Button" parent="ButtonToBeAssigned/VBoxContainer"]
+[node name="ActionBar" type="Button" parent="ButtonToBeAssigned/VBoxContainer"]
 custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -29,7 +29,7 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
 text = "Action Bar to be Assigned"
 
-[node name="ButtonToBeAssigned" type="Button" parent="ButtonToBeAssigned/VBoxContainer"]
+[node name="Ability" type="Button" parent="ButtonToBeAssigned/VBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4

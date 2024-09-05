@@ -90,7 +90,7 @@ public partial class MovementController : Controller
 	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
 	{
 		// GD.Print("Rotating smoothly");
-		if(!player.targeting && !player.is_climbing)
+		if(!player.targeting_system.targeting && !player.is_climbing)
 		{
 			player.prev_y_rotation = player.GlobalRotation.Y;
 			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving

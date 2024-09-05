@@ -3,20 +3,15 @@ using System;
 
 public partial class ResourceSystem : Node
 {
-	public Timer posture_regen_timer;
-	public Timer resource_regen_timer;
-	private CustomSignals _customSignals;
+	[Export] public Timer posture_regen_timer;
+	[Export] public Timer resource_regen_timer;
+	
 
 	[Signal] public delegate void ResourceChangeEventHandler(float resource);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		posture_regen_timer = GetNode<Timer>("PostureRegenTimer");
-		resource_regen_timer = GetNode<Timer>("ResourceRegenTimer");
 		
-		
-
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
 
     
@@ -53,8 +48,7 @@ public partial class ResourceSystem : Node
 			if(entity is Enemy enemy)
 			{
 				enemy.posture_bar.Value += posture_damage;
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), entity.posture);
-			
+
 			}
 			// if(entity is Player player)
 			// {
@@ -102,7 +96,6 @@ public partial class ResourceSystem : Node
 		if(entity is Enemy enemy)
 		{
 			enemy.posture_bar.Value = entity.posture;
-			_customSignals.EmitSignal(nameof(CustomSignals.EnemyPostureChangedUI), enemy, entity.posture);
 		}
 		// if(entity is Player player)
 		// {

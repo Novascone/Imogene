@@ -1,26 +1,20 @@
 using Godot;
 using System;
 
-public partial class NewAbilityButton : Button
+public partial class Areas : Node
 {
-
-	[Export] public string ability_name;
-	// public string cross;
-	// public string level;
-	// public string button_bind;
-	
+	[Export] public Area3D vision;
+	[Export] public Area3D interact;
+	[Export] public Area3D near;
+	[Export] public Area3D far;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
-
-	
 }

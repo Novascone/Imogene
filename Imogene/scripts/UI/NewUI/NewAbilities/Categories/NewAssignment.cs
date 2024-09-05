@@ -1,12 +1,13 @@
 using Godot;
 using System;
 
-public partial class AssignedAccepted : Control
+public partial class NewAssignment : Control
 {
 	[Export] public Button assigned_label;
 	[Export] public Button assigned;
 	[Export] public Button accept;
 	[Export] public Button cancel;
+	// Stores information about the ability to be assigned and the ability that it will replace
 	public string old_ability_name;
 	public string new_ability_name;
 	public string old_button_bind;

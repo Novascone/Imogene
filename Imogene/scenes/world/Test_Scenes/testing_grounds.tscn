@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://pfe1jopmwi2x"]
+[gd_scene load_steps=10 format=3 uid="uid://pfe1jopmwi2x"]
 
 [ext_resource type="PackedScene" uid="uid://lv1lgsac8cay" path="res://scenes/entities/target_dummy.tscn" id="1_y1ekm"]
 [ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://scenes/entities/Player/player.tscn" id="2_fgw80"]
+[ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://scenes/objects/box.tscn" id="3_6rjfg"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vx77o"]
 vertices = PackedVector3Array(-38.6838, 0.491906, -39.8947, -38.6838, 0.491906, 39.8553, 38.5662, 0.491906, 39.8553, 38.5662, 0.491906, -39.8947)
@@ -49,10 +50,13 @@ shadow_enabled = true
 sky_mode = 1
 
 [node name="TargetDummy" parent="." instance=ExtResource("1_y1ekm")]
-transform = Transform3D(0.572311, 0, 0.403063, 0, 0.7, 0, -0.403063, 0, 0.572311, -2.16955, 0, -5.59824)
+transform = Transform3D(0.695103, 0, 0.0826522, 0, 0.7, 0, -0.0826522, 0, 0.695103, -2.16955, 0, -5.59824)
 
 [node name="player" parent="." instance=ExtResource("2_fgw80")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 10.5576)
 
 [node name="TargetDummy2" parent="." instance=ExtResource("1_y1ekm")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.44871, 0, -1.12566)
+transform = Transform3D(0.357884, 0, 0.601597, 0, 0.7, 0, -0.601597, 0, 0.357884, -9.44871, 0, -1.12566)
+
+[node name="Box" parent="." instance=ExtResource("3_6rjfg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7585, 0.621105, 16.5805)

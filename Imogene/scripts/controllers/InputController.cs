@@ -157,6 +157,7 @@ public partial class InputController : Controller
 		// }
 		
 	}
+	
 
 	public void CheckDPadInput(Player player)
 	{

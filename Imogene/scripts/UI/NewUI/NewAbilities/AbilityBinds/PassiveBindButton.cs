@@ -16,6 +16,6 @@ public partial class PassiveBindButton : Control
 
 	public void _on_button_down()
 	{
-		EmitSignal(nameof(PassiveBindButtonPressed), this);
+		EmitSignal(nameof(PassiveBindButtonPressed), this); // Emits signal along with the information that the passive button carries
 	}
 }

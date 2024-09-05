@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dy7iuu5uwaorl"]
+[gd_scene load_steps=6 format=3 uid="uid://dy7iuu5uwaorl"]
+
+[ext_resource type="Script" path="res://scripts/controllers/Areas.cs" id="1_nrmty"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k7hob"]
 points = PackedVector3Array(0, 0, 0, 1, 0.5, -1, -1, 0.5, -1, 0, 0, 0, 1, 0, -1, -1, 0, -1)
@@ -9,7 +11,12 @@ points = PackedVector3Array(0, 0, 0, 1, 0.5, -1, -1, 0.5, -1, 0, 0, 0, 1, 0, -1,
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_50tlx"]
 
-[node name="Areas" type="Node3D"]
+[node name="Areas" type="Node3D" node_paths=PackedStringArray("vision", "interact", "near", "far")]
+script = ExtResource("1_nrmty")
+vision = NodePath("Vision")
+interact = NodePath("Interact")
+near = NodePath("Near")
+far = NodePath("Far")
 
 [node name="Vision" type="Area3D" parent="."]
 transform = Transform3D(20.2, 0, 0, 0, 20.2, 0, 0, 0, 20.2, 0, 0, 0)
@@ -18,26 +25,25 @@ collision_mask = 2
 [node name="VisionHitBoxCollison" type="CollisionShape3D" parent="Vision"]
 shape = SubResource("ConvexPolygonShape3D_k7hob")
 
-[node name="InteractArea" type="Area3D" parent="."]
-transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, -0.824717, 0)
-visible = false
+[node name="Interact" type="Area3D" parent="."]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0)
 collision_layer = 64
 collision_mask = 64
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interact"]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("SphereShape3D_e6jw8")
 
-[node name="SoftTargetSmall" type="Area3D" parent="."]
+[node name="Near" type="Area3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SoftTargetSmall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Near"]
 shape = SubResource("SphereShape3D_voeau")
 
-[node name="SoftTargetLarge" type="Area3D" parent="."]
+[node name="Far" type="Area3D" parent="."]
 transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SoftTargetLarge"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Far"]
 shape = SubResource("SphereShape3D_50tlx")

@@ -9,44 +9,44 @@ using System.Transactions;
 public partial class PlayerEntity : Entity
 {
 
-	public bool stats_changed = true; // Has the entities heath changed?
-	public bool stats_updated = true; // Have the entities stats changed?
+	// public bool stats_changed = true; // Has the entities heath changed?
+	// public bool stats_updated = true; // Have the entities stats changed?
 	
-	// Equipment
-	public string resource_path;
-	public string secondary_resource_path;
-	public string weapon_type = "one_handed_axe";
-	public Node3D main_node; // Temp helm node
-	public Node3D right_node;
-	public Node3D left_node;
-	public Node3D head_slot; // Head slot for the player
-	public MeshInstance3D helm; // Temp helm
-	public Node3D shoulder_right_slot; 
-	public MeshInstance3D shoulder_right;
-	public Node3D shoulder_left_slot;
-	public MeshInstance3D shoulder_left;
-	public Node3D chest_slot;
-	public MeshInstance3D chest;
-	public Node3D mark_slot;
-	public MeshInstance3D mark;
-	public Node3D belt_slot;
-	public MeshInstance3D belt; 
-	public Node3D glove_right_slot; 
-	public MeshInstance3D glove_right; 
-	public Node3D glove_left_slot;
-	public MeshInstance3D glove_left;
-	public Node3D main_hand_slot;
-	public MeshInstance3D main_hand;
-	public Node3D off_hand_slot;
-	public MeshInstance3D off_hand;
-	public Node3D leg_right_slot;
-	public MeshInstance3D leg_right;
-	public Node3D leg_left_slot;
-	public MeshInstance3D leg_left;
-	public Node3D foot_right_slot;
-	public MeshInstance3D foot_right;
-	public Node3D foot_left_slot;
-	public MeshInstance3D foot_left;
+	// // Equipment
+	// public string resource_path;
+	// public string secondary_resource_path;
+	// public string weapon_type = "one_handed_axe";
+	// public Node3D main_node; // Temp helm node
+	// public Node3D right_node;
+	// public Node3D left_node;
+	// public Node3D head_slot; // Head slot for the player
+	// public MeshInstance3D helm; // Temp helm
+	// public Node3D shoulder_right_slot; 
+	// public MeshInstance3D shoulder_right;
+	// public Node3D shoulder_left_slot;
+	// public MeshInstance3D shoulder_left;
+	// public Node3D chest_slot;
+	// public MeshInstance3D chest;
+	// public Node3D mark_slot;
+	// public MeshInstance3D mark;
+	// public Node3D belt_slot;
+	// public MeshInstance3D belt; 
+	// public Node3D glove_right_slot; 
+	// public MeshInstance3D glove_right; 
+	// public Node3D glove_left_slot;
+	// public MeshInstance3D glove_left;
+	// public Node3D main_hand_slot;
+	// public MeshInstance3D main_hand;
+	// public Node3D off_hand_slot;
+	// public MeshInstance3D off_hand;
+	// public Node3D leg_right_slot;
+	// public MeshInstance3D leg_right;
+	// public Node3D leg_left_slot;
+	// public MeshInstance3D leg_left;
+	// public Node3D foot_right_slot;
+	// public MeshInstance3D foot_right;
+	// public Node3D foot_left_slot;
+	// public MeshInstance3D foot_left;
 
 	
 
@@ -59,87 +59,36 @@ public partial class PlayerEntity : Entity
 	
 	
 	
-	public bool remove_equipped = false;
-	public Vector2 blend_direction = Vector2.Zero; // Blend Direction of the player for changing animation
+	// public bool remove_equipped = false;
 	
-	
-	// Objects to exclude from ray casting
-	public Godot.Collections.Array<Rid> exclude = new Godot.Collections.Array<Rid>();
-	
-
-	// Targeting variables
-	
-	
-	// Interact variables
-	public Area3D interact_area; // Radius of where the player can interact
-	public Area3D area_interacting;
-	public bool in_interact_area; // Is the entity in an interact area
-	public bool entered_interact; // Has the entity entered the an interact area?
-	public bool left_interact; // has the entity left the interact area?
-	public bool interacting; // Is the entity interacting?
-	public bool is_climbing;
-	public bool is_clambering;
-	
-
-	// Ability Variables
-	public bool recovery_1 = false;
-	public bool recovery_2 = false;
-	public bool action_1_set;
-	public bool action_2_set;
-	public bool using_ability; // Is the entity using an ability?
-	public bool can_use_abilities = true;
-
 
 	// Attached objects
 	// public Area3D hurtbox; // Area where the player takes damage
 	// public Area3D hitbox; // Area where the player does damage
-	public MeshInstance3D land_point;
-	public Vector3 land_point_position;
-
+	
 	// public UI ui;	
-	public CustomSignals _customSignals; // Custom signal instance
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
-		dr_lvl_scale = 50 * (float)level;
-		rec_lvl_scale = 100 * (float)level;
-		main_hand_hitbox = GetNode<MeleeHitbox>("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
+		
 		// ui = GetNode<UI>("UI/UI");
 		
 		// Timer health_regen_timer = GetNode<Timer>("Systems/HealthRegenTimer");
 		
 		
-		interact_area = GetNode<Area3D>("Areas/InteractArea");
-
-		land_point = GetNode<MeshInstance3D>("UI/LandPoint");
-		
-		
-		interact_area.AreaEntered += OnInteractAreaEntered;
-		interact_area.AreaExited += OnInteractAreaExited;
+		// interact_area = GetNode<Area3D>("Areas/InteractArea");
 
 		
-
 		
-
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		
+		// interact_area.AreaEntered += OnInteractAreaEntered;
+		// interact_area.AreaExited += OnInteractAreaExited;
 	}
 
-    private void OnInteractAreaExited(Area3D area)
-    {
-		
-        left_interact = true;
-		in_interact_area = false;
-		area_interacting = null;
-    }
-
-    private void OnInteractAreaEntered(Area3D area)
-    {
-        entered_interact = true;
-		in_interact_area = true;
-		area_interacting = area;
-    }
+    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)

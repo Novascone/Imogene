@@ -212,66 +212,66 @@ public partial class EquipmentController : Controller
         
 		// var resource_2 = GD.Load<PackedScene>(resource_path_2);
 		
-		GD.Print("received arm equip signal ");
+		// GD.Print("received arm equip signal ");
 		
-		if(arm.slot == "head")
-		{
-			resource_path = arm.resource_path;
-			PackedScene resource = GD.Load<PackedScene>(resource_path);
-			GD.Print("Helmet equipped");
+		// if(arm.slot == "head")
+		// {
+		// 	resource_path = arm.resource_path;
+		// 	PackedScene resource = GD.Load<PackedScene>(resource_path);
+		// 	GD.Print("Helmet equipped");
 			
-			player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			GD.Print(player.main_node);
-			player.head_slot.AddChild(player.main_node);
-			// if(equpipable.equipable_type is "Arm")
-			// {
-				GD.Print("Adding stats");
-				// Arm item_to_add = equpipable.arm_item;
-				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-				AddEquipableStats(arm);
-				// player.stat_controller.UpdateStats();
-				player.PrintStats();
-			// }
-		}
-		if(arm.slot == "shoulders")
-		{
-			resource_path = arm.resource_path;
-			secondary_resource_path = arm.second_resource_path;
-			PackedScene resource = GD.Load<PackedScene>(resource_path);
-			PackedScene secondary_resource = GD.Load<PackedScene>(secondary_resource_path);
+		// 	player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(player.main_node);
+		// 	player.head_slot.AddChild(player.main_node);
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		// player.stat_controller.UpdateStats();
+		// 		// player.PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "shoulders")
+		// {
+		// 	resource_path = arm.resource_path;
+		// 	secondary_resource_path = arm.second_resource_path;
+		// 	PackedScene resource = GD.Load<PackedScene>(resource_path);
+		// 	PackedScene secondary_resource = GD.Load<PackedScene>(secondary_resource_path);
 			
-			GD.Print(resource);
-			player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			player.right_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			player.left_node = (Node3D)secondary_resource.GetState().GetNodeInstance(0).Instantiate();
-			player.shoulder_right_slot.AddChild(player.right_node);
-			player.shoulder_left_slot.AddChild(player.left_node);
-			// shoulder_right_slot.Hide();
-			// GD.Print("Shoulder equipped");
-			// GD.Print("Adding stats");
-				AddEquipableStats(arm);
-				// player.stat_controller.UpdateStats();
-				player.PrintStats();
-			// }
-		}
-		if(arm.slot == "chest")
-		{
-			// GD.Print("chest equipped");
-			resource_path = arm.resource_path;
-			PackedScene resource = GD.Load<PackedScene>(resource_path);
-			player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
-			GD.Print(player.main_node);
-			player.chest_slot.AddChild(player.main_node);
-			// if(equpipable.equipable_type is "Arm")
-			// {
-				// GD.Print("Adding stats");
-				// Arm item_to_add = equpipable.arm_item;
-				// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
-				AddEquipableStats(arm);
-				// player.stat_controller.UpdateStats();
-				player.PrintStats();
-			// }
-		}
+		// 	GD.Print(resource);
+		// 	player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+		// 	player.right_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+		// 	player.left_node = (Node3D)secondary_resource.GetState().GetNodeInstance(0).Instantiate();
+		// 	player.shoulder_right_slot.AddChild(player.right_node);
+		// 	player.shoulder_left_slot.AddChild(player.left_node);
+		// 	// shoulder_right_slot.Hide();
+		// 	// GD.Print("Shoulder equipped");
+		// 	// GD.Print("Adding stats");
+		// 		AddEquipableStats(arm);
+		// 		// player.stat_controller.UpdateStats();
+		// 		// player.PrintStats();
+		// 	// }
+		// }
+		// if(arm.slot == "chest")
+		// {
+		// 	// GD.Print("chest equipped");
+		// 	resource_path = arm.resource_path;
+		// 	PackedScene resource = GD.Load<PackedScene>(resource_path);
+		// 	player.main_node = (Node3D)resource.GetState().GetNodeInstance(0).Instantiate();
+		// 	GD.Print(player.main_node);
+		// 	player.chest_slot.AddChild(player.main_node);
+		// 	// if(equpipable.equipable_type is "Arm")
+		// 	// {
+		// 		// GD.Print("Adding stats");
+		// 		// Arm item_to_add = equpipable.arm_item;
+		// 		// GD.Print("arm_item from player: " + item_to_add.physical_resistance);
+		// 		AddEquipableStats(arm);
+		// 		// player.stat_controller.UpdateStats();
+		// 		// player.PrintStats();
+		// 	// }
+		// }
 		// if(arm.slot == "gloves")
 		// {
 		// 	GD.Print("Gloves equipped");

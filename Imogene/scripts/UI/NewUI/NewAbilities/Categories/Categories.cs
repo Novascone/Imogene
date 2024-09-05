@@ -12,8 +12,8 @@ public partial class Categories : Control
 	[Export] public Passives class_passives;
 	[Export] public Passives general_passives;
 	[Export] public Control page_container;
-	[Export] public AssignedAccepted assigned_accepted;
-	public CrossBindButton button_selected;
+	[Export] public NewAssignment new_assignment;
+	public CrossBindButton cross_bind_selected;
 	public bool active;
 	public bool passive;
 
@@ -45,8 +45,8 @@ public partial class Categories : Control
 		foreach(NewAbilityButton ability_button in class_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
 		foreach(NewAbilityButton ability_button in class_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
 
-		assigned_accepted.accept.ButtonDown += OnAssignedAcceptAccept;
-		assigned_accepted.cancel.ButtonDown += OnAssignedAcceptCancel;
+		new_assignment.accept.ButtonDown += OnAssignedAcceptAccept;
+		new_assignment.cancel.ButtonDown += OnAssignedAcceptCancel;
 
 	}
 
@@ -57,37 +57,39 @@ public partial class Categories : Control
 
     private void OnAssignedAcceptAccept()
     {
-		GD.Print("Ability " + button_selected.new_ability_name + " is now assigned to " + button_selected.button_bind + " On " + button_selected.cross + " " + button_selected.level);
-		EmitSignal(nameof(ClearAbilityBind), assigned_accepted.old_ability_name);
-		EmitSignal(nameof(ClearAbilityIcon), assigned_accepted.old_ability_name, assigned_accepted.new_ability_name);
-		EmitSignal(nameof(AbilityReassigned), assigned_accepted.new_cross, assigned_accepted.new_level, assigned_accepted.new_button_bind, assigned_accepted.new_ability_name, assigned_accepted.assigned.Icon);
+		GD.Print("Ability " + cross_bind_selected.new_ability_name + " is now assigned to " + cross_bind_selected.button_bind + " On " + cross_bind_selected.cross + " " + cross_bind_selected.level);
+		EmitSignal(nameof(ClearAbilityBind), new_assignment.old_ability_name);
+		EmitSignal(nameof(ClearAbilityIcon), new_assignment.old_ability_name, new_assignment.new_ability_name);
+		EmitSignal(nameof(AbilityReassigned), new_assignment.new_cross, new_assignment.new_level, new_assignment.new_button_bind, new_assignment.new_ability_name, new_assignment.assigned.Icon);
 		ResetPage();
-		assigned_accepted.Hide();
+		new_assignment.Hide();
 
     }
 
-    private void OnAbilityButtonDown(NewAbilityButton ability_button)
+	private void HandleCategoryButtonDown()
     {
-        assigned_accepted.assigned.Icon = ability_button.Icon;
-		assigned_accepted.new_ability_name = ability_button.ability_name;
-		assigned_accepted.old_cross = ability_button.cross;
-		assigned_accepted.old_level = ability_button.level;
-		assigned_accepted.old_button_bind = ability_button.button_bind;
-		button_selected.new_ability_name = ability_button.ability_name;
+		new_assignment.assigned_label.Text = cross_bind_selected.button_bind + " " + cross_bind_selected.cross + " " + cross_bind_selected.level;
+		new_assignment.assigned.Icon = cross_bind_selected.Icon;
+		new_assignment.new_ability_name = cross_bind_selected.ability_name;
+		new_assignment.new_button_bind = cross_bind_selected.button_bind;
+		new_assignment.new_cross = cross_bind_selected.cross;
+		new_assignment.new_level = cross_bind_selected.level;
+        new_assignment.Show();
+    }
+
+    private void OnAbilityButtonDown(NewAbilityButton ability_button) // When an ability button is pressed, set the icon of the action bar to be assigned to that of the ability button, set the action bar new name to the ability buttons name
+    {
+        new_assignment.assigned.Icon = ability_button.Icon;
+		new_assignment.new_ability_name = ability_button.ability_name;
+		// assigned_accepted.old_cross = ability_button.cross;
+		// assigned_accepted.old_level = ability_button.level;
+		// assigned_accepted.old_button_bind = ability_button.button_bind;
+		cross_bind_selected.new_ability_name = ability_button.ability_name;
 		
-		GD.Print("ability " + assigned_accepted.new_ability_name + " at bindings " + assigned_accepted.new_button_bind + " " + assigned_accepted.new_cross + " " + assigned_accepted.new_level);
+		GD.Print("ability " + new_assignment.new_ability_name + " at bindings " + new_assignment.new_button_bind + " " + new_assignment.new_cross + " " + new_assignment.new_level);
     }
 
-    private void HandleCategoryButtonDown()
-    {
-		assigned_accepted.assigned_label.Text = button_selected.button_bind + " " + button_selected.cross + " " + button_selected.level;
-		assigned_accepted.assigned.Icon = button_selected.Icon;
-		assigned_accepted.new_ability_name = button_selected.ability_name;
-		assigned_accepted.new_button_bind = button_selected.button_bind;
-		assigned_accepted.new_cross = button_selected.cross;
-		assigned_accepted.new_level = button_selected.level;
-        assigned_accepted.Show();
-    }
+    
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
@@ -104,7 +106,7 @@ public partial class Categories : Control
 			class_category.ResetPage();
 			general_category.ResetPage();
 			general_category.Show();
-			assigned_accepted.Hide();
+			new_assignment.Hide();
 		}
 		else if(passive)
 		{
@@ -112,7 +114,7 @@ public partial class Categories : Control
 			class_passives.Hide();
 			class_passives.ResetPage();
 			general_passives.Show();
-			assigned_accepted.Hide();
+			new_assignment.Hide();
 		}
 		
 	}
@@ -125,7 +127,7 @@ public partial class Categories : Control
 			general_category.ResetPage();
 			class_category.ResetPage();
 			class_category.Show();
-			assigned_accepted.Hide();
+			new_assignment.Hide();
 		}
 		else if(passive)
 		{
@@ -133,7 +135,7 @@ public partial class Categories : Control
 			general_passives.Hide();
 			general_passives.ResetPage();
 			class_passives.Show();
-			assigned_accepted.Hide();
+			new_assignment.Hide();
 		}
 	}
 
@@ -160,9 +162,9 @@ public partial class Categories : Control
 			{
 				active_passives.Hide();
 			}
-			if(control == assigned_accepted)
+			if(control == new_assignment)
 			{
-				assigned_accepted.Hide();
+				new_assignment.Hide();
 			}
 		}
 	}

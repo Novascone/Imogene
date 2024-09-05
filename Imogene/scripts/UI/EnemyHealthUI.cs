@@ -64,20 +64,13 @@ public partial class EnemyHealthUI : Control
 		
     }
 
-	public void SetSoftTargetIcon(Enemy enemy)
+	public void ShowSoftTargetIcon(Enemy enemy)
 	{
-		if(enemy.soft_target || enemy.targeted)
-		{
-			enemy.soft_target_icon.Show();
-		}
-		else
-		{
-			enemy.soft_target_icon.Hide();
-		}
+		enemy.soft_target_icon.Show();
 		
 	}
 
-	public void RemoveSoftTargetIcon(Enemy enemy)
+	public void HideSoftTargetIcon(Enemy enemy)
 	{
 		enemy.soft_target_icon.Hide();
 	}

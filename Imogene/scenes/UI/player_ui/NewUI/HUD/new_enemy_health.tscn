@@ -9,7 +9,7 @@ bg_color = Color(0, 0, 0, 0.501961)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6s80u"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="NewEnemyHealth" type="Control" node_paths=PackedStringArray("label", "health_bar", "posture_bar")]
+[node name="NewEnemyHealth" type="Control" node_paths=PackedStringArray("name", "health_bar", "posture_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w1rhd")
-label = NodePath("VBoxContainer/Label")
+name = NodePath("VBoxContainer/Name")
 health_bar = NodePath("VBoxContainer/HealthBar")
 posture_bar = NodePath("VBoxContainer/PostureBar")
 
@@ -37,7 +37,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Name" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_alignment = 1

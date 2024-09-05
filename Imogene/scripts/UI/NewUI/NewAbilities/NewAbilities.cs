@@ -13,6 +13,7 @@ public partial class NewAbilities : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Subscribe to the ButtonDown signal for each cross bind button in each cross
 		foreach(Control control in binds.l_cross_primary_assignment.GetChildren())
 		{
 			if(control is CrossBindButton cross_bind)
@@ -56,9 +57,11 @@ public partial class NewAbilities : Control
 			}
 		}
 
-		categories.assigned_accepted.accept.ButtonDown += OnAssignedAcceptAccept;
-		categories.assigned_accepted.cancel.ButtonDown += OnAssignedAcceptCancel;
+		// subscribe to the accept and cancel buttons in new assignment
+		categories.new_assignment.accept.ButtonDown += OnNewAssignmentAccept;
+		categories.new_assignment.cancel.ButtonDown += OnNewAssignmentCancel;
 
+		// subscribe to the ability reassigned signal 
 		categories.AbilityReassigned += OnAbilityReassigned;
 	}
 
@@ -67,18 +70,18 @@ public partial class NewAbilities : Control
         GD.Print("Abilities received ability reassignment");
     }
 
-    private void OnAssignedAcceptCancel()
+    private void OnNewAssignmentCancel()
     {
         throw new NotImplementedException();
     }
 
-    private void OnAssignedAcceptAccept()
+    private void OnNewAssignmentAccept()
     {
 		categories.Hide();
 		binds.Show();
     }
 
-    private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button)
+    private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button) // If a passive bind button is pressed set the categories to passive, hide binds, show categories
     {
 		categories.passive = true;
 		categories.active = false;
@@ -88,21 +91,21 @@ public partial class NewAbilities : Control
 		
     }
 
-    private void OnCrossBindDown(CrossBindButton cross_button)
+    private void OnCrossBindDown(CrossBindButton cross_button) // When a cross bind button is pressed set categories to active give the new assignment information about the ability on the cross bind button
     {
 		categories.active = true;
 		categories.passive = false;
-		categories.assigned_accepted.old_ability_name = cross_button.ability_name;
-		categories.assigned_accepted.old_cross = cross_button.cross;
-		categories.assigned_accepted.old_level = cross_button.level;
-		categories.assigned_accepted.old_button_bind = cross_button.button_bind;
-		categories.button_selected = cross_button;
+		categories.new_assignment.old_ability_name = cross_button.ability_name;
+		categories.new_assignment.old_cross = cross_button.cross;
+		categories.new_assignment.old_level = cross_button.level;
+		categories.new_assignment.old_button_bind = cross_button.button_bind;
+		categories.cross_bind_selected = cross_button;
 		binds.Hide();
 		categories.Show();
 		
     }
 
-	public void _on_close_button_down()
+	public void _on_close_button_down() // Reset page and child pages, hide this page
 	{
 		ResetPage();
 		categories.ResetPage();
@@ -110,7 +113,7 @@ public partial class NewAbilities : Control
 		EmitSignal(nameof(AbilitiesClosed));
 	}
 
-	public void ResetPage()
+	public void ResetPage() // Reset this page
 	{
 		binds.Show();
 		categories.Hide();

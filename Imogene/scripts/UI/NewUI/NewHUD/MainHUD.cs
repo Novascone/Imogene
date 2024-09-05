@@ -34,6 +34,7 @@ public partial class MainHUD : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Hide labels on secondary crosses
 		foreach(Control control in l_cross_secondary.GetChildren())
 		{
 			if (control is HUDButton hud_button)
@@ -56,7 +57,7 @@ public partial class MainHUD : Control
 	{
 	}
 
-	public void SwitchCrosses(string cross)
+	public void SwitchCrosses(string cross) // switches between crosses
 	{
 		if(cross == "Left")
 		{
@@ -81,7 +82,7 @@ public partial class MainHUD : Control
 		
 	}
 
-	public void MoveCrosses(string cross)
+	public void MoveCrosses(string cross) // checks which cross to switch and then changes the positioning and color of the crosses
 	{
 		if(cross == "Left")
 		{
@@ -164,97 +165,7 @@ public partial class MainHUD : Control
 		
 	}
 
-	// public void AssignAbility(string cross, string level, string bind, Texture2D icon)
-	// {
-
-	// 	if(cross == "Left")
-	// 	{
-	// 		if(level == "Primary")
-	// 		{
-	// 			GD.Print("level is primary");
-	// 			if(bind == left_up)
-	// 			{
-	// 				l_cross_primary.up.Icon = icon;
-	// 			}
-	// 			else if(bind == left_left)
-	// 			{
-	// 				l_cross_primary.left.Icon = icon;
-	// 			}
-	// 			else if(bind == left_right)
-	// 			{
-	// 				l_cross_primary.right.Icon = icon;
-	// 			}
-	// 			else if(bind == left_down)
-	// 			{
-	// 				l_cross_primary.down.Icon = icon;
-	// 			}
-
-	// 		}
-	// 		else if(level == "Secondary")
-	// 		{
-	// 			if(bind == left_up)
-	// 			{
-	// 				l_cross_secondary.up.Icon = icon;
-	// 			}
-	// 			else if(bind == left_left)
-	// 			{
-	// 				l_cross_secondary.left.Icon = icon;
-	// 			}
-	// 			else if(bind == left_right)
-	// 			{
-	// 				l_cross_secondary.right.Icon = icon;
-	// 			}
-	// 			else if(bind == left_down)
-	// 			{
-	// 				l_cross_secondary.down.Icon = icon;
-	// 			}
-	// 		}
-	// 	}
-	// 	else if(cross == "Right")
-	// 	{
-	// 		if(level == "Primary")
-	// 		{
-	// 			if(bind == right_up)
-	// 			{
-	// 				r_cross_primary.up.Icon = icon;
-	// 			}
-	// 			else if(bind == right_left)
-	// 			{
-	// 				r_cross_primary.left.Icon = icon;
-	// 			}
-	// 			else if(bind == right_right)
-	// 			{
-	// 				r_cross_primary.right.Icon = icon;
-	// 			}
-	// 			else if(bind == right_down)
-	// 			{
-	// 				r_cross_primary.down.Icon = icon;
-	// 			}
-
-	// 		}
-	// 		else if(level == "Secondary")
-	// 		{
-	// 			if(bind == right_up)
-	// 			{
-	// 				r_cross_secondary.up.Icon = icon;
-	// 			}
-	// 			else if(bind == right_left)
-	// 			{
-	// 				r_cross_secondary.left.Icon = icon;
-	// 			}
-	// 			else if(bind == right_right)
-	// 			{
-	// 				r_cross_secondary.right.Icon = icon;
-	// 			}
-	// 			else if(bind == right_down)
-	// 			{
-	// 				r_cross_secondary.down.Icon = icon;
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon)
+	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon) // Checks the assignment of an ability and then assigns the hud cross button that ability's icon and name
 	{
 		if(CheckAssignment(cross, level, bind) == "LPrimeCrossUp"){
 			l_cross_primary.up.Icon = icon;
@@ -335,118 +246,14 @@ public partial class MainHUD : Control
 			r_cross_secondary.down.Icon = icon;
 			r_cross_secondary.down.ability_name = ability_name;
 		}
-
-
-		// if(cross == "Left")
-		// {
-		// 	if(level == "Primary")
-		// 	{
-		// 		if(bind == left_up)
-		// 		{
-		// 			l_cross_primary_assignment.up.Icon = icon;
-		// 			l_cross_primary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_left)
-		// 		{
-		// 			l_cross_primary_assignment.left.Icon = icon;
-		// 			l_cross_primary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_right)
-		// 		{
-		// 			l_cross_primary_assignment.right.Icon = icon;
-		// 			l_cross_primary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_down)
-		// 		{
-		// 			l_cross_primary_assignment.down.Icon = icon;
-		// 			l_cross_primary_assignment.down.ability_name = ability_name;
-		// 		}
-
-		// 	}
-		// 	else if(level == "Secondary")
-		// 	{
-		// 		if(bind == left_up)
-		// 		{
-		// 			l_cross_secondary_assignment.up.Icon = icon;
-		// 			l_cross_secondary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_left)
-		// 		{
-		// 			l_cross_secondary_assignment.left.Icon = icon;
-		// 			l_cross_secondary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_right)
-		// 		{
-		// 			l_cross_secondary_assignment.right.Icon = icon;
-		// 			l_cross_secondary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == left_down)
-		// 		{
-		// 			l_cross_secondary_assignment.down.Icon = icon;
-		// 			l_cross_secondary_assignment.down.ability_name = ability_name;
-		// 		}
-		// 	}
-		// }
-		// else if(cross== "Right")
-		// {
-		// 	if(level == "Primary")
-		// 	{
-		// 		if(bind == right_up)
-		// 		{
-		// 			r_cross_primary_assignment.up.Icon = icon;
-		// 			r_cross_primary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_left)
-		// 		{
-		// 			r_cross_primary_assignment.left.Icon = icon;
-		// 			r_cross_primary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_right)
-		// 		{
-		// 			r_cross_primary_assignment.right.Icon = icon;
-		// 			r_cross_primary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_down)
-		// 		{
-		// 			r_cross_primary_assignment.down.Icon = icon;
-		// 			r_cross_primary_assignment.down.ability_name = ability_name;
-		// 		}
-
-		// 	}
-		// 	else if(level == "Secondary")
-		// 	{
-		// 		if(bind == right_up)
-		// 		{
-		// 			r_cross_secondary_assignment.up.Icon = icon;
-		// 			r_cross_secondary_assignment.up.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_left)
-		// 		{
-		// 			r_cross_secondary_assignment.left.Icon = icon;
-		// 			r_cross_secondary_assignment.left.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_right)
-		// 		{
-		// 			r_cross_secondary_assignment.right.Icon = icon;
-		// 			r_cross_secondary_assignment.right.ability_name = ability_name;
-		// 		}
-		// 		else if(bind == right_down)
-		// 		{
-		// 			r_cross_secondary_assignment.down.Icon = icon;
-		// 			r_cross_secondary_assignment.down.ability_name = ability_name;
-		// 		}
-		// 	}
-		// }
 	}
 
-	public void ClearAbility(string ability_name_old, string ability_name_new)
+	public void ClearAbility(string ability_name_old, string ability_name_new) // Looks through each cross to find the old and new abilities, and then removes their icon and name
 	{
 		foreach(Control control in l_cross_primary.GetChildren())
 		{
 			if(control is HUDButton hud_button)
 			{
-				
-				
 				if(hud_button.ability_name == ability_name_old || hud_button.ability_name == ability_name_new)
 				{
 					GD.Print("Looking in L Cross " + hud_button.ability_name);
@@ -502,7 +309,7 @@ public partial class MainHUD : Control
 		}
 	}
 
-	public string CheckAssignment(string cross, string level, string bind)
+	public string CheckAssignment(string cross, string level, string bind) // Checks which button an ability is assigned to
 	{
 		if(cross == "Left")
 		{

@@ -14,7 +14,7 @@ public partial class AbilityController : Node
 
 	 public void QueueAbility(Player player, Ability ability)
     {
-        if(!player.ui.preventing_movement && can_use_abilities)
+        if(!player.ui.preventing_movement && !player.ui.capturing_input && can_use_abilities)
         {
         
             if(ability.state == Ability.States.not_queued)
@@ -212,7 +212,7 @@ public partial class AbilityController : Node
         if(!ability.rotate_on_soft_far && player.targeting_system.enemy_close)
         {
 			AddToAbilityList(player, ability);
-            player.targeting_system.SoftTargetRotation();
+            player.targeting_system.SoftTargetRotation(player);
 			ability.stop_movement_input = true;
 			GD.Print("Rotating player");
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
@@ -231,7 +231,7 @@ public partial class AbilityController : Node
 			GD.Print("Rotating player");
 			AddToAbilityList(player, ability);
 			ability.stop_movement_input = true; // Not allowing player to move while they are being rotated
-            player.targeting_system.SoftTargetRotation();
+            player.targeting_system.SoftTargetRotation(player);
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
             {
                 GD.Print("Execute rotation");

@@ -16,7 +16,7 @@ size = Vector2(491, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ek18"]
 size = Vector2(494, 31)
 
-[node name="Categories" type="VBoxContainer" node_paths=PackedStringArray("class_category", "general_category", "assigned_passives", "class_passives", "general_passives", "page_container", "assigned_accepted") groups=["page"]]
+[node name="Categories" type="VBoxContainer" node_paths=PackedStringArray("class_category", "general_category", "assigned_passives", "class_passives", "general_passives", "page_container", "new_assignment") groups=["page"]]
 offset_right = 1000.0
 offset_bottom = 478.0
 size_flags_vertical = 0
@@ -27,7 +27,7 @@ assigned_passives = NodePath("PanelContainer/VBoxContainer/AssignedPassives")
 class_passives = NodePath("PanelContainer/VBoxContainer/ClassPassives")
 general_passives = NodePath("PanelContainer/VBoxContainer/GeneralPassives")
 page_container = NodePath("PanelContainer/VBoxContainer")
-assigned_accepted = NodePath("PanelContainer/VBoxContainer/AssignedAndAccepted")
+new_assignment = NodePath("PanelContainer/VBoxContainer/NewAssignment")
 
 [node name="CategoryTitle" type="Panel" parent="."]
 visible = false
@@ -103,7 +103,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="AssignedAndAccepted" parent="PanelContainer/VBoxContainer" instance=ExtResource("7_0dpyp")]
+[node name="NewAssignment" parent="PanelContainer/VBoxContainer" instance=ExtResource("7_0dpyp")]
 visible = false
 layout_mode = 2
 
