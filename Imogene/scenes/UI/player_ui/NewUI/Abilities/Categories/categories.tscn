@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://s6e25bsdm7fw"]
+[gd_scene load_steps=11 format=3 uid="uid://s6e25bsdm7fw"]
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/Categories/Categories.cs" id="1_7cgcj"]
 [ext_resource type="PackedScene" uid="uid://c5espcc1s6xmk" path="res://scenes/UI/player_ui/NewUI/Abilities/active_passives.tscn" id="2_535cn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dr57tre3tnf45" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/general.tscn" id="3_juus6"]
 [ext_resource type="PackedScene" uid="uid://4usjhrjsl1ki" path="res://scenes/UI/player_ui/NewUI/Abilities/class_passives_full_page.tscn" id="5_kseo5"]
 [ext_resource type="PackedScene" uid="uid://7p7jdm8lgbvq" path="res://scenes/UI/player_ui/NewUI/Abilities/general_passives_full_page.tscn" id="6_wvpaw"]
+[ext_resource type="PackedScene" uid="uid://ci6cc2tdf4nvh" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/assigned_and_accepted.tscn" id="7_0dpyp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nevu4"]
 
@@ -15,7 +16,7 @@ size = Vector2(491, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ek18"]
 size = Vector2(494, 31)
 
-[node name="Categories" type="VBoxContainer" node_paths=PackedStringArray("class_category", "general_category", "assigned_passives", "class_passives", "general_passives", "page_container") groups=["page"]]
+[node name="Categories" type="VBoxContainer" node_paths=PackedStringArray("class_category", "general_category", "assigned_passives", "class_passives", "general_passives", "page_container", "assigned_accepted") groups=["page"]]
 offset_right = 1000.0
 offset_bottom = 478.0
 size_flags_vertical = 0
@@ -26,6 +27,7 @@ assigned_passives = NodePath("PanelContainer/VBoxContainer/AssignedPassives")
 class_passives = NodePath("PanelContainer/VBoxContainer/ClassPassives")
 general_passives = NodePath("PanelContainer/VBoxContainer/GeneralPassives")
 page_container = NodePath("PanelContainer/VBoxContainer")
+assigned_accepted = NodePath("PanelContainer/VBoxContainer/AssignedAndAccepted")
 
 [node name="CategoryTitle" type="Panel" parent="."]
 visible = false
@@ -86,6 +88,7 @@ visible = false
 layout_mode = 2
 
 [node name="Class" parent="PanelContainer/VBoxContainer" instance=ExtResource("2_xy4jn")]
+visible = false
 layout_mode = 2
 
 [node name="General" parent="PanelContainer/VBoxContainer" instance=ExtResource("3_juus6")]
@@ -97,6 +100,10 @@ visible = false
 layout_mode = 2
 
 [node name="GeneralPassives" parent="PanelContainer/VBoxContainer" instance=ExtResource("6_wvpaw")]
+visible = false
+layout_mode = 2
+
+[node name="AssignedAndAccepted" parent="PanelContainer/VBoxContainer" instance=ExtResource("7_0dpyp")]
 visible = false
 layout_mode = 2
 

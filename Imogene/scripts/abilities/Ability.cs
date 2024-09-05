@@ -78,7 +78,7 @@ public partial class Ability : Node3D
    
     public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
-        if(assigned_button != null)
+        if(assigned_button != null && assigned_button != "")
         {
             if(@event.IsActionPressed(assigned_button))
             {

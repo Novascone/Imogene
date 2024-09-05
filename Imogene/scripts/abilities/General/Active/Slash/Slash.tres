@@ -5,11 +5,9 @@
 
 [resource]
 script = ExtResource("2_uaaau")
-id = 0
-class_type = "General"
-ability_type = "Active"
-name = "Slash"
+class_type = 0
+general_ability_type = 0
+class_ability_type = 0
+damage_type = 1
 description = "Swing weapon in a slashing motion"
-ability_path = ""
 icon = ExtResource("1_uisj3")
-type = "melee"

@@ -21,7 +21,22 @@ public partial class NewUI : Control
 	{
 		inventory.main.bottom_buttons.abilities.ButtonDown += OnAbilitiesButtonDown;
 		abilities.AbilitiesClosed += OnAbilitiesClosed;
+		abilities.categories.AbilityReassigned += OnAbilityReassigned;
+		abilities.categories.ClearAbilityIcon += OnClearAbilityIcon;
 	}
+
+    private void OnClearAbilityIcon(string ability_name_old, string ability_name_new)
+    {
+        abilities.binds.ClearAbility(ability_name_old, ability_name_new);
+		hud.main.ClearAbility(ability_name_old, ability_name_new);
+    }
+
+
+    private void OnAbilityReassigned(string cross, string level, string bind, string ability_name, Texture2D icon)
+    {
+        abilities.binds.AssignAbility(cross, level, bind, ability_name, icon);
+		hud.main.AssignAbility(cross, level, bind,ability_name, icon);
+    }
 
     private void OnAbilitiesClosed()
     {
@@ -77,9 +92,10 @@ public partial class NewUI : Control
 		
 	}
 
-	public void AssignAbility(Ability ability)
+	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon)
 	{
-		hud.main.AssignAbility(ability);
+		hud.main.AssignAbility(cross, level, bind, ability_name, icon);
+		abilities.binds.AssignAbility(cross, level, bind, ability_name, icon);
 	}
 
 	public void SwitchCrosses(string cross)

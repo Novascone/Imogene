@@ -14,8 +14,6 @@ public partial class AbilityAssigner : Node
 	public override void _Ready()
 	{
 		
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		
 	}
 
     public override void _Process(double delta)
@@ -38,7 +36,7 @@ public partial class AbilityAssigner : Node
 		ability.assigned_button = bind;
 		ability.cross = cross;
 		ability.level = level;
-		player.ui.AssignAbility(ability);
+		player.ui.AssignAbility(ability.cross, ability.level, ability.assigned_button, ability.Name, ability.icon);
 	}
 
     private void LoadAbilitiesHelper(Player player, Ability ability) // Adds ability to abilities list
@@ -113,21 +111,51 @@ public partial class AbilityAssigner : Node
 		// ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
 	}
 
-    private void OnAbilityChanged(string new_ability, string new_button_assignment)
-    {
-        GD.Print("Got ability changed signal!");
-		GD.Print("new button assignment " + new_button_assignment+ " new ability " + new_ability);
-		// foreach(Ability ability in player.abilities)
-		// {
-		// 	if (ability.Name == new_ability)
-		// 	{
-		// 		ability.useable = true;
-		// 		ability.CheckAssignment(new_button_assignment);
-		// 	}
-		// }
-		// player.ui.abilities.ability_changed = false;
-		// player.ui.abilities.ability_to_change = null;
-		// player.ui.abilities.button_to_bind = null;
+    // private void OnAbilityChanged(string new_ability, string new_button_assignment)
+    // {
+    //     GD.Print("Got ability changed signal!");
+	// 	GD.Print("new button assignment " + new_button_assignment+ " new ability " + new_ability);
+	// 	// foreach(Ability ability in player.abilities)
+	// 	// {
+	// 	// 	if (ability.Name == new_ability)
+	// 	// 	{
+	// 	// 		ability.useable = true;
+	// 	// 		ability.CheckAssignment(new_button_assignment);
+	// 	// 	}
+	// 	// }
+	// 	// player.ui.abilities.ability_changed = false;
+	// 	// player.ui.abilities.ability_to_change = null;
+	// 	// player.ui.abilities.button_to_bind = null;
 		
-    }
+    // }
+
+    
+	public void ChangeAbilityAssignment(Player player, string cross, string level, string bind, string ability_name)
+	{
+		GD.Print("Changing ability assignment in ability assigner for " + ability_name);
+		foreach(Ability ability in player.abilities.GetChildren())
+		{
+			if(ability.Name == ability_name)
+			{
+				ability.cross = cross;
+				ability.level = level;
+				ability.assigned_button = bind;
+				GD.Print("to " + ability.assigned_button + " on " + ability.cross + " " + ability.level);
+			}
+		}
+	}
+
+	public void ClearAbility(Player player, string ability_name)
+	{
+		foreach(Ability ability in player.abilities.GetChildren())
+		{
+			if(ability.Name == ability_name)
+			{
+				ability.cross = "";
+				ability.level = "";
+				ability.assigned_button = "";
+				GD.Print(ability.Name + " Was cleared");
+			}
+		}
+	}
 }

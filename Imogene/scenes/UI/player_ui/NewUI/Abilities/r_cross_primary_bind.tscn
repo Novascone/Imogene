@@ -21,8 +21,10 @@ layout_mode = 2
 
 [node name="Up" parent="." instance=ExtResource("2_y6tpl")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "Y"
-side = "Right"
+cross = "Right"
 level = "Primary"
 
 [node name="Control2" type="Control" parent="."]
@@ -30,8 +32,10 @@ layout_mode = 2
 
 [node name="Left" parent="." instance=ExtResource("2_y6tpl")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "X"
-side = "Right"
+cross = "Right"
 level = "Primary"
 
 [node name="Control3" type="Control" parent="."]
@@ -39,8 +43,10 @@ layout_mode = 2
 
 [node name="Right" parent="." instance=ExtResource("2_y6tpl")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "B"
-side = "Right"
+cross = "Right"
 level = "Primary"
 
 [node name="Control4" type="Control" parent="."]
@@ -48,4 +54,8 @@ layout_mode = 2
 
 [node name="Down" parent="." instance=ExtResource("2_y6tpl")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "A"
+cross = "Right"
+level = "Primary"

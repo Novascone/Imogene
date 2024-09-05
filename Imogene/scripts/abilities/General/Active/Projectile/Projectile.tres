@@ -5,11 +5,9 @@
 
 [resource]
 script = ExtResource("2_fqc07")
-id = 0
-class_type = "General"
-ability_type = "Active"
-name = "Projectile"
+class_type = 0
+general_ability_type = 1
+class_ability_type = 0
+damage_type = 2
 description = "Fire a projectile"
-ability_path = ""
 icon = ExtResource("1_nkb7j")
-type = "melee"

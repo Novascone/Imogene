@@ -6,7 +6,7 @@ public partial class NewAbilities : Control
 	[Export] public Binds binds;
 	[Export] public Categories categories;
 	[Export] public Passives assigned_passives;
-	public CrossBindButton button_selected;
+	
 	public PassiveBindButton passive_button_pressed;
 
 	[Signal] public delegate void AbilitiesClosedEventHandler();
@@ -17,8 +17,8 @@ public partial class NewAbilities : Control
 		{
 			if(control is CrossBindButton cross_bind)
 			{
-				cross_bind.CrossButtonPressed += OnCrossBindDown;
-				
+				// cross_bind.CrossButtonPressed += OnCrossBindDown;
+				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
@@ -26,7 +26,8 @@ public partial class NewAbilities : Control
 		{
 			if(control is CrossBindButton cross_bind)
 			{
-				cross_bind.CrossButtonPressed += OnCrossBindDown;
+				// cross_bind.CrossButtonPressed += OnCrossBindDown;
+				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
@@ -34,15 +35,16 @@ public partial class NewAbilities : Control
 		{
 			if(control is CrossBindButton cross_bind)
 			{
-				cross_bind.CrossButtonPressed += OnCrossBindDown;
-			}
+				// cross_bind.CrossButtonPressed += OnCrossBindDown;
+				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);			}
 		}
 
 		foreach(Control control in binds.r_cross_secondary_assignment.GetChildren())
 		{
 			if(control is CrossBindButton cross_bind)
 			{
-				cross_bind.CrossButtonPressed += OnCrossBindDown;
+				// cross_bind.CrossButtonPressed += OnCrossBindDown;
+				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
@@ -53,7 +55,28 @@ public partial class NewAbilities : Control
 				passive_bind_button.PassiveBindButtonPressed += HandlePassiveBindButtonPressed;
 			}
 		}
+
+		categories.assigned_accepted.accept.ButtonDown += OnAssignedAcceptAccept;
+		categories.assigned_accepted.cancel.ButtonDown += OnAssignedAcceptCancel;
+
+		categories.AbilityReassigned += OnAbilityReassigned;
 	}
+
+    private void OnAbilityReassigned(string cross, string level, string bind, string ability_name, Texture2D icon)
+    {
+        GD.Print("Abilities received ability reassignment");
+    }
+
+    private void OnAssignedAcceptCancel()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnAssignedAcceptAccept()
+    {
+		categories.Hide();
+		binds.Show();
+    }
 
     private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button)
     {
@@ -69,10 +92,14 @@ public partial class NewAbilities : Control
     {
 		categories.active = true;
 		categories.passive = false;
-		button_selected = cross_button;
+		categories.assigned_accepted.old_ability_name = cross_button.ability_name;
+		categories.assigned_accepted.old_cross = cross_button.cross;
+		categories.assigned_accepted.old_level = cross_button.level;
+		categories.assigned_accepted.old_button_bind = cross_button.button_bind;
+		categories.button_selected = cross_button;
 		binds.Hide();
 		categories.Show();
-		GD.Print("Button selected " + button_selected.button_bind, " on side " + button_selected.side + " at level " + button_selected.level);
+		
     }
 
 	public void _on_close_button_down()

@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cswv6f0pgc28e"]
+[gd_scene load_steps=5 format=3 uid="uid://cswv6f0pgc28e"]
 
 [ext_resource type="Script" path="res://scripts/UI/NewUI/NewAbilities/Categories/ClassCategory.cs" id="1_qpumw"]
-[ext_resource type="PackedScene" uid="uid://yatijfm1xdmc" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/Class/ability_page.tscn" id="2_txclu"]
+[ext_resource type="PackedScene" uid="uid://yatijfm1xdmc" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/ability_page.tscn" id="2_txclu"]
+[ext_resource type="PackedScene" uid="uid://u0nea1rtxa4x" path="res://scenes/UI/player_ui/NewUI/Abilities/Categories/brigian_kernel_abilities_changed.tscn" id="3_wdkwa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4h1h3"]
 size = Vector2(266, 80)
 
-[node name="Class" type="MarginContainer" node_paths=PackedStringArray("basic", "kernel", "defensive", "mastery", "movement", "specialized", "unique", "toy", "buttons")]
+[node name="Class" type="MarginContainer" node_paths=PackedStringArray("basic", "kernel", "defensive", "mastery", "movement", "specialized", "unique", "toy", "buttons_container", "buttons")]
 offset_right = 1020.0
 offset_bottom = 770.0
 size_flags_horizontal = 4
@@ -16,15 +17,16 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("1_qpumw")
-basic = NodePath("BasicAbilities")
-kernel = NodePath("KernelAbilities")
+basic = NodePath("Basic")
+kernel = NodePath("Kernel")
 defensive = NodePath("DefensiveAbilities")
 mastery = NodePath("MasteryAbilities")
 movement = NodePath("MovementAbilites")
 specialized = NodePath("SpecializedAbilites")
 unique = NodePath("UniqueAbilites")
 toy = NodePath("ToyAbilites")
-buttons = NodePath("VBoxContainer")
+buttons_container = NodePath("VBoxContainer")
+buttons = NodePath("VBoxContainer/GridContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -41,12 +43,13 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 24
-text = "Basic"
+text = "Basic
+"
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/GridContainer/Basic"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/GridContainer/Basic/Area2D"]
-position = Vector2(149, 51)
+position = Vector2(153, 52)
 shape = SubResource("RectangleShape2D_4h1h3")
 
 [node name="Kernel" type="Button" parent="VBoxContainer/GridContainer"]
@@ -152,45 +155,37 @@ shape = SubResource("RectangleShape2D_4h1h3")
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="BasicAbilities" parent="." instance=ExtResource("2_txclu")]
+[node name="Basic" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Basic"
 
-[node name="KernelAbilities" parent="." instance=ExtResource("2_txclu")]
+[node name="Kernel" parent="." instance=ExtResource("3_wdkwa")]
 visible = false
 layout_mode = 2
-title_text = "Kernel"
 
 [node name="DefensiveAbilities" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Defensive"
 
 [node name="MasteryAbilities" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Mastery"
 
 [node name="MovementAbilites" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Movement"
 
 [node name="SpecializedAbilites" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Specialized"
 
 [node name="UniqueAbilites" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Unique"
 
 [node name="ToyAbilites" parent="." instance=ExtResource("2_txclu")]
 visible = false
 layout_mode = 2
-title_text = "Toy"
 
 [connection signal="button_down" from="VBoxContainer/GridContainer/Basic" to="." method="_on_basic_button_down"]
 [connection signal="button_down" from="VBoxContainer/GridContainer/Kernel" to="." method="_on_kernel_button_down"]

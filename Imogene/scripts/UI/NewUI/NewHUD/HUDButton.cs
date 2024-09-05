@@ -7,6 +7,7 @@ public partial class HUDButton : Button
 	[Export] public string side;
 	[Export] public string level;
 	[Export] public Label label;
+	public string ability_name;
  	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

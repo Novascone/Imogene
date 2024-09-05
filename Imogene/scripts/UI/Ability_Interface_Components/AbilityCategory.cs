@@ -80,17 +80,17 @@ public partial class AbilityCategory : PanelContainer
 
 	public void AbilityAssigned(AbilityResource ability_resource, string button_name) // Assign abilities to Ability buttons
 	{
-		foreach(AbilityButton ability_button in abilities)
-		{
-			if(ability_button.assigned && ability_button.ability_name == ability_resource.name)
-			{
-				// ability.Text = name;
-				ability_button.button_assigned = button_name;
-				// GD.Print(ability_button.Name);
-				// GD.Print(ability_button.button_assigned);
-				break;
-			}
-		}
+		// foreach(AbilityButton ability_button in abilities)
+		// {
+		// 	if(ability_button.assigned && ability_button.ability_name == ability_resource.name)
+		// 	{
+		// 		// ability.Text = name;
+		// 		ability_button.button_assigned = button_name;
+		// 		// GD.Print(ability_button.Name);
+		// 		// GD.Print(ability_button.button_assigned);
+		// 		break;
+		// 	}
+		// }
 	}
 
     
@@ -134,24 +134,24 @@ public partial class AbilityCategory : PanelContainer
 
 	public void AddAbility(AbilityResource ability_resource) // Add ability to category
 	{
-		if(this.IsInGroup(ability_resource.type))
-		{
-			foreach(AbilityButton ability in abilities)
-			{
-				if(!ability.assigned)
-				{
-					// ability.Text = name;
-					ability.ability_resource = ability_resource;
-					ability.ability_name = ability_resource.name;
-					ability.ability_type = ability_resource.type;
-					ability.info_text.Text = ability_resource.description;
-					ability.Icon = ability_resource.icon;
-					ability.category = this;
-					ability.assigned = true;
-					break;
-				}
-			}
-		}
+		// if(this.IsInGroup(ability_resource.type))
+		// {
+		// 	foreach(AbilityButton ability in abilities)
+		// 	{
+		// 		if(!ability.assigned)
+		// 		{
+		// 			// ability.Text = name;
+		// 			ability.ability_resource = ability_resource;
+		// 			ability.ability_name = ability_resource.name;
+		// 			ability.ability_type = ability_resource.type;
+		// 			ability.info_text.Text = ability_resource.description;
+		// 			ability.Icon = ability_resource.icon;
+		// 			ability.category = this;
+		// 			ability.assigned = true;
+		// 			break;
+		// 		}
+		// 	}
+		// }
 		
 	}
 

@@ -159,6 +159,9 @@ public partial class Player : PlayerEntity
 		ui.InventoryToggle += HandleInventoryToggle;
 
 		ability_controller.ResourceEffect += resource_system.HandleResourceEffect;
+		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
+		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+		
 		stat_controller.UpdateStats(this);
 		
 		
@@ -219,6 +222,17 @@ public partial class Player : PlayerEntity
 	}
 
     
+
+    private void HandleClearAbilityBind(string ability_name)
+    {
+        ability_assigner.ClearAbility(this, ability_name);
+    }
+
+    private void HandleAbilityReassigned(string cross, string level, string bind, string ability_name, Texture2D icon)
+    {
+		GD.Print("Player received ability reassigned signal");
+        ability_assigner.ChangeAbilityAssignment(this, cross, level, bind, ability_name);
+    }
 
     private void OnHurtboxAreaEntered(Area3D area)
     {

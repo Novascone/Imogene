@@ -3,14 +3,15 @@ using System;
 
 public partial class ClassCategory : Control
 {
-	[Export] public Control basic;
-	[Export] public Control kernel;
-	[Export] public Control defensive;
-	[Export] public Control mastery;
-	[Export] public Control movement;
-	[Export] public Control specialized;
-	[Export] public Control unique;
-	[Export] public Control toy;
+	[Export] public AbilityPage basic;
+	[Export] public AbilityPage kernel;
+	[Export] public AbilityPage defensive;
+	[Export] public AbilityPage mastery;
+	[Export] public AbilityPage movement;
+	[Export] public AbilityPage specialized;
+	[Export] public AbilityPage unique;
+	[Export] public AbilityPage toy;
+	[Export] public Control buttons_container;
 	[Export] public Control buttons;
 	
 	
@@ -30,53 +31,54 @@ public partial class ClassCategory : Control
 	public void _on_basic_button_down()
 	{
 		basic.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 	
 	public void _on_kernel_button_down()
 	{
 		kernel.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_defensive_button_down()
 	{
 		defensive.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_mastery_button_down()
 	{
 		mastery.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_movement_button_down()
 	{
 		movement.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_specialized_button_down()
 	{
 		specialized.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_unique_button_down()
 	{
 		unique.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void _on_toy_button_down()
 	{
 		toy.Show();
-		buttons.Hide();
+		buttons_container.Hide();
 	}
 
 	public void ResetPage()
 	{
+		GD.Print("reset class categories");
 		foreach(Control control in GetChildren())
 		{
 			if(control is AbilityPage ability_page)

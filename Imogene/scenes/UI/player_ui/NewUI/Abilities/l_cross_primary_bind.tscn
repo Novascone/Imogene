@@ -21,8 +21,10 @@ layout_mode = 2
 
 [node name="Up" parent="." instance=ExtResource("2_br7cy")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "RB"
-side = "Left"
+cross = "Left"
 level = "Primary"
 
 [node name="Control2" type="Control" parent="."]
@@ -30,8 +32,10 @@ layout_mode = 2
 
 [node name="Left" parent="." instance=ExtResource("2_br7cy")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "LB"
-side = "Left"
+cross = "Left"
 level = "Primary"
 
 [node name="Control3" type="Control" parent="."]
@@ -39,15 +43,19 @@ layout_mode = 2
 
 [node name="Right" parent="." instance=ExtResource("2_br7cy")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "RT"
-side = "Left"
-level = "Secondary"
+cross = "Left"
+level = "Primary"
 
 [node name="Control4" type="Control" parent="."]
 layout_mode = 2
 
 [node name="Down" parent="." instance=ExtResource("2_br7cy")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 button_bind = "LT"
-side = "Left"
+cross = "Left"
 level = "Secondary"
