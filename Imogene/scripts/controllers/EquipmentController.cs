@@ -3,7 +3,7 @@ using System;
 // Equipment controller
 // Handles the equipping of items, including armor and consumables
 // Armor equipping will be reworked once the update PC models are complete
-public partial class EquipmentController : Controller
+public partial class EquipmentController : Node
 {
 	[Export] public PackedScene ArmPrefab { get; set; }
 	[Export] public Skeleton3D SkeletonNode { get; set; }
@@ -34,13 +34,6 @@ public partial class EquipmentController : Controller
 	public int d_pad_frames_held_threshold = 10;
 	public bool d_pad_held;
 
-
-	public override void _Ready()
-	{
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.EquipableInfo += HandleEquipableInfo;
-		_customSignals.EquipConsumable += HandleEquipConsumable;
-	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -555,7 +548,7 @@ public partial class EquipmentController : Controller
     // }
 	
 
-	public void AddEquipableStats(ArmsResource item)
+	public void AddEquipableStats(Player player, ArmsResource item)
 	{
 
 		// GD.Print("Adding equipable stats from the gear controller");
@@ -592,12 +585,12 @@ public partial class EquipmentController : Controller
 		// player.ui.inventory_info.stats_updated = false;
 	}
 
-	private void HandleEquipConsumable(ConsumableResource item, int consumable_slot)
+	private void HandleEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
     {
         player.consumables[consumable_slot] = item;
 		// GD.Print(player.consumables[consumable_slot].name);
     }
-	public void GetEquipConsumable(ConsumableResource item, int consumable_slot)
+	public void GetEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
     {
         player.consumables[consumable_slot] = item;
 		// GD.Print(player.consumables[consumable_slot].name);

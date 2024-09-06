@@ -54,7 +54,7 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_soft)
                 {
-                    if(player.targeting_system.soft_targeting && player.targeting_system.enemy_to_soft_target)
+                    if(player.systems.targeting_system.soft_targeting && player.systems.targeting_system.enemy_to_soft_target)
                     {
                         GD.Print("Rotate soft ability");
                         SoftRotateAbility(player, ability);
@@ -209,10 +209,10 @@ public partial class AbilityController : Node
 
 	public void SoftRotateAbility(Player player, Ability ability)
     {
-        if(!ability.rotate_on_soft_far && player.targeting_system.enemy_close)
+        if(!ability.rotate_on_soft_far && player.systems.targeting_system.enemy_close)
         {
 			AddToAbilityList(player, ability);
-            player.targeting_system.SoftTargetRotation(player);
+            player.systems.targeting_system.SoftTargetRotation(player);
 			ability.stop_movement_input = true;
 			GD.Print("Rotating player");
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
@@ -225,13 +225,13 @@ public partial class AbilityController : Node
                 // player.movementController.movement_input_allowed = true;
             }
         }
-        else if (ability.rotate_on_soft_far && player.targeting_system.enemy_far)
+        else if (ability.rotate_on_soft_far && player.systems.targeting_system.enemy_far)
         {
             // GD.Print("Setting player movement to false");
 			GD.Print("Rotating player");
 			AddToAbilityList(player, ability);
 			ability.stop_movement_input = true; // Not allowing player to move while they are being rotated
-            player.targeting_system.SoftTargetRotation(player);
+            player.systems.targeting_system.SoftTargetRotation(player);
             if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
             {
                 GD.Print("Execute rotation");

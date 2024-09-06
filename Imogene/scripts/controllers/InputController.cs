@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class InputController : Controller
+public partial class InputController : Node
 {
 	public float input_strength;
 	[Signal] public delegate void CrossChangedEventHandler(string cross);
@@ -113,7 +113,7 @@ public partial class InputController : Controller
 				return false;
 			}
 		}
-		if(player.targeting_system.rotating_to_soft_target)
+		if(player.systems.targeting_system.rotating_to_soft_target)
 		{
 			GD.Print("Input prevented");
 			return true;

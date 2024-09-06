@@ -17,9 +17,9 @@ public partial class NewEnemyHealth : Control
 		name.Text = enemy.identifier;
 		posture_bar.MaxValue = enemy.maximum_posture;
 		posture_bar.Value = enemy.posture;
-		targeted_enemy.hard_target_icon.Show();
-		targeted_enemy.status_bar.Show();
-		targeted_enemy.soft_target_icon.Show();
+		targeted_enemy.ui.hard_target_icon.Show();
+		targeted_enemy.ui.status_bar.Show();
+		targeted_enemy.ui.soft_target_icon.Show();
 		
 		Show();
     }
@@ -28,9 +28,9 @@ public partial class NewEnemyHealth : Control
         Hide();
 		if(targeted_enemy != null)
 		{
-			targeted_enemy.hard_target_icon.Hide();
-			targeted_enemy.status_bar.Hide();
-			targeted_enemy.soft_target_icon.Hide();
+			targeted_enemy.ui.hard_target_icon.Hide();
+			targeted_enemy.ui.status_bar.Hide();
+			targeted_enemy.ui.soft_target_icon.Hide();
 			targeted_enemy.targeted = false;
 			targeted_enemy = null;
 		}
@@ -39,13 +39,13 @@ public partial class NewEnemyHealth : Control
 
 	public void ShowSoftTargetIcon(Enemy enemy)
 	{
-		enemy.soft_target_icon.Show();
+		enemy.ui.soft_target_icon.Show();
 		
 	}
 
 	public void HideSoftTargetIcon(Enemy enemy)
 	{
-		enemy.soft_target_icon.Hide();
+		enemy.ui.soft_target_icon.Hide();
 	}
 
 

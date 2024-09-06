@@ -69,9 +69,9 @@ public partial class Jump : Ability
 
 	public void Climb(Player player) // Checks if player is near wall and sets state to climb if the player presses the climb button
 	{
-		if(player.near_wall.IsColliding())
+		if(player.controllers.near_wall.IsColliding())
 		{
-			if(player.on_wall.IsColliding())
+			if(player.controllers.on_wall.IsColliding())
 			{
 				// GD.Print(player.near_wall.GetCollider());
 				if(CheckHeld() && !player.is_climbing)

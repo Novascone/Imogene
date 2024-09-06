@@ -68,7 +68,7 @@ public partial class Kick : Ability
 		
 		AddHitbox(player);
 		
-		if(player.damage_system.Crit()) // check if the play will crit
+		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
 			kick_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2) / 2; // Set projectile damage
 			kick_hitbox.posture_damage = player.posture_damage * 3; // Set projectile posture damage 

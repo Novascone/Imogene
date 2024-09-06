@@ -16,6 +16,24 @@ public partial class Enemy : Entity
 	// Movement variables
 	public Vector3 _targetVelocity = Vector3.Zero;
 	[Export] public int FallAcceleration { get; set; } = 75;
+	
+	[Export] EnemyAreas areas;
+	[Export] public BoneAttachment3D head;
+	
+	// Ray cast variables
+	[Export] public int look_ahead = 5; // How far the rays will project
+	[Export] public int direction_lines_mag = 5;
+	[Export] public int direction_line_mag = 7;
+	[Export] public int num_rays = 16;
+
+	[Export] public EnemyDebug debug;
+	[Export] public AnimationTree tree;
+	[Export] public NavigationAgent3D navigation_agent; 
+	[Export] public EnemyControllers controllers;
+	// UI
+	[Export] public EnemyUI ui;
+	
+
 	public Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
 
 	// Mob variables
@@ -24,23 +42,11 @@ public partial class Enemy : Entity
 	private float attack_dist = 2.5f;
 	private Label3D damage_label; 
 	private AnimationPlayer damage_numbers;
-	public Area3D alert_area;
-	public BoneAttachment3D head;
-	
-	// Ray cast variables
-	[Export] public int look_ahead = 5; // How far the rays will project
-	[Export] public int direction_lines_mag = 5;
-	[Export] public int direction_line_mag = 7;
-	[Export] public int num_rays = 16;
-	public Node3D ray_position; // Position rays are cast from
+
 	public Vector3 ray_origin;
-	public MeshInstance3D collision_lines;
 	public StandardMaterial3D collision_lines_material = new StandardMaterial3D();
-	public MeshInstance3D ray_lines;
 	public StandardMaterial3D ray_lines_material = new StandardMaterial3D();
-	public MeshInstance3D direction_lines;
 	public StandardMaterial3D direction_line_material = new StandardMaterial3D();
-	public MeshInstance3D direction_moving_line;
 	public StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
 	public Vector3[] ray_directions; // Directions the rays will be cast in
 	public float[] interest; // Interest weight, how interested the entity is in moving toward a location
@@ -49,11 +55,11 @@ public partial class Enemy : Entity
 
 
 	// Enemy animation
-	public AnimationTree tree;
+	
 	public Vector2 blend_direction = Vector2.Zero;
 
 	// Navigation variables
-	public NavigationAgent3D navigation_agent; 
+
 	private List<Marker3D> waypoints = new List<Marker3D>(); 
 	private int waypointIndex; 
 
@@ -65,23 +71,8 @@ public partial class Enemy : Entity
 	private CustomSignals _customSignals;
 	private Vector3 camera_position; // Position of camera
 
-	public StatController stat_controller;
-	public EnemyMovementController movement_controller;
-	public EnemyAbilityController ability_controller;
-	
-
-	// UI
-	public ProgressBar health_bar;
-	public TextureProgressBar posture_bar;
-	public Sprite3D status_bar;
-	public Sprite3D hard_target_icon;
-	public Sprite3D soft_target_icon;
 
 	
-
-	// State machine
-	public StateMachine state_machine;
-
 	public bool entity_in_alert_area;
 
 	// Place for entity to look
@@ -100,20 +91,11 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
-		stat_controller = GetNode<StatController>("Controllers/StatController");
-		movement_controller = GetNode<EnemyMovementController>("Controllers/MovementController");
-		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
-		ability_controller = GetNode<EnemyAbilityController>("Controllers/AbilityController");
-		health_bar = GetNode<ProgressBar>("UI/HealthBarSubViewport/VBoxContainer/ProgressBar");
-		posture_bar = GetNode<TextureProgressBar>("UI/HealthBarSubViewport/VBoxContainer/TextureProgressBar");
-		status_bar = GetNode<Sprite3D>("UI/StatusBar");
-		hard_target_icon = GetNode<Sprite3D>("UI/HardTargetIcon");
-		soft_target_icon = GetNode<Sprite3D>("UI/SoftTargetIcon");
 		maximum_health = health;
-		health_bar.MaxValue = health;
-		health_bar.Value = health;
-		posture_bar.MaxValue = maximum_posture;
-		posture_bar.Value = 0;
+		ui.health_bar.MaxValue = health;
+		ui.health_bar.Value = health;
+		ui.posture_bar.MaxValue = maximum_posture;
+		ui.posture_bar.Value = 0;
 		speed = 2;
 		attacking = false;
 		level = 1;
@@ -123,35 +105,14 @@ public partial class Enemy : Entity
 		slash_resistance = 3;
 		dr_lvl_scale = 50 * (float)level;
 		rec_lvl_scale = 100 * (float)level;
-		stat_controller.UpdateStats(this);
-		movement_controller.GetEntityInfo(this);
-		status_effect_controller.GetEntityInfo(this);
-		ability_controller.GetEntityInfo(this);
-		// GD.Print("Posture Regen " + posture_regen);
+	
 
-		ray_position = GetNode<Node3D>("Controllers/RayPosition");
-		tree = GetNode<AnimationTree>("Animation/AnimationTree");
-		collision_lines = GetNode<MeshInstance3D>("Debug/CollisionLines");
-		ray_lines = GetNode<MeshInstance3D>("Debug/RayLines");
-		direction_lines = GetNode<MeshInstance3D>("Debug/DirectionLines");
-		direction_moving_line = GetNode<MeshInstance3D>("Debug/DirectionMovingLine");
+		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
 
-		main_hand_hitbox = GetNode<MeleeHitbox>("Armature/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox");
 
-		navigation_agent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-		state_machine = GetNode<StateMachine>("Controllers/StateMachine");
-		state_machine.GetEntityInfo(this);
-
-		hurtbox = GetNode<Hurtbox>("Armature/Skeleton3D/Chest/ChestSlot/Hurtbox");
-		hurtbox.BodyEntered += OnHurtboxBodyEntered;
-		hurtbox.AreaEntered += OnHurtboxAreaEntered;
-
-		head = GetNode<BoneAttachment3D>("Armature/Skeleton3D/Head");
-
-		alert_area = GetNode<Area3D>("Areas/Alert");
-		alert_area.BodyEntered += OnAlertAreaBodyEntered;
-		alert_area.AreaEntered += OnAlertAreaEntered;
-		alert_area.BodyExited += OnAlertAreaBodyExited;
+		areas.alert.BodyEntered += OnAlertAreaBodyEntered;
+		areas.alert.AreaEntered += OnAlertAreaEntered;
+		areas.alert.BodyExited += OnAlertAreaBodyExited;
 
 		
 		Array.Resize(ref interest, num_rays);
@@ -165,101 +126,34 @@ public partial class Enemy : Entity
 			// GD.Print(ray_directions[i]);
 		}
 
-		// damage_numbers = GetNode<AnimationPlayer>("Damage_Number_3D/AnimationPlayer");
-		// damage_label = GetNode<Label3D>("Damage_Number_3D/Label3D");
-
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		// _customSignals.EnemyTargetedUI += HandleEnemyTargetedUI;
-		// _customSignals.EnemyUntargetedUI += HandleEnemyUntargetedUI;
-		_customSignals.FinishedCircling += HandleFinishedCircling;		
+		speed = walk_speed;
 	}
-
-    private void OnHurtboxAreaEntered(Area3D area)
-    {
-        if(area is MeleeHitbox melee_box)
-		{
-			// GD.Print(Name + " hurtbox entered by " + melee_box.Name);
-			if(area is MeleeHitbox)
-			{
-				foreach(StatusEffect status_effect in melee_box.effects)
-				{
-					GD.Print("Applying " + status_effect.Name + " to " + Name);
-					// status_effect.Apply(this);
-					status_effect_controller.AddStatusEffect(status_effect);
-					// if(status_effect.effect_type == "movement")
-					// {
-					// 	previous_movement_effects_count = movement_effects.Count;
-					// }
-				}
-				damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
-				resource_system.Posture(this, melee_box.posture_damage);
-			}
-		}
-		
-    }
-
-    private void OnHurtboxBodyEntered(Node3D body)
-    {
-		
-		if(body is RangedHitbox ranged_box)
-		{
-			foreach(StatusEffect status_effect in ranged_box.effects)
-			{
-				GD.Print("Applying " + status_effect.Name + " to " + Name);
-				status_effect_controller.AddStatusEffect(status_effect);
-				// if(status_effect.effect_type == "movement")
-				// {
-				// 	previous_movement_effects_count = movement_effects.Count;
-				// }
-			}
-			if(body is RangedHitbox)
-			{
-				damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
-				resource_system.Posture(this, ranged_box.posture_damage);
-			}
-		}
-    }
 
     private void HandleFinishedCircling()
     {
-        state_machine.current_state.Exit("ForwardState");
+        controllers.state_machine.current_state.Exit("ForwardState");
     }
 
-    // private void HandleEnemyUntargetedUI()
-    // {
-    //     status_bar.Hide();
-	// 	target_icon.Hide();
-    // }
-
-    // private void HandleEnemyTargetedUI(Enemy enemy)
-    // {
-    //     status_bar.Show();
-	// 	target_icon.Show();
-    // }
-
+ 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
 	{
-		// GD.Print("Max Health " + maximum_health);
-		// GD.Print("Health " + health);
-		
-		// GD.Print(Name + " In soft small " + in_soft_target_small);
-
-		ray_origin = ray_position.GlobalPosition;
+	
+		ray_origin = controllers.ray_position.GlobalPosition;
 		var direction = Vector3.Zero;
-		if(collision_lines.Mesh is ImmediateMesh collision_lines_mesh)
+		if(debug.collision_lines.Mesh is ImmediateMesh collision_lines_mesh)
 		{
 			collision_lines_mesh.ClearSurfaces();
 		}
-		if(ray_lines.Mesh is ImmediateMesh ray_lines_mesh)
+		if(debug.ray_lines.Mesh is ImmediateMesh ray_lines_mesh)
 		{
 			ray_lines_mesh.ClearSurfaces();
 		}
-		if(direction_lines.Mesh is ImmediateMesh direction_lines_mesh)
+		if(debug.direction_lines.Mesh is ImmediateMesh direction_lines_mesh)
 		{
 			direction_lines_mesh.ClearSurfaces();
 		}
-		if(direction_moving_line.Mesh is ImmediateMesh direction_moving_line_mesh)
+		if(debug.direction_moving_line.Mesh is ImmediateMesh direction_moving_line_mesh)
 		{
 			direction_moving_line_mesh.ClearSurfaces();
 		}
@@ -275,7 +169,6 @@ public partial class Enemy : Entity
 	
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
-		_customSignals.EmitSignal(nameof(CustomSignals.EnemyPosition), GlobalPosition);
 
 		if (direction != Vector3.Zero)
 		{
@@ -288,7 +181,9 @@ public partial class Enemy : Entity
 		{
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
-
+		controllers.movement_controller.StatusEffectsAffectingSpeed(this);
+		controllers.movement_controller.StatusEffectsPreventingMovement(this);
+		controllers.ability_controller.CheckCanUseAbility(this);
 		SmoothRotation();
 		LookAtOver();
 		
@@ -413,8 +308,4 @@ public partial class Enemy : Entity
 			direction_moving_line_mesh.SurfaceEnd();
 		}
 	}
-
-	
-
-	
 }

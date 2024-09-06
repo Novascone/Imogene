@@ -41,13 +41,12 @@ public partial class ResourceSystem : Node
 			if(entity.posture >= entity.maximum_posture)
 			{
 				entity.posture_broken = true;
-				entity.damage_system.Stun();
 			}
 			// GD.Print("posture " + entity.posture);
 			
 			if(entity is Enemy enemy)
 			{
-				enemy.posture_bar.Value += posture_damage;
+				enemy.ui.posture_bar.Value += posture_damage;
 
 			}
 			// if(entity is Player player)
@@ -95,7 +94,7 @@ public partial class ResourceSystem : Node
 		}
 		if(entity is Enemy enemy)
 		{
-			enemy.posture_bar.Value = entity.posture;
+			enemy.ui.posture_bar.Value = entity.posture;
 		}
 		// if(entity is Player player)
 		// {

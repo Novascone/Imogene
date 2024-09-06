@@ -13,24 +13,29 @@ public partial class InitialState : State
 
     public override void _PhysicsProcess(double delta)
     {
-        if(fsm.this_entity is Enemy enemy)
+       
+    }
+
+   public void CheckIfEnemy(Enemy enemy)
+   {
+       if(fsm.enemy is not null)
         {
             // if(enemy.player_seen)
             // {
             //    Exit("ChaseState");
             // }
         }
-    }
-    public override async void Enter()
+   }
+    public override async void Enter(Enemy enemy)
    {
      
       // GD.Print("Hello from Initial state");
 		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
-      if(fsm.this_entity is not StandardEnemy && fsm.this_entity is not TargetDummy)
-      {
-         Exit("ForwardState");
-      }
+      // if(fsm.enemy is not StandardEnemy && fsm.enemy is not TargetDummy)
+      // {
+      //    Exit("ForwardState");
+      // }
       
       // GD.Print("Exiting initial state");
       

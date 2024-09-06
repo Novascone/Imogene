@@ -1,27 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://qyu8cdscxpm0"]
+[gd_scene load_steps=9 format=3 uid="uid://qyu8cdscxpm0"]
 
-[ext_resource type="Script" path="res://scripts/controllers/MovementController.cs" id="1_bvsiu"]
-[ext_resource type="Script" path="res://scripts/controllers/StatController.cs" id="2_deavj"]
-[ext_resource type="Script" path="res://scripts/controllers/AbilityAssigner.cs" id="3_wav14"]
-[ext_resource type="Script" path="res://scripts/controllers/EquipmentController.cs" id="4_hr57o"]
-[ext_resource type="Script" path="res://scripts/controllers/StatusEffectController.cs" id="5_ccukg"]
+[ext_resource type="Script" path="res://scripts/controllers/Controllers.cs" id="1_0gddq"]
+[ext_resource type="PackedScene" uid="uid://bhans33fk5xqm" path="res://scenes/entities/Player/input_controller.tscn" id="1_j33pf"]
+[ext_resource type="PackedScene" uid="uid://nu8ipwp3ykox" path="res://scenes/entities/Player/movement_controller.tscn" id="2_vewvy"]
+[ext_resource type="PackedScene" uid="uid://cfctyyhexl1xg" path="res://scenes/entities/Player/ability_assigner.tscn" id="4_rygms"]
+[ext_resource type="PackedScene" uid="uid://bf8paulijqr0g" path="res://scenes/entities/Player/ability_controller.tscn" id="5_xq1af"]
+[ext_resource type="Script" path="res://scripts/controllers/EquipmentController.cs" id="6_jbsj4"]
+[ext_resource type="PackedScene" uid="uid://br1lm3qgxi0jb" path="res://scenes/entities/status_effect_controller.tscn" id="8_aw8yw"]
+[ext_resource type="Script" path="res://scripts/controllers/AnimationController.cs" id="8_xyccc"]
 
-[node name="Controllers" type="Node3D"]
+[node name="Controllers" type="Node3D" node_paths=PackedStringArray("input_controller", "movement_controller", "ability_assigner", "ability_controller", "equipment_controller", "near_wall", "on_wall")]
+script = ExtResource("1_0gddq")
+input_controller = NodePath("InputController")
+movement_controller = NodePath("MovementController")
+ability_assigner = NodePath("AbilityAssigner")
+ability_controller = NodePath("AbilityController")
+equipment_controller = NodePath("EquipmentController")
+near_wall = NodePath("WallCheck/NearWall")
+on_wall = NodePath("WallCheck/OnWall")
 
-[node name="MovementController" type="Node" parent="."]
-script = ExtResource("1_bvsiu")
+[node name="InputController" parent="." instance=ExtResource("1_j33pf")]
 
-[node name="StatController" type="Node" parent="."]
-script = ExtResource("2_deavj")
+[node name="MovementController" parent="." instance=ExtResource("2_vewvy")]
 
-[node name="AbilityController" type="Node" parent="."]
-script = ExtResource("3_wav14")
+[node name="AbilityAssigner" parent="." instance=ExtResource("4_rygms")]
+
+[node name="AbilityController" parent="." instance=ExtResource("5_xq1af")]
 
 [node name="EquipmentController" type="Node" parent="."]
-script = ExtResource("4_hr57o")
+script = ExtResource("6_jbsj4")
 
-[node name="StatusEffectController" type="Node" parent="."]
-script = ExtResource("5_ccukg")
+[node name="StatusEffectController" parent="." instance=ExtResource("8_aw8yw")]
+
+[node name="AnimationController" type="Node" parent="."]
+script = ExtResource("8_xyccc")
 
 [node name="WallCheck" type="Node3D" parent="."]
 

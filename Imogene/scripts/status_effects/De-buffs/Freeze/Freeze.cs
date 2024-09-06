@@ -25,7 +25,7 @@ public partial class Freeze : StatusEffect
 			current_stacks += 1;
 			GD.Print("Frozen");
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.status_effect_controller.SetEffectBooleans(this);
+			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
 		}
 		
 	}
@@ -34,7 +34,7 @@ public partial class Freeze : StatusEffect
     {
 		GD.Print("timer timeout");
 		current_stacks -= 1;
-		entity.status_effect_controller.RemoveStatusEffect(this);
+		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 		GD.Print("entity is no longer frozen");
 		// RemoveStatusEffect(this);

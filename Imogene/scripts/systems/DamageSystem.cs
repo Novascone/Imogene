@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class DamageSystem : EntitySystem
+public partial class DamageSystem : Node
 {
 	// Timers
 	public Timer health_regen_timer;
@@ -23,22 +23,62 @@ public partial class DamageSystem : EntitySystem
 	{
 		
 		health_regen_timer = GetNode<Timer>("HealthRegenTimer");
-		health_regen_timer.Timeout += OnHealthRegenTickTimeout;
-
-		dot_timer = GetNode<Timer>("DoTTimer");
-		dot_timer.Timeout += OnDoTTickTimeout;
-
-		slow_timer = GetNode<Timer>("SlowTimer");
-		slow_timer.Timeout += OnSlowTickTimeout;
-
-		stun_timer = GetNode<Timer>("StunTimer");
-		stun_timer.Timeout += OnStunTickTimeout;
+		// health_regen_timer.Timeout += () => OnHealthRegenTickTimeout(entity);
 
 		damage_number_3d_template = GD.Load<PackedScene>("res://scenes/UI/DamageNumber3D.tscn");
 
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 	}
-	public void SpawnDamageNumber(float value, bool is_critical)
+	public void SubscribeToHurtboxSignals(Entity entity)
+	{
+		entity.hurtbox.AreaEntered += (area) => OnHurtboxAreaEntered(area, entity);
+		entity.hurtbox.BodyEntered += (body) => OnHurtboxBodyEntered(body, entity);
+	}
+
+    private void OnHurtboxBodyEntered(Node3D body, Entity entity)
+    {
+        	if(body is RangedHitbox ranged_box)
+			{
+				foreach(StatusEffect status_effect in ranged_box.effects)
+				{
+					GD.Print("Applying " + status_effect.Name + " to " + Name);
+					entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, status_effect);
+					// if(status_effect.effect_type == "movement")
+					// {
+					// 	previous_movement_effects_count = movement_effects.Count;
+					// }
+				}
+				if(body is RangedHitbox)
+				{
+					entity.entity_systems.damage_system.TakeDamage(entity, ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
+					entity.entity_systems.resource_system.Posture(entity, ranged_box.posture_damage);
+				}
+			}
+    }
+
+    private void OnHurtboxAreaEntered(Area3D area, Entity entity)
+    {
+         if(area is MeleeHitbox melee_box)
+		{
+			// GD.Print(Name + " hurtbox entered by " + melee_box.Name);
+			if(area is MeleeHitbox)
+			{
+				foreach(StatusEffect status_effect in melee_box.effects)
+				{
+					GD.Print("Applying " + status_effect.Name + " to " + Name);
+					// status_effect.Apply(this);
+					entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, status_effect);
+					// if(status_effect.effect_type == "movement")
+					// {
+					// 	previous_movement_effects_count = movement_effects.Count;
+					// }
+				}
+				entity.entity_systems.damage_system.TakeDamage(entity, melee_box.damage_type, melee_box.damage, melee_box.is_critical);
+				entity.entity_systems.resource_system.Posture(entity, melee_box.posture_damage);
+			}
+		}
+    }
+
+    public void SpawnDamageNumber(float value, bool is_critical)
 	{
 		DamageNumber3D damage_number = GetDamageNumber();
 		Vector3 position = spawn_point.GlobalTransform.Origin;
@@ -62,7 +102,7 @@ public partial class DamageSystem : EntitySystem
 	}
 
 
-    public bool Crit()
+    public bool Crit(Entity entity)
 	{
 		float random_float = GD.Randf();
 		if(random_float < entity.critical_hit_chance)
@@ -75,10 +115,10 @@ public partial class DamageSystem : EntitySystem
 		}
 	}
 
-	public void TakeDamage(string damage_type, float amount, bool is_critical) // Applies damage to an entity
+	public void TakeDamage(Entity entity, string damage_type, float amount, bool is_critical) // Applies damage to an entity
 	{
-		
-		amount = DamageMitigation(damage_type, amount);
+		GD.Print(entity.Name + " is taking damage");
+		amount = DamageMitigation(entity, damage_type, amount);
 		// GD.Print("Amount of damage " + amount);
 		// GD.Print("Is critical " + is_critical);
 		if(entity.health - amount > 0)
@@ -87,10 +127,10 @@ public partial class DamageSystem : EntitySystem
 			entity.health = MathF.Round(entity.health);
 			if(entity is Enemy enemy)
 			{
-				enemy.health_bar.Value = entity.health;
+				enemy.ui.health_bar.Value = entity.health;
 				spawn_point = enemy.head;
 				SpawnDamageNumber(amount, is_critical);
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
+				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
 			// if(entity is Player player)
 			// {
@@ -107,58 +147,6 @@ public partial class DamageSystem : EntitySystem
 
 		// GD.Print(entity.identifier + " took " + amount + " of " + damage_type + " damage") ;
 		// GD.Print(entity.identifier + " " + entity.health);
-
-		if(is_critical)
-		{
-			if(damage_type == "Slash" || damage_type == "Fire")
-			{
-				if(entity.taking_dot)
-				{
-					entity.dot_duration += 5;
-					// GD.Print("Already taking DoT added more to duration");
-				}
-				else
-				{
-					entity.dot_duration = 5;
-				}
-				
-				if(damage_type == "Slash")
-				{
-					entity.dot_damage_type = "Bleed";
-				}
-				else
-				{
-					entity.dot_damage_type = damage_type;
-				}
-				DoT(entity.dot_damage_type, DamageMitigation(entity.dot_damage_type,(float)(amount * 5)), entity.dot_duration);
-				// GD.Print("The hit is critical");
-			}
-			if(damage_type == "Cold")
-			{
-				if(entity.slowed)
-				{
-					entity.slow_duration += 5;
-				}
-				else
-				{
-					entity.slow_duration = 5;
-				}
-				Slow();
-			}
-			if(damage_type == "Lightning")
-			{
-				if(entity.stunned)
-				{
-					entity.stun_duration += 5;
-				}
-				else
-				{
-					entity.stun_duration = 5;
-				}
-				Stun();
-			}
-			
-		}
 	}
 
 	public void HealthRegen()
@@ -166,7 +154,7 @@ public partial class DamageSystem : EntitySystem
 		health_regen_timer.Start();
 	}
 
-	private void OnHealthRegenTickTimeout()
+	private void OnHealthRegenTickTimeout(Entity entity)
     {
         if(entity.health < entity.maximum_health)
 		{
@@ -178,7 +166,7 @@ public partial class DamageSystem : EntitySystem
 		// }
     }
 
-	public float DamageMitigation(string damage_type, float amount)
+	public float DamageMitigation(Entity entity, string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
 		// GD.Print(mitigated_damage + " of damage going into mitigation ");
@@ -244,101 +232,101 @@ public partial class DamageSystem : EntitySystem
 		return MathF.Round(mitigated_damage);
 	}
 
-	public void DoT(string damage_type, float amount, int duration)
-	{
-		dot_timer.Start();
-		entity.dot_in_seconds = amount / duration;
-		entity.dot_in_seconds = MathF.Round(entity.dot_in_seconds);
-		entity.taking_dot = true;
-		// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
-	}
+	// public void DoT(string damage_type, float amount, int duration)
+	// {
+	// 	dot_timer.Start();
+	// 	entity.dot_in_seconds = amount / duration;
+	// 	entity.dot_in_seconds = MathF.Round(entity.dot_in_seconds);
+	// 	entity.taking_dot = true;
+	// 	// GD.Print("Taking " + amount + " of " + damage_type + " over " + dot_timer.TimeLeft + " seconds ");
+	// }
 
-	private void OnDoTTickTimeout()
-	{
-		GD.Print("One tick of " + entity.dot_in_seconds + " " + entity.dot_damage_type);
-		GD.Print("DoT duration " + entity.dot_duration);
-		if(entity.health > 0)
-		{
-			entity.health -= entity.dot_in_seconds;
-			entity.health = MathF.Round(entity.health);
-			if(entity is Enemy enemy)
-			{
-				enemy.health_bar.Value = entity.health;
-				_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), entity.health);
-			}
-		}
-		else
-		{
-			entity.dead = true;
-			GD.Print("Dead");
-		}
+	// private void OnDoTTickTimeout()
+	// {
+	// 	GD.Print("One tick of " + entity.dot_in_seconds + " " + entity.dot_damage_type);
+	// 	GD.Print("DoT duration " + entity.dot_duration);
+	// 	if(entity.health > 0)
+	// 	{
+	// 		entity.health -= entity.dot_in_seconds;
+	// 		entity.health = MathF.Round(entity.health);
+	// 		if(entity is Enemy enemy)
+	// 		{
+	// 			enemy.health_bar.Value = entity.health;
+	// 			_customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), entity.health);
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		entity.dead = true;
+	// 		GD.Print("Dead");
+	// 	}
 		
 		
-		GD.Print(entity.identifier + " health " + entity.health);
-		entity.dot_duration -= 1;
-		if(entity.dot_duration == 0)
-		{
-			dot_timer.Stop();
-			entity.dot_damage_type = null;
-			entity.taking_dot = false;
-		}
-	}
+	// 	GD.Print(entity.identifier + " health " + entity.health);
+	// 	entity.dot_duration -= 1;
+	// 	if(entity.dot_duration == 0)
+	// 	{
+	// 		dot_timer.Stop();
+	// 		entity.dot_damage_type = null;
+	// 		entity.taking_dot = false;
+	// 	}
+	// }
 
-	public void Slow()
-	{
-		slow_timer.Start();
-		if(!entity.slowed)
-		{
-			entity.speed /= 2;
-		}
+	// public void Slow()
+	// {
+	// 	slow_timer.Start();
+	// 	if(!entity.slowed)
+	// 	{
+	// 		entity.speed /= 2;
+	// 	}
 		
-		entity.slowed = true;
-	}
+	// 	entity.slowed = true;
+	// }
 
-	 private void OnSlowTickTimeout()
-    {
-        GD.Print(entity.identifier + " is slowed for " + entity.slow_duration);
+	//  private void OnSlowTickTimeout()
+    // {
+    //     GD.Print(entity.identifier + " is slowed for " + entity.slow_duration);
 		
-		entity.slow_duration -= 1;
-		if(entity.slow_duration == 0)
-		{
-			slow_timer.Stop();
-			entity.slowed = false;
-			entity.speed = entity.speed *= 2;
-		}
-    }
+	// 	entity.slow_duration -= 1;
+	// 	if(entity.slow_duration == 0)
+	// 	{
+	// 		slow_timer.Stop();
+	// 		entity.slowed = false;
+	// 		entity.speed = entity.speed *= 2;
+	// 	}
+    // }
 
-	public void Stun()
-	{
-		stun_timer.Start();
-		entity.can_move = false;
-		entity.stunned = true;
-		if(entity.posture_broken)
-		{
-			GD.Print(entity.identifier + " posture broken");
-		}
-	}
+	// public void Stun()
+	// {
+	// 	stun_timer.Start();
+	// 	entity.can_move = false;
+	// 	entity.stunned = true;
+	// 	if(entity.posture_broken)
+	// 	{
+	// 		GD.Print(entity.identifier + " posture broken");
+	// 	}
+	// }
 
-	private void OnStunTickTimeout()
-    {
+	// private void OnStunTickTimeout()
+    // {
 
-       GD.Print(entity.identifier + " is stunned for " + entity.stun_duration);
+    //    GD.Print(entity.identifier + " is stunned for " + entity.stun_duration);
 
-		if(entity.stun_duration > 0)
-		{
-			entity.stun_duration -= 1;
-		}
-		else
-		{
-			entity.stun_duration = 5;
-		}
+	// 	if(entity.stun_duration > 0)
+	// 	{
+	// 		entity.stun_duration -= 1;
+	// 	}
+	// 	else
+	// 	{
+	// 		entity.stun_duration = 5;
+	// 	}
 	   
-	   if(entity.stun_duration == 0)
-	   {
-			stun_timer.Stop();
-			entity.stunned = false;
-			entity.can_move = true;
-	   }
-    }
+	//    if(entity.stun_duration == 0)
+	//    {
+	// 		stun_timer.Stop();
+	// 		entity.stunned = false;
+	// 		entity.can_move = true;
+	//    }
+    // }
 
 }

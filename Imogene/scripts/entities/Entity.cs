@@ -19,14 +19,15 @@ public partial class Entity : CharacterBody3D
 	[Export] public Hurtbox hurtbox;
 
 	// Systems
-	[Export] public DamageSystem damage_system;
-	[Export] public ResourceSystem resource_system;
+	[Export] public EntitySystems entity_systems;
+	// [Export] public DamageSystem damage_system;
+	// [Export] public ResourceSystem resource_system;
 	[Export] public XPSystem xp_system;
 	
 
 
 	// Controllers
-	[Export] public StatusEffectController status_effect_controller;
+	[Export] public EntityControllers entity_controllers;
 
 
 	// Booleans
@@ -220,33 +221,7 @@ public partial class Entity : CharacterBody3D
 
 	private CustomSignals _customSignals;
 
-    public override void _Ready()
-    {
 
-		damage_system = GetNode<DamageSystem>("Systems/DamageSystem");
-		damage_system.GetEntityInfo(this);
-
-		resource_system = GetNode<ResourceSystem>("Systems/ResourceSystem");
-		
-
-		status_effect_controller = GetNode<StatusEffectController>("Controllers/StatusEffectController");
-		status_effect_controller.GetEntityInfo(this);
-
-		if(this is Player player)
-		{
-			xp_system = GetNode<XPSystem>("Systems/XPSystem");
-			xp_system.GetEntityInfo(this);
-
-			// targeting_system.GetPlayerInfo(player);
-
-		}
-		// Timers
-
-
-		_customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-    }
-
-	
     private void OnCastTickTimeout()
     {
         throw new NotImplementedException();

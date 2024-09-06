@@ -244,7 +244,7 @@ public partial class Slash : Ability
 		player.main_hand_hitbox.damage_type = "Cold";
 		// player.main_hand_hitbox.damage_type = "Lightning";
 		// GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
-		if(player.damage_system.Crit())
+		if(player.entity_systems.damage_system.Crit(player))
 		{
 			GD.Print("Critical!");
 			player.main_hand_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2);

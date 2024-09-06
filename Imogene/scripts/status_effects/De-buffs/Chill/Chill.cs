@@ -36,7 +36,7 @@ public partial class Chill : StatusEffect
 			{
 				GD.Print("creating timer");
 				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-				entity.status_effect_controller.SetEffectBooleans(this);
+				entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
 				GD.Print("setting booleans via apply");
 			}
 			current_stacks += 1;
@@ -59,11 +59,11 @@ public partial class Chill : StatusEffect
 			// freeze.Apply(entity);
 			if(entity.status_effects.Contains(this))
 			{
-				entity.status_effect_controller.RemoveStatusEffect(this);
+				entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 				
 			}
 			entity.speed = entity.walk_speed;
-			entity.status_effect_controller.AddStatusEffect(freeze);
+			entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
 			current_stacks = 0;
 				
 		}
@@ -76,7 +76,7 @@ public partial class Chill : StatusEffect
         if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)
 		{
 			entity.speed = entity.walk_speed;
-			entity.status_effect_controller.RemoveStatusEffect(this);
+			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			GD.Print("removing booleans from chill via timer");
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 			GD.Print("entity speed reset to " + entity.speed);

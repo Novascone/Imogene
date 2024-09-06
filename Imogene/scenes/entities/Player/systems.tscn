@@ -1,38 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://nxu401tbmgw3"]
+[gd_scene load_steps=9 format=3 uid="uid://nxu401tbmgw3"]
 
-[ext_resource type="Script" path="res://scripts/systems/DamageSystem.cs" id="1_aetg5"]
-[ext_resource type="Script" path="res://scripts/systems/ResourceSystem.cs" id="2_pv2oq"]
-[ext_resource type="Script" path="res://scripts/systems/XPSystem.cs" id="3_g8o0f"]
-[ext_resource type="Script" path="res://scripts/systems/TargetingSystem.cs" id="4_8j1gk"]
-[ext_resource type="Script" path="res://scripts/systems/StatusEffectSystem.cs" id="5_nj2sf"]
+[ext_resource type="Script" path="res://scripts/controllers/Systems.cs" id="1_jd3nc"]
+[ext_resource type="PackedScene" uid="uid://quqk6wxyhwh1" path="res://scenes/entities/Player/damage_system.tscn" id="2_a62hr"]
+[ext_resource type="PackedScene" uid="uid://d8nqngnt1qcc" path="res://scenes/entities/resource_system.tscn" id="3_f2yjo"]
+[ext_resource type="Script" path="res://scripts/systems/XPSystem.cs" id="3_xoqwr"]
+[ext_resource type="PackedScene" uid="uid://r40vsjeix5rc" path="res://scenes/entities/Player/targeting_system.tscn" id="4_hohff"]
+[ext_resource type="Script" path="res://scripts/systems/StatusEffectSystem.cs" id="5_8sok6"]
+[ext_resource type="PackedScene" uid="uid://c8rwto7s7kjhv" path="res://scenes/entities/Player/vision_system.tscn" id="6_te5lk"]
+[ext_resource type="PackedScene" uid="uid://b0rm1tmnu6soc" path="res://scenes/entities/Player/interact_system.tscn" id="7_vo3n5"]
 
-[node name="Systems" type="Node"]
+[node name="Systems" type="Node" node_paths=PackedStringArray("vision_system", "interact_system", "targeting_system")]
+script = ExtResource("1_jd3nc")
+vision_system = NodePath("VisionSystem")
+interact_system = NodePath("InteractSystem")
+targeting_system = NodePath("TargetingSystem")
 
-[node name="DamageSystem" type="Node" parent="."]
-script = ExtResource("1_aetg5")
+[node name="DamageSystem" parent="." instance=ExtResource("2_a62hr")]
 
-[node name="DoTTimer" type="Timer" parent="DamageSystem"]
-
-[node name="HealthRegenTimer" type="Timer" parent="DamageSystem"]
-
-[node name="SlowTimer" type="Timer" parent="DamageSystem"]
-
-[node name="StunTimer" type="Timer" parent="DamageSystem"]
-
-[node name="ResourceSystem" type="Node" parent="."]
-script = ExtResource("2_pv2oq")
-
-[node name="ResourceRegenTimer" type="Timer" parent="ResourceSystem"]
-
-[node name="PostureRegenTimer" type="Timer" parent="ResourceSystem"]
-
-[node name="CastTimer" type="Timer" parent="."]
+[node name="ResourceSystem" parent="." instance=ExtResource("3_f2yjo")]
 
 [node name="XPSystem" type="Node" parent="."]
-script = ExtResource("3_g8o0f")
-
-[node name="TargetingSystem" type="Node" parent="."]
-script = ExtResource("4_8j1gk")
+script = ExtResource("3_xoqwr")
 
 [node name="StatusEffectSystem" type="Node" parent="."]
-script = ExtResource("5_nj2sf")
+script = ExtResource("5_8sok6")
+
+[node name="VisionSystem" parent="." instance=ExtResource("6_te5lk")]
+
+[node name="InteractSystem" parent="." instance=ExtResource("7_vo3n5")]
+
+[node name="TargetingSystem" parent="." instance=ExtResource("4_hohff")]

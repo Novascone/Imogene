@@ -25,13 +25,13 @@ public partial class Fear : StatusEffect
 			//  GD.Print(caster.Name);
 			//  entity.direction = -caster.GlobalTransform.Basis.Z;
 			 GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.status_effect_controller.SetEffectBooleans(this);
+			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
 		}
     }
 
     private void timer_timeout(Entity entity)
     {
         current_stacks -= 1;
-		entity.status_effect_controller.RemoveStatusEffect(this);
+		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
     }
 }

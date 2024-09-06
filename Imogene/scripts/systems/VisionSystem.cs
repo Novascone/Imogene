@@ -21,7 +21,7 @@ public partial class VisionSystem : Node
     {
         if(body is Enemy enemy)
 		{
-			player.targeting_system.EnemyExitedFar(enemy);
+			player.systems.targeting_system.EnemyExitedFar(enemy);
 		}
     }
 
@@ -29,7 +29,7 @@ public partial class VisionSystem : Node
     {
         if(body is Enemy enemy)
 		{
-			player.targeting_system.EnemyEnteredFar(enemy);
+			player.systems.targeting_system.EnemyEnteredFar(enemy);
 		}
     }
 
@@ -37,7 +37,7 @@ public partial class VisionSystem : Node
     {
         if(body is Enemy enemy)
 		{
-			player.targeting_system.EnemyExitedNear(enemy);
+			player.systems.targeting_system.EnemyExitedNear(enemy);
 		}
     }
 
@@ -45,14 +45,14 @@ public partial class VisionSystem : Node
     {
          if(body is Enemy enemy)
 		{
-			player.targeting_system.EnemyEnteredNear(enemy);
+			player.systems.targeting_system.EnemyEnteredNear(enemy);
 		}
     }
 	private void OnBodyExitedPlayerVision(Node3D body, Player player)
     {
         if (body is Enemy enemy)
 		{
-			player.targeting_system.EnemyExitedVision(enemy);
+			player.systems.targeting_system.EnemyExitedVision(enemy);
 		}
     }
 
@@ -60,7 +60,7 @@ public partial class VisionSystem : Node
     {
         if(body is Enemy enemy)
 		{
-			player.targeting_system.EnemyEnteredVision(enemy);
+			player.systems.targeting_system.EnemyEnteredVision(enemy);
 		}
     }
 }

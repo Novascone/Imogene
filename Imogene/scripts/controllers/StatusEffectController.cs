@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Dynamic;
 
-public partial class StatusEffectController : Controller
+public partial class StatusEffectController : Node
 {
 	public bool effect_already_applied;
 	// Movement
@@ -77,38 +77,38 @@ public partial class StatusEffectController : Controller
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if(slowed) { GD.Print(entity.Name + " is slowed"); }
+		// if(slowed) { GD.Print(entity.Name + " is slowed"); }
 
 		// if(dazed) { GD.Print(entity.Name + " is dazed"); }
 
 		// if(stunned) { GD.Print(entity.Name + " is stunned"); }
 
-		if(chilled) { GD.Print(entity.Name + " is chilled"); }
+		// if(chilled) { GD.Print(entity.Name + " is chilled"); }
 
-		if(frozen) { GD.Print(entity.Name + " is frozen"); }
+		// if(frozen) { GD.Print(entity.Name + " is frozen"); }
 	}
 
-	public void AddStatusEffect(StatusEffect effect)
+	public void AddStatusEffect(Entity entity, StatusEffect effect)
 	{
 		var effect_to_add = new StatusEffect();
-		effect_to_add = GetEffect(effect, effect_to_add);
-		QueueStatusEffect(effect_to_add);
+		effect_to_add = GetEffect(entity, effect, effect_to_add);
+		QueueStatusEffect(entity, effect_to_add);
 		if(effect_to_add.state == StatusEffect.States.queued)
 		{
 			GD.Print("effect queued");
 			if(!effect_to_add.applied)
 			{
-				GD.Print("adding new effect");
+				GD.Print("adding new effect to " + entity.Name);
 				entity.status_effects.Add(effect_to_add);
 				AddChild(effect_to_add);
 			}
-			ApplyStatusEffect(effect_to_add);
+			ApplyStatusEffect(entity, effect_to_add);
 		}
 		
 		
 	}
 
-	public bool SlowingEffectApplied( StatusEffect effect)
+	public bool SlowingEffectApplied(Entity entity, StatusEffect effect)
 	{
 		if(slowed || chilled || tethered)
 		{
@@ -123,7 +123,7 @@ public partial class StatusEffectController : Controller
 		return false;
 	}
 
-	public bool StoppingEffectApplied(StatusEffect effect)
+	public bool StoppingEffectApplied(Entity entity, StatusEffect effect)
 	{
 		if(frozen || feared || hamstrung || stunned || hexed)
 		{
@@ -137,27 +137,27 @@ public partial class StatusEffectController : Controller
 		return false;
 	}
 
-	public void RemoveStatusEffect(StatusEffect effect)
+	public void RemoveStatusEffect(Entity entity, StatusEffect effect)
 	{
 		GD.Print("removing " + effect.Name);
 		entity.status_effects.Remove(effect);
 		RemoveChild(effect);
 		GD.Print("resetting stacks of " + effect.Name);
-		entity.status_effect_controller.SetEffectBooleans(effect);
+		entity.entity_controllers.status_effect_controller.SetEffectBooleans(effect);
 	}
 
-	public void QueueStatusEffect(StatusEffect effect)
+	public void QueueStatusEffect(Entity entity, StatusEffect effect)
 	{
 		GD.Print("trying to queue status effect");
 		if(effect.state == StatusEffect.States.not_queued)
 		{   
 			GD.Print("status effect not queued");
-			if(effect.prevents_movement && !StoppingEffectApplied(effect))
+			if(effect.prevents_movement && !StoppingEffectApplied(entity, effect))
 			{
 				effect.state = StatusEffect.States.queued;
 				GD.Print("queueing status effect");
 			}
-			else if(effect.alters_speed && !SlowingEffectApplied(effect))
+			else if(effect.alters_speed && !SlowingEffectApplied(entity, effect))
 			{
 				effect.state = StatusEffect.States.queued;
 				GD.Print("queueing status effect");
@@ -169,7 +169,7 @@ public partial class StatusEffectController : Controller
 		}
 	}
 
-	public void ApplyStatusEffect(StatusEffect effect)
+	public void ApplyStatusEffect(Entity entity, StatusEffect effect)
 	{
 		GD.Print("effects count " + entity.status_effects.Count);
 		GD.Print("Applying an effect of type " + effect.GetType());
@@ -278,7 +278,7 @@ public partial class StatusEffectController : Controller
 
 	}
 
-	public StatusEffect GetEffect(StatusEffect effect, StatusEffect effect_to_get)
+	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effect_to_get)
 	{
 		// if(effect is unstoppable) { unstoppable = !unstoppable; }
 

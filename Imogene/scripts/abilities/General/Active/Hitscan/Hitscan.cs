@@ -95,7 +95,7 @@ public partial class Hitscan : RangedAbility
 
 		 if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
 		{
-			player.movement_controller.rotation_only = true;
+			player.controllers.movement_controller.rotation_only = true;
 			GD.Print("player can only rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
@@ -105,7 +105,7 @@ public partial class Hitscan : RangedAbility
 				EmitSignal(nameof(AbilityFinished),this);
 			}
 			
-			player.movement_controller.rotation_only = false;
+			player.controllers.movement_controller.rotation_only = false;
 		}
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
@@ -156,7 +156,7 @@ public partial class Hitscan : RangedAbility
 			
 			if(hurtbox.Owner is Enemy enemy)
 			{
-				enemy.damage_system.TakeDamage("cold",10.0f,false);
+				enemy.entity_systems.damage_system.TakeDamage(enemy, "cold",10.0f,false);
 			}
 			
 		}

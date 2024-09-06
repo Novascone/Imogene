@@ -133,57 +133,57 @@ public partial class InventoryButton : Button
 		ReleaseFocus();
 	}
 
-	public void _on_consumable_1_button_down()
-	{
-		// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 1);
-		this_player.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 1);
-		hud.EquipConsumableHUD((ConsumableResource)inventory_item, 1);
-		consumable_slot_selection.Hide();
-		consumable_1.Hide();
-		consumable_2.Hide();
-		consumable_3.Hide();
-		consumable_4.Hide();
-	}
-	public void _on_consumable_2_button_down()
-	{
-		// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 2);
-		this_player.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 2);
-		hud.EquipConsumableHUD((ConsumableResource)inventory_item, 2);
-		consumable_slot_selection.Hide();
-		consumable_1.Hide();
-		consumable_2.Hide();
-		consumable_3.Hide();
-		consumable_4.Hide();
-	}
-	public void _on_consumable_3_button_down()
-	{
-		// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 3);
-		this_player.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 3);
-		hud.EquipConsumableHUD((ConsumableResource)inventory_item, 3);
-		consumable_slot_selection.Hide();
-		consumable_1.Hide();
-		consumable_2.Hide();
-		consumable_3.Hide();
-		consumable_4.Hide();
-	}
-	public void _on_consumable_4_button_down()
-	{
-		// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 4);
-		this_player.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 4);
-		hud.EquipConsumableHUD((ConsumableResource)inventory_item, 4);
-		consumable_slot_selection.Hide();
-		consumable_1.Hide();
-		consumable_2.Hide();
-		consumable_3.Hide();
-		consumable_4.Hide();
-	}
-	public void _on_cancel_button_down()
-	{
-		consumable_slot_selection.Hide();
-		consumable_1.Hide();
-		consumable_2.Hide();
-		consumable_3.Hide();
-		consumable_4.Hide();
-	}
+	// public void _on_consumable_1_button_down()
+	// {
+	// 	// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 1);
+	// 	this_player.controllers.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 1);
+	// 	hud.EquipConsumableHUD((ConsumableResource)inventory_item, 1);
+	// 	consumable_slot_selection.Hide();
+	// 	consumable_1.Hide();
+	// 	consumable_2.Hide();
+	// 	consumable_3.Hide();
+	// 	consumable_4.Hide();
+	// }
+	// public void _on_consumable_2_button_down()
+	// {
+	// 	// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 2);
+	// 	this_player.controllers.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 2);
+	// 	hud.EquipConsumableHUD((ConsumableResource)inventory_item, 2);
+	// 	consumable_slot_selection.Hide();
+	// 	consumable_1.Hide();
+	// 	consumable_2.Hide();
+	// 	consumable_3.Hide();
+	// 	consumable_4.Hide();
+	// }
+	// public void _on_consumable_3_button_down()
+	// {
+	// 	// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 3);
+	// 	this_player.controllers.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 3);
+	// 	hud.EquipConsumableHUD((ConsumableResource)inventory_item, 3);
+	// 	consumable_slot_selection.Hide();
+	// 	consumable_1.Hide();
+	// 	consumable_2.Hide();
+	// 	consumable_3.Hide();
+	// 	consumable_4.Hide();
+	// }
+	// public void _on_consumable_4_button_down()
+	// {
+	// 	// _customSignals.EmitSignal(nameof(CustomSignals.EquipConsumable),inventory_item, 4);
+	// 	this_player.controllers.equipment_controller.GetEquipConsumable((ConsumableResource)inventory_item, 4);
+	// 	hud.EquipConsumableHUD((ConsumableResource)inventory_item, 4);
+	// 	consumable_slot_selection.Hide();
+	// 	consumable_1.Hide();
+	// 	consumable_2.Hide();
+	// 	consumable_3.Hide();
+	// 	consumable_4.Hide();
+	// }
+	// public void _on_cancel_button_down()
+	// {
+	// 	consumable_slot_selection.Hide();
+	// 	consumable_1.Hide();
+	// 	consumable_2.Hide();
+	// 	consumable_3.Hide();
+	// 	consumable_4.Hide();
+	// }
 
 }

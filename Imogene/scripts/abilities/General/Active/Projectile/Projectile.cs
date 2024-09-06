@@ -49,7 +49,7 @@ public partial class Projectile : RangedAbility
     {
         if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
 		{
-			player.movement_controller.rotation_only = true;
+			player.controllers.movement_controller.rotation_only = true;
 			GD.Print("player can only rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
@@ -59,7 +59,7 @@ public partial class Projectile : RangedAbility
 				EmitSignal(nameof(AbilityFinished),this);
 			}
 			
-			player.movement_controller.rotation_only = false;
+			player.controllers.movement_controller.rotation_only = false;
 		}
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
@@ -90,7 +90,7 @@ public partial class Projectile : RangedAbility
 		projectile.GlobalPosition = player.cast_point.GlobalPosition; // give the projectile the cast point position
 		projectile.GlobalRotation = player.GlobalRotation; // give the projectile the player rotation
 
-		if(player.damage_system.Crit()) // check if the play will crit
+		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
 			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2); // Set projectile damage
 			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 

@@ -16,25 +16,28 @@ public partial class CircleState: State
   
     public override void _PhysicsProcess(double delta)
     {
-        if(enemy != null)
-        {
-            if(enemy.switch_to_state2)
-            {
-                Exit("State2");
-            }
-
-            
-            SetInterest();
-            SetDanger();
-            ChooseDirection();
         
-        }
     }
 
-    public override  void Enter()
+    public void SwitchState(Enemy enemy)
     {
-        entity = fsm.this_entity;
-        if (entity is CirclingEnemy this_enemy)
+        
+        if(enemy.switch_to_state2)
+        {
+            Exit("State2");
+        }
+
+        
+        SetInterest(enemy);
+        SetDanger(enemy);
+        ChooseDirection(enemy);
+        
+    }
+
+    public override  void Enter(Enemy enemy)
+    {
+        enemy = fsm.enemy;
+        if (enemy is CirclingEnemy this_enemy)
         {
             enemy = this_enemy;
             circling_enemy = this_enemy;
@@ -46,7 +49,7 @@ public partial class CircleState: State
         // await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
     
     }
-    public override void SetInterest()
+    public override void SetInterest(Enemy enemy)
     {
         enemy.navigation_agent.TargetPosition = circling_enemy.box_position;
         target_position_1 = enemy.navigation_agent.GetNextPathPosition();
@@ -57,21 +60,21 @@ public partial class CircleState: State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = enemy.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y).Dot(entity.Transform.Basis.X + entity.GlobalPosition.DirectionTo(target_position_1)); 
+                var d = enemy.ray_directions[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.Transform.Basis.X + enemy.GlobalPosition.DirectionTo(target_position_1)); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 enemy.interest[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
             }
     }
 
-    public override void SetDanger()
+    public override void SetDanger(Enemy enemy)
     {
         var space_state = enemy.GetWorld3D().DirectSpaceState;
 		for(int i = 0; i < enemy.num_rays; i++)
 		{
 			// Cast a ray from the ray origin, in the ray direction(rotated with player .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) with a magnitude of our look_ahead variable
-			var ray_query = PhysicsRayQueryParameters3D.Create(enemy.ray_origin, enemy.ray_origin + enemy.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y) * enemy.look_ahead);
-			var ray_target = enemy.ray_origin + enemy.ray_directions[i].Rotated(entity.GlobalTransform.Basis.Y.Normalized(), entity.Rotation.Y) * enemy.look_ahead; // Used in SetRayCastLines
+			var ray_query = PhysicsRayQueryParameters3D.Create(enemy.ray_origin, enemy.ray_origin + enemy.ray_directions[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y) * enemy.look_ahead);
+			var ray_target = enemy.ray_origin + enemy.ray_directions[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y) * enemy.look_ahead; // Used in SetRayCastLines
 			var result = space_state.IntersectRay(ray_query); // Result dictionary from the ray cast
 		
 			// Uncomment to show ray casts before collision
@@ -81,7 +84,7 @@ public partial class CircleState: State
 			if(result.Count > 0)
 			{
 				collider = (Node3D)result["collider"];
-				enemy.SetCollisionLines(enemy.collision_lines, result);
+				enemy.SetCollisionLines(enemy.debug.collision_lines, result);
 				enemy.danger[i] = 1.0f;	
 			}
 			else
@@ -91,7 +94,7 @@ public partial class CircleState: State
         }
     }
 
-    public override void ChooseDirection()
+    public override void ChooseDirection(Enemy enemy)
 	{
 		for(int i = 0; i < enemy.num_rays; i++)
 		{
@@ -114,19 +117,19 @@ public partial class CircleState: State
 			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			enemy.SetDirectionLines(enemy.direction_lines, enemy.ray_directions[i] * enemy.interest[i] * enemy.direction_lines_mag);
+			enemy.SetDirectionLines(enemy.debug.direction_lines, enemy.ray_directions[i] * enemy.interest[i] * enemy.direction_lines_mag);
 		}
 
 		// Normalize the chosen direction
 		enemy.chosen_dir = enemy.chosen_dir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		enemy.SetDirectionMovingLine(enemy.direction_moving_line, enemy.chosen_dir * enemy.direction_line_mag);
+		enemy.SetDirectionMovingLine(enemy.debug.direction_moving_line, enemy.chosen_dir * enemy.direction_line_mag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}
 
-    public void _on_circle_timer_timeout()
+    public void _on_circle_timer_timeout(Enemy enemy)
     {
         enemy.entity_in_alert_area = false;
         GD.Print("Circle Timer expired");

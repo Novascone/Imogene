@@ -36,44 +36,44 @@ public partial class EnemyHealthUI : Control
 	// 	enemy_posture.Value = enemy.posture;
 	// 	Show();
     // }
-	public void EnemyTargeted(Enemy enemy)
-    {
-		targeted_enemy = enemy;
-        enemy_health.MaxValue = enemy.maximum_health;
-		enemy_health.Value = enemy.health;
-		enemy_name.Text = enemy.identifier;
-		enemy_posture.MaxValue = enemy.maximum_posture;
-		enemy_posture.Value = enemy.posture;
-		targeted_enemy.hard_target_icon.Show();
-		targeted_enemy.status_bar.Show();
-		targeted_enemy.soft_target_icon.Show();
+	// public void EnemyTargeted(Enemy enemy)
+    // {
+	// 	targeted_enemy = enemy;
+    //     enemy_health.MaxValue = enemy.maximum_health;
+	// 	enemy_health.Value = enemy.health;
+	// 	enemy_name.Text = enemy.identifier;
+	// 	enemy_posture.MaxValue = enemy.maximum_posture;
+	// 	enemy_posture.Value = enemy.posture;
+	// 	targeted_enemy.hard_target_icon.Show();
+	// 	targeted_enemy.status_bar.Show();
+	// 	targeted_enemy.soft_target_icon.Show();
 		
-		Show();
-    }
-	public void EnemyUntargeted()
-    {
-        Hide();
-		if(targeted_enemy != null)
-		{
-			targeted_enemy.hard_target_icon.Hide();
-			targeted_enemy.status_bar.Hide();
-			targeted_enemy.soft_target_icon.Hide();
-			targeted_enemy.targeted = false;
-			targeted_enemy = null;
-		}
+	// 	Show();
+    // }
+	// public void EnemyUntargeted()
+    // {
+    //     Hide();
+	// 	if(targeted_enemy != null)
+	// 	{
+	// 		targeted_enemy.hard_target_icon.Hide();
+	// 		targeted_enemy.status_bar.Hide();
+	// 		targeted_enemy.soft_target_icon.Hide();
+	// 		targeted_enemy.targeted = false;
+	// 		targeted_enemy = null;
+	// 	}
 		
-    }
+    // }
 
-	public void ShowSoftTargetIcon(Enemy enemy)
-	{
-		enemy.soft_target_icon.Show();
+	// public void ShowSoftTargetIcon(Enemy enemy)
+	// {
+	// 	enemy.soft_target_icon.Show();
 		
-	}
+	// }
 
-	public void HideSoftTargetIcon(Enemy enemy)
-	{
-		enemy.soft_target_icon.Hide();
-	}
+	// public void HideSoftTargetIcon(Enemy enemy)
+	// {
+	// 	enemy.soft_target_icon.Hide();
+	// }
 
 
 

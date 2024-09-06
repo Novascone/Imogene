@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 // Movement Controller
 // Moves the player character around the world, sets basic animations, implements the landing icon, applies smooth rotation, handles looking at enemies, and prevents movement when UI is open
-public partial class MovementController : Controller
+public partial class MovementController : Node
 {
 
 	Vector3 ray_origin;
@@ -90,7 +90,7 @@ public partial class MovementController : Controller
 	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
 	{
 		// GD.Print("Rotating smoothly");
-		if(!player.targeting_system.targeting && !player.is_climbing)
+		if(!player.systems.targeting_system.targeting && !player.is_climbing)
 		{
 			player.prev_y_rotation = player.GlobalRotation.Y;
 			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
@@ -105,9 +105,10 @@ public partial class MovementController : Controller
 		}
 	}
 
+
 	public bool StatusEffectsPreventingMovement(Player player)
 	{
-		if(player.status_effect_controller.frozen || player.status_effect_controller.stunned || player.status_effect_controller.hamstrung || player.status_effect_controller.hexed)
+		if(player.entity_controllers.status_effect_controller.frozen || player.entity_controllers.status_effect_controller.stunned || player.entity_controllers.status_effect_controller.hamstrung || player.entity_controllers.status_effect_controller.hexed)
 		{
 			return true;
 		}
@@ -119,7 +120,7 @@ public partial class MovementController : Controller
 
 	public bool StatusEffectsAffectingSpeed(Player player)
 	{
-		if (player.status_effect_controller.on_fire || player.status_effect_controller.stealth || player.status_effect_controller.transpose || player.status_effect_controller.bull || player.status_effect_controller.slowed || player.status_effect_controller.chilled)
+		if (player.entity_controllers.status_effect_controller.on_fire || player.entity_controllers.status_effect_controller.stealth || player.entity_controllers.status_effect_controller.transpose || player.entity_controllers.status_effect_controller.bull || player.entity_controllers.status_effect_controller.slowed || player.entity_controllers.status_effect_controller.chilled)
 		{
 			return true;
 		}
@@ -172,7 +173,7 @@ public partial class MovementController : Controller
 		if(player.direction != Vector3.Zero && player.is_climbing)
 		{
 			player.prev_y_rotation = player.GlobalRotation.Y;
-			player.current_y_rotation = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
+			player.current_y_rotation = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
 			if(player.prev_y_rotation != player.current_y_rotation)
 			{
 				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
@@ -182,7 +183,7 @@ public partial class MovementController : Controller
 
 	public void ClimbingRotation(Player player) // Sets the rotation of the player when climbing
 	{
-		var rot = -(MathF.Atan2(player.near_wall.GetCollisionNormal().Z, player.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
+		var rot = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 		
 		player.vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
 		
@@ -195,7 +196,7 @@ public partial class MovementController : Controller
 		player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 	}
 
-	public Godot.Collections.Dictionary LandPosition() // Sends out raycast to determine where the player will land
+	public Godot.Collections.Dictionary LandPosition(Player player) // Sends out raycast to determine where the player will land
 	{
 		ray_origin = player.GlobalTransform.Origin;
 		ray_target = player.GlobalTransform.Origin + new Vector3(0, -20, 0);
@@ -206,5 +207,4 @@ public partial class MovementController : Controller
 		var ray = spaceState.IntersectRay(ray_query);
 		return ray;
 	}
-
 }

@@ -47,12 +47,12 @@ public partial class NewHUD : Control
 
 	public void SubscribeToTargetingSignals(Player player)
 	{
-		player.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
-		player.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
-		player.targeting_system.EnemyTargeted += HandleEnemyTargeted;
-		player.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
-		player.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
-		player.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
+		player.systems.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
+		player.systems.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
+		player.systems.targeting_system.EnemyTargeted += HandleEnemyTargeted;
+		player.systems.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
+		player.systems.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
+		player.systems.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
 	}
 
     private void OnInteractAreaExited(Area3D area)

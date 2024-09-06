@@ -28,7 +28,7 @@ public partial class Stun : StatusEffect
 		{
 			GD.Print("Stunning");
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.status_effect_controller.SetEffectBooleans(this);
+			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
 		}
 		current_stacks += 1;
 		
@@ -38,7 +38,7 @@ public partial class Stun : StatusEffect
     {
 		GD.Print("timer timeout");
      
-		entity.status_effect_controller.RemoveStatusEffect(this);
+		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 		GD.Print("entity can now move ");
 		// RemoveStatusEffect(this);

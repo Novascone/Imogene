@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class EnemyMovementController : Controller
+public partial class EnemyMovementController : Node
 {
 	public bool speed_altered_check;
 	public bool movement_stopped_check;
@@ -12,20 +12,10 @@ public partial class EnemyMovementController : Controller
 		// GD.Print("Enemy movement controller loaded");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
+	
+	public bool StatusEffectsPreventingMovement(Enemy enemy)
 	{
-		if(StatusEffectsPreventingMovement())
-		{
-			// GD.Print(entity.Name + " can't move");
-		}
-		
-		
-	}
-
-	public bool StatusEffectsPreventingMovement()
-	{
-		if(entity.status_effect_controller.frozen || entity.status_effect_controller.stunned || entity.status_effect_controller.hamstrung || entity.status_effect_controller.hexed)
+		if(enemy.entity_controllers.status_effect_controller.frozen || enemy.entity_controllers.status_effect_controller.stunned || enemy.entity_controllers.status_effect_controller.hamstrung || enemy.entity_controllers.status_effect_controller.hexed)
 		{
 			return true;
 		}
@@ -35,9 +25,9 @@ public partial class EnemyMovementController : Controller
 		}
 	}
 
-	public bool StatusEffectsAffectingSpeed()
+	public bool StatusEffectsAffectingSpeed(Enemy enemy)
 	{
-		if (entity.status_effect_controller.on_fire || entity.status_effect_controller.stealth || entity.status_effect_controller.transpose || entity.status_effect_controller.bull || entity.status_effect_controller.slowed || entity.status_effect_controller.chilled)
+		if (enemy.entity_controllers.status_effect_controller.on_fire || enemy.entity_controllers.status_effect_controller.stealth || enemy.entity_controllers.status_effect_controller.transpose || enemy.entity_controllers.status_effect_controller.bull || enemy.entity_controllers.status_effect_controller.slowed || enemy.entity_controllers.status_effect_controller.chilled)
 		{
 			return true;
 		}

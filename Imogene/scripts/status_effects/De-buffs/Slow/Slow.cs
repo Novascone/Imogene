@@ -26,7 +26,7 @@ public partial class Slow : StatusEffect
 		if(current_stacks == 0)
 		{
 			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.status_effect_controller.SetEffectBooleans(this);
+			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
 			GD.Print("Adding slow to " + entity.Name);
 		}
 		current_stacks += 1;
@@ -50,7 +50,7 @@ public partial class Slow : StatusEffect
 		{
 			entity.speed = entity.walk_speed;
 			GD.Print("removing slow from " + entity.Name);
-			entity.status_effect_controller.RemoveStatusEffect(this);
+			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 			GD.Print("entity speed reset to " + entity.speed);
 			// RemoveStatusEffect(this);

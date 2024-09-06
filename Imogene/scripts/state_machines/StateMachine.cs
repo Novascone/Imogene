@@ -6,7 +6,7 @@ using System.Linq;
 public partial class StateMachine : Node3D
 {
 	public State current_state;
-	public Entity this_entity;
+	public Enemy enemy;
 	// public ContextSteering this_entity_context;
 	public List<string> history = new List<string>();
 	public Dictionary<string, State> states = new Dictionary<string, State>();
@@ -28,7 +28,7 @@ public partial class StateMachine : Node3D
 				current_state = state;
 			}
 		}
-		current_state.Enter();
+		current_state.Enter(enemy);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -53,13 +53,9 @@ public partial class StateMachine : Node3D
 		RemoveChild(current_state);
 		current_state = states[state_name];
 		AddChild(current_state);
-		current_state.Enter();
+		current_state.Enter(enemy);
 	}
 	
-	public void GetEntityInfo(Entity s)
-	{
-		this_entity = s;
-	}
 
 	// public void GetEntityInfoContextTest(ContextSteering s)
 	// {

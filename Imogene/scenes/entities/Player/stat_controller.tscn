@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://so6yd7758k1a"]
-
-[ext_resource type="Script" path="res://scripts/controllers/StatController.cs" id="1_r48cc"]
-
-[node name="StatController" type="Node"]
-script = ExtResource("1_r48cc")

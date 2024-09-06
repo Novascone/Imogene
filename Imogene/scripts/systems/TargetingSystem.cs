@@ -74,7 +74,7 @@ public partial class TargetingSystem : Node
 			{
 				if(closest_enemy.in_player_vision || enemy_close)
 				{
-					if(!closest_enemy.soft_target_icon.Visible)
+					if(!closest_enemy.ui.soft_target_icon.Visible)
 					{
 						EmitSignal(nameof(ShowSoftTargetIcon),closest_enemy);
 					}
@@ -82,7 +82,7 @@ public partial class TargetingSystem : Node
 				}
 				else
 				{
-					if(closest_enemy.soft_target_icon.Visible)
+					if(closest_enemy.ui.soft_target_icon.Visible)
 					{
 						EmitSignal(nameof(HideSoftTargetIcon),closest_enemy);
 					}
@@ -97,7 +97,7 @@ public partial class TargetingSystem : Node
 				{
 					if(enemy != closest_enemy)
 					{
-						if(enemy.soft_target && enemy.soft_target_icon.Visible)
+						if(enemy.soft_target && enemy.ui.soft_target_icon.Visible)
 						{
 							enemy.soft_target = false;
 							EmitSignal(nameof(HideSoftTargetIcon), enemy);
@@ -136,7 +136,7 @@ public partial class TargetingSystem : Node
 					EmitSignal(nameof(DimSoftTargetHUD));
 					if(closest_enemy != null)
 					{
-						if(closest_enemy.soft_target_icon.Visible)
+						if(closest_enemy.ui.soft_target_icon.Visible)
 						{
 							EmitSignal(nameof(HideSoftTargetIcon), closest_enemy);
 						}

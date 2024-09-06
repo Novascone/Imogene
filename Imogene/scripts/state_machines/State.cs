@@ -7,8 +7,6 @@ public partial class State : Node3D
 	public StateMachine fsm;
 	public string name;
 	// public ContextSteering entity;
-	public Entity entity;
-	public Enemy enemy;
 	public Vector3 target_position_1;
 	public Vector3 target_position_2;
 	public Node3D collider;
@@ -25,22 +23,22 @@ public partial class State : Node3D
 	{
 	}
 
-	public virtual void Enter()
+	public virtual void Enter(Enemy enemy)
 	{
 		
 	}
 
-	public virtual void SetInterest()
+	public virtual void SetInterest(Enemy enemy)
 	{
 
 	}
 
-	public virtual void SetDanger()
+	public virtual void SetDanger(Enemy enemy)
 	{
 		
 	}
 
-	public virtual void ChooseDirection()
+	public virtual void ChooseDirection(Enemy enemy)
 	{
 		
 	}
@@ -50,14 +48,6 @@ public partial class State : Node3D
 		fsm.ChangeTo(next_state);
 	}
 
-	public void GetEntityInfo(Entity s)
-	{
-		entity = s;
-		if(entity is Enemy es)
-		{
-			enemy = es;
-		}
-	}
 
 
 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://quqk6wxyhwh1"]
+
+[ext_resource type="Script" path="res://scripts/systems/DamageSystem.cs" id="1_8hb6i"]
+
+[node name="DamageSystem" type="Node"]
+script = ExtResource("1_8hb6i")
+
+[node name="DoTTimer" type="Timer" parent="."]
+
+[node name="HealthRegenTimer" type="Timer" parent="."]
+
+[node name="SlowTimer" type="Timer" parent="."]
+
+[node name="StunTimer" type="Timer" parent="."]
