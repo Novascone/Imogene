@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0rm1tmnu6soc"]
+[gd_scene load_steps=5 format=3 uid="uid://b0rm1tmnu6soc"]
 
 [ext_resource type="Script" path="res://scripts/systems/InteractSystem.cs" id="1_3i1bb"]
+[ext_resource type="PackedScene" uid="uid://sub7n5i5r0gq" path="res://scenes/objects/item_test_cube.tscn" id="2_bcgyq"]
+[ext_resource type="Script" path="res://scripts/items/ItemData.cs" id="3_0enw7"]
 
-[node name="InteractSystem" type="Node"]
+[sub_resource type="Resource" id="Resource_8em6k"]
+script = ExtResource("3_0enw7")
+item_name = "Test Cube"
+item_model_prefab = ExtResource("2_bcgyq")
+
+[node name="InteractSystem" type="Node3D"]
 script = ExtResource("1_3i1bb")
+item_types = [SubResource("Resource_8em6k")]

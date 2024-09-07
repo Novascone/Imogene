@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b02njwvptdrdb"]
+[gd_scene load_steps=9 format=3 uid="uid://b02njwvptdrdb"]
 
 [ext_resource type="Shader" path="res://shaders/interact.gdshader" id="1_87ipv"]
+[ext_resource type="Script" path="res://scripts/items/InteractableObject.cs" id="1_jn8s7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1h8ub"]
+size = Vector3(1, 1, 2.29846)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8qq1d"]
 
@@ -15,7 +17,6 @@ shader_parameter/strength = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prx8h"]
 next_pass = SubResource("ShaderMaterial_4tslu")
-albedo_color = Color(0, 1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dq5sj"]
 
@@ -24,11 +25,14 @@ radius = 2.3
 
 [node name="Box" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_jn8s7")
 
 [node name="BoxCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00567627)
 shape = SubResource("BoxShape3D_1h8ub")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.22783, 0, 0, 0)
 mesh = SubResource("BoxMesh_8qq1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_prx8h")
 

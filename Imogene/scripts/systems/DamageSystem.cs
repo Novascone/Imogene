@@ -23,7 +23,7 @@ public partial class DamageSystem : Node
 	{
 		
 		health_regen_timer = GetNode<Timer>("HealthRegenTimer");
-		// health_regen_timer.Timeout += () => OnHealthRegenTickTimeout(entity);
+		
 
 		damage_number_3d_template = GD.Load<PackedScene>("res://scenes/UI/DamageNumber3D.tscn");
 
@@ -32,6 +32,11 @@ public partial class DamageSystem : Node
 	{
 		entity.hurtbox.AreaEntered += (area) => OnHurtboxAreaEntered(area, entity);
 		entity.hurtbox.BodyEntered += (body) => OnHurtboxBodyEntered(body, entity);
+	}
+
+	public void SubscribeEntityToHealthRegen(Entity entity)
+	{
+		health_regen_timer.Timeout += () => OnHealthRegenTickTimeout(entity);
 	}
 
     private void OnHurtboxBodyEntered(Node3D body, Entity entity)
@@ -151,14 +156,21 @@ public partial class DamageSystem : Node
 
 	public void HealthRegen()
 	{
+		GD.Print("starting health regen timer");
 		health_regen_timer.Start();
 	}
 
 	private void OnHealthRegenTickTimeout(Entity entity)
     {
-        if(entity.health < entity.maximum_health)
+		GD.Print("Heal regen tick timeout");
+        if(entity.health < entity.maximum_health && entity.health_regen > 0)
 		{
 			entity.health += entity.health_regen;
+			health_regen_timer.Start();
+			if(entity is Enemy enemy)
+			{
+				enemy.ui.health_bar.Value = entity.health;
+			}
 		}
 		// if(entity is Player player)
 		// {

@@ -145,6 +145,9 @@ public partial class Player : Entity
 		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
 
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
+
+		systems.interact_system.NearInteractable += controllers.ability_controller.OnNearInteractable;
+
 		entity_controllers.stats_controller.StatsUpdate += ui.HandleUpdatedStats;
 		ui.InventoryToggle += HandleInventoryToggle;
 
@@ -170,7 +173,6 @@ public partial class Player : Entity
 		controllers.ability_assigner.GetAbilities(this);
 		controllers.ability_assigner.AssignAbilities(this);
 	}
-
     
 
     private void HandleClearAbilityBind(string ability_name)
@@ -241,27 +243,32 @@ public partial class Player : Entity
 			GD.Print("ability in use" + ability_in_use);
 			ability_in_use.FrameCheck(this);
 		}
-
 		
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);
 		systems.targeting_system.Target(this);
 		MoveAndSlide();
+
+	
 		
     }
 
 	private void HandleCrossChanged(string cross)
     {
-		ui.SwitchCrosses(cross);
-		if(cross == "Left")
+		if(!ui.preventing_movement)
 		{
-			l_cross_primary_selected = !l_cross_primary_selected;
+			ui.SwitchCrosses(cross);
+			if(cross == "Left")
+			{
+				l_cross_primary_selected = !l_cross_primary_selected;
+			}
+			else if(cross == "Right")
+			{
+				r_cross_primary_selected = !r_cross_primary_selected;
+			}
 		}
-		else if(cross == "Right")
-		{
-			r_cross_primary_selected = !r_cross_primary_selected;
-		}
+		
     }
 
 	private void HandleInventoryToggle()

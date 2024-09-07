@@ -57,6 +57,7 @@ public partial class NewHUD : Control
 
     private void OnInteractAreaExited(Area3D area)
     {
+		if(!area.IsInGroup("PlayerPickUp"))
 		in_interact_area = false;
 		interact_bar.button.Text = interact_button.ToString() + ";";
 		interact_bar.interact_inventory.Hide();
@@ -66,11 +67,15 @@ public partial class NewHUD : Control
 
     private void OnInteractAreaEntered(Area3D area)
     {
-		in_interact_area = true;
-		interact_bar.button.Text = interact_button.ToString() + ":" + " interact";
-		interact_bar.interact_object.Text = area.Name;
-        interact_bar.Show();
-		EmitSignal(nameof(HUDPreventingInput),true);
+		if(!area.IsInGroup("PlayerPickUp"))
+		{
+			in_interact_area = true;
+			interact_bar.button.Text = interact_button.ToString() + ":" + " interact";
+			interact_bar.interact_object.Text = area.Name;
+			interact_bar.Show();
+			EmitSignal(nameof(HUDPreventingInput),true);
+		}
+		
     }
 
     private void HandleDimSoftTargetHUD()

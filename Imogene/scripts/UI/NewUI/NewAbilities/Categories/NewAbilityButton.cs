@@ -22,5 +22,14 @@ public partial class NewAbilityButton : Button
 	{
 	}
 
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
+			if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
+		}
+	}
+
 	
 }

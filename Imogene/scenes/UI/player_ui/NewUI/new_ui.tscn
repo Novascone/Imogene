@@ -56,3 +56,4 @@ anchors_preset = 0
 
 [node name="CursorSprite" parent="Cursor" groups=["prevents_movement"] instance=ExtResource("6_ejrbb")]
 visible = false
+z_index = 2

@@ -60,3 +60,4 @@ layout_mode = 2
 layout_mode = 2
 
 [connection signal="button_down" from="MatsGold/Mats" to="." method="_on_mats_button_down"]
+[connection signal="button_down" from="MatsGold/Mats" to="MatsGold/Mats" method="_on_button_down"]

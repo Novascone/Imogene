@@ -42,5 +42,9 @@ public partial class BottomButton : Button
 		}
 	}
 
+	// public void _on_button_down()
+	// {
+	// 	AcceptEvent();
+	// }
 
 }

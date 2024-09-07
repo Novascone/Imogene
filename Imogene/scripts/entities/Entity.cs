@@ -22,7 +22,6 @@ public partial class Entity : CharacterBody3D
 	[Export] public EntitySystems entity_systems;
 	// [Export] public DamageSystem damage_system;
 	// [Export] public ResourceSystem resource_system;
-	[Export] public XPSystem xp_system;
 	
 
 
@@ -214,13 +213,18 @@ public partial class Entity : CharacterBody3D
 
 	// Status effects
 	public List<StatusEffect> status_effects = new List<StatusEffect>();
-	
+
 
     // public Vector3 enemy_position;
 
 
-	private CustomSignals _customSignals;
+    public override void _Ready()
+    {
+	
+        entity_systems.damage_system.SubscribeEntityToHealthRegen(this);
+    }
 
+   
 
     private void OnCastTickTimeout()
     {

@@ -57,6 +57,8 @@ public partial class NewUI : Control
     {
         EmitSignal(nameof(InventoryToggle));
 		preventing_movement = false;
+		if(cursor.Visible)
+		
 		cursor.Visible = !cursor.Visible;
     }
 
@@ -67,10 +69,12 @@ public partial class NewUI : Control
 		preventing_movement = true;
     }
 
-	public override void _Input(InputEvent @event)
+	public override void _GuiInput(InputEvent @event)
 	{
+		
 		if(@event is InputEventJoypadButton eventJoypadButton)
 		{
+			GD.Print("event " + @event);
 			if(CheckUIComponentOpen() && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
 			{
 				GD.Print("event accepted ");
@@ -118,6 +122,10 @@ public partial class NewUI : Control
 		if(Input.IsActionJustPressed("Inventory"))
 		{
 			preventing_movement = !preventing_movement;
+			if(!CheckUIComponentOpen() && !cursor.Visible || CheckUIComponentOpen()  && cursor.Visible )
+			{
+				cursor.Visible = !cursor.Visible;
+			}
 			if(!abilities.Visible)
 			{
 				inventory.Visible = !inventory.Visible;
@@ -127,7 +135,8 @@ public partial class NewUI : Control
 				abilities.ResetPage();
 				abilities.Visible = !abilities.Visible;
 			}
-			cursor.Visible = !cursor.Visible;
+			
+			
 			EmitSignal(nameof(InventoryToggle));
 		}
 

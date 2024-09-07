@@ -279,8 +279,16 @@ public partial class AbilityController : Node
         ability.in_use = false;
     }
 
-    
-
-
-    
+    internal void OnNearInteractable(bool near_interactable)
+    {
+        GD.Print("got signal from interact system");
+        if(near_interactable == true)
+        {
+            can_use_abilities = false;
+        }
+        else
+        {
+            can_use_abilities = true;
+        }
+    }
 }

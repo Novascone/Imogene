@@ -29,17 +29,13 @@ public partial class Stat : Control
 	{
 	}
 
-    public override void _GuiInput(InputEvent @event)
+   	public override void _GuiInput(InputEvent @event)
 	{
 		if(@event is InputEventJoypadButton eventJoypadButton)
 		{
-			if(eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
+			if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
+			if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
 		}
-		
 	}
 	public void _on_area_2d_area_entered(Area2D area)
 	{
@@ -65,4 +61,6 @@ public partial class Stat : Control
 	{
 		info.Hide();
 	}
+
+	
 }

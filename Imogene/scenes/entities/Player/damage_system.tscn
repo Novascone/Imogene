@@ -8,6 +8,7 @@ script = ExtResource("1_8hb6i")
 [node name="DoTTimer" type="Timer" parent="."]
 
 [node name="HealthRegenTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="SlowTimer" type="Timer" parent="."]
 

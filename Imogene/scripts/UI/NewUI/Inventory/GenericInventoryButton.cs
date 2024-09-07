@@ -32,6 +32,11 @@ public partial class GenericInventoryButton : Button
 		}
 	}
 
+	public void _on_button_down()
+	{
+		AcceptEvent();
+	}
+
 	public void _on_focus_entered()
 	{
 		info.Show();
@@ -41,4 +46,13 @@ public partial class GenericInventoryButton : Button
 	{
 		info.Hide();
 	}
+	public override void _GuiInput(InputEvent @event)
+	{
+		if(@event is InputEventJoypadButton eventJoypadButton)
+		{
+			if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
+			if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
+		}
+	}
+
 }
