@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy3yjxh5ky8nk"]
-
-[ext_resource type="Script" path="res://scripts/abilities/General/Active/Thrust/Thrust.cs" id="1_n7f1g"]
-
-[node name="Thrust" type="Node3D"]
-script = ExtResource("1_n7f1g")

@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx7euxlockctf"]
+
+[ext_resource type="Script" path="res://player/ui/GearInfo.cs" id="1_lqxac"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80ts1"]
+size = Vector2(63, 65)
+
+[node name="MainSecondary" type="Button" node_paths=PackedStringArray("info")]
+custom_minimum_size = Vector2(75, 75)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_lqxac")
+info = NodePath("Info")
+
+[node name="Info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.009
+offset_left = -18.5
+offset_top = -30.0
+offset_right = 21.5
+offset_bottom = 10.01
+grow_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.0
+offset_top = -59.0
+offset_right = 47.0
+offset_bottom = 22.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Info/PanelContainer"]
+layout_mode = 2
+text = "Main 
+Hand
+Secondary"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(37, 38)
+shape = SubResource("RectangleShape2D_80ts1")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

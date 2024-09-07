@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8rwto7s7kjhv"]
-
-[ext_resource type="Script" path="res://scripts/systems/VisionSystem.cs" id="1_dgg4l"]
-
-[node name="VisionSystem" type="Node"]
-script = ExtResource("1_dgg4l")

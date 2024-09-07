@@ -1,0 +1,113 @@
+[gd_scene load_steps=2 format=3 uid="uid://cghvdlhroyxr"]
+
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDCross.cs" id="1_i1oew"]
+
+[node name="HUDCross" type="GridContainer" node_paths=PackedStringArray("up", "up_label", "left", "left_label", "right", "right_label", "down", "down_label")]
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+script = ExtResource("1_i1oew")
+up = NodePath("up")
+up_label = NodePath("up/Label")
+left = NodePath("left")
+left_label = NodePath("left/Label")
+right = NodePath("right")
+right_label = NodePath("right/Label")
+down = NodePath("down")
+down_label = NodePath("down/Label")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="up" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="up"]
+visible = false
+layout_mode = 0
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+horizontal_alignment = 2
+
+[node name="Control3" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="left" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="left"]
+visible = false
+layout_mode = 0
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+horizontal_alignment = 2
+
+[node name="Control5" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="right" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="right"]
+visible = false
+layout_mode = 0
+offset_left = 27.0
+offset_right = 57.0
+offset_bottom = 25.0
+horizontal_alignment = 2
+
+[node name="Control8" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="down" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="down"]
+visible = false
+layout_mode = 0
+offset_left = 25.0
+offset_right = 57.0
+offset_bottom = 25.0
+horizontal_alignment = 2
+
+[node name="Control9" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

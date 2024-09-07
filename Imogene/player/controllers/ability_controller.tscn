@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf8paulijqr0g"]
+
+[ext_resource type="Script" path="res://player/controllers/AbilityController.cs" id="1_g3drm"]
+
+[node name="AbilityController" type="Node"]
+script = ExtResource("1_g3drm")

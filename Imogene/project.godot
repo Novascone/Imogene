@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="Imogene"
-run/main_scene="res://scenes/world/Test_Scenes/testing_grounds.tscn"
+run/main_scene="res://levels/test/testing_grounds.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 run/max_fps=144
 config/icon="res://icon.svg"
 
 [autoload]
 
-CustomSignals="*res://scripts/custom_signals/CustomSignals.cs"
+CustomSignals="*res://custom_signals/CustomSignals.cs"
 
 [display]
 

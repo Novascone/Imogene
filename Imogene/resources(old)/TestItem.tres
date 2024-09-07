@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5vccqvn34ool"]
+
+[ext_resource type="Script" path="res://interactive/items(old)/ConsumableResource.cs" id="2_ff1d1"]
+
+[resource]
+script = ExtResource("2_ff1d1")
+heal_amount = 10
+id = 0
+name = ""
+quantity = 0
+stack_size = 0
+is_stackable = false
+type = ""

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cshmtuq4hqonv"]
+
+[ext_resource type="PackedScene" uid="uid://di281sdq811rp" path="res://models/weapons/axe.blend" id="1_ad7li"]
+[ext_resource type="Script" path="res://interactive/items(old)/arms/Arm.cs" id="2_uha7f"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_m5lfe"]
+script/source = "using Godot;
+using System;
+
+public partial class Hitbox : RigidBody3D
+{
+	// Called when the node enters the scene tree for the first time.
+	[Export] public string damage_type { get; set; }
+	[Export] public float damage { get; set; }
+	[Export] public float posture_damage { get; set; }
+	public bool is_critical;
+	
+}
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_erb5q"]
+
+[node name="Weapon" instance=ExtResource("1_ad7li")]
+script = ExtResource("2_uha7f")
+
+[node name="Hitbox" type="Area3D" parent="." index="1"]
+transform = Transform3D(1, -2.98023e-08, -1.63913e-07, 5.96046e-08, 1, 1.51992e-06, 0, 0, 0.999999, -0.00900173, 1.6362, 0.249891)
+monitoring = false
+script = SubResource("CSharpScript_m5lfe")
+damage_type = null
+damage = null
+posture_damage = null
+
+[node name="HitboxCollision" type="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, -2.98023e-08, -1.49012e-08, 2.98023e-08, 1, 8.9407e-08, 0, 0, 1, 0.00774658, -0.0166409, 0.022884)
+shape = SubResource("SphereShape3D_erb5q")

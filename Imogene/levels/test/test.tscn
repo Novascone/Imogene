@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://dwsx4y3cqpgte"]
+
+[ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://interactive/box.tscn" id="1_4rjct"]
+[ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://props/platform.tscn" id="4_atlgh"]
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://player/player.tscn" id="4_j8e3h"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
+vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6mhlf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhky2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iphw8"]
+
+[sub_resource type="Sky" id="Sky_xie8p"]
+sky_material = SubResource("ProceduralSkyMaterial_iphw8")
+
+[sub_resource type="Environment" id="Environment_sd3p5"]
+background_mode = 2
+sky = SubResource("Sky_xie8p")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pvhmg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hh1qf"]
+
+[node name="Level" type="Node3D" groups=["terrain"]]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_eyji4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(-39.6001, 0, 0, 0, 0.0161886, 0, 0, 0, 31.3423, 0, 0, 0)
+mesh = SubResource("BoxMesh_6mhlf")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
+shape = SubResource("BoxShape3D_hhky2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sd3p5")
+
+[node name="Box" parent="." instance=ExtResource("1_4rjct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486114, 0.621105, -14.2103)
+
+[node name="Platform" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 10.7345, 1.24334, -6)
+
+[node name="Platform2" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 11.9934, 1.81361, -6)
+
+[node name="Platform3" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(0.603222, 0, -0.797573, 0, 1, 0, 0.797573, 0, 0.603222, 13.4703, 2.38739, -6)
+
+[node name="Platform4" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0507778, 5.7949)
+
+[node name="Platform5" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184252, 6.73639)
+
+[node name="Platform6" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.350969, 7.69502)
+
+[node name="Platform7" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.516428, 8.51507)
+
+[node name="Platform8" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.698438, 9.0432)
+
+[node name="Platform9" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903539, 9.56571)
+
+[node name="Platform10" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.10338, 0.903539, 9.56571)
+
+[node name="Platform11" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.855, 2.59798, 9.27905)
+
+[node name="Platform12" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.855, 3.57582, 10.9564)
+
+[node name="Platform13" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0225, 4.32972, 10.9564)
+
+[node name="Platform14" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(0.560885, 0, -0.827894, 0, 1, 0, 0.827894, 0, 0.560885, -2.39207, 5.70501, 9.09201)
+
+[node name="Platform15" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(-0.0215706, 0, -0.999767, 0, 1, 0, 0.999767, 0, -0.0215706, -5.63668, 6.94045, 3.53488)
+
+[node name="Platform16" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(-0.0215706, 0, -0.999767, 0, 1, 0, 0.999767, 0, -0.0215706, -5.63668, 8.27653, 1.42583)
+
+[node name="Platform17" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(-0.0215706, 0, -0.999767, 0, 1, 0, 0.999767, 0, -0.0215706, -5.63668, 9.39454, -1.10253)
+
+[node name="Platform18" parent="." instance=ExtResource("4_atlgh")]
+transform = Transform3D(-0.777201, 0, -0.629253, 0, 1, 0, 0.629253, 0, -0.777201, -3.43577, 10.6634, -1.10253)
+collision_mask = 128
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852181, -0.348481, 0.390318, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.85098, 1)
+light_energy = 0.25
+shadow_enabled = true
+shadow_blur = 0.0
+sky_mode = 1
+
+[node name="player" parent="." instance=ExtResource("4_j8e3h")]
+
+[node name="Box2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.96641, 0, 2.68336, 0, 4, 0, -2.68336, 0, 2.96641, -8.73805, 1.85571, -4.70036)
+mesh = SubResource("BoxMesh_pvhmg")
+
+[node name="BoxTwo" type="StaticBody3D" parent="Box2"]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box2/BoxTwo"]
+shape = SubResource("BoxShape3D_hh1qf")

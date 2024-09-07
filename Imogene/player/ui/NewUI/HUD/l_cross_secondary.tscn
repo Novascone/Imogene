@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://cvh0tiss1l4y3"]
+
+[node name="LCrossSecondary" type="GridContainer"]
+modulate = Color(1, 1, 1, 0.0980392)
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossSecondaryUpAction" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="LCrossSecondaryUpAction"]
+visible = false
+layout_mode = 0
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "RB"
+horizontal_alignment = 2
+
+[node name="Control3" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossSecondaryLeftAction" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="LCrossSecondaryLeftAction"]
+visible = false
+layout_mode = 0
+offset_left = 29.0
+offset_right = 58.0
+offset_bottom = 25.0
+text = "LB"
+horizontal_alignment = 2
+
+[node name="Control5" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="LCrossSecondaryRightAction" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="LCrossSecondaryRightAction"]
+visible = false
+layout_mode = 0
+offset_left = 27.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "RT"
+horizontal_alignment = 2
+
+[node name="Control8" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LCrossSecondaryDownAction" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="LCrossSecondaryDownAction"]
+visible = false
+layout_mode = 0
+offset_left = 25.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "LT"
+horizontal_alignment = 2
+
+[node name="Control9" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

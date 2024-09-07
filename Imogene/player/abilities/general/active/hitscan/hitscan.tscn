@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr6yeyvn2n78f"]
+
+[ext_resource type="Script" path="res://player/abilities/general/active/hitscan/Hitscan.cs" id="1_d5ves"]
+[ext_resource type="Texture2D" uid="uid://cdevi0u2qlhth" path="res://images/icons/hit_scan.png" id="2_dwisl"]
+[ext_resource type="PackedScene" uid="uid://bqd7fqr61nd4u" path="res://player/abilities/debug/cast_marker.tscn" id="2_dyjx2"]
+
+[node name="Hitscan" type="Node3D" node_paths=PackedStringArray("cast_timer")]
+script = ExtResource("1_d5ves")
+cast_marker_scene = ExtResource("2_dyjx2")
+cast_timer = NodePath("CastTimer")
+general_ability_type = 1
+icon = ExtResource("2_dwisl")
+
+[node name="CastTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]

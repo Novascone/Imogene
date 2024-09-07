@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvdgsyi02o40v"]
+
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDCross.cs" id="1_bm6es"]
+[ext_resource type="PackedScene" uid="uid://d16ibxd137gk3" path="res://player/ui/NewUI/HUD/left_cross_hud_button.tscn" id="2_oh1co"]
+
+[node name="LeftPrimaryHUDCross" type="GridContainer" node_paths=PackedStringArray("up", "left", "right", "down")]
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+columns = 3
+script = ExtResource("1_bm6es")
+up = NodePath("up")
+left = NodePath("Left")
+right = NodePath("Right")
+down = NodePath("Down")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="up" parent="." instance=ExtResource("2_oh1co")]
+layout_mode = 2
+button_bind = "RB"
+level = "Primary"
+
+[node name="Control3" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Left" parent="." instance=ExtResource("2_oh1co")]
+layout_mode = 2
+button_bind = "LB"
+level = "Primary"
+
+[node name="Control5" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Right" parent="." instance=ExtResource("2_oh1co")]
+layout_mode = 2
+button_bind = "RT"
+level = "Primary"
+
+[node name="Control8" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Down" parent="." instance=ExtResource("2_oh1co")]
+layout_mode = 2
+button_bind = "LT"
+level = "Primary"
+
+[node name="Control9" type="Control" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

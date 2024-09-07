@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://co3w4qm4qhs02"]
+
+[ext_resource type="Script" path="res://enemy/controllers/EnemyControllers.cs" id="1_u81j6"]
+[ext_resource type="Script" path="res://enemy/controllers/EnemyMovementController.cs" id="1_wffa1"]
+[ext_resource type="Script" path="res://enemy/controllers/EnemyAbilityController.cs" id="4_ibg3k"]
+[ext_resource type="PackedScene" uid="uid://dftoggtcqx068" path="res://enemy/controllers/state_machines/enemy_state_machine.tscn" id="4_n6ty1"]
+
+[node name="Controllers" type="Node3D" node_paths=PackedStringArray("movement_controller", "ability_controller", "ray_position")]
+script = ExtResource("1_u81j6")
+movement_controller = NodePath("MovementController")
+ability_controller = NodePath("AbilityController")
+ray_position = NodePath("RayPosition")
+
+[node name="MovementController" type="Node" parent="."]
+script = ExtResource("1_wffa1")
+
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("4_ibg3k")
+
+[node name="RayPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18038, 0)
+
+[node name="StateMachine" parent="." instance=ExtResource("4_n6ty1")]

@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dotvtist08pqx"]
-
-[ext_resource type="PackedScene" uid="uid://dc3uiph458lkd" path="res://models/armor/shoulder_test_left.glb" id="1_etsku"]
-
-[node name="shoulder_test_left" instance=ExtResource("1_etsku")]

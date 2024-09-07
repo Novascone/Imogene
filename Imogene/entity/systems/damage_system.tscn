@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://quqk6wxyhwh1"]
+
+[ext_resource type="Script" path="res://entity/systems/DamageSystem.cs" id="1_cywth"]
+[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/DamageNumber3D.tscn" id="2_scf3d"]
+
+[node name="DamageSystem" type="Node" node_paths=PackedStringArray("health_regen_timer")]
+script = ExtResource("1_cywth")
+health_regen_timer = NodePath("HealthRegenTimer")
+damage_number_3d_template = ExtResource("2_scf3d")
+
+[node name="DoTTimer" type="Timer" parent="."]
+
+[node name="HealthRegenTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SlowTimer" type="Timer" parent="."]
+
+[node name="StunTimer" type="Timer" parent="."]

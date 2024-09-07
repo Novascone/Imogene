@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://vtcl8xpfnxfs"]
+
+[ext_resource type="Texture2D" uid="uid://d064ods76e1x0" path="res://images/icons/thrust_icon.png" id="1_fj2u4"]
+[ext_resource type="Script" path="res://player/abilities/AbilityResourceScripts/AbilityResource.cs" id="2_s0362"]
+
+[resource]
+script = ExtResource("2_s0362")
+id = 0
+class_type = "General"
+ability_type = "Active"
+name = "Thrust"
+description = "Thrust at enemy for thrust damage"
+ability_path = ""
+icon = ExtResource("1_fj2u4")
+type = "melee"

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://r40vsjeix5rc"]
+
+[ext_resource type="Script" path="res://player/systems/TargetingSystem.cs" id="1_7r4wp"]
+
+[node name="TargetingSystem" type="Node"]
+script = ExtResource("1_7r4wp")

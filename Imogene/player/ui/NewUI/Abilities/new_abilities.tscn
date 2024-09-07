@@ -1,0 +1,120 @@
+[gd_scene load_steps=6 format=3 uid="uid://ey6wymo6kewe"]
+
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/NewAbilities.cs" id="1_k050e"]
+[ext_resource type="PackedScene" uid="uid://dffakp3c6a4tl" path="res://player/ui/NewUI/Abilities/binds.tscn" id="2_jcc34"]
+[ext_resource type="PackedScene" uid="uid://s6e25bsdm7fw" path="res://player/ui/NewUI/Abilities/Categories/categories.tscn" id="3_fvdln"]
+[ext_resource type="PackedScene" uid="uid://4usjhrjsl1ki" path="res://player/ui/NewUI/Abilities/class_passives_full_page.tscn" id="4_88coj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y3424"]
+size = Vector2(144, 29)
+
+[node name="NewAbilites" type="PanelContainer" node_paths=PackedStringArray("binds", "categories")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -510.0
+offset_right = 510.0
+offset_bottom = 810.0
+grow_horizontal = 2
+script = ExtResource("1_k050e")
+binds = NodePath("VBoxContainer/AbilityBinds/Binds")
+categories = NodePath("VBoxContainer/Categories")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Title" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(815, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/Title"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 25.5
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Abilities"
+horizontal_alignment = 1
+
+[node name="AbilityBinds" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Control" type="Control" parent="VBoxContainer/AbilityBinds"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Binds" parent="VBoxContainer/AbilityBinds" instance=ExtResource("2_jcc34")]
+layout_mode = 2
+
+[node name="Close" type="VBoxContainer" parent="VBoxContainer/AbilityBinds"]
+visible = false
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Close" type="Button" parent="VBoxContainer/AbilityBinds/Close"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/AbilityBinds/Close/Close"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/AbilityBinds/Close/Close/Area2D"]
+position = Vector2(75, 16.5)
+shape = SubResource("RectangleShape2D_y3424")
+
+[node name="Control" type="Control" parent="VBoxContainer/AbilityBinds/Close"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Categories" parent="VBoxContainer" instance=ExtResource("3_fvdln")]
+visible = false
+layout_mode = 2
+
+[node name="Passives" parent="VBoxContainer" instance=ExtResource("4_88coj")]
+visible = false
+layout_mode = 2
+
+[node name="Close" type="VBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="VBoxContainer/Close"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="VBoxContainer/Close"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/Close/Close"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Close/Close/Area2D"]
+position = Vector2(75, 16.5)
+shape = SubResource("RectangleShape2D_y3424")
+
+[connection signal="button_down" from="VBoxContainer/AbilityBinds/Close/Close" to="VBoxContainer/AbilityBinds/Binds" method="_on_close_button_down"]
+[connection signal="button_down" from="VBoxContainer/Close/Close" to="." method="_on_close_button_down"]

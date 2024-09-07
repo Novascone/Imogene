@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3s2coq504hnp"]
+
+[ext_resource type="Script" path="res://player/abilities/brigian/active/whirlwind/Whirlwind.cs" id="1_oegyt"]
+[ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://images/icons/whirlwind_icon.png" id="2_7kg35"]
+[ext_resource type="PackedScene" uid="uid://djsdkytrejoj0" path="res://player/abilities/brigian/active/whirlwind/whirlwind_hitbox.tscn" id="2_w3hli"]
+[ext_resource type="PackedScene" uid="uid://by8ni4t30bap" path="res://player/abilities/brigian/active/whirlwind/whirlwind_mesh.tscn" id="3_suli4"]
+
+[node name="Whirlwind" type="Node3D" node_paths=PackedStringArray("tick_timer")]
+script = ExtResource("1_oegyt")
+tick_timer = NodePath("TickTimer")
+hitbox_to_load = ExtResource("2_w3hli")
+mesh_to_load = ExtResource("3_suli4")
+class_type = 1
+class_ability_type = 2
+damage_type = 1
+icon = ExtResource("2_7kg35")
+
+[node name="TickTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="TickTimer" to="." method="_on_tick_timer_timeout"]

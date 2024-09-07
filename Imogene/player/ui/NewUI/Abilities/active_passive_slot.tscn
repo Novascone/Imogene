@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://7py5yrnfrye5"]
+
+[node name="ActivePassiveSlot" type="Button"]
+custom_minimum_size = Vector2(60, 60)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true

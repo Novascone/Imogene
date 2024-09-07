@@ -1,9 +1,0 @@
-[gd_scene load_steps=4 format=3 uid="uid://byrwgonwmhnwl"]
-
-[ext_resource type="Script" path="res://scripts/items/arms/Arm.cs" id="1_5sagk"]
-[ext_resource type="PackedScene" uid="uid://dvt8a50k61ti8" path="res://models/armor/shoulder_test.glb" id="1_vmu1i"]
-[ext_resource type="Resource" uid="uid://cf63d8x7ps2v8" path="res://scenes/armor/shoulders/shoulder_test.tres" id="2_sjb58"]
-
-[node name="shoulder_test" instance=ExtResource("1_vmu1i")]
-script = ExtResource("1_5sagk")
-armsResource = ExtResource("2_sjb58")

@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bahsj643nmpab"]
-
-[ext_resource type="Script" path="res://scripts/items/arms/Arm.cs" id="1_r3cor"]
-[ext_resource type="Resource" uid="uid://by4klij2b72pa" path="res://scenes/armor/shoulders_split.tres" id="2_3llnu"]
-
-[node name="shoulders_split" type="Node3D"]
-script = ExtResource("1_r3cor")
-armsResource = ExtResource("2_3llnu")

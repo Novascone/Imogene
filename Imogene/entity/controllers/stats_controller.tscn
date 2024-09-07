@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://so6yd7758k1a"]
+
+[ext_resource type="Script" path="res://entity/controllers/StatsController.cs" id="1_0otuq"]
+
+[node name="StatsController" type="Node"]
+script = ExtResource("1_0otuq")

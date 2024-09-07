@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5wqcc1dtvpxy"]
+
+[ext_resource type="PackedScene" uid="uid://ds2svqsgmx87v" path="res://scenes(old)/UI/UI.tscn" id="1_0kepo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvify"]
+albedo_color = Color(0.473485, 1, 0.709992, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5tqk3"]
+material = SubResource("StandardMaterial3D_uvify")
+
+[node name="UI" type="Node3D"]
+
+[node name="UI" parent="." instance=ExtResource("1_0kepo")]
+
+[node name="LandPoint" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+mesh = SubResource("SphereMesh_5tqk3")
+skeleton = NodePath("../..")
+
+[node name="DebugRaycast" type="RayCast3D" parent="."]
+visible = false
+target_position = Vector3(0, 0, -100)

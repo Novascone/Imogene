@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://2syxxwi1wgte"]
+
+[ext_resource type="Script" path="res://player/abilities/general/active/slash/Slash.cs" id="1_abkjy"]
+[ext_resource type="Texture2D" uid="uid://bdxbifpl5u8m3" path="res://images/icons/slash_icon.png" id="2_3detj"]
+
+[node name="Slash" type="Node3D"]
+script = ExtResource("1_abkjy")
+damage_type = 1
+icon = ExtResource("2_3detj")
+
+[node name="SwingTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="HeldTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SecondarySwingTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="ReleaseTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
+[connection signal="timeout" from="HeldTimer" to="." method="_on_held_timer_timeout"]
+[connection signal="timeout" from="SecondarySwingTimer" to="." method="_on_secondary_swing_timer_timeout"]
+[connection signal="timeout" from="ReleaseTimer" to="." method="_on_release_timer_timeout"]

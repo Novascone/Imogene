@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh2s27eq81msc"]
+
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="1_rnyhu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0f4e3"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ovxx"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="SubViewportContainer" type="SubViewportContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -100.0
+offset_right = 128.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport/VBoxContainer"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_0f4e3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ovxx")
+value = 50.0
+show_percentage = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SubViewport/VBoxContainer"]
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+fill_mode = 6
+nine_patch_stretch = true
+texture_progress = ExtResource("1_rnyhu")

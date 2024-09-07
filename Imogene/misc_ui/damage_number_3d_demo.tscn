@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvini3p33macr"]
+
+[ext_resource type="Script" path="res://misc_ui/damage_number_3d_demo.cs" id="1_wke3f"]
+[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/DamageNumber3D.tscn" id="2_74bje"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_513si"]
+
+[sub_resource type="Sky" id="Sky_i2yqe"]
+sky_material = SubResource("ProceduralSkyMaterial_513si")
+
+[sub_resource type="Environment" id="Environment_ixnnb"]
+background_mode = 2
+sky = SubResource("Sky_i2yqe")
+
+[sub_resource type="BoxMesh" id="BoxMesh_fpgkv"]
+
+[node name="DamageNumber3DDemo" type="Node3D" node_paths=PackedStringArray("spawn_point", "spread_value", "height_value")]
+script = ExtResource("1_wke3f")
+spawn_point = NodePath("SpawnPoint")
+spread_value = NodePath("VBoxContainer/HBoxContainer/SpreadValue")
+height_value = NodePath("VBoxContainer/HBoxContainer2/HeightValue")
+damage_number_3d_template = ExtResource("2_74bje")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ixnnb")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.54588, 0)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 531.0
+offset_bottom = 137.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Spread "
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 200.0
+value = 1.0
+
+[node name="SpreadValue" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "1
+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Height
+"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 400.0
+value = 1.0
+
+[node name="HeightValue" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "1
+"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 0.2, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("BoxMesh_fpgkv")
+
+[node name="Camera" type="Camera3D" parent="." groups=["Camera"]]
+transform = Transform3D(-0.866025, -0.288929, 0.408069, 0, 0.816138, 0.577857, -0.5, 0.500439, -0.706796, 14, 21, -25)
+projection = 1
+size = 21.0
+far = 100.0
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/HSlider" to="." method="_on_spread_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/HSlider" to="." method="_on_height_value_changed"]
