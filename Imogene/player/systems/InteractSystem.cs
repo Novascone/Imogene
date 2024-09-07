@@ -62,10 +62,10 @@ public partial class InteractSystem : Node3D
 			{
 				GD.PrintErr("Item not found");
 			}
-			if(near_by_items.Count == 0)
-			{
-				EmitSignal(nameof(NearInteractable),false);
-			}
+			// if(near_by_items.Count == 0)
+			// {
+			// 	EmitSignal(nameof(NearInteractable),false);
+			// }
 		}
 		
 	}
@@ -101,7 +101,7 @@ public partial class InteractSystem : Node3D
 		GD.Print("Item exited interact area");
 		if(body is InteractableItem item && near_by_items.Contains(item))
 		{
-			EmitSignal(nameof(NearInteractable),false);
+			// EmitSignal(nameof(NearInteractable),false);
 			item.LoseFocus();
 
 			near_by_items.Remove(item);
@@ -113,7 +113,7 @@ public partial class InteractSystem : Node3D
 		GD.Print("Item entered interact area");
 		if(body is InteractableItem item)
 		{
-			EmitSignal(nameof(NearInteractable),true);
+			// EmitSignal(nameof(NearInteractable),true);
 			item.GainFocus();
 			
 			near_by_items.Add(item);
