@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp5y21kspghkw"]
+
+[ext_resource type="Script" path="res://entity/player/ui/abilities/binds/CrossBindButton.cs" id="1_mjwyo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vb2se"]
+size = Vector2(56, 56)
+
+[node name="RCrossBindButton" type="Button" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(60, 60)
+script = ExtResource("1_mjwyo")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 29.0
+offset_bottom = 25.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(30, 30)
+shape = SubResource("RectangleShape2D_vb2se")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

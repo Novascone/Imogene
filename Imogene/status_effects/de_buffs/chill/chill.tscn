@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6siwhq2e6kja"]
+
+[ext_resource type="Script" path="res://status_effects/de_buffs/chill/Chill.cs" id="1_j7mqs"]
+[ext_resource type="Resource" uid="uid://debmhsoohcm13" path="res://status_effects/de_buffs/chill/Chill.tres" id="2_35hqu"]
+
+[node name="Chill" type="Node3D"]
+script = ExtResource("1_j7mqs")
+resource = ExtResource("2_35hqu")
+alters_speed = true
+
+[node name="DurationTimer" type="Timer" parent="."]
+one_shot = true

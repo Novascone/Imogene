@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://juocam0bru5p"]
+
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="1_8s3h2"]
+[ext_resource type="Script" path="res://entity/player/ui/NewCursor.cs" id="2_4mror"]
+[ext_resource type="PackedScene" uid="uid://dem7n4e5trdw4" path="res://entity/player/ui/Inventory/main_inventory/item_button.tscn" id="3_dwscb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ux3vn"]
+radius = 3.0
+
+[node name="CursorSprite" type="Sprite2D"]
+top_level = true
+position = Vector2(1157, 294)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_8s3h2")
+script = ExtResource("2_4mror")
+
+[node name="CursorArea2D" type="Area2D" parent="." groups=["cursor"]]
+show_behind_parent = true
+position = Vector2(0, 6.66667)
+scale = Vector2(6.66667, 6.66667)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CursorArea2D"]
+position = Vector2(-9, -9.99999)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_ux3vn")
+
+[node name="ItemButton" parent="." instance=ExtResource("3_dwscb")]
+visible = false
+offset_left = -240.0
+offset_top = -240.0
+offset_right = -40.0002
+offset_bottom = -39.9999

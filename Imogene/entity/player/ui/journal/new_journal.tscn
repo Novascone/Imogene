@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgp7cnnm5irxa"]
+
+[ext_resource type="Script" path="res://entity/player/ui/journal/NewJournal.cs" id="1_55qso"]
+[ext_resource type="PackedScene" uid="uid://cjlg5yn8ajv6d" path="res://entity/player/ui/journal/journal_page.tscn" id="2_8a4y7"]
+[ext_resource type="PackedScene" uid="uid://7x5lamc64r6a" path="res://entity/player/ui/journal/journal_tab.tscn" id="2_s32ox"]
+
+[node name="NewJournal" type="HBoxContainer"]
+custom_minimum_size = Vector2(612, 0)
+offset_right = 428.0
+offset_bottom = 816.0
+script = ExtResource("1_55qso")
+
+[node name="QuestPage" parent="." instance=ExtResource("2_8a4y7")]
+layout_mode = 2
+
+[node name="BestiaryPage" parent="." instance=ExtResource("2_8a4y7")]
+visible = false
+layout_mode = 2
+
+[node name="LorePage" parent="." instance=ExtResource("2_8a4y7")]
+visible = false
+layout_mode = 2
+
+[node name="TutorialsPage" parent="." instance=ExtResource("2_8a4y7")]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="QuestsTab" parent="VBoxContainer" instance=ExtResource("2_s32ox")]
+layout_mode = 2
+button_title = "Quests"
+
+[node name="BestiaryTab" parent="VBoxContainer" instance=ExtResource("2_s32ox")]
+layout_mode = 2
+button_title = "Bestiary"
+
+[node name="LoreTab" parent="VBoxContainer" instance=ExtResource("2_s32ox")]
+layout_mode = 2
+button_title = "Lore"
+
+[node name="TutorialsTab" parent="VBoxContainer" instance=ExtResource("2_s32ox")]
+layout_mode = 2
+button_title = "Tutorials"

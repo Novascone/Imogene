@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3nom8wdu51lb"]
+
+[ext_resource type="Script" path="res://entity/player/ui/abilities/passive/GeneralPassives.cs" id="1_puqin"]
+[ext_resource type="PackedScene" uid="uid://qany0r8it5yb" path="res://entity/player/ui/abilities/passive/passive_selection_slot.tscn" id="1_pvluj"]
+
+[node name="GeneralPassives" type="GridContainer"]
+custom_minimum_size = Vector2(470, 0)
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 20
+columns = 3
+script = ExtResource("1_puqin")
+
+[node name="PassiveSelection1" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection2" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection3" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection4" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection5" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection6" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection7" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection8" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection9" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection10" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection11" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2
+
+[node name="PassiveSelection12" parent="." instance=ExtResource("1_pvluj")]
+layout_mode = 2

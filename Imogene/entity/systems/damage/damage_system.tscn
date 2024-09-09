@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://quqk6wxyhwh1"]
 
 [ext_resource type="Script" path="res://entity/systems/damage/DamageSystem.cs" id="1_y4f82"]
-[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/DamageNumber3D.tscn" id="2_gwfjj"]
+[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/damage_number_3d.tscn" id="2_gwfjj"]
 
 [node name="DamageSystem" type="Node" node_paths=PackedStringArray("health_regen_timer")]
 script = ExtResource("1_y4f82")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvini3p33macr"]
 
 [ext_resource type="Script" path="res://misc_ui/damage_number_3d_demo.cs" id="1_wke3f"]
-[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/DamageNumber3D.tscn" id="2_74bje"]
+[ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://misc_ui/damage_number_3d.tscn" id="2_74bje"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_513si"]
 

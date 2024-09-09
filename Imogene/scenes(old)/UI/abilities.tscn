@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts(old)/UI/AbilitiesInterface.cs" id="1_luq6p"]
 [ext_resource type="Script" path="res://scripts(old)/UI/Assignment/CrossAssignment.cs" id="2_k808o"]
-[ext_resource type="PackedScene" uid="uid://c7lfd31hfc3l4" path="res://entity/player/ui/melee_abilities.tscn" id="3_3x268"]
+[ext_resource type="PackedScene" uid="uid://c7lfd31hfc3l4" path="res://scenes(old)/UI/melee_abilities.tscn" id="3_3x268"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y243c"]
 size = Vector2(329, 90)
