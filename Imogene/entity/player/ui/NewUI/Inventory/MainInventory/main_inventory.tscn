@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkjmtb18np0jd"]
+
+[ext_resource type="Script" path="res://entity/player/ui/NewUI/Inventory/MainInventory/MainInventory.cs" id="1_he5l0"]
+[ext_resource type="PackedScene" uid="uid://q4fdinjsppia" path="res://entity/player/ui/NewUI/Inventory/MainInventory/CharacterOutline/character_outline.tscn" id="2_cuxs3"]
+[ext_resource type="PackedScene" uid="uid://ccindx3yp61uk" path="res://entity/player/ui/NewUI/Inventory/BottomButtons/bottom_buttons.tscn" id="3_64plo"]
+[ext_resource type="PackedScene" uid="uid://bq07pugqwxxgg" path="res://entity/player/ui/NewUI/Inventory/MainInventory/items.tscn" id="3_j3h2y"]
+[ext_resource type="PackedScene" uid="uid://i8rexh5m0xrf" path="res://entity/player/ui/NewUI/Inventory/MainInventory/mats_label.tscn" id="4_ajoqv"]
+[ext_resource type="PackedScene" uid="uid://cyqtt3a7dcrvv" path="res://entity/player/ui/NewUI/Inventory/MainInventory/gold_label.tscn" id="5_3to8r"]
+
+[node name="MainInventory" type="VBoxContainer" node_paths=PackedStringArray("items", "mats", "bottom_buttons")]
+offset_right = 612.0
+offset_bottom = 1080.0
+size_flags_horizontal = 10
+script = ExtResource("1_he5l0")
+items = NodePath("Items")
+mats = NodePath("MatsGold/Mats")
+bottom_buttons = NodePath("BottomButtons")
+
+[node name="InventoryTitle" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="Label" type="Label" parent="InventoryTitle"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -12.5
+offset_right = 46.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterOutline" parent="." instance=ExtResource("2_cuxs3")]
+layout_mode = 2
+
+[node name="Items" parent="." instance=ExtResource("3_j3h2y")]
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="MatsGold" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_stretch_ratio = 0.07
+theme_override_constants/separation = 0
+
+[node name="Mats" parent="MatsGold" instance=ExtResource("4_ajoqv")]
+layout_mode = 2
+
+[node name="Gold" parent="MatsGold" instance=ExtResource("5_3to8r")]
+layout_mode = 2
+
+[node name="BottomButtons" parent="." instance=ExtResource("3_64plo")]
+layout_mode = 2
+
+[connection signal="button_down" from="MatsGold/Mats" to="." method="_on_mats_button_down"]
+[connection signal="button_down" from="MatsGold/Mats" to="MatsGold/Mats" method="_on_button_down"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjlg5yn8ajv6d"]
+
+[ext_resource type="Script" path="res://entity/player/ui/NewUI/NewJournal/NewJournalPage.cs" id="1_tcmbi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tuq6d"]
+
+[node name="JournalPage" type="PanelContainer"]
+offset_right = 612.0
+offset_bottom = 816.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tuq6d")
+script = ExtResource("1_tcmbi")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1

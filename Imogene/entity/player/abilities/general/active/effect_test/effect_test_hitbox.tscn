@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://lgu3vtdut02x"]
+
+[ext_resource type="Script" path="res://entity/player/abilities/general/active/effect_test/EffectTestHitbox.cs" id="1_advpc"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8p15s"]
+height = 6.0
+radius = 5.0
+
+[node name="EffectTestHitbox" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_advpc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_8p15s")

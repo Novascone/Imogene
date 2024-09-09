@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwte326qeanqt"]
+
+[ext_resource type="Script" path="res://entity/player/abilities/general/active/bash/Bash.cs" id="1_h2j8q"]
+
+[node name="Bash" type="Node3D"]
+script = ExtResource("1_h2j8q")

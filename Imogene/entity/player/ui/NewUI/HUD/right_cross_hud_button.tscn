@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://tycrnxtx81ri"]
+
+[ext_resource type="Script" path="res://entity/player/ui/NewUI/HUD/HUDButton.cs" id="1_fx3sa"]
+
+[node name="RCrossHUDButton" type="Button" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(60, 60)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_fx3sa")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 29.0
+offset_bottom = 25.0

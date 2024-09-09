@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct07s1yunm3bp"]
+
+[ext_resource type="Script" path="res://entity/player/abilities/general/active/projectile/Projectile.cs" id="1_yrhtv"]
+[ext_resource type="PackedScene" uid="uid://cdhbhcfmpougy" path="res://entity/player/abilities/general/active/projectile/projectile_to_load.tscn" id="2_r4gxv"]
+[ext_resource type="Texture2D" uid="uid://bck6o03dlln85" path="res://images/icons/projectile.png" id="2_rqfnq"]
+[ext_resource type="PackedScene" uid="uid://bgqyp4uyqad22" path="res://status_effects/De-buffs/Slow/Slow.tscn" id="3_wucp7"]
+
+[node name="Projectile" type="Node3D" node_paths=PackedStringArray("cast_timer")]
+top_level = true
+script = ExtResource("1_yrhtv")
+projectile_to_load = ExtResource("2_r4gxv")
+slow_effect = ExtResource("3_wucp7")
+cast_timer = NodePath("CastTimer")
+general_ability_type = 1
+damage_type = 2
+icon = ExtResource("2_rqfnq")
+
+[node name="CastTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]

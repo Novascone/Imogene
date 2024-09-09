@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://7p7jdm8lgbvq"]
+
+[ext_resource type="Script" path="res://entity/player/ui/NewUI/Abilities/Passives.cs" id="1_r2lj0"]
+[ext_resource type="PackedScene" uid="uid://b3nom8wdu51lb" path="res://entity/player/ui/NewUI/Abilities/general_passives.tscn" id="3_fp4rg"]
+
+[node name="Passives" type="VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+offset_right = 1000.0
+offset_bottom = 687.0
+size_flags_vertical = 0
+script = ExtResource("1_r2lj0")
+
+[node name="Control1" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="GeneralPassives" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GeneralPassives" parent="GeneralPassives" instance=ExtResource("3_fp4rg")]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="AcceptCancel" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Accept" type="Button" parent="AcceptCancel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Accept"
+
+[node name="Cancel" type="Button" parent="AcceptCancel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Cancel"

@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://qyu8cdscxpm0"]
+
+[ext_resource type="Script" path="res://entity/player/controllers/Controllers.cs" id="1_tbsx8"]
+[ext_resource type="PackedScene" uid="uid://bhans33fk5xqm" path="res://entity/player/controllers/input_controller.tscn" id="2_qrjtm"]
+[ext_resource type="PackedScene" uid="uid://nu8ipwp3ykox" path="res://entity/player/controllers/movement_controller.tscn" id="3_p8lxt"]
+[ext_resource type="PackedScene" uid="uid://cfctyyhexl1xg" path="res://entity/player/controllers/ability_assigner.tscn" id="4_tqegs"]
+[ext_resource type="PackedScene" uid="uid://bf8paulijqr0g" path="res://entity/player/controllers/ability_controller.tscn" id="5_6i25k"]
+[ext_resource type="Script" path="res://entity/player/controllers/EquipmentController.cs" id="6_4o8dn"]
+[ext_resource type="PackedScene" uid="uid://br1lm3qgxi0jb" path="res://entity/controllers/status_effect_controller.tscn" id="7_rq3jr"]
+[ext_resource type="Script" path="res://entity/player/controllers/AnimationController.cs" id="8_v723f"]
+
+[node name="Controllers" type="Node3D" node_paths=PackedStringArray("input_controller", "movement_controller", "ability_assigner", "ability_controller", "equipment_controller", "near_wall", "on_wall")]
+script = ExtResource("1_tbsx8")
+input_controller = NodePath("InputController")
+movement_controller = NodePath("MovementController")
+ability_assigner = NodePath("AbilityAssigner")
+ability_controller = NodePath("AbilityController")
+equipment_controller = NodePath("EquipmentController")
+near_wall = NodePath("WallCheck/NearWall")
+on_wall = NodePath("WallCheck/OnWall")
+
+[node name="InputController" parent="." instance=ExtResource("2_qrjtm")]
+
+[node name="MovementController" parent="." instance=ExtResource("3_p8lxt")]
+
+[node name="AbilityAssigner" parent="." instance=ExtResource("4_tqegs")]
+
+[node name="AbilityController" parent="." instance=ExtResource("5_6i25k")]
+
+[node name="EquipmentController" type="Node" parent="."]
+script = ExtResource("6_4o8dn")
+
+[node name="StatusEffectController" parent="." instance=ExtResource("7_rq3jr")]
+
+[node name="AnimationController" type="Node" parent="."]
+script = ExtResource("8_v723f")
+
+[node name="WallCheck" type="Node3D" parent="."]
+
+[node name="NearWall" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -0.25, 0)
+target_position = Vector3(0, 0, -1.5)
+
+[node name="OnWall" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, 0, -1.5)

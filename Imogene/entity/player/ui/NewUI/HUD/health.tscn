@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://dd7p7bmo27kl3"]
+
+[ext_resource type="Script" path="res://entity/player/ui/NewUI/HUD/HUDHealth.cs" id="1_3el4u"]
+[ext_resource type="Texture2D" uid="uid://bg5i3lilkmdlq" path="res://images/UI/Health_Bar.png" id="1_ugypd"]
+[ext_resource type="PackedScene" uid="uid://b2dntfmfswshm" path="res://entity/player/ui/NewUI/HUD/health_movement_debuffs.tscn" id="3_ci5u3"]
+[ext_resource type="PackedScene" uid="uid://7uth5jo0nvxt" path="res://entity/player/ui/NewUI/HUD/health_movement_buffs.tscn" id="4_1ykb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7uu88"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_av40f"]
+
+[node name="Health" type="PanelContainer" node_paths=PackedStringArray("hit_points")]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7uu88")
+script = ExtResource("1_3el4u")
+hit_points = NodePath("VBoxContainer/HitPoints/TextureProgressBar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HitPoints" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(310, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/HitPoints"]
+layout_mode = 2
+rounded = true
+nine_patch_stretch = true
+texture_progress = ExtResource("1_ugypd")
+
+[node name="HealthBuffsDebuffs" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_av40f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HealthBuffsDebuffs"]
+layout_mode = 2
+
+[node name="HealthMovementDebuffs" parent="VBoxContainer/HealthBuffsDebuffs/HBoxContainer" instance=ExtResource("3_ci5u3")]
+layout_mode = 2
+
+[node name="HealthMovementBuffs" parent="VBoxContainer/HealthBuffsDebuffs/HBoxContainer" instance=ExtResource("4_1ykb5")]
+layout_mode = 2
