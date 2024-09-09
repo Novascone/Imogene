@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ey1llb7cj1at"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/BottomButton.cs" id="1_ws1qr"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/BottomButtons/BottomButton.cs" id="1_ws1qr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhyu"]
 size = Vector2(115, 161)

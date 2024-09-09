@@ -7,13 +7,13 @@
 
 [node name="Whirlwind" type="Node3D" node_paths=PackedStringArray("tick_timer")]
 script = ExtResource("1_oegyt")
-tick_timer = NodePath("TickTimer")
 hitbox_to_load = ExtResource("2_w3hli")
 mesh_to_load = ExtResource("3_suli4")
 class_type = 1
 class_ability_type = 2
 damage_type = 1
 icon = ExtResource("2_7kg35")
+tick_timer = NodePath("TickTimer")
 
 [node name="TickTimer" type="Timer" parent="."]
 one_shot = true

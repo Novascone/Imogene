@@ -1,7 +1,7 @@
 [gd_scene load_steps=55 format=4 uid="uid://c15bfxsubrb7"]
 
 [ext_resource type="Script" path="res://enemy/enemies/StandardEnemy.cs" id="1_kirt1"]
-[ext_resource type="Script" path="res://entity/systems/DamageSystem.cs" id="3_6aaj3"]
+[ext_resource type="Script" path="res://entity/systems/damage/DamageSystem.cs" id="3_6aaj3"]
 [ext_resource type="Script" path="res://entity/systems/damage/melee/MeleeHitbox.cs" id="3_22w45"]
 [ext_resource type="Script" path="res://entity/systems/damage/Hurtbox.cs" id="3_ynyqk"]
 [ext_resource type="Script" path="res://entity/systems/ResourceSystem.cs" id="4_aqa2q"]

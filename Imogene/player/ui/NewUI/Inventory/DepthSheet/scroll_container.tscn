@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://1in75rdt30fc"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/DepthScroller.cs" id="1_wqqpl"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/DepthSheet/DepthScroller.cs" id="1_wqqpl"]
 [ext_resource type="PackedScene" uid="uid://bcofoc2v0qdtw" path="res://player/ui/NewUI/Inventory/DepthSheet/physical_melee_power.tscn" id="2_5dscf"]
 [ext_resource type="PackedScene" uid="uid://bxtrg3rgkyuki" path="res://player/ui/NewUI/Inventory/DepthSheet/spell_melee_power.tscn" id="3_eeulx"]
 [ext_resource type="PackedScene" uid="uid://bacowo2bq860u" path="res://player/ui/NewUI/Inventory/DepthSheet/physical_ranged_power.tscn" id="4_o2vkb"]

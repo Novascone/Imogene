@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kje4rweonowi"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDCross.cs" id="1_elisb"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/HUDCross.cs" id="1_elisb"]
 [ext_resource type="PackedScene" uid="uid://d16ibxd137gk3" path="res://player/ui/NewUI/HUD/left_cross_hud_button.tscn" id="2_cee1n"]
 
 [node name="LeftSecondaryHUDCross" type="GridContainer" node_paths=PackedStringArray("up", "left", "right", "down")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://btmc04hp1fhcf"]
 
-[ext_resource type="Script" path="res://player/ui/stats/depth_stat/health/MaximumHealthStat.cs" id="1_usb2c"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/depth_stat/health/MaximumHealthStat.cs" id="1_usb2c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

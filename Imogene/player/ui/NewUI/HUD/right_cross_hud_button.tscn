@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://tycrnxtx81ri"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDButton.cs" id="1_fx3sa"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/HUDButton.cs" id="1_fx3sa"]
 
 [node name="RCrossHUDButton" type="Button" node_paths=PackedStringArray("label")]
 custom_minimum_size = Vector2(60, 60)

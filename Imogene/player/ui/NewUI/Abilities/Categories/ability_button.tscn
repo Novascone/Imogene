@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://2mvabkkp3f02"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/Categories/NewAbilityButton.cs" id="1_6kr6r"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/Categories/category_scripts/NewAbilityButton.cs" id="1_6kr6r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8di2v"]
 size = Vector2(53, 54)

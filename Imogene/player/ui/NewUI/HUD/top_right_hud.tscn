@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cl2ybmgii70wf"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/TopRightHUD.cs" id="1_o366c"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/TopRightHUD.cs" id="1_o366c"]
 [ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="2_6ekrn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xewhd"]

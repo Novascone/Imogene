@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bcjfs8lc5v5hs"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/DepthSheet.cs" id="1_gohda"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/DepthSheet/DepthSheet.cs" id="1_gohda"]
 [ext_resource type="PackedScene" uid="uid://1in75rdt30fc" path="res://player/ui/NewUI/Inventory/DepthSheet/scroll_container.tscn" id="2_f4sd2"]
 
 [node name="DepthSheet" type="VBoxContainer" node_paths=PackedStringArray("title", "scroll_container")]

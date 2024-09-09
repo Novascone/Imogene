@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dhhl1nbomlijl"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/AbilityBinds/CrossBinds.cs" id="1_dop5q"]
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/AbilityBinds/CrossBindButton.cs" id="2_r8dxi"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/ability_bind_scripts/CrossBinds.cs" id="1_dop5q"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/ability_bind_scripts/CrossBindButton.cs" id="2_r8dxi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vb2se"]
 size = Vector2(56, 56)

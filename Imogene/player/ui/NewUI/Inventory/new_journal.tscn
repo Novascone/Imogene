@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cgp7cnnm5irxa"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/NewJournal/JournalScripts/NewJournal.cs" id="1_55qso"]
+[ext_resource type="Script" path="res://player/ui/NewUI/NewJournal/NewJournal.cs" id="1_55qso"]
 [ext_resource type="PackedScene" uid="uid://cjlg5yn8ajv6d" path="res://player/ui/NewUI/NewJournal/journal_page.tscn" id="2_8a4y7"]
 [ext_resource type="PackedScene" uid="uid://7x5lamc64r6a" path="res://player/ui/NewUI/NewJournal/journal_tab.tscn" id="2_s32ox"]
 

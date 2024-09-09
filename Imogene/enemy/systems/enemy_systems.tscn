@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://1jswm5hx3u0m"]
 
-[ext_resource type="Script" path="res://entity/systems/DamageSystem.cs" id="1_yvdbn"]
+[ext_resource type="Script" path="res://entity/systems/damage/DamageSystem.cs" id="1_yvdbn"]
 [ext_resource type="Script" path="res://entity/systems/ResourceSystem.cs" id="2_qfo8d"]
 
 [node name="Systems" type="Node"]

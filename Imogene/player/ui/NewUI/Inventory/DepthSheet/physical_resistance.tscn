@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhf0nnhf72h18"]
 
-[ext_resource type="Script" path="res://player/ui/stats/depth_stat/defense/PhysicalResistanceStat.cs" id="1_cym2g"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/depth_stat/defense/PhysicalResistanceStat.cs" id="1_cym2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

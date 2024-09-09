@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ey6wymo6kewe"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/NewAbilities.cs" id="1_k050e"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/NewAbilities.cs" id="1_k050e"]
 [ext_resource type="PackedScene" uid="uid://dffakp3c6a4tl" path="res://player/ui/NewUI/Abilities/binds.tscn" id="2_jcc34"]
 [ext_resource type="PackedScene" uid="uid://s6e25bsdm7fw" path="res://player/ui/NewUI/Abilities/Categories/categories.tscn" id="3_fvdln"]
 [ext_resource type="PackedScene" uid="uid://4usjhrjsl1ki" path="res://player/ui/NewUI/Abilities/class_passives_full_page.tscn" id="4_88coj"]

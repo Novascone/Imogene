@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://u0nea1rtxa4x"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/Categories/AbilityPage.cs" id="1_e52a8"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/Categories/category_scripts/AbilityPage.cs" id="1_e52a8"]
 [ext_resource type="PackedScene" uid="uid://2mvabkkp3f02" path="res://player/ui/NewUI/Abilities/Categories/ability_button.tscn" id="2_0yvx4"]
 [ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://images/icons/whirlwind_icon.png" id="3_u7rob"]
 [ext_resource type="PackedScene" uid="uid://ch578n7k1cxb6" path="res://player/ui/NewUI/Abilities/Categories/ability_modifier_button.tscn" id="4_6bc31"]

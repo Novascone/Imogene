@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhoyscwvfrkr"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/NewEnemyHealth.cs" id="1_w1rhd"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/NewEnemyHealth.cs" id="1_w1rhd"]
 [ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="2_0b1vk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wh7s"]

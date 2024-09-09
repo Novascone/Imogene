@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dcahhhe26atfg"]
 
 [ext_resource type="PackedScene" uid="uid://dy1g8lm7gptmn" path="res://player/ui/NewUI/Abilities/passive_bind_button.tscn" id="1_7lare"]
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/AbilityBinds/PassiveBinds.cs" id="1_yb1mg"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/ability_bind_scripts/PassiveBinds.cs" id="1_yb1mg"]
 
 [node name="PassiveBinds" type="GridContainer"]
 size_flags_horizontal = 4

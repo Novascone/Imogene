@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://xgdub2ncuvaf"]
 
 [ext_resource type="Texture2D" uid="uid://dboo2klqspmvl" path="res://images/UI/Resource_Bar.png" id="1_dfwk1"]
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDResource.cs" id="1_e5b75"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/HUDResource.cs" id="1_e5b75"]
 [ext_resource type="PackedScene" uid="uid://bmls3io7ondw5" path="res://player/ui/NewUI/HUD/resource_damage_buffs.tscn" id="3_kqy71"]
 [ext_resource type="PackedScene" uid="uid://bavogpclovt2" path="res://player/ui/NewUI/HUD/resource_damage_debuffs.tscn" id="4_45mab"]
 

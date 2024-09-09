@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://entity/systems/damage/melee/MeleeHitbox.cs" id="9_l4is8"]
 [ext_resource type="Script" path="res://player/controllers/EquipmentController.cs" id="9_osd41"]
 [ext_resource type="PackedScene" uid="uid://ds2svqsgmx87v" path="res://scenes(old)/UI/UI.tscn" id="10_ns3v6"]
-[ext_resource type="Script" path="res://entity/systems/DamageSystem.cs" id="11_18dsy"]
+[ext_resource type="Script" path="res://entity/systems/damage/DamageSystem.cs" id="11_18dsy"]
 [ext_resource type="Script" path="res://entity/systems/ResourceSystem.cs" id="12_bcheo"]
 [ext_resource type="Script" path="res://player/systems/XPSystem.cs" id="13_24dii"]
 [ext_resource type="Script" path="res://player/systems/TargetingSystem.cs" id="14_rjnp4"]

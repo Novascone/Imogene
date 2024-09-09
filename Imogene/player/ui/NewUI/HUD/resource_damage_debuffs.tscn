@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bavogpclovt2"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/ResourceDamageBuffs.cs" id="1_mcvt7"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/ResourceDamageBuffs.cs" id="1_mcvt7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_65i8t"]
 

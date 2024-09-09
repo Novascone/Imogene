@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://exsdwg741ke1"]
 
 [ext_resource type="Script" path="res://entity/systems/EntitySystems.cs" id="1_kl8e8"]
-[ext_resource type="PackedScene" uid="uid://quqk6wxyhwh1" path="res://entity/systems/damage_system.tscn" id="2_jptoh"]
+[ext_resource type="PackedScene" uid="uid://quqk6wxyhwh1" path="res://entity/systems/damage/damage_system.tscn" id="2_jptoh"]
 [ext_resource type="PackedScene" uid="uid://d8nqngnt1qcc" path="res://entity/systems/resource_system.tscn" id="3_fifkn"]
 
 [node name="EntitySystems" type="Node" node_paths=PackedStringArray("damage_system", "resource_system")]

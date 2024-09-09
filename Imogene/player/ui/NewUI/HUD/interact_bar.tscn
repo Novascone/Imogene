@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dke068oqxby8u"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/InteractBar.cs" id="1_xycvt"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/InteractBar.cs" id="1_xycvt"]
 
 [node name="InteractBar" type="MarginContainer" node_paths=PackedStringArray("button", "interact_object", "interact_inventory")]
 offset_right = 200.0

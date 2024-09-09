@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dr57tre3tnf45"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/Categories/GeneralCategory.cs" id="1_66p15"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/Categories/category_scripts/GeneralCategory.cs" id="1_66p15"]
 [ext_resource type="PackedScene" uid="uid://b7y4n0m3po8lc" path="res://player/ui/NewUI/Abilities/Categories/general_melee_ability_page.tscn" id="2_cdllj"]
 [ext_resource type="PackedScene" uid="uid://yatijfm1xdmc" path="res://player/ui/NewUI/Abilities/Categories/ability_page.tscn" id="2_gledf"]
 [ext_resource type="PackedScene" uid="uid://8efqsvtspovk" path="res://player/ui/NewUI/Abilities/Categories/general_ranged_ability_page.tscn" id="3_fibaw"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cvfdwuy2yaggc"]
 
-[ext_resource type="Script" path="res://player/ui/stats/summary_stats/DamageStat.cs" id="1_35kjx"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/summary_stats/DamageStat.cs" id="1_35kjx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
 size = Vector2(163, 24)

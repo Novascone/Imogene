@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccindx3yp61uk"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/BottomButtons.cs" id="1_g34jn"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/BottomButtons/BottomButtons.cs" id="1_g34jn"]
 [ext_resource type="PackedScene" uid="uid://ey1llb7cj1at" path="res://player/ui/NewUI/Inventory/MainInventory/new_bottom_button_label.tscn" id="2_fygvd"]
 
 [node name="BottomButtons" type="HBoxContainer" node_paths=PackedStringArray("abilities")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvd3g7bbtsx2h"]
 
-[ext_resource type="Script" path="res://player/ui/stats/depth_stat/offense/SpellRangedPowerStat.cs" id="1_ryxwp"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/depth_stat/offense/SpellRangedPowerStat.cs" id="1_ryxwp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

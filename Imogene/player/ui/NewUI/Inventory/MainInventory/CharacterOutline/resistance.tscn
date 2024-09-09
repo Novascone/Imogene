@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbix83ljpsc38"]
 
-[ext_resource type="Script" path="res://player/ui/stats/summary_stats/ResistanceStat.cs" id="1_7w6d5"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/summary_stats/ResistanceStat.cs" id="1_7w6d5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
 size = Vector2(163, 24)

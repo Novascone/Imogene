@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://da4nvcq8l4mqw"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/NewInventory.cs" id="1_7bn67"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/MainInventory/NewInventory.cs" id="1_7bn67"]
 [ext_resource type="PackedScene" uid="uid://bfuvrwc8ao448" path="res://player/ui/NewUI/Inventory/temp_buttons.tscn" id="2_8psl5"]
 [ext_resource type="PackedScene" uid="uid://rtld441p1tfw" path="res://player/ui/NewUI/Inventory/mats.tscn" id="4_8al3d"]
 [ext_resource type="PackedScene" uid="uid://bcjfs8lc5v5hs" path="res://player/ui/NewUI/Inventory/DepthSheet/depth_sheet.tscn" id="4_xqf6c"]

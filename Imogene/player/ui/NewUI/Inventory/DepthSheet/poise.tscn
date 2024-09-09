@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqkm4hk5fe7hn"]
 
-[ext_resource type="Script" path="res://player/ui/stats/depth_stat/defense/PoiseStat.cs" id="1_eb3vs"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/depth_stat/defense/PoiseStat.cs" id="1_eb3vs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

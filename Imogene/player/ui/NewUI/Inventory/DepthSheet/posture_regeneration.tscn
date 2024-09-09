@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://drjic6r0o42fv"]
 
-[ext_resource type="Script" path="res://player/ui/stats/depth_stat/resource/PostureRegenerationStat.cs" id="1_qd8rh"]
+[ext_resource type="Script" path="res://player/ui/ui_stats_scripts/depth_stat/resource/PostureRegenerationStat.cs" id="1_qd8rh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dy1g8lm7gptmn"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/AbilityBinds/PassiveBindButton.cs" id="1_sgccr"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/ability_bind_scripts/PassiveBindButton.cs" id="1_sgccr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_km65b"]
 size = Vector2(54, 54)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyqtt3a7dcrvv"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/InventoryScripts/GenericInventoryButton.cs" id="1_xegfv"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Inventory/MainInventory/GenericInventoryButton.cs" id="1_xegfv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vyf8"]
 size = Vector2(476.75, 29)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://lmqtt6wcr5fw"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/new_abilities_scripts/AbilityBinds/CrossBinds.cs" id="1_8iigf"]
+[ext_resource type="Script" path="res://player/ui/NewUI/Abilities/ability_bind_scripts/CrossBinds.cs" id="1_8iigf"]
 [ext_resource type="PackedScene" uid="uid://om3ceo7ul6p6" path="res://player/ui/NewUI/Abilities/Categories/l_cross_bind_button.tscn" id="2_jgfdg"]
 
 [node name="LCrossSecondaryBind" type="GridContainer" node_paths=PackedStringArray("up", "left", "right", "down")]

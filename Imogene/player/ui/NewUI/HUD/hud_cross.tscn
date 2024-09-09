@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cghvdlhroyxr"]
 
-[ext_resource type="Script" path="res://player/ui/NewUI/HUD/new_hud_scripts/HUDCross.cs" id="1_i1oew"]
+[ext_resource type="Script" path="res://player/ui/NewUI/HUD/HUDCross.cs" id="1_i1oew"]
 
 [node name="HUDCross" type="GridContainer" node_paths=PackedStringArray("up", "up_label", "left", "left_label", "right", "right_label", "down", "down_label")]
 size_flags_horizontal = 8
