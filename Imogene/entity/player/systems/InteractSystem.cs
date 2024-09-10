@@ -14,7 +14,7 @@ public partial class InteractSystem : Node3D
 	Area3D area_interacting;
 
 	[Signal] public delegate void NearInteractableEventHandler(bool near_interactable);
-
+	[Signal] public delegate void ItemPickedUpEventHandler(ItemData item);
 	[Export] public Array<ItemData> item_types {get; set;} = new Array<ItemData>();
 	private List<InteractableItem> near_by_items = new List<InteractableItem>();
 	
@@ -27,6 +27,7 @@ public partial class InteractSystem : Node3D
 		player.areas.interact.BodyEntered += (body) => OnObjectEnteredArea(body, player);
 		player.areas.interact.BodyExited += (body) => OnObjectExitedArea(body, player);
 		player.areas.pick_up_items.BodyEntered += (body) => OnObjectEnteredPickUp(body, player);
+		GD.Print("item types count " + item_types.Count);
 		GD.Print("subscribed top interact signals");
 	}
 
@@ -52,11 +53,12 @@ public partial class InteractSystem : Node3D
 			nearest_item.QueueFree();
 			near_by_items.Remove(nearest_item);
 			
-
+			GD.Print("picking up nearest item");
 			ItemData template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearest_item.SceneFilePath);
 			if(template != null)
 			{
-				GD.Print("Item id:" + item_types.IndexOf(template) +" Item name:" + template.item_name);
+				GD.Print("Item id: " + item_types.IndexOf(template) +" Item name: " + template.item_name);
+				EmitSignal(nameof(ItemPickedUp), template);
 			}
 			else
 			{

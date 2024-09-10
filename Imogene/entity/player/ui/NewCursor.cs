@@ -3,10 +3,10 @@ using System;
 
 public partial class NewCursor : Sprite2D
 {
-	[Export] public ItemButton item_button;
+	[Export] public ItemSlot item_button;
 	private Vector2 mouse_pos = Vector2.Zero;
 	private float mouse_max_speed = 30.0f;
-	public ItemButton hover_over_item_button;
+	public ItemSlot hover_over_item_button;
 	public Button hover_over_button;
 
 	public override void _Input(InputEvent @event)

@@ -14,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_1860t")
 hud = NodePath("NewHUD")
 inventory = NodePath("NewInventory")
@@ -29,17 +30,11 @@ anchor_bottom = 0.0
 offset_top = 4.0
 offset_right = 1980.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="NewInventory" parent="." groups=["prevents_movement"] instance=ExtResource("3_6wxf8")]
 visible = false
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 1368.0
-offset_right = 1980.0
-offset_bottom = 1080.0
+layout_mode = 1
 
 [node name="NewAbilities" parent="." groups=["prevents_movement"] instance=ExtResource("4_77sew")]
 visible = false

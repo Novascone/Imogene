@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entity/player/ui/NewCursor.cs" id="1_js7o6"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="1_ypew5"]
-[ext_resource type="PackedScene" uid="uid://dem7n4e5trdw4" path="res://entity/player/ui/Inventory/main_inventory/item_button.tscn" id="2_yfium"]
+[ext_resource type="PackedScene" uid="uid://dem7n4e5trdw4" path="res://entity/player/ui/Inventory/main_inventory/item_slot.tscn" id="2_yfium"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ux3vn"]
 radius = 3.0

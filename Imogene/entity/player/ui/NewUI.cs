@@ -27,6 +27,7 @@ public partial class NewUI : Control
 		abilities.categories.ClearAbilityIcon += OnClearAbilityIcon;
 		hud.HUDPreventingInput += OnHudPreventingInput;
 	}
+	
 
     private void OnHudPreventingInput(bool preventing_input)
     {
@@ -213,4 +214,6 @@ public partial class NewUI : Control
 		}
 		return false;
 	}
+
+	
 }

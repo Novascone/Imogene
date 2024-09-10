@@ -147,13 +147,18 @@ public partial class Player : Entity
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		systems.interact_system.NearInteractable += controllers.ability_controller.OnNearInteractable;
+		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
+		ui.inventory.main.DroppingItem += HandleDroppingItem;
 
 		entity_controllers.stats_controller.StatsUpdate += ui.HandleUpdatedStats;
-		ui.InventoryToggle += HandleInventoryToggle;
+		
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
+
+		ui.InventoryToggle += HandleInventoryToggle;
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+
 
 		
 		entity_controllers.stats_controller.UpdateStats(this);
@@ -173,7 +178,12 @@ public partial class Player : Entity
 		controllers.ability_assigner.GetAbilities(this);
 		controllers.ability_assigner.AssignAbilities(this);
 	}
-    
+
+    private void HandleDroppingItem()
+    {
+		GD.Print("Received signal for dropping item");
+        ui.inventory.main.GetDropPosition(this);
+    }
 
     private void HandleClearAbilityBind(string ability_name)
     {
@@ -237,12 +247,10 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print("Hitbox disabled " + hitbox_collision.Disabled);
-		if(ability_in_use != null)
-		{
-			GD.Print("ability in use" + ability_in_use);
-			ability_in_use.FrameCheck(this);
-		}
+		// foreach(Node node in GetTree().Root.GetChildren())
+		// {
+		// 	GD.Print("node name " + node.Name);
+		// }
 		
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);

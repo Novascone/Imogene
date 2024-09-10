@@ -37,6 +37,7 @@ public partial class NewHUD : Control
 			
 		}
 	}
+	
 
 	public void SubscribeToInteractSignals(Player player)
 	{

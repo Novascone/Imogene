@@ -43,7 +43,6 @@ layout_mode = 2
 
 [node name="Items" parent="." instance=ExtResource("3_j3h2y")]
 layout_mode = 2
-size_flags_horizontal = 1
 
 [node name="MatsGold" type="HBoxContainer" parent="."]
 layout_mode = 2

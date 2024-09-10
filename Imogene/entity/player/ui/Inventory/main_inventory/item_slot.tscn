@@ -1,15 +1,31 @@
 [gd_scene load_steps=3 format=3 uid="uid://dem7n4e5trdw4"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/ItemButton.cs" id="1_a3xjp"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/ItemSlot.cs" id="1_2e685"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_phr8x"]
 size = Vector2(40.5, 39)
 
-[node name="ItemButton" type="Button"]
+[node name="ItemSlot" type="Button" node_paths=PackedStringArray("slot_icon")]
 custom_minimum_size = Vector2(45, 45)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_a3xjp")
+script = ExtResource("1_2e685")
+slot_icon = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
 
 [node name="Area2D" type="Area2D" parent="."]
 
