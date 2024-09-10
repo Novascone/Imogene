@@ -11,6 +11,7 @@ public partial class InteractSystem : Node3D
 	public bool in_interact_area;
 	public bool left_interact;
 	public bool entered_interact;
+	private bool inventory_full;
 	Area3D area_interacting;
 
 	[Signal] public delegate void NearInteractableEventHandler(bool near_interactable);
@@ -27,13 +28,26 @@ public partial class InteractSystem : Node3D
 		player.areas.interact.BodyEntered += (body) => OnObjectEnteredArea(body, player);
 		player.areas.interact.BodyExited += (body) => OnObjectExitedArea(body, player);
 		player.areas.pick_up_items.BodyEntered += (body) => OnObjectEnteredPickUp(body, player);
+		player.ui.inventory.main.InventoryCapacity += HandleInventoryCapacity;
+	
 		GD.Print("item types count " + item_types.Count);
 		GD.Print("subscribed top interact signals");
 	}
 
+    private void HandleInventoryCapacity(bool full)
+    {
+		GD.Print("receiving inventory full signal " + full);
+        inventory_full = full;
+		foreach(InteractableItem item in near_by_items)
+		{
+			item.GainFocus(full);
+		}
+	
+    }
+
     private void OnObjectEnteredPickUp(Node3D body, Player player)
     {
-       PickUpNearestItem();
+       PickUpItem(body, player);
     }
 
     // public override void _UnhandledInput(InputEvent @event)
@@ -44,26 +58,36 @@ public partial class InteractSystem : Node3D
     // 	}
     // }
 
-    private void PickUpNearestItem()
+    private void PickUpItem(Node3D item, Player player)
 	{
 		InteractableItem nearest_item = near_by_items.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
 
 		if(nearest_item != null)
 		{
-			nearest_item.QueueFree();
-			near_by_items.Remove(nearest_item);
-			
-			GD.Print("picking up nearest item");
-			ItemData template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearest_item.SceneFilePath);
-			if(template != null)
+			if(player.ui.inventory.main.slots_filled < player.ui.inventory.main.item_slots_count)
 			{
-				GD.Print("Item id: " + item_types.IndexOf(template) +" Item name: " + template.item_name);
-				EmitSignal(nameof(ItemPickedUp), template);
+				item.QueueFree();
+				near_by_items.Remove((InteractableItem)item);
+				GD.Print("picking up nearest item");
+				ItemData template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearest_item.SceneFilePath);
+				if(template != null)
+				{
+					GD.Print("Item id: " + item_types.IndexOf(template) +" Item name: " + template.item_name);
+					EmitSignal(nameof(ItemPickedUp), template);
+				}
+				else
+				{
+					GD.PrintErr("Item not found");
+				}
 			}
 			else
 			{
-				GD.PrintErr("Item not found");
+				GD.Print("Inventory full");
 			}
+			// nearest_item.QueueFree();
+			
+			
+			
 			// if(near_by_items.Count == 0)
 			// {
 			// 	EmitSignal(nameof(NearInteractable),false);
@@ -116,8 +140,7 @@ public partial class InteractSystem : Node3D
 		if(body is InteractableItem item)
 		{
 			// EmitSignal(nameof(NearInteractable),true);
-			item.GainFocus();
-			
+			item.GainFocus(inventory_full);
 			near_by_items.Add(item);
 		}
 	}

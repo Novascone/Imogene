@@ -14,6 +14,7 @@ config/name="Imogene"
 run/main_scene="res://levels/test/testing_grounds.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 run/max_fps=144
+run/delta_smoothing=false
 config/icon="res://icon.svg"
 
 [autoload]

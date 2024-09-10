@@ -9,18 +9,31 @@ public partial class ItemSlot : Button
 	
 	[Signal] public delegate void CursorHoveringEventHandler(ItemSlot item_button);
 	[Signal] public delegate void CursorLeftEventHandler(ItemSlot item_button);
+	[Signal] public delegate void ItemEquippedEventHandler(int id);
 	[Signal] public delegate void ItemDroppedEventHandler(int from_slot_id, int to_slot_id);
+	
 
 	[Export] public TextureRect slot_icon;
 	[Export] public Area2D interact_area;
+	[Export] public Panel equipped_highlight;
 	[Export] public int inventory_slot_id { get; set; } = -1;
 	public bool slot_filled { get; set; } = false;
 	public ItemData slot_data { get; set; }
 
-	public void FillSlot(ItemData data)
+    public override void _GuiInput(InputEvent @event)
+    {
+        if(@event.IsActionPressed("InteractMenu"))
+		{
+			GD.Print("interact menu pressed");
+			EmitSignal(nameof(ItemEquipped), inventory_slot_id);
+		}
+    }
+
+    public void FillSlot(ItemData data, bool equipped)
 	{
 		GD.Print("Filling slot of id " + inventory_slot_id);
 		slot_data = data;
+		equipped_highlight.Visible = equipped;
 		if(slot_data != null)
 		{
 			slot_filled = true;

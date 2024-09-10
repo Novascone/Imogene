@@ -33,6 +33,7 @@ public partial class NewUI : Control
 		{
 			item_slot.CursorHovering += cursor.OnCursorHovering;
 			item_slot.CursorLeft += cursor.OnCursorLeft;
+			item_slot.ItemEquipped += inventory.main.OnItemEquipped;
 			item_slot.inventory_slot_id -= 1;
 			inventory.main.inventory_slots.Add(item_slot);
 		}
