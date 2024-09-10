@@ -46,6 +46,15 @@ public partial class AbilityController : Node
         // }
     }
 
+    public void AbilityFrameCheck(Player player)
+    {
+        if(player.ability_in_use != null)
+		{
+			GD.Print("ability in use" + player.ability_in_use);
+			player.ability_in_use.FrameCheck(player);
+		}
+    }
+
 	public void CheckCanUseAbility(Player player, Ability ability)
     {
         if(ability.state == Ability.States.queued)

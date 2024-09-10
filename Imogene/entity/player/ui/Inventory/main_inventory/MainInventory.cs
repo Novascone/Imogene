@@ -21,18 +21,12 @@ public partial class MainInventory : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach (ItemSlot slot in items.GetChildren())
-		{
-			slot.inventory_slot_id -= 1;
-			inventory_slots.Add(slot);
-			slot.ItemDropped += HandleItemDropped;
-		}
 		GD.Print("inventory slots: " + inventory_slots.Count);
 	}
 
-    private void HandleItemDropped(int from_slot_id, int to_slot_id)
+    public void HandleItemDroppedInto(int from_slot_id, int to_slot_id)
     {
-		GD.Print("from slot id " + from_slot_id + " to slot id " + to_slot_id);
+		
         var to_slot_item = inventory_slots[to_slot_id].slot_data;
 		var from_slot_item = inventory_slots[from_slot_id].slot_data;
 
@@ -40,17 +34,17 @@ public partial class MainInventory : Control
 		inventory_slots[from_slot_id].FillSlot(to_slot_item);
 	}
 
-    public override bool _CanDropData(Vector2 atPosition, Variant data)
-    {
-		GD.Print("Checking can");
-        return data.VariantType == Variant.Type.Dictionary && (string)data.AsGodotDictionary()["Type"] == "Item";
-    }
 
-    public override void _DropData(Vector2 atPosition, Variant data)
+    // public override bool _CanDropData(Vector2 atPosition, Variant data)
+    // {
+	// 	GD.Print("Checking can");
+    //     return data.VariantType == Variant.Type.Dictionary && (string)data.AsGodotDictionary()["Type"] == "Item";
+    // }
+
+    public void HandleItemDroppedOutside(int id, ItemData data)
     {
 		GD.Print("Drop item");
 		EmitSignal(nameof(DroppingItem));
-        int id = (int)data.AsGodotDictionary()["ID"];
 		var new_item = inventory_slots[id].slot_data.item_model_prefab.Instantiate() as Node3D;
 
 		inventory_slots[id].FillSlot(null);

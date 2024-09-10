@@ -247,15 +247,12 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		// foreach(Node node in GetTree().Root.GetChildren())
-		// {
-		// 	GD.Print("node name " + node.Name);
-		// }
 		
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);
 		systems.targeting_system.Target(this);
+		controllers.ability_controller.AbilityFrameCheck(this);
 		MoveAndSlide();
 
 	

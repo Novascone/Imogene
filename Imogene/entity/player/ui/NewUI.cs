@@ -1,4 +1,5 @@
 using Godot;
+using GodotPlugins.Game;
 using System;
 
 public partial class NewUI : Control
@@ -26,8 +27,18 @@ public partial class NewUI : Control
 		abilities.categories.AbilityReassigned += OnAbilityReassigned;
 		abilities.categories.ClearAbilityIcon += OnClearAbilityIcon;
 		hud.HUDPreventingInput += OnHudPreventingInput;
+		cursor.ItemDroppedIntoSlot += inventory.main.HandleItemDroppedInto;
+		cursor.ItemDroppedOutSide += inventory.main.HandleItemDroppedOutside;
+		foreach(ItemSlot item_slot in inventory.main.items.GetChildren())
+		{
+			item_slot.CursorHovering += cursor.OnCursorHovering;
+			item_slot.CursorLeft += cursor.OnCursorLeft;
+			item_slot.inventory_slot_id -= 1;
+			inventory.main.inventory_slots.Add(item_slot);
+		}
+		
 	}
-	
+
 
     private void OnHudPreventingInput(bool preventing_input)
     {

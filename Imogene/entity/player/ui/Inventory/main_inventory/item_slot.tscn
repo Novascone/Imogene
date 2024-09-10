@@ -5,12 +5,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_phr8x"]
 size = Vector2(40.5, 39)
 
-[node name="ItemSlot" type="Button" node_paths=PackedStringArray("slot_icon")]
+[node name="ItemSlot" type="Button" node_paths=PackedStringArray("slot_icon", "interact_area")]
 custom_minimum_size = Vector2(45, 45)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_2e685")
 slot_icon = NodePath("TextureRect")
+interact_area = NodePath("Area2D")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
