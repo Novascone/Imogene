@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bacowo2bq860u"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/depth_stat/offense/PhysicalRangedPowerStat.cs" id="1_k6uh2"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PhysicalRangedPowerStat.cs" id="1_k6uh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

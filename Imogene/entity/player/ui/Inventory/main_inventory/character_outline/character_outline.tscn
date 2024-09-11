@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://q4fdinjsppia"]
+[gd_scene load_steps=32 format=3 uid="uid://q4fdinjsppia"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/CharacterOutline.cs" id="1_7c54v"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/LevelStat.cs" id="3_8xm4e"]
+[ext_resource type="PackedScene" uid="uid://d12hsso4ghsv0" path="res://entity/player/ui/Inventory/main_inventory/character_outline/level_stat.tscn" id="2_ns1t1"]
+[ext_resource type="PackedScene" uid="uid://ctdjf7muksw77" path="res://entity/player/ui/Inventory/main_inventory/reputation_button.tscn" id="3_7m7oj"]
 [ext_resource type="PackedScene" uid="uid://8aj38jxuqw66" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat_label.tscn" id="3_ewnx4"]
 [ext_resource type="PackedScene" uid="uid://c7afornn586dj" path="res://entity/player/ui/Inventory/main_inventory/outline_button.tscn" id="4_g66vt"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/StrengthStat.cs" id="4_ygnmo"]
@@ -64,17 +65,17 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Level" parent="StatsOutline" instance=ExtResource("3_ewnx4")]
+[node name="Level" parent="StatsOutline" instance=ExtResource("2_ns1t1")]
 layout_mode = 2
-script = ExtResource("3_8xm4e")
 
 [node name="Spacer1" type="Control" parent="StatsOutline"]
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Reputation" parent="StatsOutline" instance=ExtResource("4_g66vt")]
+[node name="ReputationButton" parent="StatsOutline" instance=ExtResource("3_7m7oj")]
 layout_mode = 2
 
 [node name="Spacer2" type="Control" parent="StatsOutline"]
@@ -134,6 +135,9 @@ script = ExtResource("12_jpeqr")
 [node name="Recovery" parent="StatsOutline/Details" instance=ExtResource("10_vghec")]
 layout_mode = 2
 script = ExtResource("13_jo62v")
+
+[node name="Panel" type="Panel" parent="StatsOutline/Details"]
+layout_mode = 2
 
 [node name="Sheet" parent="StatsOutline" instance=ExtResource("4_g66vt")]
 layout_mode = 2

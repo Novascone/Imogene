@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://crhbfxnmrr28r"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/depth_stat/offense/WisdomScalerStat.cs" id="1_0htne"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/WisdomScalerStat.cs" id="1_0htne"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

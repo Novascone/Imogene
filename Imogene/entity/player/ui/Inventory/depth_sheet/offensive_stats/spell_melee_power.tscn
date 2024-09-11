@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxtrg3rgkyuki"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/depth_stat/offense/SpellMeleePowerStat.cs" id="1_ibcvy"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SpellMeleePowerStat.cs" id="1_ibcvy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
-size = Vector2(280, 16.5)
+size = Vector2(152, 16.5)
 
 [node name="SpellMeleePower" type="HBoxContainer"]
 script = ExtResource("1_ibcvy")
@@ -63,7 +63,7 @@ fit_content = true
 [node name="Area2D" type="Area2D" parent="Label"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Label/Area2D"]
-position = Vector2(128, 9)
+position = Vector2(73, 9)
 shape = SubResource("RectangleShape2D_cht00")
 
 [node name="Value" type="Label" parent="."]

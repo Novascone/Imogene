@@ -6,9 +6,7 @@ public partial class Stat : Control
 
     [Export] public Button label;
 	[Export] public Label value;
-	[Export] public Control info;
-	[Export] public RichTextLabel info_text;
-	public string set_info_text;
+	[Export] public StatInfo info;
 	public string stat_value = "1";
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -16,12 +14,12 @@ public partial class Stat : Control
        
 	}
 
-    public virtual void GetStatInfo(string stat_value_ui)
+    public void GetStatInfo(string stat_value_ui)
 	{
-		// stat_number = stat_value;
-		// value.Text = stat_value;
-		// GD.Print("stat number " + stat_number);
-		// info_text.Text = string.Format(set_info_text, stat_number, 0, stat_number, stat_number);
+		stat_value = stat_value_ui;
+		value.Text = stat_value;
+		// info.info.Text = string.Format(info.info.Text, stat_value);
+		//physical_melee_power_info.Text = string.Format(physical_melee_power_info_text, physical_melee_power_UI);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,11 +53,11 @@ public partial class Stat : Control
 
     public void _on_label_focus_entered()
 	{
-		info.Show();
+		info.tool_tip_container.Show();
 	}
 	public void _on_label_focus_exited()
 	{
-		info.Hide();
+		info.tool_tip_container.Hide();
 	}
 
 	

@@ -7,7 +7,7 @@ public partial class DamageStat : Stat
 	public override void _Ready()
 	{
 		label.Text = Name + ":";
-		set_info_text =  "   Damage {0} \n * Total damage per second done by character by the average of power modifiers \n * Physical melee dps {1} \n * spell melee dps {2} \n * Physical ranged dps {3} \n * spell ranged dps {4} \n These 4 catagories are your dps when using a skill of the respective type. \n * Combination of power modifiers melee and ranged, in both their physical and spell forms, \n     damage, attack speed, critical hit chance, and critical hit damage";
+		// info.info.Text =  "   Damage {0} \n * Total damage per second done by character by the average of power modifiers \n * Physical melee dps {1} \n * spell melee dps {2} \n * Physical ranged dps {3} \n * spell ranged dps {4} \n These 4 catagories are your dps when using a skill of the respective type. \n * Combination of power modifiers melee and ranged, in both their physical and spell forms, \n     damage, attack speed, critical hit chance, and critical hit damage";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -19,7 +19,7 @@ public partial class DamageStat : Stat
 	{
 		stat_value = stat_value_ui;
 		value.Text = stat_value;
-		info_text.Text = string.Format(set_info_text, stat_value, p_m_dps, s_m_dps, p_r_dps, s_r_dps);
+		// info.info.Text = string.Format(info.info.Text, stat_value, p_m_dps, s_m_dps, p_r_dps, s_r_dps);
 		// damage_info.Text = string.Format(damage_info_text, damage_UI, physical_melee_dps_UI, spell_melee_dps_UI, physical_ranged_dps_UI, spell_ranged_dps_UI); // 1 variable(s)
 	}
 }

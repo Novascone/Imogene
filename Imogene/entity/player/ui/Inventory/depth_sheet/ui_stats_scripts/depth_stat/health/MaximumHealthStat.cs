@@ -7,7 +7,7 @@ public partial class MaximumHealthStat : Stat
 	public override void _Ready()
 	{
 		base._Ready();
-		set_info_text =  " Maximum Health {0} \n * The total amount of health if health is reduced to zero you die ";
+		// info.info.Text =  " Maximum Health {0} \n * The total amount of health if health is reduced to zero you die ";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,11 +15,5 @@ public partial class MaximumHealthStat : Stat
 	{
 	}
 
-	public override void GetStatInfo(string stat_value_ui)
-	{
-		stat_value = stat_value_ui;
-		value.Text = stat_value;
-		info_text.Text = string.Format(set_info_text, stat_value);
-		
-	}
+	
 }

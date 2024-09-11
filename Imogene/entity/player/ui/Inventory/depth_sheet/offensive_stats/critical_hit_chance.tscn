@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kud4x3vdh8f"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/depth_stat/offense/CriticalHitChanceStat.cs" id="1_e51h4"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CriticalHitChanceStat.cs" id="1_e51h4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

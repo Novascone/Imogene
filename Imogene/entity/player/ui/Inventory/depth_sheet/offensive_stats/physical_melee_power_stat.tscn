@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://cytlgq5un81o5"]
+
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PhysicalMeleePowerStat.cs" id="1_bkogk"]
+[ext_resource type="PackedScene" uid="uid://cchyv2u8uyybq" path="res://entity/player/ui/Inventory/stat_info.tscn" id="2_87pdy"]
+[ext_resource type="PackedScene" uid="uid://o8l5upljlv6m" path="res://entity/player/ui/Inventory/depth_sheet/depth_stat_area.tscn" id="3_siush"]
+
+[node name="PhysicalMeleePower" type="HBoxContainer" node_paths=PackedStringArray("label", "value", "info")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -8.5
+offset_right = 179.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+tooltip_text = "this is some tool tip"
+script = ExtResource("1_bkogk")
+label = NodePath("Label")
+value = NodePath("Value")
+info = NodePath("Info")
+
+[node name="Info" parent="." instance=ExtResource("2_87pdy")]
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="."]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Label" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tooltip_text = "Some tool tip text"
+theme_type_variation = &"sheetbutton"
+text = "Physical Melee Power"
+alignment = 0
+
+[node name="Area2D" parent="Label" instance=ExtResource("3_siush")]
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"statssheetlabel"
+text = "null
+"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="."]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[connection signal="focus_entered" from="Label" to="." method="_on_label_focus_entered"]
+[connection signal="focus_exited" from="Label" to="." method="_on_label_focus_exited"]

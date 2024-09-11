@@ -1,11 +1,11 @@
 [gd_scene load_steps=37 format=3 uid="uid://1in75rdt30fc"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/DepthScroller.cs" id="1_wqqpl"]
-[ext_resource type="PackedScene" uid="uid://bcofoc2v0qdtw" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_melee_power.tscn" id="2_5dscf"]
-[ext_resource type="PackedScene" uid="uid://bxtrg3rgkyuki" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_melee_power.tscn" id="3_eeulx"]
-[ext_resource type="PackedScene" uid="uid://bacowo2bq860u" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_ranged_power.tscn" id="4_o2vkb"]
-[ext_resource type="PackedScene" uid="uid://bvd3g7bbtsx2h" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_ranged_power.tscn" id="5_ph2oh"]
-[ext_resource type="PackedScene" uid="uid://crhbfxnmrr28r" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/wisdom_scaler.tscn" id="6_a28w4"]
+[ext_resource type="PackedScene" uid="uid://cytlgq5un81o5" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_melee_power_stat.tscn" id="2_gev0m"]
+[ext_resource type="PackedScene" uid="uid://beq75db4l4reg" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_melee_power_stat.tscn" id="3_3er3g"]
+[ext_resource type="PackedScene" uid="uid://cegrbwjehqocq" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_ranged_power_stat.tscn" id="4_w2wb5"]
+[ext_resource type="PackedScene" uid="uid://fi18jou8q78h" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_ranged_power_stat.tscn" id="5_4mtde"]
+[ext_resource type="PackedScene" uid="uid://nxyla0qiqfgq" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/wisdom_scaler_stat.tscn" id="6_qb8d2"]
 [ext_resource type="PackedScene" uid="uid://kud4x3vdh8f" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/critical_hit_chance.tscn" id="7_cpn0w"]
 [ext_resource type="PackedScene" uid="uid://fcw2mcgssgdg" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/critical_hit_damage.tscn" id="8_f32hh"]
 [ext_resource type="PackedScene" uid="uid://bvilvdkpw1jsu" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/attack_speed.tscn" id="9_jmi4q"]
@@ -37,21 +37,16 @@
 [ext_resource type="PackedScene" uid="uid://drjic6r0o42fv" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/posture_regeneration.tscn" id="35_nct7w"]
 [ext_resource type="PackedScene" uid="uid://vm8jakcr50yg" path="res://entity/player/ui/Inventory/depth_sheet/movement_speed.tscn" id="36_oprs7"]
 
-[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "physical_melee_power", "spell_melee_power", "physical_ranged_power", "spell_ranged_power", "wisdom_scaler", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
+[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
 clip_contents = false
-custom_minimum_size = Vector2(291, 1080)
-offset_right = 291.0
-offset_bottom = 1080.0
+custom_minimum_size = Vector2(2, 0)
+offset_right = 300.0
+offset_bottom = 8.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 follow_focus = true
 script = ExtResource("1_wqqpl")
 vbox = NodePath("VBoxContainer")
-physical_melee_power = NodePath("VBoxContainer/PhysicalMeleePower")
-spell_melee_power = NodePath("VBoxContainer/SpellMeleePower")
-physical_ranged_power = NodePath("VBoxContainer/PhysicalRangedPower")
-spell_ranged_power = NodePath("VBoxContainer/SpellRangedPower")
-wisdom_scaler = NodePath("VBoxContainer/WisdomScaler")
 critical_hit_chance = NodePath("VBoxContainer/CriticalHitChance")
 critical_hit_damage = NodePath("VBoxContainer/CriticalHitDamage")
 attack_speed = NodePath("VBoxContainer/AttackSpeed")
@@ -107,19 +102,19 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Offense"
 
-[node name="PhysicalMeleePower" parent="VBoxContainer" instance=ExtResource("2_5dscf")]
+[node name="PhysicalMeleePower" parent="VBoxContainer" instance=ExtResource("2_gev0m")]
 layout_mode = 2
 
-[node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("3_eeulx")]
+[node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("3_3er3g")]
 layout_mode = 2
 
-[node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("4_o2vkb")]
+[node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("4_w2wb5")]
 layout_mode = 2
 
-[node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("5_ph2oh")]
+[node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("5_4mtde")]
 layout_mode = 2
 
-[node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("6_a28w4")]
+[node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("6_qb8d2")]
 layout_mode = 2
 
 [node name="CriticalHitChance" parent="VBoxContainer" instance=ExtResource("7_cpn0w")]

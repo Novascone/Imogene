@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://d12hsso4ghsv0"]
+
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/Stat.cs" id="1_fegtr"]
+[ext_resource type="PackedScene" uid="uid://cchyv2u8uyybq" path="res://entity/player/ui/Inventory/stat_info.tscn" id="2_7rbyg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
+size = Vector2(154, 23)
+
+[node name="Level" type="Control" node_paths=PackedStringArray("label", "value", "info")]
+custom_minimum_size = Vector2(225, 25)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 225.0
+offset_bottom = 25.0
+size_flags_vertical = 4
+focus_mode = 2
+script = ExtResource("1_fegtr")
+label = NodePath("Label")
+value = NodePath("Value")
+info = NodePath("Info")
+
+[node name="Info" parent="." instance=ExtResource("2_7rbyg")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 11.0
+offset_top = 127.0
+offset_right = 11.0
+offset_bottom = 152.0
+
+[node name="Spacer1" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 4.0
+offset_right = 11.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Label" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+offset_left = 15.0
+offset_right = 171.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "BaseStat"
+alignment = 0
+
+[node name="Area2D" type="Area2D" parent="Label"]
+position = Vector2(-130, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Label/Area2D"]
+position = Vector2(211, 13.5)
+shape = SubResource("RectangleShape2D_wxma3")
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+offset_left = 175.0
+offset_right = 213.0
+offset_bottom = 25.0
+text = "null
+"
+
+[node name="Spacer2" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 217.0
+offset_right = 225.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[connection signal="focus_entered" from="Label" to="." method="_on_label_focus_entered"]
+[connection signal="focus_exited" from="Label" to="." method="_on_label_focus_exited"]
+[connection signal="area_entered" from="Label/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Label/Area2D" to="." method="_on_area_2d_area_exited"]

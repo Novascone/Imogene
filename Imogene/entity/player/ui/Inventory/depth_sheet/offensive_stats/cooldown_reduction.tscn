@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cffxphebx347c"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/depth_stat/offense/CooldownReductionStat.cs" id="1_cxu8r"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/offense/CooldownReductionStat.cs" id="1_cxu8r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cht00"]
 size = Vector2(280, 16.5)

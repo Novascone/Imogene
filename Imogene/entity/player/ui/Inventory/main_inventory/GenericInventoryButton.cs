@@ -3,7 +3,7 @@ using System;
 
 public partial class GenericInventoryButton : Button
 {
-	[Export] public Control info;
+	[Export] public StatInfo info;
 	[Export] public RichTextLabel info_text;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -39,12 +39,12 @@ public partial class GenericInventoryButton : Button
 
 	public void _on_focus_entered()
 	{
-		info.Show();
+		info.tool_tip_container.Show();
 	}
 
 	public void _on_focus_exited()
 	{
-		info.Hide();
+		info.tool_tip_container.Hide();
 	}
 	public override void _GuiInput(InputEvent @event)
 	{
