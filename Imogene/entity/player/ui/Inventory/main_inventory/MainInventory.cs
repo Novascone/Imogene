@@ -63,8 +63,8 @@ public partial class MainInventory : Control
 			equipped_slot = -1;
 		}
 		EmitSignal(nameof(DroppingItem));
-		var new_item = inventory_slots[id].slot_data.item_model_prefab.Instantiate() as Node3D;
-
+		var new_item = inventory_slots[id].slot_data.item_model_prefab.Instantiate() as InteractableItem;
+		new_item.dropped_by_player = true;
 		inventory_slots[id].FillSlot(null, false);
 		slots_filled -= 1;
 		EmitSignal(nameof(InventoryCapacity), false);

@@ -148,7 +148,9 @@ public partial class Player : Entity
 
 		systems.interact_system.NearInteractable += controllers.ability_controller.OnNearInteractable;
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
+		systems.interact_system.InputPickUp += HandleInputPickUp;
 		ui.inventory.main.DroppingItem += HandleDroppingItem;
+		ui.CapturingInput += systems.interact_system.HandleCapturingInput;
 
 		entity_controllers.stats_controller.StatsUpdate += ui.HandleUpdatedStats;
 		
@@ -178,6 +180,11 @@ public partial class Player : Entity
 		controllers.ability_assigner.GetAbilities(this);
 		controllers.ability_assigner.AssignAbilities(this);
 	}
+
+    private void HandleInputPickUp(InteractableItem item)
+    {
+        systems.interact_system.PickUpItem(item, this);
+    }
 
     private void HandleDroppingItem()
     {

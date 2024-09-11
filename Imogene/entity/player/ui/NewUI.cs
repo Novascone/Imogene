@@ -11,7 +11,7 @@ public partial class NewUI : Control
 	[Export] public NewCursor cursor;
 
 	[Signal] public delegate void InventoryToggleEventHandler();
-	[Signal] public delegate void CapturingInputEventHandler();
+	[Signal] public delegate void CapturingInputEventHandler(bool capturing_input);
 
 	public bool preventing_movement;
 	public bool capturing_input;
@@ -135,6 +135,7 @@ public partial class NewUI : Control
 		if(Input.IsActionJustPressed("Inventory"))
 		{
 			preventing_movement = !preventing_movement;
+			EmitSignal(nameof(CapturingInput), !preventing_movement);
 			if(!CheckUIComponentOpen() && !cursor.Visible || CheckUIComponentOpen()  && cursor.Visible )
 			{
 				cursor.Visible = !cursor.Visible;

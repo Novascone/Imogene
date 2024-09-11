@@ -17,6 +17,7 @@ public partial class NewInventory : Control
 	public override void _Process(double delta)
 	{
 	}
+	
 
 	
 }

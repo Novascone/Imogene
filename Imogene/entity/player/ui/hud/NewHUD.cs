@@ -12,10 +12,12 @@ public partial class NewHUD : Control
 	[Export] public TopRightHUD top_right;
 
 	[Signal] public delegate void HUDPreventingInputEventHandler(bool preventing_input);
+	[Signal] public delegate void AcceptHUDInputEventHandler(Node3D interacting_object);
 
 	public JoyButton interact_button = JoyButton.A;
 
 	public bool in_interact_area;
+	private Node3D object_interacting_with;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -31,7 +33,11 @@ public partial class NewHUD : Control
 		{
 			if(in_interact_area && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == interact_button)
 			{
-				interact_bar.interact_inventory.Visible = !interact_bar.interact_inventory.Visible;
+				if(object_interacting_with is InteractableObject)
+				{
+					interact_bar.interact_inventory.Visible = !interact_bar.interact_inventory.Visible;
+				}
+				EmitSignal(nameof(AcceptHUDInput), object_interacting_with);
 				AcceptEvent();
 			}
 			
@@ -43,10 +49,76 @@ public partial class NewHUD : Control
 	{
 		player.areas.interact.AreaEntered += OnInteractAreaEntered;
 		player.areas.interact.AreaExited += OnInteractAreaExited;
+		player.areas.pick_up_items.BodyEntered += OnPickUpAreaEntered;
+		player.areas.pick_up_items.BodyExited += (body) => OnPickUpAreaExited(body, player);
+		player.systems.interact_system.SwitchToNextNearestItem += HandleSwitchToNextItem;
 	}
 
+    private void HandleSwitchToNextItem(InteractableItem item, bool last_item)
+    {
+		
+        object_interacting_with = item;
+		if(!last_item)
+		{
+			if(item.dropped_by_player)
+			{
+				GD.Print("received switch item signal switching to " + item.Name );
+				in_interact_area = true;
+				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
+				interact_bar.interact_object.Text = item.Name;
+				interact_bar.Show();
+				EmitSignal(nameof(HUDPreventingInput),true);
+			}
+		}
+		else
+		{
+			in_interact_area = false;
+			interact_bar.button.Text = interact_button.ToString() + ";";
+			interact_bar.interact_inventory.Hide();
+			interact_bar.Hide(); 
+			EmitSignal(nameof(HUDPreventingInput),false);
+		}
+    }
 
-	public void SubscribeToTargetingSignals(Player player)
+    private void OnPickUpAreaExited(Node3D body, Player player)
+    {
+		
+		if(body is InteractableItem item)
+		{
+			// GD.Print("item exited " + item.Name);
+			// GD.Print("item interacting with " + object_interacting_with.Name);
+			
+			if(item == object_interacting_with || item == null)
+			{
+				in_interact_area = false;
+				interact_bar.button.Text = interact_button.ToString() + ";";
+				interact_bar.interact_inventory.Hide();
+				interact_bar.Hide(); 
+				EmitSignal(nameof(HUDPreventingInput),false);
+				object_interacting_with = null;
+			}
+			
+		}
+    }
+
+    private void OnPickUpAreaEntered(Node3D body)
+    {
+		if(body is InteractableItem item)
+		{
+			
+			if(item.dropped_by_player)
+			{
+				object_interacting_with = item;
+				in_interact_area = true;
+				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
+				interact_bar.interact_object.Text = body.Name;
+				interact_bar.Show();
+				EmitSignal(nameof(HUDPreventingInput),true);
+			}
+		}
+    }
+
+    public void SubscribeToTargetingSignals(Player player)
 	{
 		player.systems.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
 		player.systems.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
@@ -58,23 +130,33 @@ public partial class NewHUD : Control
 
     private void OnInteractAreaExited(Area3D area)
     {
-		if(!area.IsInGroup("PlayerPickUp"))
-		in_interact_area = false;
-		interact_bar.button.Text = interact_button.ToString() + ";";
-		interact_bar.interact_inventory.Hide();
-        interact_bar.Hide(); 
-		EmitSignal(nameof(HUDPreventingInput),false);
+		if(area is InteractableObject interactable_object)
+		{	
+			
+			in_interact_area = false;
+			interact_bar.button.Text = interact_button.ToString() + ";";
+			interact_bar.interact_inventory.Hide();
+			interact_bar.Hide(); 
+			EmitSignal(nameof(HUDPreventingInput),false);
+			if(interactable_object == object_interacting_with)
+			{
+				object_interacting_with = null;
+			}
+			
+		}
+		
     }
 
     private void OnInteractAreaEntered(Area3D area)
     {
-		if(!area.IsInGroup("PlayerPickUp"))
+		if(area is InteractableObject interactable_object)
 		{
 			in_interact_area = true;
-			interact_bar.button.Text = interact_button.ToString() + ":" + " interact";
-			interact_bar.interact_object.Text = area.Name;
+			interact_bar.button.Text = interact_button.ToString() + ":" + " Interact";
+			interact_bar.interact_object.Text = interactable_object.Name;
 			interact_bar.Show();
 			EmitSignal(nameof(HUDPreventingInput),true);
+			object_interacting_with = interactable_object;
 		}
 		
     }
