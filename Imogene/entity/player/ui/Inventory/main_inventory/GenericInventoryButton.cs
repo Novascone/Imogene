@@ -46,13 +46,13 @@ public partial class GenericInventoryButton : Button
 	{
 		info.tool_tip_container.Hide();
 	}
-	public override void _GuiInput(InputEvent @event)
-	{
-		if(@event is InputEventJoypadButton eventJoypadButton)
-		{
-			if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
-			if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
-		}
-	}
+	// public override void _GuiInput(InputEvent @event)
+	// {
+	// 	if(@event is InputEventJoypadButton eventJoypadButton)
+	// 	{
+	// 		if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
+	// 		if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
+	// 	}
+	// }
 
 }

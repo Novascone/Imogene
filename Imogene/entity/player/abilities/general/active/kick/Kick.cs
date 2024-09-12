@@ -69,15 +69,15 @@ public partial class Kick : Ability
 		
 		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
-			kick_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2) / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.posture_damage * 3; // Set projectile posture damage 
+			kick_hitbox.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2) / 2; // Set projectile damage
+			kick_hitbox.posture_damage = player.calculation_stats["posture_damage"] * 3; // Set projectile posture damage 
 			kick_hitbox.is_critical = true;
 		}
 		else
 		{
 			
-			kick_hitbox.damage = player.damage / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.posture_damage * 2; // Set projectile posture damage 
+			kick_hitbox.damage = player.summary_stats["damage"]  / 2; // Set projectile damage
+			kick_hitbox.posture_damage = player.calculation_stats["posture_damage"] * 2; // Set projectile posture damage 
 			kick_hitbox.is_critical = false;
 		}
 		kick_hitbox.damage_type = "physical"; // Set projectile damage type

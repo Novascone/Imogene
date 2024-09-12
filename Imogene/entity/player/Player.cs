@@ -95,11 +95,11 @@ public partial class Player : Entity
 	{
 		
 		base._Ready();
-		dr_lvl_scale = 50 * (float)level;
-		rec_lvl_scale = 100 * (float)level;
+		damage_resistance_stats["damage_resistance_level_scale"] = 50 * base_stats["level"];
+		calculation_stats["recovery_level_scale"] = 100 * base_stats["level"];
 	
 		
-		resource = maximum_resource/2;
+		general_stats["resource"] = depth_stats["maximum_resource"] / 2;
 		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
 		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
 		Ability effect_test = (Ability)controllers.ability_assigner.LoadAbility(this, "effect_test", "general", "active");
@@ -166,8 +166,8 @@ public partial class Player : Entity
 		entity_controllers.stats_controller.UpdateStats(this);
 		
 
-		maximum_health = health;
-		resource = maximum_resource;
+		depth_stats["maximum_health"] = general_stats["health"];
+		general_stats["resource"] = depth_stats["maximum_resource"];
 
 		exclude.Add(areas.vision.GetRid());
 		exclude.Add(areas.near.GetRid());
@@ -254,7 +254,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+	
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);

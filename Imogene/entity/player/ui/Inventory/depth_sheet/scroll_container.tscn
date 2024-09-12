@@ -38,7 +38,7 @@
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/PostureRegenerationStat.cs" id="36_4ku7f"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/misc_stats/MovementSpeedStat.cs" id="37_bbmp4"]
 
-[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox")]
+[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "physical_melee_power", "spell_melee_power", "physical_ranged_power", "spell_ranged_power", "wisdom_scaler", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
 z_index = 2
 clip_contents = false
 custom_minimum_size = Vector2(2, 0)
@@ -49,6 +49,41 @@ size_flags_vertical = 3
 follow_focus = true
 script = ExtResource("1_wqqpl")
 vbox = NodePath("VBoxContainer")
+physical_melee_power = NodePath("VBoxContainer/PhyscialMeleePower")
+spell_melee_power = NodePath("VBoxContainer/SpellMeleePower")
+physical_ranged_power = NodePath("VBoxContainer/PhysicalRangedPower")
+spell_ranged_power = NodePath("VBoxContainer/SpellRangedPower")
+wisdom_scaler = NodePath("VBoxContainer/WisdomScaler")
+critical_hit_chance = NodePath("VBoxContainer/CriticalHitChance")
+critical_hit_damage = NodePath("VBoxContainer/CriticalHitDamage")
+attack_speed = NodePath("VBoxContainer/AttackSpeed")
+attack_speed_increase = NodePath("VBoxContainer/AttackSpeedIncrease")
+cool_down_reduction = NodePath("VBoxContainer/CooldownReduction")
+armor = NodePath("VBoxContainer/Armor")
+poise = NodePath("VBoxContainer/Poise")
+block_amount = NodePath("VBoxContainer/BlockAmount")
+retaliation = NodePath("VBoxContainer/Retaliation")
+physical_resistance = NodePath("VBoxContainer/PhysicalResistance")
+pierce_resistance = NodePath("VBoxContainer/PierceResistance")
+slash_resistance = NodePath("VBoxContainer/SlashResistance")
+blunt_resistance = NodePath("VBoxContainer/BluntResistance")
+bleed_resistance = NodePath("VBoxContainer/BleedResistance")
+poison_resistance = NodePath("VBoxContainer/PoisonResistance")
+curse_resistance = NodePath("VBoxContainer/CurseResistance")
+spell_resistance = NodePath("VBoxContainer/SpellResistance")
+fire_resistance = NodePath("VBoxContainer/FireResistance")
+cold_resistance = NodePath("VBoxContainer/ColdResistance")
+lightning_resistance = NodePath("VBoxContainer/LightningResistance")
+holy_resistance = NodePath("VBoxContainer/HolyResistance")
+maximum_health = NodePath("VBoxContainer/MaximumHealth")
+health_bonus = NodePath("VBoxContainer/Healthbonus")
+health_regeneration = NodePath("VBoxContainer/HealthRegeneration")
+health_retaliation = NodePath("VBoxContainer/HealthOnRetaliation")
+maximum_resource = NodePath("VBoxContainer/MaximumResource")
+resource_regeneration = NodePath("VBoxContainer/ResourceRegeneration")
+resource_cost_reduction = NodePath("VBoxContainer/ResourceCostReduction")
+posture_regeneration = NodePath("VBoxContainer/PostureRegeneration")
+movement_speed = NodePath("VBoxContainer/MovementSpeed")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -77,42 +112,52 @@ text = "Offense"
 [node name="PhyscialMeleePower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("3_b45b7")
+stat_name = "physical_melee_power"
 
 [node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("5_6k3wh")
+stat_name = "spell_melee_power"
 
 [node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("5_whog0")
+stat_name = "physical_ranged_power"
 
 [node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("6_k0axa")
+stat_name = "spell_ranged_power"
 
 [node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("7_pxtvh")
+stat_name = "wisdom_scaler"
 
 [node name="CriticalHitChance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("8_njrj4")
+stat_name = "critical_hit_chance"
 
 [node name="CriticalHitDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("10_y3frb")
+stat_name = "critical_hit_damage"
 
 [node name="AttackSpeed" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("11_n6bqi")
+stat_name = "attack_speed"
 
 [node name="AttackSpeedIncrease" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("11_hpuyp")
+stat_name = "attack_speed_increase"
 
 [node name="CooldownReduction" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("12_tocge")
+stat_name = "cooldown_reduction"
 
 [node name="Defense" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -138,66 +183,82 @@ text = "Defense
 [node name="Armor" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("13_8lr53")
+stat_name = "armor"
 
 [node name="Poise" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("14_4ne2x")
+stat_name = "poise"
 
 [node name="BlockAmount" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("15_lp0mt")
+stat_name = "block_amount"
 
-[node name="Relaliation" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+[node name="Retaliation" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("16_3ljsi")
+stat_name = "retaliation"
 
 [node name="PhysicalResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("17_ktcwq")
+stat_name = "physcial_resistance"
 
 [node name="PierceResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("18_rj0yu")
+stat_name = "pierce_resistance"
 
 [node name="SlashResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("19_jywmw")
+stat_name = "slash_resistance"
 
 [node name="BluntResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("20_qymbr")
+stat_name = "blunt_resistance"
 
 [node name="BleedResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("21_2dpiu")
+stat_name = "bleed_resistance"
 
 [node name="PoisonResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("22_kxdgd")
+stat_name = "poison_resistance"
 
 [node name="CurseResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("23_v5b2o")
+stat_name = "curse_resistance"
 
 [node name="SpellResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("24_01tgk")
+stat_name = "spell_reistance"
 
 [node name="FireResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("25_a7wfy")
+stat_name = "fire_reistance"
 
 [node name="ColdResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("26_w433w")
+stat_name = "cold_resistance"
 
 [node name="LightningResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("27_n7u25")
+stat_name = "lightning_resistance"
 
 [node name="HolyResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("28_bqukj")
+stat_name = "holy_resistance"
 
 [node name="Health" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -223,18 +284,22 @@ text = "Health
 [node name="MaximumHealth" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("29_aiii4")
+stat_name = "maximum_health"
 
 [node name="Healthbonus" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("30_sn5rs")
+stat_name = "health_bonus"
 
 [node name="HealthRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("31_1m0jg")
+stat_name = "health_regeneration"
 
 [node name="HealthOnRetaliation" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("32_hnp57")
+stat_name = "health_on_retaliation"
 
 [node name="Resource" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -260,18 +325,22 @@ text = "Resource
 [node name="MaximumResource" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("33_upyhc")
+stat_name = "maximum_resource"
 
 [node name="ResourceRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("34_jltvl")
+stat_name = "resource_regeneration"
 
 [node name="ResourceCostReduction" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("35_236sc")
+stat_name = "resource_cost_reduction"
 
 [node name="PostureRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("36_4ku7f")
+stat_name = "posture_regeneration"
 
 [node name="Misc" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -297,3 +366,4 @@ text = "Misc
 [node name="MovementSpeed" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
 script = ExtResource("37_bbmp4")
+stat_name = "movement"

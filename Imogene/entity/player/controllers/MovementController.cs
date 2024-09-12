@@ -35,8 +35,8 @@ public partial class MovementController : Node
 			}
 			if(!player.using_movement_ability && !rotation_only)
 			{
-				player.velocity.X = player.direction.X * player.speed;
-				player.velocity.Z = player.direction.Z * player.speed;
+				player.velocity.X = player.direction.X * player.movement_stats["speed"];
+				player.velocity.Z = player.direction.Z * player.movement_stats["speed"];
 			}
 			else if(rotation_only)
 			{
@@ -54,16 +54,16 @@ public partial class MovementController : Node
 		{
 		if(input_strength > 0.75f)
 		{
-			player.speed = player.run_speed;
+			player.movement_stats["speed"] = player.movement_stats["run_speed"];
 		}
 		else
 		{
-			player.speed = player.walk_speed; 
+			player.movement_stats["speed"] = player.movement_stats["walk_speed"]; 
 		}
 		}
 		else
 		{
-			player.speed = Mathf.Lerp(player.speed, 2.0f, 0.1f);
+			player.movement_stats["speed"] = Mathf.Lerp(player.movement_stats["speed"], 2.0f, 0.1f);
 		}
 
 		if(!player.IsOnFloor())
@@ -156,14 +156,14 @@ public partial class MovementController : Node
 		{
 			GD.Print("Climbing movement");
 			// player.direction = Vector3.Zero;
-			player.velocity.Y = player.direction.Y * player.speed;
+			player.velocity.Y = player.direction.Y * player.movement_stats["speed"];
 			if(!player.is_clambering)
 			{
-				player.speed = climb_speed;
+				player.movement_stats["speed"]= climb_speed;
 			}
 			else
 			{
-				player.speed = clamber_speed;
+				player.movement_stats["speed"] = clamber_speed;
 			}
 			
 		}

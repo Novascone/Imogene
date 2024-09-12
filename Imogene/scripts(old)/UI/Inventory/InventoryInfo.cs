@@ -306,91 +306,91 @@ public partial class InventoryInfo : UI
 	{
 		// GD.Print("receiving stats");
 		// GD.Print("Strength received: " + this_ui.this_player.strength);
-		level_UI = this_ui.this_player.level.ToString();
-		strength_UI = this_ui.this_player.strength.ToString();
-		dexterity_UI = this_ui.this_player.dexterity.ToString();
-		intellect_UI = this_ui.this_player.intellect.ToString();
-		vitality_UI = this_ui.this_player.vitality.ToString();
-		stamina_UI = this_ui.this_player.stamina.ToString();
-		wisdom_UI = this_ui.this_player.wisdom.ToString();
-		charisma_UI = this_ui.this_player.charisma.ToString();
+		// level_UI = this_ui.this_player.level.ToString();
+		// strength_UI = this_ui.this_player.strength.ToString();
+		// dexterity_UI = this_ui.this_player.dexterity.ToString();
+		// intellect_UI = this_ui.this_player.intellect.ToString();
+		// vitality_UI = this_ui.this_player.vitality.ToString();
+		// stamina_UI = this_ui.this_player.stamina.ToString();
+		// wisdom_UI = this_ui.this_player.wisdom.ToString();
+		// charisma_UI = this_ui.this_player.charisma.ToString();
 		
 
-		// Stat details
-		damage_UI = this_ui.this_player.total_dps.ToString();
-		resistance_UI = this_ui.this_player.resistance.ToString();
-		recovery_UI = this_ui.this_player.recovery.ToString();
-		// Sheet
+		// // Stat details
+		// damage_UI = this_ui.this_player.total_dps.ToString();
+		// resistance_UI = this_ui.this_player.resistance.ToString();
+		// recovery_UI = this_ui.this_player.recovery.ToString();
+		// // Sheet
 
-		// Offense
+		// // Offense
 
-		physical_melee_dps_UI = this_ui.this_player.physical_melee_dps.ToString();
-		spell_melee_dps_UI = this_ui.this_player.spell_melee_dps.ToString();
-		physical_ranged_dps_UI = this_ui.this_player.physical_ranged_dps.ToString();
-		spell_ranged_dps_UI = this_ui.this_player.spell_ranged_dps.ToString();
+		// physical_melee_dps_UI = this_ui.this_player.physical_melee_dps.ToString();
+		// spell_melee_dps_UI = this_ui.this_player.spell_melee_dps.ToString();
+		// physical_ranged_dps_UI = this_ui.this_player.physical_ranged_dps.ToString();
+		// spell_ranged_dps_UI = this_ui.this_player.spell_ranged_dps.ToString();
 
-		physical_melee_power_UI = this_ui.this_player.physical_melee_power.ToString();
-		spell_melee_power_UI = this_ui.this_player.spell_melee_power.ToString();
-		physical_ranged_power_UI = this_ui.this_player.physical_ranged_power.ToString();
-		spell_ranged_power_UI = this_ui.this_player.spell_ranged_power.ToString();
-		wisdom_scaler_UI = this_ui.this_player.wisdom_scaler.ToString();
-		slash_damage_UI = this_ui.this_player.slash_damage.ToString();
-		thrust_damage_UI = this_ui.this_player.pierce_damage.ToString();
-		blunt_damage_UI = this_ui.this_player.blunt_damage.ToString();
-		bleed_damage_UI = this_ui.this_player.bleed_damage.ToString();
-		poison_damage_UI = this_ui.this_player.poison_damage.ToString();
-		fire_damage_UI = this_ui.this_player.fire_damage.ToString();
-		cold_damage_UI = this_ui.this_player.cold_damage.ToString();
-		lightning_damage_UI = this_ui.this_player.lightning_damage.ToString();
-		holy_damage_UI = this_ui.this_player.holy_damage.ToString();
-		critical_hit_chance_UI = this_ui.this_player.critical_hit_chance.ToString();
-		critical_hit_damage_UI = this_ui.this_player.critical_hit_damage.ToString();
-		attack_speed_UI = this_ui.this_player.aps.ToString();
-		attack_speed_increase_UI = this_ui.this_player.attack_speed_increase.ToString();
-		cool_down_reduction_UI = this_ui.this_player.cool_down_reduction.ToString();
-		posture_damage_UI = this_ui.this_player.posture_damage.ToString();
+		// physical_melee_power_UI = this_ui.this_player.physical_melee_power.ToString();
+		// spell_melee_power_UI = this_ui.this_player.spell_melee_power.ToString();
+		// physical_ranged_power_UI = this_ui.this_player.physical_ranged_power.ToString();
+		// spell_ranged_power_UI = this_ui.this_player.spell_ranged_power.ToString();
+		// wisdom_scaler_UI = this_ui.this_player.wisdom_scaler.ToString();
+		// slash_damage_UI = this_ui.this_player.slash_damage.ToString();
+		// thrust_damage_UI = this_ui.this_player.pierce_damage.ToString();
+		// blunt_damage_UI = this_ui.this_player.blunt_damage.ToString();
+		// bleed_damage_UI = this_ui.this_player.bleed_damage.ToString();
+		// poison_damage_UI = this_ui.this_player.poison_damage.ToString();
+		// fire_damage_UI = this_ui.this_player.fire_damage.ToString();
+		// cold_damage_UI = this_ui.this_player.cold_damage.ToString();
+		// lightning_damage_UI = this_ui.this_player.lightning_damage.ToString();
+		// holy_damage_UI = this_ui.this_player.holy_damage.ToString();
+		// critical_hit_chance_UI = this_ui.this_player.critical_hit_chance.ToString();
+		// critical_hit_damage_UI = this_ui.this_player.critical_hit_damage.ToString();
+		// attack_speed_UI = this_ui.this_player.aps.ToString();
+		// attack_speed_increase_UI = this_ui.this_player.attack_speed_increase.ToString();
+		// cool_down_reduction_UI = this_ui.this_player.cooldown_reduction.ToString();
+		// posture_damage_UI = this_ui.this_player.posture_damage.ToString();
 		
 
-		// Defense
+		// // Defense
 
-		armor_UI = this_ui.this_player.armor.ToString();
-		poise_UI = this_ui.this_player.poise.ToString();
-		block_amount_UI = this_ui.this_player.block_amount.ToString();
-		retaliation_UI = this_ui.this_player.retaliation.ToString();
-		physical_resistance_UI = this_ui.this_player.physical_resistance.ToString();
-		thrust_resistance_UI = this_ui.this_player.pierce_damage.ToString();
-		slash_resistance_UI = this_ui.this_player.slash_resistance.ToString();
-		blunt_resistance_UI = this_ui.this_player.blunt_resistance.ToString();
-		bleed_resistance_UI = this_ui.this_player.bleed_resistance.ToString();
-		poison_resistance_UI = this_ui.this_player.poison_resistance.ToString();
-		curse_resistance_UI = this_ui.this_player.curse_resistance.ToString();
-		spell_resistance_UI = this_ui.this_player.spell_resistance.ToString();
-		fire_resistance_UI = this_ui.this_player.fire_resistance.ToString();
-		cold_resistance_UI = this_ui.this_player.cold_resistance.ToString();
-		lightning_resistance_UI = this_ui.this_player.lightning_resistance.ToString();
-		holy_resistance_UI = this_ui.this_player.holy_resistance.ToString();
+		// armor_UI = this_ui.this_player.armor.ToString();
+		// poise_UI = this_ui.this_player.poise.ToString();
+		// block_amount_UI = this_ui.this_player.block_amount.ToString();
+		// retaliation_UI = this_ui.this_player.retaliation.ToString();
+		// physical_resistance_UI = this_ui.this_player.physical_resistance.ToString();
+		// thrust_resistance_UI = this_ui.this_player.pierce_damage.ToString();
+		// slash_resistance_UI = this_ui.this_player.slash_resistance.ToString();
+		// blunt_resistance_UI = this_ui.this_player.blunt_resistance.ToString();
+		// bleed_resistance_UI = this_ui.this_player.bleed_resistance.ToString();
+		// poison_resistance_UI = this_ui.this_player.poison_resistance.ToString();
+		// curse_resistance_UI = this_ui.this_player.curse_resistance.ToString();
+		// spell_resistance_UI = this_ui.this_player.spell_resistance.ToString();
+		// fire_resistance_UI = this_ui.this_player.fire_resistance.ToString();
+		// cold_resistance_UI = this_ui.this_player.cold_resistance.ToString();
+		// lightning_resistance_UI = this_ui.this_player.lightning_resistance.ToString();
+		// holy_resistance_UI = this_ui.this_player.holy_resistance.ToString();
 
-		// Health
+		// // Health
 
-		maximum_health_UI = this_ui.this_player.maximum_health.ToString();
-		health_bonus_UI = this_ui.this_player.health_bonus.ToString();
-		health_regen_UI = this_ui.this_player.health_regen.ToString();
-		posture_regen_UI = this_ui.this_player.posture_regen.ToString();
-		health_on_retaliate_UI = this_ui.this_player.health_on_retaliate.ToString();
+		// maximum_health_UI = this_ui.this_player.maximum_health.ToString();
+		// health_bonus_UI = this_ui.this_player.health_bonus.ToString();
+		// health_regen_UI = this_ui.this_player.health_regen.ToString();
+		// posture_regen_UI = this_ui.this_player.posture_regen.ToString();
+		// health_on_retaliate_UI = this_ui.this_player.health_on_retaliate.ToString();
 
-		// Resources
+		// // Resources
 
-		maximum_resource_UI = this_ui.this_player.maximum_resource.ToString();
-		resource_regen_UI = this_ui.this_player.resource_regen.ToString();
-		resource_cost_reduction_UI = this_ui.this_player.resource_cost_reduction.ToString();
+		// maximum_resource_UI = this_ui.this_player.maximum_resource.ToString();
+		// resource_regen_UI = this_ui.this_player.resource_regen.ToString();
+		// resource_cost_reduction_UI = this_ui.this_player.resource_cost_reduction.ToString();
 
-		// Misc
+		// // Misc
 
-		movement_speed_UI = this_ui.this_player.movement_speed.ToString();
+		// movement_speed_UI = this_ui.this_player.movement_speed.ToString();
 
-		// Possessions
-		gold_UI = this_ui.this_player.maximum_gold.ToString();
-		CharacterInfo();
+		// // Possessions
+		// gold_UI = this_ui.this_player.maximum_gold.ToString();
+		// CharacterInfo();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

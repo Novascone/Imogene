@@ -95,7 +95,7 @@ public partial class NewUI : Control
 			}
 			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.A)
 			{
-				GD.Print("event accepted ");
+				GD.Print("event accepted from ui");
 				AcceptEvent();
 			}
 			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)

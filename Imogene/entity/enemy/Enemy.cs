@@ -91,20 +91,20 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
-		maximum_health = health;
-		ui.health_bar.MaxValue = health;
-		ui.health_bar.Value = health;
-		ui.posture_bar.MaxValue = maximum_posture;
+		depth_stats["maximum_health"] = general_stats["health"];
+		ui.health_bar.MaxValue = general_stats["health"];
+		ui.health_bar.Value = general_stats["health"];
+		ui.posture_bar.MaxValue = calculation_stats["maximum_posture"];
 		ui.posture_bar.Value = 0;
-		speed = 2;
+		movement_stats["speed"] = 2;
 		attacking = false;
-		level = 1;
-		armor = 5;
-		stamina = 2000;
-		physical_resistance = 10;
-		slash_resistance = 3;
-		dr_lvl_scale = 50 * (float)level;
-		rec_lvl_scale = 100 * (float)level;
+		base_stats["level"] = 1;
+		depth_stats["armor"] = 5;
+		base_stats["stamina"] = 2000;
+		depth_stats["physical_resistance"] = 10;
+		depth_stats["slash_resistance"] = 3;
+		damage_resistance_stats["damage_resistance_level_scale"] = 50 * (float)base_stats["level"];
+		calculation_stats["recovery_level_scale"] = 100 * (float)base_stats["level"];
 	
 
 		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
@@ -126,7 +126,7 @@ public partial class Enemy : Entity
 			// GD.Print(ray_directions[i]);
 		}
 
-		speed = walk_speed;
+		movement_stats["speed"] = movement_stats["walk_speed"];
 	}
 
     private void HandleFinishedCircling()

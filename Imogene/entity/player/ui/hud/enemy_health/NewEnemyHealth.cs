@@ -12,11 +12,11 @@ public partial class NewEnemyHealth : Control
 	public void EnemyTargeted(Enemy enemy)
     {
 		targeted_enemy = enemy;
-        health_bar.MaxValue = enemy.maximum_health;
-		health_bar.Value = enemy.health;
+        health_bar.MaxValue = enemy.depth_stats["maximum_health"];
+		health_bar.Value = enemy.general_stats["health"];
 		name.Text = enemy.identifier;
-		posture_bar.MaxValue = enemy.maximum_posture;
-		posture_bar.Value = enemy.posture;
+		posture_bar.MaxValue = enemy.calculation_stats["maximum_posture"];
+		posture_bar.Value = enemy.general_stats["posture"];
 		targeted_enemy.ui.hard_target_icon.Show();
 		targeted_enemy.ui.status_bar.Show();
 		targeted_enemy.ui.soft_target_icon.Show();

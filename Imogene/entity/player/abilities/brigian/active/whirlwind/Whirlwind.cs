@@ -30,15 +30,15 @@ public partial class Whirlwind : Ability
 		
 		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
-			whirlwind_hitbox.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2); // Set projectile damage
-			whirlwind_hitbox.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
+			whirlwind_hitbox.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2); // Set projectile damage
+			whirlwind_hitbox.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
 			whirlwind_hitbox.is_critical = true;
 		}
 		else
 		{
 			
-			whirlwind_hitbox.damage = player.damage; // Set projectile damage
-			whirlwind_hitbox.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
+			whirlwind_hitbox.damage = player.summary_stats["damage"]; // Set projectile damage
+			whirlwind_hitbox.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
 			whirlwind_hitbox.is_critical = false;
 		}
 		whirlwind_hitbox.damage_type = damage_type.ToString(); // Set projectile damage type		
@@ -59,7 +59,7 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.resource + resource_change < 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.general_stats["resource"] + resource_change < 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			

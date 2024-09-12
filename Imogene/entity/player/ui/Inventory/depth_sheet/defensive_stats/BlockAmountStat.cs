@@ -7,6 +7,7 @@ public partial class BlockAmountStat : Stat
 	public override void _Ready()
 	{
 		base._Ready();
+		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Block amount {0} \n * Amount of damage that can be blocked by weapon/shield ";
 	}
 

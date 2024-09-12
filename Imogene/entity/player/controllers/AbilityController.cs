@@ -187,7 +187,7 @@ public partial class AbilityController : Node
             }
             
         }
-        else if(player.resource - ability.resource_change >= 0 || ability.resource_change == 0)
+        else if(player.general_stats["resource"] - ability.resource_change >= 0 || ability.resource_change == 0)
         {
             if(ability.cooldown_timer != null)
             {

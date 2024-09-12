@@ -75,10 +75,10 @@ public partial class MainHUD : Control
 	public void UpdateHUDStats(Player player)
 	{
 		
-		health.hit_points.MaxValue = player.maximum_health;
-		health.hit_points.Value = player.health;
-		resource.resource_points.MaxValue = player.maximum_resource;
-		resource.resource_points.Value = player.resource;
+		health.hit_points.MaxValue = player.depth_stats["maximum_health"];
+		health.hit_points.Value = player.general_stats["health"];
+		resource.resource_points.MaxValue = player.depth_stats["maximum_resource"];
+		resource.resource_points.Value = player.general_stats["resource"];
 		
 	}
 

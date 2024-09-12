@@ -90,15 +90,15 @@ public partial class Projectile : RangedAbility
 
 		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
-			projectile.damage = MathF.Round(player.damage * (1 + player.critical_hit_damage), 2); // Set projectile damage
-			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
+			projectile.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2); // Set projectile damage
+			projectile.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
 			projectile.is_critical = true;
 		}
 		else
 		{
 			
-			projectile.damage = player.damage; // Set projectile damage
-			projectile.posture_damage = player.posture_damage / 3; // Set projectile posture damage 
+			projectile.damage = player.summary_stats["damage"]; // Set projectile damage
+			projectile.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
 			projectile.is_critical = false;
 		}
 		// Set projectile damage type

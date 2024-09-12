@@ -5,6 +5,7 @@ using System.Text;
 public partial class Stat : Control
 {
 
+	[Export] public string stat_name;
 	[Export] public StatInfo info;
     [Export] public Button label;
 	[Export] public Area2D area;

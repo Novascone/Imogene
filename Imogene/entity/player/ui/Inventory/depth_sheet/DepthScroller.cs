@@ -69,4 +69,15 @@ public partial class DepthScroller : Control
 	public override void _Process(double delta)
 	{
 	}
+
+	public void SubScribeToStatSignals(Player player)
+	{
+		// foreach(Control control in vbox.GetChildren())
+		// {
+		// 	if(control is Stat stat)
+		// 	{
+		// 		player.entity_controllers.stats_controller
+		// 	}
+		// }
+	}
 }

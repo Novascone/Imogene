@@ -102,7 +102,7 @@ public partial class DamageSystem : Node
     public bool Crit(Entity entity)
 	{
 		float random_float = GD.Randf();
-		if(random_float < entity.critical_hit_chance)
+		if(random_float < entity.depth_stats["critical_hit_chance"])
 		{
 			return true;
 		}
@@ -118,13 +118,13 @@ public partial class DamageSystem : Node
 		amount = DamageMitigation(entity, damage_type, amount);
 		// GD.Print("Amount of damage " + amount);
 		// GD.Print("Is critical " + is_critical);
-		if(entity.health - amount > 0)
+		if(entity.general_stats["health"] - amount > 0)
 		{
-			entity.health -= amount;
-			entity.health = MathF.Round(entity.health);
+			entity.general_stats["health"] -= amount;
+			entity.general_stats["health"]= MathF.Round(entity.general_stats["health"]);
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = entity.health;
+				enemy.ui.health_bar.Value = entity.general_stats["health"];
 				spawn_point = enemy.head;
 				SpawnDamageNumber(amount, is_critical);
 				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
@@ -155,13 +155,13 @@ public partial class DamageSystem : Node
 	private void OnHealthRegenTickTimeout(Entity entity)
     {
 		GD.Print("Heal regen tick timeout");
-        if(entity.health < entity.maximum_health && entity.health_regen > 0)
+        if(entity.general_stats["health"]< entity.depth_stats["maximum_health"] && entity.depth_stats["health_regeneration"] > 0)
 		{
-			entity.health += entity.health_regen;
+			entity.general_stats["health"] += entity.depth_stats["health_regeneration"];
 			health_regen_timer.Start();
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = entity.health;
+				enemy.ui.health_bar.Value = entity.general_stats["health"];
 			}
 		}
 		// if(entity is Player player)
@@ -174,62 +174,62 @@ public partial class DamageSystem : Node
 	{
 		float mitigated_damage = amount;
 		// GD.Print(mitigated_damage + " of damage going into mitigation ");
-		mitigated_damage *= 1 - entity.dr_armor;
+		mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_armor"];
 		// GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
-			mitigated_damage *= 1 - entity.dr_phys;
+			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_physical"];
 			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
-				mitigated_damage *= 1 - entity.dr_slash;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_slash"];;
 				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
 				return MathF.Round(mitigated_damage);
 				
 			}
-			if(damage_type == "Thrust")
+			if(damage_type == "Pierce")
 			{
-				mitigated_damage *= 1 - entity.dr_thrust;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_pierce"];;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Blunt")
 			{
-				mitigated_damage *= 1 - entity.dr_blunt;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_blunt"];;
 				return MathF.Round(mitigated_damage);
 			}
 		}
 		if(damage_type == "Bleed")
 		{
-			mitigated_damage *= 1 - entity.dr_bleed;
+			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_bleed"];;
 			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Poison")
 		{
-			mitigated_damage *= 1 - entity.dr_poison;
+			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_poison"];;
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
 		{
-			mitigated_damage *= 1 - entity.dr_spell;
+			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_spell"];;
 			if(damage_type == "Fire")
 			{
-				mitigated_damage *= 1 - entity.dr_fire;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_fire"];;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Cold")
 			{
-				mitigated_damage *= 1 - entity.dr_cold;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_cold"];;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Lightning")
 			{
-				mitigated_damage *= 1 - entity.dr_lightning;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_lightning"];;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Holy")
 			{
-				mitigated_damage *= 1 - entity.dr_holy;
+				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_holy"];;
 				return MathF.Round(mitigated_damage);
 			}
 		}
