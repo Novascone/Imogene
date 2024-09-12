@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
 size = Vector2(154, 23)
 
-[node name="Level" type="Control" node_paths=PackedStringArray("label", "value", "info")]
+[node name="Level" type="Control" node_paths=PackedStringArray("info", "label", "area", "value")]
 custom_minimum_size = Vector2(225, 25)
 layout_mode = 3
 anchors_preset = 0
@@ -15,9 +15,10 @@ offset_bottom = 25.0
 size_flags_vertical = 4
 focus_mode = 2
 script = ExtResource("1_fegtr")
-label = NodePath("Label")
-value = NodePath("Value")
 info = NodePath("Info")
+label = NodePath("Label")
+area = NodePath("Label/Area2D")
+value = NodePath("Value")
 
 [node name="Info" parent="." instance=ExtResource("2_7rbyg")]
 layout_mode = 2
@@ -77,5 +78,3 @@ size_flags_stretch_ratio = 0.05
 
 [connection signal="focus_entered" from="Label" to="." method="_on_label_focus_entered"]
 [connection signal="focus_exited" from="Label" to="." method="_on_label_focus_exited"]
-[connection signal="area_entered" from="Label/Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="Label/Area2D" to="." method="_on_area_2d_area_exited"]

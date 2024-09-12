@@ -77,7 +77,7 @@ public partial class InteractSystem : Node3D
 		if(body is InteractableItem item)
 		{
 			items_in_pick_up.Add(item);
-			if(!item.dropped_by_player)
+			if(!item.interact_to_pick_up)
 			{
 				PickUpItem(item, player);
 			}
@@ -93,7 +93,7 @@ public partial class InteractSystem : Node3D
 		if(body is InteractableItem item)
 		{
 			items_in_pick_up.Remove(item);
-			if(item.dropped_by_player)
+			if(item.interact_to_pick_up)
 			{
 				pick_up_item = next_nearest;
 			}

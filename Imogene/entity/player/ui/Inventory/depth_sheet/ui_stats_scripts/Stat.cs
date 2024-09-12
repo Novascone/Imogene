@@ -1,17 +1,22 @@
 using Godot;
 using System;
+using System.Text;
 
 public partial class Stat : Control
 {
 
-    [Export] public Button label;
-	[Export] public Label value;
 	[Export] public StatInfo info;
+    [Export] public Button label;
+	[Export] public Area2D area;
+	[Export] public Label value;
+	
 	public string stat_value = "1";
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-       
+		label.Text = SeparateByCapitals(Name);
+       	area.AreaEntered += _on_area_2d_area_entered;
+	   	area.AreaExited += _on_area_2d_area_exited;
 	}
 
     public void GetStatInfo(string stat_value_ui)
@@ -35,8 +40,25 @@ public partial class Stat : Control
 			if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
 		}
 	}
+
+	public string SeparateByCapitals(string name)
+	{
+		StringBuilder new_name = new StringBuilder(name);
+		
+		for(int i = 1; i < new_name.Length; i++)
+		{
+			if(char.IsUpper(new_name[i]))
+			{
+				new_name.Insert(i, " ");
+				i++;
+			}
+		}
+
+		return new_name.ToString();
+	}
 	public void _on_area_2d_area_entered(Area2D area)
 	{
+		
 		if(area.IsInGroup("cursor"))
 		{
 			label.GrabFocus();
@@ -45,6 +67,7 @@ public partial class Stat : Control
 
 	public void _on_area_2d_area_exited(Area2D area)
 	{
+		
 		if(area.IsInGroup("cursor"))
 		{
 			label.ReleaseFocus();

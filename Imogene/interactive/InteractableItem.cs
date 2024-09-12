@@ -5,7 +5,7 @@ public partial class InteractableItem : Node3D
 {
 	[Export] public MeshInstance3D item_highlight_mesh_white {get; set;}
 	[Export] public MeshInstance3D item_highlight_mesh_red {get; set;}
-	public bool dropped_by_player;
+	public bool interact_to_pick_up;
 
 	public void GainFocus(bool inventory_full)
 	{

@@ -8,6 +8,7 @@ using System.Threading;
 [GlobalClass]
 public partial class MainInventory : Control
 {
+	[Export] public CharacterOutline character_outline;
 	[Export] public GridContainer items;
 	[Export] public GenericInventoryButton mats;
 	[Export] public BottomButtons bottom_buttons;
@@ -26,6 +27,7 @@ public partial class MainInventory : Control
 	public override void _Ready()
 	{
 		GD.Print("inventory slots: " + inventory_slots.Count);
+
 	}
 
     public void HandleItemDroppedInto(int from_slot_id, int to_slot_id)
@@ -64,7 +66,7 @@ public partial class MainInventory : Control
 		}
 		EmitSignal(nameof(DroppingItem));
 		var new_item = inventory_slots[id].slot_data.item_model_prefab.Instantiate() as InteractableItem;
-		new_item.dropped_by_player = true;
+		new_item.interact_to_pick_up = true;
 		inventory_slots[id].FillSlot(null, false);
 		slots_filled -= 1;
 		EmitSignal(nameof(InventoryCapacity), false);

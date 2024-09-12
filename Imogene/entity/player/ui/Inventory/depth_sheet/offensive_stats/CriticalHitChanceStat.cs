@@ -7,7 +7,8 @@ public partial class CriticalHitChanceStat : Stat
 	public override void _Ready()
 	{
 		base._Ready();
-		// info.info.Text =  " Critical hit chance {0} \n * Percentage chance for a hit to be a critical hit \n * Increased by skills and gear ";
+		label.Text = SeparateByCapitals(Name);
+		info.tool_tip.Text = " Critical hit chance {0} \n * Percentage chance for a hit to be a critical hit \n * Increased by skills and gear ";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

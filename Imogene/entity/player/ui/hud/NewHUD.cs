@@ -60,7 +60,7 @@ public partial class NewHUD : Control
         object_interacting_with = item;
 		if(!last_item)
 		{
-			if(item.dropped_by_player)
+			if(item.interact_to_pick_up)
 			{
 				GD.Print("received switch item signal switching to " + item.Name );
 				in_interact_area = true;
@@ -106,7 +106,7 @@ public partial class NewHUD : Control
 		if(body is InteractableItem item)
 		{
 			
-			if(item.dropped_by_player)
+			if(item.interact_to_pick_up)
 			{
 				object_interacting_with = item;
 				in_interact_area = true;

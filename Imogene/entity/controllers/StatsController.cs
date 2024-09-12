@@ -65,7 +65,7 @@ public partial class StatsController : Node
 		// GD.Print("dr_armor of " + entity.dr_armor + " for " + entity.identifier);
 		entity.dr_phys = (float)Math.Round(entity.physical_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_slash = (float)Math.Round(entity.slash_resistance/entity.dr_lvl_scale, 2);
-		entity.dr_thrust = (float)Math.Round(entity.thrust_resistance/entity.dr_lvl_scale, 2);
+		entity.dr_thrust = (float)Math.Round(entity.pierce_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_blunt = (float)Math.Round(entity.blunt_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_bleed = (float)Math.Round(entity.bleed_resistance/entity.dr_lvl_scale, 2);
 		entity.dr_poison = (float)Math.Round(entity.poison_resistance/entity.dr_lvl_scale, 2);

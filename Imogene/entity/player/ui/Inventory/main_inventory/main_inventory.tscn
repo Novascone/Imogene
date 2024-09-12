@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://i8rexh5m0xrf" path="res://entity/player/ui/Inventory/main_inventory/mats_label.tscn" id="4_ajoqv"]
 [ext_resource type="PackedScene" uid="uid://cyqtt3a7dcrvv" path="res://entity/player/ui/Inventory/main_inventory/gold_label.tscn" id="5_3to8r"]
 
-[node name="MainInventory" type="VBoxContainer" node_paths=PackedStringArray("items", "mats", "bottom_buttons")]
+[node name="MainInventory" type="VBoxContainer" node_paths=PackedStringArray("character_outline", "items", "mats", "bottom_buttons")]
 offset_right = 612.0
 offset_bottom = 1080.0
 size_flags_horizontal = 10
 script = ExtResource("1_he5l0")
+character_outline = NodePath("CharacterOutline")
 items = NodePath("Items")
 mats = NodePath("MatsGold/Mats")
 bottom_buttons = NodePath("BottomButtons")
@@ -39,6 +40,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CharacterOutline" parent="." instance=ExtResource("2_cuxs3")]
+z_index = 2
 layout_mode = 2
 
 [node name="Items" parent="." instance=ExtResource("3_j3h2y")]

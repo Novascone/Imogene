@@ -17,7 +17,7 @@ public partial class CharacterOutline : Controller
 	[Export] public Control recovery;
 
 	[Export] public Control reputation;
-	[Export] public Control sheet;
+	[Export] public Button sheet;
 
 	// Armor
 	[Export] public Control shoulders;
@@ -46,5 +46,10 @@ public partial class CharacterOutline : Controller
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public void _on_sheet_button_down()
+	{
+
 	}
 }

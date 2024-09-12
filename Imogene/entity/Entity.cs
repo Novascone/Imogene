@@ -116,7 +116,7 @@ public partial class Entity : CharacterBody3D
 
 
 	public float slash_damage = 0; // Percentage of damage given by slash
-	public float thrust_damage = 0; // Percentage of damage given by thrust
+	public float pierce_damage = 0; // Percentage of damage given by thrust
 	public float blunt_damage = 0; // Percentage of damage given by blunt
 	public float bleed_damage = 0; // Percentage of damage given by bleed
 	public float poison_damage = 0; // Percentage of damage given by poison
@@ -137,7 +137,7 @@ public partial class Entity : CharacterBody3D
 	public int block_amount = 0; // How much damage the entity can block when blocking
  	public int retaliation = 0; // Increases retaliation period
 	public int physical_resistance = 0; // Increases physical damage resistance
-	public int thrust_resistance = 0; // Increases thrust damage resistance
+	public int pierce_resistance = 0; // Increases thrust damage resistance
 	public int slash_resistance = 0; // Increases slash damage resistance
 	public int blunt_resistance = 0; // Increases blunt damage resistance
 	public int bleed_resistance = 0; // Increases bleed damage resistance

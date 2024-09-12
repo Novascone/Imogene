@@ -1,43 +1,45 @@
-[gd_scene load_steps=37 format=3 uid="uid://1in75rdt30fc"]
+[gd_scene load_steps=38 format=3 uid="uid://1in75rdt30fc"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/DepthScroller.cs" id="1_wqqpl"]
-[ext_resource type="PackedScene" uid="uid://cytlgq5un81o5" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_melee_power_stat.tscn" id="2_gev0m"]
-[ext_resource type="PackedScene" uid="uid://beq75db4l4reg" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_melee_power_stat.tscn" id="3_3er3g"]
-[ext_resource type="PackedScene" uid="uid://cegrbwjehqocq" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/physical_ranged_power_stat.tscn" id="4_w2wb5"]
-[ext_resource type="PackedScene" uid="uid://fi18jou8q78h" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/spell_ranged_power_stat.tscn" id="5_4mtde"]
-[ext_resource type="PackedScene" uid="uid://nxyla0qiqfgq" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/wisdom_scaler_stat.tscn" id="6_qb8d2"]
-[ext_resource type="PackedScene" uid="uid://kud4x3vdh8f" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/critical_hit_chance.tscn" id="7_cpn0w"]
-[ext_resource type="PackedScene" uid="uid://fcw2mcgssgdg" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/critical_hit_damage.tscn" id="8_f32hh"]
-[ext_resource type="PackedScene" uid="uid://bvilvdkpw1jsu" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/attack_speed.tscn" id="9_jmi4q"]
-[ext_resource type="PackedScene" uid="uid://d2y2btjgiqqij" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/attack_speed_increase.tscn" id="10_thaar"]
-[ext_resource type="PackedScene" uid="uid://cffxphebx347c" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/cooldown_reduction.tscn" id="11_brqix"]
-[ext_resource type="PackedScene" uid="uid://b80r6igw6pp6x" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/armor.tscn" id="12_scooy"]
-[ext_resource type="PackedScene" uid="uid://dqkm4hk5fe7hn" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/poise.tscn" id="13_7hawn"]
-[ext_resource type="PackedScene" uid="uid://dxvy0jjmqrusn" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/block_amount.tscn" id="14_pqbtv"]
-[ext_resource type="PackedScene" uid="uid://c4ai3tnwy0i67" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/retaliation.tscn" id="15_j7chq"]
-[ext_resource type="PackedScene" uid="uid://dhf0nnhf72h18" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/physical_resistance.tscn" id="16_qoqw1"]
-[ext_resource type="PackedScene" uid="uid://ctqy31wcmfro3" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/pierce_resistance.tscn" id="17_50ckj"]
-[ext_resource type="PackedScene" uid="uid://bgiwx545otgim" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/slash_resistance.tscn" id="18_r5voc"]
-[ext_resource type="PackedScene" uid="uid://b2ll8ae47x7n3" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/blunt_resistance.tscn" id="19_nskil"]
-[ext_resource type="PackedScene" uid="uid://dsjrh4bhsx2qu" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/bleed_resistance.tscn" id="20_1t3uq"]
-[ext_resource type="PackedScene" uid="uid://ble3yrgjj01t0" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/poison_resistance.tscn" id="21_hw2g0"]
-[ext_resource type="PackedScene" uid="uid://dtw326lqso667" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/curse_resistance.tscn" id="22_x34aq"]
-[ext_resource type="PackedScene" uid="uid://c7yffx585sw47" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/spell_resistance.tscn" id="23_qvtvu"]
-[ext_resource type="PackedScene" uid="uid://bgxhki2ukl636" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/fire_resistance.tscn" id="24_nc4y3"]
-[ext_resource type="PackedScene" uid="uid://dkjs362kopvyu" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/cold_resistance.tscn" id="25_iab47"]
-[ext_resource type="PackedScene" uid="uid://b8f18wfchd2t6" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/lightning_resistance.tscn" id="26_6qam3"]
-[ext_resource type="PackedScene" uid="uid://cknoxl7ipanip" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/holy_resistance.tscn" id="27_0qrux"]
-[ext_resource type="PackedScene" uid="uid://btmc04hp1fhcf" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/maximum_health.tscn" id="28_feo0a"]
-[ext_resource type="PackedScene" uid="uid://g36su1dtevxj" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/health_bonus.tscn" id="29_wehdt"]
-[ext_resource type="PackedScene" uid="uid://blsj18n6or068" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/health_regeneration.tscn" id="30_fib8k"]
-[ext_resource type="PackedScene" uid="uid://bavdr18gmefsb" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/health_retaliation.tscn" id="31_rfj12"]
-[ext_resource type="PackedScene" uid="uid://eoa342ty7rbm" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/maximum_resource.tscn" id="32_dyndx"]
-[ext_resource type="PackedScene" uid="uid://c04s7pnkyalq5" path="res://entity/player/ui/Inventory/depth_sheet/resource_regeneration.tscn" id="33_en8nh"]
-[ext_resource type="PackedScene" uid="uid://bsv1wtafcjume" path="res://entity/player/ui/Inventory/depth_sheet/resource_cost_reduction.tscn" id="34_krpxy"]
-[ext_resource type="PackedScene" uid="uid://drjic6r0o42fv" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/posture_regeneration.tscn" id="35_nct7w"]
-[ext_resource type="PackedScene" uid="uid://vm8jakcr50yg" path="res://entity/player/ui/Inventory/depth_sheet/movement_speed.tscn" id="36_oprs7"]
+[ext_resource type="PackedScene" uid="uid://s0a61njmsp3j" path="res://entity/player/ui/Inventory/depth_sheet/depth_stat_.tscn" id="2_8a1yr"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PhysicalMeleePowerStat.cs" id="3_b45b7"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SpellMeleePowerStat.cs" id="5_6k3wh"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PhysicalRangedPowerStat.cs" id="5_whog0"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SpellRangedPowerStat.cs" id="6_k0axa"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/WisdomScalerStat.cs" id="7_pxtvh"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CriticalHitChanceStat.cs" id="8_njrj4"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CriticalHitDamageStat.cs" id="10_y3frb"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/AttackSpeedIncreaseStat.cs" id="11_hpuyp"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/AttackSpeedStat.cs" id="11_n6bqi"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CooldownReductionStat.cs" id="12_tocge"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/ArmorStat.cs" id="13_8lr53"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PoiseStat.cs" id="14_4ne2x"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BlockAmountStat.cs" id="15_lp0mt"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/RetaliationStat.cs" id="16_3ljsi"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PhysicalResistanceStat.cs" id="17_ktcwq"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PierceResistanceStat.cs" id="18_rj0yu"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/SlashResistanceStat.cs" id="19_jywmw"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BluntResistanceStat.cs" id="20_qymbr"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BleedResistanceStat.cs" id="21_2dpiu"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PoisonResistanceStat.cs" id="22_kxdgd"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/CurseResistanceStat.cs" id="23_v5b2o"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/SpellResistanceStat.cs" id="24_01tgk"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/FireResistanceStat.cs" id="25_a7wfy"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/ColdResistanceStat.cs" id="26_w433w"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/LightningResistanceStat.cs" id="27_n7u25"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/HolyResistanceStat.cs" id="28_bqukj"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/health_stats/MaximumHealthStat.cs" id="29_aiii4"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/health_stats/HealthBonusStat.cs" id="30_sn5rs"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/health_stats/HealthRegenerationStat.cs" id="31_1m0jg"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/health_stats/HealthRetaliationStat.cs" id="32_hnp57"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/MaximumResourceStat.cs" id="33_upyhc"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/ResourceRegenerationStat.cs" id="34_jltvl"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/ResourceCostReductionStat.cs" id="35_236sc"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/PostureRegenerationStat.cs" id="36_4ku7f"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/misc_stats/MovementSpeedStat.cs" id="37_bbmp4"]
 
-[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
+[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox")]
+z_index = 2
 clip_contents = false
 custom_minimum_size = Vector2(2, 0)
 offset_right = 300.0
@@ -47,36 +49,6 @@ size_flags_vertical = 3
 follow_focus = true
 script = ExtResource("1_wqqpl")
 vbox = NodePath("VBoxContainer")
-critical_hit_chance = NodePath("VBoxContainer/CriticalHitChance")
-critical_hit_damage = NodePath("VBoxContainer/CriticalHitDamage")
-attack_speed = NodePath("VBoxContainer/AttackSpeed")
-attack_speed_increase = NodePath("VBoxContainer/AttackSpeedIncrease")
-cool_down_reduction = NodePath("VBoxContainer/CooldownReduction")
-armor = NodePath("VBoxContainer/Armor")
-poise = NodePath("VBoxContainer/Poise")
-block_amount = NodePath("VBoxContainer/BlockAmount")
-retaliation = NodePath("VBoxContainer/Retaliation")
-physical_resistance = NodePath("VBoxContainer/PhysicalResistance")
-pierce_resistance = NodePath("VBoxContainer/PierceResistance")
-slash_resistance = NodePath("VBoxContainer/SlashResistance")
-blunt_resistance = NodePath("VBoxContainer/BluntResistance")
-bleed_resistance = NodePath("VBoxContainer/BleedResistance")
-poison_resistance = NodePath("VBoxContainer/PoisonResistance")
-curse_resistance = NodePath("VBoxContainer/CurseResistance")
-spell_resistance = NodePath("VBoxContainer/SpellResistance")
-fire_resistance = NodePath("VBoxContainer/FireResistance")
-cold_resistance = NodePath("VBoxContainer/ColdResistance")
-lightning_resistance = NodePath("VBoxContainer/LightningResistance")
-holy_resistance = NodePath("VBoxContainer/HolyResistance")
-maximum_health = NodePath("VBoxContainer/MaximumHealth")
-health_bonus = NodePath("VBoxContainer/HealthBonus")
-health_regeneration = NodePath("VBoxContainer/HealthRegeneration")
-health_retaliation = NodePath("VBoxContainer/HealthRetaliation")
-maximum_resource = NodePath("VBoxContainer/MaximumResource")
-resource_regeneration = NodePath("VBoxContainer/ResourceRegeneration")
-resource_cost_reduction = NodePath("VBoxContainer/ResourceCostReduction")
-posture_regeneration = NodePath("VBoxContainer/PostureRegeneration")
-movement_speed = NodePath("VBoxContainer/MovementSpeed")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -102,35 +74,45 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Offense"
 
-[node name="PhysicalMeleePower" parent="VBoxContainer" instance=ExtResource("2_gev0m")]
+[node name="PhyscialMeleePower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("3_b45b7")
 
-[node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("3_3er3g")]
+[node name="SpellMeleePower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("5_6k3wh")
 
-[node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("4_w2wb5")]
+[node name="PhysicalRangedPower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("5_whog0")
 
-[node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("5_4mtde")]
+[node name="SpellRangedPower" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("6_k0axa")
 
-[node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("6_qb8d2")]
+[node name="WisdomScaler" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("7_pxtvh")
 
-[node name="CriticalHitChance" parent="VBoxContainer" instance=ExtResource("7_cpn0w")]
+[node name="CriticalHitChance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("8_njrj4")
 
-[node name="CriticalHitDamage" parent="VBoxContainer" instance=ExtResource("8_f32hh")]
+[node name="CriticalHitDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("10_y3frb")
 
-[node name="AttackSpeed" parent="VBoxContainer" instance=ExtResource("9_jmi4q")]
+[node name="AttackSpeed" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("11_n6bqi")
 
-[node name="AttackSpeedIncrease" parent="VBoxContainer" instance=ExtResource("10_thaar")]
+[node name="AttackSpeedIncrease" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("11_hpuyp")
 
-[node name="CooldownReduction" parent="VBoxContainer" instance=ExtResource("11_brqix")]
+[node name="CooldownReduction" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("12_tocge")
 
 [node name="Defense" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -153,53 +135,69 @@ grow_vertical = 2
 text = "Defense
 "
 
-[node name="Armor" parent="VBoxContainer" instance=ExtResource("12_scooy")]
+[node name="Armor" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("13_8lr53")
 
-[node name="Poise" parent="VBoxContainer" instance=ExtResource("13_7hawn")]
+[node name="Poise" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("14_4ne2x")
 
-[node name="BlockAmount" parent="VBoxContainer" instance=ExtResource("14_pqbtv")]
+[node name="BlockAmount" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("15_lp0mt")
 
-[node name="Retaliation" parent="VBoxContainer" instance=ExtResource("15_j7chq")]
+[node name="Relaliation" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("16_3ljsi")
 
-[node name="PhysicalResistance" parent="VBoxContainer" instance=ExtResource("16_qoqw1")]
+[node name="PhysicalResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("17_ktcwq")
 
-[node name="PierceResistance" parent="VBoxContainer" instance=ExtResource("17_50ckj")]
+[node name="PierceResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("18_rj0yu")
 
-[node name="SlashResistance" parent="VBoxContainer" instance=ExtResource("18_r5voc")]
+[node name="SlashResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("19_jywmw")
 
-[node name="BluntResistance" parent="VBoxContainer" instance=ExtResource("19_nskil")]
+[node name="BluntResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("20_qymbr")
 
-[node name="BleedResistance" parent="VBoxContainer" instance=ExtResource("20_1t3uq")]
+[node name="BleedResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("21_2dpiu")
 
-[node name="PoisonResistance" parent="VBoxContainer" instance=ExtResource("21_hw2g0")]
+[node name="PoisonResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("22_kxdgd")
 
-[node name="CurseResistance" parent="VBoxContainer" instance=ExtResource("22_x34aq")]
+[node name="CurseResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("23_v5b2o")
 
-[node name="SpellResistance" parent="VBoxContainer" instance=ExtResource("23_qvtvu")]
+[node name="SpellResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("24_01tgk")
 
-[node name="FireResistance" parent="VBoxContainer" instance=ExtResource("24_nc4y3")]
+[node name="FireResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("25_a7wfy")
 
-[node name="ColdResistance" parent="VBoxContainer" instance=ExtResource("25_iab47")]
+[node name="ColdResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("26_w433w")
 
-[node name="LightningResistance" parent="VBoxContainer" instance=ExtResource("26_6qam3")]
+[node name="LightningResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("27_n7u25")
 
-[node name="HolyResistance" parent="VBoxContainer" instance=ExtResource("27_0qrux")]
+[node name="HolyResistance" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("28_bqukj")
 
 [node name="Health" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -222,17 +220,21 @@ grow_vertical = 2
 text = "Health
 "
 
-[node name="MaximumHealth" parent="VBoxContainer" instance=ExtResource("28_feo0a")]
+[node name="MaximumHealth" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("29_aiii4")
 
-[node name="HealthBonus" parent="VBoxContainer" instance=ExtResource("29_wehdt")]
+[node name="Healthbonus" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("30_sn5rs")
 
-[node name="HealthRegeneration" parent="VBoxContainer" instance=ExtResource("30_fib8k")]
+[node name="HealthRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("31_1m0jg")
 
-[node name="HealthRetaliation" parent="VBoxContainer" instance=ExtResource("31_rfj12")]
+[node name="HealthOnRetaliation" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("32_hnp57")
 
 [node name="Resource" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -255,17 +257,21 @@ grow_vertical = 2
 text = "Resource
 "
 
-[node name="MaximumResource" parent="VBoxContainer" instance=ExtResource("32_dyndx")]
+[node name="MaximumResource" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("33_upyhc")
 
-[node name="ResourceRegeneration" parent="VBoxContainer" instance=ExtResource("33_en8nh")]
+[node name="ResourceRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("34_jltvl")
 
-[node name="ResourceCostReduction" parent="VBoxContainer" instance=ExtResource("34_krpxy")]
+[node name="ResourceCostReduction" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("35_236sc")
 
-[node name="PostureRegeneration" parent="VBoxContainer" instance=ExtResource("35_nct7w")]
+[node name="PostureRegeneration" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("36_4ku7f")
 
 [node name="Misc" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -288,5 +294,6 @@ grow_vertical = 2
 text = "Misc
 "
 
-[node name="MovementSpeed" parent="VBoxContainer" instance=ExtResource("36_oprs7")]
+[node name="MovementSpeed" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
+script = ExtResource("37_bbmp4")

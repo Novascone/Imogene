@@ -7,7 +7,8 @@ public partial class WisdomScalerStat : Stat
 	public override void _Ready()
 	{
 		base._Ready();
-		// info =  " Wisdom Scaler {0} \n Increases by one for every 20 wisdom \n * Scales how powerful attacks that scale with wisdom are ";
+		label.Text = SeparateByCapitals(Name);
+		info.tool_tip.Text =  " Wisdom Scaler {0} \n Increases by one for every 20 wisdom \n * Scales how powerful attacks that scale with wisdom are ";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

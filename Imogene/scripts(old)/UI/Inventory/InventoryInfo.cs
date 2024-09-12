@@ -148,7 +148,7 @@ public partial class InventoryInfo : UI
 	private BlockAmountStat block_amount_stat;
 	private RetaliationStat retaliation_stat;
 	private PhysicalResistanceStat physical_resistance_stat;
-	private ThrustResistanceStat thrust_resistance_stat;
+	private PierceResistanceStat thrust_resistance_stat;
 	private SlashResistanceStat slash_resistance_stat;
 	private BluntResistanceStat blunt_resistance_stat;
 	private BleedResistanceStat bleed_resistance_stat;
@@ -244,7 +244,7 @@ public partial class InventoryInfo : UI
 		block_amount_stat = GetNode<BlockAmountStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BlockAmount");
 		retaliation_stat = GetNode<RetaliationStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/Retaliation");
 		physical_resistance_stat = GetNode<PhysicalResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/PhysicalResistance");
-		thrust_resistance_stat = GetNode<ThrustResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance");
+		thrust_resistance_stat = GetNode<PierceResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/ThrustResistance");
 		slash_resistance_stat = GetNode<SlashResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/SlashResistance");
 		blunt_resistance_stat = GetNode<BluntResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BluntResistance");
 		bleed_resistance_stat = GetNode<BleedResistanceStat>("FullInventory/CharacterSheetDepth/ScrollContainer/StatsSheet/VBoxContainer/BleedResistance");
@@ -335,7 +335,7 @@ public partial class InventoryInfo : UI
 		spell_ranged_power_UI = this_ui.this_player.spell_ranged_power.ToString();
 		wisdom_scaler_UI = this_ui.this_player.wisdom_scaler.ToString();
 		slash_damage_UI = this_ui.this_player.slash_damage.ToString();
-		thrust_damage_UI = this_ui.this_player.thrust_damage.ToString();
+		thrust_damage_UI = this_ui.this_player.pierce_damage.ToString();
 		blunt_damage_UI = this_ui.this_player.blunt_damage.ToString();
 		bleed_damage_UI = this_ui.this_player.bleed_damage.ToString();
 		poison_damage_UI = this_ui.this_player.poison_damage.ToString();
@@ -358,7 +358,7 @@ public partial class InventoryInfo : UI
 		block_amount_UI = this_ui.this_player.block_amount.ToString();
 		retaliation_UI = this_ui.this_player.retaliation.ToString();
 		physical_resistance_UI = this_ui.this_player.physical_resistance.ToString();
-		thrust_resistance_UI = this_ui.this_player.thrust_resistance.ToString();
+		thrust_resistance_UI = this_ui.this_player.pierce_damage.ToString();
 		slash_resistance_UI = this_ui.this_player.slash_resistance.ToString();
 		blunt_resistance_UI = this_ui.this_player.blunt_resistance.ToString();
 		bleed_resistance_UI = this_ui.this_player.bleed_resistance.ToString();

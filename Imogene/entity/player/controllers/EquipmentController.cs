@@ -566,7 +566,7 @@ public partial class EquipmentController : Node
 		player.block_amount += item.block;
 		player.retaliation += item.retaliation;
 		player.physical_resistance += item.physical_resistance;
-		player.thrust_resistance += item.thrust_resistance;
+		player.pierce_resistance += item.pierce_resistance;
 		player.slash_resistance += item.slash_resistance;
 		player.blunt_resistance += item.blunt_resistance;
 		player.bleed_resistance += item.bleed_resistance;

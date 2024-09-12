@@ -33,7 +33,7 @@ public partial class ArmsResource : EquipableResource
 	[Export]
 	public int physical_resistance;
 	[Export]
-	public int thrust_resistance;
+	public int pierce_resistance;
 	[Export]
 	public int slash_resistance;
 	[Export]

@@ -32,12 +32,13 @@
 [ext_resource type="PackedScene" uid="uid://cqf6ui62jdgrk" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/off_hand.tscn" id="25_usurc"]
 [ext_resource type="PackedScene" uid="uid://c0rchsocdrwdr" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/off_hand_secondary.tscn" id="26_q62pn"]
 
-[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
+[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("sheet", "shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
 offset_right = 593.0
 offset_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_7c54v")
+sheet = NodePath("StatsOutline/Sheet")
 shoulders = NodePath("Armor/Column1/MarginContainer/Shoulders")
 gloves = NodePath("Armor/Column1/HBoxContainer/VBoxContainer/Gloves")
 ring_1 = NodePath("Armor/Column1/HBoxContainer/VBoxContainer/Ring1")
@@ -274,3 +275,5 @@ focus_neighbor_left = NodePath("../../../../Column2/Boots")
 [node name="OffHandSecondary" parent="Armor/Column3/HBoxContainer/VBoxContainer" instance=ExtResource("26_q62pn")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../../Column2/Boots")
+
+[connection signal="button_down" from="StatsOutline/Sheet" to="." method="_on_sheet_button_down"]

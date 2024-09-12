@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
 size = Vector2(220, 21)
 
-[node name="SummaryStat" type="Control" node_paths=PackedStringArray("label", "value", "info")]
+[node name="SummaryStat" type="Control" node_paths=PackedStringArray("info", "label", "area", "value")]
 custom_minimum_size = Vector2(230, 66)
 layout_mode = 3
 anchors_preset = 0
@@ -16,9 +16,10 @@ offset_bottom = 66.0
 size_flags_vertical = 3
 focus_mode = 2
 script = ExtResource("1_4va3k")
-label = NodePath("VBoxContainer/Label")
-value = NodePath("VBoxContainer/Value")
 info = NodePath("Info")
+label = NodePath("VBoxContainer/Label")
+area = NodePath("VBoxContainer/Label/Area2D")
+value = NodePath("VBoxContainer/Value")
 
 [node name="Info" parent="." instance=ExtResource("2_i6gcp")]
 layout_mode = 2
