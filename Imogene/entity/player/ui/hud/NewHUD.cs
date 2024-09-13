@@ -39,7 +39,7 @@ public partial class NewHUD : Control
 				}
 				EmitSignal(nameof(AcceptHUDInput), object_interacting_with);
 				AcceptEvent();
-				GD.Print("Hud accepting event");
+				
 			}
 			
 		}

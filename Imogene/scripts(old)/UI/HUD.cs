@@ -303,6 +303,7 @@ public partial class HUD : UI
 			{
 
 				AcceptEvent();
+				
 			}
 		}
 		
