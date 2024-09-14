@@ -8,8 +8,8 @@ public partial class ResourceSystem : Node
 
 	[Signal] public delegate void ResourceChangeEventHandler(float resource);
 
-	StatModifier change_resource = new(StatModifier.ModificationType.Add);
-	StatModifier change_posture = new(StatModifier.ModificationType.Add);
+	StatModifier change_resource = new (StatModifier.ModificationType.add_current);
+	StatModifier change_posture = new (StatModifier.ModificationType.add_current);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -21,10 +21,11 @@ public partial class ResourceSystem : Node
     public void Resource(Player player, float resource_change)
 	{
 		change_resource.value_to_add = resource_change;
-		player.resource.modifiers.Add(change_resource);
+		player.resource.AddModifier(change_resource);
 		GD.Print("Cost " + resource_change);
-		EmitSignal(nameof(ResourceChange), player.resource.current_value);
-		
+		EmitSignal(nameof(ResourceChange),player.resource.current_value);
+		GD.Print("player resource changed by " + resource_change);
+		GD.Print("player resource " + player.resource.current_value);
 		ResourceRegen(player);
 	}
 
@@ -47,7 +48,7 @@ public partial class ResourceSystem : Node
 			// GD.Print(entity.identifier + " taking posture damage of " + posture_damage);
 			
 			change_posture.value_to_add = posture_damage;
-			entity.posture.modifiers.Add(change_posture);
+			entity.posture.AddModifier(change_posture);
 			
 			if(entity.posture.current_value >= entity.posture.max_value)
 			{
@@ -58,6 +59,7 @@ public partial class ResourceSystem : Node
 			if(entity is Enemy enemy)
 			{
 				enemy.ui.posture_bar.Value += posture_damage;
+				GD.Print(enemy.Name + "is taking " + posture_damage + " posture damage");
 
 			}
 			// if(entity is Player player)
@@ -78,10 +80,13 @@ public partial class ResourceSystem : Node
 	private void OnResourceRegenTickTimeout(Player player)
     {
         GD.Print("resource regenerating");
-		if(player.resource.current_value< player.resource.max_value)
+		if(player.resource.current_value < player.resource.max_value)
 		{
 			change_resource.value_to_add = player.resource_regeneration.current_value;
-			player.resource.modifiers.Add(change_resource);
+			player.resource.AddModifier(change_resource);
+			EmitSignal(nameof(ResourceChange),player.resource.current_value);
+			GD.Print("player resource " + player.resource.current_value);
+			
 		}
 
 		// if(entity is Player player)
@@ -97,7 +102,8 @@ public partial class ResourceSystem : Node
 		// GD.Print("posture regenerating");
 		if(entity.posture.current_value > 0)
 		{
-			change_posture.value_to_add = entity.resource_regeneration.current_value;
+			change_posture.value_to_add = -entity.resource_regeneration.current_value;
+			entity.posture.AddModifier(change_posture);
 		}
         else
 		{

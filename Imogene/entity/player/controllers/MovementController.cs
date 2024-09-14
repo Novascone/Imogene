@@ -18,7 +18,7 @@ public partial class MovementController : Node
 	public bool rotation_only;
 	public bool rotation_finished;
 	public bool movement_input_allowed = true;
-	StatModifier walk = new(StatModifier.ModificationType.Multiply);
+	StatModifier walk = new (StatModifier.ModificationType.multiply_base);
 
     public override void _Ready()
     {
@@ -42,8 +42,7 @@ public partial class MovementController : Node
 			if(!player.using_movement_ability && !rotation_only)
 			{
 				player.velocity.X = player.direction.X * player.movement_speed.current_value;
-				player.velocity.Z = player.direction.Z * player.movement_speed.current_value;
-				
+				player.velocity.Z = player.direction.Z * player.movement_speed.current_value;			
 			}
 			else if(rotation_only)
 			{

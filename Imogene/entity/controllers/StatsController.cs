@@ -71,7 +71,7 @@ public partial class StatsController : Node
 	{
 		GD.Print("setting combined damage");
 		entity.combined_damage = entity.main_hand_damage.current_value + entity.off_hand_damage.current_value + entity.damage_bonus.current_value;
-		damage_per_second = entity.attacks_per_second.current_value * entity.combined_damage;
+		damage_per_second = entity.main_hand_attacks_per_second.current_value * entity.combined_damage;
 	}
 
 	public void SetCriticalHitModifier(Entity entity)

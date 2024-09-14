@@ -87,19 +87,63 @@ public partial class Player : Entity
 	public bool using_ability; // Is the entity using an ability?
 	public bool can_use_abilities = true;
 
+	List<StatModifier> equipment_stat_modifiers = new List<StatModifier>();
+	StatModifier add_strength;
+	StatModifier add_stamina;
+	StatModifier increase_critical_hit_chance;
 	
-	
+    public override void _Input(InputEvent @event)
+    {
+		
+		
+        if(@event.IsActionPressed("one"))
+		{
+			strength.AddModifier(add_strength);
+			stamina.AddModifier(add_stamina);
+			critical_hit_chance.AddModifier(increase_critical_hit_chance);
+			GD.Print("Player strength " + strength.current_value);
+			GD.Print("Player stamina " + stamina.current_value);
+			GD.Print("Player critical hit chance " + stamina.current_value);
+		}
+		if(@event.IsActionPressed("two"))
+		{
+			strength.RemoveModifier(add_strength);
+			stamina.RemoveModifier(add_stamina);
+			critical_hit_chance.RemoveModifier(increase_critical_hit_chance);
+			GD.Print("Player strength " + strength.current_value);
+			GD.Print("Player stamina " + stamina.current_value);
+			GD.Print("Player critical hit chance " + stamina.current_value);
+		}
+		if(@event.IsActionPressed("three"))
+		{
+			
+		}
+		if(@event.IsActionPressed("four"))
+		{
+			
+		}
+		
+		
+    }
 
 
-
-	public override void _Ready()
+    public override void _Ready()
 	{
 		
 		base._Ready();
-		
-		
+
+		add_strength = new(StatModifier.ModificationType.add_base);
+		add_stamina = new(StatModifier.ModificationType.add_base);
+		increase_critical_hit_chance = new(StatModifier.ModificationType.add_base);
+
+		equipment_stat_modifiers.Add(add_strength);
+		add_strength.value_to_add = 5;
+		equipment_stat_modifiers.Add(add_stamina);
+		add_stamina.value_to_add = 5;
+		equipment_stat_modifiers.Add(increase_critical_hit_chance);
+		increase_critical_hit_chance.value_to_add = 0.2f;
+
 	
-		resource.base_value = resource.max_value / 2;
 		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
 		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
 		Ability effect_test = (Ability)controllers.ability_assigner.LoadAbility(this, "effect_test", "general", "active");
@@ -139,8 +183,6 @@ public partial class Player : Entity
 		ui.hud.SubscribeToInteractSignals(this);
 
 	
-		// hurtbox.AreaEntered += OnHurtboxAreaEntered;
-		// hurtbox.BodyEntered += OnHurtboxBodyEntered;
 		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
 
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
@@ -155,6 +197,7 @@ public partial class Player : Entity
 		
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
+		entity_systems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
 
 		ui.InventoryToggle += HandleInventoryToggle;
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
@@ -199,54 +242,6 @@ public partial class Player : Entity
         controllers.ability_assigner.ChangeAbilityAssignment(this, cross, level, bind, ability_name);
     }
 
-
-
-    // private void OnHurtboxAreaEntered(Area3D area)
-    // {
-    //     if(area is MeleeHitbox melee_box)
-	// 	{
-	// 		if(area.IsInGroup("ActiveHitbox") && area is MeleeHitbox)
-	// 		{
-	// 			foreach(StatusEffect status_effect in melee_box.effects)
-	// 			{
-	// 				GD.Print("Applying " + status_effect.Name + " to " + Name);
-	// 				status_effect.Apply(this);
-	// 				// if(status_effect.effect_type == "movement")
-	// 				// {
-	// 				// 	previous_movement_effects_count = movement_effects.Count;
-	// 				// }
-	// 			}
-	// 			damage_system.TakeDamage(melee_box.damage_type, melee_box.damage, melee_box.is_critical);
-	// 			resource_system.Posture(this, melee_box.posture_damage);
-	// 		}
-	// 	}
-    // }
-
-    // private void OnHurtboxBodyEntered(Node3D body)
-    // {
-	// 	// GD.Print("Hitbox entered " + this.Name);
-	// 	if(body is RangedHitbox ranged_box)
-	// 	{
-	// 		if(body.IsInGroup("ActiveHitbox") && body is RangedHitbox)
-	// 		{
-	// 			foreach(StatusEffect status_effect in ranged_box.effects)
-	// 			{
-	// 				GD.Print("Applying " + status_effect.Name + " to " + Name);
-	// 				status_effect.Apply(this);
-	// 				// if(status_effect.effect_type == "movement")
-	// 				// {
-	// 				// 	previous_movement_effects_count = movement_effects.Count;
-	// 				// }
-	// 			}
-	// 			damage_system.TakeDamage(ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
-	// 			resource_system.Posture(this, ranged_box.posture_damage);
-	// 		}
-	// 	}
-    // }
-
-	
-
-	
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
 

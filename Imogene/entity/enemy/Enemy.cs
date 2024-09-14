@@ -91,6 +91,7 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
+		GD.Print(Name + " health " + health.current_value);
 		ui.health_bar.MaxValue = health.max_value;
 		ui.health_bar.Value = health.current_value;
 		ui.posture_bar.MaxValue = posture.max_value;

@@ -63,99 +63,100 @@ public partial class Entity : CharacterBody3D
 	
 
 	
-	public Stat physical_melee_power = new("physical_melee_power", 0);
-	public Stat physical_ranged_power = new("physical_ranged_power", 0);
-	public Stat spell_melee_power = new("spell_melee_power", 0);
-	public Stat spell_ranged_power = new("spell_ranged_power", 0);
+	public Stat physical_melee_power = new(Stat.StatType.physical_melee_power, 0);
+	public Stat physical_ranged_power = new(Stat.StatType.physical_ranged_power, 0);
+	public Stat spell_melee_power = new(Stat.StatType.spell_melee_power, 0);
+	public Stat spell_ranged_power = new(Stat.StatType.spell_melee_power, 0);
 
 	// Wisdom
-	public Stat wisdom_scaler = new("wisdom_scaler", 0);
+	public Stat wisdom_scaler = new(Stat.StatType.wisdom_scaler, 0);
 
 	// Regeneration
-	public Stat health_regeneration = new("health_regeneration", 0);
-	public Stat resource_regeneration = new("resource_regeneration", 0);
-	public Stat posture_regeneration = new("posture_regeneration", 0);
+	public Stat health_regeneration = new(Stat.StatType.health_regeneration, 0);
+	public Stat resource_regeneration = new(Stat.StatType.resource_regeneration, 0);
+	public Stat posture_regeneration = new(Stat.StatType.posture_regeneration, 0);
 
 	
 	public List<Stat> damage_stats = new List<Stat>();
 	public List<Stat> resistance_stats= new List<Stat>();
 
 	// Base stats
-	public Stat level = new("level", 0);
-	public Stat strength = new("strength", 0);
-	public Stat dexterity = new("dexterity", 0);
-	public Stat intellect = new("intellect", 0);
-	public Stat vitality = new("vitality", 0);
-	public Stat stamina = new("stamina", 0);
-	public Stat wisdom = new("wisdom", 0);
-	public Stat charisma = new("charisma", 0);
+	public Stat level = new(Stat.StatType.level, 0);
+	public Stat strength = new(Stat.StatType.strength, 0);
+	public Stat dexterity = new(Stat.StatType.dexterity, 0);
+	public Stat intellect = new(Stat.StatType.intellect, 0);
+	public Stat vitality = new(Stat.StatType.vitality, 0);
+	public Stat stamina = new(Stat.StatType.stamina, 0);
+	public Stat wisdom = new(Stat.StatType.wisdom, 0);
+	public Stat charisma = new(Stat.StatType.charisma, 0);
 
 	// Gear Stats
-	public Stat main_hand_damage = new("main_hand_damage", 10);
-	public Stat off_hand_damage = new("off_hand_damage", 0);
-	public Stat damage_bonus = new("damage_bonus", 0);
-	public Stat attacks_per_second = new("attacks_per_second", 0);
+	public Stat main_hand_damage = new(Stat.StatType.main_hand_damage, 10);
+	public Stat off_hand_damage = new(Stat.StatType.off_hand_damage, 0);
+	public Stat damage_bonus = new(Stat.StatType.damage_bonus, 0);
+	public Stat main_hand_attacks_per_second = new(Stat.StatType.main_hand_attacks_per_second, 0);
+	public Stat off_hand_attacks_per_second = new(Stat.StatType.off_hand_attacks_per_second, 0);
 
 	// Misc Stats
 	
-	public Stat health_bonus = new("health_bonus", 0);
-	public Stat movement_speed = new("movement_speed", 6f);
-	public Stat fall_speed = new("fall_speed", 40);
-	public Stat jump_speed = new("jump_speed", 30);
+	public Stat health_bonus = new(Stat.StatType.health_bonus, 0);
+	public Stat movement_speed = new(Stat.StatType.movement_speed, 6f);
+	public Stat fall_speed = new(Stat.StatType.fall_speed, 40);
+	public Stat jump_speed = new(Stat.StatType.jump_speed, 30);
 
 	// Damage these contribute to the multiplier applied to attacks of this type
-	public Stat critical_hit_chance = new("critical_hit_chance", 0);
-	public Stat critical_hit_damage = new("critical_hit_damage", 0);
-	public Stat posture_damage = new("posture_damage", 0);
+	public Stat critical_hit_chance = new(Stat.StatType.critical_hit_chance, 0);
+	public Stat critical_hit_damage = new(Stat.StatType.critical_hit_damage, 0);
+	public Stat posture_damage = new(Stat.StatType.posture_damage, 0);
 	
 	// Damage stats list
-	public Stat power = new("power", 0);
-	public Stat physical_damage = new("physical_damage", 0);
-	public Stat pierce_damage = new("pierce_damage", 0);
-	public Stat slash_damage = new("slash_damage", 0);
-	public Stat blunt_damage = new("blunt_damage", 0);
-	public Stat bleed_damage = new("bleed_damage", 0);
-	public Stat poison_damage = new("poison_damage", 0);
-	public Stat curse_damage = new("curse_damage", 0);
-	public Stat spell_damage = new("spell_damage", 0);
-	public Stat fire_damage = new("fire_damage", 0);
-	public Stat cold_damage = new("cold_damage", 0);
-	public Stat lightning_damage = new("Lightning_damage", 0);
-	public Stat holy_damage = new("holy_damage", 0);
+	public Stat power = new(Stat.StatType.power, 0);
+	public Stat physical_damage = new(Stat.StatType.physical_damage, 0);
+	public Stat pierce_damage = new(Stat.StatType.pierce_damage, 0);
+	public Stat slash_damage = new(Stat.StatType.slash_damage, 0);
+	public Stat blunt_damage = new(Stat.StatType.blunt_damage, 0);
+	public Stat bleed_damage = new(Stat.StatType.bleed_damage, 0);
+	public Stat poison_damage = new(Stat.StatType.poison_damage, 0);
+	public Stat curse_damage = new(Stat.StatType.curse_damage, 0);
+	public Stat spell_damage = new(Stat.StatType.spell_damage, 0);
+	public Stat fire_damage = new(Stat.StatType.fire_damage, 0);
+	public Stat cold_damage = new(Stat.StatType.cold_damage, 0);
+	public Stat lightning_damage = new(Stat.StatType.lightning_damage, 0);
+	public Stat holy_damage = new(Stat.StatType.holy_damage, 0);
 
 	
 	// Defensive Stats
 	
 	
-	public Stat block_amount = new("block_amount", 0);
-	public Stat retaliation = new("retaliation", 0);
+	public Stat block_amount = new(Stat.StatType.block_amount, 0);
+	public Stat retaliation = new(Stat.StatType.retaliation, 0);
 	
 	// Resistance Stats
-	public Stat armor = new("armor", 0);
-	public Stat poise = new("poise", 0);
-	public Stat physical_resistance = new("physical_resistance", 0);
-	public Stat pierce_resistance = new("pierce_resistance", 0);
-	public Stat slash_resistance = new("slash_resistance", 0);
-	public Stat blunt_resistance = new("blunt_resistance", 0);
-	public Stat bleed_resistance = new("bleed_resistance", 0);
-	public Stat poison_resistance = new("poison_resistance", 0);
-	public Stat curse_resistance = new("curse_resistance", 0);
-	public Stat spell_resistance = new("spell_resistance", 0);
-	public Stat fire_resistance = new("fire_resistance", 0);
-	public Stat cold_resistance = new("cold_resistance", 0);
-	public Stat lightning_resistance = new("lightning_resistance", 0);
-	public Stat holy_resistance = new("holy_resistance", 0);
+	public Stat armor = new(Stat.StatType.armor, 0);
+	public Stat poise = new(Stat.StatType.poise, 0);
+	public Stat physical_resistance = new(Stat.StatType.physical_resistance, 0);
+	public Stat pierce_resistance = new(Stat.StatType.pierce_resistance, 0);
+	public Stat slash_resistance = new(Stat.StatType.slash_resistance, 0);
+	public Stat blunt_resistance = new(Stat.StatType.blunt_resistance, 0);
+	public Stat bleed_resistance = new(Stat.StatType.bleed_resistance, 0);
+	public Stat poison_resistance = new(Stat.StatType.poison_resistance, 0);
+	public Stat curse_resistance = new(Stat.StatType.curse_resistance, 0);
+	public Stat spell_resistance = new(Stat.StatType.spell_resistance, 0);
+	public Stat fire_resistance = new(Stat.StatType.fire_resistance, 0);
+	public Stat cold_resistance = new(Stat.StatType.cold_resistance, 0);
+	public Stat lightning_resistance = new(Stat.StatType.lightning_resistance, 0);
+	public Stat holy_resistance = new(Stat.StatType.holy_resistance, 0);
 
 	// Health
-	public Stat health = new("health", 200);
-	public Stat health_on_retaliation = new("health_on_retaliation", 0);
-	public Stat health_regeneration_bonus = new("health_regeneration_bonus" , 0);
+	public Stat health = new(Stat.StatType.health, 200);
+	public Stat health_on_retaliation = new(Stat.StatType.health_on_retaliation, 0);
+	public Stat health_regeneration_bonus = new(Stat.StatType.health_regeneration_bonus , 0);
 
 	// Resource
-	public Stat resource = new("resource", 100);
-	public Stat posture = new("posture", 0);
-	public Stat resource_cost_reduction = new("resource_cost_reduction", 0);
-	public Stat resource_regeneration_bonus = new("resource_regeneration_bonus", 0);
+	public Stat resource = new(Stat.StatType.resource, 100);
+	public Stat posture = new(Stat.StatType.posture, 0);
+	public Stat resource_cost_reduction = new(Stat.StatType.resource_cost_reduction, 0);
+	public Stat resource_regeneration_bonus = new(Stat.StatType.resource_regeneration_bonus, 0);
 
 
 	public float critical_hit_modifier;
@@ -198,156 +199,7 @@ public partial class Entity : CharacterBody3D
 
 
 	
-    // Stats
-    // public float level = 1; // Level of the entity
-	// public float xp = 0;
-	// public float xp_to_level = 100;
-    // public float speed; // Speed of the entity
-	// public float walk_speed = 3.5f;
-	// public float run_speed = 6.0f;
-    // public float fall_speed = 40.0f; // How fast the player falls 
-    // public float jump_speed = 30.0f; // How fast the player jumps
-	// public float health = 200; // Prelim health number
-    // public float resource = 100; // prelim resource number
-	// public float posture;
-
-	// public int strength = 0; // Strength: A primary stat for melee damage. Contributes to Physical Melee Power, Physical Ranged Power, and Spell Melee Power
-	// public int dexterity = 0; // Dexterity: A primary stat for melee damage. Contributes to all Power stats
-	// public int intellect = 0; // Intellect: Primary stat spell damage for. Contributes to Spell Melee Power and Spell Ranged Power
-	// public int vitality = 0; // Vitality: Primary stat for health
-	// public int stamina = 0; // Primary stat for resource and regeneration
-	// public int wisdom = 0; // Increases the damage of abilities that use wisdom, also used for interactions
-	// public int charisma = 0; // Primary Stat for character interaction
-
-
-	
-	// Offense
-	// public float total_dps; // Total estimated dps, combination of all 4 types of attacks
-	// public float physical_melee_dps;
-	// public float spell_melee_dps;
-	// public float physical_ranged_dps;
-	// public float spell_ranged_dps;
-    // public float main_hand_damage;
-	// public float off_hand_damage;
-
-	
-
-	
-
-
-
-	// public float physical_melee_power; // Increases physical melee DPS by a magnitude every 100 points + 2 for every point of strength + 1 for every point of dexterity
-	// public float spell_melee_power; // Increases melee magic DPS a magnitude every 100 points + 3 for every point of intellect + 1 for every point of dexterity + 1 for every point strength
-	// public float physical_ranged_power; // Increases physical ranged DPS a magnitude every 100 points + 2 for every point of strength + 1 for every point of dexterity
-	// public float spell_ranged_power;  // Increases physical ranged DPS by a magnitude every 100 points + 3 for every point of dexterity + 1 for every point of strength
-	// public float wisdom_scaler; // Increases by one every 20 wisdom. Increases how powerful attacks that scale with wisdom are
-
-	
-	// public float physical_melee_power_mod; // 1 + (power/100)
-	// public float physical_ranged_power_mod; 
-	// public float spell_melee_power_mod;
-	// public float spell_ranged_power_mod;
-	// public float power_mod_avg;
-
-    
-    // public float attack_speed;
-	// public float damage_bonus = 0; // Damage bonus from gear
-	// public float combined_damage = 0; // Main hand, off-hand, and all damage from equipment
-	// public float base_aps = 0; // Base attacks per second of the entity, determined by weapons/ stance for players/ entities using weapons
-	// public float aps_modifiers = 0; // Modifiers to attacks per second, from skills or gear
-	// public float aps = 0; // Attacks per second
-	// public float base_dps = 0; // Base dps of the entity aps * combined damage
-	// public float skill_mod = 0; // Damage modification granted from skills or equipment
-	// public float crit_mod = 0; // 1 + (crit chance * crit damage)
-
-
-
-	// public float slash_damage = 0; // Percentage of damage given by slash
-	// public float pierce_damage = 0; // Percentage of damage given by thrust
-	// public float blunt_damage = 0; // Percentage of damage given by blunt
-	// public float bleed_damage = 0; // Percentage of damage given by bleed
-	// public float poison_damage = 0; // Percentage of damage given by poison
-	// public float fire_damage = 0; // Percentage of damage given by fire
-	// public float cold_damage = 0; // Percentage of damage given by cold
-	// public float lightning_damage = 0; // Percentage of damage given by lightning
-	// public float holy_damage = 0; // Percentage of damage given by holy
-	// public float critical_hit_chance = 0.5f; // Percentage change for hit to be a critical hit
-	// public float critical_hit_damage = 0.9f; // Multiplier applied to base damage if a hit is critical
-	// public float attack_speed_increase = 0; // aps modifiers as a percentage to be displayed
-	// public float cooldown_reduction = 0; // The percent reduction of cooldown
-	// public float posture_damage = 34; // How much damage each attack does to opponent posture **** this needs more defining as does the posture system ****
-    // public float damage; // How much damage the entity does
-
-	// Defense
-	// public float armor = 20; // Total armor the entity has increases armor damage reduction 
-	// public float poise = 0; // Decreases how fast posture depletes **** this needs more defining as does the posture system ****
-	// public float block_amount = 0; // How much damage the entity can block when blocking
- 	// public float retaliation = 0; // Increases retaliation period
-	// public float physical_resistance = 0; // Increases physical damage resistance
-	// public float pierce_resistance = 0; // Increases thrust damage resistance
-	// public float slash_resistance = 0; // Increases slash damage resistance
-	// public float blunt_resistance = 0; // Increases blunt damage resistance
-	// public float bleed_resistance = 0; // Increases bleed damage resistance
-	// public float poison_resistance = 0; // Increases poison damage resistance
-	// public float curse_resistance = 0; // Increases curse resistance
-	// public float spell_resistance = 0; // Increases spell damage resistance
-	// public float fire_resistance = 0; // Increases fire damage resistance
-	// public float cold_resistance = 0; // Increases cold damage resistance
-	// public float lightning_resistance = 0; // Increases lightning damage resistance
-	// public float holy_resistance = 0; // Increases holy damage resistance
-
-	
-
-	// public float dr_armor; // 1 + (armor / (dr_level_scale)) repeat for all resistances
-	// public float dr_phys;
-	// public float dr_slash;
-	// public float dr_thrust;
-	// public float dr_blunt;
-	// public float dr_bleed;
-	// public float dr_poison;
-	// public float dr_curse;
-	// public float dr_spell;
-	// public float dr_fire;
-	// public float dr_cold;
-	// public float dr_lightning;
-	// public float dr_holy;
-
-	// public float dr_lvl_scale; // level * 50 <-- set in player entity / on enemy script
-	// public float avg_res_dr; // Average of all resistances
-
-	// public float resistance; // Estimated total resistance stat
-
-
-
-	// Health
-
-	// public float maximum_health;
-	// public float health_bonus = 0; // Health bonus from skills and gear
-	// public float health_regen = 0; // Health regenerated every second 1 + (stamina/rec_lvl_scale * health_regen_bonus)
-	// public float health_regen_bonus = 0; // Bonus to health regeneration from skills and gear
-	// public float health_on_retaliate = 0; // How much health is gain from a successful attack during retaliation period
-
-	// Resource
-
-	// public float maximum_resource = 100;
-	// public float resource_regen = 0; // Resource regenerated every second 1 + (stamina/rec_lvl_scale *  resource_regen_bonus)
-	// public float resource_regen_bonus = 0; // Bonus to health regeneration from skills and gear
-	// public float maximum_posture = 100;
-	// public float posture_regen = 0; // Posture regenerated every second 1 + (stamina/rec_lvl_scale * (1 + poise/100)
-	// public float posture_regen_bonus = 0; // Bonus to posture regen from skills and gear
-	// public float resource_cost_reduction = 0; // Resource cost reduction from skills and gear
-	// public float rec_lvl_scale; // level * 100 <-- set in player entity
-
-	// public float recovery; // Estimated total recovery stat, average of the three types of recovery
-
-	// Misc
-	// public float movement_speed = 0; // How fast the entity moves
-
-	// Materials
-
-	// public float maximum_gold; // How much gold the entity can carry
-
-
+ 
     public Vector3 direction; // Direction 
 	public Vector3 position; // Position 
 	public Vector3 velocity; // Velocity 
@@ -366,25 +218,122 @@ public partial class Entity : CharacterBody3D
 
     // public Vector3 enemy_position;
 	
-
+	public List<Stat> stats = new List<Stat>();
     public override void _Ready()
     {
-		
+		health.max_value = 200;
+		health.base_value = health.max_value;
+		health.current_value = health.max_value;
+
+		resource.max_value = 200;
+		resource.base_value = resource.max_value;
+		resource.current_value = resource.max_value/2;
+
+		resource_regeneration.base_value = 1;
+		resource_regeneration.current_value = 1;
+
+		posture.max_value = 100;
+		posture.current_value = 0;
+
+		posture_regeneration.base_value = 2;
+		posture_regeneration.current_value = 2;
+
+		posture_damage.current_value = 10;
+	// public Stat physical_melee_power = new("physical_melee_power", 0);
+	// public Stat physical_ranged_power = new("physical_ranged_power", 0);
+	// public Stat spell_melee_power = new("spell_melee_power", 0);
+	// public Stat spell_ranged_power = new("spell_ranged_power", 0);
+
+	// // Wisdom
+	// public Stat wisdom_scaler = new("wisdom_scaler", 0);
+
+	// // Regeneration
+	// public Stat health_regeneration = new("health_regeneration", 0);
+	// public Stat resource_regeneration = new("resource_regeneration", 0);
+	// public Stat posture_regeneration = new("posture_regeneration", 0);
+
 	
-		// public float damage_resistance_poise;
-		// public float damage_resistance_physical;
-		// public float damage_resistance_slash;
-		// public float damage_resistance_pierce;
-		// public float damage_resistance_blunt;
-		// public float damage_resistance_bleed;
-		// public float damage_resistance_poison;
-		// public float damage_resistance_curse;
-		// public float damage_resistance_spell;
-		// public float damage_resistance_fire;
-		// public float damage_resistance_cold;
-		// public float damage_resistance_lightning;
-		// public float damage_resistance_holy;
-		
+	// public List<Stat> damage_stats = new List<Stat>();
+	// public List<Stat> resistance_stats= new List<Stat>();
+
+	// // Base stats
+	// public Stat level = new("level", 0);
+	// public Stat strength = new("strength", 0);
+	// public Stat dexterity = new("dexterity", 0);
+	// public Stat intellect = new("intellect", 0);
+	// public Stat vitality = new("vitality", 0);
+	// public Stat stamina = new("stamina", 0);
+	// public Stat wisdom = new("wisdom", 0);
+	// public Stat charisma = new("charisma", 0);
+
+	// // Gear Stats
+	// public Stat main_hand_damage = new("main_hand_damage", 10);
+	// public Stat off_hand_damage = new("off_hand_damage", 0);
+	// public Stat damage_bonus = new("damage_bonus", 0);
+	// public Stat attacks_per_second = new("attacks_per_second", 0);
+
+	// // Misc Stats
+	
+	// public Stat health_bonus = new("health_bonus", 0);
+	// public Stat movement_speed = new("movement_speed", 6f);
+	// public Stat fall_speed = new("fall_speed", 40);
+	// public Stat jump_speed = new("jump_speed", 30);
+
+	// // Damage these contribute to the multiplier applied to attacks of this type
+	// public Stat critical_hit_chance = new("critical_hit_chance", 0);
+	// public Stat critical_hit_damage = new("critical_hit_damage", 0);
+	// public Stat posture_damage = new("posture_damage", 0);
+	
+	// // Damage stats list
+	// public Stat power = new("power", 0);
+	// public Stat physical_damage = new("physical_damage", 0);
+	// public Stat pierce_damage = new("pierce_damage", 0);
+	// public Stat slash_damage = new("slash_damage", 0);
+	// public Stat blunt_damage = new("blunt_damage", 0);
+	// public Stat bleed_damage = new("bleed_damage", 0);
+	// public Stat poison_damage = new("poison_damage", 0);
+	// public Stat curse_damage = new("curse_damage", 0);
+	// public Stat spell_damage = new("spell_damage", 0);
+	// public Stat fire_damage = new("fire_damage", 0);
+	// public Stat cold_damage = new("cold_damage", 0);
+	// public Stat lightning_damage = new("Lightning_damage", 0);
+	// public Stat holy_damage = new("holy_damage", 0);
+
+	
+	// // Defensive Stats
+	
+	
+	// public Stat block_amount = new("block_amount", 0);
+	// public Stat retaliation = new("retaliation", 0);
+	
+	// // Resistance Stats
+	// public Stat armor = new("armor", 0);
+	// public Stat poise = new("poise", 0);
+	// public Stat physical_resistance = new("physical_resistance", 0);
+	// public Stat pierce_resistance = new("pierce_resistance", 0);
+	// public Stat slash_resistance = new("slash_resistance", 0);
+	// public Stat blunt_resistance = new("blunt_resistance", 0);
+	// public Stat bleed_resistance = new("bleed_resistance", 0);
+	// public Stat poison_resistance = new("poison_resistance", 0);
+	// public Stat curse_resistance = new("curse_resistance", 0);
+	// public Stat spell_resistance = new("spell_resistance", 0);
+	// public Stat fire_resistance = new("fire_resistance", 0);
+	// public Stat cold_resistance = new("cold_resistance", 0);
+	// public Stat lightning_resistance = new("lightning_resistance", 0);
+	// public Stat holy_resistance = new("holy_resistance", 0);
+
+	// // Health
+	// public Stat health = new("health", 200);
+	// public Stat health_on_retaliation = new("health_on_retaliation", 0);
+	// public Stat health_regeneration_bonus = new("health_regeneration_bonus" , 0);
+
+	// // Resource
+	// public Stat resource = new("resource", 100);
+	// public Stat posture = new("posture", 0);
+	// public Stat resource_cost_reduction = new("resource_cost_reduction", 0);
+	// public Stat resource_regeneration_bonus = new("resource_regeneration_bonus", 0);
+
+	
         entity_systems.damage_system.SubscribeEntityToHealthRegen(this);
     }
 

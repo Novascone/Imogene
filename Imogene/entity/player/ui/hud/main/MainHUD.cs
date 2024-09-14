@@ -356,4 +356,10 @@ public partial class MainHUD : Control
 		}
 		else return "";
 	}
+
+    internal void HandleResourceChange(float incoming_resource_value)
+    {
+        
+		resource.resource_points.Value = incoming_resource_value;
+    }
 }
