@@ -31,16 +31,16 @@ public partial class Slow : StatusEffect
 		}
 		current_stacks += 1;
 		
-		if(entity.movement_stats["speed"] >= entity.movement_stats["walk_speed"])
+		if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 		{
-			entity.movement_stats["speed"] *= 0.7f;
+			entity.movement_speed.modifiers.Add(slow);
 		}
 		else
 		{
 			GD.Print("speed has already been decreased");
 		}
 		
-		GD.Print(entity.Name + " Speed after slow " + entity.movement_stats["speed"]);
+		GD.Print(entity.Name + " Speed after slow " + entity.movement_speed.current_value);
 	}
 
 	private void timer_timeout(Entity entity)
@@ -48,11 +48,11 @@ public partial class Slow : StatusEffect
 		GD.Print("timer timeout");
         if(current_stacks == 1)
 		{
-			entity.movement_stats["speed"] = entity.movement_stats["walk_speed"];
+			entity.movement_speed.modifiers.Remove(slow);
 			GD.Print("removing slow from " + entity.Name);
 			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-			GD.Print("entity speed reset to " + entity.movement_stats["speed"]);
+			GD.Print("entity speed reset to " + entity.movement_speed.current_value);
 			// RemoveStatusEffect(this);
 		}
 		else

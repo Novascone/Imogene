@@ -3,7 +3,7 @@ using System;
 using System.Text;
 
 
-public partial class PhysicalMeleePowerStat : Stat
+public partial class PhysicalMeleePowerStat : UIStat
 {
 	
 	// Called when the node enters the scene tree for the first time.

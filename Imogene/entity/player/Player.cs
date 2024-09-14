@@ -87,19 +87,19 @@ public partial class Player : Entity
 	public bool using_ability; // Is the entity using an ability?
 	public bool can_use_abilities = true;
 
-
-
 	
+	
+
+
 
 	public override void _Ready()
 	{
 		
 		base._Ready();
-		damage_resistance_stats["damage_resistance_level_scale"] = 50 * base_stats["level"];
-		calculation_stats["recovery_level_scale"] = 100 * base_stats["level"];
-	
 		
-		general_stats["resource"] = depth_stats["maximum_resource"] / 2;
+		
+	
+		resource.base_value = resource.max_value / 2;
 		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
 		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
 		Ability effect_test = (Ability)controllers.ability_assigner.LoadAbility(this, "effect_test", "general", "active");
@@ -130,8 +130,7 @@ public partial class Player : Entity
 
 		camera_rig.TopLevel = true;
 
-		controllers.movement_controller = GetNode<MovementController>("Controllers/MovementController");
-		controllers.equipment_controller = GetNode<EquipmentController>("Controllers/EquipmentController");
+
 
 
 		systems.vision_system.SubscribeToAreaSignals(this);
@@ -164,10 +163,7 @@ public partial class Player : Entity
 
 		
 		entity_controllers.stats_controller.UpdateStats(this);
-		
-
-		depth_stats["maximum_health"] = general_stats["health"];
-		general_stats["resource"] = depth_stats["maximum_resource"];
+	
 
 		exclude.Add(areas.vision.GetRid());
 		exclude.Add(areas.near.GetRid());
@@ -202,6 +198,8 @@ public partial class Player : Entity
 		GD.Print("Player received ability reassigned signal");
         controllers.ability_assigner.ChangeAbilityAssignment(this, cross, level, bind, ability_name);
     }
+
+
 
     // private void OnHurtboxAreaEntered(Area3D area)
     // {
@@ -254,7 +252,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-	
+		
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);
@@ -262,7 +260,6 @@ public partial class Player : Entity
 		controllers.ability_controller.AbilityFrameCheck(this);
 		MoveAndSlide();
 
-	
 		
     }
 

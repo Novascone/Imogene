@@ -20,7 +20,7 @@ public partial class XPSystem : EntitySystem
 	{
 		if(entity is Player player)
 		{
-			entity.accumulation_stats["xp"] += xp_gained;
+			entity.xp.amount += xp_gained;
 			// player.ui.hud.xp.Value = player.xp;
 			LevelUp();
 		}
@@ -30,15 +30,15 @@ public partial class XPSystem : EntitySystem
 	{
 		if(entity is Player player)
 		{
-			if( entity.accumulation_stats["xp"] >= entity.accumulation_stats["xp"])
+			if( entity.xp.amount >= xp_to_level)
 			{
-				entity.accumulation_stats["xp"]-= xp_to_level;
+				entity.xp.amount -= xp_to_level;
 				xp_to_level *= 2;
 				// player.ui.hud.xp.MaxValue = player.xp_to_level;
 				// player.ui.hud.xp.Value = player.xp;
 				GD.Print("Leveled up");
 				GD.Print("New xp to level " + xp_to_level);
-				GD.Print("current xp " + entity.accumulation_stats["xp"]);
+				GD.Print("current xp " + entity.xp.amount);
 			}
 		}
 	}

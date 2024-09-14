@@ -244,25 +244,8 @@ public partial class Slash : Ability
 		player.main_hand_hitbox.damage_type = "Cold";
 		// player.main_hand_hitbox.damage_type = "Lightning";
 		// GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
-		if(player.entity_systems.damage_system.Crit(player))
-		{
-			GD.Print("Critical!");
-			player.main_hand_hitbox.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2);
-			player.main_hand_hitbox.posture_damage = player.calculation_stats["posture_damage"];
-			player.main_hand_hitbox.is_critical = true;
-			// GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
-		}
-		else
-		{
-			player.main_hand_hitbox.damage = player.summary_stats["damage"];
-			player.main_hand_hitbox.posture_damage = player.calculation_stats["posture_damage"];
-			player.main_hand_hitbox.is_critical = false;
-			// GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
-		}
-		
-		
-		
-	
+		DealDamage(player);
+
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{
 			OneHanded(player);

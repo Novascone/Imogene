@@ -23,8 +23,6 @@ public partial class Entity : CharacterBody3D
 	// [Export] public DamageSystem damage_system;
 	// [Export] public ResourceSystem resource_system;
 	
-
-
 	// Controllers
 	[Export] public EntityControllers entity_controllers;
 
@@ -59,169 +57,145 @@ public partial class Entity : CharacterBody3D
 	public int stun_duration;
 	public bool stunned;
 
-	// List<int> base_stats = new List<int>();
-
-	public Dictionary<string, float> base_stats = new Dictionary<string, float>()
-	{
-			{"level", 1},
-			{"strength", 0},
-			{"dexterity", 0},
-			{"intellect", 0},
-			{"vitality", 0},
-			{"stamina", 0},
-			{"wisdom", 0},
-			{"charisma", 0},
-	};
-
-
-	public Dictionary<string, float> depth_stats = new Dictionary<string, float>()
-	{
-		// Offense
-		{"physical_melee_power", 0},
-		{"spell_melee_power", 0},
-		{"physical_ranged_power", 0},
-		{"spell_ranged_power", 0},
-		{"wisdom_scaler", 0},
-		{"critical_hit_chance", 0.5f},
-		{"critical_hit_damage", 0.9f},
-		{"attack_speed", 0},
-		{"attack_speed_increase", 0},
-		{"cooldown_reduction", 0},
-
-		// Defense
-		{"armor", 20},
-		{"poise", 0},
-		{"block_amount", 0},
-		{"retaliation", 0},
-		{"physical_resistance", 0},
-		{"pierce_resistance", 0},
-		{"slash_resistance", 0},
-		{"blunt_resistance", 0},
-		{"bleed_resistance", 0},
-		{"poison_resistance", 0},
-		{"curse_resistance", 0},
-		{"spell_resistance", 0},
-		{"fire_resistance", 0},
-		{"cold_resistance", 0},
-		{"lightning_resistance", 0},
-		{"holy_resistance", 0},
-
-		// Health
-		{"maximum_health", 0},
-		{"health_bonus", 0},
-		{"health_regeneration", 0},
-		{"health_on_retaliation", 0},
-		
-		// Resource
-		{"maximum_resource", 100},
-		{"resource_regeneration", 0},
-		{"resource_cost_reduction", 0},
-		{"posture_regeneration", 0},
-
-		// Misc
-		{"movement_speed", 0},
-	};
-
-	public Dictionary<string, float> movement_stats = new Dictionary<string, float>()
-	{
-		{"movement_speed", 0},
-		{"speed", 0},
-		{"walk_speed", 3.5f},
-		{"run_speed", 6},
-		{"fall_speed", 40},
-		{"jump_speed", 30.0f},
-	};
-
-	public Dictionary<string, float> accumulation_stats = new Dictionary<string, float>()
-	{
-		{"xp", 0},
-		{"gold", 0},
-	};
-
-	public Dictionary<string, float> summary_stats = new Dictionary<string, float>()
-	{
-		{"damage", 0},
-		{"resistance", 0},
-		{"recovery", 0},
-	};
-
-	public Dictionary<string, float> calculation_stats = new Dictionary<string, float>()
-	{
-		{"physical_melee_power", 0},
-		{"spell_melee_power", 0},
-		{"physical_ranged_power", 0},
-		{"spell_ranged_power", 0},
-
-		{"physical_melee_power_mod", 0},
-		{"spell_melee_power_mod", 0},
-		{"physical_ranged_power_mod", 0},
-		{"spell_ranged_power_mod", 0},
-		{"power_mod_avg", 0},
-		
-		{"physical_melee_dps", 0},
-		{"spell_melee_dps", 0},
-		{"physical_ranged_dps", 0},
-		{"spell_ranged_dps", 0},
-
-		{"main_hand_damage", 0},
-		{"off_hand_damage", 0},
-
-		{"damage_bonus", 0},
-		{"combined_damage", 0},
-		{"base_aps", 0},
-		{"aps_modifiers", 0},
-		{"aps", 0},
-		{"base_dps", 0},
-		{"skill_mod", 0},
-		{"crit_mod", 0},
-		{"posture_damage", 34},
-		{"maximum_posture", 0},
-		{"health_regeneration_bonus", 0},
-		{"resource_regeneration_bonus", 1},
-		{"posture_regeneration_bonus", 0},
+	public Collectable xp = new("xp", 0);
+	public Collectable gold = new("gold", 0);
 
 	
 
-		{"damage_resistance_level_scale", 0},
-		{"recovery_level_scale", 0},
+	
+	public Stat physical_melee_power = new("physical_melee_power", 0);
+	public Stat physical_ranged_power = new("physical_ranged_power", 0);
+	public Stat spell_melee_power = new("spell_melee_power", 0);
+	public Stat spell_ranged_power = new("spell_ranged_power", 0);
 
-	};
+	// Wisdom
+	public Stat wisdom_scaler = new("wisdom_scaler", 0);
 
-	public Dictionary<string, float> general_stats = new Dictionary<string, float>()
-	{
-		{"health", 200},
-		{"resource", 100},
-		{"posture", 0}
-
-	};
-
-	public Dictionary<string, float> damage_resistance_stats = new Dictionary<string, float>()
-	{
-		{"damage_resistance_armor", 0}, // 1 + (armor / (dr_level_scale)) repeat for all resistances
-		{"damage_resistance_physical", 0},
-		{"damage_resistance_slash", 0},
-		{"damage_resistance_pierce", 0},
-		{"damage_resistance_blunt", 0},
-		{"damage_resistance_bleed", 0},
-		{"damage_resistance_poison", 0},
-		{"damage_resistance_curse", 0},
-		{"damage_resistance_spell", 0},
-		{"damage_resistance_fire", 0},
-		{"damage_resistance_cold", 0},
-		{"damage_resistance_lightning", 0},
-		{"damage_resistance_holy", 0},
-		{"average_damage_resistance", 0},
-		
-	};
+	// Regeneration
+	public Stat health_regeneration = new("health_regeneration", 0);
+	public Stat resource_regeneration = new("resource_regeneration", 0);
+	public Stat posture_regeneration = new("posture_regeneration", 0);
 
 	
+	public List<Stat> damage_stats = new List<Stat>();
+	public List<Stat> resistance_stats= new List<Stat>();
+
+	// Base stats
+	public Stat level = new("level", 0);
+	public Stat strength = new("strength", 0);
+	public Stat dexterity = new("dexterity", 0);
+	public Stat intellect = new("intellect", 0);
+	public Stat vitality = new("vitality", 0);
+	public Stat stamina = new("stamina", 0);
+	public Stat wisdom = new("wisdom", 0);
+	public Stat charisma = new("charisma", 0);
+
+	// Gear Stats
+	public Stat main_hand_damage = new("main_hand_damage", 10);
+	public Stat off_hand_damage = new("off_hand_damage", 0);
+	public Stat damage_bonus = new("damage_bonus", 0);
+	public Stat attacks_per_second = new("attacks_per_second", 0);
+
+	// Misc Stats
+	
+	public Stat health_bonus = new("health_bonus", 0);
+	public Stat movement_speed = new("movement_speed", 6f);
+	public Stat fall_speed = new("fall_speed", 40);
+	public Stat jump_speed = new("jump_speed", 30);
+
+	// Damage these contribute to the multiplier applied to attacks of this type
+	public Stat critical_hit_chance = new("critical_hit_chance", 0);
+	public Stat critical_hit_damage = new("critical_hit_damage", 0);
+	public Stat posture_damage = new("posture_damage", 0);
+	
+	// Damage stats list
+	public Stat power = new("power", 0);
+	public Stat physical_damage = new("physical_damage", 0);
+	public Stat pierce_damage = new("pierce_damage", 0);
+	public Stat slash_damage = new("slash_damage", 0);
+	public Stat blunt_damage = new("blunt_damage", 0);
+	public Stat bleed_damage = new("bleed_damage", 0);
+	public Stat poison_damage = new("poison_damage", 0);
+	public Stat curse_damage = new("curse_damage", 0);
+	public Stat spell_damage = new("spell_damage", 0);
+	public Stat fire_damage = new("fire_damage", 0);
+	public Stat cold_damage = new("cold_damage", 0);
+	public Stat lightning_damage = new("Lightning_damage", 0);
+	public Stat holy_damage = new("holy_damage", 0);
+
+	
+	// Defensive Stats
+	
+	
+	public Stat block_amount = new("block_amount", 0);
+	public Stat retaliation = new("retaliation", 0);
+	
+	// Resistance Stats
+	public Stat armor = new("armor", 0);
+	public Stat poise = new("poise", 0);
+	public Stat physical_resistance = new("physical_resistance", 0);
+	public Stat pierce_resistance = new("pierce_resistance", 0);
+	public Stat slash_resistance = new("slash_resistance", 0);
+	public Stat blunt_resistance = new("blunt_resistance", 0);
+	public Stat bleed_resistance = new("bleed_resistance", 0);
+	public Stat poison_resistance = new("poison_resistance", 0);
+	public Stat curse_resistance = new("curse_resistance", 0);
+	public Stat spell_resistance = new("spell_resistance", 0);
+	public Stat fire_resistance = new("fire_resistance", 0);
+	public Stat cold_resistance = new("cold_resistance", 0);
+	public Stat lightning_resistance = new("lightning_resistance", 0);
+	public Stat holy_resistance = new("holy_resistance", 0);
+
+	// Health
+	public Stat health = new("health", 200);
+	public Stat health_on_retaliation = new("health_on_retaliation", 0);
+	public Stat health_regeneration_bonus = new("health_regeneration_bonus" , 0);
+
+	// Resource
+	public Stat resource = new("resource", 100);
+	public Stat posture = new("posture", 0);
+	public Stat resource_cost_reduction = new("resource_cost_reduction", 0);
+	public Stat resource_regeneration_bonus = new("resource_regeneration_bonus", 0);
+
+
+	public float critical_hit_modifier;
+	public float combined_damage;
+
+	public List<float> damage_modifiers = new List<float>();
+	public float power_modifier;
+	public float physical_damage_modifier;
+	public float slash_damage_modifier;
+	public float pierce_damage_modifier;
+	public float blunt_damage_modifier;
+	public float bleed_damage_modifier;
+	public float poison_damage_modifier;
+	public float curse_damage_modifier;
+	public float spell_damage_modifier;
+	public float fire_damage_modifier;
+	public float cold_damage_modifier;
+	public float lightning_damage_modifier;
+	public float holy_damage_modifier;
+
 	
 
-	public Dictionary<string, bool> status_effects_d = new Dictionary<string, bool>()
-	{
+	// Damage resistance
+	public List<float> resistances = new List<float>();
+	public List<float> physical_resistances = new List<float>();
+	public float damage_resistance_armor;
+	public float damage_resistance_poise;
+	public float damage_resistance_physical;
+	public float damage_resistance_slash;
+	public float damage_resistance_pierce;
+	public float damage_resistance_blunt;
+	public float damage_resistance_bleed;
+	public float damage_resistance_poison;
+	public float damage_resistance_curse;
+	public float damage_resistance_spell;
+	public float damage_resistance_fire;
+	public float damage_resistance_cold;
+	public float damage_resistance_lightning;
+	public float damage_resistance_holy;
 
-	};
-	
 
 	
     // Stats
@@ -391,11 +365,25 @@ public partial class Entity : CharacterBody3D
 
 
     // public Vector3 enemy_position;
-
+	
 
     public override void _Ready()
     {
-
+		
+	
+		// public float damage_resistance_poise;
+		// public float damage_resistance_physical;
+		// public float damage_resistance_slash;
+		// public float damage_resistance_pierce;
+		// public float damage_resistance_blunt;
+		// public float damage_resistance_bleed;
+		// public float damage_resistance_poison;
+		// public float damage_resistance_curse;
+		// public float damage_resistance_spell;
+		// public float damage_resistance_fire;
+		// public float damage_resistance_cold;
+		// public float damage_resistance_lightning;
+		// public float damage_resistance_holy;
 		
         entity_systems.damage_system.SubscribeEntityToHealthRegen(this);
     }

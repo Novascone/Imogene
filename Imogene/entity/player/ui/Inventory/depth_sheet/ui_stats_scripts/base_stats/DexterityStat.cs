@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class DexterityStat : Stat
+public partial class DexterityStat : UIStat
 {
 	// Called when the node enters the scene tree for the first time.
 

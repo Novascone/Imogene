@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class WisdomStat : Stat
+public partial class WisdomStat : UIStat
 {
 	public override void _Ready()
 	{

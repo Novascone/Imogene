@@ -91,20 +91,16 @@ public partial class Enemy : Entity
 	public override void _Ready()
 	{
 		base._Ready();
-		depth_stats["maximum_health"] = general_stats["health"];
-		ui.health_bar.MaxValue = general_stats["health"];
-		ui.health_bar.Value = general_stats["health"];
-		ui.posture_bar.MaxValue = calculation_stats["maximum_posture"];
+		ui.health_bar.MaxValue = health.max_value;
+		ui.health_bar.Value = health.current_value;
+		ui.posture_bar.MaxValue = posture.max_value;
 		ui.posture_bar.Value = 0;
-		movement_stats["speed"] = 2;
 		attacking = false;
-		base_stats["level"] = 1;
-		depth_stats["armor"] = 5;
-		base_stats["stamina"] = 2000;
-		depth_stats["physical_resistance"] = 10;
-		depth_stats["slash_resistance"] = 3;
-		damage_resistance_stats["damage_resistance_level_scale"] = 50 * (float)base_stats["level"];
-		calculation_stats["recovery_level_scale"] = 100 * (float)base_stats["level"];
+		level.base_value = 1;
+		armor.current_value = 5;
+		stamina.current_value = 2000;
+		physical_resistance.current_value = 10;
+		slash_resistance.current_value = 3;
 	
 
 		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
@@ -125,8 +121,6 @@ public partial class Enemy : Entity
 			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
 			// GD.Print(ray_directions[i]);
 		}
-
-		movement_stats["speed"] = movement_stats["walk_speed"];
 	}
 
     private void HandleFinishedCircling()

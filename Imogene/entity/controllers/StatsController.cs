@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 // Stat controller
 // Updates and sends stats for the player, more information on how the stats are calculated in the Imogene_Journal
@@ -9,9 +10,135 @@ public partial class StatsController : Node
 
 	
 	[Signal] public delegate void StatsUpdateEventHandler(Player player);
+
 	
 	
 
+	// Damage
+	
+	public float damage_per_second;
+	public float damage_estimate;
+
+	// Power Modifiers
+	public float physical_melee_power_modifier;
+	public float spell_melee_power_modifier;
+	public float physical_ranged_power_modifier;
+	public float spell_ranged_power_modifier;
+	public float power_modifier_average;
+
+	// Damage Modifiers
+	public float average_damage_modifier;
+
+	public float average_damage_resistance;
+	public float resistance;
+	
+	public float damage_resistance_level_scale;
+	public float recovery_level_scale;
+	public float recovery;
+
+
+
+    public void SetPowers(Entity entity)
+	{
+		entity.physical_melee_power.base_value = (2 * entity.strength.current_value) + entity.dexterity.current_value;
+		entity.spell_melee_power.base_value = entity.strength.current_value + entity.dexterity.current_value + (3 * entity.intellect.current_value);
+		entity.physical_ranged_power.base_value = entity.strength.current_value + (3 * entity.dexterity.current_value);
+		entity.spell_ranged_power.base_value = (2 * entity.dexterity.current_value) + (3 * entity.intellect.current_value);		
+	}
+
+	public void SetWisdomScaler(Entity entity)
+	{
+		entity.wisdom_scaler.base_value = entity.wisdom.current_value/20;
+	}
+
+	public void SetDamageModifiers(Entity entity)
+	{
+		for(int i = 0; i < entity.damage_stats.Count; i ++)
+		{
+			entity.damage_modifiers[i] = 1 + (entity.damage_stats[i].current_value / 100);
+		}
+
+		float damage_modifiers_total = 0;
+
+		foreach(float modifier in entity.damage_modifiers)
+		{
+			damage_modifiers_total += modifier;
+		}
+		average_damage_modifier = damage_modifiers_total / entity.damage_modifiers.Count;
+	}
+
+	public void SetDamage(Entity entity)
+	{
+		GD.Print("setting combined damage");
+		entity.combined_damage = entity.main_hand_damage.current_value + entity.off_hand_damage.current_value + entity.damage_bonus.current_value;
+		damage_per_second = entity.attacks_per_second.current_value * entity.combined_damage;
+	}
+
+	public void SetCriticalHitModifier(Entity entity)
+	{
+		entity.critical_hit_modifier = 1 + (entity.critical_hit_chance.current_value + entity.critical_hit_damage.current_value);
+	}
+
+	public void SetPowerModifiers(Entity entity)
+	{
+		physical_melee_power_modifier = 1 + (entity.physical_melee_power.current_value/100);
+		spell_melee_power_modifier = 1 + (entity.spell_melee_power.current_value/100);
+		physical_ranged_power_modifier = 1 + (entity.physical_ranged_power.current_value/100);
+		spell_ranged_power_modifier = 1 + (entity.spell_ranged_power.current_value/100);
+		power_modifier_average = (physical_melee_power_modifier + spell_melee_power_modifier + physical_ranged_power_modifier + spell_ranged_power_modifier) / 4;
+	}
+
+	public void SetDamageEstimate(Entity entity)
+	{
+		damage_estimate = (float)Math.Round(damage_per_second * power_modifier_average * entity.critical_hit_modifier, 2);
+	}
+
+	public void SetScales(Entity entity)
+	{
+		damage_resistance_level_scale = entity.level.current_value * 50;
+		recovery_level_scale = entity.level.current_value * 100;
+	}
+
+	
+
+	public void SetDamageResistances(Entity entity)
+	{
+
+		for(int i = 0; i < entity.resistance_stats.Count; i ++)
+		{
+			entity.resistances[i] = (float)Math.Round(entity.resistance_stats[i].current_value / damage_resistance_level_scale, 2);
+		}
+
+		float total_resistance = 0;
+
+		foreach(float resistance in entity.resistances)
+		{
+			total_resistance += resistance;
+		}
+		average_damage_resistance = total_resistance / entity.resistances.Count;
+		
+	}
+
+	public void SetResistanceEstimate(Entity entity)
+	{
+		resistance = entity.health.max_value * average_damage_resistance * entity.damage_resistance_armor;
+	}
+
+	public void SetRegenerations(Entity entity)
+	{
+		entity.health_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * entity.health_regeneration_bonus.current_value, 2);
+		entity.resource_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * entity.resource_regeneration_bonus.current_value, 2);
+		entity.posture_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * (1 + (entity.poise.current_value / 100)), 2);
+	}
+
+	public void SetRecoveryEstimate(Entity entity)
+	{
+		recovery = (float) Math.Round((entity.health_regeneration.current_value + entity.resource_regeneration.current_value + entity.posture_regeneration.current_value) / 3, 2);
+	}
+
+
+
+	
 	public void UpdateStats(Entity entity) // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
 	{
 
@@ -19,89 +146,25 @@ public partial class StatsController : Node
 		// Calculates stats
 		
 
-		entity.calculation_stats["physical_melee_power"] = (2 * entity.base_stats["strength"]) + entity.base_stats["dexterity"];
-		entity.calculation_stats["physical_ranged_power"] = entity.base_stats["strength"] + (3 * entity.base_stats["dexterity"]);
-		entity.calculation_stats["spell_melee_power"] = entity.base_stats["strength"] + entity.base_stats["dexterity"] + (3 * entity.base_stats["intellect"]);
-		entity.calculation_stats["spell_ranged_power"] = (2 * entity.base_stats["dexterity"]) + (3 * entity.base_stats["intellect"]);
-
-		// physical_melee_damage = physical_melee_power/15;
-		// physical_ranged_damage = physical_ranged_power/15;
-		// spell_melee_damage = spell_melee_power/15;
-		// spell_ranged_damage = spell_ranged_power/15;
-		entity.depth_stats["wisdom_scaler"] = entity.base_stats["wisdom"]/20;
-
-		// damage
-		entity.calculation_stats["combined_damage"] = entity.calculation_stats["main_hand_damage"] + entity.calculation_stats["off_hand_damage"] + entity.calculation_stats["damage_bonus"];
-		entity.calculation_stats["aps"] = entity.calculation_stats["base_aps"] * (1 + entity.calculation_stats["aps_modifiers"]);
-		entity.calculation_stats["base_dps"] = entity.calculation_stats["aps"] * entity.calculation_stats["combined_damage"];
-		entity.calculation_stats["combined_damage"] = entity.calculation_stats["main_hand_damage"] + entity.calculation_stats["off_hand_damage"] + 2 + 1 + 1;
-
-		entity.calculation_stats["aps"] = 1.71f;
-		entity.calculation_stats["base_dps"] = entity.calculation_stats["aps"] * entity.calculation_stats["combined_damage"];
-		entity.calculation_stats["skill_mod"] = 1.15f;
-		entity.calculation_stats["crit_mod"] = 1 + (entity.depth_stats["critical_hit_chance"] * entity.depth_stats["critical_hit_damage"]);
-
-		entity.calculation_stats["physical_melee_power_mod"] = 1 + (entity.calculation_stats["physical_melee_power"]/100);
-		entity.calculation_stats["spell_melee_power_mod"] = 1 + (entity.calculation_stats["spell_melee_power"]/100);
-		entity.calculation_stats["physical_ranged_power_mod"] = 1 + (entity.calculation_stats["physical_ranged_power"]/100);
-		entity.calculation_stats["spell_ranged_power_mod"] = 1 + (entity.calculation_stats["spell_ranged_power"]/100);
-
-		entity.calculation_stats["power_mod_avg"] = (entity.calculation_stats["physical_melee_power_mod"] + entity.calculation_stats["spell_melee_power_mod"] + entity.calculation_stats["physical_ranged_power_mod"] + entity.calculation_stats["spell_ranged_power_mod"]) / 4;
-
-		entity.calculation_stats["physical_melee_dps"] = entity.calculation_stats["base_dps"] * entity.calculation_stats["physical_melee_power_mod"] * entity.calculation_stats["skill_mod"] * entity.calculation_stats["crit_mod"];
-		entity.calculation_stats["spell_melee_dps"] = entity.calculation_stats["base_dps"] * entity.calculation_stats["spell_melee_power_mod"] * entity.calculation_stats["skill_mod"] * entity.calculation_stats["crit_mod"];
-		entity.calculation_stats["physical_ranged_dps"] = entity.calculation_stats["base_dps"] * entity.calculation_stats["physical_ranged_power_mod"] * entity.calculation_stats["skill_mod"] * entity.calculation_stats["crit_mod"];
-		entity.calculation_stats["spell_ranged_dps"] = entity.calculation_stats["base_dps"] * entity.calculation_stats["spell_ranged_power_mod"] * entity.calculation_stats["skill_mod"] * entity.calculation_stats["crit_mod"];
-
-		entity.calculation_stats["physical_melee_dps"] = (float)Math.Round(entity.calculation_stats["physical_melee_dps"], 2);
-		entity.calculation_stats["spell_melee_dps"] = (float)Math.Round(entity.calculation_stats["spell_melee_dps"], 2);
-		entity.calculation_stats["physical_ranged_dps"] = (float)Math.Round(entity.calculation_stats["physical_ranged_dps"], 2);
-		entity.calculation_stats["spell_ranged_dps"] = (float)Math.Round(entity.calculation_stats["spell_ranged_dps"], 2);
-
-		entity.calculation_stats["total_dps"] = (float)Math.Round(entity.calculation_stats["base_dps"] * entity.calculation_stats["power_mod_avg"] * entity.calculation_stats["skill_mod"] * entity.calculation_stats["crit_mod"], 2);
-		// total_dps = (float)Math.Round(total_dps,2);
-		entity.summary_stats["damage"] = entity.calculation_stats["total_dps"];
+		SetPowers(entity);
+		SetWisdomScaler(entity);
+		SetDamageModifiers(entity);
+		SetDamage(entity);
+		SetCriticalHitModifier(entity);
+		SetPowerModifiers(entity);
+		SetDamageEstimate(entity);
 
 		// mitigation
-		entity.damage_resistance_stats["damage_resistance_armor"] = (float)Math.Round(entity.depth_stats["armor"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		// entity.dr_phys = (float)Math.Round(entity.physical_resistance/entity.dr_lvl_scale, 2);
-		entity.damage_resistance_stats["damage_resistance_physical"] = (float)Math.Round(entity.depth_stats["physical_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_slash"] = (float)Math.Round(entity.depth_stats["slash_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_pierce"] = (float)Math.Round(entity.depth_stats["pierce_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_blunt"] = (float)Math.Round(entity.depth_stats["blunt_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_bleed"] = (float)Math.Round(entity.depth_stats["bleed_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_poison"] = (float)Math.Round(entity.depth_stats["poison_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_spell"] = (float)Math.Round(entity.depth_stats["spell_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_fire"] = (float)Math.Round(entity.depth_stats["fire_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_cold"] = (float)Math.Round(entity.depth_stats["cold_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_lightning"] = (float)Math.Round(entity.depth_stats["lightning_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		entity.damage_resistance_stats["damage_resistance_holy"] = (float)Math.Round(entity.depth_stats["holy_resistance"]/entity.calculation_stats["damage_resistance_level_scale"], 2);
-		
-		entity.damage_resistance_stats["average_damage_resistance"] = (entity.damage_resistance_stats["damage_resistance_physical"] 
-																	+ entity.damage_resistance_stats["damage_resistance_slash"]
-																	+ entity.damage_resistance_stats["damage_resistance_pierce"]
-																	+ entity.damage_resistance_stats["damage_resistance_blunt"]
-																	+ entity.damage_resistance_stats["damage_resistance_bleed"]
-																	+ entity.damage_resistance_stats["damage_resistance_poison"]
-																	+ entity.damage_resistance_stats["damage_resistance_spell"] 
-																	+ entity.damage_resistance_stats["damage_resistance_fire"]
-																	+ entity.damage_resistance_stats["damage_resistance_cold"]
-																	+ entity.damage_resistance_stats["damage_resistance_lightning"]
-																	+ entity.damage_resistance_stats["damage_resistance_holy"]) / 11;
+		SetScales(entity);
+		SetDamageResistances(entity);
+		SetResistanceEstimate(entity);
+
 
 		
-		entity.summary_stats["resistance"]= (float)Math.Round(entity.depth_stats["maximum_health"] * (entity.damage_resistance_stats["damage_resistance_armor"] * entity.damage_resistance_stats["average_damage_resistance"]),2);
-		// GD.Print("ave resistance: " + entity.avg_res_dr);
-		// GD.Print("resistance: " + entity.resistance);
-		// GD.Print("max health: " + entity.maximum_health + " of " + entity.Name);
 
 		// recovery
 
-		entity.depth_stats["health_regeneration"] = (float)Math.Round(1 + entity.base_stats["stamina"]/entity.calculation_stats["recovery_level_scale"] * entity.calculation_stats["health_regeneration_bonus"], 2);
-		entity.depth_stats["resource_regeneration"] = (float)Math.Round(1 + entity.base_stats["stamina"]/entity.calculation_stats["recovery_level_scale"] * entity.calculation_stats["resource_regeneration_bonus"], 2);
-		entity.depth_stats["posture_regeneration"] = (float)Math.Round(1 + entity.base_stats["stamina"]/entity.calculation_stats["recovery_level_scale"] * (1 + entity.depth_stats["poise"]/ 100), 2);
-		entity.summary_stats["recovery"] = (float)Math.Round((entity.depth_stats["health_regeneration"] + entity.depth_stats["resource_regeneration"] + entity.depth_stats["posture_regeneration"]) / 3, 2);
-
+		
 		if(entity is Player player)
 		{
 			EmitSignal(nameof(StatsUpdate), player);

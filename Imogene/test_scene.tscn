@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dh567d4d8wgki"]
+
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://entity/player/player.tscn" id="1_qxxsw"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_k7al6"]
+vertices = PackedVector3Array(-38.6838, 0.491906, -39.8947, -38.6838, 0.491906, 39.8553, 38.5662, 0.491906, 39.8553, 38.5662, 0.491906, -39.8947)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vof10"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_816vi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w0sl2"]
+
+[sub_resource type="Sky" id="Sky_sjwia"]
+sky_material = SubResource("ProceduralSkyMaterial_w0sl2")
+
+[sub_resource type="Environment" id="Environment_5pcjr"]
+background_mode = 2
+sky = SubResource("Sky_sjwia")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(0.597243, 0, 0, 0, 1, 0, 0, 0, 0.700777, 0, 0, 0)
+navigation_mesh = SubResource("NavigationMesh_k7al6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(-78.3675, 0, 0, 0, 0.0161886, 0, 0, 0, 80.7894, 0, 0, 0)
+mesh = SubResource("BoxMesh_vof10")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/Floor"]
+shape = SubResource("BoxShape3D_816vi")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5pcjr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.430902, 0.890561, -0.145684, -0.296833, 0.292338, 0.909081, 0.852181, -0.348481, 0.390318, 29.7696, 21.3021, 5.43859)
+light_color = Color(1, 1, 0.905882, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 1.09
+shadow_enabled = true
+sky_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("1_qxxsw")]

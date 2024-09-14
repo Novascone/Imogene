@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+
 public partial class DamageSystem : Node
 {
 	// Timers
@@ -16,6 +17,8 @@ public partial class DamageSystem : Node
 	private float height = 60;
 	[Export] PackedScene damage_number_3d_template;
 	private Queue<DamageNumber3D> damage_number_3d_pool = new Queue<DamageNumber3D>();
+	private StatModifier remove_health = new(StatModifier.ModificationType.Add);
+	private StatModifier add_health = new(StatModifier.ModificationType.Add);
 	
 	private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
@@ -39,14 +42,11 @@ public partial class DamageSystem : Node
 				{
 					GD.Print("Applying " + status_effect.Name + " to " + Name);
 					entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, status_effect);
-					// if(status_effect.effect_type == "movement")
-					// {
-					// 	previous_movement_effects_count = movement_effects.Count;
-					// }
 				}
 				if(body is RangedHitbox)
 				{
-					entity.entity_systems.damage_system.TakeDamage(entity, ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
+					GD.Print(entity.Name + " Is taking " + ranged_box.damage  + " damage");
+					TakeDamage(entity, ranged_box.damage_type, ranged_box.damage, ranged_box.is_critical);
 					entity.entity_systems.resource_system.Posture(entity, ranged_box.posture_damage);
 				}
 			}
@@ -62,14 +62,10 @@ public partial class DamageSystem : Node
 				foreach(StatusEffect status_effect in melee_box.effects)
 				{
 					GD.Print("Applying " + status_effect.Name + " to " + Name);
-					// status_effect.Apply(this);
 					entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, status_effect);
-					// if(status_effect.effect_type == "movement")
-					// {
-					// 	previous_movement_effects_count = movement_effects.Count;
-					// }
 				}
-				entity.entity_systems.damage_system.TakeDamage(entity, melee_box.damage_type, melee_box.damage, melee_box.is_critical);
+				
+				TakeDamage(entity, melee_box.damage_type, melee_box.damage, melee_box.is_critical);
 				entity.entity_systems.resource_system.Posture(entity, melee_box.posture_damage);
 			}
 		}
@@ -102,7 +98,7 @@ public partial class DamageSystem : Node
     public bool Crit(Entity entity)
 	{
 		float random_float = GD.Randf();
-		if(random_float < entity.depth_stats["critical_hit_chance"])
+		if(random_float < entity.critical_hit_chance.current_value)
 		{
 			return true;
 		}
@@ -114,26 +110,21 @@ public partial class DamageSystem : Node
 
 	public void TakeDamage(Entity entity, string damage_type, float amount, bool is_critical) // Applies damage to an entity
 	{
-		GD.Print(entity.Name + " is taking damage");
+		
 		amount = DamageMitigation(entity, damage_type, amount);
-		// GD.Print("Amount of damage " + amount);
-		// GD.Print("Is critical " + is_critical);
-		if(entity.general_stats["health"] - amount > 0)
+		
+		if(entity.health.current_value - amount > 0)
 		{
-			entity.general_stats["health"] -= amount;
-			entity.general_stats["health"]= MathF.Round(entity.general_stats["health"]);
+
+			remove_health.value_to_add = amount;
+			entity.health.modifiers.Add(remove_health);
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = entity.general_stats["health"];
+				enemy.ui.health_bar.Value = enemy.health.current_value;
 				spawn_point = enemy.head;
 				SpawnDamageNumber(amount, is_critical);
-				// _customSignals.EmitSignal(nameof(CustomSignals.EnemyHealthChangedUI), enemy, entity.health);
 			}
-			// if(entity is Player player)
-			// {
-			// 	player.ui.hud.health.Value = entity.health; 
-			// 	// GD.Print("UI health " + player.ui.hud.health.Value);
-			// }
+			
 			HealthRegen();
 		}
 		else
@@ -141,9 +132,6 @@ public partial class DamageSystem : Node
 			entity.dead = true;
 			GD.Print("dead");
 		}
-
-		// GD.Print(entity.identifier + " took " + amount + " of " + damage_type + " damage") ;
-		// GD.Print(entity.identifier + " " + entity.health);
 	}
 
 	public void HealthRegen()
@@ -155,81 +143,77 @@ public partial class DamageSystem : Node
 	private void OnHealthRegenTickTimeout(Entity entity)
     {
 		GD.Print("Heal regen tick timeout");
-        if(entity.general_stats["health"]< entity.depth_stats["maximum_health"] && entity.depth_stats["health_regeneration"] > 0)
+        if(entity.health.current_value < entity.health.max_value && entity.health_regeneration.current_value > 0)
 		{
-			entity.general_stats["health"] += entity.depth_stats["health_regeneration"];
+			add_health.value_to_add = entity.health_regeneration.current_value;
 			health_regen_timer.Start();
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = entity.general_stats["health"];
+				enemy.ui.health_bar.Value = enemy.health.current_value;
 			}
 		}
-		// if(entity is Player player)
-		// {
-		// 	player.ui.hud.health.Value = player.health;
-		// }
     }
 
 	public float DamageMitigation(Entity entity, string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
 		// GD.Print(mitigated_damage + " of damage going into mitigation ");
-		mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_armor"];
+		mitigated_damage *= 1 - entity.damage_resistance_armor;
 		// GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_physical"];
+			mitigated_damage *= 1 - entity.damage_resistance_physical;
 			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_slash"];;
+				mitigated_damage *= 1 - entity.damage_resistance_slash;
 				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
 				return MathF.Round(mitigated_damage);
 				
 			}
 			if(damage_type == "Pierce")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_pierce"];;
+				mitigated_damage *= 1 - entity.damage_resistance_pierce;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Blunt")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_blunt"];;
+				mitigated_damage *= 1 - entity.damage_resistance_blunt;
 				return MathF.Round(mitigated_damage);
 			}
 		}
 		if(damage_type == "Bleed")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_bleed"];;
+			mitigated_damage *= 1 - entity.damage_resistance_bleed;
 			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Poison")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_poison"];;
+			mitigated_damage *= 1 - entity.damage_resistance_poison;
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_spell"];;
+			mitigated_damage *= 1 - entity.damage_resistance_spell;
 			if(damage_type == "Fire")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_fire"];;
+				mitigated_damage *= 1 - entity.damage_resistance_fire;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Cold")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_cold"];;
+				mitigated_damage *= 1 - entity.damage_resistance_cold;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Lightning")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_lightning"];;
+				mitigated_damage *= 1 - entity.damage_resistance_lightning;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Holy")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_stats["damage_resistance_holy"];;
+				mitigated_damage *= 1 - entity.damage_resistance_holy;
 				return MathF.Round(mitigated_damage);
 			}
 		}

@@ -15,7 +15,7 @@ public partial class Projectile : RangedAbility
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
+		
 		slow = (StatusEffect)slow_effect.Instantiate();
 		rotate_on_soft = true;
 		rotate_on_held = true;
@@ -87,23 +87,12 @@ public partial class Projectile : RangedAbility
 		GetTree().Root.AddChild(projectile); // Add projectile to the scene
 		projectile.GlobalPosition = player.cast_point.GlobalPosition; // give the projectile the cast point position
 		projectile.GlobalRotation = player.GlobalRotation; // give the projectile the player rotation
-
-		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
-		{
-			projectile.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2); // Set projectile damage
-			projectile.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
-			projectile.is_critical = true;
-		}
-		else
-		{
-			
-			projectile.damage = player.summary_stats["damage"]; // Set projectile damage
-			projectile.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
-			projectile.is_critical = false;
-		}
+		
 		// Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 		projectile.effects.Add(slow);
+		ranged_hitbox = projectile;
+		DealDamage(player);
 	}
 
 	public void RemoveFromExclusion(Player player, Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array

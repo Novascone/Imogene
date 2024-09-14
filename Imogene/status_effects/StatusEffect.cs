@@ -14,6 +14,7 @@ public partial class StatusEffect : Node3D
 	public int duration;
 	public int max_stacks;
 	public int current_stacks;
+	public StatModifier slow = new(StatModifier.ModificationType.Multiply);
 	public States state;
 
 	public enum States
@@ -25,6 +26,7 @@ public partial class StatusEffect : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		slow.mod = -0.3f;
 		duration_timer = GetNode<Timer>("DurationTimer");
 	}
 

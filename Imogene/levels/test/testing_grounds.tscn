@@ -16,12 +16,12 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fcuuf"]
 
-[sub_resource type="Sky" id="Sky_sjwia"]
+[sub_resource type="Sky" id="Sky_wsed3"]
 sky_material = SubResource("ProceduralSkyMaterial_fcuuf")
 
 [sub_resource type="Environment" id="Environment_7mfov"]
 background_mode = 2
-sky = SubResource("Sky_sjwia")
+sky = SubResource("Sky_wsed3")
 
 [node name="testing_grounds" type="Node3D"]
 

@@ -18,10 +18,16 @@ public partial class MovementController : Node
 	public bool rotation_only;
 	public bool rotation_finished;
 	public bool movement_input_allowed = true;
-	
-	
+	StatModifier walk = new(StatModifier.ModificationType.Multiply);
 
-	public void MovePlayer(Player player, float input_strength, double delta)
+    public override void _Ready()
+    {
+        walk.mod = -0.5f;
+    }
+
+
+
+    public void MovePlayer(Player player, float input_strength, double delta)
 	{
 		if(CanMove(player))
 		{
@@ -35,8 +41,9 @@ public partial class MovementController : Node
 			}
 			if(!player.using_movement_ability && !rotation_only)
 			{
-				player.velocity.X = player.direction.X * player.movement_stats["speed"];
-				player.velocity.Z = player.direction.Z * player.movement_stats["speed"];
+				player.velocity.X = player.direction.X * player.movement_speed.current_value;
+				player.velocity.Z = player.direction.Z * player.movement_speed.current_value;
+				
 			}
 			else if(rotation_only)
 			{
@@ -54,17 +61,17 @@ public partial class MovementController : Node
 		{
 		if(input_strength > 0.75f)
 		{
-			player.movement_stats["speed"] = player.movement_stats["run_speed"];
+			player.movement_speed.RemoveModifier(walk);
 		}
 		else
 		{
-			player.movement_stats["speed"] = player.movement_stats["walk_speed"]; 
+			player.movement_speed.AddModifier(walk);
 		}
 		}
-		else
-		{
-			player.movement_stats["speed"] = Mathf.Lerp(player.movement_stats["speed"], 2.0f, 0.1f);
-		}
+		// else
+		// {
+		// 	player.movement_stats["speed"] = Mathf.Lerp(player.movement_stats["speed"], 2.0f, 0.1f);
+		// }
 
 		if(!player.IsOnFloor())
 		{
@@ -156,15 +163,15 @@ public partial class MovementController : Node
 		{
 			GD.Print("Climbing movement");
 			// player.direction = Vector3.Zero;
-			player.velocity.Y = player.direction.Y * player.movement_stats["speed"];
-			if(!player.is_clambering)
-			{
-				player.movement_stats["speed"]= climb_speed;
-			}
-			else
-			{
-				player.movement_stats["speed"] = clamber_speed;
-			}
+			// player.velocity.Y = player.direction.Y * player.movement_stats["speed"];
+			// if(!player.is_clambering)
+			// {
+			// 	player.movement_stats["speed"]= climb_speed;
+			// }
+			// else
+			// {
+			// 	player.movement_stats["speed"] = clamber_speed;
+			// }
 			
 		}
 

@@ -95,12 +95,12 @@ public partial class AnimationController : Controller
 		// player.targeting = false;
 		if(player.direction != Vector3.Zero)
 		{
-			if(player.movement_stats["speed"] == player.movement_stats["speed"])
+			if(player.movement_speed.current_value == player.movement_speed.base_value)
 			{
 				player.blend_direction.X = 0;
 				player.blend_direction.Y = 1;
 			}
-			else if (player.movement_stats["speed"] == player.movement_stats["speed"])
+			else if (player.movement_speed.current_value == 0)
 			{
 				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
 				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0.5f, 0.1f);

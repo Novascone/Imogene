@@ -15,7 +15,7 @@ public partial class Kick : Ability
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+		melee_hitbox = kick_hitbox;
 		charge_timer_1 = GetNode<Timer>("ChargeTimer1");
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
 		cast_timer = GetNode<Timer>("CastTimer");
@@ -66,18 +66,18 @@ public partial class Kick : Ability
 		
 		
 		AddHitbox(player);
-		
+		DealDamage(player);
 		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
-			kick_hitbox.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2) / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.calculation_stats["posture_damage"] * 3; // Set projectile posture damage 
+			kick_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2) / 2; // Set projectile damage
+			kick_hitbox.posture_damage = player.posture_damage.current_value * 3; // Set projectile posture damage 
 			kick_hitbox.is_critical = true;
 		}
 		else
 		{
 			
-			kick_hitbox.damage = player.summary_stats["damage"]  / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.calculation_stats["posture_damage"] * 2; // Set projectile posture damage 
+			kick_hitbox.damage = player.combined_damage  / 2; // Set projectile damage
+			kick_hitbox.posture_damage = player.posture_damage.current_value * 2; // Set projectile posture damage 
 			kick_hitbox.is_critical = false;
 		}
 		kick_hitbox.damage_type = "physical"; // Set projectile damage type

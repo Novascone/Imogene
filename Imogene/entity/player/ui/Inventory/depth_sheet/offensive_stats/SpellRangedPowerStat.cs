@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Text.RegularExpressions;
 
-public partial class SpellRangedPowerStat : Stat
+public partial class SpellRangedPowerStat : UIStat
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

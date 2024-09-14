@@ -12,6 +12,7 @@ public partial class Whirlwind : Ability
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 		resource_change = -10;
 		rotate_on_soft = false;
 	}
@@ -28,20 +29,9 @@ public partial class Whirlwind : Ability
 			AddHitbox(player);
 		}
 		
-		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
-		{
-			whirlwind_hitbox.damage = MathF.Round(player.summary_stats["damage"] * (1 + player.depth_stats["critical_hit_damage"]), 2); // Set projectile damage
-			whirlwind_hitbox.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
-			whirlwind_hitbox.is_critical = true;
-		}
-		else
-		{
-			
-			whirlwind_hitbox.damage = player.summary_stats["damage"]; // Set projectile damage
-			whirlwind_hitbox.posture_damage = player.calculation_stats["posture_damage"] / 3; // Set projectile posture damage 
-			whirlwind_hitbox.is_critical = false;
-		}
+		melee_hitbox = whirlwind_hitbox;
 		whirlwind_hitbox.damage_type = damage_type.ToString(); // Set projectile damage type		
+		DealDamage(player);
 	}
 
     public override void FrameCheck(Player player)
@@ -59,7 +49,7 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.general_stats["resource"] + resource_change < 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.resource.current_value + resource_change < 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			

@@ -6,50 +6,50 @@ public partial class DepthScroller : Control
 	[Export] Control vbox;
 
 	// Offense
-	[Export] Stat physical_melee_power;
-	[Export] Stat spell_melee_power;
-	[Export] Stat physical_ranged_power;
-	[Export] Stat spell_ranged_power;
-	[Export] Stat wisdom_scaler;
-	[Export] Stat critical_hit_chance;
-	[Export] Stat critical_hit_damage;
-	[Export] Stat attack_speed;
-	[Export] Stat attack_speed_increase;
-	[Export] Stat cool_down_reduction;
+	[Export] UIStat physical_melee_power;
+	[Export] UIStat spell_melee_power;
+	[Export] UIStat physical_ranged_power;
+	[Export] UIStat spell_ranged_power;
+	[Export] UIStat wisdom_scaler;
+	[Export] UIStat critical_hit_chance;
+	[Export] UIStat critical_hit_damage;
+	[Export] UIStat attack_speed;
+	[Export] UIStat attack_speed_increase;
+	[Export] UIStat cool_down_reduction;
 
 	// Defense
-	[Export] Stat armor;
-	[Export] Stat poise;
-	[Export] Stat block_amount;
-	[Export] Stat retaliation;
-	[Export] Stat physical_resistance;
-	[Export] Stat pierce_resistance;
-	[Export] Stat slash_resistance;
-	[Export] Stat blunt_resistance;
-	[Export] Stat bleed_resistance;
-	[Export] Stat poison_resistance;
-	[Export] Stat curse_resistance;
-	[Export] Stat spell_resistance;
-	[Export] Stat fire_resistance;
-	[Export] Stat cold_resistance;
-	[Export] Stat lightning_resistance;
-	[Export] Stat holy_resistance;
+	[Export] UIStat armor;
+	[Export] UIStat poise;
+	[Export] UIStat block_amount;
+	[Export] UIStat retaliation;
+	[Export] UIStat physical_resistance;
+	[Export] UIStat pierce_resistance;
+	[Export] UIStat slash_resistance;
+	[Export] UIStat blunt_resistance;
+	[Export] UIStat bleed_resistance;
+	[Export] UIStat poison_resistance;
+	[Export] UIStat curse_resistance;
+	[Export] UIStat spell_resistance;
+	[Export] UIStat fire_resistance;
+	[Export] UIStat cold_resistance;
+	[Export] UIStat lightning_resistance;
+	[Export] UIStat holy_resistance;
 
 	// Health
-	[Export] Stat maximum_health;
-	[Export] Stat health_bonus;
-	[Export] Stat health_regeneration;
-	[Export] Stat health_retaliation;
+	[Export] UIStat maximum_health;
+	[Export] UIStat health_bonus;
+	[Export] UIStat health_regeneration;
+	[Export] UIStat health_retaliation;
 
 	// Resource
-	[Export] Stat maximum_resource;
-	[Export] Stat resource_regeneration;
-	[Export] Stat resource_cost_reduction;
-	[Export] Stat posture_regeneration;
+	[Export] UIStat maximum_resource;
+	[Export] UIStat resource_regeneration;
+	[Export] UIStat resource_cost_reduction;
+	[Export] UIStat posture_regeneration;
 
 	// Misc
 
-	[Export] Stat movement_speed;
+	[Export] UIStat movement_speed;
 
 
 

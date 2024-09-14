@@ -5,10 +5,12 @@ public partial class Chill : StatusEffect
 {
 	private PackedScene freeze_scene;
 	private Freeze freeze;
+	
 	public bool removed_by_freeze;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 5;
@@ -41,9 +43,9 @@ public partial class Chill : StatusEffect
 			}
 			current_stacks += 1;
 			
-			if(entity.movement_stats["speed"] >= entity.movement_stats["walk_speed"])
+			if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 			{
-				entity.movement_stats["speed"] *= 0.7f;
+				entity.movement_speed.modifiers.Add(slow);
 			}
 			else
 			{
@@ -62,7 +64,8 @@ public partial class Chill : StatusEffect
 				entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 				
 			}
-			entity.movement_stats["speed"]= entity.movement_stats["walk_speed"];
+		
+			entity.movement_speed.modifiers.Remove(slow);
 			entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
 			current_stacks = 0;
 				
@@ -75,11 +78,11 @@ public partial class Chill : StatusEffect
 		GD.Print("timer timeout chill");
         if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)
 		{
-			entity.movement_stats["speed"] = entity.movement_stats["walk_speed"];
+			entity.movement_speed.modifiers.Remove(slow);
 			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			GD.Print("removing booleans from chill via timer");
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-			GD.Print("entity speed reset to " + entity.movement_stats["speed"]);
+			GD.Print("entity speed reset to " + entity.movement_speed.current_value);
 			// RemoveStatusEffect(this);
 		}
 		else if(current_stacks > 0 && entity.status_effects.Contains(this))

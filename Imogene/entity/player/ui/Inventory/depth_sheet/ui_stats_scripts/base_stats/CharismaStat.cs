@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CharismaStat : Stat
+public partial class CharismaStat : UIStat
 {
 	public override void _Ready()
 	{

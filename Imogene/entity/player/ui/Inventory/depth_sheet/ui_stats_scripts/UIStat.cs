@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Text;
 
-public partial class Stat : Control
+public partial class UIStat : Control
 {
 
 	[Export] public string stat_name;

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ch3j48kr3fxd5"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/Stat.cs" id="1_22dvj"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/UIStat.cs" id="1_22dvj"]
 [ext_resource type="PackedScene" uid="uid://cchyv2u8uyybq" path="res://entity/player/ui/Inventory/stat_info.tscn" id="2_dsnmy"]
 [ext_resource type="PackedScene" uid="uid://o8l5upljlv6m" path="res://entity/player/ui/Inventory/depth_sheet/depth_stat_area.tscn" id="3_2pxeo"]
 

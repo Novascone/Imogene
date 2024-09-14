@@ -7,7 +7,6 @@ public partial class TargetDummy : Enemy
 	public override void _Ready()
 	{
 		base._Ready();
-		movement_stats["speed"] = movement_stats["walk_speed"];
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
