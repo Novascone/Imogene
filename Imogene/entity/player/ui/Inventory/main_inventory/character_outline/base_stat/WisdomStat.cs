@@ -1,19 +1,20 @@
 using Godot;
 using System;
 
-public partial class LevelStat : UIStat
+public partial class WisdomStat : UIStat
 {
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
 		label.Text = Name + ":";
-		// info.info.Text =  " Level {0} \n * Level of character";
+		info.tool_tip.Text =  " Wisdom {0} \n * Primary stat for interaction ";
 	}
+
+	
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
 
-	
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://1in75rdt30fc"]
+[gd_scene load_steps=50 format=3 uid="uid://1in75rdt30fc"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/DepthScroller.cs" id="1_wqqpl"]
 [ext_resource type="PackedScene" uid="uid://s0a61njmsp3j" path="res://entity/player/ui/Inventory/depth_sheet/depth_stat_.tscn" id="2_8a1yr"]
@@ -8,20 +8,32 @@
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SpellRangedPowerStat.cs" id="6_k0axa"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/WisdomScalerStat.cs" id="7_pxtvh"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CriticalHitChanceStat.cs" id="8_njrj4"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PowerStat.cs" id="10_404t7"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CriticalHitDamageStat.cs" id="10_y3frb"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PhysicalDamageStat.cs" id="11_f4csp"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/AttackSpeedIncreaseStat.cs" id="11_hpuyp"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/AttackSpeedStat.cs" id="11_n6bqi"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PierceDamageStat.cs" id="12_nse2a"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CooldownReductionStat.cs" id="12_tocge"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SlashDamageStat.cs" id="13_7vvr5"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/ArmorStat.cs" id="13_8lr53"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/BluntDamageStat.cs" id="14_2dcab"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PoiseStat.cs" id="14_4ne2x"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BlockAmountStat.cs" id="15_lp0mt"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/BleedDamageStat.cs" id="15_pau6f"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/RetaliationStat.cs" id="16_3ljsi"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/PoisonDamageStat.cs" id="16_gy15q"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PhysicalResistanceStat.cs" id="17_ktcwq"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/CurseDamageStat.cs" id="17_yyrn8"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/SpellDamageStat.cs" id="18_jk01k"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PierceResistanceStat.cs" id="18_rj0yu"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/FireDamageStat.cs" id="19_i63on"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/SlashResistanceStat.cs" id="19_jywmw"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/ColdDamage.cs" id="20_oot21"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BluntResistanceStat.cs" id="20_qymbr"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/BleedResistanceStat.cs" id="21_2dpiu"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/LightningDamageStat.cs" id="21_5cwnn"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/PoisonResistanceStat.cs" id="22_kxdgd"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/offensive_stats/HolyDamageStat.cs" id="22_lcdt6"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/CurseResistanceStat.cs" id="23_v5b2o"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/SpellResistanceStat.cs" id="24_01tgk"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/defensive_stats/FireResistanceStat.cs" id="25_a7wfy"]
@@ -38,7 +50,7 @@
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/resource_stats/PostureRegenerationStat.cs" id="36_4ku7f"]
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/misc_stats/MovementSpeedStat.cs" id="37_bbmp4"]
 
-[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "physical_melee_power", "spell_melee_power", "physical_ranged_power", "spell_ranged_power", "wisdom_scaler", "critical_hit_chance", "critical_hit_damage", "attack_speed", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
+[node name="ScrollContainer" type="ScrollContainer" node_paths=PackedStringArray("vbox", "physical_melee_power", "spell_melee_power", "physical_ranged_power", "spell_ranged_power", "wisdom_scaler", "critical_hit_chance", "critical_hit_damage", "attack_speed_increase", "cool_down_reduction", "armor", "poise", "block_amount", "retaliation", "physical_resistance", "pierce_resistance", "slash_resistance", "blunt_resistance", "bleed_resistance", "poison_resistance", "curse_resistance", "spell_resistance", "fire_resistance", "cold_resistance", "lightning_resistance", "holy_resistance", "maximum_health", "health_bonus", "health_regeneration", "health_retaliation", "maximum_resource", "resource_regeneration", "resource_cost_reduction", "posture_regeneration", "movement_speed")]
 z_index = 2
 clip_contents = false
 custom_minimum_size = Vector2(2, 0)
@@ -56,7 +68,6 @@ spell_ranged_power = NodePath("VBoxContainer/SpellRangedPower")
 wisdom_scaler = NodePath("VBoxContainer/WisdomScaler")
 critical_hit_chance = NodePath("VBoxContainer/CriticalHitChance")
 critical_hit_damage = NodePath("VBoxContainer/CriticalHitDamage")
-attack_speed = NodePath("VBoxContainer/AttackSpeed")
 attack_speed_increase = NodePath("VBoxContainer/AttackSpeedIncrease")
 cool_down_reduction = NodePath("VBoxContainer/CooldownReduction")
 armor = NodePath("VBoxContainer/Armor")
@@ -144,10 +155,57 @@ layout_mode = 2
 script = ExtResource("10_y3frb")
 stat_name = "critical_hit_damage"
 
-[node name="AttackSpeed" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+[node name="Power" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2
-script = ExtResource("11_n6bqi")
-stat_name = "attack_speed"
+script = ExtResource("10_404t7")
+
+[node name="PhysicalDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("11_f4csp")
+
+[node name="PierceDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("12_nse2a")
+
+[node name="SlashDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("13_7vvr5")
+
+[node name="BluntDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("14_2dcab")
+
+[node name="BleedDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("15_pau6f")
+
+[node name="PoisonDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("16_gy15q")
+
+[node name="CurseDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("17_yyrn8")
+
+[node name="SpellDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("18_jk01k")
+
+[node name="FireDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("19_i63on")
+
+[node name="ColdDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("20_oot21")
+
+[node name="LightningDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("21_5cwnn")
+
+[node name="HolyDamage" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
+layout_mode = 2
+script = ExtResource("22_lcdt6")
 
 [node name="AttackSpeedIncrease" parent="VBoxContainer" instance=ExtResource("2_8a1yr")]
 layout_mode = 2

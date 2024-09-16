@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dv0bfcfw2lhyj"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/summary_stats/RecoveryStat.cs" id="1_l13xg"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/summary_stat/RecoveryStat.cs" id="1_l13xg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]
 size = Vector2(163, 24)

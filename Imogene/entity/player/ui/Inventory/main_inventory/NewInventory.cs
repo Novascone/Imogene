@@ -5,7 +5,7 @@ public partial class NewInventory : Control
 {
 
 	[Export] public MainInventory main;
-	[Export] public Control depth_sheet;
+	[Export] public DepthSheet depth_sheet;
 	[Export] public Control mats;
 	[Export] public Control temp_buttons;
 	// Called when the node enters the scene tree for the first time.

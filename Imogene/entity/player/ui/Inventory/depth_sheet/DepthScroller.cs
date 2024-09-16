@@ -3,7 +3,7 @@ using System;
 
 public partial class DepthScroller : Control
 {
-	[Export] Control vbox;
+	[Export] public Control vbox;
 
 	// Offense
 	[Export] UIStat physical_melee_power;

@@ -76,9 +76,6 @@ public partial class Entity : CharacterBody3D
 	public Stat resource_regeneration = new(Stat.StatType.resource_regeneration, 0);
 	public Stat posture_regeneration = new(Stat.StatType.posture_regeneration, 0);
 
-	
-	public List<Stat> damage_stats = new List<Stat>();
-	public List<Stat> resistance_stats= new List<Stat>();
 
 	// Base stats
 	public Stat level = new(Stat.StatType.level, 0);
@@ -96,6 +93,7 @@ public partial class Entity : CharacterBody3D
 	public Stat damage_bonus = new(Stat.StatType.damage_bonus, 0);
 	public Stat main_hand_attacks_per_second = new(Stat.StatType.main_hand_attacks_per_second, 0);
 	public Stat off_hand_attacks_per_second = new(Stat.StatType.off_hand_attacks_per_second, 0);
+	public Stat attack_speed_increase = new(Stat.StatType.attack_speed_increase, 0);
 
 	// Misc Stats
 	
@@ -157,12 +155,13 @@ public partial class Entity : CharacterBody3D
 	public Stat posture = new(Stat.StatType.posture, 0);
 	public Stat resource_cost_reduction = new(Stat.StatType.resource_cost_reduction, 0);
 	public Stat resource_regeneration_bonus = new(Stat.StatType.resource_regeneration_bonus, 0);
+	public Stat cooldown_reduction = new(Stat.StatType.cooldown_reduction, 0);
 
 
 	public float critical_hit_modifier;
 	public float combined_damage;
 
-	public List<float> damage_modifiers = new List<float>();
+	
 	public float power_modifier;
 	public float physical_damage_modifier;
 	public float slash_damage_modifier;
@@ -180,8 +179,6 @@ public partial class Entity : CharacterBody3D
 	
 
 	// Damage resistance
-	public List<float> resistances = new List<float>();
-	public List<float> physical_resistances = new List<float>();
 	public float damage_resistance_armor;
 	public float damage_resistance_poise;
 	public float damage_resistance_physical;

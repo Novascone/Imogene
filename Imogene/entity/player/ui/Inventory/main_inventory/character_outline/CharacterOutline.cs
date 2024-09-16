@@ -4,17 +4,19 @@ using System;
 public partial class CharacterOutline : Controller
 {
 	// Base stats
-	[Export] public Control level;
-	[Export] public Control strength;
-	[Export] public Control dexterity;
-	[Export] public Control intellect;
-	[Export] public Control vitality;
-	[Export] public Control stamina;
-	[Export] public Control wisdom;
-	[Export] public Control charisma;
-	[Export] public Control damage;
-	[Export] public Control resistance;
-	[Export] public Control recovery;
+	[Export] public UIStat level;
+	[Export] public Control base_stats;
+	[Export] public UIStat strength;
+	[Export] public UIStat dexterity;
+	[Export] public UIStat intellect;
+	[Export] public UIStat vitality;
+	[Export] public UIStat stamina;
+	[Export] public UIStat wisdom;
+	[Export] public UIStat charisma;
+	[Export] public Control summary_stats;
+	[Export] public UIStat damage;
+	[Export] public UIStat resistance;
+	[Export] public UIStat recovery;
 
 	[Export] public Control reputation;
 	[Export] public Button sheet;
@@ -52,4 +54,28 @@ public partial class CharacterOutline : Controller
 	{
 
 	}
+
+    internal void HandleUpdateStats(Player player)
+    {
+		
+		int i = 0;
+        level.value.Text = player.entity_controllers.stats_controller.base_stats[i].base_value.ToString();
+		level.GetStatInfo(player.entity_controllers.stats_controller.base_stats[i].base_value);
+		i += 1;
+		foreach(UIStat ui_stat in base_stats.GetChildren())
+		{
+			ui_stat.GetStatInfo(player.entity_controllers.stats_controller.base_stats[i].base_value);
+			i += 1;
+		}
+		i = 0;
+		foreach(Control control in summary_stats.GetChildren())
+		{
+			if(control is UIStat ui_stat)
+			{
+				ui_stat.GetStatInfo(player.entity_controllers.stats_controller.summary_stats[i]);
+				i += 1;
+			}
+		}
+
+    }
 }

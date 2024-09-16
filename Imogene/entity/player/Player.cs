@@ -193,7 +193,8 @@ public partial class Player : Entity
 		ui.inventory.main.DroppingItem += HandleDroppingItem;
 		ui.CapturingInput += systems.interact_system.HandleCapturingInput;
 
-		entity_controllers.stats_controller.StatsUpdate += ui.HandleUpdatedStats;
+		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
+		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
 		
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
@@ -202,10 +203,17 @@ public partial class Player : Entity
 		ui.InventoryToggle += HandleInventoryToggle;
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
-
-
 		
-		entity_controllers.stats_controller.UpdateStats(this);
+		level.base_value = 4;
+		strength.base_value = 10;
+		dexterity.base_value = 5;
+		vitality.base_value = 20;
+		intellect.base_value = 11;
+		physical_resistance.base_value = 6;
+
+		entity_controllers.stats_controller.SetUIStats(this);
+		entity_controllers.stats_controller.Update(this);
+		
 	
 
 		exclude.Add(areas.vision.GetRid());

@@ -20,7 +20,7 @@ public partial class Stat : Resource
 		//Gear
 		main_hand_damage, off_hand_damage, damage_bonus,
 		main_hand_attacks_per_second, off_hand_attacks_per_second,
-		health_bonus,
+		attack_speed_increase, health_bonus,
 		
 		//Movement
 		movement_speed, fall_speed, jump_speed,
@@ -46,6 +46,7 @@ public partial class Stat : Resource
 
 		//Resource
 		resource, posture, resource_cost_reduction, resource_regeneration_bonus,
+		cooldown_reduction,
 
 		//Level
 		level,
@@ -94,6 +95,11 @@ public partial class Stat : Resource
 			GD.Print("removed modifier");
 		}
 		
+	}
+
+	public void ResetToBase()
+	{
+		current_value = base_value;
 	}
 
 	public void PrintModifiers()

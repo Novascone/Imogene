@@ -1,13 +1,13 @@
 using Godot;
 using System;
 
-public partial class HealthRegenerationStat : UIStat
+public partial class RecoveryStat : UIStat
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base._Ready();
-		info.tool_tip.Text =  " Health regen {0} \n * Amount of health regenerated per second \n * Increased by skills and gear ";
+		label.Text = Name + ":";
+		info.tool_tip.Text =  " Recovery {0} \n * The average of health regeneration, resource regeneration, and posture regeneration \n * Calculated by stamina ";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

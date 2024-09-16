@@ -9,7 +9,7 @@ public partial class StatsController : Node
 {
 
 	
-	[Signal] public delegate void StatsUpdateEventHandler(Player player);
+	[Signal] public delegate void UpdateStatsEventHandler(Player player);
 
 	
 	
@@ -36,55 +36,184 @@ public partial class StatsController : Node
 	public float recovery_level_scale;
 	public float recovery;
 
+	public List<Stat> depth_stats = new List<Stat>();
+
+	public Stat[] base_stats = new Stat[8];
+
+	public float[] summary_stats = new float[3];
+
+	public Stat[] resistance_stats = new Stat[12];
+	public Stat[] damage_modifiers = new Stat[12];
+
+	public void SetResistanceStats(Entity entity)
+	{	
+		resistance_stats[0] = entity.physical_resistance;
+		resistance_stats[1] = entity.pierce_resistance;
+		resistance_stats[2] = entity.slash_resistance;
+		resistance_stats[3] = entity.blunt_resistance;
+		resistance_stats[4] = entity.bleed_resistance;
+		resistance_stats[5] = entity.poison_resistance;
+		resistance_stats[6] = entity.curse_resistance;
+		resistance_stats[7] = entity.spell_resistance;
+		resistance_stats[8] = entity.fire_resistance;
+		resistance_stats[9] = entity.cold_resistance;
+		resistance_stats[10] = entity.lightning_resistance;
+		resistance_stats[11] = entity.holy_resistance;
+	}
+	public void SetDamageModifierStats(Entity entity)
+	{
+		damage_modifiers[0] = entity.physical_damage;
+		damage_modifiers[1] = entity.pierce_damage;
+		damage_modifiers[2] = entity.slash_damage;
+		damage_modifiers[3] = entity.blunt_damage;
+		damage_modifiers[4] = entity.bleed_damage;
+		damage_modifiers[5] = entity.poison_damage;
+		damage_modifiers[6] = entity.curse_damage;
+		damage_modifiers[7] = entity.spell_damage;
+		damage_modifiers[8] = entity.fire_damage;
+		damage_modifiers[9] = entity.cold_damage;
+		damage_modifiers[10] = entity.lightning_damage;
+		damage_modifiers[11] = entity.holy_damage;
+	}
+	public void SetUIBaseStats(Entity entity)
+	{
+		base_stats[0] = entity.level;
+		base_stats[1] = entity.strength;
+		base_stats[2] = entity.dexterity;
+		base_stats[3] = entity.intellect;
+		base_stats[4] = entity.vitality;
+		base_stats[5] = entity.stamina;
+		base_stats[6] = entity.wisdom;
+		base_stats[7] = entity.charisma;
+	}
+
+	public void SetSummaryStats()
+	{
+		summary_stats[0] = damage_estimate;
+		summary_stats[1] = resistance;
+		summary_stats[2] = recovery;
+	}
+
+	public void SetUIDepthStats(Entity entity)
+	{
+		depth_stats.Add(entity.physical_melee_power);
+		depth_stats.Add(entity.spell_melee_power);
+		depth_stats.Add(entity.physical_ranged_power);
+		depth_stats.Add(entity.spell_ranged_power);
+		depth_stats.Add(entity.wisdom_scaler);
+		depth_stats.Add(entity.critical_hit_chance);
+		depth_stats.Add(entity.critical_hit_damage);
+		depth_stats.Add(entity.power);
+		depth_stats.Add(entity.physical_damage);
+		depth_stats.Add(entity.pierce_damage);
+		depth_stats.Add(entity.slash_damage);
+		depth_stats.Add(entity.blunt_damage);
+		depth_stats.Add(entity.bleed_damage);
+		depth_stats.Add(entity.poison_damage);
+		depth_stats.Add(entity.curse_damage);
+		depth_stats.Add(entity.spell_damage);
+		depth_stats.Add(entity.fire_damage);
+		depth_stats.Add(entity.cold_damage);
+		depth_stats.Add(entity.lightning_damage);
+		depth_stats.Add(entity.holy_damage);
+		depth_stats.Add(entity.attack_speed_increase);
+		depth_stats.Add(entity.cooldown_reduction);
+		depth_stats.Add(entity.armor);
+		depth_stats.Add(entity.poise);
+		depth_stats.Add(entity.block_amount);
+		depth_stats.Add(entity.retaliation);
+		depth_stats.Add(entity.physical_resistance);
+		depth_stats.Add(entity.pierce_resistance);
+		depth_stats.Add(entity.slash_resistance);
+		depth_stats.Add(entity.blunt_resistance);
+		depth_stats.Add(entity.bleed_resistance);
+		depth_stats.Add(entity.poison_resistance);
+		depth_stats.Add(entity.curse_resistance);
+		depth_stats.Add(entity.spell_resistance);
+		depth_stats.Add(entity.fire_resistance);
+		depth_stats.Add(entity.cold_resistance);
+		depth_stats.Add(entity.lightning_resistance);
+		depth_stats.Add(entity.holy_resistance);
+		depth_stats.Add(entity.health);
+		depth_stats.Add(entity.health_bonus);
+		depth_stats.Add(entity.health_regeneration);
+		depth_stats.Add(entity.health_on_retaliation);
+		depth_stats.Add(entity.resource);
+		depth_stats.Add(entity.resource_regeneration);
+		depth_stats.Add(entity.resource_cost_reduction);
+		depth_stats.Add(entity.posture_regeneration);
+		depth_stats.Add(entity.movement_speed);
+	}
+
+	public void SetUIStats(Entity entity)
+	{
+		SetUIBaseStats(entity);
+		SetPowers(entity);
+		SetWisdomScaler(entity);
+		SetDamageModifiers(entity);
+		SetDamage(entity);
+		SetCriticalHitModifier(entity);
+		SetPowerModifiers(entity);
+		SetDamageEstimate(entity);
+		SetScales(entity);
+		SetDamageResistances(entity);
+		SetResistanceEstimate(entity);
+		SetSummaryStats();
+		SetUIDepthStats(entity);
+	}
+
 
 
     public void SetPowers(Entity entity)
 	{
-		entity.physical_melee_power.base_value = (2 * entity.strength.current_value) + entity.dexterity.current_value;
-		entity.spell_melee_power.base_value = entity.strength.current_value + entity.dexterity.current_value + (3 * entity.intellect.current_value);
-		entity.physical_ranged_power.base_value = entity.strength.current_value + (3 * entity.dexterity.current_value);
-		entity.spell_ranged_power.base_value = (2 * entity.dexterity.current_value) + (3 * entity.intellect.current_value);		
+		entity.physical_melee_power.base_value = (2 * entity.strength.base_value ) + entity.dexterity.base_value ;
+		entity.spell_melee_power.base_value = entity.strength.base_value  + entity.dexterity.base_value  + (3 * entity.intellect.base_value );
+		entity.physical_ranged_power.base_value = entity.strength.base_value  + (3 * entity.dexterity.base_value );
+		entity.spell_ranged_power.base_value = (2 * entity.dexterity.base_value ) + (3 * entity.intellect.base_value );		
 	}
 
 	public void SetWisdomScaler(Entity entity)
 	{
-		entity.wisdom_scaler.base_value = entity.wisdom.current_value/20;
+		entity.wisdom_scaler.base_value = entity.wisdom.base_value /20;
 	}
 
 	public void SetDamageModifiers(Entity entity)
 	{
-		for(int i = 0; i < entity.damage_stats.Count; i ++)
-		{
-			entity.damage_modifiers[i] = 1 + (entity.damage_stats[i].current_value / 100);
-		}
-
+		SetDamageModifierStats(entity);
 		float damage_modifiers_total = 0;
-
-		foreach(float modifier in entity.damage_modifiers)
+		for(int i = 0; i < damage_modifiers.Length; i ++)
 		{
-			damage_modifiers_total += modifier;
+			damage_modifiers_total += 1 + (damage_modifiers[i].base_value / 100);
 		}
-		average_damage_modifier = damage_modifiers_total / entity.damage_modifiers.Count;
+
+		
+		average_damage_modifier = damage_modifiers_total / damage_modifiers.Length;
+	}
+
+	public void SetAttackSpeed(Entity entity)
+	{
+		// entity.main_hand_attacks_per_second = entity.main_hand.attacks_per_second * (1 + entity.attack_speed_increase.base_value);
+		// entity.off_hand_attacks_per_second = entity.off_hand.attacks_per_second * (1 + entity.attack_speed_increase.base_value);
 	}
 
 	public void SetDamage(Entity entity)
 	{
 		GD.Print("setting combined damage");
-		entity.combined_damage = entity.main_hand_damage.current_value + entity.off_hand_damage.current_value + entity.damage_bonus.current_value;
-		damage_per_second = entity.main_hand_attacks_per_second.current_value * entity.combined_damage;
+		entity.combined_damage = entity.main_hand_damage.base_value  + entity.off_hand_damage.base_value  + entity.damage_bonus.base_value ;
+		damage_per_second = entity.main_hand_attacks_per_second.base_value  * entity.combined_damage;
 	}
 
 	public void SetCriticalHitModifier(Entity entity)
 	{
-		entity.critical_hit_modifier = 1 + (entity.critical_hit_chance.current_value + entity.critical_hit_damage.current_value);
+		entity.critical_hit_modifier = 1 + (entity.critical_hit_chance.base_value  + entity.critical_hit_damage.base_value );
 	}
 
 	public void SetPowerModifiers(Entity entity)
 	{
-		physical_melee_power_modifier = 1 + (entity.physical_melee_power.current_value/100);
-		spell_melee_power_modifier = 1 + (entity.spell_melee_power.current_value/100);
-		physical_ranged_power_modifier = 1 + (entity.physical_ranged_power.current_value/100);
-		spell_ranged_power_modifier = 1 + (entity.spell_ranged_power.current_value/100);
+		physical_melee_power_modifier = 1 + (entity.physical_melee_power.base_value /100);
+		spell_melee_power_modifier = 1 + (entity.spell_melee_power.base_value /100);
+		physical_ranged_power_modifier = 1 + (entity.physical_ranged_power.base_value /100);
+		spell_ranged_power_modifier = 1 + (entity.spell_ranged_power.base_value /100);
 		power_modifier_average = (physical_melee_power_modifier + spell_melee_power_modifier + physical_ranged_power_modifier + spell_ranged_power_modifier) / 4;
 	}
 
@@ -95,27 +224,25 @@ public partial class StatsController : Node
 
 	public void SetScales(Entity entity)
 	{
-		damage_resistance_level_scale = entity.level.current_value * 50;
-		recovery_level_scale = entity.level.current_value * 100;
+		damage_resistance_level_scale = entity.level.base_value * 50;
+		recovery_level_scale = entity.level.base_value * 100;
 	}
 
 	
 
 	public void SetDamageResistances(Entity entity)
 	{
-
-		for(int i = 0; i < entity.resistance_stats.Count; i ++)
+		SetScales(entity);
+		SetResistanceStats(entity);
+		float total_resistances = 0;
+		for(int i = 0; i < resistance_stats.Length; i ++)
 		{
-			entity.resistances[i] = (float)Math.Round(entity.resistance_stats[i].current_value / damage_resistance_level_scale, 2);
+			GD.Print("damage resistance scale " + damage_resistance_level_scale);
+			total_resistances += (float)Math.Round(resistance_stats[i].base_value / damage_resistance_level_scale, 2);
 		}
 
-		float total_resistance = 0;
-
-		foreach(float resistance in entity.resistances)
-		{
-			total_resistance += resistance;
-		}
-		average_damage_resistance = total_resistance / entity.resistances.Count;
+		
+		average_damage_resistance = total_resistances / resistance_stats.Length;
 		
 	}
 
@@ -126,26 +253,25 @@ public partial class StatsController : Node
 
 	public void SetRegenerations(Entity entity)
 	{
-		entity.health_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * entity.health_regeneration_bonus.current_value, 2);
-		entity.resource_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * entity.resource_regeneration_bonus.current_value, 2);
-		entity.posture_regeneration.base_value = (float)Math.Round(1 + entity.stamina.current_value / recovery_level_scale * (1 + (entity.poise.current_value / 100)), 2);
+		entity.health_regeneration.base_value = (float)Math.Round(1 + entity.stamina.base_value / recovery_level_scale * entity.health_regeneration_bonus.base_value , 2);
+		entity.resource_regeneration.base_value = (float)Math.Round(1 + entity.stamina.base_value  / recovery_level_scale * entity.resource_regeneration_bonus.base_value , 2);
+		entity.posture_regeneration.base_value = (float)Math.Round(1 + entity.stamina.base_value  / recovery_level_scale * (1 + (entity.poise.base_value  / 100)), 2);
 	}
 
 	public void SetRecoveryEstimate(Entity entity)
 	{
-		recovery = (float) Math.Round((entity.health_regeneration.current_value + entity.resource_regeneration.current_value + entity.posture_regeneration.current_value) / 3, 2);
+		recovery = (float) Math.Round((entity.health_regeneration.base_value  + entity.resource_regeneration.base_value  + entity.posture_regeneration.base_value ) / 3, 2);
 	}
 
 
 
 	
-	public void UpdateStats(Entity entity) // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
+	public void Update(Entity entity) // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
 	{
 
 
 		// Calculates stats
-		
-
+	
 		SetPowers(entity);
 		SetWisdomScaler(entity);
 		SetDamageModifiers(entity);
@@ -160,89 +286,12 @@ public partial class StatsController : Node
 		SetResistanceEstimate(entity);
 
 
-		
-
-		// recovery
-
-		
+	
 		if(entity is Player player)
 		{
-			EmitSignal(nameof(StatsUpdate), player);
+			EmitSignal(nameof(UpdateStats), player);
 		}
-		// if(player != null)
-		// {
-		// 	player.ui.hud.health.MaxValue = entity.maximum_health;
 
-		// }
-		
-
-		// GD.Print("combined damage " + combined_damage);
-		// GD.Print("base dps " + base_dps);
-		// GD.Print("aps " + aps);
-		// GD.Print("skill mod " + skill_mod);
-		// GD.Print("crit mod " + crit_mod);
-		// GD.Print("physical melee power mod " + physical_melee_power_mod);
-		// GD.Print("spell melee power mod " + spell_melee_power_mod);
-		// GD.Print("physical ranged power mod " + physical_ranged_power_mod);
-		// GD.Print("spell ranged power mod " + spell_ranged_power_mod);
-		// GD.Print("physical melee dps " + physical_melee_dps);
-		// GD.Print("spell melee dps " + spell_melee_dps);
-		// GD.Print("physical ranged dps " + physical_ranged_dps);
-		// GD.Print("spell ranged dps " + spell_ranged_dps);
-
-		// GD.Print("dr_armor " + dr_armor);
-		// GD.Print("dr_phys " + dr_phys);
-		// GD.Print("dr_slash " + dr_slash);
-		// GD.Print("dr_thrust " + dr_thrust);
-		// GD.Print("dr_blunt " + dr_blunt);
-		// GD.Print("dr_bleed " + dr_bleed);
-		// GD.Print("dr_poison " + dr_poison);
-		// GD.Print("dr_spell " + dr_spell);
-		// GD.Print("dr_fire " + dr_fire);
-		// GD.Print("dr_cold " + dr_cold);
-		// GD.Print("dr_lightning " + dr_lightning);
-		// GD.Print("dr_holy " + dr_holy);
-
-		// GD.Print("avg_res " + avg_res_dr);
-		// GD.Print("maximum health " + maximum_health);
-		// GD.Print("resistance " + resistance);
-
-		// GD.Print("health_regen " + player.health_regen);
-		// GD.Print("resource_regen " + player.resource_regen);
-		// GD.Print("posture_regen " + player.posture_regen);
-		// GD.Print("recovery " + player.recovery);
-		// GD.Print("Stats have been updated from the stat controller");
-		// if(entity is Player)
-		// {
-		// 	SendStats();
-		// }
-		
-		
 	}
 
-	// public void SendStats()
-	// {
-	// 	GD.Print("sending stats from stat controller");
-	// 	_customSignals.EmitSignal(nameof(CustomSignals.SendStats),
-	// 	entity.level, entity.strength, entity.dexterity, entity.intellect, entity.vitality, entity.stamina, entity.wisdom, entity.charisma, entity.total_dps,
-
-	// 	entity.physical_melee_dps, entity.spell_melee_dps, entity.physical_ranged_dps, entity.spell_ranged_dps, entity.physical_melee_power, 
-
-	// 	entity.spell_melee_power, entity.physical_ranged_power, entity.spell_ranged_power, entity.wisdom_scaler, entity.physical_melee_power_mod,
-
-	// 	entity.physical_ranged_power_mod, entity.spell_ranged_power_mod, entity.power_mod_avg, entity.damage_bonus, entity.combined_damage, entity.base_aps,
-
-	// 	entity.aps_modifiers, entity.aps, entity.base_dps, entity.skill_mod, entity.crit_mod, entity.slash_damage, entity.thrust_damage, entity.blunt_damage, entity.bleed_damage,
-
-	// 	entity.poison_damage, entity.fire_damage, entity.cold_damage, entity.lightning_damage, entity.holy_damage, entity.critical_hit_chance, entity.critical_hit_damage, entity.attack_speed_increase,
-
-	// 	entity.cool_down_reduction, entity.posture_damage, entity.armor, entity.poise, entity.block_amount, entity.retaliation, entity.physical_resistance, entity.thrust_resistance, entity.slash_resistance,
-
-	// 	entity.blunt_resistance, entity.bleed_resistance, entity.poison_resistance, entity.curse_resistance, entity.spell_resistance, entity.fire_resistance, entity.cold_resistance, entity.lightning_resistance,
-		
-	// 	entity.holy_resistance, entity.maximum_health, entity.health_bonus, entity.health_regen, entity.health_regen_bonus, entity.maximum_posture, entity.posture_regen, entity.posture_regen_bonus, entity.health_on_retaliate, entity.resistance,
-
-	// 	entity.maximum_resource, entity.resource_regen, entity.resource_cost_reduction, entity.recovery, entity.movement_speed, entity.maximum_gold
-	// 															);
-	// }
 }

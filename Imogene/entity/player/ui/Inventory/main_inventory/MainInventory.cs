@@ -150,4 +150,6 @@ public partial class MainInventory : Control
 			equipped_slot = id;
 		}
     }
+
+   
 }

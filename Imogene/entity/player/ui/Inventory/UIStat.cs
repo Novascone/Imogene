@@ -16,16 +16,21 @@ public partial class UIStat : Control
 	public override void _Ready()
 	{
 		label.Text = SeparateByCapitals(Name);
+		GD.Print(Name + "Subscribed to area entered");
        	area.AreaEntered += _on_area_2d_area_entered;
 	   	area.AreaExited += _on_area_2d_area_exited;
 	}
 
-    public void GetStatInfo(string stat_value_ui)
+    public virtual void GetStatInfo(float stat_value_ui)
 	{
-		stat_value = stat_value_ui;
+		stat_value = stat_value_ui.ToString();
 		value.Text = stat_value;
-		// info.info.Text = string.Format(info.info.Text, stat_value);
+		info.tool_tip.Text = string.Format(info.tool_tip.Text, stat_value);
 		//physical_melee_power_info.Text = string.Format(physical_melee_power_info_text, physical_melee_power_UI);
+	}
+	public virtual void GetStatInfo(float stat_value_ui, float p_m_dps, float s_m_dps, float p_r_dps, float s_r_dps)
+	{
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -7,7 +7,7 @@ public partial class ResourceCostReductionStat : UIStat
 	public override void _Ready()
 	{
 		base._Ready();
-		// info.info.Text =  " Resource cost reduction {0} \n * Amount resource cost of skills are reduced by \n * Increased by skills and gear ";
+		info.tool_tip.Text =  " Resource cost reduction {0} \n * Amount resource cost of skills are reduced by \n * Increased by skills and gear ";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

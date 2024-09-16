@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://d12hsso4ghsv0"]
 
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/UIStat.cs" id="1_fegtr"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/UIStat.cs" id="1_fegtr"]
 [ext_resource type="PackedScene" uid="uid://cchyv2u8uyybq" path="res://entity/player/ui/Inventory/stat_info.tscn" id="2_7rbyg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxma3"]

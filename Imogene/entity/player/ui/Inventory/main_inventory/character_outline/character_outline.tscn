@@ -1,28 +1,31 @@
-[gd_scene load_steps=32 format=3 uid="uid://q4fdinjsppia"]
+[gd_scene load_steps=35 format=3 uid="uid://q4fdinjsppia"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/CharacterOutline.cs" id="1_7c54v"]
 [ext_resource type="PackedScene" uid="uid://d12hsso4ghsv0" path="res://entity/player/ui/Inventory/main_inventory/character_outline/level_stat.tscn" id="2_ns1t1"]
 [ext_resource type="PackedScene" uid="uid://ctdjf7muksw77" path="res://entity/player/ui/Inventory/main_inventory/reputation_button.tscn" id="3_7m7oj"]
 [ext_resource type="PackedScene" uid="uid://8aj38jxuqw66" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat_label.tscn" id="3_ewnx4"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/LevelStat.cs" id="3_fdaha"]
 [ext_resource type="PackedScene" uid="uid://c7afornn586dj" path="res://entity/player/ui/Inventory/main_inventory/outline_button.tscn" id="4_g66vt"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/StrengthStat.cs" id="4_ygnmo"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/DexterityStat.cs" id="5_ufeug"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/IntellectStat.cs" id="6_pkyrb"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/VitalityStat.cs" id="7_5lqh7"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/StaminaStat.cs" id="8_1vm7q"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/WisdomStat.cs" id="8_yxamx"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/base_stats/CharismaStat.cs" id="9_we4gu"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/StrengthStat.cs" id="4_ygnmo"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/ReputationButton.cs" id="5_oi51a"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/DexterityStat.cs" id="5_ufeug"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/IntellectStat.cs" id="6_pkyrb"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/VitalityStat.cs" id="7_5lqh7"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/StaminaStat.cs" id="8_1vm7q"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/WisdomStat.cs" id="8_yxamx"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/base_stat/CharismaStat.cs" id="9_we4gu"]
 [ext_resource type="PackedScene" uid="uid://b81j85oqiivla" path="res://entity/player/ui/Inventory/main_inventory/character_outline/summary_stat_label.tscn" id="10_vghec"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/summary_stats/DamageStat.cs" id="11_q85tt"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/summary_stat/DamageStat.cs" id="11_q85tt"]
 [ext_resource type="PackedScene" uid="uid://bltlndmkefkxt" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/shoulder.tscn" id="12_1a5db"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/summary_stats/ResistanceStat.cs" id="12_jpeqr"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/summary_stat/ResistanceStat.cs" id="12_jpeqr"]
 [ext_resource type="PackedScene" uid="uid://cx77ycj2tvuta" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/head.tscn" id="12_xmh1a"]
-[ext_resource type="Script" path="res://entity/player/ui/Inventory/depth_sheet/ui_stats_scripts/summary_stats/RecoveryStat.cs" id="13_jo62v"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/character_outline/summary_stat/RecoveryStat.cs" id="13_jo62v"]
 [ext_resource type="PackedScene" uid="uid://0mdvjau7kw8w" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/gloves.tscn" id="13_wuqsw"]
 [ext_resource type="PackedScene" uid="uid://dq7cayo2vlyni" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/ring_1.tscn" id="14_pmlhx"]
 [ext_resource type="PackedScene" uid="uid://deeumsjr2j6x1" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/main_hand.tscn" id="15_kvh73"]
 [ext_resource type="PackedScene" uid="uid://cx7euxlockctf" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/main_secondary.tscn" id="16_jxob0"]
 [ext_resource type="PackedScene" uid="uid://bb5y6yvbqnvk7" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/chest.tscn" id="18_la36c"]
+[ext_resource type="Script" path="res://entity/player/ui/Inventory/main_inventory/SheetButton.cs" id="19_cj0q8"]
 [ext_resource type="PackedScene" uid="uid://ciqnv40shydeh" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/belt.tscn" id="19_jd1he"]
 [ext_resource type="PackedScene" uid="uid://bfkp51snla0xu" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/pants.tscn" id="20_tcnuj"]
 [ext_resource type="PackedScene" uid="uid://dtusg3pgw01fl" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/boots.tscn" id="21_tb24g"]
@@ -32,12 +35,15 @@
 [ext_resource type="PackedScene" uid="uid://cqf6ui62jdgrk" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/off_hand.tscn" id="25_usurc"]
 [ext_resource type="PackedScene" uid="uid://c0rchsocdrwdr" path="res://entity/player/ui/Inventory/main_inventory/character_outline/gear/off_hand_secondary.tscn" id="26_q62pn"]
 
-[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("sheet", "shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
+[node name="CharacterOutline" type="HBoxContainer" node_paths=PackedStringArray("level", "base_stats", "summary_stats", "sheet", "shoulders", "gloves", "ring_1", "main_hand", "main_hand_secondary", "head", "chest", "belt", "pants", "boots", "neck", "bracers", "ring_2", "off_hand", "off_hand_secondary")]
 offset_right = 593.0
 offset_bottom = 506.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_7c54v")
+level = NodePath("StatsOutline/Level")
+base_stats = NodePath("StatsOutline/BaseStats")
+summary_stats = NodePath("StatsOutline/Details")
 sheet = NodePath("StatsOutline/Sheet")
 shoulders = NodePath("Armor/Column1/MarginContainer/Shoulders")
 gloves = NodePath("Armor/Column1/HBoxContainer/VBoxContainer/Gloves")
@@ -68,6 +74,7 @@ size_flags_stretch_ratio = 2.0
 
 [node name="Level" parent="StatsOutline" instance=ExtResource("2_ns1t1")]
 layout_mode = 2
+script = ExtResource("3_fdaha")
 
 [node name="Spacer1" type="Control" parent="StatsOutline"]
 custom_minimum_size = Vector2(0, 5)
@@ -78,6 +85,7 @@ size_flags_stretch_ratio = 2.0
 
 [node name="ReputationButton" parent="StatsOutline" instance=ExtResource("3_7m7oj")]
 layout_mode = 2
+script = ExtResource("5_oi51a")
 
 [node name="Spacer2" type="Control" parent="StatsOutline"]
 layout_mode = 2
@@ -142,6 +150,7 @@ layout_mode = 2
 
 [node name="Sheet" parent="StatsOutline" instance=ExtResource("4_g66vt")]
 layout_mode = 2
+script = ExtResource("19_cj0q8")
 
 [node name="Armor" type="HBoxContainer" parent="."]
 layout_mode = 2

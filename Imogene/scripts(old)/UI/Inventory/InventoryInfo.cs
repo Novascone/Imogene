@@ -410,67 +410,67 @@ public partial class InventoryInfo : UI
 	{
 		
 		// Base Stats
-		strength_stat.GetStatInfo(strength_UI);
-		dexterity_stat.GetStatInfo(dexterity_UI);
-		intellect_stat.GetStatInfo(intellect_UI);
-		vitality_stat.GetStatInfo(vitality_UI);
-		stamina_stat.GetStatInfo(stamina_UI);
-		wisdom_stat.GetStatInfo(wisdom_UI);
-		charisma_stat.GetStatInfo(charisma_UI);
+		// strength_stat.GetStatInfo(strength_UI);
+		// dexterity_stat.GetStatInfo(dexterity_UI);
+		// intellect_stat.GetStatInfo(intellect_UI);
+		// vitality_stat.GetStatInfo(vitality_UI);
+		// stamina_stat.GetStatInfo(stamina_UI);
+		// wisdom_stat.GetStatInfo(wisdom_UI);
+		// charisma_stat.GetStatInfo(charisma_UI);
 	
-		// Stats Summary
-		damage_stat.GetStatInfo(damage_UI, physical_melee_dps_UI, spell_melee_dps_UI, physical_ranged_dps_UI, spell_ranged_dps_UI);
-		resistance_stat.GetStatInfo(resistance_UI);
-		recovery_stat.GetStatInfo(recovery_UI);
+		// // Stats Summary
+		// damage_stat.GetStatInfo(damage_UI, physical_melee_dps_UI, spell_melee_dps_UI, physical_ranged_dps_UI, spell_ranged_dps_UI);
+		// resistance_stat.GetStatInfo(resistance_UI);
+		// recovery_stat.GetStatInfo(recovery_UI);
 
-		// Sheet
-		// Offense
-		physical_melee_power_stat.GetStatInfo(physical_melee_power_UI);
-		spell_melee_power_stat.GetStatInfo(spell_melee_power_UI);
-		physical_ranged_power_stat.GetStatInfo(physical_ranged_power_UI);
-		spell_ranged_power_stat.GetStatInfo(spell_melee_power_UI);
-		wisdom_scaler_stat.GetStatInfo(wisdom_scaler_UI);
-		critical_hit_chance_stat.GetStatInfo(critical_hit_chance_UI);
-		critical_hit_damage_stat.GetStatInfo(critical_hit_damage_UI);
-		attack_speed_stat.GetStatInfo(attack_speed_UI);
-		attack_speed_increase_stat.GetStatInfo(attack_speed_increase_UI);
-		cooldown_reduction_stat.GetStatInfo(cool_down_reduction_UI);
+		// // Sheet
+		// // Offense
+		// physical_melee_power_stat.GetStatInfo(physical_melee_power_UI);
+		// spell_melee_power_stat.GetStatInfo(spell_melee_power_UI);
+		// physical_ranged_power_stat.GetStatInfo(physical_ranged_power_UI);
+		// spell_ranged_power_stat.GetStatInfo(spell_melee_power_UI);
+		// wisdom_scaler_stat.GetStatInfo(wisdom_scaler_UI);
+		// critical_hit_chance_stat.GetStatInfo(critical_hit_chance_UI);
+		// critical_hit_damage_stat.GetStatInfo(critical_hit_damage_UI);
+		// attack_speed_stat.GetStatInfo(attack_speed_UI);
+		// attack_speed_increase_stat.GetStatInfo(attack_speed_increase_UI);
+		// cooldown_reduction_stat.GetStatInfo(cool_down_reduction_UI);
 
-		// Defense
-		armor_stat.GetStatInfo(armor_UI);
-		poise_stat.GetStatInfo(poise_UI);
-		block_amount_stat.GetStatInfo(block_amount_UI);
-		retaliation_stat.GetStatInfo(retaliation_UI);
-		physical_resistance_stat.GetStatInfo(physical_resistance_UI);
-		thrust_resistance_stat.GetStatInfo(thrust_resistance_UI);
-		slash_resistance_stat.GetStatInfo(slash_resistance_UI);
-		blunt_resistance_stat.GetStatInfo(blunt_resistance_UI);
-		bleed_resistance_stat.GetStatInfo(bleed_resistance_UI);
-		poison_resistance_stat.GetStatInfo(poison_resistance_UI);
-		curse_resistance_stat.GetStatInfo(curse_resistance_UI);
-		spell_resistance_stat.GetStatInfo(spell_resistance_UI);
-		fire_resistance_stat.GetStatInfo(spell_resistance_UI);
-		cold_resistance_stat.GetStatInfo(cold_resistance_UI);
-		lightning_resistance_stat.GetStatInfo(lightning_resistance_UI);
-		holy_resistance_stat.GetStatInfo(holy_resistance_UI);
+		// // Defense
+		// armor_stat.GetStatInfo(armor_UI);
+		// poise_stat.GetStatInfo(poise_UI);
+		// block_amount_stat.GetStatInfo(block_amount_UI);
+		// retaliation_stat.GetStatInfo(retaliation_UI);
+		// physical_resistance_stat.GetStatInfo(physical_resistance_UI);
+		// thrust_resistance_stat.GetStatInfo(thrust_resistance_UI);
+		// slash_resistance_stat.GetStatInfo(slash_resistance_UI);
+		// blunt_resistance_stat.GetStatInfo(blunt_resistance_UI);
+		// bleed_resistance_stat.GetStatInfo(bleed_resistance_UI);
+		// poison_resistance_stat.GetStatInfo(poison_resistance_UI);
+		// curse_resistance_stat.GetStatInfo(curse_resistance_UI);
+		// spell_resistance_stat.GetStatInfo(spell_resistance_UI);
+		// fire_resistance_stat.GetStatInfo(spell_resistance_UI);
+		// cold_resistance_stat.GetStatInfo(cold_resistance_UI);
+		// lightning_resistance_stat.GetStatInfo(lightning_resistance_UI);
+		// holy_resistance_stat.GetStatInfo(holy_resistance_UI);
 
-		// Health
-		maximum_health_stat.GetStatInfo(maximum_health_UI);
-		health_bonus_stat.GetStatInfo(health_bonus_UI);
-		health_regeneration_stat.GetStatInfo(health_regen_UI);
-		health_retaliation_stat.GetStatInfo(health_on_retaliate_UI);
+		// // Health
+		// maximum_health_stat.GetStatInfo(maximum_health_UI);
+		// health_bonus_stat.GetStatInfo(health_bonus_UI);
+		// health_regeneration_stat.GetStatInfo(health_regen_UI);
+		// health_retaliation_stat.GetStatInfo(health_on_retaliate_UI);
 		
-		// Resource
-		maximum_resource_stat.GetStatInfo(maximum_resource_UI);
-		resource_regeneration_stat.GetStatInfo(resource_regen_UI);
-		resource_cost_reduction_stat.GetStatInfo(resource_cost_reduction_UI);
-		posture_regeneration_stat.GetStatInfo(posture_regen_UI);
+		// // Resource
+		// maximum_resource_stat.GetStatInfo(maximum_resource_UI);
+		// resource_regeneration_stat.GetStatInfo(resource_regen_UI);
+		// resource_cost_reduction_stat.GetStatInfo(resource_cost_reduction_UI);
+		// posture_regeneration_stat.GetStatInfo(posture_regen_UI);
 
-		// Misc
-		movement_speed_stat.GetStatInfo(movement_speed_UI);
+		// // Misc
+		// movement_speed_stat.GetStatInfo(movement_speed_UI);
 
 		
-		level_stat.GetStatInfo(level_UI);
+		// level_stat.GetStatInfo(level_UI);
 		
 
 		gold_label.Text = gold_UI;
