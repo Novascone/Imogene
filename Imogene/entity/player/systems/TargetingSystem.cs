@@ -244,7 +244,6 @@ public partial class TargetingSystem : Node
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				EmitSignal(nameof(HideSoftTargetIcon), enemy);
-				GD.Print("Emitting hide target icon signal");
 				enemy_close = false;
 				closest_enemy = null;
 			}
@@ -252,7 +251,6 @@ public partial class TargetingSystem : Node
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				EmitSignal(nameof(HideSoftTargetIcon), enemy);
-				GD.Print("Emitting show target icon signal");
 			}
 		}
 	}

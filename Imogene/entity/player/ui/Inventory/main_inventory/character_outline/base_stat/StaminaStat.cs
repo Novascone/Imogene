@@ -13,7 +13,6 @@ public partial class StaminaStat : UIStat
 
 	public override void GetStatInfo(float stat_value_ui)
 	{
-		GD.Print("dexterity info");
 		stat_value = stat_value_ui.ToString();
 		value.Text = stat_value;
 		info.tool_tip.Text = string.Format(info.tool_tip.Text, stat_value, stat_value, stat_value);

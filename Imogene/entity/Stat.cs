@@ -81,7 +81,7 @@ public partial class Stat : Resource
 		{
 			modifiers.Add(stat_modifier);
 			stat_modifier.Apply(this);
-			GD.Print("added modifier");
+			
 		}
 	}
 
@@ -92,7 +92,7 @@ public partial class Stat : Resource
 		{
 			modifiers.Remove(stat_modifier);
 			stat_modifier.Release(this);
-			GD.Print("removed modifier");
+			
 		}
 		
 	}

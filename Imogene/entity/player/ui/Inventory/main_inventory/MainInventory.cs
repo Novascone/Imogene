@@ -26,7 +26,6 @@ public partial class MainInventory : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print("inventory slots: " + inventory_slots.Count);
 
 	}
 
@@ -59,7 +58,6 @@ public partial class MainInventory : Control
 
     public void HandleItemDroppedOutside(int id, ItemData data)
     {
-		GD.Print("Drop item");
 		if(equipped_slot == id)
 		{
 			equipped_slot = -1;
@@ -127,7 +125,6 @@ public partial class MainInventory : Control
 
 	public void _on_mats_button_down()
 	{
-		GD.Print("Mats button down");
 		mats.Show();
 	}
 
@@ -138,7 +135,6 @@ public partial class MainInventory : Control
 
     internal void OnItemEquipped(int id)
     {
-		GD.Print("Received item equipped");
         if(equipped_slot != -1)
 		{
 			inventory_slots[equipped_slot].FillSlot(inventory_slots[equipped_slot].slot_data, false);

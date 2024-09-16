@@ -198,7 +198,6 @@ public partial class StatsController : Node
 
 	public void SetDamage(Entity entity)
 	{
-		GD.Print("setting combined damage");
 		entity.combined_damage = entity.main_hand_damage.base_value  + entity.off_hand_damage.base_value  + entity.damage_bonus.base_value ;
 		damage_per_second = entity.main_hand_attacks_per_second.base_value  * entity.combined_damage;
 	}
@@ -237,7 +236,6 @@ public partial class StatsController : Node
 		float total_resistances = 0;
 		for(int i = 0; i < resistance_stats.Length; i ++)
 		{
-			GD.Print("damage resistance scale " + damage_resistance_level_scale);
 			total_resistances += (float)Math.Round(resistance_stats[i].base_value / damage_resistance_level_scale, 2);
 		}
 

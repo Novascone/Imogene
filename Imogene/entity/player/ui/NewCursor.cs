@@ -20,8 +20,7 @@ public partial class NewCursor : Sprite2D
 		}
 		if (@event.IsActionPressed("Interact"))
 		{
-			GD.Print("interact pressed");
-			GD.Print("hover over button: " + hover_over_button);
+
 			if (hover_over_button != null)
 			{
 				if (item_preview.slot_data == null)
@@ -36,7 +35,7 @@ public partial class NewCursor : Sprite2D
 				}
 				else
 				{
-					GD.Print("emitting item dropped signal");
+	
 					EmitSignal(nameof(ItemDroppedIntoSlot), item_preview.inventory_slot_id, hover_over_button.inventory_slot_id);
 					item_preview.Icon = null;
 					item_preview.slot_data = null;

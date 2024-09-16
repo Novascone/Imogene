@@ -18,14 +18,11 @@ public partial class DepthSheet : Control
 
     internal void HandleUpdateStats(Player player)
     {
-		GD.Print("Got update stats signal");
 		int i = 0;
         foreach(Control control in scroll_container.vbox.GetChildren())
 		{
-			GD.Print(control.Name);
 			if(control is UIStat ui_stat)
 			{
-				GD.Print(ui_stat.Name);
 				ui_stat.GetStatInfo(player.entity_controllers.stats_controller.depth_stats[i].base_value);
 				i += 1;
 			}

@@ -166,7 +166,7 @@ public partial class InteractSystem : Node3D
 	private void OnInteractAreaExited(Area3D area, Player player)
 	{
 
-		GD.Print("Interact area exited");
+		
 		if(area is InteractableObject)
 		{
 			left_interact = true;
@@ -179,7 +179,7 @@ public partial class InteractSystem : Node3D
 
 	private void OnInteractAreaEntered(Area3D area, Player player)
 	{
-		GD.Print("Interact area entered");
+		
 		if(area is InteractableObject)
 		{
 			entered_interact = true;
@@ -191,7 +191,7 @@ public partial class InteractSystem : Node3D
 
 	public void OnObjectExitedArea(Node3D body, Player player)
 	{
-		GD.Print("Item exited interact area");
+		
 		if(body is InteractableItem item && near_by_items.Contains(item))
 		{
 			// EmitSignal(nameof(NearInteractable),false);
@@ -202,7 +202,7 @@ public partial class InteractSystem : Node3D
 
 	public void OnObjectEnteredArea(Node3D body, Player player)
 	{
-		GD.Print("Item entered interact area");
+		
 		if(body is InteractableItem item)
 		{
 			// EmitSignal(nameof(NearInteractable),true);

@@ -16,7 +16,6 @@ public partial class UIStat : Control
 	public override void _Ready()
 	{
 		label.Text = SeparateByCapitals(Name);
-		GD.Print(Name + "Subscribed to area entered");
        	area.AreaEntered += _on_area_2d_area_entered;
 	   	area.AreaExited += _on_area_2d_area_exited;
 	}

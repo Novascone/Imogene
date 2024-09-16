@@ -143,6 +143,10 @@ public partial class NewUI : Control
 			if(!abilities.Visible)
 			{
 				inventory.Visible = !inventory.Visible;
+				if(inventory.depth_sheet.Visible)
+				{
+					inventory.depth_sheet.Visible = !inventory.depth_sheet.Visible;
+				}
 			}
 			if(abilities.Visible)
 			{

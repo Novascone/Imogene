@@ -40,7 +40,6 @@ public partial class StatModifier : Resource
 		{
 			stat.base_value *= 1 + mod;
 			stat.current_value *= 1 + mod;
-			GD.Print("multiplying base of " + stat.stat_type + " with " + mod);
 		}
 	}
 	public void Release(Stat stat)
