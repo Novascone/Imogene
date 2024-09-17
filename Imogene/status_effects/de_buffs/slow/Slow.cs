@@ -3,10 +3,12 @@ using System;
 
 public partial class Slow : StatusEffect
 {
+	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
+		slow.mod = -0.6f;
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 5;

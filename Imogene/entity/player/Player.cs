@@ -89,6 +89,7 @@ public partial class Player : Entity
 
 	
 	public Slow slow = new Slow();
+	public Chill chill = new Chill();
 	
     public override void _Input(InputEvent @event)
     {
@@ -102,7 +103,9 @@ public partial class Player : Entity
 		}
 		if(@event.IsActionPressed("two"))
 		{
-			
+			GD.Print("adding chill to player");
+			GD.Print("base movement speed " + movement_speed.base_value + " current movement speed " + movement_speed.current_value);
+			entity_controllers.status_effect_controller.AddStatusEffect(this, chill);
 		}
 		if(@event.IsActionPressed("three"))
 		{
@@ -236,7 +239,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+		GD.Print("current movement speed " + movement_speed.current_value);
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);

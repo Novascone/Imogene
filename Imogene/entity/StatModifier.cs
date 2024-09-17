@@ -7,7 +7,7 @@ public partial class StatModifier : Resource
 	{
 		modification_type = modification;
 	}
-	public enum ModificationType{ add_current, add_base, multiply_current, multiply_base }
+	public enum ModificationType{ add_current, add_base, multiply_current, multiply_base, nullify}
 	public ModificationType modification_type;
 	public Stat stat;
 	public float value_to_add;
@@ -32,15 +32,17 @@ public partial class StatModifier : Resource
 		}
 		if(modification_type == ModificationType.multiply_current)
 		{
-			
 			stat.current_value *= 1 + mod;
-
 		}
 		if(modification_type == ModificationType.multiply_base)
 		{
 			
 			stat.base_value *= 1 + mod;
 			stat.current_value *= 1 + mod;
+		}
+		if(modification_type == ModificationType.nullify)
+		{
+			stat.current_value = 0;
 		}
 	}
 	public void Release(Stat stat)
@@ -55,8 +57,11 @@ public partial class StatModifier : Resource
 		}
 		if(modification_type == ModificationType.multiply_current)
 		{
-			
 			stat.current_value /= 1 + mod;
+		}
+		if(modification_type == ModificationType.nullify)
+		{
+			stat.current_value = stat.base_value;
 		}
 	}
 }

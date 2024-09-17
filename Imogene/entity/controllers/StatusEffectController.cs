@@ -8,7 +8,7 @@ public partial class StatusEffectController : Node
 	
 
 	
-	
+	public bool stop_movement_input;
 	public bool effect_already_applied;
 	// Movement
 
@@ -81,6 +81,7 @@ public partial class StatusEffectController : Node
 	{
 		status_effects[slow] = false;
 		status_effects[daze] = false;
+		status_effects[chill] = false;
 		status_effects[freeze] = false;
 		status_effects[stun] = false;
 	}
@@ -112,11 +113,13 @@ public partial class StatusEffectController : Node
 				GD.Print("adding new effect to " + entity.Name + " " + effect_to_add.Name);
 				entity.status_effects.Add(effect_to_add);
 				AddChild(effect_to_add);
+				if(effect_to_add.prevents_movement == true)
+				{
+					stop_movement_input = true;
+				}
 			}
 			ApplyStatusEffect(entity, effect_to_add);
 		}
-		
-		
 	}
 
 	public bool SlowingEffectApplied(Entity entity, StatusEffect effect)
@@ -155,6 +158,10 @@ public partial class StatusEffectController : Node
 		RemoveChild(effect);
 		GD.Print("resetting stacks of " + effect.Name);
 		entity.entity_controllers.status_effect_controller.SetEffectBooleans(effect);
+		if(effect.prevents_movement == true)
+		{
+			stop_movement_input = false;
+		}
 	}
 
 	public void QueueStatusEffect(Entity entity, StatusEffect effect)
@@ -212,265 +219,36 @@ public partial class StatusEffectController : Node
 			}
 			GD.Print("Status effect " + status_effect.GetType() + " " + status_effects[status_effect]);
 		}
-	
-		// Set movement effect booleans
-
-		// if(effect is unstoppable) { unstoppable = !unstoppable; }
-
-		// if(effect is Transpose) { transpose = !transpose; }
-
-		// if(effect is Bull) { bull = !bull; }
-
-		// if(effect is stealth){ stealth = !stealth; }
-
-		if(effect is Slow) { slowed = !slowed; }
-
-		if(effect is Daze) { dazed = !dazed; }
-
-		if(effect is Chill) { chilled = !chilled; }
-
-		if(effect is Freeze) { frozen = !frozen; }
-
-		// if(effect is Fear) { feared = !feared; }
-
-		// if(effect is Hamstring) { hamstrung = !hamstrung; }
-
-		// if(effect is Tether) { tethered = !tethered; }
-
-		if(effect is Stun) { stunned = !stunned; }
-
-		// if(effect is Hex) { hexed = !hexed; }
-
-		// if(effect is Knockback) { knockedback = !knockedback; }
-
-		// Set health effect booleans
-
-		// if(effect is Invincible) { invincible = !invincible; }
-
-		// if(effect is Knockback) { bulwark = !bulwark; }
-
-		// if(effect is OutstandingForm) { outstanding_form = !outstanding_form; }
-
-		// if(effect is Bleed) { bleeding = !bleeding; }
-
-		// if(effect is Poison) { poisoned = !poisoned; }
-
-		// if(effect is Burn) { burning = !burning; }
-
-		// if(effect is Curse) { cursed = !cursed; }
-
-		// if(effect is Virulent) { virulent = !virulent; }
-
-		// if(effect is Febrile) { febrile = !febrile; }
-
-		// if(effect is Reel) { reeling = !reeling; }
-
-		// if(effect is Stagger) { staggered = !staggered; }
-
-		// Set damage booleans
-
-		// if(effect is Overpower) { overpower = !overpower; }
-
-		// if(effect is Wallop) { walloping_blows = !walloping_blows; }
-
-		// if(effect is Formidable) { formidable = !formidable; }
-
-		// if(effect is OrbOfPower) { orb_of_power = !orb_of_power; }
-
-		// if(effect is Enfeeble) { enfeebled = !enfeebled; }
-
-		// if(effect is Suspend) { suspended = !suspended; }
-
-		// if(effect is Charm) { charmed = !charmed; }
-
-		// Set general booleans
-
-		// if(effect is OnFire) { on_fire = !on_fire; }
-
-		// Set trade-off booleans
-
-		// if(effect is ConvertLife) { convert_life = !convert_life; }
-
-		// if(effect is ConvertPower) { convert_power = !convert_power; }
-
-		// if(effect is Taunt) { taunting = !taunting; }
 
 	}
 
 	
 	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effect_to_get)
 	{
-		// if(effect is unstoppable) { unstoppable = !unstoppable; }
 
-		// if(effect is Transpose) { transpose = !transpose; }
-
-		// if(effect is Bull) { bull = !bull; }
-
-		// if(effect is stealth){ stealth = !stealth; }
-
-		if(effect is Slow)
-		{ 	
-			if(!slowed)
-			{
-				slow = new Slow();
-				effect_to_get = slow;
-			}
-			else
-			{
-				GD.Print("entity is slowed");
-				foreach(StatusEffect applied_effect in entity.status_effects)
-				{
-					if(applied_effect is Slow)
-					{
-						effect_to_get = applied_effect;
-					}
-				}
-			}
-		}
-
-		if(effect is Daze)
-		 { 
-			if(!dazed)
-			{
-				daze = new Daze();
-				effect_to_get = daze;
-			}
-			else
-			{
-				GD.Print("entity is dazed");
-				foreach(StatusEffect applied_effect in entity.status_effects)
-				{
-					if(applied_effect is Daze)
-					{
-						effect_to_get = applied_effect;
-					}
-				}
-			}
-		 }
-
-		if(effect is Chill)
+		foreach(StatusEffect status_effect in status_effects.Keys)
 		{
-			if(!chilled)
+			if (effect.GetType() == status_effect.GetType())
 			{
-				chill = new Chill();
-				effect_to_get = chill;
-			}
-			else
-			{
-				GD.Print("entity is chilled");
-				foreach(StatusEffect applied_effect in entity.status_effects)
+				
+				if(!status_effects[status_effect])
 				{
-					if(applied_effect is Chill)
+					GD.Print("status effect being created");
+					effect_to_get = (StatusEffect)Activator.CreateInstance(status_effect.GetType());
+				}
+				else
+				{
+					foreach(StatusEffect applied_effect in entity.status_effects)
 					{
-						effect_to_get = applied_effect;
+						if(applied_effect.GetType() == status_effect.GetType())
+						{
+							GD.Print("status effect already exists, returning existing effect");
+							effect_to_get = applied_effect;
+						}
 					}
 				}
 			}
 		}
-
-		if(effect is Freeze)
-		{
-			if(!frozen)
-			{
-				freeze = new Freeze();
-				effect_to_get = freeze;
-			}
-			else
-			{
-				GD.Print("entity is Frozen");
-				foreach(StatusEffect applied_effect in entity.status_effects)
-				{
-					if(applied_effect is Freeze)
-					{
-						effect_to_get = applied_effect;
-					}
-				}
-			}
-		}
-
-		// if(effect is Fear) { feared = !feared; }
-
-		// if(effect is Hamstring) { hamstrung = !hamstrung; }
-
-		// if(effect is Tether) { tethered = !tethered; }
-
-		if(effect is Stun)
-		{
-			stun = new Stun();
-			effect_to_get = stun;
-			if(!slowed)
-			{
-				stun = new Stun();
-				effect_to_get = stun;
-			}
-			else
-			{
-				GD.Print("entity is stunned");
-				foreach(StatusEffect applied_effect in entity.status_effects)
-				{
-					if(applied_effect is Stun)
-					{
-						effect_to_get = applied_effect;
-					}
-				}
-			}
-		}
-
-		// if(effect is Hex) { hexed = !hexed; }
-
-		// if(effect is Knockback) { knockedback = !knockedback; }
-
-		// Set health effect booleans
-
-		// if(effect is Invincible) { invincible = !invincible; }
-
-		// if(effect is Knockback) { bulwark = !bulwark; }
-
-		// if(effect is OutstandingForm) { outstanding_form = !outstanding_form; }
-
-		// if(effect is Bleed) { bleeding = !bleeding; }
-
-		// if(effect is Poison) { poisoned = !poisoned; }
-
-		// if(effect is Burn) { burning = !burning; }
-
-		// if(effect is Curse) { cursed = !cursed; }
-
-		// if(effect is Virulent) { virulent = !virulent; }
-
-		// if(effect is Febrile) { febrile = !febrile; }
-
-		// if(effect is Reel) { reeling = !reeling; }
-
-		// if(effect is Stagger) { staggered = !staggered; }
-
-		// Set damage booleans
-
-		// if(effect is Overpower) { overpower = !overpower; }
-
-		// if(effect is Wallop) { walloping_blows = !walloping_blows; }
-
-		// if(effect is Formidable) { formidable = !formidable; }
-
-		// if(effect is OrbOfPower) { orb_of_power = !orb_of_power; }
-
-		// if(effect is Enfeeble) { enfeebled = !enfeebled; }
-
-		// if(effect is Suspend) { suspended = !suspended; }
-
-		// if(effect is Charm) { charmed = !charmed; }
-
-		// Set general booleans
-
-		// if(effect is OnFire) { on_fire = !on_fire; }
-
-		// Set trade-off booleans
-
-		// if(effect is ConvertLife) { convert_life = !convert_life; }
-
-		// if(effect is ConvertPower) { convert_power = !convert_power; }
-
-		// if(effect is Taunt) { taunting = !taunting; }
 		
 		return effect_to_get;
 	}

@@ -6,3 +6,4 @@
 [node name="Freeze" type="Node3D"]
 script = ExtResource("1_uxdi0")
 resource = ExtResource("2_3ecf6")
+prevents_movement = true

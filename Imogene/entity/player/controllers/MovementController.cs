@@ -59,11 +59,18 @@ public partial class MovementController : Node
 		{
 			if(input_strength < 0.75f)
 			{
-				player.movement_speed.AddModifier(walk);
+				if(player.movement_speed.current_value == player.movement_speed.base_value)
+				{
+					player.movement_speed.AddModifier(walk);
+				}
 			}
 			else
 			{
-				player.movement_speed.RemoveModifier(walk);
+				if(player.movement_speed.current_value < player.movement_speed.base_value)
+				{
+					player.movement_speed.RemoveModifier(walk);
+				}
+				
 			}
 		}
 		// else

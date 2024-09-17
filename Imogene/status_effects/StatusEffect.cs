@@ -9,12 +9,14 @@ public partial class StatusEffect : Node3D
     [Export] public string effect_type { get; set; }
 	[Export] public bool alters_speed;
 	[Export] public bool prevents_movement;
+	[Signal] public delegate void PreventInputEventHandler(bool input_allowed);
 	public bool applied;
  	public Timer duration_timer;
 	public int duration;
 	public int max_stacks;
 	public int current_stacks;
-	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
+	
+	
 	public States state;
 
 	public enum States
@@ -27,7 +29,8 @@ public partial class StatusEffect : Node3D
 	public override void _Ready()
 	{
 		// slow.modification_type = StatModifier.ModificationType.multiply_current;
-		slow.mod = -0.6f;
+		
+		
 		// duration_timer = GetNode<Timer>("DurationTimer");
 	}
 

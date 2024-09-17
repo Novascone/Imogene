@@ -100,16 +100,20 @@ public partial class InputController : Node
 
 	public bool InputPrevented(Player player)
 	{
+		if(player.entity_controllers.status_effect_controller.stop_movement_input)
+		{
+			return true;
+		}
 		if(player.ability_in_use != null)
 		{
 			if(player.ability_in_use.stop_movement_input)
 			{
-				// GD.Print("Input prevented");
+				GD.Print("Input prevented");
 				return true;
 			}
 			else
 			{
-				// GD.Print("Input not prevented");
+				GD.Print("Input not prevented");
 				return false;
 			}
 		}

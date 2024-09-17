@@ -82,7 +82,7 @@ public partial class Stat : Resource
 			
 			modifiers.Add(stat_modifier);
 			stat_modifier.Apply(this);
-			
+			PrintModifiers();
 		}
 	}
 
@@ -107,7 +107,7 @@ public partial class Stat : Resource
 	{
 		foreach(StatModifier modifier in modifiers)
 		{
-			GD.Print(modifier);
+			GD.Print("Modifier " + modifier);
 		}
 	}
 

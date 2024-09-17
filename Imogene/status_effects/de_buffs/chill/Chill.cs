@@ -7,10 +7,12 @@ public partial class Chill : StatusEffect
 	private Freeze freeze;
 	
 	public bool removed_by_freeze;
+	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+		base._Ready();
+		slow.mod = -0.6f;
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 5;
@@ -45,7 +47,7 @@ public partial class Chill : StatusEffect
 			
 			if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 			{
-				entity.movement_speed.modifiers.Add(slow);
+				entity.movement_speed.AddModifier(slow);
 			}
 			else
 			{
@@ -54,7 +56,7 @@ public partial class Chill : StatusEffect
 			
 			
 		}
-		else if(current_stacks == max_stacks -1 || entity.status_effects.Contains(freeze))
+		else if(current_stacks == max_stacks - 1 || entity.status_effects.Contains(freeze))
 		{
 			GD.Print("Trying to apply freeze");
 			removed_by_freeze = true;
@@ -65,7 +67,7 @@ public partial class Chill : StatusEffect
 				
 			}
 		
-			entity.movement_speed.modifiers.Remove(slow);
+			entity.movement_speed.RemoveModifier(slow);
 			entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
 			current_stacks = 0;
 				
@@ -78,7 +80,7 @@ public partial class Chill : StatusEffect
 		GD.Print("timer timeout chill");
         if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)
 		{
-			entity.movement_speed.modifiers.Remove(slow);
+			entity.movement_speed.RemoveModifier(slow);
 			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			GD.Print("removing booleans from chill via timer");
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
