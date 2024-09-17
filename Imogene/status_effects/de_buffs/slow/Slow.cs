@@ -6,6 +6,7 @@ public partial class Slow : StatusEffect
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 5;
@@ -33,7 +34,8 @@ public partial class Slow : StatusEffect
 		
 		if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 		{
-			entity.movement_speed.modifiers.Add(slow);
+			GD.Print("Adding slow modifier");
+			entity.movement_speed.AddModifier(slow);
 		}
 		else
 		{
@@ -48,7 +50,7 @@ public partial class Slow : StatusEffect
 		GD.Print("timer timeout");
         if(current_stacks == 1)
 		{
-			entity.movement_speed.modifiers.Remove(slow);
+			entity.movement_speed.RemoveModifier(slow);
 			GD.Print("removing slow from " + entity.Name);
 			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;

@@ -1,9 +1,14 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 
 public partial class StatusEffectController : Node
 {
+	
+
+	
+	
 	public bool effect_already_applied;
 	// Movement
 
@@ -14,18 +19,18 @@ public partial class StatusEffectController : Node
 	public bool stealth;
 	
 	// De-buffs
-	public Slow slow;
+	public Slow slow = new();
 	public bool slowed;
-	public Daze daze;
+	public Daze daze = new();
 	public bool dazed;
-	public Chill chill;
+	public Chill chill = new();
 	public bool chilled;
-	public Freeze freeze;
+	public Freeze freeze = new();
 	public bool frozen;
 	public bool feared;
 	public bool hamstrung;
 	public bool tethered;
-	public Stun stun;
+	public Stun stun = new();
 	public bool stunned;
 	public bool hexed;
 	public bool knockedback;
@@ -69,9 +74,15 @@ public partial class StatusEffectController : Node
 	public bool convert_power;
 	public bool taunting;
 
+	public Dictionary<StatusEffect, bool> status_effects = new Dictionary<StatusEffect, bool>();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		status_effects[slow] = false;
+		status_effects[daze] = false;
+		status_effects[freeze] = false;
+		status_effects[stun] = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -98,7 +109,7 @@ public partial class StatusEffectController : Node
 			GD.Print("effect queued");
 			if(!effect_to_add.applied)
 			{
-				GD.Print("adding new effect to " + entity.Name);
+				GD.Print("adding new effect to " + entity.Name + " " + effect_to_add.Name);
 				entity.status_effects.Add(effect_to_add);
 				AddChild(effect_to_add);
 			}
@@ -193,6 +204,14 @@ public partial class StatusEffectController : Node
 
 	public void SetEffectBooleans(StatusEffect effect)
 	{
+		foreach(StatusEffect status_effect in status_effects.Keys)
+		{
+			if (effect.GetType() == status_effect.GetType())
+			{
+				status_effects[status_effect] = !status_effects[status_effect];
+			}
+			GD.Print("Status effect " + status_effect.GetType() + " " + status_effects[status_effect]);
+		}
 	
 		// Set movement effect booleans
 
@@ -278,6 +297,7 @@ public partial class StatusEffectController : Node
 
 	}
 
+	
 	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effect_to_get)
 	{
 		// if(effect is unstoppable) { unstoppable = !unstoppable; }

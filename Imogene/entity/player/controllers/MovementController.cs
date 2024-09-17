@@ -18,7 +18,7 @@ public partial class MovementController : Node
 	public bool rotation_only;
 	public bool rotation_finished;
 	public bool movement_input_allowed = true;
-	StatModifier walk = new (StatModifier.ModificationType.multiply_base);
+	StatModifier walk = new (StatModifier.ModificationType.multiply_current);
 
     public override void _Ready()
     {
@@ -48,7 +48,6 @@ public partial class MovementController : Node
 			{
 				player.velocity = Vector3.Zero;
 			}
-			
 			player.Velocity = player.velocity;
 	}
 			
@@ -58,14 +57,14 @@ public partial class MovementController : Node
     {
         if(player.IsOnFloor())
 		{
-		if(input_strength > 0.75f)
-		{
-			player.movement_speed.RemoveModifier(walk);
-		}
-		else
-		{
-			player.movement_speed.AddModifier(walk);
-		}
+			if(input_strength < 0.75f)
+			{
+				player.movement_speed.AddModifier(walk);
+			}
+			else
+			{
+				player.movement_speed.RemoveModifier(walk);
+			}
 		}
 		// else
 		// {

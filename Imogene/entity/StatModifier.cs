@@ -14,6 +14,7 @@ public partial class StatModifier : Resource
 	public float mod;
 	public void Apply(Stat stat)
 	{
+		
 		if(modification_type == ModificationType.add_current)
 		{
 			if(stat.current_value + value_to_add <= stat.max_value || stat.max_value == 0)
@@ -32,12 +33,12 @@ public partial class StatModifier : Resource
 		if(modification_type == ModificationType.multiply_current)
 		{
 			
-				stat.current_value *= 1 + mod;
-				stat.RemoveModifier(this);
+			stat.current_value *= 1 + mod;
 
 		}
 		if(modification_type == ModificationType.multiply_base)
 		{
+			
 			stat.base_value *= 1 + mod;
 			stat.current_value *= 1 + mod;
 		}
@@ -52,9 +53,9 @@ public partial class StatModifier : Resource
 			}
 			
 		}
-		if(modification_type == ModificationType.multiply_base)
+		if(modification_type == ModificationType.multiply_current)
 		{
-			stat.base_value /= 1 + mod;
+			
 			stat.current_value /= 1 + mod;
 		}
 	}

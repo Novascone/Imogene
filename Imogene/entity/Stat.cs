@@ -79,6 +79,7 @@ public partial class Stat : Resource
 	
 		if(!modifiers.Contains(stat_modifier))
 		{
+			
 			modifiers.Add(stat_modifier);
 			stat_modifier.Apply(this);
 			
