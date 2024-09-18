@@ -15,7 +15,7 @@ public partial class EnemyMovementController : Node
 	
 	public bool StatusEffectsPreventingMovement(Enemy enemy)
 	{
-		if(enemy.entity_controllers.status_effect_controller.frozen || enemy.entity_controllers.status_effect_controller.stunned || enemy.entity_controllers.status_effect_controller.hamstrung || enemy.entity_controllers.status_effect_controller.hexed)
+		if(enemy.entity_controllers.status_effect_controller.movement_prevented)
 		{
 			return true;
 		}
@@ -27,7 +27,7 @@ public partial class EnemyMovementController : Node
 
 	public bool StatusEffectsAffectingSpeed(Enemy enemy)
 	{
-		if (enemy.entity_controllers.status_effect_controller.on_fire || enemy.entity_controllers.status_effect_controller.stealth || enemy.entity_controllers.status_effect_controller.transpose || enemy.entity_controllers.status_effect_controller.bull || enemy.entity_controllers.status_effect_controller.slowed || enemy.entity_controllers.status_effect_controller.chilled)
+		if (enemy.entity_controllers.status_effect_controller.abilities_prevented)
 		{
 			return true;
 		}

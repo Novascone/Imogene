@@ -6,3 +6,4 @@
 [node name="Daze" type="Node3D"]
 script = ExtResource("1_gll3r")
 resource = ExtResource("2_6fjq6")
+prevents_abilities = true

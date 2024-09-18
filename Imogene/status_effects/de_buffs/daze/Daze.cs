@@ -7,6 +7,7 @@ public partial class Daze : StatusEffect
 	public override void _Ready()
 	{
 		// base._Ready();
+		prevents_abilities = true;
 		duration = 5;
 		effect_type = "movement";
 		max_stacks = 1;
@@ -20,25 +21,15 @@ public partial class Daze : StatusEffect
 	public override void Apply(Entity entity)
 	{
 		
-		if(GetParent() == null)
-		{
-			entity.AddChild(this);
-		}
-		if(current_stacks == 0)
-		{
-			GD.Print("Dazed");
-			current_stacks += 1;
-			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-		}
+		CreateTimerIncrementStack(entity);
 		
 	}
 
-	private void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout");
      
-		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
+		EmitSignal(nameof(StatusEffectFinished));
 		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 		GD.Print("entity can attack");
 		// RemoveStatusEffect(this);

@@ -100,7 +100,7 @@ public partial class InputController : Node
 
 	public bool InputPrevented(Player player)
 	{
-		if(player.entity_controllers.status_effect_controller.stop_movement_input)
+		if(player.entity_controllers.status_effect_controller.movement_prevented)
 		{
 			return true;
 		}

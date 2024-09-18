@@ -12,6 +12,8 @@ public partial class Chill : StatusEffect
 	public override void _Ready()
 	{
 		base._Ready();
+		alters_speed = true;
+		adds_additional_effects = true;
 		slow.mod = -0.6f;
 		duration = 5;
 		effect_type = "movement";
@@ -31,19 +33,13 @@ public partial class Chill : StatusEffect
 		
 
 		
-		if(current_stacks < max_stacks - 1 && !entity.status_effects.Contains(freeze))
+		if(current_stacks < max_stacks - 1)
 		{
 			
 			GD.Print("Applying Chill");
 			
-			if(current_stacks == 0)
-			{
-				GD.Print("creating timer");
-				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-				entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
-				GD.Print("setting booleans via apply");
-			}
-			current_stacks += 1;
+			CreateTimerIncrementStack(entity);
+			
 			
 			if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 			{
@@ -63,19 +59,19 @@ public partial class Chill : StatusEffect
 			// freeze.Apply(entity);
 			if(entity.status_effects.Contains(this))
 			{
-				entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
-				
+				EmitSignal(nameof(StatusEffectFinished));
 			}
 		
 			entity.movement_speed.RemoveModifier(slow);
-			entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
+			// entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
+			EmitSignal(nameof(AddAdditionalStatusEffect), freeze);
 			current_stacks = 0;
 				
 		}
 		
 	}
 
-	private void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout chill");
         if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)

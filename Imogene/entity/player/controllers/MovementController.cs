@@ -48,8 +48,13 @@ public partial class MovementController : Node
 			{
 				player.velocity = Vector3.Zero;
 			}
-			player.Velocity = player.velocity;
-	}
+			
+		}
+		else
+		{
+			player.velocity = Vector3.Zero;
+		}
+		player.Velocity = player.velocity;
 			
 	}
 
@@ -120,7 +125,7 @@ public partial class MovementController : Node
 
 	public bool StatusEffectsPreventingMovement(Player player)
 	{
-		if(player.entity_controllers.status_effect_controller.frozen || player.entity_controllers.status_effect_controller.stunned || player.entity_controllers.status_effect_controller.hamstrung || player.entity_controllers.status_effect_controller.hexed)
+		if(player.entity_controllers.status_effect_controller.movement_prevented)
 		{
 			return true;
 		}
@@ -132,7 +137,7 @@ public partial class MovementController : Node
 
 	public bool StatusEffectsAffectingSpeed(Player player)
 	{
-		if (player.entity_controllers.status_effect_controller.on_fire || player.entity_controllers.status_effect_controller.stealth || player.entity_controllers.status_effect_controller.transpose || player.entity_controllers.status_effect_controller.bull || player.entity_controllers.status_effect_controller.slowed || player.entity_controllers.status_effect_controller.chilled)
+		if (player.entity_controllers.status_effect_controller.speed_altered)
 		{
 			return true;
 		}

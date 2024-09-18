@@ -7,3 +7,4 @@
 script = ExtResource("1_uxdi0")
 resource = ExtResource("2_3ecf6")
 prevents_movement = true
+prevents_abilities = true

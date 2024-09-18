@@ -88,8 +88,9 @@ public partial class Player : Entity
 	public bool can_use_abilities = true;
 
 	
-	public Slow slow = new Slow();
-	public Chill chill = new Chill();
+	public Slow slow = new();
+	public Chill chill = new();
+	public Daze daze = new();
 	
     public override void _Input(InputEvent @event)
     {
@@ -109,7 +110,9 @@ public partial class Player : Entity
 		}
 		if(@event.IsActionPressed("three"))
 		{
-			
+			GD.Print("adding daze to player");
+			GD.Print("abilities prevented " + entity_controllers.status_effect_controller.abilities_prevented);
+			entity_controllers.status_effect_controller.AddStatusEffect(this, daze);
 		}
 		if(@event.IsActionPressed("four"))
 		{
@@ -179,6 +182,7 @@ public partial class Player : Entity
 
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
+		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
 		
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
@@ -239,7 +243,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print("current movement speed " + movement_speed.current_value);
+		// GD.Print("current movement speed " + movement_speed.current_value);
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);

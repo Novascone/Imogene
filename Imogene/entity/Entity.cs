@@ -32,30 +32,11 @@ public partial class Entity : CharacterBody3D
     public bool jumping = false;
     public bool using_movement_ability;
     public bool on_floor;
-	public bool hale;
-	public bool weak;
     public bool attacking; // Boolean to keep track of if the entity is attacking
     public bool animation_triggered;
 	public bool targeted;
 	public bool dead = false;
 	
-
-	// Dot
-	public string dot_damage_type;
-	public float dot_in_seconds;
-	public int dot_duration;
-	public bool taking_dot;
-
-	// Posture
-	public bool posture_broken;
-
-	// Slow
-	public int slow_duration;
-	public bool slowed;
-
-	// Stun
-	public int stun_duration;
-	public bool stunned;
 
 	public Collectable xp = new("xp", 0);
 	public Collectable gold = new("gold", 0);
@@ -236,101 +217,6 @@ public partial class Entity : CharacterBody3D
 		posture_regeneration.current_value = 2;
 
 		posture_damage.current_value = 10;
-	// public Stat physical_melee_power = new("physical_melee_power", 0);
-	// public Stat physical_ranged_power = new("physical_ranged_power", 0);
-	// public Stat spell_melee_power = new("spell_melee_power", 0);
-	// public Stat spell_ranged_power = new("spell_ranged_power", 0);
-
-	// // Wisdom
-	// public Stat wisdom_scaler = new("wisdom_scaler", 0);
-
-	// // Regeneration
-	// public Stat health_regeneration = new("health_regeneration", 0);
-	// public Stat resource_regeneration = new("resource_regeneration", 0);
-	// public Stat posture_regeneration = new("posture_regeneration", 0);
-
-	
-	// public List<Stat> damage_stats = new List<Stat>();
-	// public List<Stat> resistance_stats= new List<Stat>();
-
-	// // Base stats
-	// public Stat level = new("level", 0);
-	// public Stat strength = new("strength", 0);
-	// public Stat dexterity = new("dexterity", 0);
-	// public Stat intellect = new("intellect", 0);
-	// public Stat vitality = new("vitality", 0);
-	// public Stat stamina = new("stamina", 0);
-	// public Stat wisdom = new("wisdom", 0);
-	// public Stat charisma = new("charisma", 0);
-
-	// // Gear Stats
-	// public Stat main_hand_damage = new("main_hand_damage", 10);
-	// public Stat off_hand_damage = new("off_hand_damage", 0);
-	// public Stat damage_bonus = new("damage_bonus", 0);
-	// public Stat attacks_per_second = new("attacks_per_second", 0);
-
-	// // Misc Stats
-	
-	// public Stat health_bonus = new("health_bonus", 0);
-	// public Stat movement_speed = new("movement_speed", 6f);
-	// public Stat fall_speed = new("fall_speed", 40);
-	// public Stat jump_speed = new("jump_speed", 30);
-
-	// // Damage these contribute to the multiplier applied to attacks of this type
-	// public Stat critical_hit_chance = new("critical_hit_chance", 0);
-	// public Stat critical_hit_damage = new("critical_hit_damage", 0);
-	// public Stat posture_damage = new("posture_damage", 0);
-	
-	// // Damage stats list
-	// public Stat power = new("power", 0);
-	// public Stat physical_damage = new("physical_damage", 0);
-	// public Stat pierce_damage = new("pierce_damage", 0);
-	// public Stat slash_damage = new("slash_damage", 0);
-	// public Stat blunt_damage = new("blunt_damage", 0);
-	// public Stat bleed_damage = new("bleed_damage", 0);
-	// public Stat poison_damage = new("poison_damage", 0);
-	// public Stat curse_damage = new("curse_damage", 0);
-	// public Stat spell_damage = new("spell_damage", 0);
-	// public Stat fire_damage = new("fire_damage", 0);
-	// public Stat cold_damage = new("cold_damage", 0);
-	// public Stat lightning_damage = new("Lightning_damage", 0);
-	// public Stat holy_damage = new("holy_damage", 0);
-
-	
-	// // Defensive Stats
-	
-	
-	// public Stat block_amount = new("block_amount", 0);
-	// public Stat retaliation = new("retaliation", 0);
-	
-	// // Resistance Stats
-	// public Stat armor = new("armor", 0);
-	// public Stat poise = new("poise", 0);
-	// public Stat physical_resistance = new("physical_resistance", 0);
-	// public Stat pierce_resistance = new("pierce_resistance", 0);
-	// public Stat slash_resistance = new("slash_resistance", 0);
-	// public Stat blunt_resistance = new("blunt_resistance", 0);
-	// public Stat bleed_resistance = new("bleed_resistance", 0);
-	// public Stat poison_resistance = new("poison_resistance", 0);
-	// public Stat curse_resistance = new("curse_resistance", 0);
-	// public Stat spell_resistance = new("spell_resistance", 0);
-	// public Stat fire_resistance = new("fire_resistance", 0);
-	// public Stat cold_resistance = new("cold_resistance", 0);
-	// public Stat lightning_resistance = new("lightning_resistance", 0);
-	// public Stat holy_resistance = new("holy_resistance", 0);
-
-	// // Health
-	// public Stat health = new("health", 200);
-	// public Stat health_on_retaliation = new("health_on_retaliation", 0);
-	// public Stat health_regeneration_bonus = new("health_regeneration_bonus" , 0);
-
-	// // Resource
-	// public Stat resource = new("resource", 100);
-	// public Stat posture = new("posture", 0);
-	// public Stat resource_cost_reduction = new("resource_cost_reduction", 0);
-	// public Stat resource_regeneration_bonus = new("resource_regeneration_bonus", 0);
-
-	
         entity_systems.damage_system.SubscribeEntityToHealthRegen(this);
     }
 
@@ -340,35 +226,4 @@ public partial class Entity : CharacterBody3D
     {
         throw new NotImplementedException();
     }
-
-    
-    // public bool Fall(double delta) // bring the player back to the ground
-	// {
-	// 	if(!IsOnFloor())
-	// 	{
-	// 		if(this is Player player)
-	// 		{
-	// 			if(!player.is_climbing)
-	// 			{
-	// 				velocity.Y -= fall_speed * (float)delta;
-    //         		return true;
-	// 			}
-	// 			else
-	// 			{
-	// 				return false;
-	// 			}
-	// 		}
-	// 		else
-	// 		{
-	// 			velocity.Y -= fall_speed * (float)delta;
-    //         	return true;
-	// 		}
-			
-	// 	}
-	// 	else
-	// 	{
-    //         return false;
-	// 	}
-		
-	// }
 }

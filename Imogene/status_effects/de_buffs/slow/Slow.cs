@@ -8,6 +8,7 @@ public partial class Slow : StatusEffect
 	public override void _Ready()
 	{
 		base._Ready();
+		alters_speed = true;
 		slow.mod = -0.6f;
 		duration = 5;
 		effect_type = "movement";
@@ -26,13 +27,7 @@ public partial class Slow : StatusEffect
 		// GD.Print(entity.Name + " Speed before slow " + entity.speed);
 		// GD.Print("Applying slow");
 		
-		if(current_stacks == 0)
-		{
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
-			GD.Print("Adding slow to " + entity.Name);
-		}
-		current_stacks += 1;
+		CreateTimerIncrementStack(entity);
 		
 		if(entity.movement_speed.current_value >= entity.movement_speed.base_value)
 		{
@@ -47,14 +42,14 @@ public partial class Slow : StatusEffect
 		GD.Print(entity.Name + " Speed after slow " + entity.movement_speed.current_value);
 	}
 
-	private void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout");
         if(current_stacks == 1)
 		{
 			entity.movement_speed.RemoveModifier(slow);
 			GD.Print("removing slow from " + entity.Name);
-			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
+			EmitSignal(nameof(StatusEffectFinished));
 			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 			GD.Print("entity speed reset to " + entity.movement_speed.current_value);
 			// RemoveStatusEffect(this);

@@ -23,26 +23,17 @@ public partial class Freeze : StatusEffect
 	public override void Apply(Entity entity)
 	{
 		
-		if(current_stacks == 0)
-		{
-			current_stacks += 1;
-			GD.Print("Frozen");
-			entity.movement_speed.AddModifier(stop);
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
-		}
+		CreateTimerIncrementStack(entity);
 		
 	}
 
-	private void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout");
 		current_stacks -= 1;
-		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
+		EmitSignal(nameof(StatusEffectFinished));
 		entity.movement_speed.RemoveModifier(stop);
-		// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
 		GD.Print("entity is no longer frozen");
-		// RemoveStatusEffect(this);
 		GD.Print("current stacks of " + this.Name + " " + current_stacks);
     }
 

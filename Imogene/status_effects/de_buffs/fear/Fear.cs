@@ -19,19 +19,12 @@ public partial class Fear : StatusEffect
 
     public override void Apply(Entity entity)
     {
-        if(current_stacks == 0)
-		{
-			 GD.Print("Applying fear");
-			//  GD.Print(caster.Name);
-			//  entity.direction = -caster.GlobalTransform.Basis.Z;
-			 GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			entity.entity_controllers.status_effect_controller.SetEffectBooleans(this);
-		}
+        CreateTimerIncrementStack(entity);
     }
 
-    private void timer_timeout(Entity entity)
+    public override void timer_timeout(Entity entity)
     {
         current_stacks -= 1;
-		entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
+		EmitSignal(nameof(StatusEffectFinished));
     }
 }

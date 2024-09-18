@@ -5,6 +5,7 @@ public partial class ResourceSystem : Node
 {
 	[Export] public Timer posture_regen_timer;
 	[Export] public Timer resource_regen_timer;
+	public bool posture_broken;
 
 	[Signal] public delegate void ResourceChangeEventHandler(float resource);
 
@@ -36,9 +37,6 @@ public partial class ResourceSystem : Node
 			resource_regen_timer.Timeout += () => OnResourceRegenTickTimeout(player);
 			resource_regen_timer.Start();
 		}
-		
-		
-		
 	}
 
 	public void Posture(Entity entity, float posture_damage)
@@ -52,7 +50,7 @@ public partial class ResourceSystem : Node
 			
 			if(entity.posture.current_value >= entity.posture.max_value)
 			{
-				entity.posture_broken = true;
+				posture_broken = true;
 			}
 			// GD.Print("posture " + entity.posture);
 			

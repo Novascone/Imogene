@@ -4,6 +4,8 @@ using System;
 public partial class AbilityController : Node
 {
 	public bool can_use_abilities = true;
+
+
     [Signal] public delegate void ResourceEffectEventHandler(Player player, float resource_change);
 	
 	// Called when the node enters the scene tree for the first time.
@@ -27,30 +29,13 @@ public partial class AbilityController : Node
             }
             
         }
-
-        // if(ability.UIButton())
-        // {
-        //     GD.Print("this is a UI button");
-        //     GD.Print(ability.button_pressed);
-        //     if(ability.button_pressed)
-        //     {
-        //         if(ability.state == Ability.States.not_queued)
-        //         {   
-        //             if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
-        //             {
-        //                 GD.Print("queueing ability");
-        //                 ability.state = Ability.States.queued;
-        //             }
-        //         }
-        //     }
-        // }
     }
 
     public void AbilityFrameCheck(Player player)
     {
         if(player.ability_in_use != null)
 		{
-			GD.Print("ability in use" + player.ability_in_use);
+			// GD.Print("ability in use" + player.ability_in_use);
 			player.ability_in_use.FrameCheck(player);
 		}
     }
@@ -299,5 +284,10 @@ public partial class AbilityController : Node
         {
             can_use_abilities = true;
         }
+    }
+
+    internal void HandleAbilitiesPrevented(bool abilities_prevented)
+    {
+        can_use_abilities = !abilities_prevented;
     }
 }

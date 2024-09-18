@@ -8,73 +8,23 @@ public partial class StatusEffectController : Node
 	
 
 	
-	public bool stop_movement_input;
+	public bool movement_prevented;
+	public bool speed_altered;
+	public bool abilities_prevented;
 	public bool effect_already_applied;
 	// Movement
 
 	// Buffs
-	public bool unstoppable;
-	public bool transpose;
-	public bool bull;
-	public bool stealth;
 	
 	// De-buffs
 	public Slow slow = new();
-	public bool slowed;
 	public Daze daze = new();
-	public bool dazed;
 	public Chill chill = new();
-	public bool chilled;
 	public Freeze freeze = new();
-	public bool frozen;
-	public bool feared;
-	public bool hamstrung;
-	public bool tethered;
 	public Stun stun = new();
-	public bool stunned;
-	public bool hexed;
-	public bool knockedback;
-
-	// Health
 	
-	// Buffs
-	public bool invincible;
-	public bool bulwark;
-	public bool outstanding_form;
-
-	// De-buffs
-	public bool bleeding;
-	public bool poisoned;
-	public bool burning;
-	public bool cursed;
-	public bool virulent;
-	public bool febrile;
-	public bool reeling;
-	public bool staggered;
-
-	// Damage
-
-	// Buffs
-	public bool overpower;
-	public bool walloping_blows;
-	public bool formidable;
-	public bool orb_of_power;
-
-	// De-buffs
-	public bool enfeebled;
-	public bool suspended;
-	public bool charmed;
-
-	// General
-
-	public bool on_fire;
-
-	// Trade-off
-	public bool convert_life;
-	public bool convert_power;
-	public bool taunting;
-
 	public Dictionary<StatusEffect, bool> status_effects = new Dictionary<StatusEffect, bool>();
+	[Signal] public delegate void AbilitiesPreventedEventHandler(bool abilities_prevented);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -100,31 +50,41 @@ public partial class StatusEffectController : Node
 		// if(frozen) { GD.Print(entity.Name + " is frozen"); }
 	}
 
-	public void AddStatusEffect(Entity entity, StatusEffect effect)
+	public void AddStatusEffect(Entity entity, StatusEffect effect) // Adds status effect to entity
 	{
 		var effect_to_add = new StatusEffect();
-		effect_to_add = GetEffect(entity, effect, effect_to_add);
-		QueueStatusEffect(entity, effect_to_add);
+		effect_to_add = GetEffect(entity, effect, effect_to_add); // Gets status effect to apply
+		QueueStatusEffect(entity, effect_to_add); // Checks if ability has been applied
 		if(effect_to_add.state == StatusEffect.States.queued)
 		{
-			GD.Print("effect queued");
-			if(!effect_to_add.applied)
-			{
+			
+			// if(!effect_to_add.applied)
+			// {
 				GD.Print("adding new effect to " + entity.Name + " " + effect_to_add.Name);
-				entity.status_effects.Add(effect_to_add);
-				AddChild(effect_to_add);
-				if(effect_to_add.prevents_movement == true)
+				entity.status_effects.Add(effect_to_add); // adds status effect to entities list of effects
+				AddChild(effect_to_add); // adds the effect as a child setting all of its _Ready() values
+				effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity, effect_to_add); // Subscribes to effect finished signal
+				if(effect_to_add.adds_additional_effects)
 				{
-					stop_movement_input = true;
+					effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity); // subscribes to add additional effect signal
 				}
-			}
-			ApplyStatusEffect(entity, effect_to_add);
+				// Sets the variable for what the status effects are preventing or altering
+				if(effect_to_add.prevents_movement){ movement_prevented = true; }
+				if(effect_to_add.alters_speed){ speed_altered = true; }
+				if(effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), true);}
+			// }
+			
 		}
+		ApplyStatusEffect(entity, effect_to_add);
 	}
 
-	public bool SlowingEffectApplied(Entity entity, StatusEffect effect)
+   
+
+    public bool SlowingEffectApplied(Entity entity, StatusEffect effect)
 	{
-		if(slowed || chilled || tethered)
+		GD.Print("status effect slow in queue " + status_effects[slow]);
+		GD.Print("status effect chill in queue " + status_effects[chill]);
+		if(status_effects[slow] || status_effects[chill]) // status_effects[tether]
 		{
 			if(entity.status_effects.Contains(effect))
 			{
@@ -139,8 +99,8 @@ public partial class StatusEffectController : Node
 
 	public bool StoppingEffectApplied(Entity entity, StatusEffect effect)
 	{
-		if(frozen || feared || hamstrung || stunned || hexed)
-		{
+		if(status_effects[freeze]) // || status_effects[fear] || status_effects[hamstrung] || status_effects[stunned] || status_effects[hexed]
+		{ 
 			if(entity.status_effects.Contains(effect))
 			{
 				return false;
@@ -158,48 +118,38 @@ public partial class StatusEffectController : Node
 		RemoveChild(effect);
 		GD.Print("resetting stacks of " + effect.Name);
 		entity.entity_controllers.status_effect_controller.SetEffectBooleans(effect);
-		if(effect.prevents_movement == true)
-		{
-			stop_movement_input = false;
-		}
+		if(effect.prevents_movement == true){ movement_prevented = false;}
+		if(effect.alters_speed){ speed_altered = false; }
+		if(effect.prevents_abilities){ abilities_prevented = false; EmitSignal(nameof(AbilitiesPrevented), false);}
 	}
 
-	public void QueueStatusEffect(Entity entity, StatusEffect effect)
+	// Queues effect if it hasn't been instantiated, because .prevents_movement, and .alters speed wont be set,
+	// if the effect has been instantiated it will check those properties and wont queue if a similar effect is active
+	public void QueueStatusEffect(Entity entity, StatusEffect effect) 
 	{
-		GD.Print("trying to queue status effect");
-		if(effect.state == StatusEffect.States.not_queued)
-		{   
-			GD.Print("status effect not queued");
-			if(effect.prevents_movement && !StoppingEffectApplied(entity, effect))
-			{
-				effect.state = StatusEffect.States.queued;
-				GD.Print("queueing status effect");
-			}
-			else if(effect.alters_speed && !SlowingEffectApplied(entity, effect))
-			{
-				effect.state = StatusEffect.States.queued;
-				GD.Print("queueing status effect");
-			}
-			else
-			{
-				effect.state = StatusEffect.States.queued;
-			}
+		
+		if(!effect.applied)
+		{
+			effect.state = StatusEffect.States.queued;
+		}
+		else
+		{
+			effect.state = StatusEffect.States.not_queued;
 		}
 	}
 
-	public void ApplyStatusEffect(Entity entity, StatusEffect effect)
+	public void ApplyStatusEffect(Entity entity, StatusEffect effect) // Sets booleans for each status effect, and applies the effect to the entity
 	{
 		GD.Print("effects count " + entity.status_effects.Count);
 		GD.Print("Applying an effect of type " + effect.GetType());
-		if(!entity.status_effects.Contains(effect))
+		
+		if (effect.current_stacks < effect.max_stacks && entity.status_effects.Contains(effect))
 		{
+			if(effect.current_stacks == 0)
+			{
+				SetEffectBooleans(effect);
+			}
 			effect.Apply(entity);
-			GD.Print("current stacks of " + effect.Name + effect.current_stacks);
-		}
-		else if (effect.current_stacks < effect.max_stacks && entity.status_effects.Contains(effect))
-		{
-			effect.Apply(entity);
-			
 			GD.Print("current stacks " + effect.current_stacks);
 		}
 		else
@@ -209,8 +159,9 @@ public partial class StatusEffectController : Node
 	
 	}
 
-	public void SetEffectBooleans(StatusEffect effect)
+	public void SetEffectBooleans(StatusEffect effect) // Switches the effect from on to off or off to on in the dictionary
 	{
+		GD.Print("setting effect booleans");
 		foreach(StatusEffect status_effect in status_effects.Keys)
 		{
 			if (effect.GetType() == status_effect.GetType())
@@ -222,10 +173,10 @@ public partial class StatusEffectController : Node
 
 	}
 
-	
-	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effect_to_get)
+	// Checks the incoming effect type, if the effect is not on, then a new instance of that effect will be created and returned,
+	// if the effect is on the entities status effects will be searched and the matching effect will be returned
+	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effect_to_get) 
 	{
-
 		foreach(StatusEffect status_effect in status_effects.Keys)
 		{
 			if (effect.GetType() == status_effect.GetType())
@@ -253,17 +204,19 @@ public partial class StatusEffectController : Node
 		return effect_to_get;
 	}
 
-	
+	// Handlers for signals from the status effects
+	 private void HandleAdditionalStatusEffect(StatusEffect effect, Entity entity)
+    {
+		GD.Print("received signal to add status effect");
+        AddStatusEffect(entity, effect);
+    }
 
-	
+    private void HandleStatusEffectFinished(Entity entity, StatusEffect effect_to_add)
+    {
+		GD.Print("received signal to remove status effect");
+        RemoveStatusEffect(entity, effect_to_add);
+		effect_to_add.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effect_to_add);
+		if(effect_to_add.adds_additional_effects){ effect_to_add.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
+    }
 
-	// public void UpdateMovementEffectsCount()
-	// {
-	// 	if(entity.movement_effects.Count > entity.previous_movement_effects_count)
-	// 	{
-	// 		GD.Print("Incrementing");
-	// 		entity.previous_movement_effects_count = entity.movement_effects.Count;
-	// 	}
-		
-	// }
 }

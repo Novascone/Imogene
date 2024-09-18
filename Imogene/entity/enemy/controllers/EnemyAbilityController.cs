@@ -19,7 +19,7 @@ public partial class EnemyAbilityController : Node
 
 	public bool StatusEffectPreventingAbilities(Enemy enemy)
 	{
-		if(enemy.entity_controllers.status_effect_controller.dazed || enemy.entity_controllers.status_effect_controller.frozen || enemy.entity_controllers.status_effect_controller.feared || enemy.entity_controllers.status_effect_controller.hexed || enemy.entity_controllers.status_effect_controller.staggered)
+		if(enemy.entity_controllers.status_effect_controller.abilities_prevented)
 		{
 			return true;
 		}
