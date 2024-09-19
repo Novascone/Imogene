@@ -4,15 +4,29 @@ using System.Runtime.CompilerServices;
 
 public partial class StatusEffect : Node3D
 {
+	public string name;
 	[Export] public string description { get; set; }
     [Export] public StatusEffectResource resource { get; set; }
-    [Export] public string effect_type { get; set; }
 	[Export] public bool alters_speed;
 	[Export] public bool prevents_movement;
+	public bool prevents_input;
 	[Export] public bool prevents_abilities;
 	[Export] public bool adds_additional_effects;
+	public bool removed = false;
 	[Signal] public delegate void StatusEffectFinishedEventHandler();
 	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect);
+	public EffectType type;
+	
+	public enum EffectType
+	{
+		buff, debuff, tradeoff
+	}
+
+	public EffectCategory category;
+	public enum EffectCategory
+	{
+		movement, health, damage, general
+	}
 	public bool applied;
  	public Timer duration_timer;
 	public int duration;
@@ -27,7 +41,6 @@ public partial class StatusEffect : Node3D
         not_queued,
         queued
     }
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -38,23 +51,26 @@ public partial class StatusEffect : Node3D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
-	{
-		if(current_stacks > 0)
-		{
-			applied = true;
-		}
-		else
-		{
-			applied = false;
-		}
-	}
+	// public override void _PhysicsProcess(double delta)
+	// {
+	// 	if(current_stacks > 0)
+	// 	{
+	// 		applied = true;
+	// 	}
+	// 	else
+	// 	{
+	// 		applied = false;
+	// 	}
+	// }
 
 	
 
 	public virtual void Apply(Entity entity)
 	{
-		GD.Print("Base status effect apply");
+		if(!applied)
+		{
+			applied = true;
+		}
 	}
 
 	public virtual void CreateTimerIncrementStack(Entity entity) // Creates timer and increments stacks
@@ -75,6 +91,17 @@ public partial class StatusEffect : Node3D
 	public virtual void timer_timeout(Entity entity)
 	{
 
+	}
+
+	public virtual void Remove(Entity entity)
+	{
+		if(!removed)
+		{
+			EmitSignal(nameof(StatusEffectFinished));
+		}
+		removed = true;
+		current_stacks = 0;
+		
 	}
 
 	

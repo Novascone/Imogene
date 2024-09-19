@@ -17,7 +17,7 @@ public partial class MovementController : Node
 	private float clamber_speed = 10.0f;
 	public bool rotation_only;
 	public bool rotation_finished;
-	public bool movement_input_allowed = true;
+	public bool movement_input_prevented = false;
 	StatModifier walk = new (StatModifier.ModificationType.multiply_current);
 
     public override void _Ready()
@@ -29,7 +29,7 @@ public partial class MovementController : Node
 
     public void MovePlayer(Player player, float input_strength, double delta)
 	{
-		if(CanMove(player))
+		if(!movement_input_prevented)
 		{
 			if(!player.is_climbing)
 			{
@@ -147,26 +147,26 @@ public partial class MovementController : Node
 		}
 	}
 
-	public bool CanMove(Player player)
-	{
+	// public bool CanMove(Player player)
+	// {
 		
-		if(StatusEffectsPreventingMovement(player))
-		{
-			return false;
-		}
+	// 	if(StatusEffectsPreventingMovement(player))
+	// 	{
+	// 		return false;
+	// 	}
 
-		// if(player.ui.inventory.Visible) 
-		// {
-		// 	return false;
-		// }
-		// else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
-		// {
-		// 	return true;
-		// }
+	// 	// if(player.ui.inventory.Visible) 
+	// 	// {
+	// 	// 	return false;
+	// 	// }
+	// 	// else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
+	// 	// {
+	// 	// 	return true;
+	// 	// }
 
-		return true;
+	// 	return true;
 		
-	}
+	// }
 
 	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
@@ -224,4 +224,9 @@ public partial class MovementController : Node
 		var ray = spaceState.IntersectRay(ray_query);
 		return ray;
 	}
+
+    internal void HandleMovementPrevented(bool movement_prevented)
+    {
+        movement_input_prevented = movement_prevented;
+    }
 }

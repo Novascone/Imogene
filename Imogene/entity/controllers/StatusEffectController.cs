@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 
 public partial class StatusEffectController : Node
 {
@@ -9,6 +10,7 @@ public partial class StatusEffectController : Node
 
 	
 	public bool movement_prevented;
+	public bool input_prevented;
 	public bool speed_altered;
 	public bool abilities_prevented;
 	public bool effect_already_applied;
@@ -25,6 +27,9 @@ public partial class StatusEffectController : Node
 	
 	public Dictionary<StatusEffect, bool> status_effects = new Dictionary<StatusEffect, bool>();
 	[Signal] public delegate void AbilitiesPreventedEventHandler(bool abilities_prevented);
+	[Signal] public delegate void MovementPreventedEventHandler(bool movement_prevented);
+	[Signal] public delegate void InputPreventedEventHandler(bool input_prevented);
+	[Signal] public delegate void SpeedAlteredEventHandler(bool speed_altered);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -69,9 +74,10 @@ public partial class StatusEffectController : Node
 					effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity); // subscribes to add additional effect signal
 				}
 				// Sets the variable for what the status effects are preventing or altering
-				if(effect_to_add.prevents_movement){ movement_prevented = true; }
+				if(effect_to_add.prevents_movement){ movement_prevented = true; EmitSignal(nameof(MovementPrevented), movement_prevented);}
+				if(effect_to_add.prevents_input){ input_prevented = true; EmitSignal(nameof(InputPrevented), input_prevented);}
 				if(effect_to_add.alters_speed){ speed_altered = true; }
-				if(effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), true);}
+				if(effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
 			// }
 			
 		}
@@ -113,14 +119,21 @@ public partial class StatusEffectController : Node
 
 	public void RemoveStatusEffect(Entity entity, StatusEffect effect)
 	{
-		GD.Print("removing " + effect.Name);
-		entity.status_effects.Remove(effect);
-		RemoveChild(effect);
-		GD.Print("resetting stacks of " + effect.Name);
+		GD.Print("\n");
+		GD.Print("removing " + effect.name);
+		effect.QueueFree();
 		entity.entity_controllers.status_effect_controller.SetEffectBooleans(effect);
-		if(effect.prevents_movement == true){ movement_prevented = false;}
+		entity.status_effects.Remove(effect);
+		if(!effect.removed)
+		{
+			effect.Remove(entity);
+		}
+		GD.Print("resetting stacks of " + effect.name);
+		
+		if(effect.prevents_movement == true){ movement_prevented = false; EmitSignal(nameof(MovementPrevented), movement_prevented);}
+		if(effect.prevents_input){ input_prevented = false; EmitSignal(nameof(InputPrevented), input_prevented);}
 		if(effect.alters_speed){ speed_altered = false; }
-		if(effect.prevents_abilities){ abilities_prevented = false; EmitSignal(nameof(AbilitiesPrevented), false);}
+		if(effect.prevents_abilities){ abilities_prevented = false; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
 	}
 
 	// Queues effect if it hasn't been instantiated, because .prevents_movement, and .alters speed wont be set,
@@ -157,6 +170,29 @@ public partial class StatusEffectController : Node
 			GD.Print("Can not add more stacks");
 		}
 	
+	}
+
+	public void RemoveMovementDebuffs(Entity entity)
+	{
+		GD.Print("entity status effects count before removing " + entity.status_effects.Count);
+		for(int i = entity.status_effects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
+		{
+			GD.Print("i " + i);
+			if(entity.status_effects[i].type == StatusEffect.EffectType.debuff  && entity.status_effects[i].category == StatusEffect.EffectCategory.movement)
+			{
+				GD.Print("removing movement debuff " + entity.status_effects[i].name);
+				RemoveStatusEffect(entity, entity.status_effects[i]);
+			}
+			
+		}
+		GD.Print("entity status effects count after removing " + entity.status_effects.Count);
+		// foreach(StatusEffect effect in entity.status_effects)
+		// {
+		// 	if(effect.type == StatusEffect.EffectType.debuff && effect.category == StatusEffect.EffectCategory.movement)
+		// 	{
+				
+		// 	}
+		// }
 	}
 
 	public void SetEffectBooleans(StatusEffect effect) // Switches the effect from on to off or off to on in the dictionary
@@ -211,12 +247,21 @@ public partial class StatusEffectController : Node
         AddStatusEffect(entity, effect);
     }
 
-    private void HandleStatusEffectFinished(Entity entity, StatusEffect effect_to_add)
+    private void HandleStatusEffectFinished(Entity entity, StatusEffect effect_to_remove)
     {
-		GD.Print("received signal to remove status effect");
-        RemoveStatusEffect(entity, effect_to_add);
-		effect_to_add.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effect_to_add);
-		if(effect_to_add.adds_additional_effects){ effect_to_add.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
+		GD.Print("received signal to remove status effect " + effect_to_remove.name);
+		foreach(StatusEffect effect in status_effects.Keys)
+		{
+			if(effect_to_remove.GetType() == effect.GetType())
+			{
+				if(status_effects[effect])
+				{
+					RemoveStatusEffect(entity, effect_to_remove);
+					effect_to_remove.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effect_to_remove);
+					if(effect_to_remove.adds_additional_effects){ effect_to_remove.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
+				}
+			}
+		}
     }
 
 }

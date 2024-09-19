@@ -7,6 +7,7 @@ public partial class InputController : Node
 	[Signal] public delegate void CrossChangedEventHandler(string cross);
 	[Signal] public delegate void UsableChangedEventHandler();
 	[Signal] public delegate void UsableUsedEventHandler();
+	public bool directional_input_prevented = false;
 	public bool d_pad_right_pressed;
 	public bool d_pad_right_released;
 	public bool d_pad_left_pressed;
@@ -100,7 +101,7 @@ public partial class InputController : Node
 
 	public bool InputPrevented(Player player)
 	{
-		if(player.entity_controllers.status_effect_controller.movement_prevented)
+		if(directional_input_prevented)
 		{
 			return true;
 		}
@@ -241,4 +242,9 @@ public partial class InputController : Node
 			}
 		}
 	}
+
+    internal void HandleInputPrevented(bool input_prevented)
+    {
+        directional_input_prevented = input_prevented;
+    }
 }

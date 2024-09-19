@@ -116,7 +116,7 @@ public partial class Player : Entity
 		}
 		if(@event.IsActionPressed("four"))
 		{
-			
+			entity_controllers.status_effect_controller.RemoveMovementDebuffs(this);
 		}
 		
 		
@@ -161,36 +161,51 @@ public partial class Player : Entity
 
 		camera_rig.TopLevel = true;
 
+		// Entity system signals
+		entity_systems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
 
-
-
-		systems.vision_system.SubscribeToAreaSignals(this);
-		systems.interact_system.SubscribeToInteractSignals(this);
-		ui.hud.SubscribeToTargetingSignals(this);
-		ui.hud.SubscribeToInteractSignals(this);
-
-	
 		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
 
-		controllers.input_controller.CrossChanged += HandleCrossChanged;
+		// Entity controller signals
+		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
+		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
 
+		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
+		entity_controllers.status_effect_controller.MovementPrevented += controllers.movement_controller.HandleMovementPrevented;
+		entity_controllers.status_effect_controller.InputPrevented += controllers.input_controller.HandleInputPrevented;
+		
+
+		// System signals
+		systems.vision_system.SubscribeToAreaSignals(this);
+
+		systems.interact_system.SubscribeToInteractSignals(this);
 		systems.interact_system.NearInteractable += controllers.ability_controller.OnNearInteractable;
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
 		systems.interact_system.InputPickUp += HandleInputPickUp;
-		ui.inventory.main.DroppingItem += HandleDroppingItem;
-		ui.CapturingInput += systems.interact_system.HandleCapturingInput;
 
-		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
-		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
-		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
-		
+
+		// Controller signals
+		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
-		entity_systems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
+
+
+
+
+		// UI signals
+		ui.hud.SubscribeToTargetingSignals(this);
+		ui.hud.SubscribeToInteractSignals(this);
+
+		ui.inventory.main.DroppingItem += HandleDroppingItem;
+
+		ui.CapturingInput += systems.interact_system.HandleCapturingInput;
 
 		ui.InventoryToggle += HandleInventoryToggle;
+
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+
+
 		
 		level.base_value = 4;
 		strength.base_value = 10;
@@ -201,7 +216,9 @@ public partial class Player : Entity
 
 		entity_controllers.stats_controller.SetUIStats(this);
 		entity_controllers.stats_controller.Update(this);
-		
+
+		controllers.ability_assigner.GetAbilities(this);
+		controllers.ability_assigner.AssignAbilities(this);
 	
 
 		exclude.Add(areas.vision.GetRid());
@@ -212,8 +229,7 @@ public partial class Player : Entity
 		exclude.Add(main_hand_hitbox.GetRid());
 		exclude.Add(GetRid());
 
-		controllers.ability_assigner.GetAbilities(this);
-		controllers.ability_assigner.AssignAbilities(this);
+		
 	}
 
     private void HandleInputPickUp(InteractableItem item)

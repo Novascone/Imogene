@@ -8,30 +8,25 @@ public partial class Chill : StatusEffect
 	
 	public bool removed_by_freeze;
 	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+
+	public Chill()
 	{
-		base._Ready();
+		name = "chill";
+		type = EffectType.debuff;
+		category = EffectCategory.movement;
 		alters_speed = true;
 		adds_additional_effects = true;
 		slow.mod = -0.6f;
 		duration = 5;
-		effect_type = "movement";
 		max_stacks = 5;
 		freeze_scene = GD.Load<PackedScene>("res://status_effects/de_buffs/freeze/freeze.tscn");
 		freeze = (Freeze)freeze_scene.Instantiate();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
-	{
-		base._PhysicsProcess(delta);
-	}
-
 	public override void Apply(Entity entity)
 	{
 		
-
+		base.Apply(entity);
 		
 		if(current_stacks < max_stacks - 1)
 		{
@@ -59,7 +54,7 @@ public partial class Chill : StatusEffect
 			// freeze.Apply(entity);
 			if(entity.status_effects.Contains(this))
 			{
-				EmitSignal(nameof(StatusEffectFinished));
+				Remove(entity);
 			}
 		
 			entity.movement_speed.RemoveModifier(slow);
@@ -74,33 +69,41 @@ public partial class Chill : StatusEffect
 	public override void timer_timeout(Entity entity)
     {
 		GD.Print("timer timeout chill");
-        if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)
+		if(!removed)
 		{
-			entity.movement_speed.RemoveModifier(slow);
-			entity.entity_controllers.status_effect_controller.RemoveStatusEffect(entity, this);
-			GD.Print("removing booleans from chill via timer");
-			// this_entity.previous_movement_effects_count = this_entity.movement_effects.Count;
-			GD.Print("entity speed reset to " + entity.movement_speed.current_value);
-			// RemoveStatusEffect(this);
-		}
-		else if(current_stacks > 0 && entity.status_effects.Contains(this))
-		{
-			if(current_stacks > 0 )
+			if(current_stacks == 1 && entity.status_effects.Contains(this) && !removed_by_freeze)
 			{
-				GD.Print("creating another timer");
-				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
+				Remove(entity);
 			}
+			else if(current_stacks > 0 && entity.status_effects.Contains(this))
+			{
+				if(current_stacks > 0)
+				{
+					GD.Print("creating another timer");
+					GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
+				}
+			}
+			else if(removed_by_freeze)
+			{
+				removed_by_freeze = false;
+			}
+			if(current_stacks > 0)
+			{
+				current_stacks -= 1;
+			}
+			
+			
+			GD.Print("current stacks of "  + this.Name + " " + current_stacks);
 		}
-		else if(removed_by_freeze)
-		{
-			removed_by_freeze = false;
-		}
-		if(current_stacks > 0)
-		{
-			current_stacks -= 1;
-		}
+        
+    }
+
+    public override void Remove(Entity entity)
+    {
+        base.Remove(entity);
+		entity.movement_speed.RemoveModifier(slow);
+		GD.Print("removing booleans from chill via timer");
+		GD.Print("entity speed reset to " + entity.movement_speed.current_value);
 		
-		
-		GD.Print("current stacks of "  + this.Name + " " + current_stacks);
     }
 }

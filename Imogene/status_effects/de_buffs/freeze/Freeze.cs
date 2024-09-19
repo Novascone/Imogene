@@ -5,14 +5,18 @@ public partial class Freeze : StatusEffect
 {
 
 	public StatModifier stop = new(StatModifier.ModificationType.nullify);
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+
+    public Freeze()
+    {
+		name = "freeze";
+		type = EffectType.debuff;
+		category = EffectCategory.movement;
 		prevents_movement = true;
+		prevents_input = true;
 		duration = 5;
-		effect_type = "movement";
 		max_stacks = 1;
-	}
+    }
+ 
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
@@ -22,19 +26,24 @@ public partial class Freeze : StatusEffect
 
 	public override void Apply(Entity entity)
 	{
-		
+		base.Apply(entity);
 		CreateTimerIncrementStack(entity);
 		
 	}
 
 	public override void timer_timeout(Entity entity)
     {
-		GD.Print("timer timeout");
-		current_stacks -= 1;
-		EmitSignal(nameof(StatusEffectFinished));
-		entity.movement_speed.RemoveModifier(stop);
-		GD.Print("entity is no longer frozen");
-		GD.Print("current stacks of " + this.Name + " " + current_stacks);
+		Remove(entity);
+    }
+
+    public override void Remove(Entity entity)
+    {
+		if(!removed)
+		{
+			base.Remove(entity);
+			entity.movement_speed.RemoveModifier(stop);
+		}
+        
     }
 
 }

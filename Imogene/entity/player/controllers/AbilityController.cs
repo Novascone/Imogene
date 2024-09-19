@@ -3,7 +3,7 @@ using System;
 
 public partial class AbilityController : Node
 {
-	public bool can_use_abilities = true;
+	public bool ability_use_prevented = false;
 
 
     [Signal] public delegate void ResourceEffectEventHandler(Player player, float resource_change);
@@ -16,7 +16,7 @@ public partial class AbilityController : Node
 
 	 public void QueueAbility(Player player, Ability ability)
     {
-        if(!player.ui.preventing_movement && !player.ui.capturing_input && can_use_abilities)
+        if(!player.ui.preventing_movement && !player.ui.capturing_input && !ability_use_prevented)
         {
         
             if(ability.state == Ability.States.not_queued)
@@ -278,16 +278,16 @@ public partial class AbilityController : Node
         GD.Print("got signal from interact system");
         if(near_interactable == true)
         {
-            can_use_abilities = false;
+            ability_use_prevented = true;
         }
         else
         {
-            can_use_abilities = true;
+            ability_use_prevented = false;
         }
     }
 
     internal void HandleAbilitiesPrevented(bool abilities_prevented)
     {
-        can_use_abilities = !abilities_prevented;
+        ability_use_prevented = abilities_prevented;
     }
 }
