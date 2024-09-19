@@ -28,8 +28,12 @@ public partial class InputController : Node
 
 	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
-		player.direction.X = 0.0f;
-		player.direction.Z = 0.0f;
+		if(!directional_input_prevented)
+		{
+			player.direction.X = 0.0f;
+			player.direction.Z = 0.0f;
+		}
+		
 
 		if(!InputPrevented(player))
 		{

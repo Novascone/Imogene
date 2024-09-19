@@ -88,9 +88,10 @@ public partial class Player : Entity
 	public bool can_use_abilities = true;
 
 	
-	public Slow slow = new();
-	public Chill chill = new();
-	public Daze daze = new();
+	
+	
+	
+	
 	
     public override void _Input(InputEvent @event)
     {
@@ -98,18 +99,21 @@ public partial class Player : Entity
 		
         if(@event.IsActionPressed("one"))
 		{
+			Slow slow = new();
 			GD.Print("adding slow to player");
 			GD.Print("base movement speed " + movement_speed.base_value + " current movement speed " + movement_speed.current_value);
 			entity_controllers.status_effect_controller.AddStatusEffect(this, slow);
 		}
 		if(@event.IsActionPressed("two"))
 		{
+			Chill chill = new();
 			GD.Print("adding chill to player");
 			GD.Print("base movement speed " + movement_speed.base_value + " current movement speed " + movement_speed.current_value);
 			entity_controllers.status_effect_controller.AddStatusEffect(this, chill);
 		}
 		if(@event.IsActionPressed("three"))
 		{
+			Daze daze = new();
 			GD.Print("adding daze to player");
 			GD.Print("abilities prevented " + entity_controllers.status_effect_controller.abilities_prevented);
 			entity_controllers.status_effect_controller.AddStatusEffect(this, daze);
@@ -118,16 +122,23 @@ public partial class Player : Entity
 		{
 			entity_controllers.status_effect_controller.RemoveMovementDebuffs(this);
 		}
+		if(@event.IsActionPressed("five"))
+		{
+			Fear fear = new(this);
+			GD.Print("adding fear to player");
+			entity_controllers.status_effect_controller.AddStatusEffect(this, fear);
+		}
 		
 		
     }
+
 
 
     public override void _Ready()
 	{
 		
 		base._Ready();
-
+		fear_duration = 3;
 		
 
 	

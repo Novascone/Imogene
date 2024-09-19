@@ -75,6 +75,7 @@ public partial class StatusEffect : Node3D
 
 	public virtual void CreateTimerIncrementStack(Entity entity) // Creates timer and increments stacks
 	{
+		GD.Print("create timer increment");
 		if(current_stacks == 0)
 		{
 			GD.Print("creating timer");
@@ -95,12 +96,14 @@ public partial class StatusEffect : Node3D
 
 	public virtual void Remove(Entity entity)
 	{
+		GD.Print("removing: " + this.name + " in status effect");
 		if(!removed)
 		{
+			removed = true;
+			current_stacks = 0;
 			EmitSignal(nameof(StatusEffectFinished));
 		}
-		removed = true;
-		current_stacks = 0;
+		
 		
 	}
 

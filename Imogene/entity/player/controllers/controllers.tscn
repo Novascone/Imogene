@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://qyu8cdscxpm0"]
+[gd_scene load_steps=8 format=3 uid="uid://qyu8cdscxpm0"]
 
 [ext_resource type="Script" path="res://entity/player/controllers/Controllers.cs" id="1_tbsx8"]
 [ext_resource type="PackedScene" uid="uid://bhans33fk5xqm" path="res://entity/player/controllers/input_controller.tscn" id="2_qrjtm"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cfctyyhexl1xg" path="res://entity/player/controllers/ability_assigner.tscn" id="4_tqegs"]
 [ext_resource type="PackedScene" uid="uid://bf8paulijqr0g" path="res://entity/player/controllers/ability_controller.tscn" id="5_6i25k"]
 [ext_resource type="Script" path="res://entity/player/controllers/EquipmentController.cs" id="6_4o8dn"]
-[ext_resource type="PackedScene" uid="uid://br1lm3qgxi0jb" path="res://entity/controllers/status_effect_controller.tscn" id="7_rq3jr"]
 [ext_resource type="Script" path="res://entity/player/controllers/AnimationController.cs" id="8_v723f"]
 
 [node name="Controllers" type="Node3D" node_paths=PackedStringArray("input_controller", "movement_controller", "ability_assigner", "ability_controller", "equipment_controller", "near_wall", "on_wall")]
@@ -29,8 +28,6 @@ on_wall = NodePath("WallCheck/OnWall")
 
 [node name="EquipmentController" type="Node" parent="."]
 script = ExtResource("6_4o8dn")
-
-[node name="StatusEffectController" parent="." instance=ExtResource("7_rq3jr")]
 
 [node name="AnimationController" type="Node" parent="."]
 script = ExtResource("8_v723f")

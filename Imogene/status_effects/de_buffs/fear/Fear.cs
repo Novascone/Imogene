@@ -3,24 +3,36 @@ using System;
 
 public partial class Fear : StatusEffect
 {
-	Vector3 caster_direction;
+	public Entity caster;
 
 	public Fear()
 	{
+		prevents_input = true;
 		name = "fear";
 		type = EffectType.debuff;
 		category = EffectCategory.movement;
 		duration = 5;
 		max_stacks = 1;
 	}
+
+	public Fear(Entity entity)
+	{
+		prevents_input = true;
+		caster = entity;
+		name = "fear";
+		type = EffectType.debuff;
+		category = EffectCategory.movement;
+		duration = entity.fear_duration;
+		max_stacks = 1;
+	}
 	
 
     public override void Apply(Entity entity)
     {
-        CreateTimerIncrementStack(entity);
 		base.Apply(entity);
-		entity.direction = caster_direction;
-		
+        CreateTimerIncrementStack(entity);
+		entity.direction = caster.Transform.Basis.Z * 2;
+	
     }
 
     public override void timer_timeout(Entity entity)

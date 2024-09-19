@@ -186,6 +186,8 @@ public partial class Entity : CharacterBody3D
 
 	public string weapon_type;
 
+	public int fear_duration = 5;
+
 
     // Possessions
     // public int gold = 0;

@@ -64,9 +64,13 @@ public partial class Slow : StatusEffect
 
     public override void Remove(Entity entity)
     {
-        base.Remove(entity);
-		entity.movement_speed.RemoveModifier(slow);
-		GD.Print("removing slow from " + entity.Name);
-		GD.Print("entity speed reset to " + entity.movement_speed.current_value);
+		if(!removed)
+		{
+			base.Remove(entity);
+			entity.movement_speed.RemoveModifier(slow);
+			GD.Print("removing slow from " + entity.Name);
+			GD.Print("entity speed reset to " + entity.movement_speed.current_value);
+		}
+       
     }
 }
