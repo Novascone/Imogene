@@ -124,9 +124,9 @@ public partial class Player : Entity
 		}
 		if(@event.IsActionPressed("five"))
 		{
-			Fear fear = new(this);
-			GD.Print("adding fear to player");
-			entity_controllers.status_effect_controller.AddStatusEffect(this, fear);
+			Hex hex = new();
+			GD.Print("adding hex to player");
+			entity_controllers.status_effect_controller.AddStatusEffect(this, hex);
 		}
 		
 		
@@ -277,7 +277,6 @@ public partial class Player : Entity
 		systems.targeting_system.Target(this);
 		controllers.ability_controller.AbilityFrameCheck(this);
 		MoveAndSlide();
-
 		
     }
 

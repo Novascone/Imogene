@@ -23,8 +23,13 @@ public partial class StatusEffectController : Node
 	public Daze daze = new();
 	public Chill chill = new();
 	public Freeze freeze = new();
-	public Stun stun = new();
 	public Fear fear = new();
+	public Hamstrung hamstrung = new();
+	public Stun stun = new();
+	public Hex hex = new();
+	public Knockback knockback = new();
+	
+
 
 	
 	public Dictionary<StatusEffect, bool> status_effects = new Dictionary<StatusEffect, bool>();
@@ -41,8 +46,12 @@ public partial class StatusEffectController : Node
 		status_effects[daze] = false;
 		status_effects[chill] = false;
 		status_effects[freeze] = false;
-		status_effects[stun] = false;
 		status_effects[fear] = false;
+		status_effects[hamstrung] = false;
+		status_effects[stun] = false;
+		status_effects[hex] = false;
+		status_effects[knockback] = false;
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

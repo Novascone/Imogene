@@ -86,11 +86,27 @@ public partial class Enemy : Entity
 	public bool soft_target;
 	public bool in_player_vision;
 
+	public float jump_height = 10;
+	public float jump_time_to_peak = 2f;
+	public float jump_time_to_decent = 1.9f;
+
+	public float jump_velocity ;
+	public float jump_gravity;
+	public float fall_gravity;
+
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
+		
 		base._Ready();
+
+		jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
+		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
+		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
+
 		ui.health_bar.MaxValue = health.max_value;
 		ui.health_bar.Value = health.current_value;
 		ui.posture_bar.MaxValue = posture.max_value;
@@ -134,7 +150,6 @@ public partial class Enemy : Entity
 	{
 	
 		ray_origin = controllers.ray_position.GlobalPosition;
-		var direction = Vector3.Zero;
 		if(debug.collision_lines.Mesh is ImmediateMesh collision_lines_mesh)
 		{
 			collision_lines_mesh.ClearSurfaces();
@@ -171,15 +186,14 @@ public partial class Enemy : Entity
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}
 
-		if (!IsOnFloor()) // If in the air, fall towards the floor. Literally gravity
-		{
-			_targetVelocity.Y -= FallAcceleration * (float)delta;
-		}
 		controllers.movement_controller.StatusEffectsAffectingSpeed(this);
 		controllers.movement_controller.StatusEffectsPreventingMovement(this);
 		controllers.ability_controller.CheckCanUseAbility(this);
+
+		controllers.movement_controller.MoveEnemy(this, delta);
 		SmoothRotation();
 		LookAtOver();
+		MoveAndSlide();
 		
 		
 		

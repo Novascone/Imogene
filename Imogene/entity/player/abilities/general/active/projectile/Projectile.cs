@@ -21,6 +21,7 @@ public partial class Projectile : RangedAbility
 		rotate_on_held = true;
 		rotate_on_soft_far = true;
 		rotate_on_soft_close = true;
+		ability_damage_modifier = 1;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -92,7 +93,7 @@ public partial class Projectile : RangedAbility
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 		projectile.effects.Add(slow);
 		ranged_hitbox = projectile;
-		DealDamage(player);
+		DealDamage(player, ability_damage_modifier);
 	}
 
 	public void RemoveFromExclusion(Player player, Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array

@@ -24,6 +24,7 @@ public partial class Slash : Ability
 		rotate_on_held = false;
 		rotate_on_soft_close = true;
 		rotate_on_soft_far = false;
+		ability_damage_modifier = 0.25f;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
 		// _customSignals.AbilityRemoved += HandleAbilityRemoved;
     }
@@ -244,7 +245,7 @@ public partial class Slash : Ability
 		player.main_hand_hitbox.damage_type = "Cold";
 		// player.main_hand_hitbox.damage_type = "Lightning";
 		// GD.Print("Main Hand damage type: " + player.main_hand_hitbox.damage_type);
-		DealDamage(player);
+		DealDamage(player, ability_damage_modifier);
 
 		if(player.weapon_type == "one_handed_axe") // play one handed axe animation
 		{

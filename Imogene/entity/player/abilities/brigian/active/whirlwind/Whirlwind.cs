@@ -15,6 +15,7 @@ public partial class Whirlwind : Ability
 		
 		resource_change = -10;
 		rotate_on_soft = false;
+		ability_damage_modifier = 1.25f;
 	}
 
 	public override void Execute(Player player)
@@ -31,7 +32,7 @@ public partial class Whirlwind : Ability
 		
 		melee_hitbox = whirlwind_hitbox;
 		whirlwind_hitbox.damage_type = damage_type.ToString(); // Set projectile damage type		
-		DealDamage(player);
+		DealDamage(player, ability_damage_modifier);
 	}
 
     public override void FrameCheck(Player player)

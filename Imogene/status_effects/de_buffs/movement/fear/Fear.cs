@@ -3,7 +3,7 @@ using System;
 
 public partial class Fear : StatusEffect
 {
-	public Entity caster;
+	
 
 	public Fear()
 	{

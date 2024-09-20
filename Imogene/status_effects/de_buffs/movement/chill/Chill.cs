@@ -3,7 +3,7 @@ using System;
 
 public partial class Chill : StatusEffect
 {
-	private PackedScene freeze_scene;
+	// private PackedScene freeze_scene;
 	private Freeze freeze;
 	
 	public bool removed_by_freeze;
@@ -19,8 +19,8 @@ public partial class Chill : StatusEffect
 		slow.mod = -0.6f;
 		duration = 5;
 		max_stacks = 5;
-		freeze_scene = GD.Load<PackedScene>("res://status_effects/de_buffs/freeze/freeze.tscn");
-		freeze = (Freeze)freeze_scene.Instantiate();
+		// freeze_scene = GD.Load<PackedScene>("res://status_effects/de_buffs/freeze/freeze.tscn");
+		// freeze = (Freeze)freeze_scene.Instantiate();
 	}
 
 	public override void Apply(Entity entity)
@@ -59,6 +59,7 @@ public partial class Chill : StatusEffect
 		
 			entity.movement_speed.RemoveModifier(slow);
 			// entity.entity_controllers.status_effect_controller.AddStatusEffect(entity, freeze);
+			freeze = new();
 			EmitSignal(nameof(AddAdditionalStatusEffect), freeze);
 			current_stacks = 0;
 				

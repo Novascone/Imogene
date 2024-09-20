@@ -12,6 +12,53 @@ public partial class EnemyMovementController : Node
 		// GD.Print("Enemy movement controller loaded");
 	}
 
+	public void MoveEnemy(Enemy enemy, double delta)
+	{
+		
+			
+		StandardMovement(enemy, delta);
+			
+
+		enemy.velocity.X = enemy.direction.X * enemy.movement_speed.current_value;
+		enemy.velocity.Z = enemy.direction.Z * enemy.movement_speed.current_value;			
+		enemy.Velocity = enemy.velocity;
+			
+	}
+
+	private void StandardMovement(Enemy enemy, double delta)
+    {
+        
+		// else
+		// {
+		// 	player.movement_stats["speed"] = Mathf.Lerp(player.movement_stats["speed"], 2.0f, 0.1f);
+		// }
+
+		if(!enemy.IsOnFloor())
+		{
+		
+			enemy.velocity.Y += (float)(SetGravity(enemy) * delta);
+		}
+		else
+		{
+			enemy.velocity.Y = 0;
+		}
+		
+		// LookForward(player,player.direction);
+    }
+
+	public float SetGravity(Enemy enemy)
+	{
+		if(enemy.Velocity.Y > 0)
+		{
+
+			return enemy.jump_gravity;
+		}
+		else
+		{
+			return enemy.fall_gravity;
+		}
+	}
+
 	
 	public bool StatusEffectsPreventingMovement(Enemy enemy)
 	{

@@ -20,6 +20,7 @@ public partial class Kick : Ability
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
 		cast_timer = GetNode<Timer>("CastTimer");
 		charges = 2;
+		ability_damage_modifier = 0.5f;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,7 +67,7 @@ public partial class Kick : Ability
 		
 		
 		AddHitbox(player);
-		DealDamage(player);
+		DealDamage(player, ability_damage_modifier);
 		if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
 		{
 			kick_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2) / 2; // Set projectile damage

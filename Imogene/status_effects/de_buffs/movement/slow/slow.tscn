@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgqyp4uyqad22"]
 
-[ext_resource type="Script" path="res://status_effects/de_buffs/slow/Slow.cs" id="1_j0uhf"]
-[ext_resource type="Resource" uid="uid://c3odvo1nfs285" path="res://status_effects/de_buffs/slow/Slow.tres" id="2_xulnu"]
+[ext_resource type="Script" path="res://status_effects/de_buffs/movement/slow/Slow.cs" id="1_j0uhf"]
+[ext_resource type="Resource" uid="uid://c3odvo1nfs285" path="res://status_effects/de_buffs/movement/slow/Slow.tres" id="2_xulnu"]
 
 [node name="Slow" type="Node3D"]
 script = ExtResource("1_j0uhf")

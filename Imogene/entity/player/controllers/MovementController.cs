@@ -29,8 +29,7 @@ public partial class MovementController : Node
 
     public void MovePlayer(Player player, float input_strength, double delta)
 	{
-		if(!movement_input_prevented)
-		{
+		
 			if(!player.is_climbing)
 			{
 				StandardMovement(player, input_strength, delta);
@@ -39,21 +38,16 @@ public partial class MovementController : Node
 			{
 				ClimbingMovement(player);
 			}
-			if(!player.using_movement_ability && !rotation_only)
+			if(!player.using_movement_ability && !rotation_only &&!movement_input_prevented)
 			{
 				player.velocity.X = player.direction.X * player.movement_speed.current_value;
 				player.velocity.Z = player.direction.Z * player.movement_speed.current_value;			
 			}
-			else if(rotation_only)
+			else if(rotation_only || movement_input_prevented)
 			{
 				player.velocity = Vector3.Zero;
 			}
 			
-		}
-		else
-		{
-			player.velocity = Vector3.Zero;
-		}
 		player.Velocity = player.velocity;
 			
 	}

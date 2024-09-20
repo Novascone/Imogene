@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entity/player/abilities/general/active/projectile/Projectile.cs" id="1_yrhtv"]
 [ext_resource type="PackedScene" uid="uid://cdhbhcfmpougy" path="res://entity/player/abilities/general/active/projectile/projectile_to_load.tscn" id="2_r4gxv"]
 [ext_resource type="Texture2D" uid="uid://bck6o03dlln85" path="res://images/icons/projectile.png" id="2_rqfnq"]
-[ext_resource type="PackedScene" uid="uid://bgqyp4uyqad22" path="res://status_effects/de_buffs/slow/slow.tscn" id="3_wucp7"]
+[ext_resource type="PackedScene" uid="uid://bgqyp4uyqad22" path="res://status_effects/de_buffs/movement/slow/slow.tscn" id="3_wucp7"]
 
 [node name="Projectile" type="Node3D" node_paths=PackedStringArray("cast_timer")]
 top_level = true

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://5a1b10vhydeb"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5gkek"]
+
+[node name="HexMesh" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("SphereMesh_5gkek")

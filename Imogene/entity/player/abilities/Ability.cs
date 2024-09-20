@@ -26,6 +26,8 @@ public partial class Ability : Node3D
 
     public MeleeHitbox melee_hitbox;
     public RangedHitbox ranged_hitbox;
+
+    public float ability_damage_modifier = 0;
     
     [Signal] public delegate void AbilityPressedEventHandler(Ability ability);
     [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
@@ -150,21 +152,21 @@ public partial class Ability : Node3D
         return button_held;
     }
 
-    public virtual void DealDamage(Player player)
+    public virtual void DealDamage(Player player, float ability_damage_modifier)
     {
         if(melee_hitbox != null)
         {
             if(player.entity_systems.damage_system.Crit(player))
             {
                 GD.Print("Critical!");
-                melee_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.combined_damage), 2);
+                melee_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.combined_damage), 2) * (1 + ability_damage_modifier);
                 melee_hitbox.posture_damage = player.posture_damage.current_value;
                 melee_hitbox.is_critical = true;
                 // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
             }
             else
             {
-                melee_hitbox.damage = player.combined_damage;
+                melee_hitbox.damage = player.combined_damage * (1 + ability_damage_modifier);
                 melee_hitbox.posture_damage = player.posture_damage.current_value;
                 melee_hitbox.is_critical = false;
                 // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
@@ -173,18 +175,18 @@ public partial class Ability : Node3D
         if(ranged_hitbox != null)
         {
             if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
-		{
-			ranged_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2); // Set projectile damage
+		    {
+			ranged_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier); // Set projectile damage
 			ranged_hitbox.posture_damage = player.posture_damage.current_value / 3; // Set projectile posture damage 
 			ranged_hitbox.is_critical = true;
-		}
-		else
-		{
-			
-			ranged_hitbox.damage = player.combined_damage; // Set projectile damage
-			ranged_hitbox.posture_damage = player.posture_damage.current_value / 3; // Set projectile posture damage 
-			ranged_hitbox.is_critical = false;
-		}
+		    }
+            else
+            {
+                
+                ranged_hitbox.damage = player.combined_damage * (1 + ability_damage_modifier); // Set projectile damage
+                ranged_hitbox.posture_damage = player.posture_damage.current_value / 3; // Set projectile posture damage 
+                ranged_hitbox.is_critical = false;
+            }
         }
         
 

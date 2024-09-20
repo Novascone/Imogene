@@ -186,6 +186,8 @@ public partial class Entity : CharacterBody3D
 
 	public string weapon_type;
 
+	[Export] public Node3D armature;
+
 	public int fear_duration = 5;
 
 

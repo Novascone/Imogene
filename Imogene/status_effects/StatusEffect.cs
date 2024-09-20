@@ -29,10 +29,11 @@ public partial class StatusEffect : Node3D
 	}
 	public bool applied;
  	public Timer duration_timer;
-	public int duration;
+	public float duration;
 	public int max_stacks;
 	public int current_stacks;
-	
+
+	public Entity caster;
 	
 	public States state;
 
