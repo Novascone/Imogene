@@ -13,6 +13,7 @@ public partial class StatusEffectController : Node
 	public bool input_prevented;
 	public bool speed_altered;
 	public bool abilities_prevented;
+	public bool tethered;
 	public bool effect_already_applied;
 	// Movement
 
@@ -25,6 +26,7 @@ public partial class StatusEffectController : Node
 	public Freeze freeze = new();
 	public Fear fear = new();
 	public Hamstrung hamstrung = new();
+	public Tether tether = new();
 	public Stun stun = new();
 	public Hex hex = new();
 	public Knockback knockback = new();
@@ -37,6 +39,7 @@ public partial class StatusEffectController : Node
 	[Signal] public delegate void MovementPreventedEventHandler(bool movement_prevented);
 	[Signal] public delegate void InputPreventedEventHandler(bool input_prevented);
 	[Signal] public delegate void SpeedAlteredEventHandler(bool speed_altered);
+	[Signal] public delegate void TetheredEventHandler(Entity entity, MeshInstance3D tether, bool tethered);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -48,6 +51,7 @@ public partial class StatusEffectController : Node
 		status_effects[freeze] = false;
 		status_effects[fear] = false;
 		status_effects[hamstrung] = false;
+		status_effects[tether] = false;
 		status_effects[stun] = false;
 		status_effects[hex] = false;
 		status_effects[knockback] = false;
@@ -86,15 +90,27 @@ public partial class StatusEffectController : Node
 				{
 					effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity); // subscribes to add additional effect signal
 				}
+				ApplyStatusEffect(entity, effect_to_add);
 				// Sets the variable for what the status effects are preventing or altering
 				if(effect_to_add.prevents_movement){ movement_prevented = true; EmitSignal(nameof(MovementPrevented), movement_prevented);}
 				if(effect_to_add.prevents_input){ input_prevented = true; EmitSignal(nameof(InputPrevented), input_prevented);}
 				if(effect_to_add.alters_speed){ speed_altered = true; }
 				if(effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
+				if(effect_to_add.name == "tether")
+				{
+					tethered = true;
+					Tether tether_effect = (Tether)effect_to_add;
+					EmitSignal(nameof(Tethered),entity, tether_effect.tether, tethered);
+				
+				}
 			// }
 			
 		}
-		ApplyStatusEffect(entity, effect_to_add);
+		else
+		{
+			ApplyStatusEffect(entity, effect_to_add);
+		}
+		
 	}
 
    
@@ -148,6 +164,8 @@ public partial class StatusEffectController : Node
 		if(effect.prevents_input){ input_prevented = false; EmitSignal(nameof(InputPrevented), input_prevented);}
 		if(effect.alters_speed){ speed_altered = false; }
 		if(effect.prevents_abilities){ abilities_prevented = false; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
+		if(effect.name == "tether"){ tethered = false; EmitSignal(nameof(Tethered),entity, tether.tether, tethered);;}
+		
 	}
 
 	// Queues effect if it hasn't been instantiated, because .prevents_movement, and .alters speed wont be set,

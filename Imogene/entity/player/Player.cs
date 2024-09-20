@@ -124,9 +124,10 @@ public partial class Player : Entity
 		}
 		if(@event.IsActionPressed("five"))
 		{
-			Hex hex = new();
-			GD.Print("adding hex to player");
-			entity_controllers.status_effect_controller.AddStatusEffect(this, hex);
+			
+			Tether tether = new();
+			GD.Print("adding tether to player");
+			entity_controllers.status_effect_controller.AddStatusEffect(this, tether);
 		}
 		
 		
@@ -183,7 +184,9 @@ public partial class Player : Entity
 
 		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
 		entity_controllers.status_effect_controller.MovementPrevented += controllers.movement_controller.HandleMovementPrevented;
+		entity_controllers.status_effect_controller.Tethered += controllers.movement_controller.HandleTethered;
 		entity_controllers.status_effect_controller.InputPrevented += controllers.input_controller.HandleInputPrevented;
+		
 		
 
 		// System signals
@@ -242,6 +245,7 @@ public partial class Player : Entity
 
 		
 	}
+	Vector3 clamp_position;
 
     private void HandleInputPickUp(InteractableItem item)
     {
@@ -271,12 +275,14 @@ public partial class Player : Entity
     public override void _PhysicsProcess(double delta)
     {
 		// GD.Print("current movement speed " + movement_speed.current_value);
+		
 		CameraFollowsPlayer();
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);
 		systems.targeting_system.Target(this);
 		controllers.ability_controller.AbilityFrameCheck(this);
 		MoveAndSlide();
+		
 		
     }
 

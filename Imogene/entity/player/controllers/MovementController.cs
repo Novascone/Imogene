@@ -18,6 +18,8 @@ public partial class MovementController : Node
 	public bool rotation_only;
 	public bool rotation_finished;
 	public bool movement_input_prevented = false;
+	Vector3 tether_position;
+	public bool movement_tethered = false;
 	StatModifier walk = new (StatModifier.ModificationType.multiply_current);
 
     public override void _Ready()
@@ -30,25 +32,32 @@ public partial class MovementController : Node
     public void MovePlayer(Player player, float input_strength, double delta)
 	{
 		
-			if(!player.is_climbing)
-			{
-				StandardMovement(player, input_strength, delta);
-			}
-			else
-			{
-				ClimbingMovement(player);
-			}
-			if(!player.using_movement_ability && !rotation_only &&!movement_input_prevented)
-			{
-				player.velocity.X = player.direction.X * player.movement_speed.current_value;
-				player.velocity.Z = player.direction.Z * player.movement_speed.current_value;			
-			}
-			else if(rotation_only || movement_input_prevented)
-			{
-				player.velocity = Vector3.Zero;
-			}
+		if(!player.is_climbing)
+		{
+			StandardMovement(player, input_strength, delta);
+		}
+		else
+		{
+			ClimbingMovement(player);
+		}
+		if(!player.using_movement_ability && !rotation_only &&!movement_input_prevented)
+		{
+			player.velocity.X = player.direction.X * player.movement_speed.current_value;
+			player.velocity.Z = player.direction.Z * player.movement_speed.current_value;			
+		}
+		else if(rotation_only || movement_input_prevented)
+		{
+			player.velocity = Vector3.Zero;
+		}
 			
 		player.Velocity = player.velocity;
+
+		if(movement_tethered)
+		{
+			GD.Print("movement tethered");
+			player.GlobalPosition = (player.GlobalPosition - tether_position).LimitLength(10) + tether_position;
+		}
+
 			
 	}
 
@@ -222,5 +231,18 @@ public partial class MovementController : Node
     internal void HandleMovementPrevented(bool movement_prevented)
     {
         movement_input_prevented = movement_prevented;
+    }
+
+    internal void HandleTethered(Entity entity, MeshInstance3D tether, bool tethered)
+    {
+		movement_tethered = tethered;
+		if(tethered)
+		{
+			tether_position = tether.GlobalPosition;
+		}
+		else
+		{
+			tether_position = Vector3.Zero;
+		}
     }
 }
