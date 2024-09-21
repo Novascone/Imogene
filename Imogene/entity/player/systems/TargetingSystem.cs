@@ -257,12 +257,12 @@ public partial class TargetingSystem : Node
 
 	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
-		if(@event.IsActionPressed("Target"))
+		if(@event.IsActionPressed("RS"))
 		{
 			target_pressed = true;
 			target_released = false;
 		}
-		if(@event.IsActionReleased("Target"))
+		if(@event.IsActionReleased("RS"))
 		{
 			target_pressed = false;
 			target_released = true;
@@ -330,11 +330,11 @@ public partial class TargetingSystem : Node
 	{
 		if(targeting && enemies_in_vision.Count > 0 && (mobs_in_order.Count > 0))
 		{
-			if(Input.IsActionJustPressed("TargetRight"))
+			if(Input.IsActionJustPressed("RS+"))
 			{
 				TargetRight();
 			}
-			else if (Input.IsActionJustPressed("TargetLeft"))
+			else if (Input.IsActionJustPressed("RS-"))
 			{
 				TargetLeft();
 			}

@@ -129,6 +129,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_vw7lu")
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 8
 
 [node name="LeftSecondaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/LCross" instance=ExtResource("6_esw3u")]
 modulate = Color(1, 1, 1, 0.0980392)
@@ -148,6 +149,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_s65oj")
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 8
 
 [node name="RightSecondaryHUDCross" parent="BottomHUDVBox/BottomHUDHBox/RCross" instance=ExtResource("8_cifg1")]
 modulate = Color(1, 1, 1, 0.0980392)

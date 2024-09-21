@@ -89,6 +89,7 @@ public partial class MainHUD : Control
 			if(l_cross_primary_selected)
 			{
 				l_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+				l_cross_primary.SizeFlagsVertical = SizeFlags.ShrinkCenter;
 				l_cross_primary.Modulate = new Color(Colors.White, 0.1f);
 				l_cross_primary.up.label.Hide();
 				l_cross_primary.left.label.Hide();
@@ -97,6 +98,7 @@ public partial class MainHUD : Control
 				l_cross_primary.ZIndex = 0;
 
 				l_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				l_cross_secondary.SizeFlagsVertical = SizeFlags.ShrinkEnd;
 				l_cross_secondary.Modulate = new Color(Colors.White, 1f);
 				l_cross_secondary.up.label.Show();
 				l_cross_secondary.left.label.Show();
@@ -107,6 +109,7 @@ public partial class MainHUD : Control
 			else
 			{
 				l_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				l_cross_primary.SizeFlagsVertical = SizeFlags.ShrinkEnd;
 				l_cross_primary.Modulate = new Color(Colors.White, 1f);
 				l_cross_primary.up.label.Show();
 				l_cross_primary.left.label.Show();
@@ -115,6 +118,7 @@ public partial class MainHUD : Control
 				l_cross_primary.ZIndex = 1;
 
 				l_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+				l_cross_secondary.SizeFlagsVertical = SizeFlags.ShrinkCenter;
 				l_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
 				l_cross_secondary.up.label.Hide();
 				l_cross_secondary.left.label.Hide();
@@ -128,6 +132,7 @@ public partial class MainHUD : Control
 			if(r_cross_primary_selected)
 			{
 				r_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+				r_cross_primary.SizeFlagsVertical = SizeFlags.ShrinkCenter;
 				r_cross_primary.Modulate = new Color(Colors.White, 0.1f);
 				r_cross_primary.up.label.Hide();
 				r_cross_primary.left.label.Hide();
@@ -136,6 +141,7 @@ public partial class MainHUD : Control
 				r_cross_primary.ZIndex = 0;
 
 				r_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				r_cross_secondary.SizeFlagsVertical = SizeFlags.ShrinkEnd;
 				r_cross_secondary.Modulate = new Color(Colors.White, 1f);
 				r_cross_secondary.up.label.Show();
 				r_cross_secondary.left.label.Show();
@@ -146,6 +152,7 @@ public partial class MainHUD : Control
 			else
 			{
 				r_cross_primary.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+				r_cross_primary.SizeFlagsVertical = SizeFlags.ShrinkEnd;
 				r_cross_primary.Modulate = new Color(Colors.White, 1f);
 				r_cross_primary.up.label.Show();
 				r_cross_primary.left.label.Show();
@@ -154,6 +161,7 @@ public partial class MainHUD : Control
 				r_cross_primary.ZIndex = 1;
 
 				r_cross_secondary.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+				r_cross_secondary.SizeFlagsVertical = SizeFlags.ShrinkCenter;
 				r_cross_secondary.Modulate = new Color(Colors.White, 0.1f);
 				r_cross_secondary.up.label.Hide();
 				r_cross_secondary.left.label.Hide();
