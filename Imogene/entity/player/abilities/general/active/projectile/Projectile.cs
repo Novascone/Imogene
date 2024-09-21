@@ -5,9 +5,8 @@ public partial class Projectile : RangedAbility
 {
 
 	[Export] public PackedScene projectile_to_load;
-	[Export] public PackedScene slow_effect;
 	[Export] public Timer cast_timer;
-	public StatusEffect slow;
+	
 	public int projectile_velocity = 25;
 	
 	
@@ -16,7 +15,6 @@ public partial class Projectile : RangedAbility
 	public override void _Ready()
 	{
 		
-		slow = (StatusEffect)slow_effect.Instantiate();
 		rotate_on_soft = true;
 		rotate_on_held = true;
 		rotate_on_soft_far = true;
@@ -91,6 +89,7 @@ public partial class Projectile : RangedAbility
 		
 		// Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
+		Slow slow = new();
 		projectile.effects.Add(slow);
 		ranged_hitbox = projectile;
 		DealDamage(player, ability_damage_modifier);
