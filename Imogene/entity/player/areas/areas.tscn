@@ -15,9 +15,8 @@ points = PackedVector3Array(0, 0, 0, 1, 0.5, -1, -1, 0.5, -1, 0, 0, 0, 1, 0, -1,
 radius = 1.32123
 height = 4.20473
 
-[node name="Areas" type="Node3D" node_paths=PackedStringArray("vision", "interact", "pick_up_items", "near", "far")]
+[node name="Areas" type="Node3D" node_paths=PackedStringArray("interact", "pick_up_items", "near", "far")]
 script = ExtResource("1_cia7l")
-vision = NodePath("Vision")
 interact = NodePath("Interact")
 pick_up_items = NodePath("PickUpItems")
 near = NodePath("Near")
@@ -25,6 +24,7 @@ far = NodePath("Far")
 
 [node name="Vision" type="Area3D" parent="."]
 transform = Transform3D(20.2, 0, 0, 0, 20.2, 0, 0, 0, 20.2, 0, 0, 0)
+visible = false
 collision_mask = 2
 
 [node name="VisionHitBoxCollison" type="CollisionShape3D" parent="Vision"]

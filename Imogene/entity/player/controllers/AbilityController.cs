@@ -84,6 +84,7 @@ public partial class AbilityController : Node
                         ability.Execute(player);
 						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
                         AddToAbilityList(player, ability);
+                        // SoftRotateAbility(player, ability);
                         // player.movementController.movement_input_allowed = true;
                     }
                 }
@@ -203,7 +204,7 @@ public partial class AbilityController : Node
 
 	public void SoftRotateAbility(Player player, Ability ability)
     {
-        if(!ability.rotate_on_soft_far && player.systems.targeting_system.enemy_close)
+        if(!ability.rotate_on_soft_far && (player.systems.targeting_system.enemy_close || player.systems.targeting_system.enemy_pointed_toward != null))
         {
 			AddToAbilityList(player, ability);
             player.systems.targeting_system.SoftTargetRotation(player);
@@ -219,7 +220,7 @@ public partial class AbilityController : Node
                 // player.movementController.movement_input_allowed = true;
             }
         }
-        else if (ability.rotate_on_soft_far && player.systems.targeting_system.enemy_far)
+        else if (ability.rotate_on_soft_far && player.systems.targeting_system.enemy_pointed_toward != null)
         {
             // GD.Print("Setting player movement to false");
 			GD.Print("Rotating player");

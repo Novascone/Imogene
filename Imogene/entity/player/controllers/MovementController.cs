@@ -43,14 +43,20 @@ public partial class MovementController : Node
 		if(!player.using_movement_ability && !rotation_only &&!movement_input_prevented)
 		{
 			player.velocity.X = player.direction.X * player.movement_speed.current_value;
-			player.velocity.Z = player.direction.Z * player.movement_speed.current_value;			
+			player.velocity.Z = player.direction.Z * player.movement_speed.current_value;
+			
 		}
 		else if(rotation_only || movement_input_prevented)
 		{
 			player.velocity = Vector3.Zero;
 		}
 			
+		// player.Velocity = player.direction.Normalized() * player.movement_speed.current_value;
+		// player.velocity.X *= input_strength;
+		// player.velocity.Z *= input_strength;
+
 		player.Velocity = player.velocity;
+		
 
 		if(movement_tethered)
 		{
@@ -81,14 +87,12 @@ public partial class MovementController : Node
 				
 			}
 		}
-		// else
-		// {
-		// 	player.movement_stats["speed"] = Mathf.Lerp(player.movement_stats["speed"], 2.0f, 0.1f);
-		// }
+		
 
 		if(!player.IsOnFloor())
 		{
 			player.velocity.Y += (float)(SetGravity(player) * delta);
+			GD.Print("Player not on floor");
 		}
 		
 		LookForward(player,player.direction);

@@ -3,7 +3,7 @@ using System;
 
 public partial class Areas : Node
 {
-	[Export] public Area3D vision;
+	// [Export] public Area3D vision;
 	[Export] public Area3D interact;
 	[Export] public Area3D pick_up_items;
 	[Export] public Area3D near;

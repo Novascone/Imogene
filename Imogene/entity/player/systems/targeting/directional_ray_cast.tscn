@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf2y7myghl30p"]
+
+[ext_resource type="Script" path="res://entity/player/systems/targeting/DirectionalRayCast.cs" id="1_fhdq1"]
+[ext_resource type="Script" path="res://entity/player/systems/targeting/TargetingRaycast.cs" id="2_m3y7q"]
+
+[node name="DirectionalRayCast" type="Node3D" node_paths=PackedStringArray("raycast_1", "raycast_2", "raycast_3", "raycast_4", "raycast_5", "raycast_6", "raycast_7", "raycast_8", "raycast_9")]
+script = ExtResource("1_fhdq1")
+raycast_1 = NodePath("DirectionalRayCast1")
+raycast_2 = NodePath("DirectionalRayCast2")
+raycast_3 = NodePath("DirectionalRayCast3")
+raycast_4 = NodePath("DirectionalRayCast4")
+raycast_5 = NodePath("DirectionalRayCast5")
+raycast_6 = NodePath("DirectionalRayCast6")
+raycast_7 = NodePath("DirectionalRayCast7")
+raycast_8 = NodePath("DirectionalRayCast8")
+raycast_9 = NodePath("DirectionalRayCast9")
+
+[node name="DirectionalRayCast8" type="RayCast3D" parent="."]
+target_position = Vector3(-8, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast6" type="RayCast3D" parent="."]
+target_position = Vector3(-6, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast4" type="RayCast3D" parent="."]
+target_position = Vector3(-4, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast2" type="RayCast3D" parent="."]
+target_position = Vector3(-2, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast1" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast3" type="RayCast3D" parent="."]
+target_position = Vector3(2, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast5" type="RayCast3D" parent="."]
+target_position = Vector3(4, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast7" type="RayCast3D" parent="."]
+target_position = Vector3(6, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")
+
+[node name="DirectionalRayCast9" type="RayCast3D" parent="."]
+target_position = Vector3(8, -1, -25)
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("2_m3y7q")

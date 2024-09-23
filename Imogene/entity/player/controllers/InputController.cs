@@ -41,20 +41,27 @@ public partial class InputController : Node
 			{
 				if (Input.IsActionPressed("Right"))
 				{
-					player.direction.X -= 1.0f;	
+					player.direction.Z -= 0.3f;
+					player.direction.X -= 0.7f;
 				}
 				if (Input.IsActionPressed("Left"))
 				{
-					player.direction.X += 1.0f;
+					player.direction.Z += 0.3f;
+					player.direction.X += 0.7f;
 				}
 				if (Input.IsActionPressed("Backward"))
 				{
-					player.direction.Z -= 1.0f;
+					player.direction.Z -= 0.6f;
+					player.direction.X += 0.4f;
+
 				}
 				if (Input.IsActionPressed("Forward"))
 				{
-					player.direction.Z += 1.0f;
+					player.direction.Z += 0.6f;
+					player.direction.X -= 0.4f;
 				}
+				
+				player.direction = player.direction.Normalized();
 			}
 			else
 			{

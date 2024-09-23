@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://r40vsjeix5rc"]
+[gd_scene load_steps=3 format=3 uid="uid://r40vsjeix5rc"]
 
 [ext_resource type="Script" path="res://entity/player/systems/TargetingSystem.cs" id="1_7r4wp"]
+[ext_resource type="PackedScene" uid="uid://cf2y7myghl30p" path="res://entity/player/systems/targeting/directional_ray_cast.tscn" id="2_hwg6s"]
 
-[node name="TargetingSystem" type="Node"]
+[node name="TargetingSystem" type="Node3D" node_paths=PackedStringArray("ray_cast")]
 script = ExtResource("1_7r4wp")
+ray_cast = NodePath("DirectionalRayCast")
+
+[node name="DirectionalRayCast" parent="." instance=ExtResource("2_hwg6s")]

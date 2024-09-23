@@ -202,6 +202,7 @@ public partial class Player : Entity
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
+		// controllers.ability_controller.StopDirectionalInput += controllers.input_controller.HandleInputPrevented;
 
 
 
@@ -235,7 +236,7 @@ public partial class Player : Entity
 		controllers.ability_assigner.AssignAbilities(this);
 	
 
-		exclude.Add(areas.vision.GetRid());
+		// exclude.Add(areas.vision.GetRid());
 		exclude.Add(areas.near.GetRid());
 		exclude.Add(areas.far.GetRid());
 		exclude.Add(areas.interact.GetRid());

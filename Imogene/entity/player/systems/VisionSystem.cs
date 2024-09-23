@@ -6,8 +6,8 @@ public partial class VisionSystem : Node
 	
 	public void SubscribeToAreaSignals(Player player)
 	{
-		player.areas.vision.BodyEntered += (body) => OnBodyEnteredPlayerVision(body, player);
-		player.areas.vision.BodyExited += (body) => OnBodyExitedPlayerVision(body, player);
+		// player.areas.vision.BodyEntered += (body) => OnBodyEnteredPlayerVision(body, player);
+		// player.areas.vision.BodyExited += (body) => OnBodyExitedPlayerVision(body, player);
 
 		player.areas.near.BodyEntered += (body) => OnBodyEnteredNear(body, player);
 		player.areas.near.BodyExited += (body) => OnBodyExitedNear(body, player);
@@ -48,19 +48,19 @@ public partial class VisionSystem : Node
 			player.systems.targeting_system.EnemyEnteredNear(enemy);
 		}
     }
-	private void OnBodyExitedPlayerVision(Node3D body, Player player)
-    {
-        if (body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyExitedVision(enemy);
-		}
-    }
+	// private void OnBodyExitedPlayerVision(Node3D body, Player player)
+    // {
+    //     if (body is Enemy enemy)
+	// 	{
+	// 		player.systems.targeting_system.EnemyExitedVision(enemy);
+	// 	}
+    // }
 
-    private void OnBodyEnteredPlayerVision(Node3D body, Player player)
-    {
-        if(body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyEnteredVision(enemy);
-		}
-    }
+    // private void OnBodyEnteredPlayerVision(Node3D body, Player player)
+    // {
+    //     if(body is Enemy enemy)
+	// 	{
+	// 		player.systems.targeting_system.EnemyEnteredVision(enemy);
+	// 	}
+    // }
 }
