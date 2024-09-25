@@ -5,7 +5,7 @@ public partial class Projectile : RangedAbility
 {
 
 	[Export] public PackedScene projectile_to_load;
-	[Export] public Timer cast_timer;
+	
 	
 	public int projectile_velocity = 25;
 	
@@ -32,7 +32,9 @@ public partial class Projectile : RangedAbility
 
 	public override void Execute(Player player)
 	{
+		base.Execute(player);
 		GD.Print("Execute projectile");
+		
 		state = States.not_queued;
 		if(cast_timer.TimeLeft == 0)
 		{
@@ -47,27 +49,28 @@ public partial class Projectile : RangedAbility
         if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
 		{
 			player.controllers.movement_controller.rotation_only = true;
-			GD.Print("player can only rotate");
+			// GD.Print("player can only rotate");
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{
 			if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
 			{
 				EmitSignal(nameof(AbilityFinished),this);
+				ability_finished = true;
 			}
 			
 			player.controllers.movement_controller.rotation_only = false;
 		}
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
-			EmitSignal(nameof(AbilityQueue),this);
+			EmitSignal(nameof(AbilityQueue), this);
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
 			if(cast_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
-				EmitSignal(nameof(AbilityCheck),this);
+				EmitSignal(nameof(AbilityQueue), this);
+				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}
 		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
@@ -102,12 +105,13 @@ public partial class Projectile : RangedAbility
 
 	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement
 	{
-		if(button_released)
+		if(button_released && !ability_finished)
 		{
 			EmitSignal(nameof(AbilityFinished),this);
+			ability_finished = true;
 		}
 		
-		stop_movement_input = false;
+		
 	}
 
 }

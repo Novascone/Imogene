@@ -17,6 +17,8 @@ columns = 3
 [node name="Button" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Button2" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(40, 40)

@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime;
+using System.Runtime.CompilerServices;
 
 public partial class TargetingSystem : Node
 {
 
-	[Export] DirectionalRayCast ray_cast;
+	[Export] public DirectionalRayCast ray_cast;
 
 	// Enemies
 	// public bool enemy_in_vision = false; // Is there an enemy in the entity's vision?
-	public bool enemy_close = false;
+	public bool enemy_near = false;
 	public bool enemy_far = false;
-	public Enemy closest_enemy;
+	public bool facing_enemy = false;
+	public Enemy nearest_enemy;
 	public Enemy enemy_pointed_toward;
 	public	Dictionary<Enemy, Vector3> mobs= new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
 	public Dictionary<Enemy,Vector3> sorted_mobs; // Sorted Dictionary of mob positions
@@ -40,6 +42,8 @@ public partial class TargetingSystem : Node
 	public bool player_rotating;
 	public bool soft_targeting;
 	public bool enemy_to_soft_target;
+
+	Vector3 direction_to_enemy;
 	
 	[Signal] public delegate void ShowSoftTargetIconEventHandler(Enemy enemy);
 	[Signal] public delegate void HideSoftTargetIconEventHandler(Enemy enemy);
@@ -47,6 +51,9 @@ public partial class TargetingSystem : Node
 	[Signal] public delegate void EnemyUntargetedEventHandler();
 	[Signal] public delegate void BrightenSoftTargetHUDEventHandler();
 	[Signal] public delegate void DimSoftTargetHUDEventHandler();
+	[Signal] public delegate void RotatingEventHandler();
+	[Signal] public delegate void RotationForAbilityFinishedEventHandler(bool finished);
+	[Signal] public delegate void RotationForInputFinishedEventHandler(bool finished);
 
 	public override void _Ready()
 	{
@@ -62,31 +69,30 @@ public partial class TargetingSystem : Node
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public void Target(Player player)
 	{
-		
-		// ray_cast.GetRayCastCollision(player);
+		// GD.Print("Rotate soft: enemy pointed toward " + enemy_pointed_toward);
+		if(mob_looking_at != null && enemy_pointed_toward != null)
+		{
+			if(mob_looking_at != enemy_pointed_toward)
+			{
+				EmitSignal(nameof(RotationForAbilityFinished),false);
+			}
+		}
+	
 		ray_cast.SetTargetingRayCastDirection();
 		ray_cast.GetRayCastCollisions();
 		enemy_pointed_toward = ray_cast.GetEnemyWithMostCollisions();
-		if(enemy_pointed_toward != null)
-		{
-			GD.Print("Enemy pointed toward " + enemy_pointed_toward.Name);
-		}
+		
 		EnemyCheck();
 		SoftTargetCheck(player);
-		// if(player.ui.hud.enemy_health.targeted_enemy != null)
-		// {
-		// 	GD.Print("Targeted enemy " + player.ui.hud.enemy_health.targeted_enemy.Name);
-		// }
 		SoftTargetToggle();
 		
-		// if(mobs.Count == 0) // Reset enemy_in_vision
-		// {	
-		// 	enemy_in_vision = false;
-		// }
-	
 		if(!rotating_to_soft_target) // If player is not rotation toward the soft target
 		{
 			Sort(player); // sorts the enemies by position
+		}
+		else if(rotating_to_soft_target)
+		{
+			SoftTargetRotation(player);
 		}
 		if(enemy_pointed_toward != null)
 		{
@@ -104,108 +110,41 @@ public partial class TargetingSystem : Node
 							{
 								enemy.soft_target = false;
 								EmitSignal(nameof(HideSoftTargetIcon), enemy);
-								GD.Print("hiding + " + enemy.Name + " soft target icon");
+								//GD.Print("hiding + " + enemy.Name + " soft target icon");
 							}
 							
 						}
 					}
 				}
 			}
-
-			// if(mobs_in_order.Count > 1)
-			// {
-			// 	foreach(Enemy enemy in mobs_in_order)
-			// 	{
-			// 		if(enemy != enemy_pointed_toward)
-			// 		{
-			// 			if(enemy.soft_target && enemy.ui.soft_target_icon.Visible)
-			// 			{
-			// 				enemy.soft_target = false;
-			// 				EmitSignal(nameof(HideSoftTargetIcon), enemy);
-			// 			}
-						
-			// 		}
-			// 	}
-			// }
 		}
-		else if(enemy_close)
+		else if(enemy_near)
 		{
-			closest_enemy = mobs_in_order[0];
-			closest_enemy.soft_target = true;
+			nearest_enemy = mobs_in_order[0];
+			nearest_enemy.soft_target = true;
+			
+			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
+			
 			if(mobs_in_order.Count > 1)
 			{
 				foreach(Enemy enemy in mobs_in_order)
 				{
-					if(enemy != enemy_pointed_toward)
+					if(enemy != nearest_enemy)
 					{
 						if(enemy.ui.soft_target_icon.Visible)
 						{
 							enemy.soft_target = false;
 							EmitSignal(nameof(HideSoftTargetIcon), enemy);
-							GD.Print("hiding + " + enemy.Name + " soft target icon");
+							//GD.Print("hiding + " + enemy.Name + " soft target icon");
 						}
 						
 					}
 				}
 			}
 		}
-		// if(enemy_far)
-		// {
-		// 	closest_enemy = mobs_in_order[0];
-		// 	closest_enemy.soft_target = true;
-		// 	if(soft_target_on && !targeting)
-		// 	{
-		// 		if(closest_enemy.in_player_vision || enemy_close)
-		// 		{
-		// 			if(!closest_enemy.ui.soft_target_icon.Visible)
-		// 			{
-		// 				EmitSignal(nameof(ShowSoftTargetIcon),closest_enemy);
-		// 			}
-					
-		// 		}
-		// 		else
-		// 		{
-		// 			if(closest_enemy.ui.soft_target_icon.Visible)
-		// 			{
-		// 				EmitSignal(nameof(HideSoftTargetIcon),closest_enemy);
-		// 			}
-					
-		// 		}
-				
-		// 	}
-			
-		// 	if(mobs_in_order.Count > 1)
-		// 	{
-		// 		foreach(Enemy enemy in mobs_in_order)
-		// 		{
-		// 			if(enemy != closest_enemy)
-		// 			{
-		// 				if(enemy.soft_target && enemy.ui.soft_target_icon.Visible)
-		// 				{
-		// 					enemy.soft_target = false;
-		// 					EmitSignal(nameof(HideSoftTargetIcon), enemy);
-		// 				}
-						
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-		{
-			rotating_to_soft_target = false;
-		}
 
 		LookAtEnemy(player);
-		// if(mobs_in_order.Count > 0)
-		// {
-		// 	GD.Print("mobs in order count" + mobs_in_order.Count);
-		// 	GD.Print("mob closest" + mobs_in_order[0].Name);
-		// }
-		// else
-		// {
-		// 	GD.Print("no mobs in order");
-		// }
+	
 	}
 
 	public void SoftTargetToggle()
@@ -218,7 +157,7 @@ public partial class TargetingSystem : Node
 		{
 			if(frames_held > 0)
 			{
-				GD.Print(frames_held);
+				//GD.Print(frames_held);
 			}
 			if(frames_held >= held_threshold)
 			{
@@ -226,11 +165,11 @@ public partial class TargetingSystem : Node
 				if(!soft_target_on)
 				{
 					EmitSignal(nameof(DimSoftTargetHUD));
-					if(closest_enemy != null)
+					if(nearest_enemy != null)
 					{
-						if(closest_enemy.ui.soft_target_icon.Visible)
+						if(nearest_enemy.ui.soft_target_icon.Visible)
 						{
-							EmitSignal(nameof(HideSoftTargetIcon), closest_enemy);
+							EmitSignal(nameof(HideSoftTargetIcon), nearest_enemy);
 						}
 					}
 				}
@@ -244,32 +183,11 @@ public partial class TargetingSystem : Node
 		}
 	}
 
-	// public void EnemyEnteredVision(Enemy enemy)
-	// {
-		
-	// 	enemy_in_vision = true;
-	// 	enemy.in_player_vision = true;
-	// 	enemies_in_vision.Add(enemy);
-	// }
-
-	// public void EnemyExitedVision(Enemy enemy)
-	// {
-		
-	// 	if(enemy == mob_looking_at)
-	// 	{
-	// 		EmitSignal(nameof(EnemyUntargeted));
-	// 		targeting = false;
-			
-	// 	}
-	// 	enemy.in_player_vision = false;
-	// 	enemies_in_vision.Remove(enemy);
-	// }
-
 	public void EnemyEnteredNear(Enemy enemy) // Called when enemy enters the small soft target zone
 	{
 		
 		enemy.in_soft_target_small = true;
-		enemy_close = true;
+		enemy_near = true;
 	}
 
 	public void EnemyExitedNear(Enemy enemy) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
@@ -277,7 +195,7 @@ public partial class TargetingSystem : Node
 		
 		enemy.in_soft_target_small = false;
 		enemy.soft_target = false;
-		
+		EmitSignal(nameof(HideSoftTargetIcon),enemy);
 		var mobs_in_small = 0;
 
 		foreach(Enemy enemy_in_mobs in mobs.Keys)
@@ -289,8 +207,8 @@ public partial class TargetingSystem : Node
 		}
 		if(mobs_in_small == 0)
 		{
-			enemy_close = false;
-			closest_enemy = null;
+			enemy_near = false;
+			nearest_enemy = null;
 		}
 	}
 
@@ -336,8 +254,8 @@ public partial class TargetingSystem : Node
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				EmitSignal(nameof(HideSoftTargetIcon), enemy);
-				enemy_close = false;
-				closest_enemy = null;
+				enemy_near = false;
+				nearest_enemy = null;
 			}
 			if(soft_target_on)
 			{
@@ -365,7 +283,7 @@ public partial class TargetingSystem : Node
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
 		
-		if(enemy_pointed_toward != null && frames_held > 1)
+		if(frames_held > 1)
 		{
 			if(frames_held < held_threshold && target_released)
 			{
@@ -377,7 +295,7 @@ public partial class TargetingSystem : Node
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 						mob_looking_at = mobs_in_order[0];
 					}
-					else
+					else if (mob_looking_at == null)
 					{
 						mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
 						mob_looking_at = enemy_pointed_toward;
@@ -391,14 +309,14 @@ public partial class TargetingSystem : Node
 				
 			}
 		}
-		if (frames_held > held_threshold && enemy_close)
+		if (frames_held > held_threshold && enemy_near)
 		{
-			closest_enemy.soft_target = false;
-			EmitSignal(nameof(ShowSoftTargetIcon), closest_enemy);
-			GD.Print("Emitting show target icon signal");
+			nearest_enemy.soft_target = false;
+			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
+			//GD.Print("Emitting show target icon signal");
 		}
 		
-		if(enemy_close || enemy_pointed_toward != null)
+		if(enemy_near || enemy_pointed_toward != null)
 		{
 			enemy_to_soft_target = true;
 		}
@@ -424,7 +342,7 @@ public partial class TargetingSystem : Node
 
 	public void LookAtEnemy(Player player) // Look at enemy and switch between enemies
 	{
-		if(targeting && enemy_pointed_toward != null && (mobs_in_order.Count > 0))
+		if(targeting && mobs_in_order.Count > 0)
 		{
 			if(Input.IsActionJustPressed("RS+"))
 			{
@@ -437,9 +355,7 @@ public partial class TargetingSystem : Node
 			
 			HardTargetRotation(player);
 		}
-		
-		SoftTarget(player);
-		
+
 	}
 
 	public void TargetRight() // Check if there is an enemy to the right and switch to the enemy thats is closest to the current enemy targeted, and to the right of the player
@@ -526,49 +442,77 @@ public partial class TargetingSystem : Node
 		}
 	}
 
-	public void SoftTarget(Player player) // Smoothly rotate to soft target
-	{
-		if(!targeting && closest_enemy != null && soft_target_on)
-		{
-			if(player.abilities_in_use.Count > 0)
-			{
-				// if(player.ability_in_use.resource.type == "melee" && closest_enemy_soft.in_soft_target_small) // This is what will be used when skill categories are implemented
-				// {
-				// 	SoftTargetRotation();
-				// }
-				// else if(player.ability_in_use.resource.type == "ranged" && closest_enemy_soft.in_soft_target_large)
-				// {
-				// 	SoftTargetRotation();
-				// }
-				// if(player.ability_in_use.resource.type == "melee" && closest_enemy_soft.in_soft_target_large)
-				// {
-				// 	SoftTargetRotation();
-				// }
-			}
-		}
-	}
-
 	public void SoftTargetRotation(Player player)
 	{
-		GD.Print("Soft target rotation");
-		rotating_to_soft_target = true;
+		float facing_similarity = 0.0f;
+		EmitSignal(nameof(Rotating));
 		if(enemy_pointed_toward != null)
 		{
-			mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
-			GD.Print("Rotating toward enemy pointed toward");
+			direction_to_enemy = player.GlobalPosition.DirectionTo(enemy_pointed_toward.GlobalPosition);
+			if(mob_looking_at != enemy_pointed_toward)
+			{
+				//GD.Print("Rotate soft: mob looking at does not equal enemy pointed toward");
+				mob_looking_at = enemy_pointed_toward;
+				mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
+			}
+			
+			
+			//GD.Print("Rotating toward enemy pointed toward");
 		}
-		else
+		else if(enemy_near)
 		{
-			mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
-			GD.Print("Rotating closest enemy");
+			
+			mob_looking_at = nearest_enemy;
+			mob_to_LookAt_pos = nearest_enemy.GlobalPosition;
+			direction_to_enemy = player.GlobalPosition.DirectionTo(nearest_enemy.GlobalPosition);
+			//GD.Print("Rotating closest enemy");
 		}
+
+
 		player.prev_y_rotation = player.GlobalRotation.Y;
 		player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
 		player.current_y_rotation = player.GlobalRotation.Y;
+
+
 		if(player.prev_y_rotation != player.current_y_rotation)
 		{
 			player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
 		}
+		
+		if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 10)
+		{
+			facing_similarity = 0.98f;
+		}
+		else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 10 && player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 6)
+		{
+			facing_similarity = 0.7f;
+		}
+		else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 6)
+		{
+			facing_similarity = 0.6f;
+		}
+
+
+		if(enemy_pointed_toward == null && nearest_enemy != null)
+		{
+			ray_cast.LookAt(nearest_enemy.GlobalPosition with {Y = ray_cast.GlobalPosition.Y});
+		}
+
+
+		if(-player.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && Mathf.IsEqualApprox(MathF.Round(player.prev_y_rotation - player.current_y_rotation, 2), 0))
+		{
+			EmitSignal(nameof(RotationForAbilityFinished), true);
+			rotating_to_soft_target = false;
+			facing_enemy = true;
+		}
+		else
+		{
+			facing_enemy = false;
+			EmitSignal(nameof(RotationForAbilityFinished), false);
+		}
+
+		
+		
 		
 }
 
@@ -630,7 +574,15 @@ public partial class TargetingSystem : Node
 			}
 	}
 
-	public static class Vector3DictionarySorter // Sorts mobs by distance
+    internal void HandleRotatePlayer()
+    {
+		// GD.Print("Targeting system receiving signal rotate player because of an ability");
+        rotating_to_soft_target = true;
+    }
+
+    
+
+    public static class Vector3DictionarySorter // Sorts mobs by distance
 	{
 		public static Dictionary<Enemy, Vector3> SortByDistance(Dictionary<Enemy, Vector3> dict, Vector3 point)
 		{

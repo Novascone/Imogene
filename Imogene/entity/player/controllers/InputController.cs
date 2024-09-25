@@ -19,6 +19,9 @@ public partial class InputController : Node
 	public int d_pad_frames_held;
 	public int d_pad_frames_held_threshold = 10;
 	public bool d_pad_held;
+	public Vector2 raw_vector;
+	public Vector2 deadzoned_vector;
+	public float deadzone = 0.25f;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
@@ -28,6 +31,7 @@ public partial class InputController : Node
 
 	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
+		
 		if(!directional_input_prevented)
 		{
 			player.direction.X = 0.0f;
@@ -39,29 +43,44 @@ public partial class InputController : Node
 		{
 			if(!player.is_climbing)
 			{
-				if (Input.IsActionPressed("Right"))
-				{
-					player.direction.Z -= 0.3f;
-					player.direction.X -= 0.7f;
-				}
-				if (Input.IsActionPressed("Left"))
-				{
-					player.direction.Z += 0.3f;
-					player.direction.X += 0.7f;
-				}
-				if (Input.IsActionPressed("Backward"))
-				{
-					player.direction.Z -= 0.6f;
-					player.direction.X += 0.4f;
+				// if (Input.IsActionPressed("Right"))
+				// {
+				// 	player.direction.Z -= 0.3f;
+				// 	player.direction.X -= 0.7f;
+				// }
+				// if (Input.IsActionPressed("Left"))
+				// {
+				// 	player.direction.Z += 0.3f;
+				// 	player.direction.X += 0.7f;
+				// }
+				// if (Input.IsActionPressed("Backward"))
+				// {
+				// 	player.direction.Z -= 0.6f;
+				// 	player.direction.X += 0.4f;
 
-				}
-				if (Input.IsActionPressed("Forward"))
-				{
-					player.direction.Z += 0.6f;
-					player.direction.X -= 0.4f;
-				}
+				// }
+				// if (Input.IsActionPressed("Forward"))
+				// {
+				// 	player.direction.Z += 0.6f;
+				// 	player.direction.X -= 0.4f;
+				// }
 				
-				player.direction = player.direction.Normalized();
+				// player.direction = player.direction.Normalized();
+
+				raw_vector = Input.GetVector("Left", "Right", "Forward", "Backward");
+				deadzoned_vector = raw_vector;
+				if(deadzoned_vector.Length() < deadzone)
+				{
+					
+					deadzoned_vector = Vector2.Zero;
+				}
+				else
+				{
+					
+					deadzoned_vector = deadzoned_vector.Normalized() * ((deadzoned_vector.Length() - deadzone) / (1 - deadzone));
+				}
+				player.direction.X = -deadzoned_vector.X;
+				player.direction.Z = -deadzoned_vector.Y;
 			}
 			else
 			{
@@ -116,22 +135,21 @@ public partial class InputController : Node
 		{
 			return true;
 		}
-		if(player.ability_in_use != null)
-		{
-			if(player.ability_in_use.stop_movement_input)
-			{
-				GD.Print("Input prevented");
-				return true;
-			}
-			else
-			{
-				GD.Print("Input not prevented");
-				return false;
-			}
-		}
+		// if(player.ability_in_use != null)
+		// {
+		// 	if(player.ability_in_use.stop_movement_input)
+		// 	{
+		// 		GD.Print("Input prevented");
+		// 		return true;
+		// 	}
+		// 	else
+		// 	{
+		// 		GD.Print("Input not prevented");
+		// 		return false;
+		// 	}
+		// }
 		if(player.systems.targeting_system.rotating_to_soft_target)
 		{
-			GD.Print("Input prevented");
 			return true;
 		}
 		if(player.ui.preventing_movement)
@@ -257,5 +275,36 @@ public partial class InputController : Node
     internal void HandleInputPrevented(bool input_prevented)
     {
         directional_input_prevented = input_prevented;
+    }
+
+    internal void HandleRotatePlayer()
+    {
+        directional_input_prevented = true;
+    }
+
+    internal void HandleRotationFinished(bool finished)
+    {
+		GD.Print("Rotation finished signal received " + finished);
+        directional_input_prevented = finished;
+    }
+
+    internal void OnAbilityFinished(Ability ability)
+    {
+		
+        if(!ability.button_held)
+		{
+			GD.Print("Received ability finished signal in input controller, and button is not held");
+			directional_input_prevented = false;
+		}
+    }
+
+    internal void OnAbilityExecuting(Ability ability)
+    {
+        directional_input_prevented = true;
+    }
+
+    internal void HandleReleaseInputControl()
+    {
+        directional_input_prevented = false;
     }
 }

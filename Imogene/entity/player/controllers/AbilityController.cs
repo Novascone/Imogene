@@ -4,9 +4,12 @@ using System;
 public partial class AbilityController : Node
 {
 	public bool ability_use_prevented = false;
-
+    public bool done_rotating = true;
 
     [Signal] public delegate void ResourceEffectEventHandler(Player player, float resource_change);
+    [Signal] public delegate void RotatePlayerEventHandler();
+    [Signal] public delegate void ReleaseInputControlEventHandler();
+    
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,7 +26,7 @@ public partial class AbilityController : Node
             {   
                 if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
                 {
-                    GD.Print("queueing ability");
+                    // GD.Print("queueing ability");
                     ability.state = Ability.States.queued;
                 }
             }
@@ -42,6 +45,8 @@ public partial class AbilityController : Node
 
 	public void CheckCanUseAbility(Player player, Ability ability)
     {
+        //GD.Print("Checking can use ability");
+       
         if(ability.state == Ability.States.queued)
         {
             if(!ability.button_held)
@@ -50,13 +55,14 @@ public partial class AbilityController : Node
                 {
                     if(player.systems.targeting_system.soft_targeting && player.systems.targeting_system.enemy_to_soft_target)
                     {
-                        GD.Print("Rotate soft ability");
+                        //GD.Print("Rotate soft ability");
                         SoftRotateAbility(player, ability);
 						
                     }
                     else
                     {
-						GD.Print("Executing");
+						//GD.Print("Executing");
+                        
                         ability.Execute(player);
                         if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 						AddToAbilityList(player, ability);
@@ -65,7 +71,8 @@ public partial class AbilityController : Node
                 else
                 {
                     // GD.Print("Execute non rotation");
-					GD.Print("Executing");
+					//GD.Print("Executing");
+                    
                     ability.Execute(player);
                     if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 					AddToAbilityList(player, ability);
@@ -75,22 +82,25 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_held)
                 {
-					
-					AddToAbilityList(player, ability);
-                    GD.Print("Button is held, waiting for player to complete rotation");
-                    if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+                    
+					if(player.systems.targeting_system.enemy_pointed_toward != null)
                     {
-                        GD.Print("Rotating on held");
+                        //GD.Print("Soft targeting enemy while holding down ability");
+                        SoftRotateAbility(player, ability);
+                    }
+                  
+                    else if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
+                    {
+                        // GD.Print("Rotating on held");
+                        EmitSignal(nameof(ReleaseInputControl));
                         ability.Execute(player);
 						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
                         AddToAbilityList(player, ability);
-                        // SoftRotateAbility(player, ability);
-                        // player.movementController.movement_input_allowed = true;
                     }
                 }
                 else
                 {
-					GD.Print("Executing");
+					//GD.Print("Executing");
                     ability.Execute(player);
                     if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
 					AddToAbilityList(player, ability);
@@ -163,12 +173,12 @@ public partial class AbilityController : Node
            
             if(ability.charges - ability.charges_used != 0)
             {
-                 GD.Print("Knock back* Can afford because of charges");
+                //GD.Print("Knock back* Can afford because of charges");
                 return true;
             }
             else
             {
-                GD.Print("Knock back* Can not afford because of charges");
+                //GD.Print("Knock back* Can not afford because of charges");
                 return false;
             }
             
@@ -179,24 +189,24 @@ public partial class AbilityController : Node
             {
                 if(ability.cooldown_timer.TimeLeft == 0)
                 {
-                    GD.Print("Can afford because of cooldown");
+                    //GD.Print("Can afford because of cooldown");
                     return true;
                 }
                 else
                 {
-                    GD.Print("Can't afford because of cooldown");
+                    //GD.Print("Can't afford because of cooldown");
                     return false;
                 }
             }
             else
             {
-                GD.Print("Can afford because of resource");
+                //GD.Print("Can afford because of resource");
                 return true;
             }
         }
         else
         {
-            GD.Print("Can't afford because resource cost");
+            //GD.Print("Can't afford because resource cost");
             return false;
         }
     
@@ -204,47 +214,40 @@ public partial class AbilityController : Node
 
 	public void SoftRotateAbility(Player player, Ability ability)
     {
-        if(!ability.rotate_on_soft_far && (player.systems.targeting_system.enemy_close || player.systems.targeting_system.enemy_pointed_toward != null))
-        {
-			AddToAbilityList(player, ability);
-            player.systems.targeting_system.SoftTargetRotation(player);
-			ability.stop_movement_input = true;
-			GD.Print("Rotating player");
-            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+        
+        // if(!ability.rotate_on_soft_far && (player.systems.targeting_system.enemy_close || player.systems.targeting_system.enemy_pointed_toward != null))
+        // {
+        
+       
+            if(!player.abilities_in_use.Contains(ability))
             {
-                GD.Print("Execute rotation");
-				// GD.Print("Executing");
-                ability.Execute(player);
-                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-				ability.stop_movement_input = false;
-                // player.movementController.movement_input_allowed = true;
+                AddToAbilityList(player, ability);
+                
+                EmitSignal(nameof(RotatePlayer));
+                //GD.Print("Rotating player");
+                done_rotating = false;
             }
-        }
-        else if (ability.rotate_on_soft_far && player.systems.targeting_system.enemy_pointed_toward != null)
-        {
-            // GD.Print("Setting player movement to false");
-			GD.Print("Rotating player");
-			AddToAbilityList(player, ability);
-			ability.stop_movement_input = true; // Not allowing player to move while they are being rotated
-            player.systems.targeting_system.SoftTargetRotation(player);
-            if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-            {
-                GD.Print("Execute rotation");
-				// GD.Print("Executing");
-                ability.Execute(player);
-                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-				ability.stop_movement_input = false; // Allowing player to move after being rotated
-				
-                // player.movementController.movement_input_allowed = true;
-            }
-        }
-        else
-        {
-			GD.Print("Executing");
-            ability.Execute(player);
-            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-			AddToAbilityList(player, ability);
-        }
+            // if(ability.button_held)
+            // {
+                //GD.Print("Ability held, done rotating: " + done_rotating);
+                if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
+                {
+                    if(ability.button_held)
+                    {
+                      
+                        EmitSignal(nameof(RotatePlayer));
+                    }
+                   
+                    ability.Execute(player);
+                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+				    
+                }
+                else if(!done_rotating)
+                {
+                    // done_rotating = false;
+                    EmitSignal(nameof(RotatePlayer));
+                }
+                
     }
 
 	public void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
@@ -276,7 +279,7 @@ public partial class AbilityController : Node
 
     internal void OnNearInteractable(bool near_interactable)
     {
-        GD.Print("got signal from interact system");
+        //GD.Print("got signal from interact system");
         if(near_interactable == true)
         {
             ability_use_prevented = true;
@@ -291,4 +294,13 @@ public partial class AbilityController : Node
     {
         ability_use_prevented = abilities_prevented;
     }
+
+
+    internal void HandleRotationFinished(bool finished)
+    {
+        //GD.Print("Rotation finished in ability controller");
+        done_rotating = finished;
+    }
+
+   
 }

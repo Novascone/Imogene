@@ -48,8 +48,7 @@ public partial class InteractSystem : Node3D
 		player.ui.inventory.main.InventoryCapacity += HandleInventoryCapacity;
 		player.ui.hud.AcceptHUDInput += OnAcceptHUDInput;
 	
-		GD.Print("item types count " + item_types.Count);
-		GD.Print("subscribed top interact signals");
+		
 	}
 
     private void OnAcceptHUDInput(Node3D interacting_object)
@@ -63,7 +62,7 @@ public partial class InteractSystem : Node3D
 
     private void HandleInventoryCapacity(bool full)
     {
-		GD.Print("receiving inventory full signal " + full);
+		
         inventory_full = full;
 		foreach(InteractableItem item in near_by_items)
 		{

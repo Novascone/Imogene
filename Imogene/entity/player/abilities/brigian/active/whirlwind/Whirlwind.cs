@@ -42,7 +42,7 @@ public partial class Whirlwind : Ability
 		{
 			if(tick_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}

@@ -33,6 +33,7 @@ public partial class Ability : Node3D
     [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
     [Signal] public delegate void AbilityCheckEventHandler(Ability ability);
     [Signal] public delegate void AbilityReleasedEventHandler(Ability ability);
+    [Signal] public delegate void AbilityExecutingEventHandler(Ability ability);
     [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
     
     // enum ability_t {active, passive}
@@ -47,6 +48,7 @@ public partial class Ability : Node3D
     public bool button_pressed;
     public bool button_released;
     public bool button_held;
+    public bool ability_finished;
     public int frames_held;
     public int frames_held_threshold = 20;
 
@@ -61,12 +63,13 @@ public partial class Ability : Node3D
     public int charges_used;
     public float cast_time;
     public Timer cooldown_timer;
+    [Export] public Timer cast_timer;
     public bool rotate_on_soft;
     public bool rotate_on_soft_far;
     public bool rotate_on_soft_close;
     public bool rotate_on_held;
 
-    public bool stop_movement_input;
+    // public bool stop_movement_input;
 
     private CustomSignals _customSignals; // Custom signal instance
 
@@ -88,7 +91,7 @@ public partial class Ability : Node3D
             if(@event.IsActionPressed(assigned_button))
             {
 
-                GD.Print("Assigned button " + assigned_button);
+                // GD.Print("Assigned button " + assigned_button);
                 // GD.Print(this.Name + "Action strength " + );
                 if(!button_pressed)
                 {
@@ -158,7 +161,7 @@ public partial class Ability : Node3D
         {
             if(player.entity_systems.damage_system.Crit(player))
             {
-                GD.Print("Critical!");
+                // GD.Print("Critical!");
                 melee_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.combined_damage), 2) * (1 + ability_damage_modifier);
                 melee_hitbox.posture_damage = player.posture_damage.current_value;
                 melee_hitbox.is_critical = true;
@@ -196,6 +199,8 @@ public partial class Ability : Node3D
     public virtual void Execute(Player player) // Default execute
     {
         // GD.Print("access ability child");
+        ability_finished = false;
+        EmitSignal(nameof(AbilityExecuting));
     }
 
     public virtual void FrameCheck(Player player)

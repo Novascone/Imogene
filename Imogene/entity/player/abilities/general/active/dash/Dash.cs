@@ -59,7 +59,7 @@ public partial class Dash : Ability
 		{
 			if(dash_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}
@@ -71,7 +71,7 @@ public partial class Dash : Ability
 
     public void _on_dash_timer_timeout() // When the dash timer times out remove the ability and reset the player velocity
 	{
-		EmitSignal(nameof(AbilityFinished),this);
+		EmitSignal(nameof(AbilityFinished), this);
 		
 		// player.using_movement_ability = false;
 		// player.velocity.X = player.direction.X * player.run_speed; 

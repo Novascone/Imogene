@@ -86,7 +86,7 @@ public partial class EffectTest : Ability
 		{
 			if(duration_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}
@@ -97,9 +97,9 @@ public partial class EffectTest : Ability
 		if(Input.IsActionJustReleased(assigned_button) || player.resource.current_value + resource_change <= 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
-			RemoveHitbox();
+			RemoveHitbox(player);
 			RemoveMesh(player);
-			EmitSignal(nameof(AbilityFinished),this);
+			EmitSignal(nameof(AbilityFinished), this);
 		}	
         
     }
@@ -118,7 +118,7 @@ public partial class EffectTest : Ability
 		}
 	}
 
-	public void RemoveHitbox()
+	public void RemoveHitbox(Player player)
 	{
 		if(effect_test_hitbox != null)
 		{
@@ -126,7 +126,7 @@ public partial class EffectTest : Ability
 			effect_test_hitbox = null;
 		}
 		
-		EmitSignal(nameof(AbilityFinished),this);
+		EmitSignal(nameof(AbilityFinished), this);
 		duration_timer.Stop();
 	}
 

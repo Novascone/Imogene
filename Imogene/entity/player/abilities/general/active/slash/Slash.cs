@@ -229,7 +229,7 @@ public partial class Slash : Ability
 		// GD.Print("execute");
 		// GD.Print("Pressed in execute: " + pressed);
 		state = States.not_queued;
-		stop_movement_input = true;
+		// stop_movement_input = true;
 		
 		// player.targeting_system.SoftTargetRotation();
 		if(player.weapon_type == "one_handed")

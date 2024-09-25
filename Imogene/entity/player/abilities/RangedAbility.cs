@@ -7,7 +7,9 @@ public partial class RangedAbility : Ability
 	public int range = 100;
 	public bool is_enemy;
 
-	public Vector3 GetPlayerCollision(Player player) // Gets the collision point of the player and the object in front of the player, or the end of the ray if there is no collision
+   
+
+    public Vector3 GetPlayerCollision(Player player) // Gets the collision point of the player and the object in front of the player, or the end of the ray if there is no collision
 	{
 		Vector3 ray_origin = player.GlobalTransform.Origin; // Set ray origin
 		Vector3 ray_end = ray_origin + -player.Transform.Basis.Z * range; // Set ray end

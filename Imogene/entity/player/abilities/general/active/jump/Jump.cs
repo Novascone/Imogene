@@ -14,7 +14,7 @@ public partial class Jump : Ability
 		clamber = GetNode<Timer>("Clamber");
 		rotate_on_soft = false;
 		clamber.Timeout += OnClamberTimeout;
-		stop_movement_input = false;
+		// stop_movement_input = false;
     }
 
     private void OnClamberTimeout() // The player is forced to move forward and up until the Clamber timer times out
@@ -135,12 +135,12 @@ public partial class Jump : Ability
 			// GD.Print("start jumping");
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player.velocity.Y = player.jump_velocity;
-			GD.Print("Player velocity from jump " + player.velocity.Y);			
+			// GD.Print("Player velocity from jump " + player.velocity.Y);			
 			player.jumping = true;
 		}
 		else
 		{
-			GD.Print("Player is not on floor and can't jump");
+			// GD.Print("Player is not on floor and can't jump");
 		}
 		EmitSignal(nameof(AbilityFinished),this);
 		// else if(!player.IsOnFloor())
@@ -156,7 +156,7 @@ public partial class Jump : Ability
 
     public override void FrameCheck(Player player)
     {
-		GD.Print("Jump frame execution");
+		// GD.Print("Jump frame execution");
 		
 		CheckGround(player);
 		

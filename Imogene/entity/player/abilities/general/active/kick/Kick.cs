@@ -6,8 +6,7 @@ public partial class Kick : Ability
 
 	private Timer charge_timer_1;
 	private Timer charge_timer_2;
-	private Timer cast_timer;
-	[Export] public PackedScene hitbox_to_load;
+		[Export] public PackedScene hitbox_to_load;
 	[Export] public PackedScene mesh_to_load;
 	KickHitbox kick_hitbox;
 	MeshInstance3D kick_mesh;
@@ -91,7 +90,7 @@ public partial class Kick : Ability
 		{
 			if(cast_timer. TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
+				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
 			}
 			
@@ -99,7 +98,7 @@ public partial class Kick : Ability
 		}
 		if(cast_timer.TimeLeft == 0)
 		{
-			EmitSignal(nameof(AbilityCheck), this);
+			EmitSignal(nameof(AbilityCheck), player, this);
 		}
     }
 
@@ -123,7 +122,7 @@ public partial class Kick : Ability
 			kick_hitbox= null;
 		}
 		
-		EmitSignal(nameof(AbilityFinished),this);
+		EmitSignal(nameof(AbilityFinished), this);
 	}
 
 	public void RemoveMesh()
@@ -162,6 +161,6 @@ public partial class Kick : Ability
 		// GD.Print("cast timer timeout");
 		RemoveHitbox();
 		RemoveMesh();
-		EmitSignal(nameof(AbilityFinished),this);
+		EmitSignal(nameof(AbilityFinished), this);
 	}
 }

@@ -60,12 +60,18 @@ public partial class AbilityAssigner : Node
     {
         var scene = GD.Load<PackedScene>("res://entity/player/abilities/" + class_type + "/" + ability_type + "/" + name + "/" + name + ".tscn");
         Ability ability = (Ability)scene.Instantiate();
+		
 		player.abilities.AddChild(ability);
 		ability.AbilityPressed += player.OnAbilityPressed;
 		ability.AbilityQueue += player.OnAbilityQueue;
 		ability.AbilityCheck += player.OnAbilityCheck;
+		ability.AbilityExecuting += player.controllers.movement_controller.OnAbilityExecuting;
+		ability.AbilityExecuting += player.controllers.input_controller.OnAbilityExecuting;
 		ability.AbilityReleased += player.OnAbilityReleased;
+		ability.AbilityFinished += player.controllers.movement_controller.OnAbilityFinished;
+		ability.AbilityFinished += player.controllers.input_controller.OnAbilityFinished;
 		ability.AbilityFinished += player.OnAbilityFinished;
+		GD.Print("finished subscribing signals to ability controller " + player.controllers.ability_controller.Name);
         return ability;
     }
 

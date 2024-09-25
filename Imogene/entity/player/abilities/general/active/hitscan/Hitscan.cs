@@ -6,7 +6,7 @@ public partial class Hitscan : RangedAbility
 	
 	public Sprite3D cast_marker;
 	[Export] public PackedScene cast_marker_scene;
-	[Export] public Timer cast_timer;
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -15,6 +15,7 @@ public partial class Hitscan : RangedAbility
 		rotate_on_held = true;
 		rotate_on_soft_far = true;
 		rotate_on_soft_close = true;
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -106,19 +107,19 @@ public partial class Hitscan : RangedAbility
 		}
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
-			EmitSignal(nameof(AbilityQueue),this);
+			EmitSignal(nameof(AbilityQueue), player, this);
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
 			if(cast_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue),this);
-				EmitSignal(nameof(AbilityCheck),this);
+				EmitSignal(nameof(AbilityQueue), player, this);
+				EmitSignal(nameof(AbilityCheck), player, this);
 			}		
 		}
 		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
 		{
-			EmitSignal(nameof(AbilityCheck),this);
+			EmitSignal(nameof(AbilityCheck), player, this);
 		}			
     }
 
@@ -163,9 +164,9 @@ public partial class Hitscan : RangedAbility
 	{
 		if(button_released)
 		{
-			EmitSignal(nameof(AbilityFinished),this);
+			EmitSignal(nameof(AbilityFinished), this);
 		}
 		
-		stop_movement_input = false;
+		// stop_movement_input = false;
 	}
 }

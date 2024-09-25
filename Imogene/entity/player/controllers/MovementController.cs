@@ -95,7 +95,11 @@ public partial class MovementController : Node
 			GD.Print("Player not on floor");
 		}
 		
-		LookForward(player,player.direction);
+		if(!player.controllers.input_controller.directional_input_prevented)
+		{
+			LookForward(player,player.direction);
+		}
+		
     }
 
     public float SetGravity(Player player)
@@ -114,7 +118,7 @@ public partial class MovementController : Node
 	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
 	{
 		// GD.Print("Rotating smoothly");
-		if(!player.systems.targeting_system.targeting && !player.is_climbing)
+		if(!player.systems.targeting_system.targeting && !player.systems.targeting_system.rotating_to_soft_target && !player.is_climbing)
 		{
 			player.prev_y_rotation = player.GlobalRotation.Y;
 			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
@@ -248,5 +252,21 @@ public partial class MovementController : Node
 		{
 			tether_position = Vector3.Zero;
 		}
+    }
+
+    internal void HandleRotatePlayer()
+    {
+		// GD.Print("Movement controller receiving signal to stop movement because of an ability");
+        movement_input_prevented = true;
+    }
+
+    internal void OnAbilityExecuting(Ability ability)
+    {
+        movement_input_prevented = true;
+    }
+
+    internal void OnAbilityFinished(Ability ability)
+    {
+        movement_input_prevented = false;
     }
 }

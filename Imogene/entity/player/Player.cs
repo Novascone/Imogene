@@ -99,10 +99,8 @@ public partial class Player : Entity
 		
         if(@event.IsActionPressed("one"))
 		{
-			Slow slow = new();
-			GD.Print("adding slow to player");
-			GD.Print("base movement speed " + movement_speed.base_value + " current movement speed " + movement_speed.current_value);
-			entity_controllers.status_effect_controller.AddStatusEffect(this, slow);
+			controllers.movement_controller.movement_input_prevented = !controllers.movement_controller.movement_input_prevented;
+			controllers.input_controller.directional_input_prevented = !controllers.input_controller.directional_input_prevented;
 		}
 		if(@event.IsActionPressed("two"))
 		{
@@ -186,6 +184,7 @@ public partial class Player : Entity
 		entity_controllers.status_effect_controller.MovementPrevented += controllers.movement_controller.HandleMovementPrevented;
 		entity_controllers.status_effect_controller.Tethered += controllers.movement_controller.HandleTethered;
 		entity_controllers.status_effect_controller.InputPrevented += controllers.input_controller.HandleInputPrevented;
+
 		
 		
 
@@ -197,12 +196,20 @@ public partial class Player : Entity
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
 		systems.interact_system.InputPickUp += HandleInputPickUp;
 
+		systems.targeting_system.RotationForAbilityFinished += controllers.ability_controller.HandleRotationFinished;
+		systems.targeting_system.RotationForInputFinished += controllers.input_controller.HandleRotationFinished;
+		systems.targeting_system.Rotating += controllers.movement_controller.HandleRotatePlayer;
+		systems.targeting_system.Rotating += controllers.input_controller.HandleRotatePlayer;
+		
+
 
 		// Controller signals
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
-		// controllers.ability_controller.StopDirectionalInput += controllers.input_controller.HandleInputPrevented;
+		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
+		controllers.ability_controller.ReleaseInputControl += controllers.input_controller.HandleReleaseInputControl;
+		
 
 
 
@@ -275,9 +282,9 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		// GD.Print("current movement speed " + movement_speed.current_value);
 		
 		CameraFollowsPlayer();
+		systems.targeting_system.ray_cast.FollowPlayer(this);
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta);
 		systems.targeting_system.Target(this);
@@ -311,44 +318,51 @@ public partial class Player : Entity
 
 	 internal void OnAbilityPressed(Ability ability)
     {
-        GD.Print(ability.Name + " has been pressed and the player has received the signal");
+        
 		controllers.ability_controller.QueueAbility(this, ability);
 		controllers.ability_controller.CheckCanUseAbility(this, ability);
     }
 
 	internal void OnAbilityQueue(Ability ability)
     {
-		GD.Print("Queueing ability again");
+		
         controllers.ability_controller.QueueAbility(this, ability);
     }
 
     internal void OnAbilityCheck(Ability ability)
     {
-		GD.Print("Checking ability again");
+		
         controllers.ability_controller.CheckCanUseAbility(this, ability);
     }
 
 	internal void OnAbilityReleased(Ability ability)
     {
-        GD.Print("Ability released");
+        
     }
 
 	internal void OnAbilityFinished(Ability ability)
     {
 		// GD.Print("Removing ability from list");
         controllers.ability_controller.RemoveFromAbilityList(this, ability);
+		systems.targeting_system.rotating_to_soft_target = false;
+		controllers.movement_controller.movement_input_prevented = false;
 		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
 		{
 			using_movement_ability = false;
 		}
+		// if(ability.rotate_on_held)
+		// {
+		// 	GD.Print(ability.Name + " released, input allowed");
+		// 	controllers.ability_controller.AllowDirectionalInput();
+		// }
+		
     }
 
 	public void CameraFollowsPlayer()
 	{
-		var camera_transform = new Transform3D();
-		var pos = GlobalTransform.Origin;
-		camera_transform.Origin = pos;
-		camera_rig.GlobalTransform = camera_transform;	
+		
+		Vector3  camera_position = GlobalPosition;
+		camera_rig.GlobalPosition = camera_position;	
 	}
 
     

@@ -44,7 +44,7 @@ public partial class StatusEffectController : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print("status effect controller added");
+		//GD.Print("status effect controller added");
 		status_effects[slow] = false;
 		status_effects[daze] = false;
 		status_effects[chill] = false;
@@ -82,7 +82,7 @@ public partial class StatusEffectController : Node
 			
 			// if(!effect_to_add.applied)
 			// {
-				GD.Print("adding new effect to " + entity.Name + " " + effect_to_add.name);
+				//GD.Print("adding new effect to " + entity.Name + " " + effect_to_add.name);
 				entity.status_effects.Add(effect_to_add); // adds status effect to entities list of effects
 				AddChild(effect_to_add); // adds the effect as a child setting all of its _Ready() values
 				effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity, effect_to_add); // Subscribes to effect finished signal
@@ -117,15 +117,15 @@ public partial class StatusEffectController : Node
 
     public bool SlowingEffectApplied(Entity entity, StatusEffect effect)
 	{
-		GD.Print("status effect slow in queue " + status_effects[slow]);
-		GD.Print("status effect chill in queue " + status_effects[chill]);
+		//GD.Print("status effect slow in queue " + status_effects[slow]);
+		//GD.Print("status effect chill in queue " + status_effects[chill]);
 		if(status_effects[slow] || status_effects[chill]) // status_effects[tether]
 		{
 			if(entity.status_effects.Contains(effect))
 			{
 				return false;
 			}
-			GD.Print("slowing effect applied");
+			//GD.Print("slowing effect applied");
 			return true;
 		}
 		
@@ -148,17 +148,17 @@ public partial class StatusEffectController : Node
 
 	public void RemoveStatusEffect(Entity entity, StatusEffect effect)
 	{
-		GD.Print("\n");
-		GD.Print("removing " + effect.name);
+		//GD.Print("\n");
+		//GD.Print("removing " + effect.name);
 		effect.QueueFree();
 		entity.entity_controllers.status_effect_controller.SetEffectBooleans(effect);
 		entity.status_effects.Remove(effect);
 		if(!effect.removed)
 		{
-			GD.Print("removing from controller");
+			//GD.Print("removing from controller");
 			effect.Remove(entity);
 		}
-		GD.Print("resetting stacks of " + effect.name);
+		//GD.Print("resetting stacks of " + effect.name);
 		
 		if(effect.prevents_movement == true){ movement_prevented = false; EmitSignal(nameof(MovementPrevented), movement_prevented);}
 		if(effect.prevents_input){ input_prevented = false; EmitSignal(nameof(InputPrevented), input_prevented);}
@@ -185,9 +185,9 @@ public partial class StatusEffectController : Node
 
 	public void ApplyStatusEffect(Entity entity, StatusEffect effect) // Sets booleans for each status effect, and applies the effect to the entity
 	{
-		GD.Print("effects count " + entity.status_effects.Count);
-		GD.Print("Applying an effect of type " + effect.GetType());
-		GD.Print("current stacks " + effect.current_stacks);
+		// GD.Print("effects count " + entity.status_effects.Count);
+		// GD.Print("Applying an effect of type " + effect.GetType());
+		// GD.Print("current stacks " + effect.current_stacks);
 		if (effect.current_stacks < effect.max_stacks && entity.status_effects.Contains(effect))
 		{
 			if(effect.current_stacks == 0)
@@ -195,29 +195,29 @@ public partial class StatusEffectController : Node
 				SetEffectBooleans(effect);
 			}
 			effect.Apply(entity);
-			GD.Print("current stacks " + effect.current_stacks);
+			//GD.Print("current stacks " + effect.current_stacks);
 		}
 		else
 		{
-			GD.Print("Can not add more stacks");
+			//GD.Print("Can not add more stacks");
 		}
 	
 	}
 
 	public void RemoveMovementDebuffs(Entity entity)
 	{
-		GD.Print("entity status effects count before removing " + entity.status_effects.Count);
+		//GD.Print("entity status effects count before removing " + entity.status_effects.Count);
 		for(int i = entity.status_effects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
 		{
-			GD.Print("i " + i);
+			//GD.Print("i " + i);
 			if(entity.status_effects[i].type == StatusEffect.EffectType.debuff  && entity.status_effects[i].category == StatusEffect.EffectCategory.movement)
 			{
-				GD.Print("removing movement debuff " + entity.status_effects[i].name);
+				//GD.Print("removing movement debuff " + entity.status_effects[i].name);
 				RemoveStatusEffect(entity, entity.status_effects[i]);
 			}
 			
 		}
-		GD.Print("entity status effects count after removing " + entity.status_effects.Count);
+		//GD.Print("entity status effects count after removing " + entity.status_effects.Count);
 		// foreach(StatusEffect effect in entity.status_effects)
 		// {
 		// 	if(effect.type == StatusEffect.EffectType.debuff && effect.category == StatusEffect.EffectCategory.movement)
@@ -229,14 +229,14 @@ public partial class StatusEffectController : Node
 
 	public void SetEffectBooleans(StatusEffect effect) // Switches the effect from on to off or off to on in the dictionary
 	{
-		GD.Print("setting effect booleans");
+		//GD.Print("setting effect booleans");
 		foreach(StatusEffect status_effect in status_effects.Keys)
 		{
 			if (effect.GetType() == status_effect.GetType())
 			{
 				status_effects[status_effect] = !status_effects[status_effect];
 			}
-			GD.Print("Status effect " + status_effect.GetType() + " " + status_effects[status_effect]);
+			//GD.Print("Status effect " + status_effect.GetType() + " " + status_effects[status_effect]);
 		}
 
 	}
@@ -262,7 +262,7 @@ public partial class StatusEffectController : Node
 					{
 						if(applied_effect.GetType() == status_effect.GetType())
 						{
-							GD.Print("status effect already exists, returning existing effect");
+							//GD.Print("status effect already exists, returning existing effect");
 							effect_to_get = applied_effect;
 						}
 					}
@@ -274,15 +274,15 @@ public partial class StatusEffectController : Node
 	}
 
 	// Handlers for signals from the status effects
-	 private void HandleAdditionalStatusEffect(StatusEffect effect, Entity entity)
+	private void HandleAdditionalStatusEffect(StatusEffect effect, Entity entity)
     {
-		GD.Print("received signal to add status effect");
+		//GD.Print("received signal to add status effect");
         AddStatusEffect(entity, effect);
     }
 
     private void HandleStatusEffectFinished(Entity entity, StatusEffect effect_to_remove)
     {
-		GD.Print("received signal to remove status effect " + effect_to_remove.Name);
+		//GD.Print("received signal to remove status effect " + effect_to_remove.Name);
 		foreach(StatusEffect effect in status_effects.Keys)
 		{
 			if(effect_to_remove.GetType() == effect.GetType())
