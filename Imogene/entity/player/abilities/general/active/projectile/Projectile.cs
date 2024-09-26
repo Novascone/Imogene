@@ -70,6 +70,7 @@ public partial class Projectile : RangedAbility
 			EmitSignal(nameof(AbilityFinished),this);
 			ability_finished = true;
 		}
+		EmitSignal(nameof(AbilityReleaseInputControl),this);
 		
 	}
 

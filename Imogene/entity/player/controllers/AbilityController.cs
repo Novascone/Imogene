@@ -82,16 +82,15 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_held)
                 {
-                    
+                    GD.Print("difference in rotation " + MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1)); 
 					if(player.systems.targeting_system.enemy_pointed_toward != null)
                     {
                         //GD.Print("Soft targeting enemy while holding down ability");
                         SoftRotateAbility(player, ability);
                     }
-                  
                     else if(MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
                     {
-                        // GD.Print("Rotating on held");
+                        GD.Print("Rotating on held");
                         EmitSignal(nameof(ReleaseInputControl));
                         ability.Execute(player);
 						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}

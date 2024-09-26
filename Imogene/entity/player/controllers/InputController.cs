@@ -93,6 +93,7 @@ public partial class InputController : Node
 		CheckDPadInput(player);
 		if(!directional_input_prevented)
 		{
+			GD.Print("looking forward");
 			LookForward(player,player.direction);
 		}
 		if(x_rotation_not_zero)
@@ -333,15 +334,16 @@ public partial class InputController : Node
     internal void OnAbilityFinished(Ability ability)
     {
 		
-        if(!ability.button_held)
-		{
-			GD.Print("Received ability finished signal in input controller, and button is not held");
+        // if(!ability.button_held)
+		// {
+			GD.Print("Received ability finished signal");
 			directional_input_prevented = false;
-		}
+		// }
     }
 
     internal void OnAbilityExecuting(Ability ability)
     {
+		GD.Print("Ability preventing input");
         directional_input_prevented = true;
     }
 

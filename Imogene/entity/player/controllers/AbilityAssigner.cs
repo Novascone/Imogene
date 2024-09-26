@@ -70,6 +70,7 @@ public partial class AbilityAssigner : Node
 		ability.AbilityReleased += player.OnAbilityReleased;
 		ability.AbilityFinished += player.controllers.movement_controller.OnAbilityFinished;
 		ability.AbilityFinished += player.controllers.input_controller.OnAbilityFinished;
+		ability.AbilityReleaseInputControl += player.controllers.input_controller.OnAbilityFinished;
 		ability.AbilityFinished += player.OnAbilityFinished;
 		GD.Print("finished subscribing signals to ability controller " + player.controllers.ability_controller.Name);
         return ability;

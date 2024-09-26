@@ -35,6 +35,7 @@ public partial class Ability : Node3D
     [Signal] public delegate void AbilityReleasedEventHandler(Ability ability);
     [Signal] public delegate void AbilityExecutingEventHandler(Ability ability);
     [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
+    [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability);
     
     // enum ability_t {active, passive}
 
