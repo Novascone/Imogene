@@ -63,7 +63,7 @@ public partial class Ability : Node3D
     public int charges_used;
     public float cast_time;
     public Timer cooldown_timer;
-    [Export] public Timer cast_timer;
+    [Export] public Timer use_timer;
     public bool rotate_on_soft;
     public bool rotate_on_soft_far;
     public bool rotate_on_soft_close;
@@ -200,12 +200,37 @@ public partial class Ability : Node3D
     {
         // GD.Print("access ability child");
         ability_finished = false;
-        EmitSignal(nameof(AbilityExecuting));
+        EmitSignal(nameof(AbilityExecuting), this);
     }
 
     public virtual void FrameCheck(Player player)
     {
-        GD.Print("this is the base frame check");
+        if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
+		{
+			if(use_timer.TimeLeft == 0)
+			{
+				EmitSignal(nameof(AbilityFinished),this);
+				ability_finished = true;
+			}
+			
+			
+		}
+		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		{
+			EmitSignal(nameof(AbilityQueue), this);
+		}
+		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
+		{
+			if(use_timer.TimeLeft == 0)
+			{
+				EmitSignal(nameof(AbilityQueue), this);
+				EmitSignal(nameof(AbilityCheck), this);
+			}		
+		}
+		if(use_timer.TimeLeft == 0) // If not held check if ability can be used
+		{
+			EmitSignal(nameof(AbilityCheck),this);
+		}	
     }
 
 

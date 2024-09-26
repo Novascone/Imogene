@@ -29,6 +29,7 @@ public partial class DirectionalRayCast : Node3D
 	public Vector3 ray_origin;
 	public Vector2 raw_vector;
 	public Vector2 deadzoned_vector;
+	public float input_strength;
 	public float deadzone = 0.25f;
 	// public List<Enemy> enemies = new List<Enemy>();
 	public Dictionary<Enemy,int> enemies = new Dictionary<Enemy, int>();
@@ -67,6 +68,7 @@ public partial class DirectionalRayCast : Node3D
 		
 
 		raw_vector = Input.GetVector("Left", "Right", "Forward", "Backward");
+		input_strength = Input.GetActionStrength("Right") + Input.GetActionStrength("Forward") + Input.GetActionStrength("Left") + Input.GetActionStrength("Backward");
 		deadzoned_vector = raw_vector;
 		if(deadzoned_vector.Length() < deadzone)
 		{

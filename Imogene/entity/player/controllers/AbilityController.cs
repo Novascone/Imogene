@@ -89,7 +89,7 @@ public partial class AbilityController : Node
                         SoftRotateAbility(player, ability);
                     }
                   
-                    else if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
+                    else if(MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
                     {
                         // GD.Print("Rotating on held");
                         EmitSignal(nameof(ReleaseInputControl));
@@ -230,23 +230,28 @@ public partial class AbilityController : Node
             // if(ability.button_held)
             // {
                 //GD.Print("Ability held, done rotating: " + done_rotating);
-                if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
+            if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
+            {
+                if(ability.button_held)
                 {
-                    if(ability.button_held)
-                    {
-                      
-                        EmitSignal(nameof(RotatePlayer));
-                    }
-                   
-                    ability.Execute(player);
-                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-				    
-                }
-                else if(!done_rotating)
-                {
-                    // done_rotating = false;
+                    
                     EmitSignal(nameof(RotatePlayer));
                 }
+                
+                ability.Execute(player);
+                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                
+            }
+            else if(!done_rotating)
+            {
+                // done_rotating = false;
+                EmitSignal(nameof(RotatePlayer));
+            }
+            else
+            {
+                ability.Execute(player);
+                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+            }
                 
     }
 

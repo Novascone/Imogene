@@ -210,16 +210,16 @@ public partial class Enemy : Entity
 	{
 		if(!entity_in_alert_area)
 		{
-			prev_y_rotation = GlobalRotation.Y;
+			previous_y_rotation = GlobalRotation.Y;
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving
 			{
 				LookAt(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
 				
 			}
 			current_y_rotation = GlobalRotation.Y;
-			if(prev_y_rotation != current_y_rotation)
+			if(previous_y_rotation != current_y_rotation)
 			{
-				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(prev_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(previous_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 	}

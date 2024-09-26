@@ -19,6 +19,7 @@ public partial class InputController : Node
 	public int d_pad_frames_held;
 	public int d_pad_frames_held_threshold = 10;
 	public bool d_pad_held;
+	public bool x_rotation_not_zero;
 	public Vector2 raw_vector;
 	public Vector2 deadzoned_vector;
 	public float deadzone = 0.25f;
@@ -58,7 +59,7 @@ public partial class InputController : Node
 				// 	player.direction.Z -= 0.6f;
 				// 	player.direction.X += 0.4f;
 
-				// }
+				// }systems.targeting_system.RotationForInputFinished += controllers.input_controller.HandleRotationFinished;
 				// if (Input.IsActionPressed("Forward"))
 				// {
 				// 	player.direction.Z += 0.6f;
@@ -90,6 +91,14 @@ public partial class InputController : Node
 		}
 
 		CheckDPadInput(player);
+		if(!directional_input_prevented)
+		{
+			LookForward(player,player.direction);
+		}
+		if(x_rotation_not_zero)
+		{
+			RotateXBack(player);
+		}
 		
 	}
 
@@ -124,6 +133,37 @@ public partial class InputController : Node
 				player.direction.Y += 1.0f;
 				// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 			}
+		}
+	}
+
+	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
+	{
+		// GD.Print("Rotating smoothly");
+		if(!player.systems.targeting_system.targeting && !player.systems.targeting_system.rotating_to_soft_target && !player.is_climbing)
+		{
+			player.previous_y_rotation = player.GlobalRotation.Y;
+			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
+			{
+				player.LookAt(player.GlobalPosition + direction with { Y = 0 });
+			}
+			player.current_y_rotation = player.GlobalRotation.Y;
+			if(player.previous_y_rotation != player.current_y_rotation)
+			{
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.previous_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+			}
+		}
+	}
+
+	public void RotateXBack(Player player)
+	{
+		GD.Print("Rotating player x back");
+		if(player.GlobalRotation.X != -0)
+		{
+			player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f);
+		}
+		else
+		{
+			x_rotation_not_zero = false;
 		}
 	}
 
@@ -282,10 +322,12 @@ public partial class InputController : Node
         directional_input_prevented = true;
     }
 
-    internal void HandleRotationFinished(bool finished)
+    internal void HandleRotationFinished(Player player)
     {
-		GD.Print("Rotation finished signal received " + finished);
-        directional_input_prevented = finished;
+		if(player.GlobalRotation.X != -0)
+		{
+			x_rotation_not_zero = true;
+		}
     }
 
     internal void OnAbilityFinished(Ability ability)

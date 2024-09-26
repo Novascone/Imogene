@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://cdhbhcfmpougy" path="res://entity/player/abilities/general/active/projectile/projectile_to_load.tscn" id="2_r4gxv"]
 [ext_resource type="Texture2D" uid="uid://bck6o03dlln85" path="res://images/icons/projectile.png" id="2_rqfnq"]
 
-[node name="Projectile" type="Node3D" node_paths=PackedStringArray("cast_timer")]
+[node name="Projectile" type="Node3D" node_paths=PackedStringArray("use_timer")]
 top_level = true
 script = ExtResource("1_yrhtv")
 projectile_to_load = ExtResource("2_r4gxv")
 general_ability_type = 1
 damage_type = 2
 icon = ExtResource("2_rqfnq")
-cast_timer = NodePath("CastTimer")
+use_timer = NodePath("CastTimer")
 
 [node name="CastTimer" type="Timer" parent="."]
 wait_time = 0.5

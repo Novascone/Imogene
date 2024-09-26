@@ -22,13 +22,6 @@ public partial class Projectile : RangedAbility
 		ability_damage_modifier = 1;
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(double delta)
-	{
-
-		
-		
-	}
 
 	public override void Execute(Player player)
 	{
@@ -36,48 +29,15 @@ public partial class Projectile : RangedAbility
 		GD.Print("Execute projectile");
 		
 		state = States.not_queued;
-		if(cast_timer.TimeLeft == 0)
+		if(use_timer.TimeLeft == 0)
 		{
-			cast_timer.Start();
+			use_timer.Start();
 			Vector3 collision = GetPlayerCollision(player); // Get the collision from the player to whats in front of it
 			LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
 		}
 	}
 
-    public override void FrameCheck(Player player)
-    {
-        if(CheckHeld()) // Check if button is held and only allow the player to rotate if it is
-		{
-			player.controllers.movement_controller.rotation_only = true;
-			// GD.Print("player can only rotate");
-		}
-		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
-		{
-			if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
-			{
-				EmitSignal(nameof(AbilityFinished),this);
-				ability_finished = true;
-			}
-			
-			player.controllers.movement_controller.rotation_only = false;
-		}
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
-		{
-			EmitSignal(nameof(AbilityQueue), this);
-		}
-		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
-		{
-			if(cast_timer.TimeLeft == 0)
-			{
-				EmitSignal(nameof(AbilityQueue), this);
-				EmitSignal(nameof(AbilityCheck), this);
-			}		
-		}
-		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
-		{
-			EmitSignal(nameof(AbilityCheck),this);
-		}		
-    }
+   
 
     public virtual void LaunchProjectile(Player player, Vector3 collision_point)
 	{
@@ -110,7 +70,6 @@ public partial class Projectile : RangedAbility
 			EmitSignal(nameof(AbilityFinished),this);
 			ability_finished = true;
 		}
-		
 		
 	}
 

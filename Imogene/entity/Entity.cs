@@ -181,8 +181,13 @@ public partial class Entity : CharacterBody3D
     public Vector3 direction; // Direction 
 	public Vector3 position; // Position 
 	public Vector3 velocity; // Velocity 
-	public float prev_y_rotation; // Rotation before current rotation
+	public float previous_y_rotation; // Rotation before current rotation
 	public float current_y_rotation; // Current rotation
+	public float previous_x_rotation; // Rotation before current rotation
+	public float current_x_rotation; // Current rotation
+	public float previous_z_rotation; // Rotation before current rotation
+	public float current_z_rotation; // Current rotation
+	
 
 	public string weapon_type;
 

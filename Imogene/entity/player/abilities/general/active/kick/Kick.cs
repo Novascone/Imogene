@@ -17,7 +17,7 @@ public partial class Kick : Ability
 		melee_hitbox = kick_hitbox;
 		charge_timer_1 = GetNode<Timer>("ChargeTimer1");
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
-		cast_timer = GetNode<Timer>("CastTimer");
+		use_timer = GetNode<Timer>("CastTimer");
 		charges = 2;
 		ability_damage_modifier = 0.5f;
 	}
@@ -54,7 +54,7 @@ public partial class Kick : Ability
 
 		state = States.not_queued;
 		charges_used += 1;
-		cast_timer.Start();
+		use_timer.Start();
 		if(charge_timer_1.TimeLeft == 0)
 		{
 			charge_timer_1.Start();
@@ -88,7 +88,7 @@ public partial class Kick : Ability
     {
         if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
-			if(cast_timer. TimeLeft == 0)
+			if(use_timer. TimeLeft == 0)
 			{
 				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
@@ -96,7 +96,7 @@ public partial class Kick : Ability
 			
 		
 		}
-		if(cast_timer.TimeLeft == 0)
+		if(use_timer.TimeLeft == 0)
 		{
 			EmitSignal(nameof(AbilityCheck), player, this);
 		}

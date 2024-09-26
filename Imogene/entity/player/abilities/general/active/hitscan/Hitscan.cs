@@ -55,7 +55,7 @@ public partial class Hitscan : RangedAbility
 	{
 		// GD.Print("Casting");
 		state = States.not_queued;
-		cast_timer.Start();
+		use_timer.Start();
 		Vector3 collision = GetPlayerCollision(player); // Get collision point of raycast from player to object in from of them or 
 		HitscanCollision(player, collision); // Create a raycast from cast point to player collision
 	}
@@ -98,7 +98,7 @@ public partial class Hitscan : RangedAbility
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{
-			if(MathF.Round(player.current_y_rotation - player.prev_y_rotation, 1) == 0)
+			if(MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1) == 0)
 			{
 				EmitSignal(nameof(AbilityFinished),this);
 			}
@@ -111,13 +111,13 @@ public partial class Hitscan : RangedAbility
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
-			if(cast_timer.TimeLeft == 0)
+			if(use_timer.TimeLeft == 0)
 			{
 				EmitSignal(nameof(AbilityQueue), player, this);
 				EmitSignal(nameof(AbilityCheck), player, this);
 			}		
 		}
-		if(cast_timer.TimeLeft == 0) // If not held check if ability can be used
+		if(use_timer.TimeLeft == 0) // If not held check if ability can be used
 		{
 			EmitSignal(nameof(AbilityCheck), player, this);
 		}			

@@ -142,7 +142,7 @@ public partial class Player : Entity
 
 	
 		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
-		// Ability slash = (Ability)ability_assigner.LoadAbility(this, "Slash", "General", "Active");
+		Ability slash = (Ability)controllers.ability_assigner.LoadAbility(this, "slash", "general", "active");
 		Ability effect_test = (Ability)controllers.ability_assigner.LoadAbility(this, "effect_test", "general", "active");
 		Ability kick = (Ability)controllers.ability_assigner.LoadAbility(this, "kick", "general", "active");
 		Ability projectile = (Ability)controllers.ability_assigner.LoadAbility(this, "projectile", "general", "active");
@@ -151,7 +151,7 @@ public partial class Player : Entity
 		Ability dash = (Ability)controllers.ability_assigner.LoadAbility(this, "dash", "general", "active");
 		
 		controllers.ability_assigner.AssignAbility(this, jump, "A", "Right", "Primary");
-		// ability_assigner.AssignAbility(this, slash, "RB", "Left", "Primary");
+		controllers.ability_assigner.AssignAbility(this, slash, "RB", "Left", "Primary");
 		controllers.ability_assigner.AssignAbility(this, effect_test, "RT", "Left", "Primary");
 		controllers.ability_assigner.AssignAbility(this, kick, "LB", "Left", "Primary");
 		controllers.ability_assigner.AssignAbility(this, projectile, "LT", "Left", "Primary");
@@ -282,7 +282,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
     {
-		
+	
 		CameraFollowsPlayer();
 		systems.targeting_system.ray_cast.FollowPlayer(this);
 		controllers.input_controller.SetInput(this);

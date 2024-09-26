@@ -53,7 +53,7 @@ public partial class TargetingSystem : Node
 	[Signal] public delegate void DimSoftTargetHUDEventHandler();
 	[Signal] public delegate void RotatingEventHandler();
 	[Signal] public delegate void RotationForAbilityFinishedEventHandler(bool finished);
-	[Signal] public delegate void RotationForInputFinishedEventHandler(bool finished);
+	[Signal] public delegate void RotationForInputFinishedEventHandler(Player player);
 
 	public override void _Ready()
 	{
@@ -257,7 +257,6 @@ public partial class TargetingSystem : Node
 				enemy_near = false;
 				nearest_enemy = null;
 			}
-			if(soft_target_on)
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
 				EmitSignal(nameof(HideSoftTargetIcon), enemy);
@@ -432,13 +431,20 @@ public partial class TargetingSystem : Node
 
 	public void HardTargetRotation(Player player) // Smoothly rotate to hard target
 	{
-		player.prev_y_rotation = player.GlobalRotation.Y;
-		player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
+		player.previous_y_rotation = player.GlobalRotation.Y;
+		if(player.IsOnFloor())
+		{
+			player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
+		}
+		else
+		{
+			player.LookAt(mob_to_LookAt_pos);
+		}
 		EmitSignal(nameof(EnemyTargeted), mob_looking_at);
 		player.current_y_rotation = player.GlobalRotation.Y;
-		if(player.prev_y_rotation != player.current_y_rotation)
+		if(player.previous_y_rotation != player.current_y_rotation)
 		{
-			player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+			player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.previous_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 		}
 	}
 
@@ -469,52 +475,87 @@ public partial class TargetingSystem : Node
 		}
 
 
-		player.prev_y_rotation = player.GlobalRotation.Y;
-		player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
-		player.current_y_rotation = player.GlobalRotation.Y;
-
-
-		if(player.prev_y_rotation != player.current_y_rotation)
-		{
-			player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
-		}
 		
-		if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 10)
+		if(enemy_pointed_toward != null || (enemy_near && ray_cast.input_strength < 0.25f))
 		{
-			facing_similarity = 0.98f;
-		}
-		else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 10 && player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 6)
-		{
-			facing_similarity = 0.7f;
-		}
-		else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 6)
-		{
-			facing_similarity = 0.6f;
-		}
+			GD.Print("Ray cast input strength " + ray_cast.input_strength);
+			player.previous_y_rotation = player.GlobalRotation.Y;
+			if(player.IsOnFloor())
+			{
+				player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
+			}
+			else
+			{
+				player.previous_x_rotation = player.GlobalRotation.X;
+				player.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
+				player.current_x_rotation = player.GlobalRotation.X;
+				if(player.previous_x_rotation != player.current_x_rotation)
+				{
+					player.GlobalRotation = player.GlobalRotation with {X = Mathf.LerpAngle(player.previous_x_rotation, player.current_x_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
+				}
+			}
+			
+			player.current_y_rotation = player.GlobalRotation.Y;
+			if(player.previous_y_rotation != player.current_y_rotation)
+			{
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.previous_y_rotation, player.current_y_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
+			}
+
+			
+			
+			if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 10)
+			{
+				facing_similarity = 0.98f;
+			}
+			else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 10 && player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 6)
+			{
+				facing_similarity = 0.7f;
+			}
+			else if(player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 6)
+			{
+				facing_similarity = 0.6f;
+			}
 
 
-		if(enemy_pointed_toward == null && nearest_enemy != null)
-		{
-			ray_cast.LookAt(nearest_enemy.GlobalPosition with {Y = ray_cast.GlobalPosition.Y});
-		}
+			if(enemy_pointed_toward == null && nearest_enemy != null)
+			{
+				ray_cast.LookAt(nearest_enemy.GlobalPosition with {Y = ray_cast.GlobalPosition.Y});
+			}
 
-
-		if(-player.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && Mathf.IsEqualApprox(MathF.Round(player.prev_y_rotation - player.current_y_rotation, 2), 0))
-		{
-			EmitSignal(nameof(RotationForAbilityFinished), true);
-			rotating_to_soft_target = false;
-			facing_enemy = true;
+			
+			if(-player.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && CheckSimilarRotations(player))
+			{
+				EmitSignal(nameof(RotationForAbilityFinished), true);
+				EmitSignal(nameof(RotationForInputFinished), player);
+				rotating_to_soft_target = false;
+				facing_enemy = true;
+			}
+			else
+			{
+				GD.Print("Not facing enemy dot " + -player.GlobalBasis.Z.Dot(direction_to_enemy));
+				facing_enemy = false;
+				EmitSignal(nameof(RotationForAbilityFinished), false);
+			}
 		}
 		else
 		{
-			facing_enemy = false;
-			EmitSignal(nameof(RotationForAbilityFinished), false);
+			GD.Print("Enemy is near, but the player is moving away from the enemy");
+			EmitSignal(nameof(RotationForAbilityFinished), true);
 		}
-
-		
-		
 		
 }
+
+	public bool CheckSimilarRotations(Player player)
+	{
+		if(Mathf.IsEqualApprox(MathF.Round(player.previous_y_rotation - player.current_y_rotation, 2), 0))
+		{
+			if(Mathf.IsEqualApprox(MathF.Round(player.previous_x_rotation - player.current_x_rotation, 2), 0))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void Sort(Player player) // Sort mobs by distance
 	{

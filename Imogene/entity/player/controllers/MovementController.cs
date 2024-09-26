@@ -95,10 +95,7 @@ public partial class MovementController : Node
 			GD.Print("Player not on floor");
 		}
 		
-		if(!player.controllers.input_controller.directional_input_prevented)
-		{
-			LookForward(player,player.direction);
-		}
+		
 		
     }
 
@@ -115,23 +112,7 @@ public partial class MovementController : Node
 		}
 	}
 
-	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
-	{
-		// GD.Print("Rotating smoothly");
-		if(!player.systems.targeting_system.targeting && !player.systems.targeting_system.rotating_to_soft_target && !player.is_climbing)
-		{
-			player.prev_y_rotation = player.GlobalRotation.Y;
-			if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
-			{
-				player.LookAt(player.GlobalPosition + direction with { Y = 0 });
-			}
-			player.current_y_rotation = player.GlobalRotation.Y;
-			if(player.prev_y_rotation != player.current_y_rotation)
-			{
-				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
-			}
-		}
-	}
+	
 
 
 	public bool StatusEffectsPreventingMovement(Player player)
@@ -200,11 +181,11 @@ public partial class MovementController : Node
 
 		if(player.direction != Vector3.Zero && player.is_climbing)
 		{
-			player.prev_y_rotation = player.GlobalRotation.Y;
+			player.previous_y_rotation = player.GlobalRotation.Y;
 			player.current_y_rotation = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
-			if(player.prev_y_rotation != player.current_y_rotation)
+			if(player.previous_y_rotation != player.current_y_rotation)
 			{
-				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.prev_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.previous_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 	}
@@ -262,6 +243,7 @@ public partial class MovementController : Node
 
     internal void OnAbilityExecuting(Ability ability)
     {
+		GD.Print("received signal ability executing " + ability.Name);
         movement_input_prevented = true;
     }
 
