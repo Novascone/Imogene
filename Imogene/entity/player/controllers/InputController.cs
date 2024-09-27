@@ -23,6 +23,8 @@ public partial class InputController : Node
 	public Vector2 raw_vector;
 	public Vector2 deadzoned_vector;
 	public float deadzone = 0.25f;
+	public float max_x_rotation = 0.3f;
+	public float min_x_rotation = -0.3f;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
@@ -44,30 +46,7 @@ public partial class InputController : Node
 		{
 			if(!player.is_climbing)
 			{
-				// if (Input.IsActionPressed("Right"))
-				// {
-				// 	player.direction.Z -= 0.3f;
-				// 	player.direction.X -= 0.7f;
-				// }
-				// if (Input.IsActionPressed("Left"))
-				// {
-				// 	player.direction.Z += 0.3f;
-				// 	player.direction.X += 0.7f;
-				// }
-				// if (Input.IsActionPressed("Backward"))
-				// {
-				// 	player.direction.Z -= 0.6f;
-				// 	player.direction.X += 0.4f;
-
-				// }systems.targeting_system.RotationForInputFinished += controllers.input_controller.HandleRotationFinished;
-				// if (Input.IsActionPressed("Forward"))
-				// {
-				// 	player.direction.Z += 0.6f;
-				// 	player.direction.X -= 0.4f;
-				// }
 				
-				// player.direction = player.direction.Normalized();
-
 				raw_vector = Input.GetVector("Left", "Right", "Forward", "Backward");
 				deadzoned_vector = raw_vector;
 				if(deadzoned_vector.Length() < deadzone)
@@ -96,6 +75,10 @@ public partial class InputController : Node
 			GD.Print("looking forward");
 			LookForward(player,player.direction);
 		}
+		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
+		GD.Print("player x rotation " + player.GlobalRotation.X);
+		GD.Print("player previous x rotation " + player.previous_x_rotation);
+		GD.Print("player current x rotation " + player.current_x_rotation);
 		if(x_rotation_not_zero)
 		{
 			RotateXBack(player);
@@ -157,10 +140,13 @@ public partial class InputController : Node
 
 	public void RotateXBack(Player player)
 	{
-		GD.Print("Rotating player x back");
+		
 		if(player.GlobalRotation.X != -0)
 		{
-			player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f);
+			// player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f); <-- figure out a way to use this with hard target 
+			player.previous_x_rotation = 0f;
+			player.current_x_rotation = 0f;
+			
 		}
 		else
 		{

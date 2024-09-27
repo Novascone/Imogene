@@ -53,7 +53,7 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_soft)
                 {
-                    if(player.systems.targeting_system.soft_targeting && player.systems.targeting_system.enemy_to_soft_target)
+                    if(player.systems.targeting_system.enemy_to_soft_target)
                     {
                         //GD.Print("Rotate soft ability");
                         SoftRotateAbility(player, ability);
