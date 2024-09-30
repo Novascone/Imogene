@@ -65,10 +65,9 @@ public partial class AbilityAssigner : Node
 		ability.AbilityPressed += player.OnAbilityPressed;
 		ability.AbilityQueue += player.OnAbilityQueue;
 		ability.AbilityCheck += player.OnAbilityCheck;
-		ability.AbilityExecuting += player.controllers.movement_controller.OnAbilityExecuting;
 		ability.AbilityReleased += player.OnAbilityReleased;
-		ability.AbilityFinished += player.controllers.movement_controller.OnAbilityFinished;
 		player.controllers.input_controller.AbilitySubscribe(ability);
+		player.controllers.movement_controller.AbilitySubscribe(ability);
 		
 		ability.AbilityFinished += player.OnAbilityFinished;
 		GD.Print("finished subscribing signals to ability controller " + player.controllers.ability_controller.Name);

@@ -10,29 +10,32 @@ using System.Runtime.CompilerServices;
 public partial class MovementController : Node
 {
 
+	// Landing point 
 	Vector3 ray_origin;
 	Vector3 ray_target = new  Vector3(0, -4, 0);
 	int ray_range = 2000;
+
+	// Climbing
 	private float climb_speed = 4.0f;
 	private float clamber_speed = 10.0f;
-	public bool rotation_only;
+	public bool climbing = false;
+	public bool clambering = false;
+	private float vertical_climbing_input;
+	private float horizontal_climbing_input;
+
+	// Input
 	public bool rotation_finished;
 	public bool movement_input_prevented = false;
+	public bool movement_ability_in_use = false;
 	Vector3 tether_position;
+	public float movement_from_tether = 0;
 	public bool movement_tethered = false;
-	StatModifier walk = new (StatModifier.ModificationType.multiply_current);
-
-    public override void _Ready()
-    {
-        walk.mod = -0.5f;
-    }
-
-
+	
 
     public void MovePlayer(Player player, float input_strength, double delta)
 	{
 		
-		if(!player.is_climbing)
+		if(!climbing)
 		{
 			StandardMovement(player, input_strength, delta);
 		}
@@ -40,28 +43,14 @@ public partial class MovementController : Node
 		{
 			ClimbingMovement(player);
 		}
-		if(!player.using_movement_ability && !rotation_only && !movement_input_prevented)
-		{
-			player.velocity.X = player.direction.X * player.movement_speed.current_value;
-			player.velocity.Z = player.direction.Z * player.movement_speed.current_value;
-			
-		}
-		else if(rotation_only || movement_input_prevented)
-		{
-			player.velocity = Vector3.Zero;
-		}
-			
-		// player.Velocity = player.direction.Normalized() * player.movement_speed.current_value;
-		// player.velocity.X *= input_strength;
-		// player.velocity.Z *= input_strength;
-
+	
 		player.Velocity = player.velocity;
 		
 
 		if(movement_tethered)
 		{
 			GD.Print("movement tethered");
-			player.GlobalPosition = (player.GlobalPosition - tether_position).LimitLength(10) + tether_position;
+			player.GlobalPosition = (player.GlobalPosition - tether_position).LimitLength(movement_from_tether) + tether_position;
 		}
 
 			
@@ -69,34 +58,23 @@ public partial class MovementController : Node
 
     private void StandardMovement(Player player, float input_strength, double delta)
     {
-        if(player.IsOnFloor())
+		if(!movement_ability_in_use && !movement_input_prevented)
 		{
-			if(input_strength < 0.75f)
-			{
-				if(player.movement_speed.current_value == player.movement_speed.base_value)
-				{
-					player.movement_speed.AddModifier(walk);
-				}
-			}
-			else
-			{
-				if(player.movement_speed.current_value < player.movement_speed.base_value)
-				{
-					player.movement_speed.RemoveModifier(walk);
-				}
-				
-			}
+			player.velocity.X = player.direction.X * player.movement_speed.current_value * input_strength;
+			player.velocity.Z = player.direction.Z * player.movement_speed.current_value * input_strength;
+			
 		}
-		
-
+		else if(movement_input_prevented)
+		{
+			
+			player.velocity = Vector3.Zero with { Y = player.fall_gravity / 15};
+		}
 		if(!player.IsOnFloor())
 		{
 			player.velocity.Y += (float)(SetGravity(player) * delta);
 			GD.Print("Player not on floor");
 		}
-		
-		
-		
+
     }
 
     public float SetGravity(Player player)
@@ -113,52 +91,6 @@ public partial class MovementController : Node
 	}
 
 	
-
-
-	public bool StatusEffectsPreventingMovement(Player player)
-	{
-		if(player.entity_controllers.status_effect_controller.movement_prevented)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public bool StatusEffectsAffectingSpeed(Player player)
-	{
-		if (player.entity_controllers.status_effect_controller.speed_altered)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	// public bool CanMove(Player player)
-	// {
-		
-	// 	if(StatusEffectsPreventingMovement(player))
-	// 	{
-	// 		return false;
-	// 	}
-
-	// 	// if(player.ui.inventory.Visible) 
-	// 	// {
-	// 	// 	return false;
-	// 	// }
-	// 	// else if (!player.ui.inventory_open || !player.ui.abilities_open && player.ui.abilities_secondary_ui_open)
-	// 	// {
-	// 	// 	return true;
-	// 	// }
-
-	// 	return true;
-		
-	// }
 
 	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
@@ -179,7 +111,7 @@ public partial class MovementController : Node
 
 		ClimbingRotation(player);
 
-		if(player.direction != Vector3.Zero && player.is_climbing)
+		if(player.direction != Vector3.Zero && climbing)
 		{
 			player.previous_y_rotation = player.GlobalRotation.Y;
 			player.current_y_rotation = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
@@ -194,15 +126,15 @@ public partial class MovementController : Node
 	{
 		var rot = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 		
-		player.vertical_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
+		vertical_climbing_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
+		horizontal_climbing_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		
-		var horizontal_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
-		if(!player.is_clambering)
+		if(!clambering)
 		{
-			player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+			player.direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 
 		}
-		player.direction = new Vector3(horizontal_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+		// player.direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 	}
 
 	public Godot.Collections.Dictionary LandPosition(Player player) // Sends out raycast to determine where the player will land
@@ -217,43 +149,95 @@ public partial class MovementController : Node
 		return ray;
 	}
 
-    internal void HandleMovementPrevented(bool movement_prevented)
+	// Signals
+
+	public void Subscribe(Player player)
+	{
+		player.entity_controllers.status_effect_controller.MovementPrevented += HandleMovementPrevented;
+		player.entity_controllers.status_effect_controller.Tethered += HandleTethered;
+
+		player.systems.targeting_system.Rotating += HandleRotatePlayer;
+
+		player.ui.CapturingInput += HandleUICapturingInput;
+	}
+
+	public void AbilitySubscribe(Ability ability)
+	{
+		ability.AbilityExecuting += OnAbilityExecuting;
+		ability.AbilityFinished += OnAbilityFinished;
+		ability.MovementAbilityExecuted += OnMovementAbilityExecuted;
+	}
+
+    public void Unsubscribe(Player player)
+	{
+		player.entity_controllers.status_effect_controller.MovementPrevented -= HandleMovementPrevented;
+		player.entity_controllers.status_effect_controller.Tethered -= HandleTethered;
+
+		player.systems.targeting_system.Rotating -= HandleRotatePlayer;
+
+		player.ui.CapturingInput -= HandleUICapturingInput;
+	}
+
+	public void AbilityUnsubscribe(Ability ability)
+	{
+		ability.AbilityExecuting -= OnAbilityExecuting;
+		ability.AbilityFinished -= OnAbilityFinished;
+	}
+
+    internal void HandleMovementPrevented(bool movement_prevented) // Listen for signal from StatusEffectController.cs that prevents movement
     {
         movement_input_prevented = movement_prevented;
     }
 
-    internal void HandleTethered(Entity entity, MeshInstance3D tether, bool tethered)
+	public void HandleClimbing(bool is_climbing) // Listen for signal from Jump.cs/AbilityController.cs that lets this script know the player has begun climbing or stopped climbing
+	{
+		climbing = is_climbing;
+	}
+
+	public void HandleClambering(bool is_clambering) // Listen for signal from Jump.cs/AbilityController.cs that lets this script know the player has begun clambering or stopped climbing
+	{
+		clambering = is_clambering;
+	}
+
+    internal void HandleTethered(Entity entity, MeshInstance3D tether, bool tethered, float tether_length) // Listen for signal from StatusEffectController.cs that lets this script know if the player is tethered
     {
 		movement_tethered = tethered;
 		if(tethered)
 		{
 			tether_position = tether.GlobalPosition;
+			movement_from_tether = tether_length;
 		}
 		else
 		{
 			tether_position = Vector3.Zero;
+			movement_from_tether = 0;
 		}
     }
 
-    internal void HandleRotatePlayer()
+    internal void HandleRotatePlayer() // Listen to signal from TargetingSystem.cs that lets this script know that the player is being rotated
     {
 		// GD.Print("Movement controller receiving signal to stop movement because of an ability");
         movement_input_prevented = true;
     }
 
-    internal void OnAbilityExecuting(Ability ability)
+    internal void HandleUICapturingInput(bool capturing_input) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
+    {
+        movement_input_prevented = capturing_input;
+    }
+
+	 internal void OnAbilityExecuting(Ability ability) // Listen to signal from individual player ability that lets this script know that it is executing
     {
 		GD.Print("received signal ability executing " + ability.Name);
         movement_input_prevented = true;
     }
 
-    internal void OnAbilityFinished(Ability ability)
+	private void OnMovementAbilityExecuted(bool executing) // Listen to signal from a movement ability that lets this script know if it has been executed or not
     {
-        movement_input_prevented = false;
+        movement_ability_in_use = executing;
     }
 
-    internal void HandleUICapturingInput(bool capturing_input) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
+    internal void OnAbilityFinished(Ability ability) // Listen to signal from individual player ability that lets this script know that it has finished
     {
-        movement_input_prevented = capturing_input;
+        movement_input_prevented = false;
     }
 }

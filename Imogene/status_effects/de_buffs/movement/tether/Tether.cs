@@ -5,6 +5,7 @@ public partial class Tether : StatusEffect
 {	
 	public PackedScene tether_mesh = ResourceLoader.Load<PackedScene>("res://status_effects/de_buffs/movement/tether/tether_mesh.tscn");
 	public MeshInstance3D tether;
+	public float tether_length = 10f;
 	
 	
 	public Tether()
@@ -15,6 +16,7 @@ public partial class Tether : StatusEffect
 		category = EffectCategory.movement;
 		duration = 5;
 		max_stacks = 1;
+		
 	
 	}
 	public override void Apply(Entity entity)

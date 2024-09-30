@@ -181,8 +181,6 @@ public partial class Player : Entity
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
 
 		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
-		entity_controllers.status_effect_controller.MovementPrevented += controllers.movement_controller.HandleMovementPrevented;
-		entity_controllers.status_effect_controller.Tethered += controllers.movement_controller.HandleTethered;
 
 
 		
@@ -196,7 +194,6 @@ public partial class Player : Entity
 		systems.interact_system.InputPickUp += HandleInputPickUp;
 
 		systems.targeting_system.RotationForAbilityFinished += controllers.ability_controller.HandleRotationFinished;
-		systems.targeting_system.Rotating += controllers.movement_controller.HandleRotatePlayer;
 	
 		
 		// Controller signals
@@ -216,7 +213,6 @@ public partial class Player : Entity
 
 		ui.CapturingInput += systems.interact_system.HandleUICapturingInput;
 
-		ui.CapturingInput += controllers.movement_controller.HandleUICapturingInput;
 
 		ui.InventoryToggle += HandleInventoryToggle;
 
@@ -224,7 +220,7 @@ public partial class Player : Entity
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
 
 		controllers.input_controller.Subscribe(this);
-
+		controllers.movement_controller.Subscribe(this);
 
 		level.base_value = 4;
 		strength.base_value = 10;
@@ -343,10 +339,10 @@ public partial class Player : Entity
         controllers.ability_controller.RemoveFromAbilityList(this, ability);
 		systems.targeting_system.rotating_to_soft_target = false;
 		controllers.movement_controller.movement_input_prevented = false;
-		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
-		{
-			using_movement_ability = false;
-		}
+		// if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
+		// {
+		// 	using_movement_ability = false;
+		// }
 		// if(ability.rotate_on_held)
 		// {
 		// 	GD.Print(ability.Name + " released, input allowed");

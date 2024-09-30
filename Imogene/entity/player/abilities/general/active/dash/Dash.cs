@@ -37,7 +37,8 @@ public partial class Dash : Ability
     {
 		
         state = States.not_queued;
-		player.using_movement_ability = true;
+		// player.using_movement_ability = true;
+		EmitSignal(nameof(MovementAbilityExecuted), true);
 		dash_timer.Start();
 		if(player.direction != Vector3.Zero) // If the player is moving, dash in that direction
 		{
@@ -72,7 +73,7 @@ public partial class Dash : Ability
     public void _on_dash_timer_timeout() // When the dash timer times out remove the ability and reset the player velocity
 	{
 		EmitSignal(nameof(AbilityFinished), this);
-		
+		EmitSignal(nameof(MovementAbilityExecuted), false);
 		// player.using_movement_ability = false;
 		// player.velocity.X = player.direction.X * player.run_speed; 
 		// player.velocity.Z = player.direction.Z * player.run_speed;

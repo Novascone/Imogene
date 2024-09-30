@@ -39,7 +39,7 @@ public partial class StatusEffectController : Node
 	[Signal] public delegate void MovementPreventedEventHandler(bool movement_prevented);
 	[Signal] public delegate void InputPreventedEventHandler(bool input_prevented);
 	[Signal] public delegate void SpeedAlteredEventHandler(bool speed_altered);
-	[Signal] public delegate void TetheredEventHandler(Entity entity, MeshInstance3D tether, bool tethered);
+	[Signal] public delegate void TetheredEventHandler(Entity entity, MeshInstance3D tether, bool tethered, float tether_length);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -100,7 +100,7 @@ public partial class StatusEffectController : Node
 				{
 					tethered = true;
 					Tether tether_effect = (Tether)effect_to_add;
-					EmitSignal(nameof(Tethered),entity, tether_effect.tether, tethered);
+					EmitSignal(nameof(Tethered),entity, tether_effect.tether, tethered, tether_effect.tether_length);
 				
 				}
 			// }
