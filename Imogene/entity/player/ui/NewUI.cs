@@ -135,7 +135,7 @@ public partial class NewUI : Control
 		if(Input.IsActionJustPressed("Inventory"))
 		{
 			preventing_movement = !preventing_movement;
-			EmitSignal(nameof(CapturingInput), !preventing_movement);
+			EmitSignal(nameof(CapturingInput), preventing_movement);
 			if(!CheckUIComponentOpen() && !cursor.Visible || CheckUIComponentOpen()  && cursor.Visible )
 			{
 				cursor.Visible = !cursor.Visible;

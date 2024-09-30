@@ -210,8 +210,8 @@ public partial class InteractSystem : Node3D
 		}
 	}
 
-    internal void HandleCapturingInput(bool capturing_input)
+    internal void HandleUICapturingInput(bool capturing_input)
     {
-        can_interact = capturing_input;
+        can_interact = !capturing_input;
     }
 }

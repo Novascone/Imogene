@@ -183,9 +183,8 @@ public partial class Player : Entity
 		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
 		entity_controllers.status_effect_controller.MovementPrevented += controllers.movement_controller.HandleMovementPrevented;
 		entity_controllers.status_effect_controller.Tethered += controllers.movement_controller.HandleTethered;
-		entity_controllers.status_effect_controller.InputPrevented += controllers.input_controller.HandleInputPrevented;
 
-		
+
 		
 
 		// System signals
@@ -197,18 +196,13 @@ public partial class Player : Entity
 		systems.interact_system.InputPickUp += HandleInputPickUp;
 
 		systems.targeting_system.RotationForAbilityFinished += controllers.ability_controller.HandleRotationFinished;
-		systems.targeting_system.RotationForInputFinished += controllers.input_controller.HandleRotationFinished;
 		systems.targeting_system.Rotating += controllers.movement_controller.HandleRotatePlayer;
-		systems.targeting_system.Rotating += controllers.input_controller.HandleRotatePlayer;
+	
 		
-
-
 		// Controller signals
-		controllers.input_controller.CrossChanged += HandleCrossChanged;
-
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
 		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
-		controllers.ability_controller.ReleaseInputControl += controllers.input_controller.HandleReleaseInputControl;
+		
 		
 
 
@@ -220,15 +214,18 @@ public partial class Player : Entity
 
 		ui.inventory.main.DroppingItem += HandleDroppingItem;
 
-		ui.CapturingInput += systems.interact_system.HandleCapturingInput;
+		ui.CapturingInput += systems.interact_system.HandleUICapturingInput;
+
+		ui.CapturingInput += controllers.movement_controller.HandleUICapturingInput;
 
 		ui.InventoryToggle += HandleInventoryToggle;
 
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
 
+		controllers.input_controller.Subscribe(this);
 
-		
+
 		level.base_value = 4;
 		strength.base_value = 10;
 		dexterity.base_value = 5;
@@ -363,6 +360,11 @@ public partial class Player : Entity
 		
 		Vector3  camera_position = GlobalPosition;
 		camera_rig.GlobalPosition = camera_position;	
+	}
+
+	public override void _ExitTree()
+	{
+		controllers.input_controller.Unsubscribe(this);
 	}
 
     

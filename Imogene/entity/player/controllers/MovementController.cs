@@ -40,7 +40,7 @@ public partial class MovementController : Node
 		{
 			ClimbingMovement(player);
 		}
-		if(!player.using_movement_ability && !rotation_only &&!movement_input_prevented)
+		if(!player.using_movement_ability && !rotation_only && !movement_input_prevented)
 		{
 			player.velocity.X = player.direction.X * player.movement_speed.current_value;
 			player.velocity.Z = player.direction.Z * player.movement_speed.current_value;
@@ -250,5 +250,10 @@ public partial class MovementController : Node
     internal void OnAbilityFinished(Ability ability)
     {
         movement_input_prevented = false;
+    }
+
+    internal void HandleUICapturingInput(bool capturing_input) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
+    {
+        movement_input_prevented = capturing_input;
     }
 }

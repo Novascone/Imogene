@@ -52,6 +52,7 @@ public partial class TargetingSystem : Node
 	
 	[Signal] public delegate void ShowSoftTargetIconEventHandler(Enemy enemy);
 	[Signal] public delegate void HideSoftTargetIconEventHandler(Enemy enemy);
+	[Signal] public delegate void PlayerTargetingEventHandler(bool is_targeting);
 	[Signal] public delegate void EnemyTargetedEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyUntargetedEventHandler();
 	[Signal] public delegate void BrightenSoftTargetHUDEventHandler();
@@ -74,13 +75,20 @@ public partial class TargetingSystem : Node
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public void Target(Player player)
 	{
-		// GD.Print("Rotate soft: enemy pointed toward " + enemy_pointed_toward);
+		
 		if(mob_looking_at != null && enemy_pointed_toward != null)
 		{
+			// GD.Print("Rotate soft: enemy pointed toward " + enemy_pointed_toward.Name);
+			// GD.Print("Rotate soft: mob looking at" + mob_looking_at.Name);
 			if(mob_looking_at != enemy_pointed_toward)
 			{
 				EmitSignal(nameof(RotationForAbilityFinished),false);
 			}
+		}
+
+		if(mob_looking_at != null)
+		{
+			GD.Print("Rotate soft: mob looking at" + mob_looking_at.Name);
 		}
 	
 		ray_cast.SetTargetingRayCastDirection();
@@ -294,6 +302,7 @@ public partial class TargetingSystem : Node
 				if(!targeting) // has player look at the closest enemy when targeting
 				{
 					targeting = true;
+					EmitSignal(nameof(PlayerTargeting), targeting);
 					if(mobs_in_order.Count > 0 && enemy_pointed_toward == null)
 					{
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
@@ -308,6 +317,7 @@ public partial class TargetingSystem : Node
 				else if(targeting)
 				{
 					targeting = false;
+					EmitSignal(nameof(PlayerTargeting), targeting);
 					mob_looking_at = null;
 					EmitSignal(nameof(EnemyUntargeted));
 				}
@@ -483,7 +493,6 @@ public partial class TargetingSystem : Node
 					mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
 				}
 				
-				
 				//GD.Print("Rotating toward enemy pointed toward");
 			}
 			else if(enemy_near)
@@ -500,7 +509,7 @@ public partial class TargetingSystem : Node
 			direction_to_enemy = player.GlobalPosition.DirectionTo(mob_looking_at.GlobalPosition);
 		}
 		
-		if(enemy_pointed_toward != null || (enemy_near && ray_cast.input_strength < 0.25f) || targeting)
+		if(enemy_pointed_toward != null || (enemy_near && ray_cast.input_strength < 0.25f) || targeting || mob_looking_at != null)
 		{
 			GD.Print("Ray cast input strength " + ray_cast.input_strength);
 			player.previous_y_rotation = player.GlobalRotation.Y;
@@ -525,7 +534,6 @@ public partial class TargetingSystem : Node
 					GD.Print("Lerping player x current rotation " + player.current_x_rotation);
 				}
 			}
-			
 			player.current_y_rotation = player.GlobalRotation.Y;
 			if(player.previous_y_rotation != player.current_y_rotation)
 			{
@@ -538,7 +546,7 @@ public partial class TargetingSystem : Node
 			SetSimilarity(player);
 
 
-			if(enemy_pointed_toward == null && nearest_enemy != null && ! targeting)
+			if(enemy_pointed_toward == null && nearest_enemy != null && !targeting)
 			{
 				ray_cast.LookAt(nearest_enemy.GlobalPosition with {Y = ray_cast.GlobalPosition.Y});
 			}
@@ -550,10 +558,12 @@ public partial class TargetingSystem : Node
 				EmitSignal(nameof(RotationForInputFinished), player);
 				rotating_to_soft_target = false;
 				facing_enemy = true;
+				GD.Print("Rotate soft: finished");
 				GD.Print("distance and rotation " + player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) + " " + min_x_rotation);
 			}
 			else
 			{
+				GD.Print("Rotate soft: not finished");
 				GD.Print("Not facing enemy dot " + -player.GlobalBasis.Z.Dot(direction_to_enemy));
 				GD.Print("Not facing enemy difference y " + MathF.Round(player.previous_y_rotation - player.current_y_rotation, 2), 0);
 				GD.Print("Not facing enemy difference x " + MathF.Round(player.previous_x_rotation - player.current_x_rotation, 2), 0);
