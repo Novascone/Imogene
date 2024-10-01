@@ -111,6 +111,8 @@ public partial class AbilityController : Node
 
     public bool CheckCross(Player player, Ability ability) // Checks what cross the ability is assigned to
     {
+        GD.Print("Checking cross for " + ability.Name);
+        GD.Print("primary left selected " + player.l_cross_primary_selected);
         if(ability.cross == "Left")
 		{
 			if(player.l_cross_primary_selected)

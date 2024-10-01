@@ -98,6 +98,7 @@ public partial class Ability : Node3D
                 if(!button_pressed)
                 {
                     EmitSignal(nameof(AbilityPressed), this);
+                    GD.Print(Name + " Pressed");
                 }
                 
                 button_pressed = true;
@@ -225,7 +226,10 @@ public partial class Ability : Node3D
 		{
 			if(use_timer.TimeLeft == 0)
 			{
-				EmitSignal(nameof(AbilityQueue), this);
+                if(state == States.not_queued)
+                {
+                    EmitSignal(nameof(AbilityQueue), this);
+                }
 				EmitSignal(nameof(AbilityCheck), this);
 			}		
 		}

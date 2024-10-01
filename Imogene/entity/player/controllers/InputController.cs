@@ -4,40 +4,135 @@ using System;
 public partial class InputController : Node
 {
 	// Input variables
-	public float input_strength;
-	public Vector2 raw_vector;
-	public Vector2 deadzoned_vector;
-	public float deadzone = 0.25f;
+	public float input_strength { get; set; } = 0.0f;
+	public float deadzone { get; set; } = 0.25f;
+	public Vector2 raw_vector { get; set; } = Vector2.Zero;
+	
+	public Vector2 deadzoned_vector { get; set; } = Vector2.Zero;
+	
+
+	// Checking bools
+	public bool directional_input_prevented { get; set; } = false;
+	public bool targeting { get; set; }  = false;
+	public bool ability_rotating_player { get; set; }  = false;
+	public bool abilities_prevented { get; set; } = false;
+
+	// D-Pad properties
+	public bool d_pad_right_pressed = false;
+
+	private bool _d_pad_right_released = false;
+	public bool d_pad_right_released
+	{
+		get => _d_pad_right_released;
+		set
+		{
+			_d_pad_right_released = value;
+			if(d_pad_right_released)
+			{
+				if(d_pad_frames_held < switch_weapon_threshold)
+				{
+					EmitSignal(nameof(CrossChanged),"Right");
+					_d_pad_right_released = false;
+					d_pad_frames_held = 0;
+				}
+				else if(d_pad_frames_held >= switch_weapon_threshold && d_pad_frames_held < sheath_weapon_threshold)
+				{
+					GD.Print("Switch main-hand");
+					_d_pad_right_released = false;
+					d_pad_frames_held = 0;
+				}
+				else
+				{
+					_d_pad_right_released = false;
+					d_pad_frames_held = 0;
+				}
+			}
+		}
+	}
+
+	public bool d_pad_left_pressed { get; set; }= false;
+	
+	private bool _d_pad_left_released = false;
+	public bool d_pad_left_released
+	{
+		get => _d_pad_left_released;
+		set
+		{
+			_d_pad_left_released = value;
+			if(d_pad_left_released)
+			{
+				if(d_pad_frames_held < switch_weapon_threshold)
+				{
+					EmitSignal(nameof(CrossChanged),"Left");
+					_d_pad_left_released = false;
+					d_pad_frames_held = 0;
+				}
+				else if(d_pad_frames_held >= switch_weapon_threshold && d_pad_frames_held < sheath_weapon_threshold)
+				{
+					GD.Print("Switch off-hand");
+					_d_pad_left_released = false;
+					d_pad_frames_held = 0;
+				}
+				else
+				{
+					_d_pad_left_released = false;
+					d_pad_frames_held = 0;
+				}
+			}
+		}
+	}
+	
+	private bool _d_pad_up_pressed = false;
+	public bool d_pad_up_pressed
+	{
+		get => _d_pad_up_pressed;
+		set
+		{
+			_d_pad_up_pressed = value;
+			if(d_pad_up_pressed)
+			{
+				GD.Print("D-Pad up pressed");
+				EmitSignal(nameof(UsableChanged));	
+				_d_pad_up_pressed = false;
+			}
+			
+		}
+	}
+
+	public bool d_pad_up_released { get; set; } = false;
+	
+	private bool _d_pad_down_pressed = false;
+	public bool d_pad_down_pressed
+	{
+		get => _d_pad_down_pressed;
+		set
+		{
+			_d_pad_down_pressed = value;
+			if(d_pad_down_pressed)
+			{
+				GD.Print("D-Pad down pressed");
+				EmitSignal(nameof(UsableUsed));
+				_d_pad_down_pressed = false;
+			}
+		}
+	}
+
+	public bool d_pad_down_released { get; set; } = false;
+
+	public int d_pad_frames_held { get; set; } = 0;
+
+	public int switch_weapon_threshold { get; set; } = 20;
+	public int sheath_weapon_threshold { get; set; } = 60;
+
+	// Rotation variables
+	public bool x_rotation_not_zero { get; set; } = false;
+	public float max_x_rotation { get; set; } = 0.3f;
+	public float min_x_rotation { get; set; } = -0.3f;
 
 	// Signals
 	[Signal] public delegate void CrossChangedEventHandler(string cross);
 	[Signal] public delegate void UsableChangedEventHandler();
 	[Signal] public delegate void UsableUsedEventHandler();
-
-
-	// Checking bools
-	public bool directional_input_prevented = false;
-	public bool targeting = false;
-	public bool ability_rotating_player = false;
-	public bool abilities_prevented = true;
-
-	// D-Pad variables
-	public bool d_pad_right_pressed;
-	public bool d_pad_right_released;
-	public bool d_pad_left_pressed;
-	public bool d_pad_left_released;
-	public bool d_pad_up_pressed;
-	public bool d_pad_up_released;
-	public bool d_pad_down_pressed;
-	public bool d_pad_down_released;
-	public int d_pad_frames_held;
-	public int d_pad_frames_held_threshold = 10;
-	public bool d_pad_held;
-
-	// Rotation variables
-	public bool x_rotation_not_zero;
-	public float max_x_rotation = 0.3f;
-	public float min_x_rotation = -0.3f;
 
 	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
@@ -75,6 +170,7 @@ public partial class InputController : Node
 	public override void _PhysicsProcess(double delta)
 	{
 		GetInputStrength();
+		
 	}
 
 	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
@@ -94,7 +190,7 @@ public partial class InputController : Node
 			}
 		}
 		
-		CheckDPadInput(player);
+		CheckDPadInput();
 		LookForward(player,player.direction);
 		
 		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
@@ -158,74 +254,18 @@ public partial class InputController : Node
 		}
 	}
 
-	public void CheckDPadInput(Player player)
+	public void CheckDPadInput()
 	{
-		if(d_pad_frames_held > d_pad_frames_held_threshold)
-		{
-			d_pad_held = true;
-		}
-		else
-		{
-			d_pad_held = false;
-		}
+
 		if(!abilities_prevented)
 		{
 			if(d_pad_left_pressed || d_pad_right_pressed)
 			{
 				d_pad_frames_held += 1;
 			}
-			
-			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_left_released) // If the left D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
+			if(d_pad_frames_held >= sheath_weapon_threshold)
 			{
-
-				EmitSignal(nameof(CrossChanged),"Left");
-				d_pad_left_released = false;
-				d_pad_frames_held = 0;
-				d_pad_held = false;
-			}
-			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_left_released) // If the frames held was greater than or equal to the threshold switch off-hand
-			{
-				GD.Print("Switch off-hand");
-				d_pad_left_released = false;
-				d_pad_frames_held = 0;
-			}
-				
-			if(d_pad_frames_held < d_pad_frames_held_threshold && d_pad_right_released) // If the right D-Pad has been released, and the frames amount of frames it was less than the threshold change crosses
-			{
-			
-				EmitSignal(nameof(CrossChanged),"Right");
-				d_pad_right_released = false;
-				d_pad_frames_held = 0;
-				d_pad_held = false;
-			}
-			else if(d_pad_frames_held >= d_pad_frames_held_threshold && d_pad_right_released) // If the frames held was greater than or equal to the threshold switch main-hand
-			{
-				GD.Print("Switch main-hand");
-				d_pad_right_released = false;
-				d_pad_frames_held = 0;
-			}
-				
-			if(d_pad_up_pressed)
-			{
-				// switch consumable
-				if(player.consumable < 4)
-				{
-					player.consumable += 1;
-				}
-				else if(player.consumable == 4)
-				{
-					player.consumable = 1;
-				}
-				d_pad_up_pressed = false;
-
-				EmitSignal(nameof(UsableChanged));
-			}
-			if(d_pad_down_pressed)
-			{
-				// use consumable
-				EmitSignal(nameof(UsableUsed));
-				player.consumables[player.consumable]?.UseItem();
-				d_pad_down_pressed = false;
+				GD.Print("Sheath weapons");
 			}
 		}
 	}
@@ -277,7 +317,7 @@ public partial class InputController : Node
 
 		player.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
 		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating += HandleTargetingSystemRotatePlayer;
+		player.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
 
 		player.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
 		player.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
@@ -299,7 +339,7 @@ public partial class InputController : Node
 
 		player.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
 		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating -= HandleTargetingSystemRotatePlayer;
+		player.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
 
 		player.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
 		player.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
@@ -323,7 +363,7 @@ public partial class InputController : Node
     {
         targeting = is_targeting;
     }
-	 public void HandleTargetingSystemRotatePlayer() // Listens for signal from TargetingSystem.cs
+	 public void HandleTargetingSystemRotatingPlayer() // Listens for signal from TargetingSystem.cs
     {
         directional_input_prevented = true;
     }
@@ -341,16 +381,16 @@ public partial class InputController : Node
         directional_input_prevented = input_prevented;
     }
 
-    public void OnAbilityFinished(Ability ability) // Listens for a signal emitted from one of the players abilities
-    {
-		directional_input_prevented = false;
-    }
-
-    public void OnAbilityExecuting(Ability ability) // Listens for a signal emitted from one of the players abilities
+	public void OnAbilityExecuting(Ability ability) // Listens for a signal emitted from one of the players abilities
     {
         directional_input_prevented = true;
     }
 
+    public void OnAbilityFinished(Ability ability) // Listens for a signal emitted from one of the players abilities
+    {
+		directional_input_prevented = false;
+    }
+	
     public void HandleAbilityReleaseInputControl() // Listens for a signal emitted from AbilityController.cs
     {
         directional_input_prevented = false;

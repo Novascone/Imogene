@@ -199,6 +199,7 @@ public partial class Player : Entity
 		// Controller signals
 		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
 		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
+		controllers.input_controller.CrossChanged += HandleCrossChanged;
 		
 		
 
@@ -311,7 +312,7 @@ public partial class Player : Entity
 
 	 internal void OnAbilityPressed(Ability ability)
     {
-        
+        GD.Print("Pressed signal received");
 		controllers.ability_controller.QueueAbility(this, ability);
 		controllers.ability_controller.CheckCanUseAbility(this, ability);
     }
