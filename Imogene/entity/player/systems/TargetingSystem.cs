@@ -299,11 +299,11 @@ public partial class TargetingSystem : Node
 		{
 			if(frames_held < held_threshold && target_released)
 			{
-				if(!targeting) // has player look at the closest enemy when targeting
+				if(!targeting && enemy_far || enemy_pointed_toward != null) // has player look at the closest enemy when targeting
 				{
 					targeting = true;
 					EmitSignal(nameof(PlayerTargeting), targeting);
-					if(mobs_in_order.Count > 0 && enemy_pointed_toward == null)
+					if(mobs_in_order.Count > 0 && enemy_pointed_toward == null && mob_looking_at == null)
 					{
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 						mob_looking_at = mobs_in_order[0];
@@ -495,7 +495,7 @@ public partial class TargetingSystem : Node
 				
 				//GD.Print("Rotating toward enemy pointed toward");
 			}
-			else if(enemy_near)
+			else if(enemy_near && ray_cast.input_strength < 0.25f)
 			{
 				
 				mob_looking_at = nearest_enemy;
@@ -509,7 +509,7 @@ public partial class TargetingSystem : Node
 			direction_to_enemy = player.GlobalPosition.DirectionTo(mob_looking_at.GlobalPosition);
 		}
 		
-		if(enemy_pointed_toward != null || (enemy_near && ray_cast.input_strength < 0.25f) || targeting || mob_looking_at != null)
+		if(enemy_pointed_toward != null || targeting || mob_looking_at != null)
 		{
 			GD.Print("Ray cast input strength " + ray_cast.input_strength);
 			player.previous_y_rotation = player.GlobalRotation.Y;
@@ -560,6 +560,11 @@ public partial class TargetingSystem : Node
 				facing_enemy = true;
 				GD.Print("Rotate soft: finished");
 				GD.Print("distance and rotation " + player.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) + " " + min_x_rotation);
+				if(!targeting)
+				{
+					mob_looking_at = null;
+				}
+				
 			}
 			else
 			{
@@ -576,6 +581,7 @@ public partial class TargetingSystem : Node
 		{
 			GD.Print("Enemy is near, but the player is moving away from the enemy");
 			EmitSignal(nameof(RotationForAbilityFinished), true);
+			EmitSignal(nameof(RotationForInputFinished), player);
 		}
 		
 	}

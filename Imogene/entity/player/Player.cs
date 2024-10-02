@@ -230,7 +230,7 @@ public partial class Player : Entity
 		intellect.base_value = 11;
 		physical_resistance.base_value = 6;
 
-		entity_controllers.stats_controller.SetUIStats(this);
+		entity_controllers.stats_controller.SetStats(this);
 		entity_controllers.stats_controller.Update(this);
 
 		controllers.ability_assigner.GetAbilities(this);

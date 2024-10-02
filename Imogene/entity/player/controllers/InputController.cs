@@ -164,18 +164,11 @@ public partial class InputController : Node
 		// 	player.xp_system.GainXP(11);
 		// }
 		
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta)
-	{
-		GetInputStrength();
-		
-	}
+	}	
 
 	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
-		
+		GetInputStrength();
 		if(!directional_input_prevented)
 		{
 			player.direction.X = 0.0f;
