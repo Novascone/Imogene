@@ -229,6 +229,10 @@ public partial class MovementController : Node
     {
 		GD.Print("received signal ability executing " + ability.Name);
         movement_input_prevented = true;
+		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
+		{
+			movement_ability_in_use = true;
+		}
     }
 
 	private void OnMovementAbilityExecuted(bool executing) // Listen to signal from a movement ability that lets this script know if it has been executed or not
@@ -239,5 +243,9 @@ public partial class MovementController : Node
     internal void OnAbilityFinished(Ability ability) // Listen to signal from individual player ability that lets this script know that it has finished
     {
         movement_input_prevented = false;
+		if(ability.general_ability_type == Ability.GeneralAbilityType.Movement)
+		{
+			movement_ability_in_use = false;
+		}
     }
 }

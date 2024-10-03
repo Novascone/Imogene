@@ -21,6 +21,7 @@ public partial class Roll : Ability
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		rotate_on_soft = false;
+		general_ability_type = GeneralAbilityType.Movement;
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;
@@ -61,7 +62,7 @@ public partial class Roll : Ability
 	{
 		state = States.not_queued;
 		roll_timer.Start(); 
-		player.using_movement_ability = true;
+		
 		if(!rolling)
 		{
 			temp_rotation = player.Rotation;

@@ -24,24 +24,13 @@ public partial class Entity : CharacterBody3D
 
 	// Systems
 	[Export] public EntitySystems entity_systems { get; set; }
-	// [Export] public DamageSystem damage_system;
-	// [Export] public ResourceSystem resource_system;
-	
+
 	// Controllers
 	[Export] public EntityControllers entity_controllers { get; set; }
-
 	
-
-
-	// Booleans
-	public bool can_move { get; set; } = true; // Boolean to keep track of if the entity is allowed to move
-    public bool jumping { get; set; } = false;
-    public bool using_movement_ability { get; set; } = false;
-	public bool dead { get; set; } = false;
-	
-
-	public Collectable xp  { get; set; } = new("xp", 0);
-	public Collectable gold { get; set; }  = new("gold", 0);
+	// Collectables
+	public Collectable xp  { get; set; } = new(Collectable.CollectableType.XP, 0);
+	public Collectable gold { get; set; }  = new(Collectable.CollectableType.Gold, 0);
 
 	
 	// Base stats
@@ -67,9 +56,6 @@ public partial class Entity : CharacterBody3D
 	public Stat resource_regeneration { get; set; } = new(Stat.StatType.resource_regeneration, 0);
 	public Stat posture_regeneration { get; set; } = new(Stat.StatType.posture_regeneration, 0);
 
-
-	
-
 	// Gear Stats
 	public Stat main_hand_damage { get; set; } = new(Stat.StatType.main_hand_damage, 10);
 	public Stat off_hand_damage { get; set; } = new(Stat.StatType.off_hand_damage, 0);
@@ -79,7 +65,6 @@ public partial class Entity : CharacterBody3D
 	public Stat attack_speed_increase { get; set; } = new(Stat.StatType.attack_speed_increase, 0);
 
 	// Misc Stats
-	
 	public Stat health_bonus { get; set; } = new(Stat.StatType.health_bonus, 0);
 	public Stat movement_speed { get; set; } = new(Stat.StatType.movement_speed, 6f);
 	public Stat fall_speed { get; set; } = new(Stat.StatType.fall_speed, 40);
@@ -107,8 +92,6 @@ public partial class Entity : CharacterBody3D
 
 	
 	// Defensive Stats
-	
-	
 	public Stat block_amount { get; set; } = new(Stat.StatType.block_amount, 0);
 	public Stat retaliation { get; set; } = new(Stat.StatType.retaliation, 0);
 	
@@ -140,11 +123,9 @@ public partial class Entity : CharacterBody3D
 	public Stat resource_regeneration_bonus { get; set; } = new(Stat.StatType.resource_regeneration_bonus, 0);
 	public Stat cooldown_reduction { get; set; } = new(Stat.StatType.cooldown_reduction, 0);
 
-
+	// Damage stats calculated from other stats
 	public float critical_hit_modifier { get; set; } = 0.0f;
 	public float combined_damage { get; set; } = 0.0f;
-
-	
 	public float power_modifier { get; set; } = 0.0f;
 	public float physical_damage_modifier { get; set; } = 0.0f;
 	public float slash_damage_modifier { get; set; } = 0.0f;
@@ -178,22 +159,12 @@ public partial class Entity : CharacterBody3D
 	public float damage_resistance_holy { get; set; } = 0.0f;
 
 
-	
- 
-   
 	public float previous_y_rotation { get; set; } = 0.0f; // Rotation before current rotation
 	public float current_y_rotation { get; set; } = 0.0f; // Current rotation
 	public float previous_x_rotation { get; set; } = 0.0f; // Rotation before current rotation
 	public float current_x_rotation { get; set; } = 0.0f; // Current rotation
 	public float previous_z_rotation { get; set; } = 0.0f; // Rotation before current rotation
 	public float current_z_rotation { get; set; } = 0.0f; // Current rotation
-	
-
-	public string weapon_type { get; set; } = "";
-
-	
-
-	public int fear_duration { get; set; } = 5;
 
 	public List<StatusEffect> status_effects { get; set; } = new List<StatusEffect>();
 

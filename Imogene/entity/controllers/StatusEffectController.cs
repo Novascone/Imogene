@@ -15,6 +15,7 @@ public partial class StatusEffectController : Node
 	public bool abilities_prevented;
 	public bool tethered;
 	public bool effect_already_applied;
+	public int fear_duration { get; set; } = 5;
 	// Movement
 
 	// Buffs

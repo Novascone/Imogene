@@ -137,7 +137,7 @@ public partial class Player : Entity
 	{
 		
 		base._Ready();
-		fear_duration = 3;
+		entity_controllers.status_effect_controller.fear_duration = 3;
 		
 
 	

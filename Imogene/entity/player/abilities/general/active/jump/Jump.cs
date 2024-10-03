@@ -14,6 +14,7 @@ public partial class Jump : Ability
 		clamber = GetNode<Timer>("Clamber");
 		rotate_on_soft = false;
 		clamber.Timeout += OnClamberTimeout;
+		general_ability_type = GeneralAbilityType.Movement;
 		// stop_movement_input = false;
     }
 
@@ -136,7 +137,6 @@ public partial class Jump : Ability
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
 			player._velocity.Y = player.jump_velocity;
 			// GD.Print("Player velocity from jump " + player.velocity.Y);			
-			player.jumping = true;
 		}
 		else
 		{
@@ -190,7 +190,7 @@ public partial class Jump : Ability
 			GD.Print("stop jumping");
 			// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land
 			off_floor = false;
-			player.jumping = false;
+			
 			EmitSignal(nameof(AbilityFinished),this);
 			
 		}
@@ -199,7 +199,6 @@ public partial class Jump : Ability
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", false);
 			// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", false); // Set animation to fall
 			// GD.Print("still jumping");
-			player.jumping = true;
 		}
 	}
 

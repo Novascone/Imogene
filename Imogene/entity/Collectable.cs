@@ -3,11 +3,12 @@ using System;
 
 public partial class Collectable : Resource
 {
-	public Collectable(string collectable_name, float collectable_amount)
+	public Collectable(CollectableType collectable_type, float collectable_amount)
 	{
-		name = collectable_name;
+		type = collectable_type;
 		amount = collectable_amount;
 	}
-	public string name;
+	public enum CollectableType {XP, Gold}
+	public CollectableType type { get; set; }
 	public float amount;
 }

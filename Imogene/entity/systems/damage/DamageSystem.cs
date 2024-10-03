@@ -11,6 +11,8 @@ public partial class DamageSystem : Node
 	public Timer slow_timer;
 	public Timer stun_timer;
 
+	public bool dead;
+
 	// Damage numbers parameters
 	private Node3D spawn_point;
 	private float spread = 90;
@@ -131,7 +133,7 @@ public partial class DamageSystem : Node
 		}
 		else
 		{
-			entity.dead = true;
+			dead = true;
 			GD.Print("dead");
 		}
 	}

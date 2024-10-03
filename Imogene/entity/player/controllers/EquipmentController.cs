@@ -34,6 +34,17 @@ public partial class EquipmentController : Node
 	public int d_pad_frames_held_threshold = 10;
 	public bool d_pad_held;
 
+	public enum WeaponSlot {OneHand, TwoHand, MainHand, OffHand}
+	public enum WeaponType {Sword, Axe, Hammer, Dagger, Fist, Bow, Crossbow, Wand, Staff, Catalyst}
+	public WeaponSlot main_hand_primary_slot;
+	public WeaponSlot main_hand_secondary_slot;
+	public WeaponSlot off_hand_primary_slot;
+	public WeaponSlot off_hand_secondary_slot;
+	public WeaponType main_hand_primary_type;
+	public WeaponType main_hand_secondary_type;
+	public WeaponType off_hand_primary_type;
+	public WeaponSlot off_hand_secondary_type;
+
 
 	public override void _PhysicsProcess(double delta)
 	{

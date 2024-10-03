@@ -22,7 +22,7 @@ public partial class Fear : StatusEffect
 		name = "fear";
 		type = EffectType.debuff;
 		category = EffectCategory.movement;
-		duration = entity.fear_duration;
+		duration = entity.entity_controllers.status_effect_controller.fear_duration;
 		max_stacks = 1;
 	}
 	
