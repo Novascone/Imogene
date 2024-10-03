@@ -134,7 +134,7 @@ public partial class Jump : Ability
 		{
 			// GD.Print("start jumping");
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
-			player.velocity.Y = player.jump_velocity;
+			player._velocity.Y = player.jump_velocity;
 			// GD.Print("Player velocity from jump " + player.velocity.Y);			
 			player.jumping = true;
 		}
@@ -185,7 +185,7 @@ public partial class Jump : Ability
 
 	public void CheckGround(Player player)
 	{
-		if(player.IsOnFloor() && player.velocity.Y <= 0)
+		if(player.IsOnFloor() && player._velocity.Y <= 0)
 		{
 			GD.Print("stop jumping");
 			// player.tree.Set("parameters/Master/Main/Jump/JumpState/conditions/on_ground", true); // Set animation to land

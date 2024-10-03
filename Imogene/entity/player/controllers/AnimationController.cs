@@ -17,28 +17,28 @@ public partial class AnimationController : Controller
 
 	public void TargetingMovement() // Calculates which direction the player is moving in relative to its local direction
 	{
-		var difference_vector_forward = -player.Transform.Basis.Z - player.direction;
+		var difference_vector_forward = -player.Transform.Basis.Z - player._direction;
 		difference_vector_forward = difference_vector_forward.Round();
 
-		var difference_vector_left = -player.Transform.Basis.X - player.direction;
+		var difference_vector_left = -player.Transform.Basis.X - player._direction;
 		difference_vector_left = difference_vector_left.Round();
 
-		var difference_vector_forward_left = -player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
+		var difference_vector_forward_left = -player.Transform.Basis.Z + -player.Transform.Basis.X - player._direction;
 		difference_vector_forward_left = difference_vector_forward_left.Round();
 
-		var difference_vector_right = player.Transform.Basis.X - player.direction;
+		var difference_vector_right = player.Transform.Basis.X - player._direction;
 		difference_vector_right = difference_vector_right.Round();
 
-		var difference_vector_forward_right = -player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
+		var difference_vector_forward_right = -player.Transform.Basis.Z + player.Transform.Basis.X - player._direction;
 		difference_vector_forward_right = difference_vector_forward_right.Round();
 
-		var difference_vector_backward = player.Transform.Basis.Z - player.direction;
+		var difference_vector_backward = player.Transform.Basis.Z - player._direction;
 		difference_vector_backward = difference_vector_backward.Round();
 
-		var difference_vector_backward_left = player.Transform.Basis.Z + -player.Transform.Basis.X - player.direction;
+		var difference_vector_backward_left = player.Transform.Basis.Z + -player.Transform.Basis.X - player._direction;
 		difference_vector_backward_left = difference_vector_backward_left.Round();
 
-		var difference_vector_backward_right = player.Transform.Basis.Z + player.Transform.Basis.X - player.direction;
+		var difference_vector_backward_right = player.Transform.Basis.Z + player.Transform.Basis.X - player._direction;
 		difference_vector_backward_right = difference_vector_backward_right.Round();
 
 		if(difference_vector_forward == Vector3.Zero) // If the difference between the players forward facing direction (-Transform.Basis.Z) and the direction the play is moving in (direction) rounds to zero, play the walk forward animation, repeat for all animations
@@ -93,7 +93,7 @@ public partial class AnimationController : Controller
 	{
 		
 		// player.targeting = false;
-		if(player.direction != Vector3.Zero)
+		if(player._direction != Vector3.Zero)
 		{
 			if(player.movement_speed.current_value == player.movement_speed.base_value)
 			{
@@ -117,42 +117,42 @@ public partial class AnimationController : Controller
 
 	public void SetClimbingAnimation()
 	{
-		if(player.direction.Y == 1.0 && player.direction.X == 0.0)
+		if(player._direction.Y == 1.0 && player._direction.X == 0.0)
 			{
 				GD.Print("player is moving up");
 				// Put animation here
 			}
-			if(player.direction.Y == 0.0 && player.direction.X == 1.0)
+			if(player._direction.Y == 0.0 && player._direction.X == 1.0)
 			{
 				GD.Print("player is moving to the left");
 				// Put animation here
 			}
-			if(player.direction.Y == 1.0 && player.direction.X == 1.0)
+			if(player._direction.Y == 1.0 && player._direction.X == 1.0)
 			{
 				GD.Print("player is moving up and to the left");
 				// Put animation here
 			}
-			if(player.direction.Y == 0.0 && player.direction.X == -1.0)
+			if(player._direction.Y == 0.0 && player._direction.X == -1.0)
 			{
 				GD.Print("player is moving to the right");
 				// Put animation here
 			}
-			if(player.direction.Y == 1.0 && player.direction.X == -1.0)
+			if(player._direction.Y == 1.0 && player._direction.X == -1.0)
 			{
 				GD.Print("player is moving up and to the right");
 				// Put animation here
 			}
-			if(player.direction.Y == -1.0 && player.direction.X == 0.0)
+			if(player._direction.Y == -1.0 && player._direction.X == 0.0)
 			{
 				GD.Print("player is moving down");
 				// Put animation here
 			}
-			if(player.direction.Y == -1.0 && player.direction.X == 1.0)
+			if(player._direction.Y == -1.0 && player._direction.X == 1.0)
 			{
 				GD.Print("player is moving down and to the left");
 				// Put animation here
 			}
-			if(player.direction.Y == -1.0 && player.direction.X == -1.0)
+			if(player._direction.Y == -1.0 && player._direction.X == -1.0)
 			{
 				GD.Print("player is moving down and to the right");
 				// Put animation here

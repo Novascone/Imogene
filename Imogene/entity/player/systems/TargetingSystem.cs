@@ -299,7 +299,7 @@ public partial class TargetingSystem : Node
 		{
 			if(frames_held < held_threshold && target_released)
 			{
-				if(!targeting && enemy_far || enemy_pointed_toward != null) // has player look at the closest enemy when targeting
+				if((!targeting && enemy_far) || (!targeting && enemy_pointed_toward != null)) // has player look at the closest enemy when targeting
 				{
 					targeting = true;
 					EmitSignal(nameof(PlayerTargeting), targeting);

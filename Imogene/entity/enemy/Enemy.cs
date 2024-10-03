@@ -86,6 +86,9 @@ public partial class Enemy : Entity
 	public bool soft_target;
 	public bool in_player_vision;
 
+	public bool attacking { get; set; } = false; // Boolean to keep track of if the entity is attacking
+	public bool targeted { get; set; } = false;
+
 	public float jump_height = 10;
 	public float jump_time_to_peak = 2f;
 	public float jump_time_to_decent = 1.9f;
@@ -179,9 +182,9 @@ public partial class Enemy : Entity
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 
-		if (direction != Vector3.Zero)
+		if (_direction != Vector3.Zero)
 		{
-			direction = direction.Normalized();
+			_direction = _direction.Normalized();
 			// Setting the basis property will affect the rotation of the node.
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}
