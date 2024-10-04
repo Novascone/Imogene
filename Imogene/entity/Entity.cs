@@ -123,41 +123,7 @@ public partial class Entity : CharacterBody3D
 	public Stat resource_regeneration_bonus { get; set; } = new(Stat.StatType.resource_regeneration_bonus, 0);
 	public Stat cooldown_reduction { get; set; } = new(Stat.StatType.cooldown_reduction, 0);
 
-	// Damage stats calculated from other stats
-	public float critical_hit_modifier { get; set; } = 0.0f;
 	public float combined_damage { get; set; } = 0.0f;
-	public float power_modifier { get; set; } = 0.0f;
-	public float physical_damage_modifier { get; set; } = 0.0f;
-	public float slash_damage_modifier { get; set; } = 0.0f;
-	public float pierce_damage_modifier { get; set; } = 0.0f;
-	public float blunt_damage_modifier { get; set; } = 0.0f;
-	public float bleed_damage_modifier { get; set; } = 0.0f;
-	public float poison_damage_modifier { get; set; } = 0.0f;
-	public float curse_damage_modifier { get; set; } = 0.0f;
-	public float spell_damage_modifier { get; set; } = 0.0f;
-	public float fire_damage_modifier { get; set; } = 0.0f;
-	public float cold_damage_modifier { get; set; } = 0.0f;
-	public float lightning_damage_modifier { get; set; } = 0.0f;
-	public float holy_damage_modifier { get; set; } = 0.0f;
-
-	
-
-	// Damage resistance
-	public float damage_resistance_armor { get; set; } = 0.0f;
-	public float damage_resistance_poise { get; set; } = 0.0f;
-	public float damage_resistance_physical { get; set; } = 0.0f;
-	public float damage_resistance_slash { get; set; } = 0.0f;
-	public float damage_resistance_pierce { get; set; } = 0.0f;
-	public float damage_resistance_blunt { get; set; } = 0.0f;
-	public float damage_resistance_bleed { get; set; } = 0.0f;
-	public float damage_resistance_poison { get; set; } = 0.0f;
-	public float damage_resistance_curse { get; set; } = 0.0f;
-	public float damage_resistance_spell { get; set; } = 0.0f;
-	public float damage_resistance_fire { get; set; } = 0.0f;
-	public float damage_resistance_cold { get; set; } = 0.0f;
-	public float damage_resistance_lightning { get; set; } = 0.0f;
-	public float damage_resistance_holy { get; set; } = 0.0f;
-
 
 	public float previous_y_rotation { get; set; } = 0.0f; // Rotation before current rotation
 	public float current_y_rotation { get; set; } = 0.0f; // Current rotation
@@ -172,15 +138,6 @@ public partial class Entity : CharacterBody3D
 	public Vector3 _position  = Vector3.Zero; // Position 
 	public Vector3 _velocity  = Vector3.Zero; // Velocity 
 
-
-    // Possessions
-    // public int gold = 0;
-
-	// Status effects
-	
-
-
-    // public Vector3 enemy_position;
 	
     public override void _Ready()
     {

@@ -116,9 +116,9 @@ public partial class Enemy : Entity
 		ui.posture_bar.Value = 0;
 		attacking = false;
 		level.base_value = 1;
-		armor.current_value = 5;
+		armor.current_value = 80;
 		stamina.current_value = 2000;
-		physical_resistance.current_value = 10;
+		physical_resistance.current_value = 0.10f;
 		slash_resistance.current_value = 3;
 	
 

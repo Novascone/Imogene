@@ -11,6 +11,7 @@ public partial class StatsController : Node
 
 	// Damage
 	public float damage_per_second { get; set; } = 0.0f;
+	public float critical_hit_modifier { get; set; } = 0.0f;
 	public float damage_estimate { get; set; } = 0.0f;
 
 	// Power Modifiers
@@ -45,7 +46,7 @@ public partial class StatsController : Node
 
 	public void SetDamageEstimate(Entity entity)
 	{
-		damage_estimate = (float)Math.Round(damage_per_second * power_modifier_average * entity.critical_hit_modifier, 2);
+		damage_estimate = (float)Math.Round(damage_per_second * power_modifier_average * critical_hit_modifier, 2);
 	}
 
 	public void SetPowerModifiers(Entity entity)
@@ -93,7 +94,7 @@ public partial class StatsController : Node
 
 	public void SetResistanceEstimate(Entity entity)
 	{
-		resistance = entity.health.max_value * average_damage_resistance * entity.damage_resistance_armor;
+		resistance = entity.health.max_value * average_damage_resistance * entity.armor.base_value;
 	}
 
 	
@@ -243,7 +244,7 @@ public partial class StatsController : Node
 
 	public void SetCriticalHitModifier(Entity entity)
 	{
-		entity.critical_hit_modifier = 1 + (entity.critical_hit_chance.base_value  + entity.critical_hit_damage.base_value );
+		critical_hit_modifier = 1 + (entity.critical_hit_chance.base_value  + entity.critical_hit_damage.base_value );
 	}
 
 	public void SetRegenerations(Entity entity)

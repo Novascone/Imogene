@@ -163,63 +163,63 @@ public partial class DamageSystem : Node
 	public float DamageMitigation(Entity entity, string damage_type, float amount)
 	{
 		float mitigated_damage = amount;
-		// GD.Print(mitigated_damage + " of damage going into mitigation ");
-		mitigated_damage *= 1 - entity.damage_resistance_armor;
+		GD.Print(mitigated_damage + " of damage going into mitigation ");
+		mitigated_damage *= 1 - (entity.armor.current_value / 100);
 		// GD.Print("Damage reduced by armor to " + mitigated_damage);
 		if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_physical;
+			mitigated_damage *= entity.physical_resistance.current_value;
 			// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
 			if(damage_type == "Slash")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_slash;
+				mitigated_damage *= entity.slash_resistance.current_value;
 				// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
 				return MathF.Round(mitigated_damage);
 				
 			}
 			if(damage_type == "Pierce")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_pierce;
+				mitigated_damage *= entity.slash_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Blunt")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_blunt;
+				mitigated_damage *= entity.blunt_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 		}
 		if(damage_type == "Bleed")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_bleed;
+			mitigated_damage *= entity.bleed_resistance.current_value;
 			GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Poison")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_poison;
+			mitigated_damage *= entity.poison_resistance.current_value;
 			return MathF.Round(mitigated_damage);
 		}
 		if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
 		{
-			mitigated_damage *= 1 - entity.damage_resistance_spell;
+			mitigated_damage *= entity.poison_resistance.current_value;
 			if(damage_type == "Fire")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_fire;
+				mitigated_damage *= entity.fire_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Cold")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_cold;
+				mitigated_damage *= entity.cold_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Lightning")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_lightning;
+				mitigated_damage *= entity.lightning_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 			if(damage_type == "Holy")
 			{
-				mitigated_damage *= 1 - entity.damage_resistance_holy;
+				mitigated_damage *= entity.holy_resistance.current_value;
 				return MathF.Round(mitigated_damage);
 			}
 		}
