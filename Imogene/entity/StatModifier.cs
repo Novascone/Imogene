@@ -3,65 +3,65 @@ using System;
 
 public partial class StatModifier : Resource
 {
-	public StatModifier(ModificationType modification)
+	public StatModifier(ModificationType modification_)
 	{
-		modification_type = modification;
+		modification = modification_;
 	}
-	public enum ModificationType{ add_current, add_base, multiply_current, multiply_base, nullify}
-	public ModificationType modification_type;
-	public Stat stat;
-	public float value_to_add;
-	public float mod;
-	public void Apply(Stat stat)
+	public enum ModificationType{ none, add_current, add_base, multiply_current, multiply_base, nullify}
+	public ModificationType modification { get; set; } = ModificationType.none;
+	public float value_to_add { get; set; } = 0.0f;
+	public float mod { get; set; } = 0.0f;
+
+	public void Apply(Stat stat_)
 	{
 		
-		if(modification_type == ModificationType.add_current)
+		if(modification == ModificationType.add_current)
 		{
-			if(stat.current_value + value_to_add <= stat.max_value || stat.max_value == 0)
+			if(stat_.current_value + value_to_add <= stat_.max_value || stat_.max_value == 0) // Checks if adding will but the stat over max value
 			{
-				stat.current_value += value_to_add;
-				stat.RemoveModifier(this);
+				stat_.current_value += value_to_add;
+				stat_.RemoveModifier(this); // Removes the modifier from the stat because additions don't need top be kept track of (this might not make sense)
 			}
 		}
-		if(modification_type == ModificationType.add_base)
+		if(modification == ModificationType.add_base)
 		{
-			if(stat.base_value + value_to_add <= stat.max_value || stat.max_value == 0)
+			if(stat_.base_value + value_to_add <= stat_.max_value || stat_.max_value == 0)
 			{
-				stat.current_value += value_to_add;
+				stat_.current_value += value_to_add;
 			}
 		}
-		if(modification_type == ModificationType.multiply_current)
+		if(modification == ModificationType.multiply_current)
 		{
-			stat.current_value *= 1 + mod;
+			stat_.current_value *= 1 + mod;
 		}
-		if(modification_type == ModificationType.multiply_base)
+		if(modification == ModificationType.multiply_base)
 		{
 			
-			stat.base_value *= 1 + mod;
-			stat.current_value *= 1 + mod;
+			stat_.base_value *= 1 + mod;
+			stat_.current_value *= 1 + mod;
 		}
-		if(modification_type == ModificationType.nullify)
+		if(modification == ModificationType.nullify)
 		{
-			stat.current_value = 0;
+			stat_.current_value = 0;
 		}
 	}
-	public void Release(Stat stat)
+	public void Release(Stat stat_)
 	{
-		if(modification_type == ModificationType.add_base)
+		if(modification == ModificationType.add_base)
 		{
-			if(stat.base_value + value_to_add <= stat.max_value || stat.max_value == 0)
+			if(stat_.base_value + value_to_add <= stat_.max_value || stat_.max_value == 0)
 			{
-				stat.base_value -= value_to_add;
+				stat_.base_value -= value_to_add;
 			}
 			
 		}
-		if(modification_type == ModificationType.multiply_current)
+		if(modification == ModificationType.multiply_current)
 		{
-			stat.current_value /= 1 + mod;
+			stat_.current_value /= 1 + mod;
 		}
-		if(modification_type == ModificationType.nullify)
+		if(modification == ModificationType.nullify)
 		{
-			stat.current_value = stat.base_value;
+			stat_.current_value = stat_.base_value;
 		}
 	}
 }

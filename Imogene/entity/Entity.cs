@@ -30,7 +30,7 @@ public partial class Entity : CharacterBody3D
 	
 	// Collectables
 	public Collectable xp  { get; set; } = new(Collectable.CollectableType.XP, 0);
-	public Collectable gold { get; set; }  = new(Collectable.CollectableType.Gold, 0);
+	public Collectable gold { get; set; }  = new(Collectable.CollectableType.GOLD, 0);
 
 	
 	// Base stats

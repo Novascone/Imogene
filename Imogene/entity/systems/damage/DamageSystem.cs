@@ -117,7 +117,7 @@ public partial class DamageSystem : Node
 		
 		if(entity.health.current_value - amount > 0)
 		{
-			remove_health.modification_type = StatModifier.ModificationType.add_current;
+			remove_health.modification = StatModifier.ModificationType.add_current;
 			remove_health.value_to_add = -amount;
 			entity.health.AddModifier(remove_health);
 			GD.Print(entity.Name + " current health " + entity.health.current_value);
@@ -149,7 +149,7 @@ public partial class DamageSystem : Node
 		GD.Print("Heal regen tick timeout");
         if(entity.health.current_value < entity.health.max_value && entity.health_regeneration.current_value > 0)
 		{
-			add_health.modification_type = StatModifier.ModificationType.add_current;
+			add_health.modification = StatModifier.ModificationType.add_current;
 			add_health.value_to_add = entity.health_regeneration.current_value;
 			entity.health.AddModifier(add_health);
 			health_regen_timer.Start();
