@@ -30,98 +30,98 @@ public partial class Entity : CharacterBody3D
 	
 	// Collectables
 	public Collectable xp  { get; set; } = new(Collectable.CollectableType.XP, 0);
-	public Collectable gold { get; set; }  = new(Collectable.CollectableType.GOLD, 0);
+	public Collectable gold { get; set; }  = new(Collectable.CollectableType.Gold, 0);
 
 	
 	// Base stats
-	public Stat level { get; set; } = new(Stat.StatType.level, 0);
-	public Stat strength { get; set; } = new(Stat.StatType.strength, 0);
-	public Stat dexterity { get; set; } = new(Stat.StatType.dexterity, 0);
-	public Stat intellect { get; set; } = new(Stat.StatType.intellect, 0);
-	public Stat vitality { get; set; } = new(Stat.StatType.vitality, 0);
-	public Stat stamina { get; set; } = new(Stat.StatType.stamina, 0);
-	public Stat wisdom { get; set; } = new(Stat.StatType.wisdom, 0);
-	public Stat charisma { get; set; } = new(Stat.StatType.charisma, 0);
+	public Stat level { get; set; } = new(Stat.StatType.Level, 0);
+	public Stat strength { get; set; } = new(Stat.StatType.Strength, 0);
+	public Stat dexterity { get; set; } = new(Stat.StatType.Dexterity, 0);
+	public Stat intellect { get; set; } = new(Stat.StatType.Intellect, 0);
+	public Stat vitality { get; set; } = new(Stat.StatType.Vitality, 0);
+	public Stat stamina { get; set; } = new(Stat.StatType.Stamina, 0);
+	public Stat wisdom { get; set; } = new(Stat.StatType.Wisdom, 0);
+	public Stat charisma { get; set; } = new(Stat.StatType.Charisma, 0);
 	
-	public Stat physical_melee_power { get; set; } = new(Stat.StatType.physical_melee_power, 0);
-	public Stat spell_melee_power { get; set; } = new(Stat.StatType.spell_melee_power, 0);
-	public Stat physical_ranged_power { get; set; } = new(Stat.StatType.physical_ranged_power, 0);
-	public Stat spell_ranged_power { get; set; } = new(Stat.StatType.spell_melee_power, 0);
+	public Stat physical_melee_power { get; set; } = new(Stat.StatType.PhysicalMeleePower, 0);
+	public Stat spell_melee_power { get; set; } = new(Stat.StatType.SpellMeleePower, 0);
+	public Stat physical_ranged_power { get; set; } = new(Stat.StatType.PhysicalRangedPower, 0);
+	public Stat spell_ranged_power { get; set; } = new(Stat.StatType.SpellRangedPower, 0);
 
 	// Wisdom
-	public Stat wisdom_scaler { get; set; } = new(Stat.StatType.wisdom_scaler, 0);
+	public Stat wisdom_scaler { get; set; } = new(Stat.StatType.WisdomScaler, 0);
 
 	// Regeneration
-	public Stat health_regeneration { get; set; } = new(Stat.StatType.health_regeneration, 0);
-	public Stat resource_regeneration { get; set; } = new(Stat.StatType.resource_regeneration, 0);
-	public Stat posture_regeneration { get; set; } = new(Stat.StatType.posture_regeneration, 0);
+	public Stat health_regeneration { get; set; } = new(Stat.StatType.HealthRegeneration, 0);
+	public Stat resource_regeneration { get; set; } = new(Stat.StatType.ResourceRegeneration, 0);
+	public Stat posture_regeneration { get; set; } = new(Stat.StatType.PostureRegeneration, 0);
 
 	// Gear Stats
-	public Stat main_hand_damage { get; set; } = new(Stat.StatType.main_hand_damage, 10);
-	public Stat off_hand_damage { get; set; } = new(Stat.StatType.off_hand_damage, 0);
-	public Stat damage_bonus { get; set; } = new(Stat.StatType.damage_bonus, 0);
-	public Stat main_hand_attacks_per_second { get; set; } = new(Stat.StatType.main_hand_attacks_per_second, 0);
-	public Stat off_hand_attacks_per_second { get; set; } = new(Stat.StatType.off_hand_attacks_per_second, 0);
-	public Stat attack_speed_increase { get; set; } = new(Stat.StatType.attack_speed_increase, 0);
+	public Stat main_hand_damage { get; set; } = new(Stat.StatType.MainHandDamage, 10);
+	public Stat off_hand_damage { get; set; } = new(Stat.StatType.OffHandDamage, 0);
+	public Stat damage_bonus { get; set; } = new(Stat.StatType.DamageBonus, 0);
+	public Stat main_hand_attacks_per_second { get; set; } = new(Stat.StatType.MainHandAttacksPerSecond, 0);
+	public Stat off_hand_attacks_per_second { get; set; } = new(Stat.StatType.OffHandAttacksPerSecond, 0);
+	public Stat attack_speed_increase { get; set; } = new(Stat.StatType.AttackSpeedIncrease, 0);
 
 	// Misc Stats
-	public Stat health_bonus { get; set; } = new(Stat.StatType.health_bonus, 0);
-	public Stat movement_speed { get; set; } = new(Stat.StatType.movement_speed, 6f);
-	public Stat fall_speed { get; set; } = new(Stat.StatType.fall_speed, 40);
-	public Stat jump_speed { get; set; } = new(Stat.StatType.jump_speed, 30);
+	public Stat health_bonus { get; set; } = new(Stat.StatType.HealthBonus, 0);
+	public Stat movement_speed { get; set; } = new(Stat.StatType.MovementSpeed, 6f);
+	public Stat fall_speed { get; set; } = new(Stat.StatType.FallSpeed, 40);
+	public Stat jump_speed { get; set; } = new(Stat.StatType.JumpSpeed, 30);
 
 	// Damage these contribute to the multiplier applied to attacks of this type
-	public Stat critical_hit_chance { get; set; } = new(Stat.StatType.critical_hit_chance, 0);
-	public Stat critical_hit_damage { get; set; } = new(Stat.StatType.critical_hit_damage, 0);
-	public Stat posture_damage { get; set; } = new(Stat.StatType.posture_damage, 0);
+	public Stat critical_hit_chance { get; set; } = new(Stat.StatType.CriticalHitChance, 0);
+	public Stat critical_hit_damage { get; set; } = new(Stat.StatType.CriticalHitDamage, 0);
+	public Stat posture_damage { get; set; } = new(Stat.StatType.PostureDamage, 0);
 	
 	// Damage stats list
-	public Stat power { get; set; } = new(Stat.StatType.power, 0);
-	public Stat physical_damage { get; set; } = new(Stat.StatType.physical_damage, 0);
-	public Stat pierce_damage { get; set; } = new(Stat.StatType.pierce_damage, 0);
-	public Stat slash_damage { get; set; } = new(Stat.StatType.slash_damage, 0);
-	public Stat blunt_damage { get; set; } = new(Stat.StatType.blunt_damage, 0);
-	public Stat bleed_damage { get; set; } = new(Stat.StatType.bleed_damage, 0);
-	public Stat poison_damage { get; set; } = new(Stat.StatType.poison_damage, 0);
-	public Stat curse_damage { get; set; } = new(Stat.StatType.curse_damage, 0);
-	public Stat spell_damage { get; set; } = new(Stat.StatType.spell_damage, 0);
-	public Stat fire_damage { get; set; } = new(Stat.StatType.fire_damage, 0);
-	public Stat cold_damage { get; set; } = new(Stat.StatType.cold_damage, 0);
-	public Stat lightning_damage { get; set; } = new(Stat.StatType.lightning_damage, 0);
-	public Stat holy_damage { get; set; } = new(Stat.StatType.holy_damage, 0);
+	public Stat power { get; set; } = new(Stat.StatType.Power, 0);
+	public Stat physical_damage { get; set; } = new(Stat.StatType.PhysicalDamage, 0);
+	public Stat pierce_damage { get; set; } = new(Stat.StatType.PierceDamage, 0);
+	public Stat slash_damage { get; set; } = new(Stat.StatType.SlashDamage, 0);
+	public Stat blunt_damage { get; set; } = new(Stat.StatType.BluntDamage, 0);
+	public Stat bleed_damage { get; set; } = new(Stat.StatType.BleedDamage, 0);
+	public Stat poison_damage { get; set; } = new(Stat.StatType.PoisonDamage, 0);
+	public Stat curse_damage { get; set; } = new(Stat.StatType.CurseDamage, 0);
+	public Stat spell_damage { get; set; } = new(Stat.StatType.SpellDamage, 0);
+	public Stat fire_damage { get; set; } = new(Stat.StatType.FireDamage, 0);
+	public Stat cold_damage { get; set; } = new(Stat.StatType.ColdDamage, 0);
+	public Stat lightning_damage { get; set; } = new(Stat.StatType.LightningDamage, 0);
+	public Stat holy_damage { get; set; } = new(Stat.StatType.HolyDamage, 0);
 
 	
 	// Defensive Stats
-	public Stat block_amount { get; set; } = new(Stat.StatType.block_amount, 0);
-	public Stat retaliation { get; set; } = new(Stat.StatType.retaliation, 0);
+	public Stat block_amount { get; set; } = new(Stat.StatType.BlockAmount, 0);
+	public Stat retaliation { get; set; } = new(Stat.StatType.Retaliation, 0);
 	
 	// Resistance Stats
-	public Stat armor { get; set; } = new(Stat.StatType.armor, 0);
-	public Stat poise { get; set; } = new(Stat.StatType.poise, 0);
-	public Stat physical_resistance { get; set; } = new(Stat.StatType.physical_resistance, 0);
-	public Stat pierce_resistance { get; set; } = new(Stat.StatType.pierce_resistance, 0);
-	public Stat slash_resistance { get; set; } = new(Stat.StatType.slash_resistance, 0);
-	public Stat blunt_resistance { get; set; } = new(Stat.StatType.blunt_resistance, 0);
-	public Stat bleed_resistance { get; set; } = new(Stat.StatType.bleed_resistance, 0);
-	public Stat poison_resistance { get; set; } = new(Stat.StatType.poison_resistance, 0);
-	public Stat curse_resistance { get; set; } = new(Stat.StatType.curse_resistance, 0);
-	public Stat spell_resistance { get; set; } = new(Stat.StatType.spell_resistance, 0);
-	public Stat fire_resistance { get; set; } = new(Stat.StatType.fire_resistance, 0);
-	public Stat cold_resistance { get; set; } = new(Stat.StatType.cold_resistance, 0);
-	public Stat lightning_resistance { get; set; } = new(Stat.StatType.lightning_resistance, 0);
-	public Stat holy_resistance { get; set; } = new(Stat.StatType.holy_resistance, 0);
+	public Stat armor { get; set; } = new(Stat.StatType.Armor, 0);
+	public Stat poise { get; set; } = new(Stat.StatType.Poise, 0);
+	public Stat physical_resistance { get; set; } = new(Stat.StatType.PhysicalResistance, 0);
+	public Stat pierce_resistance { get; set; } = new(Stat.StatType.PierceResistance, 0);
+	public Stat slash_resistance { get; set; } = new(Stat.StatType.SlashResistance, 0);
+	public Stat blunt_resistance { get; set; } = new(Stat.StatType.BluntResistance, 0);
+	public Stat bleed_resistance { get; set; } = new(Stat.StatType.BleedResistance, 0);
+	public Stat poison_resistance { get; set; } = new(Stat.StatType.PoisonResistance, 0);
+	public Stat curse_resistance { get; set; } = new(Stat.StatType.CurseResistance, 0);
+	public Stat spell_resistance { get; set; } = new(Stat.StatType.SpellResistance, 0);
+	public Stat fire_resistance { get; set; } = new(Stat.StatType.FireResistance, 0);
+	public Stat cold_resistance { get; set; } = new(Stat.StatType.ColdResistance, 0);
+	public Stat lightning_resistance { get; set; } = new(Stat.StatType.LightningResistance, 0);
+	public Stat holy_resistance { get; set; } = new(Stat.StatType.HolyResistance, 0);
 
 	// Health
-	public Stat health { get; set; } = new(Stat.StatType.health, 200);
-	public Stat health_on_retaliation { get; set; } = new(Stat.StatType.health_on_retaliation, 0);
-	public Stat health_regeneration_bonus { get; set; } = new(Stat.StatType.health_regeneration_bonus , 0);
+	public Stat health { get; set; } = new(Stat.StatType.Health, 200);
+	public Stat health_on_retaliation { get; set; } = new(Stat.StatType.HealthOnRetaliation, 0);
+	public Stat health_regeneration_bonus { get; set; } = new(Stat.StatType.HealthRegenerationBonus , 0);
 
 	// Resource
-	public Stat resource { get; set; } = new(Stat.StatType.resource, 100);
-	public Stat posture { get; set; } = new(Stat.StatType.posture, 0);
-	public Stat resource_cost_reduction { get; set; } = new(Stat.StatType.resource_cost_reduction, 0);
-	public Stat resource_regeneration_bonus { get; set; } = new(Stat.StatType.resource_regeneration_bonus, 0);
-	public Stat cooldown_reduction { get; set; } = new(Stat.StatType.cooldown_reduction, 0);
+	public Stat resource { get; set; } = new(Stat.StatType.Resource, 100);
+	public Stat posture { get; set; } = new(Stat.StatType.Posture, 0);
+	public Stat resource_cost_reduction { get; set; } = new(Stat.StatType.ResourceCostReduction, 0);
+	public Stat resource_regeneration_bonus { get; set; } = new(Stat.StatType.ResourceRegenerationBonus, 0);
+	public Stat cooldown_reduction { get; set; } = new(Stat.StatType.CooldownReduction, 0);
 
 	public float combined_damage { get; set; } = 0.0f;
 

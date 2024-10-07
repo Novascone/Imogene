@@ -3,7 +3,7 @@ using System;
 
 public partial class Stun : StatusEffect
 {
-	public StatModifier stop = new(StatModifier.ModificationType.nullify);
+	public StatModifier stop = new(StatModifier.ModificationType.Nullify);
 	public Stun()
     {
 		name = "stun";

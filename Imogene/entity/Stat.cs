@@ -13,62 +13,62 @@ public partial class Stat : Resource
 
 	public enum StatType
 	{
-		none,
+		None,
 		//Base
-		strength, dexterity, intellect, vitality, stamina,
-		wisdom, charisma,
+		Strength, Dexterity, Intellect, Vitality, Stamina,
+		Wisdom, Charisma,
 		
 		//Gear
-		main_hand_damage, off_hand_damage, damage_bonus,
-		main_hand_attacks_per_second, off_hand_attacks_per_second,
-		attack_speed_increase, health_bonus,
+		MainHandDamage, OffHandDamage, DamageBonus,
+		MainHandAttacksPerSecond, OffHandAttacksPerSecond,
+		AttackSpeedIncrease, HealthBonus,
 		
 		//Movement
-		movement_speed, fall_speed, jump_speed,
+		MovementSpeed, FallSpeed, JumpSpeed,
 		
 		//Offense
-		critical_hit_chance, critical_hit_damage, posture_damage,
-		power, physical_damage, pierce_damage, slash_damage,
-		blunt_damage, bleed_damage, poison_damage, curse_damage,
-		spell_damage, fire_damage, cold_damage, lightning_damage,
-		holy_damage,
+		CriticalHitChance, CriticalHitDamage, PostureDamage,
+		Power, PhysicalDamage, PierceDamage, SlashDamage,
+		BluntDamage, BleedDamage, PoisonDamage, CurseDamage,
+		SpellDamage, FireDamage, ColdDamage, LightningDamage,
+		HolyDamage,
 		
 		//Defense
-		block_amount, retaliation,
-		armor, poise, physical_resistance, pierce_resistance,
-		slash_resistance, blunt_resistance, bleed_resistance,
-		poison_resistance, curse_resistance, spell_resistance,
-		fire_resistance, cold_resistance, lightning_resistance,
-		holy_resistance,
+		BlockAmount, Retaliation,
+		Armor, Poise, PhysicalResistance, PierceResistance,
+		SlashResistance, BluntResistance, BleedResistance,
+		PoisonResistance, CurseResistance, SpellResistance,
+		FireResistance, ColdResistance, LightningResistance,
+		HolyResistance,
 
 		//Health
-		health, health_on_retaliation,
-		health_regeneration_bonus,
+		Health, HealthOnRetaliation,
+		HealthRegenerationBonus,
 
 		//Resource
-		resource, posture, resource_cost_reduction, resource_regeneration_bonus,
-		cooldown_reduction,
+		Resource, Posture, ResourceCostReduction, ResourceRegenerationBonus,
+		CooldownReduction,
 
 		//Level
-		level,
+		Level,
 
 		//Powers
-		physical_melee_power,
-		spell_melee_power,
-		physical_ranged_power,
-		spell_ranged_power,
+		PhysicalMeleePower,
+		SpellMeleePower,
+		PhysicalRangedPower,
+		SpellRangedPower,
 
 		//Wisdom
-		wisdom_scaler,
+		WisdomScaler,
 
 		//Regeneration
-		health_regeneration,
-		resource_regeneration,
-		posture_regeneration
+		HealthRegeneration,
+		ResourceRegeneration,
+		PostureRegeneration
 
 	}
 
-	public StatType type { get; set; } = StatType.none;
+	public StatType type { get; set; } = StatType.None;
 	public float base_value { get; set; } = 0.0f;
 	public float current_value { get; set; } = 0.0f;
 	public float max_value { get; set; } = 0.0f;

@@ -3,7 +3,7 @@ using System;
 
 public partial class Slow : StatusEffect
 {
-	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
+	public StatModifier slow = new(StatModifier.ModificationType.MultiplyCurrent);
 
 	public Slow()
 	{

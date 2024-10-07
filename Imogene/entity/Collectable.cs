@@ -8,7 +8,7 @@ public partial class Collectable : Resource
 		type = type_;
 		amount = amount_;
 	}
-	public enum CollectableType {NONE, XP, GOLD}
-	public CollectableType type { get; set; } = CollectableType.NONE;
+	public enum CollectableType {None, XP, Gold}
+	public CollectableType type { get; set; } = CollectableType.None;
 	public float amount { get; set; } = 0.0f;
 }

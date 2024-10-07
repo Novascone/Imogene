@@ -7,7 +7,7 @@ public partial class Chill : StatusEffect
 	private Freeze freeze;
 	
 	public bool removed_by_freeze;
-	public StatModifier slow = new(StatModifier.ModificationType.multiply_current);
+	public StatModifier slow = new(StatModifier.ModificationType.MultiplyCurrent);
 
 	public Chill()
 	{

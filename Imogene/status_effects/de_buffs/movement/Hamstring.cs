@@ -1,10 +1,10 @@
 using Godot;
 using System;
 
-public partial class Hamstrung : StatusEffect
+public partial class Hamstring : StatusEffect
 {
-	public StatModifier stop = new(StatModifier.ModificationType.nullify);
-	public Hamstrung()
+	public StatModifier stop = new(StatModifier.ModificationType.Nullify);
+	public Hamstring()
 	{
 		name = "hamstrung";
 		type = EffectType.debuff;

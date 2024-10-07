@@ -4,7 +4,7 @@ using System;
 public partial class Freeze : StatusEffect
 {
 
-	public StatModifier stop = new(StatModifier.ModificationType.nullify);
+	public StatModifier stop = new(StatModifier.ModificationType.Nullify);
 
     public Freeze()
     {

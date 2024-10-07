@@ -19,8 +19,8 @@ public partial class DamageSystem : Node
 	private float height = 60;
 	[Export] PackedScene damage_number_3d_template;
 	private Queue<DamageNumber3D> damage_number_3d_pool = new Queue<DamageNumber3D>();
-	private StatModifier remove_health = new(StatModifier.ModificationType.add_current);
-	private StatModifier add_health  = new(StatModifier.ModificationType.add_current);
+	private StatModifier remove_health = new(StatModifier.ModificationType.AddCurrent);
+	private StatModifier add_health  = new(StatModifier.ModificationType.AddCurrent);
 	
 	private CustomSignals _customSignals;
 	// Called when the node enters the scene tree for the first time.
@@ -117,7 +117,7 @@ public partial class DamageSystem : Node
 		
 		if(entity.health.current_value - amount > 0)
 		{
-			remove_health.modification = StatModifier.ModificationType.add_current;
+			remove_health.modification = StatModifier.ModificationType.AddCurrent;
 			remove_health.value_to_add = -amount;
 			entity.health.AddModifier(remove_health);
 			GD.Print(entity.Name + " current health " + entity.health.current_value);
@@ -149,7 +149,7 @@ public partial class DamageSystem : Node
 		GD.Print("Heal regen tick timeout");
         if(entity.health.current_value < entity.health.max_value && entity.health_regeneration.current_value > 0)
 		{
-			add_health.modification = StatModifier.ModificationType.add_current;
+			add_health.modification = StatModifier.ModificationType.AddCurrent;
 			add_health.value_to_add = entity.health_regeneration.current_value;
 			entity.health.AddModifier(add_health);
 			health_regen_timer.Start();

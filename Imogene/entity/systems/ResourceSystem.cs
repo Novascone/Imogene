@@ -9,8 +9,8 @@ public partial class ResourceSystem : Node
 
 	[Signal] public delegate void ResourceChangeEventHandler(float resource);
 
-	StatModifier change_resource = new (StatModifier.ModificationType.add_current);
-	StatModifier change_posture = new (StatModifier.ModificationType.add_current);
+	StatModifier change_resource = new (StatModifier.ModificationType.AddCurrent);
+	StatModifier change_posture = new (StatModifier.ModificationType.AddCurrent);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

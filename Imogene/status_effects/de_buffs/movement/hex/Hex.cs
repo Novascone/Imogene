@@ -5,7 +5,7 @@ public partial class Hex : StatusEffect
 {
 	public PackedScene hex_mesh_scene = ResourceLoader.Load<PackedScene>("res://status_effects/de_buffs/movement/hex/hex_mesh.tscn");
 	public MeshInstance3D hex_mesh;
-	public StatModifier stop = new(StatModifier.ModificationType.nullify);
+	public StatModifier stop = new(StatModifier.ModificationType.Nullify);
 	public Hex()
     {
 		name = "hex";
