@@ -80,7 +80,7 @@ public partial class Kick : Ability
 			kick_hitbox.posture_damage = player.posture_damage.current_value * 2; // Set projectile posture damage 
 			kick_hitbox.is_critical = false;
 		}
-		kick_hitbox.damage_type = "physical"; // Set projectile damage type
+		kick_hitbox.type = MeleeHitbox.DamageType.Physical; // Set projectile damage type
 		
 	}
 

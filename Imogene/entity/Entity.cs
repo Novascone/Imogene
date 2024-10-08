@@ -159,7 +159,7 @@ public partial class Entity : CharacterBody3D
 		posture_regeneration.current_value = 2;
 
 		posture_damage.current_value = 10;
-        entity_systems.damage_system.SubscribeEntityToHealthRegen(this);
+        entity_systems.damage_system.Subscribe(this);
     }
 
 }

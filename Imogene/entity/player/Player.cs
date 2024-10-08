@@ -139,6 +139,7 @@ public partial class Player : Entity
 		base._Ready();
 		entity_controllers.status_effect_controller.fear_duration = 3;
 		
+		resource.max_value = resource.max_value / 2;
 
 	
 		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
@@ -197,7 +198,7 @@ public partial class Player : Entity
 	
 		
 		// Controller signals
-		controllers.ability_controller.ResourceEffect += entity_systems.resource_system.HandleResourceEffect;
+		entity_systems.resource_system.Subscribe(this);
 		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 		

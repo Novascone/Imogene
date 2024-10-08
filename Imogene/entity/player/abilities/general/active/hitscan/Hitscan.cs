@@ -5,6 +5,7 @@ public partial class Hitscan : RangedAbility
 {
 	
 	public Sprite3D cast_marker;
+	
 	[Export] public PackedScene cast_marker_scene;
 	
 
@@ -154,7 +155,7 @@ public partial class Hitscan : RangedAbility
 			
 			if(hurtbox.Owner is Enemy enemy)
 			{
-				enemy.entity_systems.damage_system.TakeDamage(enemy, "cold",10.0f,false);
+				enemy.entity_systems.damage_system.TakeDamage(enemy, ranged_hitbox, 10.0f, false);
 			}
 			
 		}

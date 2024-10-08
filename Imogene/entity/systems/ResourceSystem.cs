@@ -3,127 +3,111 @@ using System;
 
 public partial class ResourceSystem : Node
 {
-	[Export] public Timer posture_regen_timer;
-	[Export] public Timer resource_regen_timer;
-	public bool posture_broken;
+	StatModifier change_resource  { get; set; } = new (StatModifier.ModificationType.AddCurrent);
+	StatModifier change_posture  { get; set; } = new (StatModifier.ModificationType.AddCurrent);
+	public float resource_timer_duration { get; set; } = 1;
+	public SceneTreeTimer resource_timer { get; set; } = null;
+	public float posture_timer_duration { get; set; } = 1;
+	public SceneTreeTimer posture_timer { get; set; } = null;
+	public bool posture_broken { get; set; } = false;
 
-	[Signal] public delegate void ResourceChangeEventHandler(float resource);
+	[Signal] public delegate void ResourceChangeEventHandler(float resource_);
 
-	StatModifier change_resource = new (StatModifier.ModificationType.AddCurrent);
-	StatModifier change_posture = new (StatModifier.ModificationType.AddCurrent);
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    public void ChangeResource(Player player_, float resource_change_)
 	{
-		
+		change_resource.value_to_add = resource_change_;
+		player_.resource.AddModifier(change_resource);
+		EmitSignal(nameof(ResourceChange), player_.resource.current_value);
+		ResourceRegeneration(player_);
 	}
 
-    
-
-    public void Resource(Player player, float resource_change)
+	public void ResourceRegeneration(Player player_)
 	{
-		change_resource.value_to_add = resource_change;
-		player.resource.AddModifier(change_resource);
-		GD.Print("Cost " + resource_change);
-		EmitSignal(nameof(ResourceChange),player.resource.current_value);
-		GD.Print("player resource changed by " + resource_change);
-		GD.Print("player resource " + player.resource.current_value);
-		ResourceRegen(player);
-	}
-
-	public void ResourceRegen(Player player)
-	{
-		if(resource_regen_timer.TimeLeft == 0)
+		if(resource_timer == null || resource_timer.TimeLeft == 0)
 		{
-			resource_regen_timer.Timeout += () => OnResourceRegenTickTimeout(player);
-			resource_regen_timer.Start();
+			resource_timer = GetTree().CreateTimer(resource_timer_duration);
+			resource_timer.Timeout += () => ResourceTimerTimeout(player_);
 		}
 	}
 
-	public void Posture(Entity entity, float posture_damage)
-	{
-		if(entity.posture.current_value < entity.posture.max_value)
+	private void ResourceTimerTimeout(Player player_)
+    {
+		if(player_.resource.current_value < player_.resource.max_value)
 		{
-			// GD.Print(entity.identifier + " taking posture damage of " + posture_damage);
+			if(resource_timer == null || resource_timer.TimeLeft == 0)
+			{
+				resource_timer = GetTree().CreateTimer(resource_timer_duration);
+				resource_timer.Timeout += () => ResourceTimerTimeout(player_);
+			}
+			change_resource.value_to_add = player_.resource_regeneration.current_value;
+			player_.resource.AddModifier(change_resource);
+			EmitSignal(nameof(ResourceChange), player_.resource.current_value);
+		}
+    }
+
+	public void ChangePosture(Entity entity_, float posture_damage_)
+	{
+		if(entity_.posture.current_value < entity_.posture.max_value)
+		{
 			
-			change_posture.value_to_add = posture_damage;
-			entity.posture.AddModifier(change_posture);
+			change_posture.value_to_add = posture_damage_;
+			entity_.posture.AddModifier(change_posture);
 			
-			if(entity.posture.current_value >= entity.posture.max_value)
+			if(entity_.posture.current_value >= entity_.posture.max_value)
 			{
 				posture_broken = true;
 			}
-			// GD.Print("posture " + entity.posture);
-			
-			if(entity is Enemy enemy)
-			{
-				enemy.ui.posture_bar.Value += posture_damage;
-				GD.Print(enemy.Name + "is taking " + posture_damage + " posture damage");
 
+			
+			if(entity_ is Enemy enemy)
+			{
+				enemy.ui.posture_bar.Value += posture_damage_;
 			}
-			// if(entity is Player player)
-			// {
-			// 	player.ui.hud.posture.Value += posture_damage;
-			// }
 		}
-		PostureRegen(entity);
+		PostureRegeneration(entity_);
 		
 	}
 
-	public void PostureRegen(Entity entity)
+	public void PostureRegeneration(Entity entity_)
 	{
-		posture_regen_timer.Timeout += () => OnPostureRegenTickTimeout(entity);
-		posture_regen_timer.Start();
+		
+		if(posture_timer == null || posture_timer.TimeLeft == 0)
+		{
+			posture_timer = GetTree().CreateTimer(posture_timer_duration);
+			posture_timer.Timeout += () => PostureTimerTimeout(entity_);
+		}
 	}
 
-	private void OnResourceRegenTickTimeout(Player player)
+	private void PostureTimerTimeout(Entity entity_)
     {
-        GD.Print("resource regenerating");
-		if(player.resource.current_value < player.resource.max_value)
+		if(entity_.posture.current_value > 0)
 		{
-			change_resource.value_to_add = player.resource_regeneration.current_value;
-			player.resource.AddModifier(change_resource);
-			EmitSignal(nameof(ResourceChange),player.resource.current_value);
-			GD.Print("player resource " + player.resource.current_value);
-			
-		}
-
-		// if(entity is Player player)
-		// {
-		// 	player.ui.hud.resource.Value = entity.resource;
-		// }
-    }
-
-	
-
-	private void OnPostureRegenTickTimeout(Entity entity)
-    {
-		// GD.Print("posture regenerating");
-		if(entity.posture.current_value > 0)
-		{
-			change_posture.value_to_add = -entity.resource_regeneration.current_value;
-			entity.posture.AddModifier(change_posture);
+			if(posture_timer == null || posture_timer.TimeLeft == 0)
+			{
+				posture_timer = GetTree().CreateTimer(posture_timer_duration);
+				posture_timer.Timeout += () => PostureTimerTimeout(entity_);
+			}
+			change_posture.value_to_add = -entity_.posture_regeneration.current_value;
+			entity_.posture.AddModifier(change_posture);
 		}
         else
 		{
-			entity.posture.current_value = 0;
+			entity_.posture.current_value = 0;
 		}
-		if(entity is Enemy enemy)
+		if(entity_ is Enemy enemy)
 		{
-			enemy.ui.posture_bar.Value = entity.posture.current_value;
+			enemy.ui.posture_bar.Value = entity_.posture.current_value;
 		}
-		// if(entity is Player player)
-		// {
-		// 	player.ui.hud.posture.Value = entity.posture;
-		// }
-		if(entity.posture.current_value == 0)
-		{
-			posture_regen_timer.Stop();
-		}
+
     }
 
-    internal void HandleResourceEffect(Player player, float resource_change)
+    internal void HandleResourceEffect(Player player_, float resource_change_)
     {
-        GD.Print("resource system has received resource change");
-        Resource(player, resource_change);
+        ChangeResource(player_, resource_change_);
     }
+
+	public void Subscribe(Player player_)
+	{
+		player_.controllers.ability_controller.ResourceEffect += HandleResourceEffect;
+	}
 }
