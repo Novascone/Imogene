@@ -61,14 +61,14 @@ public partial class StatsController : Node
 	public void SetDamageModifiers(Entity entity_)
 	{
 		SetDamageModifierStats(entity_);
-		float damage_modifiers_total = 0;
+		float _damage_modifiers_total = 0;
 		for(int i = 0; i < damage_modifiers.Length; i ++)
 		{
-			damage_modifiers_total += 1 + (damage_modifiers[i].base_value / 100);
+			_damage_modifiers_total += 1 + (damage_modifiers[i].base_value / 100);
 		}
 
 		
-		average_damage_modifier = damage_modifiers_total / damage_modifiers.Length;
+		average_damage_modifier = _damage_modifiers_total / damage_modifiers.Length;
 	}
 
 	public void SetScales(Entity entity_)
@@ -81,14 +81,14 @@ public partial class StatsController : Node
 	{
 		SetScales(entity_);
 		SetResistanceStats(entity_);
-		float total_resistances = 0;
+		float _total_resistances = 0;
 		for(int i = 0; i < resistance_stats.Length; i ++)
 		{
-			total_resistances += (float)Math.Round(resistance_stats[i].base_value / damage_resistance_level_scale, 2);
+			_total_resistances += (float)Math.Round(resistance_stats[i].base_value / damage_resistance_level_scale, 2);
 		}
 
 		
-		average_damage_resistance = total_resistances / resistance_stats.Length;
+		average_damage_resistance = _total_resistances / resistance_stats.Length;
 		
 	}
 
@@ -275,9 +275,9 @@ public partial class StatsController : Node
 
 
 	
-		if(entity_ is Player player)
+		if(entity_ is Player _player)
 		{
-			EmitSignal(nameof(UpdateStats), player);
+			EmitSignal(nameof(UpdateStats), _player);
 		}
 
 	}

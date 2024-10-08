@@ -19,8 +19,7 @@ public partial class Ability : Node3D
     [Export] public GeneralAbilityType general_ability_type;
     public enum ClassAbilityType {None, Basic, Kernel, Defensive, Mastery, Movement, Specialized, Unique, Toy}
     [Export] public ClassAbilityType class_ability_type;
-    public enum DamageType {None, Slash, Peirce, Blunt, Bleed, Poison, Fire, Cold, Lightning, Holy}
-    [Export] public DamageType damage_type;
+ 
     [Export] public string description { get; set; }
     [Export] public Texture2D icon { get; set; }
 
@@ -136,7 +135,6 @@ public partial class Ability : Node3D
 
     public bool CheckHeld()
     {
-        // GD.Print(Name + " calling checkheld");
     
         if(frames_held < frames_held_threshold)
         {
@@ -158,45 +156,47 @@ public partial class Ability : Node3D
         return button_held;
     }
 
-    public virtual void DealDamage(Player player, float ability_damage_modifier)
+    public virtual void DealDamage(Player player_, float ability_damage_modifier_)
     {
+        GD.Print("Dealing damage");
         if(melee_hitbox != null)
         {
-            if(player.entity_systems.damage_system.Crit(player))
+            if(DamageSystem.Critical(player_))
             {
                 // GD.Print("Critical!");
-                melee_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.combined_damage), 2) * (1 + ability_damage_modifier);
-                melee_hitbox.posture_damage = player.posture_damage.current_value;
+                melee_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.combined_damage), 2) * (1 + ability_damage_modifier);
+                melee_hitbox.SetDamage(player_);
+                melee_hitbox.posture_damage = player_.posture_damage.current_value;
                 melee_hitbox.is_critical = true;
                 // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
             }
             else
             {
-                melee_hitbox.damage = player.combined_damage * (1 + ability_damage_modifier);
-                melee_hitbox.posture_damage = player.posture_damage.current_value;
+                melee_hitbox.damage = player_.combined_damage * (1 + ability_damage_modifier);
+                melee_hitbox.SetDamage(player_);
+                melee_hitbox.posture_damage = player_.posture_damage.current_value;
                 melee_hitbox.is_critical = false;
                 // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
             }
         }
         if(ranged_hitbox != null)
         {
-            if(player.entity_systems.damage_system.Crit(player)) // check if the play will crit
+            if(DamageSystem.Critical(player_)) // check if the play will crit
 		    {
-			ranged_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier); // Set projectile damage
-			ranged_hitbox.posture_damage = player.posture_damage.current_value / 3; // Set projectile posture damage 
-			ranged_hitbox.is_critical = true;
+                ranged_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier); // Set projectile damage
+                ranged_hitbox.SetDamage(player_);
+                ranged_hitbox.posture_damage = player_.posture_damage.current_value / 3; // Set projectile posture damage 
+                ranged_hitbox.is_critical = true;
 		    }
             else
             {
                 
-                ranged_hitbox.damage = player.combined_damage * (1 + ability_damage_modifier); // Set projectile damage
-                ranged_hitbox.posture_damage = player.posture_damage.current_value / 3; // Set projectile posture damage 
+                ranged_hitbox.damage = player_.combined_damage * (1 + ability_damage_modifier); // Set projectile damage
+                ranged_hitbox.SetDamage(player_);
+                ranged_hitbox.posture_damage = player_.posture_damage.current_value / 3; // Set projectile posture damage 
                 ranged_hitbox.is_critical = false;
             }
-        }
-        
-
-        
+        }        
     }
 
     public virtual void Execute(Player player) // Default execute

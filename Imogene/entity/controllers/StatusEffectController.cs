@@ -57,29 +57,29 @@ public partial class StatusEffectController : Node
 
 	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity
 	{
-		var effect_to_add = new StatusEffect();
-		effect_to_add = GetEffect(entity_, effect_, effect_to_add); // Gets status effect to apply
-		QueueStatusEffect(effect_to_add); // Checks if ability has been applied
-		if(effect_to_add.state == StatusEffect.States.queued)
+		var _effect_to_add = new StatusEffect();
+		_effect_to_add = GetEffect(entity_, effect_, _effect_to_add); // Gets status effect to apply
+		QueueStatusEffect(_effect_to_add); // Checks if ability has been applied
+		if(_effect_to_add.state == StatusEffect.States.queued)
 		{
 			
-				entity_.status_effects.Add(effect_to_add); // adds status effect to entities list of effects
-				AddChild(effect_to_add); // adds the effect as a child setting all of its _Ready() values
-				effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity_, effect_to_add); // Subscribes to effect finished signal
-				if(effect_to_add.adds_additional_effects)
+				entity_.status_effects.Add(_effect_to_add); // adds status effect to entities list of effects
+				AddChild(_effect_to_add); // adds the effect as a child setting all of its _Ready() values
+				_effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity_, _effect_to_add); // Subscribes to effect finished signal
+				if(_effect_to_add.adds_additional_effects)
 				{
-					effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity_); // subscribes to add additional effect signal
+					_effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity_); // subscribes to add additional effect signal
 				}
-				ApplyStatusEffect(entity_, effect_to_add);
+				ApplyStatusEffect(entity_, _effect_to_add);
 				// Sets the variable for what the status effects are preventing or altering
-				if(effect_to_add.prevents_movement){ movement_prevented = true; EmitSignal(nameof(MovementPrevented), movement_prevented);}
-				if(effect_to_add.prevents_input){ input_prevented = true; EmitSignal(nameof(InputPrevented), input_prevented);}
-				if(effect_to_add.alters_speed){ speed_altered = true; }
-				if(effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
-				if(effect_to_add.name == "tether")
+				if(_effect_to_add.prevents_movement){ movement_prevented = true; EmitSignal(nameof(MovementPrevented), movement_prevented);}
+				if(_effect_to_add.prevents_input){ input_prevented = true; EmitSignal(nameof(InputPrevented), input_prevented);}
+				if(_effect_to_add.alters_speed){ speed_altered = true; }
+				if(_effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
+				if(_effect_to_add.name == "tether")
 				{
 					tethered = true;
-					Tether tether_effect = (Tether)effect_to_add;
+					Tether tether_effect = (Tether)_effect_to_add;
 					EmitSignal(nameof(Tethered),entity_, tether_effect.tether, tethered, tether_effect.tether_length);
 				
 				}
@@ -88,7 +88,7 @@ public partial class StatusEffectController : Node
 		}
 		else
 		{
-			ApplyStatusEffect(entity_, effect_to_add);
+			ApplyStatusEffect(entity_, _effect_to_add);
 		}
 		
 	}
@@ -141,6 +141,7 @@ public partial class StatusEffectController : Node
 				SetEffectBooleans(effect_);
 			}
 			effect_.Apply(entity_);
+			GD.Print("Adding " + effect_.name);
 		}
 	}
 
@@ -161,11 +162,11 @@ public partial class StatusEffectController : Node
 	public void SetEffectBooleans(StatusEffect effect_) // Switches the effect from on to off or off to on in the dictionary
 	{
 
-		foreach(StatusEffect status_effect in status_effects.Keys)
+		foreach(StatusEffect _status_effect in status_effects.Keys)
 		{
-			if (effect_.GetType() == status_effect.GetType())
+			if (effect_.GetType() == _status_effect.GetType())
 			{
-				status_effects[status_effect] = !status_effects[status_effect];
+				status_effects[_status_effect] = !status_effects[_status_effect];
 			}
 		}
 
@@ -175,12 +176,12 @@ public partial class StatusEffectController : Node
 	// if the effect is on the entities status effects will be searched and the matching effect will be returned
 	public StatusEffect GetEffect(Entity entity_, StatusEffect effect_, StatusEffect effect_to_get_) 
 	{
-		foreach(StatusEffect status_effect in status_effects.Keys)
+		foreach(StatusEffect _status_effect in status_effects.Keys)
 		{
-			if (effect_.GetType() == status_effect.GetType())
+			if (effect_.GetType() == _status_effect.GetType())
 			{
 				
-				if(!status_effects[status_effect])
+				if(!status_effects[_status_effect])
 				{
 					effect_to_get_ = effect_;
 				}
@@ -188,7 +189,7 @@ public partial class StatusEffectController : Node
 				{
 					foreach(StatusEffect applied_effect in entity_.status_effects)
 					{
-						if(applied_effect.GetType() == status_effect.GetType())
+						if(applied_effect.GetType() == _status_effect.GetType())
 						{
 							effect_to_get_ = applied_effect;
 						}
@@ -208,11 +209,11 @@ public partial class StatusEffectController : Node
 
     private void HandleStatusEffectFinished(Entity entity_, StatusEffect effect_to_remove_)
     {
-		foreach(StatusEffect effect in status_effects.Keys)
+		foreach(StatusEffect _effect in status_effects.Keys)
 		{
-			if(effect_to_remove_.GetType() == effect.GetType())
+			if(effect_to_remove_.GetType() == _effect.GetType())
 			{
-				if(status_effects[effect])
+				if(status_effects[_effect])
 				{
 					
 					RemoveStatusEffect(entity_, effect_to_remove_);
@@ -223,5 +224,10 @@ public partial class StatusEffectController : Node
 			}
 		}
     }
+
+	public void Subscribe(Entity entity_)
+	{
+		entity_.entity_systems.damage_system.AddStatusEffect += AddStatusEffect;
+	}
 
 }

@@ -139,6 +139,7 @@ public partial class Player : Entity
 		base._Ready();
 		entity_controllers.status_effect_controller.fear_duration = 3;
 		
+		power.current_value = 50;
 		resource.max_value = resource.max_value / 2;
 
 	
@@ -175,8 +176,6 @@ public partial class Player : Entity
 		// Entity system signals
 		entity_systems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
 
-		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
-
 		// Entity controller signals
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
@@ -198,7 +197,7 @@ public partial class Player : Entity
 	
 		
 		// Controller signals
-		entity_systems.resource_system.Subscribe(this);
+		
 		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 		

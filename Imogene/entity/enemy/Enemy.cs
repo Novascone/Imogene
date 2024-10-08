@@ -120,9 +120,7 @@ public partial class Enemy : Entity
 		stamina.current_value = 2000;
 		physical_resistance.current_value = 0.10f;
 		slash_resistance.current_value = 3;
-	
 
-		entity_systems.damage_system.SubscribeToHurtboxSignals(this);
 
 
 		areas.alert.BodyEntered += OnAlertAreaBodyEntered;

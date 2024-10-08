@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 public partial class DamageSystem : Node
@@ -9,76 +10,230 @@ public partial class DamageSystem : Node
 	public SceneTreeTimer health_regeneration_timer { get; set; } = null;
 	public float health_tick_duration { get; set; } = 1;
 
-	public bool dead;
+	public bool dead { get; set; } = false;
 
 	// Damage numbers parameters
-	private Node3D spawn_point;
-	private float spread = 90;
-	private float height = 60;
-	[Export] PackedScene damage_number_3d_template;
-	private Queue<DamageNumber3D> damage_number_3d_pool = new Queue<DamageNumber3D>();
-	private StatModifier remove_health = new(StatModifier.ModificationType.AddCurrent);
-	private StatModifier add_health  = new(StatModifier.ModificationType.AddCurrent);
+	private Node3D damage_number_spawn_point { get; set; } = null;
+	private float damage_number_spread { get; set; } = 90;
+	private float damage_number_height { get; set; } = 60;
+	[Export] PackedScene damage_number_3d_template { get; set; }
+	private Queue<DamageNumber3D> damage_number_3d_pool { get; set; } = new Queue<DamageNumber3D>();
+	private StatModifier add_health { get; set; } = new(StatModifier.ModificationType.AddCurrent);
+	private StatModifier remove_health { get; set; } =  new(StatModifier.ModificationType.AddCurrent);
+	private StatModifier null_health { get; set; } = new(StatModifier.ModificationType.Nullify);
+
+	[Signal] public delegate void AddStatusEffectEventHandler(Entity entity_, StatusEffect status_effect_);
+	[Signal] public delegate void ChangePostureEventHandler(Entity entity_, float posture_damage_);
+
 	
-	private CustomSignals _customSignals;
-	// Called when the node enters the scene tree for the first time.
-	
-	public void SubscribeToHurtboxSignals(Entity entity_)
+	public float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
 	{
-		entity_.hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity_);
-		entity_.hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity_);
+		float mitigated_damage = amount_;
+		mitigated_damage *= 1 - (entity_.armor.current_value / 100);
+
+		if(hitbox_ is MeleeHitbox melee_hitbox)
+		{
+			
+			mitigated_damage = MitigateMelee(melee_hitbox, mitigated_damage, entity_);
+			
+		}
+
+		if(hitbox_ is RangedHitbox ranged_hitbox)
+		{
+			mitigated_damage = MitigateRanged(ranged_hitbox, mitigated_damage, entity_);
+		}
+
+		
+		return MathF.Round(mitigated_damage);
 	}
 
-	public void Subscribe(Entity entity_)
+	public float MitigateMelee(MeleeHitbox melee_hitbox_, float mitigated_damage_, Entity entity_)
 	{
-
-		health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-		health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
-	}
-
-    private void OnHurtboxBodyEntered(Node3D body_, Entity entity_)
-    {
-        	if(body_ is RangedHitbox ranged_box)
+		if(melee_hitbox_.type == MeleeHitbox.DamageType.Physical)
+		{
+			mitigated_damage_ *= entity_.physical_resistance.current_value;
+			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Pierce)
 			{
-				foreach(StatusEffect status_effect in ranged_box.effects)
+				mitigated_damage_ *= entity_.blunt_resistance.current_value;
+			}
+			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Slash)
+			{
+				mitigated_damage_ *= entity_.blunt_resistance.current_value;
+			}
+			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Blunt)
+			{
+				mitigated_damage_ *= entity_.blunt_resistance.current_value;
+			}
+		}
+		else if(melee_hitbox_.type == MeleeHitbox.DamageType.Spell)
+		{
+			mitigated_damage_ *= entity_.spell_resistance.current_value;
+			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Fire)
+			{
+				mitigated_damage_ *= entity_.fire_resistance.current_value;
+			}
+			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Cold)
+			{
+				mitigated_damage_ *= entity_.cold_resistance.current_value;
+			}
+			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Lightning)
+			{
+				mitigated_damage_ *= entity_.lightning_resistance.current_value;
+			}
+			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Holy)
+			{
+				mitigated_damage_ *= entity_.holy_resistance.current_value;
+			}
+		}
+		else if(melee_hitbox_.type == MeleeHitbox.DamageType.Other)
+		{
+			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Bleed)
+			{
+				mitigated_damage_ *= entity_.poison_resistance.current_value;
+			}
+			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Poison)
+			{
+				mitigated_damage_ *= entity_.cold_resistance.current_value;
+			}
+			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Curse)
+			{
+				mitigated_damage_ *= entity_.lightning_resistance.current_value;
+			}
+		}
+
+		return mitigated_damage_;
+	}
+
+	public float MitigateRanged(RangedHitbox ranged_hitbox_, float mitigated_damage_, Entity entity_)
+	{
+		if(ranged_hitbox_.type == RangedHitbox.DamageType.Physical)
+			{
+				mitigated_damage_ *= entity_.physical_resistance.current_value;
+				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Pierce)
 				{
-					GD.Print("Applying " + status_effect.Name + " to " + Name);
-					entity_.entity_controllers.status_effect_controller.AddStatusEffect(entity_, status_effect);
+					mitigated_damage_ *= entity_.blunt_resistance.current_value;
 				}
-				if(body_ is RangedHitbox)
+				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Slash)
 				{
-					GD.Print(entity_.Name + " Is taking " + ranged_box.damage  + " damage");
-					TakeDamage(entity_, ranged_box, ranged_box.damage, ranged_box.is_critical);
-					entity_.entity_systems.resource_system.ChangePosture(entity_, ranged_box.posture_damage);
+					mitigated_damage_ *= entity_.blunt_resistance.current_value;
+				}
+				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Blunt)
+				{
+					mitigated_damage_ *= entity_.blunt_resistance.current_value;
 				}
 			}
-    }
-
-    private void OnHurtboxAreaEntered(Node3D area_, Entity entity_)
-    {
-         if(area_ is MeleeHitbox melee_box)
-		{
-			// GD.Print(Name + " hurtbox entered by " + melee_box.Name);
-			if(area_ is MeleeHitbox)
+			else if(ranged_hitbox_.type == RangedHitbox.DamageType.Spell)
 			{
-				foreach(StatusEffect status_effect in melee_box.effects)
+				mitigated_damage_ *= entity_.spell_resistance.current_value;
+				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Fire)
 				{
-					GD.Print("Applying " + status_effect.Name + " to " + Name);
-					entity_.entity_controllers.status_effect_controller.AddStatusEffect(entity_, status_effect);
+					mitigated_damage_ *= entity_.fire_resistance.current_value;
 				}
-				
-				TakeDamage(entity_, melee_box, melee_box.damage, melee_box.is_critical);
-				entity_.entity_systems.resource_system.ChangePosture(entity_, melee_box.posture_damage);
+				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Cold)
+				{
+					mitigated_damage_ *= entity_.cold_resistance.current_value;
+				}
+				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Lightning)
+				{
+					mitigated_damage_ *= entity_.lightning_resistance.current_value;
+				}
+				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Holy)
+				{
+					mitigated_damage_ *= entity_.holy_resistance.current_value;
+				}
+			}
+			else if(ranged_hitbox_.type == RangedHitbox.DamageType.Other)
+			{
+				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Bleed)
+				{
+					mitigated_damage_ *= entity_.bleed_resistance.current_value;
+				}
+				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Poison)
+				{
+					mitigated_damage_ *= entity_.poison_resistance.current_value;
+				}
+				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Curse)
+				{
+					mitigated_damage_ *= entity_.curse_resistance.current_value;
+				}
+			}
+
+		return mitigated_damage_;
+	}
+
+	public static bool Critical(Entity entity_)
+	{
+		float random_float = GD.Randf();
+		if(random_float < entity_.critical_hit_chance.current_value)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public void TakeDamage(Entity entity_, Node3D hitbox_, float amount_, bool is_critical_)
+	{
+		
+		amount_ = DamageMitigation(entity_, hitbox_, amount_);
+		
+		if(entity_.health.current_value - amount_ > 0)
+		{
+			remove_health.value_to_add = -amount_;
+			entity_.health.AddModifier(remove_health);
+
+			if(entity_ is Enemy enemy)
+			{
+				enemy.ui.health_bar.Value = enemy.health.current_value;
+				damage_number_spawn_point = enemy.head;
+				SpawnDamageNumber(amount_, is_critical_);
+			}
+			
+			HealthRegeneration(entity_);
+		}
+		else
+		{
+			entity_.health.AddModifier(null_health);
+			dead = true;
+		}
+	}
+
+	public void HealthRegeneration(Entity entity_)
+	{
+		if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
+		{
+			health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
+			health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
+		}
+	}
+
+	private void OnHealthRegenerationTickTimeout(Entity entity_)
+    {
+        if(entity_.health.current_value < entity_.health.max_value)
+		{
+			add_health.modification = StatModifier.ModificationType.AddCurrent;
+			add_health.value_to_add = entity_.health_regeneration.current_value;
+			entity_.health.AddModifier(add_health);
+			if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
+			{
+				health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
+				health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
+			}
+			if(entity_ is Enemy enemy)
+			{
+				enemy.ui.health_bar.Value = enemy.health.current_value;
 			}
 		}
     }
 
-    public void SpawnDamageNumber(float value_, bool is_critical_)
+	 public void SpawnDamageNumber(float value_, bool is_critical_)
 	{
 		DamageNumber3D damage_number = GetDamageNumber();
-		Vector3 position = spawn_point.GlobalTransform.Origin;
+		Vector3 position = damage_number_spawn_point.GlobalTransform.Origin;
 		AddChild(damage_number, true);
-		damage_number.SetValuesAndAnimate(value_, is_critical_, position, height, spread);
+		damage_number.SetValuesAndAnimate(value_, is_critical_, position, damage_number_height, damage_number_spread);
 	}
 
 	public DamageNumber3D GetDamageNumber()
@@ -96,227 +251,43 @@ public partial class DamageSystem : Node
 		}
 	}
 
-
-    public bool Crit(Entity entity_)
-	{
-		float random_float = GD.Randf();
-		if(random_float < entity_.critical_hit_chance.current_value)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public void TakeDamage(Entity entity_, Node3D hitbox_, float amount_, bool is_critical_) // Applies damage to an entity
-	{
-		
-		amount_ = DamageMitigation(entity_, hitbox_, amount_);
-		
-		if(entity_.health.current_value - amount_ > 0)
-		{
-			remove_health.modification = StatModifier.ModificationType.AddCurrent;
-			remove_health.value_to_add = -amount_;
-			entity_.health.AddModifier(remove_health);
-			GD.Print(entity_.Name + " current health " + entity_.health.current_value);
-			if(entity_ is Enemy enemy)
-			{
-				enemy.ui.health_bar.Value = enemy.health.current_value;
-				GD.Print("enemy ui health value " + enemy.ui.health_bar.Value);
-				spawn_point = enemy.head;
-				SpawnDamageNumber(amount_, is_critical_);
-			}
-			
-			HealthRegeneration(entity_);
-		}
-		else
-		{
-			dead = true;
-			GD.Print("dead");
-		}
-	}
-
-
-	public void HealthRegeneration(Entity entity_)
-	{
-		GD.Print("starting health regen timer");
-		if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
-		{
-			health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-			health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
-		}
-	}
-
-	private void OnHealthRegenerationTickTimeout(Entity entity_)
+    private void OnHurtboxBodyEntered(Node3D body_, Entity entity_)
     {
-		GD.Print("Heal regen tick timeout");
-        if(entity_.health.current_value < entity_.health.max_value && entity_.health_regeneration.current_value > 0)
-		{
-			add_health.modification = StatModifier.ModificationType.AddCurrent;
-			add_health.value_to_add = entity_.health_regeneration.current_value;
-			entity_.health.AddModifier(add_health);
-			if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
+        	if(body_ is RangedHitbox _ranged_hitbox)
 			{
-				health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-				health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
+				foreach(StatusEffect status_effect in _ranged_hitbox.effects)
+				{
+					
+					EmitSignal(nameof(AddStatusEffect),entity_, status_effect);
+				}
+
+				TakeDamage(entity_, _ranged_hitbox, _ranged_hitbox.damage, _ranged_hitbox.is_critical);
+				EmitSignal(nameof(ChangePosture), entity_, _ranged_hitbox.posture_damage);
+				
 			}
-			if(entity_ is Enemy enemy)
+    }
+
+    private void OnHurtboxAreaEntered(Node3D area_, Entity entity_)
+    {
+         if(area_ is MeleeHitbox melee_hitbox)
+		{
+			if(area_ is MeleeHitbox)
 			{
-				enemy.ui.health_bar.Value = enemy.health.current_value;
+				foreach(StatusEffect status_effect in melee_hitbox.effects)
+				{
+					EmitSignal(nameof(AddStatusEffect),entity_, status_effect);
+				}
+				
+				TakeDamage(entity_, melee_hitbox, melee_hitbox.damage, melee_hitbox.is_critical);
+				EmitSignal(nameof(ChangePosture),entity_, melee_hitbox.posture_damage);
 			}
 		}
     }
 
-	public float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
+	public void Subscribe(Entity entity_)
 	{
-		float mitigated_damage = amount_;
-		if(hitbox_ is MeleeHitbox melee_hitbox)
-		{
-			if(melee_hitbox.type == MeleeHitbox.DamageType.Physical)
-			{
-
-			}
-		}
-
-		if(hitbox_ is RangedHitbox ranged_hitbox)
-		{
-			GD.Print("Ranged hitbox");
-			if(ranged_hitbox.type == RangedHitbox.DamageType.Physical)
-			{
-				
-			}
-		}
-
-		
-		// GD.Print(mitigated_damage + " of damage going into mitigation ");
-		// mitigated_damage *= 1 - (entity_.armor.current_value / 100);
-		// // GD.Print("Damage reduced by armor to " + mitigated_damage);
-		// if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
-		// {
-		// 	mitigated_damage *= entity_.physical_resistance.current_value;
-		// 	// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
-		// 	if(damage_type == "Slash")
-		// 	{
-		// 		mitigated_damage *= entity_.slash_resistance.current_value;
-		// 		// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
-		// 		return MathF.Round(mitigated_damage);
-				
-		// 	}
-		// 	if(damage_type == "Pierce")
-		// 	{
-		// 		mitigated_damage *= entity_.slash_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Blunt")
-		// 	{
-		// 		mitigated_damage *= entity_.blunt_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// }
-		// if(damage_type == "Bleed")
-		// {
-		// 	mitigated_damage *= entity_.bleed_resistance.current_value;
-		// 	GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
-		// 	return MathF.Round(mitigated_damage);
-		// }
-		// if(damage_type == "Poison")
-		// {
-		// 	mitigated_damage *= entity_.poison_resistance.current_value;
-		// 	return MathF.Round(mitigated_damage);
-		// }
-		// if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
-		// {
-		// 	mitigated_damage *= entity_.poison_resistance.current_value;
-		// 	if(damage_type == "Fire")
-		// 	{
-		// 		mitigated_damage *= entity_.fire_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Cold")
-		// 	{
-		// 		mitigated_damage *= entity_.cold_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Lightning")
-		// 	{
-		// 		mitigated_damage *= entity_.lightning_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Holy")
-		// 	{
-		// 		mitigated_damage *= entity_.holy_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// }
-		return MathF.Round(mitigated_damage);
-	}
-
-	public float DamageMitigation(Entity entity_, RangedHitbox.DamageType damage_type, float amount)
-	{
-		float mitigated_damage = amount;
-		// GD.Print(mitigated_damage + " of damage going into mitigation ");
-		// mitigated_damage *= 1 - (entity_.armor.current_value / 100);
-		// // GD.Print("Damage reduced by armor to " + mitigated_damage);
-		// if(damage_type == "Slash" || damage_type == "Thrust" || damage_type == "Blunt")
-		// {
-		// 	mitigated_damage *= entity_.physical_resistance.current_value;
-		// 	// GD.Print("Damage reduced by physical resistance to " + mitigated_damage);
-		// 	if(damage_type == "Slash")
-		// 	{
-		// 		mitigated_damage *= entity_.slash_resistance.current_value;
-		// 		// GD.Print("Damage reduced by slash resistance to " + mitigated_damage);
-		// 		return MathF.Round(mitigated_damage);
-				
-		// 	}
-		// 	if(damage_type == "Pierce")
-		// 	{
-		// 		mitigated_damage *= entity_.slash_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Blunt")
-		// 	{
-		// 		mitigated_damage *= entity_.blunt_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// }
-		// if(damage_type == "Bleed")
-		// {
-		// 	mitigated_damage *= entity_.bleed_resistance.current_value;
-		// 	GD.Print("Damage reduced by bleed resistance to " + mitigated_damage);
-		// 	return MathF.Round(mitigated_damage);
-		// }
-		// if(damage_type == "Poison")
-		// {
-		// 	mitigated_damage *= entity_.poison_resistance.current_value;
-		// 	return MathF.Round(mitigated_damage);
-		// }
-		// if(damage_type == "Fire" || damage_type == "Cold" ||  damage_type == "Lightning" || damage_type == "Holy")
-		// {
-		// 	mitigated_damage *= entity_.poison_resistance.current_value;
-		// 	if(damage_type == "Fire")
-		// 	{
-		// 		mitigated_damage *= entity_.fire_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Cold")
-		// 	{
-		// 		mitigated_damage *= entity_.cold_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Lightning")
-		// 	{
-		// 		mitigated_damage *= entity_.lightning_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// 	if(damage_type == "Holy")
-		// 	{
-		// 		mitigated_damage *= entity_.holy_resistance.current_value;
-		// 		return MathF.Round(mitigated_damage);
-		// 	}
-		// }
-		return MathF.Round(mitigated_damage);
+		entity_.hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity_);
+		entity_.hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity_);
 	}
 
 }

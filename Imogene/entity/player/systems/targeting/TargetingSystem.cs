@@ -243,6 +243,12 @@ public partial class TargetingSystem : Node
 		enemy.soft_target = false;
 		if(enemy.IsInGroup("enemy")) 
 		{
+			if(enemy == mob_looking_at)
+			{
+				mob_looking_at = null;
+				targeting = false;
+				EmitSignal(nameof(PlayerTargeting), targeting);
+			}
 			if (mobs.Count == 1)
 			{
 				mobs.Remove(enemy);

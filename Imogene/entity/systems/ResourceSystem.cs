@@ -47,6 +47,7 @@ public partial class ResourceSystem : Node
 
 	public void ChangePosture(Entity entity_, float posture_damage_)
 	{
+		GD.Print("posture damage");
 		if(entity_.posture.current_value < entity_.posture.max_value)
 		{
 			
@@ -94,9 +95,9 @@ public partial class ResourceSystem : Node
 		{
 			entity_.posture.current_value = 0;
 		}
-		if(entity_ is Enemy enemy)
+		if(entity_ is Enemy _enemy)
 		{
-			enemy.ui.posture_bar.Value = entity_.posture.current_value;
+			_enemy.ui.posture_bar.Value = entity_.posture.current_value;
 		}
 
     }
@@ -106,8 +107,17 @@ public partial class ResourceSystem : Node
         ChangeResource(player_, resource_change_);
     }
 
-	public void Subscribe(Player player_)
+	public void Subscribe(Entity entity_)
 	{
-		player_.controllers.ability_controller.ResourceEffect += HandleResourceEffect;
+		if(entity_ is Player _player)
+		{
+			_player.controllers.ability_controller.ResourceEffect += HandleResourceEffect;
+		}
+		entity_.entity_systems.damage_system.ChangePosture += ChangePosture;
 	}
+
+    private void HandleChangePosture()
+    {
+        GD.Print("change posture");
+    }
 }

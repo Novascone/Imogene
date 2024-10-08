@@ -106,9 +106,9 @@ public partial class Stat : Resource
 
 	public void PrintModifiers()
 	{
-		foreach(StatModifier modifier in modifiers)
+		foreach(StatModifier _modifier in modifiers)
 		{
-			GD.Print("Modifier " + modifier);
+			GD.Print("Modifier " + _modifier);
 		}
 	}
 
