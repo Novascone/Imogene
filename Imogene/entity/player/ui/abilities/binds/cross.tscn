@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://da1qmuahqfbk2"]
-
-[ext_resource type="Script" path="res://scripts(old)/UI/Assignment/CrossAssignment.cs" id="1_hmq22"]
+[gd_scene load_steps=2 format=3 uid="uid://da1qmuahqfbk2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h0v1t"]
 size = Vector2(54, 56)
@@ -29,7 +27,6 @@ focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 mouse_filter = 1
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_hmq22")
 
 [node name="Area2D" type="Area2D" parent="LCrossPrimaryUpAssign"]
 
@@ -54,7 +51,6 @@ focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_hmq22")
 
 [node name="Area2D" type="Area2D" parent="LCrossPrimaryLeftAssign"]
 position = Vector2(29.6122, 29.6355)
@@ -80,7 +76,6 @@ focus_neighbor_right = NodePath("../../../VBoxRightCrossPrimary/RCrossPrimary/RC
 focus_neighbor_bottom = NodePath("../LCrossPrimaryDownAssign")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_hmq22")
 
 [node name="Area2D" type="Area2D" parent="LCrossPrimaryRightAssign"]
 position = Vector2(29.9016, 19.3901)
@@ -106,7 +101,6 @@ focus_neighbor_right = NodePath("../LCrossPrimaryRightAssign")
 focus_neighbor_bottom = NodePath("../../../VBoxLeftCrossSecondary/LCrossSecondary/LCrossSecondaryUpAssign")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_hmq22")
 
 [node name="Area2D" type="Area2D" parent="LCrossPrimaryDownAssign"]
 position = Vector2(33.3204, 35.571)

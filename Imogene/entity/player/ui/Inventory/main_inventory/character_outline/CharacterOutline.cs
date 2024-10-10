@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CharacterOutline : Controller
+public partial class CharacterOutline : Control
 {
 	// Base stats
 	[Export] public UIStat level;

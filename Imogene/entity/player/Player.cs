@@ -9,7 +9,7 @@ public partial class Player : Entity
 	[Export] public CameraRig camera_rig { get; set; }
 	[Export] public Marker3D cast_point { get; set; }
 	[Export] public Node3D surrounding_hitbox { get; set; }
-	[Export] public NewUI ui { get; set; }
+	[Export] public UI ui { get; set; }
 	[Export] public Areas areas { get; set; }
 	[Export] public Controllers controllers { get; set; }
 	[Export] public Systems systems { get; set; }

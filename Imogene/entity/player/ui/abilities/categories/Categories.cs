@@ -12,7 +12,7 @@ public partial class Categories : Control
 	[Export] public Passives class_passives;
 	[Export] public Passives general_passives;
 	[Export] public Control page_container;
-	[Export] public NewAssignment new_assignment;
+	[Export] public Assignment new_assignment;
 	public CrossBindButton cross_bind_selected;
 	public bool active;
 	public bool passive;
@@ -28,22 +28,22 @@ public partial class Categories : Control
 		foreach(Button button in class_category.buttons.GetChildren()){button.ButtonDown += HandleCategoryButtonDown;}
 		foreach(Button button in general_category.buttons.GetChildren()){button.ButtonDown += HandleCategoryButtonDown;}
 
-		foreach(NewAbilityButton ability_button in general_category.melee.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in general_category.ranged.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in general_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in general_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in general_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in general_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.melee.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.ranged.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in general_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
 
 
-		foreach(NewAbilityButton ability_button in class_category.basic.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.kernel.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.mastery.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.specialized.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(NewAbilityButton ability_button in class_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.basic.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.kernel.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.mastery.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.specialized.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton ability_button in class_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
 
 		new_assignment.accept.ButtonDown += OnAssignedAcceptAccept;
 		new_assignment.cancel.ButtonDown += OnAssignedAcceptCancel;
@@ -77,7 +77,7 @@ public partial class Categories : Control
         new_assignment.Show();
     }
 
-    private void OnAbilityButtonDown(NewAbilityButton ability_button) // When an ability button is pressed, set the icon of the action bar to be assigned to that of the ability button, set the action bar new name to the ability buttons name
+    private void OnAbilityButtonDown(AbilityButton ability_button) // When an ability button is pressed, set the icon of the action bar to be assigned to that of the ability button, set the action bar new name to the ability buttons name
     {
         new_assignment.assigned.Icon = ability_button.Icon;
 		new_assignment.new_ability_name = ability_button.ability_name;

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class AnimationController : Controller
+public partial class AnimationController : Node
 {
 
 	private Vector3 blend_direction;
@@ -17,30 +17,30 @@ public partial class AnimationController : Controller
 	{
 	}
 
-	public void TargetingMovement() // Calculates which direction the player is moving in relative to its local direction
+	public void TargetingMovement(Player player_) // Calculates which direction the player is moving in relative to its local direction
 	{
-		var difference_vector_forward = -player.Transform.Basis.Z - player._direction;
+		var difference_vector_forward = -player_.Transform.Basis.Z - player_._direction;
 		difference_vector_forward = difference_vector_forward.Round();
 
-		var difference_vector_left = -player.Transform.Basis.X - player._direction;
+		var difference_vector_left = -player_.Transform.Basis.X - player_._direction;
 		difference_vector_left = difference_vector_left.Round();
 
-		var difference_vector_forward_left = -player.Transform.Basis.Z + -player.Transform.Basis.X - player._direction;
+		var difference_vector_forward_left = -player_.Transform.Basis.Z + -player_.Transform.Basis.X - player_._direction;
 		difference_vector_forward_left = difference_vector_forward_left.Round();
 
-		var difference_vector_right = player.Transform.Basis.X - player._direction;
+		var difference_vector_right = player_.Transform.Basis.X - player_._direction;
 		difference_vector_right = difference_vector_right.Round();
 
-		var difference_vector_forward_right = -player.Transform.Basis.Z + player.Transform.Basis.X - player._direction;
+		var difference_vector_forward_right = -player_.Transform.Basis.Z + player_.Transform.Basis.X - player_._direction;
 		difference_vector_forward_right = difference_vector_forward_right.Round();
 
-		var difference_vector_backward = player.Transform.Basis.Z - player._direction;
+		var difference_vector_backward = player_.Transform.Basis.Z - player_._direction;
 		difference_vector_backward = difference_vector_backward.Round();
 
-		var difference_vector_backward_left = player.Transform.Basis.Z + -player.Transform.Basis.X - player._direction;
+		var difference_vector_backward_left = player_.Transform.Basis.Z + -player_.Transform.Basis.X - player_._direction;
 		difference_vector_backward_left = difference_vector_backward_left.Round();
 
-		var difference_vector_backward_right = player.Transform.Basis.Z + player.Transform.Basis.X - player._direction;
+		var difference_vector_backward_right = player_.Transform.Basis.Z + player_.Transform.Basis.X - player_._direction;
 		difference_vector_backward_right = difference_vector_backward_right.Round();
 
 		if(difference_vector_forward == Vector3.Zero) // If the difference between the players forward facing direction (-Transform.Basis.Z) and the direction the play is moving in (direction) rounds to zero, play the walk forward animation, repeat for all animations
@@ -91,18 +91,18 @@ public partial class AnimationController : Controller
 		}
 	}
 
-	public void SetDefaultBlendDirection() // Set the default walking direction
+	public void SetDefaultBlendDirection(Player player_) // Set the default walking direction
 	{
 		
 		// player.targeting = false;
-		if(player._direction != Vector3.Zero)
+		if(player_._direction != Vector3.Zero)
 		{
-			if(player.movement_speed.current_value == player.movement_speed.base_value)
+			if(player_.movement_speed.current_value == player_.movement_speed.base_value)
 			{
 				blend_direction.X = 0;
 				blend_direction.Y = 1;
 			}
-			else if (player.movement_speed.current_value == 0)
+			else if (player_.movement_speed.current_value == 0)
 			{
 				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
 				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0.5f, 0.1f);
@@ -117,44 +117,44 @@ public partial class AnimationController : Controller
 		
 	}
 
-	public void SetClimbingAnimation()
+	public void SetClimbingAnimation(Player player_)
 	{
-		if(player._direction.Y == 1.0 && player._direction.X == 0.0)
+		if(player_._direction.Y == 1.0 && player_._direction.X == 0.0)
 			{
 				GD.Print("player is moving up");
 				// Put animation here
 			}
-			if(player._direction.Y == 0.0 && player._direction.X == 1.0)
+			if(player_._direction.Y == 0.0 && player_._direction.X == 1.0)
 			{
 				GD.Print("player is moving to the left");
 				// Put animation here
 			}
-			if(player._direction.Y == 1.0 && player._direction.X == 1.0)
+			if(player_._direction.Y == 1.0 && player_._direction.X == 1.0)
 			{
 				GD.Print("player is moving up and to the left");
 				// Put animation here
 			}
-			if(player._direction.Y == 0.0 && player._direction.X == -1.0)
+			if(player_._direction.Y == 0.0 && player_._direction.X == -1.0)
 			{
 				GD.Print("player is moving to the right");
 				// Put animation here
 			}
-			if(player._direction.Y == 1.0 && player._direction.X == -1.0)
+			if(player_._direction.Y == 1.0 && player_._direction.X == -1.0)
 			{
 				GD.Print("player is moving up and to the right");
 				// Put animation here
 			}
-			if(player._direction.Y == -1.0 && player._direction.X == 0.0)
+			if(player_._direction.Y == -1.0 && player_._direction.X == 0.0)
 			{
 				GD.Print("player is moving down");
 				// Put animation here
 			}
-			if(player._direction.Y == -1.0 && player._direction.X == 1.0)
+			if(player_._direction.Y == -1.0 && player_._direction.X == 1.0)
 			{
 				GD.Print("player is moving down and to the left");
 				// Put animation here
 			}
-			if(player._direction.Y == -1.0 && player._direction.X == -1.0)
+			if(player_._direction.Y == -1.0 && player_._direction.X == -1.0)
 			{
 				GD.Print("player is moving down and to the right");
 				// Put animation here

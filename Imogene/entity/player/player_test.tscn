@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bvyat7uxdnfwj" path="res://entity/player/camera/camera_rig.tscn" id="5_m6151"]
 [ext_resource type="PackedScene" uid="uid://qyu8cdscxpm0" path="res://entity/player/controllers/controllers.tscn" id="6_ru6fn"]
 [ext_resource type="PackedScene" uid="uid://nxu401tbmgw3" path="res://entity/player/systems/systems.tscn" id="7_754ef"]
-[ext_resource type="PackedScene" uid="uid://bw8eviujy74ht" path="res://entity/player/ui/new_ui.tscn" id="8_hh885"]
+[ext_resource type="PackedScene" uid="uid://bw8eviujy74ht" path="res://entity/player/ui/ui.tscn" id="8_hh885"]
 [ext_resource type="PackedScene" uid="uid://exsdwg741ke1" path="res://entity/systems/entity_systems.tscn" id="9_ajdn0"]
 [ext_resource type="PackedScene" uid="uid://onx8yig8heqf" path="res://entity/controllers/entity_controllers.tscn" id="10_to86k"]
 [ext_resource type="Animation" uid="uid://c6tr1fr06anmo" path="res://models/animations/Fall.res" id="11_mwrot"]

@@ -6,7 +6,7 @@ public partial class AbilityAssigner : Node
 {
 
 	public bool can_use_abilities;
-	UI ui;
+
 	// Called when the node enters the scene tree for the first time.
 	
 	private CustomSignals _customSignals; // Custom signal instance
@@ -111,7 +111,7 @@ public partial class AbilityAssigner : Node
 	// 	return false;
 	// }
 
-	public void SubscribeToUI(UI ui)
+	public void SubscribeToUI()
 	{
 		// ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
 	}

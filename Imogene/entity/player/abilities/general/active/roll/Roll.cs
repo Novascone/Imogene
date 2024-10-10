@@ -114,17 +114,17 @@ public partial class Roll : Ability
 		
 	}
 	
-	public override void OnAnimationFinished(StringName animName) // Resets the states for the player when the animation finishes
-    {
-        if(animName == "Roll_Forward")
-		{
-			// GD.Print("Roll finished");
-			rolling = false;
-			// player.using_movement_ability = false;
-			// player.tree.Set("parameters/Master/Main/conditions/rolling", false);
-			EmitSignal(nameof(AbilityFinished),this);
-		}
-    }
+	// public override void OnAnimationFinished(StringName animName) // Resets the states for the player when the animation finishes
+    // {
+    //     if(animName == "Roll_Forward")
+	// 	{
+	// 		// GD.Print("Roll finished");
+	// 		rolling = false;
+	// 		// player.using_movement_ability = false;
+	// 		// player.tree.Set("parameters/Master/Main/conditions/rolling", false);
+	// 		EmitSignal(nameof(AbilityFinished),this);
+	// 	}
+    // }
 
     // private void HandleAbilityRemoved(string ability, string button_removed) // Unbinds the ability
     // {

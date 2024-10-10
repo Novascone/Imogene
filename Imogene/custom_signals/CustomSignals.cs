@@ -63,16 +63,16 @@ public partial class CustomSignals : Node
 
 
 	//Inventory to Player
-	[Signal] public delegate void UIPreventingMovementEventHandler(bool ui_preventing_movement); // Tells the player if the UI is preventing movement
-	[Signal] public delegate void EquipableInfoEventHandler(ArmsResource item); // Gives the player information about an equipable item in their inventory
-	[Signal] public delegate void ConsumableInfoEventHandler(ConsumableResource item); // Gives the player information about a consumable item in their inventory
-	[Signal] public delegate void ItemInfoEventHandler(Item item); // Gives the player information about a generic item in their inventory
+	// [Signal] public delegate void UIPreventingMovementEventHandler(bool ui_preventing_movement); // Tells the player if the UI is preventing movement
+	// [Signal] public delegate void EquipableInfoEventHandler(ArmsResource item); // Gives the player information about an equipable item in their inventory
+	// [Signal] public delegate void ConsumableInfoEventHandler(ConsumableResource item); // Gives the player information about a consumable item in their inventory
+	// [Signal] public delegate void ItemInfoEventHandler(Item item); // Gives the player information about a generic item in their inventory
 
 
 
 	// UI to Player
-	[Signal] public delegate void RemoveEquippedEventHandler(); // Tells the player to remove what is equipped (only head slot right now)
-	[Signal] public delegate void EquipConsumableEventHandler(ConsumableResource item, int consumable_slot); // Tells the player which consumable has been equipped
+	// [Signal] public delegate void RemoveEquippedEventHandler(); // Tells the player to remove what is equipped (only head slot right now)
+	// [Signal] public delegate void EquipConsumableEventHandler(ConsumableResource item, int consumable_slot); // Tells the player which consumable has been equipped
 
 
 
@@ -80,7 +80,7 @@ public partial class CustomSignals : Node
 
 	// UI to UI
 	[Signal] public delegate void AbilityUISecondaryOpenEventHandler(bool secondary_open); // Tells the UI if part of the ability UI is open
-	[Signal] public delegate void AbilitySelectedEventHandler(AbilityButton selected_ability, Button cross_button); // Tells the UI which ability has been selected selected_ability is the ability selected via the AbilityButton Class, and cross button is the action button it is assigned to
+	// [Signal] public delegate void AbilitySelectedEventHandler(AbilityButton selected_ability, Button cross_button); // Tells the UI which ability has been selected selected_ability is the ability selected via the AbilityButton Class, and cross button is the action button it is assigned to
 	[Signal] public delegate void ButtonNameEventHandler(Button cross_button, string cross_button_name); // Tells Ability category the reference of the action button that is wanting to be assigned and its name
 	[Signal] public delegate void ButtonToBeAssignedEventHandler(Button cross_button, Button representative_button); // Tells the Ability button which ability it should be. Also allows the setting of the preview button the user sees when assigning an ability
 	[Signal] public delegate void OverSlotEventHandler(string slot); // Tells the UI which slot the player is currently over

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ci6cc2tdf4nvh"]
 
-[ext_resource type="Script" path="res://entity/player/ui/abilities/categories/NewAssignment.cs" id="1_g04cj"]
+[ext_resource type="Script" path="res://entity/player/ui/abilities/categories/Assignment.cs" id="1_g04cj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvmu8"]
 

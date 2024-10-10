@@ -47,7 +47,7 @@ public partial class EquipmentController : Node
 
 
 	public int consumable = 1;
-	public ConsumableResource[] consumables = new ConsumableResource[4];
+	// public ConsumableResource[] consumables = new ConsumableResource[4];
 
 
 	public override void _PhysicsProcess(double delta)
@@ -214,7 +214,7 @@ public partial class EquipmentController : Node
 		
 	}
 
-	public void GetEquipableInfo(ArmsResource arm) // Gets info from equipable items
+	public void GetEquipableInfo() // Gets info from equipable items
     {
 		// GD.Print("Item name: "  + arm.name);
         
@@ -563,7 +563,7 @@ public partial class EquipmentController : Node
     // }
 	
 
-	public void AddEquipableStats(Player player, ArmsResource item)
+	public void AddEquipableStats()
 	{
 
 		// GD.Print("Adding equipable stats from the gear controller");
@@ -600,16 +600,6 @@ public partial class EquipmentController : Node
 		// player.ui.inventory_info.stats_updated = false;
 	}
 
-	private void HandleEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
-    {
-        consumables[consumable_slot] = item;
-		// GD.Print(player.consumables[consumable_slot].name);
-    }
-	public void GetEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
-    {
-        consumables[consumable_slot] = item;
-		// GD.Print(player.consumables[consumable_slot].name);
-    }
 
     
 }

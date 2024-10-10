@@ -1,23 +1,54 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5wqcc1dtvpxy"]
+[gd_scene load_steps=7 format=3 uid="uid://bw8eviujy74ht"]
 
-[ext_resource type="PackedScene" uid="uid://ds2svqsgmx87v" path="res://scenes(old)/UI/UI.tscn" id="1_0kepo"]
+[ext_resource type="Script" path="res://entity/player/ui/UI.cs" id="1_1860t"]
+[ext_resource type="PackedScene" uid="uid://bpxgwmexldh1q" path="res://entity/player/ui/hud/hud.tscn" id="2_xds4q"]
+[ext_resource type="PackedScene" uid="uid://da4nvcq8l4mqw" path="res://entity/player/ui/Inventory/inventory.tscn" id="3_6wxf8"]
+[ext_resource type="PackedScene" uid="uid://ey6wymo6kewe" path="res://entity/player/ui/abilities/abilities.tscn" id="4_77sew"]
+[ext_resource type="PackedScene" uid="uid://cgp7cnnm5irxa" path="res://entity/player/ui/journal/journal.tscn" id="4_cu10v"]
+[ext_resource type="PackedScene" uid="uid://juocam0bru5p" path="res://entity/player/ui/cursor_sprite.tscn" id="6_ejrbb"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvify"]
-albedo_color = Color(0.473485, 1, 0.709992, 1)
+[node name="NewUI" type="Control" node_paths=PackedStringArray("hud", "inventory", "abilities", "journal", "cursor")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_1860t")
+hud = NodePath("NewHUD")
+inventory = NodePath("NewInventory")
+abilities = NodePath("NewAbilities")
+journal = NodePath("NewJournal")
+cursor = NodePath("Cursor/CursorSprite")
 
-[sub_resource type="SphereMesh" id="SphereMesh_5tqk3"]
-material = SubResource("StandardMaterial3D_uvify")
+[node name="NewHUD" parent="." instance=ExtResource("2_xds4q")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 4.0
+offset_right = 1980.0
+offset_bottom = 1080.0
+mouse_filter = 2
 
-[node name="UI" type="Node3D"]
-
-[node name="UI" parent="." instance=ExtResource("1_0kepo")]
-
-[node name="LandPoint" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+[node name="NewInventory" parent="." groups=["prevents_movement"] instance=ExtResource("3_6wxf8")]
 visible = false
-mesh = SubResource("SphereMesh_5tqk3")
-skeleton = NodePath("../..")
+layout_mode = 1
 
-[node name="DebugRaycast" type="RayCast3D" parent="."]
+[node name="NewAbilities" parent="." groups=["prevents_movement"] instance=ExtResource("4_77sew")]
 visible = false
-target_position = Vector3(0, 0, -100)
+layout_mode = 1
+
+[node name="NewJournal" parent="." groups=["prevents_movement"] instance=ExtResource("4_cu10v")]
+visible = false
+layout_mode = 2
+offset_right = 612.0
+
+[node name="Cursor" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CursorSprite" parent="Cursor" groups=["prevents_movement"] instance=ExtResource("6_ejrbb")]
+visible = false
+z_index = 2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://bhen6dwnykdg2"]
 
-[ext_resource type="Script" path="res://scripts(old)/objects/RotateBox.cs" id="1_0w2jw"]
+[ext_resource type="Script" path="res://levels/test/RotateBox.cs" id="1_0w2jw"]
 [ext_resource type="Script" path="res://levels/test/Chaser.cs" id="3_puugv"]
 [ext_resource type="PackedScene" path="res://scenes/entities/avoidance_enemy_organized.tscn" id="3_y2ydq"]
 

@@ -1,13 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ch578n7k1cxb6"]
-
-[ext_resource type="Script" path="res://scripts(old)/UI/Ability_Interface_Components/AbilityButton.cs" id="1_ijfhn"]
+[gd_scene format=3 uid="uid://ch578n7k1cxb6"]
 
 [node name="AbilityModifierButton" type="Button"]
 custom_minimum_size = Vector2(60, 60)
 size_flags_vertical = 4
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_ijfhn")
 
 [node name="Info" type="Control" parent="."]
 visible = false

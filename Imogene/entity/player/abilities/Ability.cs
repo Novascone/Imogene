@@ -12,35 +12,15 @@ using System.ComponentModel;
 
 public partial class Ability : Node3D
 {
-  
-    public enum ClassType {General, Brigian, Mage, Monk, Rogue, Shaman}
-    [Export] public ClassType class_type;
-    public enum GeneralAbilityType {Melee, Ranged, Defensive, Movement, Unique, Toy}
-    [Export] public GeneralAbilityType general_ability_type;
-    public enum ClassAbilityType {None, Basic, Kernel, Defensive, Mastery, Movement, Specialized, Unique, Toy}
-    [Export] public ClassAbilityType class_ability_type;
- 
+    [Export] public ClassType class_type { get; set; }
+    [Export] public GeneralAbilityType general_ability_type { get; set; }
+    [Export] public ClassAbilityType class_ability_type { get; set; }
     [Export] public string description { get; set; }
     [Export] public Texture2D icon { get; set; }
 
-    public MeleeHitbox melee_hitbox;
-    public RangedHitbox ranged_hitbox;
-
-    public float ability_damage_modifier = 0;
-    
-    [Signal] public delegate void AbilityPressedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
-    [Signal] public delegate void AbilityCheckEventHandler(Ability ability);
-    [Signal] public delegate void AbilityReleasedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityExecutingEventHandler(Ability ability);
-    [Signal] public delegate void MovementAbilityExecutedEventHandler(bool executing);
-    [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability);
-    
-    // enum ability_t {active, passive}
-
-
-    
+    public MeleeHitbox melee_hitbox { get; set; } = null;
+    public RangedHitbox ranged_hitbox { get; set; } = null;
+    public float ability_damage_modifier  { get; set; } = 0;
     public string cross{ get; set; }
     public string level { get; set; }
     public string assigned_button { get; set; }
@@ -70,17 +50,24 @@ public partial class Ability : Node3D
     public bool rotate_on_soft_close;
     public bool rotate_on_held;
 
-    // public bool stop_movement_input;
+    [Signal] public delegate void AbilityPressedEventHandler(Ability ability);
+    [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
+    [Signal] public delegate void AbilityCheckEventHandler(Ability ability);
+    [Signal] public delegate void AbilityReleasedEventHandler(Ability ability);
+    [Signal] public delegate void AbilityExecutingEventHandler(Ability ability);
+    [Signal] public delegate void MovementAbilityExecutedEventHandler(bool executing);
+    [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
+    [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability);
 
-    private CustomSignals _customSignals; // Custom signal instance
+    
+
+    public enum ClassType {General, Brigian, Mage, Monk, Rogue, Shaman}
+    public enum GeneralAbilityType {Melee, Ranged, Defensive, Movement, Unique, Toy}
+    public enum ClassAbilityType {None, Basic, Kernel, Defensive, Mastery, Movement, Specialized, Unique, Toy}
 
     public States state;
-
-    public enum States
-    {
-        not_queued,
-        queued
-    }
+    public enum States{ not_queued, queued }
+   
 
    
 
@@ -113,8 +100,7 @@ public partial class Ability : Node3D
                 }
                 button_pressed = false;
                 button_released = true;
-                // GD.Print(this.Name + " has been released");              
-                // GD.Print("button released");
+    
             }
         }
 		
@@ -216,7 +202,6 @@ public partial class Ability : Node3D
 				ability_finished = true;
 			}
 			
-			
 		}
 		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
@@ -237,13 +222,6 @@ public partial class Ability : Node3D
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}	
-    }
-
-
-
-    public virtual void OnAnimationFinished(StringName animName)
-    {
-        // throw new NotImplementedException();
     }
 
 }

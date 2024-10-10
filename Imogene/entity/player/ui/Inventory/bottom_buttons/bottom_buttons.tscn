@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccindx3yp61uk"]
 
 [ext_resource type="Script" path="res://entity/player/ui/Inventory/bottom_buttons/BottomButtons.cs" id="1_g34jn"]
-[ext_resource type="PackedScene" uid="uid://ey1llb7cj1at" path="res://entity/player/ui/Inventory/main_inventory/new_bottom_button_label.tscn" id="2_fygvd"]
+[ext_resource type="PackedScene" uid="uid://ey1llb7cj1at" path="res://entity/player/ui/Inventory/main_inventory/bottom_button_label.tscn" id="2_fygvd"]
 
 [node name="BottomButtons" type="HBoxContainer" node_paths=PackedStringArray("abilities")]
 offset_right = 612.0
