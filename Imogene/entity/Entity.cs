@@ -164,4 +164,11 @@ public partial class Entity : CharacterBody3D
 		entity_controllers.status_effect_controller.Subscribe(this);
     }
 
+	// public override void _ExitTree()
+	// {
+	// 	entity_systems.damage_system.unsubscribe(this);
+	// 	entity_systems.resource_system.unsubscribe(this);
+	// 	entity_controllers.status_effect_controller.Unsubscribe(this);
+	// }
+
 }

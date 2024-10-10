@@ -289,5 +289,10 @@ public partial class DamageSystem : Node
 		entity_.hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity_);
 		entity_.hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity_);
 	}
+	public void unsubscribe(Entity entity_)
+	{
+		entity_.hurtbox.AreaEntered -= (area_) => OnHurtboxAreaEntered(area_, entity_);
+		entity_.hurtbox.BodyEntered -= (body_) => OnHurtboxBodyEntered(body_, entity_);
+	}
 
 }

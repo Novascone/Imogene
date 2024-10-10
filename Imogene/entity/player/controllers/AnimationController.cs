@@ -4,6 +4,8 @@ using System;
 public partial class AnimationController : Controller
 {
 
+	private Vector3 blend_direction;
+
 	private float _t = 0.2f;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -44,15 +46,15 @@ public partial class AnimationController : Controller
 		if(difference_vector_forward == Vector3.Zero) // If the difference between the players forward facing direction (-Transform.Basis.Z) and the direction the play is moving in (direction) rounds to zero, play the walk forward animation, repeat for all animations
 		{ 
 			// GD.Print("player moving forward");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 1, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 1, _t);
+			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
 			
 		}
 		if(difference_vector_left == Vector3.Zero)
 		{
 			// GD.Print("Player moving left");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, -1, _t);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
+			blend_direction.X = Mathf.Lerp(blend_direction.X, -1, _t);
 			
 		}
 		if(difference_vector_forward_left == Vector3.Zero)
@@ -63,8 +65,8 @@ public partial class AnimationController : Controller
 		if(difference_vector_right == Vector3.Zero)
 		{
 			// GD.Print("Player moving left");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 1, _t);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, _t);
+			blend_direction.X = Mathf.Lerp(blend_direction.X, 1, _t);
 		}
 		if(difference_vector_forward_right == Vector3.Zero)
 		{
@@ -74,8 +76,8 @@ public partial class AnimationController : Controller
 		if(difference_vector_backward == Vector3.Zero)
 		{
 			// GD.Print("player moving backward");
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, -1, _t);
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, _t);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, -1, _t);
+			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, _t);
 		}
 		if(difference_vector_backward_left == Vector3.Zero)
 		{
@@ -97,20 +99,20 @@ public partial class AnimationController : Controller
 		{
 			if(player.movement_speed.current_value == player.movement_speed.base_value)
 			{
-				player.blend_direction.X = 0;
-				player.blend_direction.Y = 1;
+				blend_direction.X = 0;
+				blend_direction.Y = 1;
 			}
 			else if (player.movement_speed.current_value == 0)
 			{
-				player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-				player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0.5f, 0.1f);
+				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0.5f, 0.1f);
 			}
 			
 		}
 		else
 		{
-			player.blend_direction.X = Mathf.Lerp(player.blend_direction.X, 0, 0.1f);
-			player.blend_direction.Y = Mathf.Lerp(player.blend_direction.Y, 0, 0.1f);
+			blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
+			blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
 		}
 		
 	}

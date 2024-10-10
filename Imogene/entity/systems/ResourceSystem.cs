@@ -116,8 +116,14 @@ public partial class ResourceSystem : Node
 		entity_.entity_systems.damage_system.ChangePosture += ChangePosture;
 	}
 
-    private void HandleChangePosture()
-    {
-        GD.Print("change posture");
-    }
+	public void unsubscribe(Entity entity_)
+	{
+		if(entity_ is Player _player)
+		{
+			_player.controllers.ability_controller.ResourceEffect -= HandleResourceEffect;
+		}
+		entity_.entity_systems.damage_system.ChangePosture -= ChangePosture;
+	}
+
+  
 }

@@ -46,6 +46,10 @@ public partial class EquipmentController : Node
 	public WeaponSlot off_hand_secondary_type;
 
 
+	public int consumable = 1;
+	public ConsumableResource[] consumables = new ConsumableResource[4];
+
+
 	public override void _PhysicsProcess(double delta)
 	{
 		// GD.Print(d_pad_frames_held);
@@ -598,12 +602,12 @@ public partial class EquipmentController : Node
 
 	private void HandleEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
     {
-        player.consumables[consumable_slot] = item;
+        consumables[consumable_slot] = item;
 		// GD.Print(player.consumables[consumable_slot].name);
     }
 	public void GetEquipConsumable(Player player, ConsumableResource item, int consumable_slot)
     {
-        player.consumables[consumable_slot] = item;
+        consumables[consumable_slot] = item;
 		// GD.Print(player.consumables[consumable_slot].name);
     }
 

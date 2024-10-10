@@ -68,48 +68,48 @@ public partial class Roll : Ability
 			temp_rotation = player.Rotation;
 		}
 		
-		if(player.blend_direction.X > 0 && player.blend_direction.Y > 0) // Determines which roll animation to use
-		{
-			roll_right = true;
-		}
-		if(player.blend_direction.X < 0 && player.blend_direction.Y < 0)
-		{
-			roll_left = true;
-		}
-		if(player.blend_direction.X > 0 && player.blend_direction.Y < 0)
-		{
-			roll_right = true;
-		}
-		if(player.blend_direction.X < 0 && player.blend_direction.Y > 0)
-		{
-			roll_left = true;
-		}
-		if(player.blend_direction.X > 0 && player.blend_direction.Y == 0)
-		{
-			roll_right = true;
-		}
-		if(player.blend_direction.X < 0 && player.blend_direction.Y == 0)
-		{
-			roll_left = true;
-		}
-		if(player.blend_direction.X == 0 && player.blend_direction.Y > 0)
-		{
-			roll_forward = true;
-		}
-		if(player.blend_direction.X == 0 && player.blend_direction.Y < 0)
-		{
-			roll_back = true;
-		}
+		// if(player.blend_direction.X > 0 && player.blend_direction.Y > 0) // Determines which roll animation to use
+		// {
+		// 	roll_right = true;
+		// }
+		// if(player.blend_direction.X < 0 && player.blend_direction.Y < 0)
+		// {
+		// 	roll_left = true;
+		// }
+		// if(player.blend_direction.X > 0 && player.blend_direction.Y < 0)
+		// {
+		// 	roll_right = true;
+		// }
+		// if(player.blend_direction.X < 0 && player.blend_direction.Y > 0)
+		// {
+		// 	roll_left = true;
+		// }
+		// if(player.blend_direction.X > 0 && player.blend_direction.Y == 0)
+		// {
+		// 	roll_right = true;
+		// }
+		// if(player.blend_direction.X < 0 && player.blend_direction.Y == 0)
+		// {
+		// 	roll_left = true;
+		// }
+		// if(player.blend_direction.X == 0 && player.blend_direction.Y > 0)
+		// {
+		// 	roll_forward = true;
+		// }
+		// if(player.blend_direction.X == 0 && player.blend_direction.Y < 0)
+		// {
+		// 	roll_back = true;
+		// }
 		if(!rolling)
 		{
 			rolling = true;
 			roll_velocity = Vector3.Zero; 
 			// roll_velocity = Vector3.Zero; // resets dash_velocity so it always moves in the right direction
 			roll_velocity += player.Velocity * 1.5f; // Set roll velocity
-			player.tree.Set("parameters/conditions/roll_back", roll_back); // Set animations
-			player.tree.Set("parameters/Master/Main/conditions/rolling", roll_forward);
-			player.tree.Set("parameters/conditions/roll_left", roll_left);
-			player.tree.Set("parameters/conditions/roll_right", roll_right);
+			// player.tree.Set("parameters/conditions/roll_back", roll_back); // Set animations
+			// player.tree.Set("parameters/Master/Main/conditions/rolling", roll_forward);
+			// player.tree.Set("parameters/conditions/roll_left", roll_left);
+			// player.tree.Set("parameters/conditions/roll_right", roll_right);
 		}
 		
 	}

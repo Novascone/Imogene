@@ -230,4 +230,9 @@ public partial class StatusEffectController : Node
 		entity_.entity_systems.damage_system.AddStatusEffect += AddStatusEffect;
 	}
 
+	public void Unsubscribe(Entity entity_)
+	{
+		entity_.entity_systems.damage_system.AddStatusEffect -= AddStatusEffect;
+	}
+
 }

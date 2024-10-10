@@ -220,7 +220,7 @@ public partial class AbilityController : Node
         // {
         
        
-            if(!player.abilities_in_use.Contains(ability))
+            if(!player.abilities_in_use_list.Contains(ability))
             {
                 AddToAbilityList(player, ability);
                 
@@ -259,22 +259,22 @@ public partial class AbilityController : Node
 	public void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
         // GD.Print("adding ability to list");
-        if(!player.abilities_in_use.Contains(ability))
+        if(!player.abilities_in_use_list.Contains(ability))
         {
-            player.abilities_in_use.AddFirst(ability);
+            player.abilities_in_use_list.AddFirst(ability);
             ability.in_use = true;
         }
 
-        player.ability_in_use = player.abilities_in_use.First.Value;
+        player.ability_in_use = player.abilities_in_use_list.First.Value;
     }
 
     public void RemoveFromAbilityList(Player player, Ability ability) // Removes ability from abilities used
     {
         // GD.Print("removing ability from list");
-        player.abilities_in_use.Remove(ability);
-        if(player.abilities_in_use.Count > 0)
+        player.abilities_in_use_list.Remove(ability);
+        if(player.abilities_in_use_list.Count > 0)
         {
-            player.ability_in_use = player.abilities_in_use.First.Value;
+            player.ability_in_use = player.abilities_in_use_list.First.Value;
         }
         else
         {

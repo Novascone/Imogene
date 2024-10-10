@@ -75,21 +75,21 @@ public partial class Jump : Ability
 			if(player.controllers.on_wall.IsColliding())
 			{
 				// GD.Print(player.near_wall.GetCollider());
-				if(CheckHeld() && !player.is_climbing)
+				if(CheckHeld() && !player.controllers.input_controller.climbing)
 				{
 					// GD.Print("setting climbing to true");
-					player.is_climbing = true;
+					player.controllers.input_controller.climbing = true;
 				}
-				else if(Input.IsActionJustPressed(assigned_button) && player.is_climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
+				else if(Input.IsActionJustPressed(assigned_button) && player.controllers.input_controller.climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
 				{
 					// GD.Print("Setting climbing to false");
-					player.is_climbing = false;
+					player.controllers.input_controller.climbing = false;
 				}
 				
 			}
 			else
 			{
-				if(!player.is_clambering)
+				if(!player.controllers.input_controller.clambering)
 				{
 					Clamber(player); // If the to ray cast is no longer making contact, clamber
 				}
@@ -97,7 +97,7 @@ public partial class Jump : Ability
 		}
 		else
 		{
-			player.is_climbing = false;
+			player.controllers.input_controller.climbing= false;
 		}
 		
 	}
@@ -107,7 +107,7 @@ public partial class Jump : Ability
 		// GD.Print("Player can clamber");
 		if(CheckHeld())
 		{
-			player.is_clambering = true;
+			player.controllers.input_controller.clambering = true;
 			var upward_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0); // Move the plater up bt 1.85 units
 			var upward_move_time = 0.4; // set how long the tween to take to move upward
 			var upward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In); // Create the tween and sets its transition and ease
@@ -121,8 +121,6 @@ public partial class Jump : Ability
 			var forward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear); // Create tween set transition type
 			forward_tween.SetProcessMode(0);
 			forward_tween.TweenProperty(player, "global_transform:origin", forward_movement, forward_move_time); // Same as the upward tween
-
-			player.move_forward_clamber = -1; // Make the player move in the direction they are facing
 			clamber.Start(); // Start the clamber timer
 
 			}
@@ -135,7 +133,7 @@ public partial class Jump : Ability
 		{
 			// GD.Print("start jumping");
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
-			player._velocity.Y = player.jump_velocity;
+			player._velocity.Y = player.controllers.movement_controller.jump_velocity;
 			// GD.Print("Player velocity from jump " + player.velocity.Y);			
 		}
 		else

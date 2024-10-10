@@ -16,6 +16,8 @@ public partial class InputController : Node
 	public bool targeting { get; set; }  = false;
 	public bool ability_rotating_player { get; set; }  = false;
 	public bool abilities_prevented { get; set; } = false;
+	public bool climbing { get; set; } = false;
+	public bool clambering { get; set; } = false;
 
 	// D-Pad properties
 	public bool d_pad_right_pressed = false;
@@ -130,21 +132,21 @@ public partial class InputController : Node
 	public float min_x_rotation { get; set; } = -0.3f;
 
 	// Signals
-	[Signal] public delegate void CrossChangedEventHandler(string cross);
+	[Signal] public delegate void CrossChangedEventHandler(string cross_);
 	[Signal] public delegate void UsableChangedEventHandler();
 	[Signal] public delegate void UsableUsedEventHandler();
 
-	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
         
-		if(@event.IsActionPressed("D-PadLeft")) {d_pad_left_pressed = true; d_pad_left_released = false;}
-		if(@event.IsActionReleased("D-PadLeft")) {d_pad_left_pressed = false; d_pad_left_released = true;}
-		if(@event.IsActionPressed("D-PadRight")){d_pad_right_pressed = true; d_pad_right_released = false;}
-		if(@event.IsActionReleased("D-PadRight")){d_pad_right_pressed = false; d_pad_right_released = true;}
-		if(@event.IsActionPressed("D-PadUp")){d_pad_up_pressed = true; d_pad_up_released = false;}
-		if(@event.IsActionReleased("D-PadUp")){d_pad_up_pressed = false; d_pad_up_released = true;}
-		if(@event.IsActionPressed("D-PadDown")){d_pad_down_pressed = true; d_pad_down_released = false;}
-		if(@event.IsActionReleased("D-PadDown")){d_pad_down_pressed = false;d_pad_down_released = true;}
+		if(@event_.IsActionPressed("D-PadLeft")) {d_pad_left_pressed = true; d_pad_left_released = false;}
+		if(@event_.IsActionReleased("D-PadLeft")) {d_pad_left_pressed = false; d_pad_left_released = true;}
+		if(@event_.IsActionPressed("D-PadRight")){d_pad_right_pressed = true; d_pad_right_released = false;}
+		if(@event_.IsActionReleased("D-PadRight")){d_pad_right_pressed = false; d_pad_right_released = true;}
+		if(@event_.IsActionPressed("D-PadUp")){d_pad_up_pressed = true; d_pad_up_released = false;}
+		if(@event_.IsActionReleased("D-PadUp")){d_pad_up_pressed = false; d_pad_up_released = true;}
+		if(@event_.IsActionPressed("D-PadDown")){d_pad_down_pressed = true; d_pad_down_released = false;}
+		if(@event_.IsActionReleased("D-PadDown")){d_pad_down_pressed = false;d_pad_down_released = true;}
 		// if(@event.IsActionPressed("one"))
 		// {
 		// 	player.damage_system.TakeDamage("Physical", 10, false);
@@ -166,31 +168,31 @@ public partial class InputController : Node
 		
 	}	
 
-	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
+	public void SetInput(Player player_) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
 		GetInputStrength();
 		if(!directional_input_prevented)
 		{
-			player._direction.X = 0.0f;
-			player._direction.Z = 0.0f;
-			if(!player.is_climbing)
+			player_._direction.X = 0.0f;
+			player_._direction.Z = 0.0f;
+			if(!climbing)
 			{
-				SetDeadzonedVector(player);
+				SetDeadzonedVector(player_);
 			}
 			else
 			{
-				ClimbingMovement(player);
+				ClimbingMovement(player_);
 			}
 		}
 		
 		CheckDPadInput();
-		LookForward(player,player._direction);
+		LookForward(player_, player_._direction);
 		
 		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
 		
 		if(x_rotation_not_zero)
 		{
-			RotateXBack(player);
+			RotateXBack(player_);
 		}
 		
 	}
@@ -201,7 +203,7 @@ public partial class InputController : Node
 		// GD.Print("Input strength " + input_strength);
 	}
 
-	public void SetDeadzonedVector(Player player)
+	public void SetDeadzonedVector(Player player_)
 	{
 		raw_vector = Input.GetVector("Left", "Right", "Forward", "Backward");
 		deadzoned_vector = raw_vector;
@@ -214,34 +216,34 @@ public partial class InputController : Node
 			
 			deadzoned_vector = deadzoned_vector.Normalized() * ((deadzoned_vector.Length() - deadzone) / (1 - deadzone));
 		}
-		player._direction.X = -deadzoned_vector.X;
-		player._direction.Z = -deadzoned_vector.Y;
+		player_._direction.X = -deadzoned_vector.X;
+		player_._direction.Z = -deadzoned_vector.Y;
 	}
 
 	
-	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
+	public void ClimbingMovement(Player player_) // Takes climbing input and moves the character when climbing
 	{
 		{
-			player._direction = Vector3.Zero;
+			player_._direction = Vector3.Zero;
 			
 			if (Input.IsActionPressed("Right"))
 			{
-				player._direction.X -= 1.0f;	
+				player_._direction.X -= 1.0f;	
 				// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
 			}
 			if (Input.IsActionPressed("Left"))
 			{
-				player._direction.X += 1.0f;
+				player_._direction.X += 1.0f;
 				// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
 			}
 			if (Input.IsActionPressed("Backward"))
 			{
-				player._direction.Y -= 1.0f;
+				player_._direction.Y -= 1.0f;
 				// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
 			}
 			if (Input.IsActionPressed("Forward"))
 			{
-				player._direction.Y += 1.0f;
+				player_._direction.Y += 1.0f;
 				// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 			}
 		}
@@ -264,35 +266,35 @@ public partial class InputController : Node
 	}
 
 
-	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
+	public void LookForward(Player player_, Vector3 direction_) // Rotates the player character smoothly with lerp
 	{
 		if(!directional_input_prevented)
 		{
-			if(!targeting && !ability_rotating_player && !player.is_climbing)
+			if(!targeting && !ability_rotating_player && !climbing)
 			{
-				player.previous_y_rotation = player.GlobalRotation.Y;
-				if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
+				player_.previous_y_rotation = player_.GlobalRotation.Y;
+				if (player_.GlobalTransform.Origin != player_.GlobalPosition + direction_ with {Y = 0}) // looks at direction the player is moving
 				{
-					player.LookAt(player.GlobalPosition + direction with { Y = 0 });
+					player_.LookAt(player_.GlobalPosition + direction_ with { Y = 0 });
 				}
-				player.current_y_rotation = player.GlobalRotation.Y;
-				if(player.previous_y_rotation != player.current_y_rotation)
+				player_.current_y_rotation = player_.GlobalRotation.Y;
+				if(player_.previous_y_rotation != player_.current_y_rotation)
 				{
-					player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.previous_y_rotation, player.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+					player_.GlobalRotation = player_.GlobalRotation with {Y = Mathf.LerpAngle(player_.previous_y_rotation, player_.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 				}
 			}
 		}
 	}
 
 
-	public void RotateXBack(Player player)
+	public void RotateXBack(Player player_)
 	{
 		
-		if(player.GlobalRotation.X != -0)
+		if(player_.GlobalRotation.X != -0)
 		{
 			// player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f); <-- figure out a way to use this with hard target 
-			player.previous_x_rotation = 0f;
-			player.current_x_rotation = 0f;
+			player_.previous_x_rotation = 0f;
+			player_.current_x_rotation = 0f;
 			
 		}
 		else
@@ -304,47 +306,47 @@ public partial class InputController : Node
 
 	// Signals
 
-	public void Subscribe(Player player)
+	public void Subscribe(Player player_)
 	{
-		player.entity_controllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
+		player_.entity_controllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
 
-		player.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
-		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
+		player_.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
+		player_.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player_.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
 
-		player.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
-		player.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
+		player_.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
+		player_.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
 
-		player.ui.CapturingInput += HandleUICapturingInput;
+		player_.ui.CapturingInput += HandleUICapturingInput;
 	}
 
-	public void AbilitySubscribe(Ability ability)
+	public void AbilitySubscribe(Ability ability_)
 	{
-		ability.AbilityExecuting += OnAbilityExecuting;
-		ability.AbilityFinished += OnAbilityFinished;
-		ability.AbilityReleaseInputControl += OnAbilityFinished;
+		ability_.AbilityExecuting += OnAbilityExecuting;
+		ability_.AbilityFinished += OnAbilityFinished;
+		ability_.AbilityReleaseInputControl += OnAbilityFinished;
 	}
 
 
-    public void Unsubscribe(Player player)
+    public void Unsubscribe(Player player_)
 	{
-		player.entity_controllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
+		player_.entity_controllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
 
-		player.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
-		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
+		player_.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
+		player_.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player_.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
 
-		player.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
-		player.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
+		player_.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
+		player_.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
 
-		player.ui.CapturingInput -= HandleUICapturingInput;
+		player_.ui.CapturingInput -= HandleUICapturingInput;
 	}
 
-	public void AbilityUnsubscribe(Ability ability)
+	public void AbilityUnsubscribe(Ability ability_)
 	{
-		ability.AbilityExecuting -= OnAbilityExecuting;
-		ability.AbilityFinished -= OnAbilityFinished;
-		ability.AbilityReleaseInputControl -= OnAbilityFinished;
+		ability_.AbilityExecuting -= OnAbilityExecuting;
+		ability_.AbilityFinished -= OnAbilityFinished;
+		ability_.AbilityReleaseInputControl -= OnAbilityFinished;
 	}
 
 	private void HandleAbilityRotatingPlayer() // Listens for signal from AbilityController.cs
@@ -352,34 +354,34 @@ public partial class InputController : Node
         ability_rotating_player = true;
     }
 
-	private void HandlePlayerTargeting(bool is_targeting) // Listens for player targeting signal from TargetingSystem.cs
+	private void HandlePlayerTargeting(bool targeting_) // Listens for player targeting signal from TargetingSystem.cs
     {
-        targeting = is_targeting;
+        targeting = targeting_;
     }
 	 public void HandleTargetingSystemRotatingPlayer() // Listens for signal from TargetingSystem.cs
     {
         directional_input_prevented = true;
     }
-	 public void HandleTargetingRotationFinished(Player player) // Listens for a signal from TargetingSystem.cs
+	 public void HandleTargetingRotationFinished(Player player_) // Listens for a signal from TargetingSystem.cs
     {
-		if(player.GlobalRotation.X != -0)
+		if(player_.GlobalRotation.X != -0)
 		{
 			x_rotation_not_zero = true;
 		}
 		ability_rotating_player = false;
     }
 
-    public void HandleStatusEffectPreventingInput(bool input_prevented) // Listens for signal from StatusEffectController.cs 
+    public void HandleStatusEffectPreventingInput(bool input_prevented_) // Listens for signal from StatusEffectController.cs 
     {
-        directional_input_prevented = input_prevented;
+        directional_input_prevented = input_prevented_;
     }
 
-	public void OnAbilityExecuting(Ability ability) // Listens for a signal emitted from one of the players abilities
+	public void OnAbilityExecuting(Ability ability_) // Listens for a signal emitted from one of the players abilities
     {
         directional_input_prevented = true;
     }
 
-    public void OnAbilityFinished(Ability ability) // Listens for a signal emitted from one of the players abilities
+    public void OnAbilityFinished(Ability ability_) // Listens for a signal emitted from one of the players abilities
     {
 		directional_input_prevented = false;
     }
@@ -389,13 +391,13 @@ public partial class InputController : Node
         directional_input_prevented = false;
     }
 
-    public void HandleUICapturingInput(bool capturing_input) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
+    public void HandleUICapturingInput(bool capturing_input_) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
     {
-        directional_input_prevented = capturing_input;
+        directional_input_prevented = capturing_input_;
     }
 
-	public void HandleAbilitiesPrevented(bool abilities_are_prevented) // Not yet implemented
+	public void HandleAbilitiesPrevented(bool abilities_prevented_) // Not yet implemented
 	{
-		abilities_prevented = abilities_are_prevented;
+		abilities_prevented = abilities_prevented_;
 	}
 }

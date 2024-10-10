@@ -44,7 +44,7 @@ public partial class Projectile : RangedAbility
 		Vector3 cast_direction = (collision_point - player.cast_point.GlobalTransform.Origin).Normalized(); // Get position the projectile needs to go to
 		RangedHitbox projectile = (RangedHitbox)projectile_to_load.Instantiate(); // Instantiate the projectile
 		
-		player.exclude.Add(projectile.GetRid()); // Add the projectile to the players exclude array
+		player.excluded_rids.Add(projectile.GetRid()); // Add the projectile to the players exclude array
 		projectile.TreeExited  += () => RemoveFromExclusion(player, projectile.GetRid(), projectile); // When the projectile exits the scene remove it from the exclusion array 
 		GetTree().Root.AddChild(projectile); // Add projectile to the scene
 		projectile.GlobalPosition = player.cast_point.GlobalPosition; // give the projectile the cast point position
@@ -60,7 +60,7 @@ public partial class Projectile : RangedAbility
 
 	public void RemoveFromExclusion(Player player, Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array
 	{
-		player.exclude.Remove(projectile_rid);
+		player.excluded_rids.Remove(projectile_rid);
 	}
 
 	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement

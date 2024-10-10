@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entity/enemy/enemies/StandardEnemy.cs" id="1_kirt1"]
 [ext_resource type="Script" path="res://entity/systems/damage/DamageSystem.cs" id="3_6aaj3"]
-[ext_resource type="Script" path="res://entity/systems/damage/melee/MeleeHitbox.cs" id="3_22w45"]
+[ext_resource type="Script" path="res://entity/systems/damage/MeleeHitbox.cs" id="3_22w45"]
 [ext_resource type="Script" path="res://entity/systems/damage/Hurtbox.cs" id="3_ynyqk"]
 [ext_resource type="Script" path="res://entity/systems/ResourceSystem.cs" id="4_aqa2q"]
 [ext_resource type="Script" path="res://entity/controllers/StatsController.cs" id="4_cd15p"]

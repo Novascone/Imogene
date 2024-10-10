@@ -130,7 +130,7 @@ public partial class Hitscan : RangedAbility
 		var new_intersection = PhysicsRayQueryParameters3D.Create(player.cast_point.GlobalTransform.Origin, collision_point + cast_direction * 2); // Create a new raycast with the origin being the cast point and the end being the collision point with direction and increase length
 		new_intersection.CollisionMask = 16; // set Collision mask to 5
 		new_intersection.CollideWithAreas = true; // Set raycast to collide with areas
-		new_intersection.Exclude = player.exclude; // Add player exclude
+		new_intersection.Exclude = player.excluded_rids; // Add player exclude
 		var cast_collision = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection); // Get raycast collision
 
 		if(cast_collision.Count > 0)

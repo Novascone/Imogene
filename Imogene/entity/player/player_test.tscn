@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entity/player/Player.cs" id="1_ueduk"]
 [ext_resource type="Script" path="res://entity/systems/damage/Hurtbox.cs" id="2_cksd1"]
-[ext_resource type="Script" path="res://entity/systems/damage/melee/MeleeHitbox.cs" id="3_vcy4u"]
+[ext_resource type="Script" path="res://entity/systems/damage/MeleeHitbox.cs" id="3_vcy4u"]
 [ext_resource type="PackedScene" uid="uid://dy7iuu5uwaorl" path="res://entity/player/areas/areas.tscn" id="4_dsu82"]
 [ext_resource type="PackedScene" uid="uid://bvyat7uxdnfwj" path="res://entity/player/camera/camera_rig.tscn" id="5_m6151"]
 [ext_resource type="PackedScene" uid="uid://qyu8cdscxpm0" path="res://entity/player/controllers/controllers.tscn" id="6_ru6fn"]

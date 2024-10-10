@@ -22,6 +22,14 @@ public partial class MovementController : Node
 	public bool clambering = false;
 	private float vertical_climbing_input;
 	private float horizontal_climbing_input;
+	public float move_forward_clamber = 0;
+
+	public float jump_height { get; set; } = 30;
+	public float jump_time_to_peak { get; set; } = 2f;
+	public float jump_time_to_decent { get; set; } = 1.9f;
+	public float jump_velocity { get; set; } = 0.0f;
+	public float jump_gravity { get; set; } = 0.0f;
+	public float fall_gravity { get; set; } = 0.0f;
 
 	// Input
 	public bool rotation_finished;
@@ -30,7 +38,14 @@ public partial class MovementController : Node
 	Vector3 tether_position;
 	public float movement_from_tether = 0;
 	public bool movement_tethered = false;
-	
+
+    public override void _Ready()
+    {
+        jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
+		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
+		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);	
+    }
+
 
     public void MovePlayer(Player player, float input_strength, double delta)
 	{
@@ -67,7 +82,7 @@ public partial class MovementController : Node
 		else if(movement_input_prevented)
 		{
 			
-			player._velocity = Vector3.Zero with { Y = player.fall_gravity / 15};
+			player._velocity = Vector3.Zero with { Y = fall_gravity / 15};
 		}
 		if(!player.IsOnFloor())
 		{
@@ -82,11 +97,11 @@ public partial class MovementController : Node
 		if(player.Velocity.Y > 0)
 		{
 
-			return player.jump_gravity;
+			return jump_gravity;
 		}
 		else
 		{
-			return player.fall_gravity;
+			return fall_gravity;
 		}
 	}
 
@@ -131,7 +146,7 @@ public partial class MovementController : Node
 		
 		if(!clambering)
 		{
-			player._direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+			player._direction = new Vector3(horizontal_climbing_input, vertical_climbing_input, move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 
 		}
 		// player.direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
@@ -144,7 +159,7 @@ public partial class MovementController : Node
 		var spaceState = player.GetWorld3D().DirectSpaceState;
 		var ray_query = PhysicsRayQueryParameters3D.Create(ray_origin, ray_target);
 		ray_query.CollideWithAreas = true;
-		ray_query.Exclude = player.exclude;
+		ray_query.Exclude = player.excluded_rids;
 		var ray = spaceState.IntersectRay(ray_query);
 		return ray;
 	}

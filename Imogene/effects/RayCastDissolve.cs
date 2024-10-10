@@ -29,7 +29,7 @@ public partial class RayCastDissolve : Node3D
 		var ray_query = PhysicsRayQueryParameters3D.Create(from, to);
 		ray_query.From = from;
 		ray_query.To = to;
-		ray_query.Exclude = character.exclude;
+		ray_query.Exclude = character.excluded_rids;
 		// ray_query.CollideWithAreas = true;
 		// ray_query.Exclude.Add(character.GetRid());
 		
