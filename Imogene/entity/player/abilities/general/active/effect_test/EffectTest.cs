@@ -51,7 +51,7 @@ public partial class EffectTest : Ability
 	{
 		
 		// GD.Print("execute");
-		state = States.not_queued;
+		base.Execute(player);
 		duration_timer.Start();
 		
 		if(effect_test_hitbox == null)

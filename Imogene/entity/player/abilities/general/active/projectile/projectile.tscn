@@ -8,10 +8,9 @@
 top_level = true
 script = ExtResource("1_yrhtv")
 projectile_to_load = ExtResource("2_r4gxv")
-general_ability_type = 1
-damage_type = 2
-icon = ExtResource("2_rqfnq")
 use_timer = NodePath("CastTimer")
+general_ability_type = 1
+icon = ExtResource("2_rqfnq")
 
 [node name="CastTimer" type="Timer" parent="."]
 wait_time = 0.5

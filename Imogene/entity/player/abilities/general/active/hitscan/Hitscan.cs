@@ -14,8 +14,6 @@ public partial class Hitscan : RangedAbility
 	{
 		rotate_on_soft = true;
 		rotate_on_held = true;
-		rotate_on_soft_far = true;
-		rotate_on_soft_close = true;
 		
 	}
 
@@ -55,7 +53,6 @@ public partial class Hitscan : RangedAbility
 	public override void Execute(Player player)
 	{
 		// GD.Print("Casting");
-		state = States.not_queued;
 		use_timer.Start();
 		Vector3 collision = GetPlayerCollision(player); // Get collision point of raycast from player to object in from of them or 
 		HitscanCollision(player, collision); // Create a raycast from cast point to player collision
@@ -106,7 +103,7 @@ public partial class Hitscan : RangedAbility
 			
 			// player.controllers.movement_controller.rotation_only = false;
 		}
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		if(Input.IsActionJustPressed(assigned_button) && state == States.NotQueued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			EmitSignal(nameof(AbilityQueue), player, this);
 		}

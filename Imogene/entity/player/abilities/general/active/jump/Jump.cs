@@ -128,7 +128,7 @@ public partial class Jump : Ability
 
     public override void Execute(Player player)
     {	
-		state = States.not_queued;
+		base.Execute(player);
 		if(player.IsOnFloor() || coyote_timer.TimeLeft > 0) // If player is on the floor and not jumping (add double jump later) set the players velocity to its jump speed 
 		{
 			// GD.Print("start jumping");

@@ -22,12 +22,12 @@ public partial class AbilityController : Node
         if(!player.ui.preventing_movement && !player.ui.capturing_input && !ability_use_prevented)
         {
         
-            if(ability.state == Ability.States.not_queued)
+            if(ability.state == Ability.States.NotQueued)
             {   
                 if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
                 {
                     // GD.Print("queueing ability");
-                    ability.state = Ability.States.queued;
+                    ability.state = Ability.States.Queued;
                 }
             }
             
@@ -47,7 +47,7 @@ public partial class AbilityController : Node
     {
         //GD.Print("Checking can use ability");
        
-        if(ability.state == Ability.States.queued)
+        if(ability.state == Ability.States.Queued)
         {
             if(!ability.button_held)
             {

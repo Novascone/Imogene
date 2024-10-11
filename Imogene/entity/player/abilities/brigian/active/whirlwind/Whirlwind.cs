@@ -21,7 +21,7 @@ public partial class Whirlwind : Ability
 	public override void Execute(Player player)
 	{
 		
-		state = States.not_queued;
+		base.Execute(player);
 		
 		tick_timer.Start();
 		

@@ -60,7 +60,7 @@ public partial class Roll : Ability
 	}
 	public override void Execute(Player player)
 	{
-		state = States.not_queued;
+		base.Execute(player);
 		roll_timer.Start(); 
 		
 		if(!rolling)

@@ -12,15 +12,16 @@ using System.ComponentModel;
 
 public partial class Ability : Node3D
 {
+    [Export] public Timer use_timer  { get; set; }
     [Export] public ClassType class_type { get; set; }
     [Export] public GeneralAbilityType general_ability_type { get; set; }
     [Export] public ClassAbilityType class_ability_type { get; set; }
     [Export] public string description { get; set; }
     [Export] public Texture2D icon { get; set; }
-    public States state { get; set; } = States.not_queued;
+    public States state { get; set; } = States.NotQueued;
     public MeleeHitbox melee_hitbox { get; set; } = null;
     public RangedHitbox ranged_hitbox { get; set; } = null;
-    public float ability_damage_modifier  { get; set; } = 0;
+    public float ability_damage_modifier  { get; set; } = 0.0f;
     public Cross cross { get; set; } = Cross.None;
     public Tier tier { get; set; } = Tier.None;
     public string assigned_button { get; set; } = "";
@@ -31,34 +32,30 @@ public partial class Ability : Node3D
     public bool ability_finished { get; set; } = false;
     public int frames_held { get; set; } = 0;
     public int frames_held_threshold { get; set; } = 20;
-    public bool useable { get; set; } = true;
     public bool in_use { get; set; } = false;
     public int resource_change  { get; set; } = 0;
     public int charges { get; set; } = 0;
     public int charges_used { get; set; } = 0;
     public float cast_time { get; set; } = 0;
     public SceneTreeTimer cooldown_timer { get; set; } = null;
-    [Export] public Timer use_timer  { get; set; } = null;
     public bool rotate_on_soft { get; set; } = false;
-    public bool rotate_on_soft_far { get; set; } = false;
-    public bool rotate_on_soft_close { get; set; } = false;
     public bool rotate_on_held { get; set; } = false;
 
-    [Signal] public delegate void AbilityPressedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
-    [Signal] public delegate void AbilityCheckEventHandler(Ability ability);
-    [Signal] public delegate void AbilityReleasedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityExecutingEventHandler(Ability ability);
-    [Signal] public delegate void MovementAbilityExecutedEventHandler(bool executing);
-    [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
-    [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability);
+    [Signal] public delegate void AbilityPressedEventHandler(Ability ability_);
+    [Signal] public delegate void AbilityQueueEventHandler(Ability ability_);
+    [Signal] public delegate void AbilityCheckEventHandler(Ability ability_);
+    [Signal] public delegate void AbilityReleasedEventHandler(Ability ability_);
+    [Signal] public delegate void AbilityExecutingEventHandler(Ability ability_);
+    [Signal] public delegate void MovementAbilityExecutedEventHandler(bool executing_);
+    [Signal] public delegate void AbilityFinishedEventHandler(Ability ability_);
+    [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability_);
 
-    public enum ClassType {General, Brigian, Mage, Monk, Rogue, Shaman}
-    public enum GeneralAbilityType {Melee, Ranged, Defensive, Movement, Unique, Toy}
+    public enum ClassType {None, General, Brigian, Mage, Monk, Rogue, Shaman}
+    public enum GeneralAbilityType {None, Melee, Ranged, Defensive, Movement, Unique, Toy}
     public enum ClassAbilityType {None, Basic, Kernel, Defensive, Mastery, Movement, Specialized, Unique, Toy}
     public enum Cross {None, Left, Right}
     public enum Tier {None, Primary, Secondary}
-    public enum States{ not_queued, queued }
+    public enum States{ NotQueued, Queued }
    
     public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
@@ -90,16 +87,11 @@ public partial class Ability : Node3D
 		
 	}
 
-    public bool UIButton()
+    public virtual void Execute(Player player_) // Default execute
     {
-        if(assigned_button == "B")
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        state = States.NotQueued;
+        ability_finished = false;
+        EmitSignal(nameof(AbilityExecuting), this);
     }
 
     public bool CheckHeld()
@@ -131,7 +123,7 @@ public partial class Ability : Node3D
         {
             if(DamageSystem.Critical(player_))
             {
-                melee_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.combined_damage), 2) * (1 + ability_damage_modifier);
+                melee_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier);
                 melee_hitbox.SetDamage(player_);
                 melee_hitbox.posture_damage = player_.posture_damage.current_value;
                 melee_hitbox.is_critical = true;
@@ -155,7 +147,6 @@ public partial class Ability : Node3D
 		    }
             else
             {
-                
                 ranged_hitbox.damage = player_.combined_damage * (1 + ability_damage_modifier); // Set projectile damage
                 ranged_hitbox.SetDamage(player_);
                 ranged_hitbox.posture_damage = player_.posture_damage.current_value / 3; // Set projectile posture damage 
@@ -164,12 +155,7 @@ public partial class Ability : Node3D
         }        
     }
 
-    public virtual void Execute(Player player_) // Default execute
-    {
-        ability_finished = false;
-        EmitSignal(nameof(AbilityExecuting), this);
-    }
-
+ 
     public virtual void FrameCheck(Player player_)
     {
         if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
@@ -179,9 +165,8 @@ public partial class Ability : Node3D
 				EmitSignal(nameof(AbilityFinished),this);
 				ability_finished = true;
 			}
-			
 		}
-		if(Input.IsActionJustPressed(assigned_button) && state == States.not_queued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		if(Input.IsActionJustPressed(assigned_button) && state == States.NotQueued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			EmitSignal(nameof(AbilityQueue), this);
 		}
@@ -189,7 +174,7 @@ public partial class Ability : Node3D
 		{
 			if(use_timer.TimeLeft == 0)
 			{
-                if(state == States.not_queued)
+                if(state == States.NotQueued)
                 {
                     EmitSignal(nameof(AbilityQueue), this);
                 }
@@ -201,5 +186,4 @@ public partial class Ability : Node3D
 			EmitSignal(nameof(AbilityCheck),this);
 		}	
     }
-
 }

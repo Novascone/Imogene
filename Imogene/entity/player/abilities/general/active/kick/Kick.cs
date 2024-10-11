@@ -51,8 +51,7 @@ public partial class Kick : Ability
 
 	public override void Execute(Player player)
 	{
-
-		state = States.not_queued;
+		base.Execute(player);
 		charges_used += 1;
 		use_timer.Start();
 		if(charge_timer_1.TimeLeft == 0)

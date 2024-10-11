@@ -12,8 +12,6 @@ public partial class Slash : Ability
 		
 		rotate_on_soft = true;
 		rotate_on_held = true;
-		rotate_on_soft_far = true;
-		rotate_on_soft_close = true;
 		ability_damage_modifier = 1;
     }
 
@@ -22,8 +20,6 @@ public partial class Slash : Ability
 	{
 		base.Execute(player);
 		GD.Print("Execute slash");
-		
-		state = States.not_queued;
 		if(use_timer.TimeLeft == 0)
 		{
 			use_timer.Start();
