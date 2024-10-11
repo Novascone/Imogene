@@ -54,7 +54,7 @@ public partial class Hitscan : RangedAbility
 	{
 		// GD.Print("Casting");
 		use_timer.Start();
-		Vector3 collision = GetPlayerCollision(player); // Get collision point of raycast from player to object in from of them or 
+		Vector3 collision = GetRayCastCollision(player); // Get collision point of raycast from player to object in from of them or 
 		HitscanCollision(player, collision); // Create a raycast from cast point to player collision
 	}
 

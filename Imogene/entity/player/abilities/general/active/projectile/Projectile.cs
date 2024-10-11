@@ -30,7 +30,7 @@ public partial class Projectile : RangedAbility
 		if(use_timer.TimeLeft == 0)
 		{
 			use_timer.Start();
-			Vector3 collision = GetPlayerCollision(player); // Get the collision from the player to whats in front of it
+			Vector3 collision = GetRayCastCollision(player); // Get the collision from the player to whats in front of it
 			LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
 		}
 	}
