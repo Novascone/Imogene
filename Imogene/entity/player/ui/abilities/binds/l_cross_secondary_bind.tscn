@@ -24,8 +24,8 @@ layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 button_bind = "RB"
-cross = "Left"
-level = "Secondary"
+cross = 1
+tier = 2
 
 [node name="Control2" type="Control" parent="."]
 layout_mode = 2
@@ -35,8 +35,8 @@ layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 button_bind = "LB"
-cross = "Left"
-level = "Secondary"
+cross = 1
+tier = 2
 
 [node name="Control3" type="Control" parent="."]
 layout_mode = 2
@@ -46,8 +46,8 @@ layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 button_bind = "RT"
-cross = "Left"
-level = "Secondary"
+cross = 1
+tier = 2
 
 [node name="Control4" type="Control" parent="."]
 layout_mode = 2
@@ -57,5 +57,5 @@ layout_mode = 2
 icon_alignment = 1
 expand_icon = true
 button_bind = "LT"
-cross = "Left"
-level = "Secondary"
+cross = 1
+tier = 2

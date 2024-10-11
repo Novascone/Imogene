@@ -173,83 +173,83 @@ public partial class MainHUD : Control
 		
 	}
 
-	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon) // Checks the assignment of an ability and then assigns the hud cross button that ability's icon and name
+	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon) // Checks the assignment of an ability and then assigns the hud cross button that ability's icon and name
 	{
-		if(CheckAssignment(cross, level, bind) == "LPrimeCrossUp"){
+		if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossUp"){
 			l_cross_primary.up.Icon = icon;
 			l_cross_primary.up.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LPrimeCrossLeft")
+		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossLeft")
 		{
 			l_cross_primary.left.Icon = icon;
 			l_cross_primary.left.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LPrimeCrossRight")
+		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossRight")
 		{
 			l_cross_primary.right.Icon = icon;
 			l_cross_primary.right.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LPrimeCrossDown")
+		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossDown")
 		{
 			l_cross_primary.down.Icon = icon;
 			l_cross_primary.down.ability_name = ability_name;
 		}
 
-		if(CheckAssignment(cross, level, bind) == "LSecondCrossUp"){
+		if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossUp"){
 			l_cross_secondary.up.Icon = icon;
 			l_cross_secondary.up.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LSecondCrossLeft")
+		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossLeft")
 		{
 			l_cross_secondary.left.Icon = icon;
 			l_cross_secondary.left.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LSecondCrossRight")
+		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossRight")
 		{
 			l_cross_secondary.right.Icon = icon;
 			l_cross_secondary.right.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "LSecondCrossDown")
+		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossDown")
 		{
 			l_cross_secondary.down.Icon = icon;
 			l_cross_secondary.down.ability_name = ability_name;
 		}
 
-		if(CheckAssignment(cross, level, bind) == "RPrimeCrossUp"){
+		if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossUp"){
 			r_cross_primary.up.Icon = icon;
 			r_cross_primary.up.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RPrimeCrossLeft")
+		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossLeft")
 		{
 			r_cross_primary.left.Icon = icon;
 			r_cross_primary.left.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RPrimeCrossRight")
+		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossRight")
 		{
 			r_cross_primary.right.Icon = icon;
 			r_cross_primary.right.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RPrimeCrossDown")
+		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossDown")
 		{
 			r_cross_primary.down.Icon = icon;
 			r_cross_primary.down.ability_name = ability_name;
 		}
 
-		if(CheckAssignment(cross, level, bind) == "RSecondCrossUp"){
+		if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossUp"){
 			r_cross_secondary.up.Icon = icon;
 			r_cross_secondary.up.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RSecondCrossLeft")
+		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossLeft")
 		{
 			r_cross_secondary.left.Icon = icon;
 			r_cross_secondary.left.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RSecondCrossRight")
+		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossRight")
 		{
 			r_cross_secondary.right.Icon = icon;
 			r_cross_secondary.right.ability_name = ability_name;
 		}
-		else if(CheckAssignment(cross, level, bind) == "RSecondCrossDown")
+		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossDown")
 		{
 			r_cross_secondary.down.Icon = icon;
 			r_cross_secondary.down.ability_name = ability_name;
@@ -317,11 +317,11 @@ public partial class MainHUD : Control
 		}
 	}
 
-	public string CheckAssignment(string cross, string level, string bind) // Checks which button an ability is assigned to
+	public string CheckAssignment(Ability.Cross cross_, Ability.Tier tier_, string bind) // Checks which button an ability is assigned to
 	{
-		if(cross == "Left")
+		if(cross_ == Ability.Cross.Left)
 		{
-			if(level == "Primary")
+			if(tier_ == Ability.Tier.Primary)
 			{
 				if(bind == left_up)
 				{return "LPrimeCrossUp";}
@@ -331,7 +331,7 @@ public partial class MainHUD : Control
 				else return "";
 
 			}
-			else if(level == "Secondary")
+			else if(tier_ == Ability.Tier.Secondary)
 			{
 				if(bind == left_up)
 				{return "LSecondCrossUp";}
@@ -342,9 +342,9 @@ public partial class MainHUD : Control
 			}
 			else return "";
 		}
-		else if(cross== "Right")
+		else if(cross_ == Ability.Cross.Right)
 		{
-			if(level == "Primary")
+			if(tier_ == Ability.Tier.Primary)
 			{
 				if(bind == right_up){return "RPrimeCrossUp";}
 				else if(bind == right_left){return "RPrimeCrossLeft";}
@@ -352,7 +352,7 @@ public partial class MainHUD : Control
 				else if(bind == right_down){return "RPrimeCrossDown";}
 				else return "";
 			}
-			else if(level == "Secondary")
+			else if(tier_ == Ability.Tier.Secondary)
 			{
 				if(bind == right_up){return "RSecondCrossUp";}
 				else if(bind == right_left){return "RPrimeCrossLeft";}

@@ -31,12 +31,12 @@ public partial class AbilityAssigner : Node
 		// }
    	}
 
-	public void AssignAbility(Player player, Ability ability, string bind, string cross, string level)
+	public void AssignAbility(Player player, Ability ability, string bind, Ability.Cross cross, Ability.Tier tier)
 	{
 		ability.assigned_button = bind;
 		ability.cross = cross;
-		ability.level = level;
-		player.ui.AssignAbility(ability.cross, ability.level, ability.assigned_button, ability.Name, ability.icon);
+		ability.tier = tier;
+		player.ui.AssignAbility(ability.cross, ability.tier, ability.assigned_button, ability.Name, ability.icon);
 	}
 
     private void LoadAbilitiesHelper(Player player, Ability ability) // Adds ability to abilities list
@@ -135,7 +135,7 @@ public partial class AbilityAssigner : Node
     // }
 
     
-	public void ChangeAbilityAssignment(Player player, string cross, string level, string bind, string ability_name)
+	public void ChangeAbilityAssignment(Player player, Ability.Cross cross, Ability.Tier tier, string bind, string ability_name)
 	{
 		GD.Print("Changing ability assignment in ability assigner for " + ability_name);
 		foreach(Ability ability in player.abilities.GetChildren())
@@ -143,9 +143,9 @@ public partial class AbilityAssigner : Node
 			if(ability.Name == ability_name)
 			{
 				ability.cross = cross;
-				ability.level = level;
+				ability.tier = tier;
 				ability.assigned_button = bind;
-				GD.Print("to " + ability.assigned_button + " on " + ability.cross + " " + ability.level);
+				GD.Print("to " + ability.assigned_button + " on " + ability.cross + " " + ability.tier);
 			}
 		}
 	}
@@ -156,8 +156,8 @@ public partial class AbilityAssigner : Node
 		{
 			if(ability.Name == ability_name)
 			{
-				ability.cross = "";
-				ability.level = "";
+				ability.cross = Ability.Cross.None;
+				ability.tier = Ability.Tier.None;
 				ability.assigned_button = "";
 				GD.Print(ability.Name + " Was cleared");
 			}

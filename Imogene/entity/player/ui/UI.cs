@@ -60,10 +60,11 @@ public partial class UI : Control
     }
 
 
-    private void OnAbilityReassigned(string cross, string level, string bind, string ability_name, Texture2D icon)
+    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
     {
-        abilities.binds.AssignAbility(cross, level, bind, ability_name, icon);
-		hud.main.AssignAbility(cross, level, bind,ability_name, icon);
+		GD.Print("Ability reassigned " + icon);
+        abilities.binds.AssignAbility(cross_, tier_, bind, ability_name, icon);
+		hud.main.AssignAbility(cross_, tier_, bind,ability_name, icon);
     }
 
     private void OnAbilitiesClosed()
@@ -172,10 +173,10 @@ public partial class UI : Control
 		
 	}
 
-	public void AssignAbility(string cross, string level, string bind, string ability_name, Texture2D icon)
+	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
 	{
-		hud.main.AssignAbility(cross, level, bind, ability_name, icon);
-		abilities.binds.AssignAbility(cross, level, bind, ability_name, icon);
+		hud.main.AssignAbility(cross_, tier_, bind, ability_name, icon);
+		abilities.binds.AssignAbility(cross_, tier_, bind, ability_name, icon);
 	}
 
 	public void SwitchCrosses(string cross)

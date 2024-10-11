@@ -12,10 +12,10 @@ public partial class Assignment : Control
 	public string new_ability_name;
 	public string old_button_bind;
 	public string new_button_bind;
-	public string old_cross;
-	public string new_cross;
-	public string old_level;
-	public string new_level;
+	public Ability.Cross old_cross;
+	public Ability.Cross new_cross;
+	public Ability.Tier old_tier;
+	public Ability.Tier new_tier;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

@@ -113,11 +113,11 @@ public partial class AbilityController : Node
     {
         GD.Print("Checking cross for " + ability.Name);
         GD.Print("primary left selected " + player.l_cross_primary_selected);
-        if(ability.cross == "Left")
+        if(ability.cross == Ability.Cross.Left)
 		{
 			if(player.l_cross_primary_selected)
 			{
-				if(ability.level == "Primary")
+				if(ability.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -128,7 +128,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-				if(ability.level == "Secondary")
+				if(ability.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -138,11 +138,11 @@ public partial class AbilityController : Node
                 }
 			}
 		}
-		else if(ability.cross == "Right")
+		else if(ability.cross == Ability.Cross.Right)
 		{
 			if(player.r_cross_primary_selected)
 			{
-				if(ability.level == "Primary")
+				if(ability.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -153,7 +153,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-                if(ability.level == "Secondary")
+                if(ability.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }

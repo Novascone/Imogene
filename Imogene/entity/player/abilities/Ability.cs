@@ -17,38 +17,32 @@ public partial class Ability : Node3D
     [Export] public ClassAbilityType class_ability_type { get; set; }
     [Export] public string description { get; set; }
     [Export] public Texture2D icon { get; set; }
-
+    public States state { get; set; } = States.not_queued;
     public MeleeHitbox melee_hitbox { get; set; } = null;
     public RangedHitbox ranged_hitbox { get; set; } = null;
     public float ability_damage_modifier  { get; set; } = 0;
-    public string cross{ get; set; }
-    public string level { get; set; }
-    public string assigned_button { get; set; }
-    public string action_button { get; set; }
-    public bool cross_selected;
-    public bool button_pressed;
-    public bool button_released;
-    public bool button_held;
-    public bool ability_finished;
-    public int frames_held;
-    public int frames_held_threshold = 20;
-
-    public bool useable = true;
-    public bool in_use = false;
-    public int pressed = 0;
-    public bool animation_finished = false;
-    public bool ready_to_use;
-
-    public int resource_change;
-    public int charges;
-    public int charges_used;
-    public float cast_time;
-    public Timer cooldown_timer;
-    [Export] public Timer use_timer;
-    public bool rotate_on_soft;
-    public bool rotate_on_soft_far;
-    public bool rotate_on_soft_close;
-    public bool rotate_on_held;
+    public Cross cross { get; set; } = Cross.None;
+    public Tier tier { get; set; } = Tier.None;
+    public string assigned_button { get; set; } = "";
+    public bool cross_selected { get; set; } = false;
+    public bool button_pressed { get; set; } = false;
+    public bool button_released { get; set; } = false;
+    public bool button_held { get; set; } = false;
+    public bool ability_finished { get; set; } = false;
+    public int frames_held { get; set; } = 0;
+    public int frames_held_threshold { get; set; } = 20;
+    public bool useable { get; set; } = true;
+    public bool in_use { get; set; } = false;
+    public int resource_change  { get; set; } = 0;
+    public int charges { get; set; } = 0;
+    public int charges_used { get; set; } = 0;
+    public float cast_time { get; set; } = 0;
+    public SceneTreeTimer cooldown_timer { get; set; } = null;
+    [Export] public Timer use_timer  { get; set; } = null;
+    public bool rotate_on_soft { get; set; } = false;
+    public bool rotate_on_soft_far { get; set; } = false;
+    public bool rotate_on_soft_close { get; set; } = false;
+    public bool rotate_on_held { get; set; } = false;
 
     [Signal] public delegate void AbilityPressedEventHandler(Ability ability);
     [Signal] public delegate void AbilityQueueEventHandler(Ability ability);
@@ -59,40 +53,30 @@ public partial class Ability : Node3D
     [Signal] public delegate void AbilityFinishedEventHandler(Ability ability);
     [Signal] public delegate void AbilityReleaseInputControlEventHandler(Ability ability);
 
-    
-
     public enum ClassType {General, Brigian, Mage, Monk, Rogue, Shaman}
     public enum GeneralAbilityType {Melee, Ranged, Defensive, Movement, Unique, Toy}
     public enum ClassAbilityType {None, Basic, Kernel, Defensive, Mastery, Movement, Specialized, Unique, Toy}
-
-    public States state;
+    public enum Cross {None, Left, Right}
+    public enum Tier {None, Primary, Secondary}
     public enum States{ not_queued, queued }
    
-
-   
-
-   
-    public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+    public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
         if(assigned_button != null && assigned_button != "")
         {
-            if(@event.IsActionPressed(assigned_button))
+            if(@event_.IsActionPressed(assigned_button))
             {
 
-                // GD.Print("Assigned button " + assigned_button);
-                // GD.Print(this.Name + "Action strength " + );
                 if(!button_pressed)
                 {
                     EmitSignal(nameof(AbilityPressed), this);
-                    GD.Print(Name + " Pressed");
                 }
                 
                 button_pressed = true;
                 frames_held = 1;
                 button_released = false;
-                // GD.Print(this.Name + " has been pressed");
             }
-            if(@event.IsActionReleased(assigned_button))
+            if(@event_.IsActionReleased(assigned_button))
             {
                 if(!button_released)
                 {
@@ -105,7 +89,6 @@ public partial class Ability : Node3D
         }
 		
 	}
-
 
     public bool UIButton()
     {
@@ -144,17 +127,14 @@ public partial class Ability : Node3D
 
     public virtual void DealDamage(Player player_, float ability_damage_modifier_)
     {
-        GD.Print("Dealing damage");
         if(melee_hitbox != null)
         {
             if(DamageSystem.Critical(player_))
             {
-                // GD.Print("Critical!");
                 melee_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.combined_damage), 2) * (1 + ability_damage_modifier);
                 melee_hitbox.SetDamage(player_);
                 melee_hitbox.posture_damage = player_.posture_damage.current_value;
                 melee_hitbox.is_critical = true;
-                // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
             }
             else
             {
@@ -162,7 +142,6 @@ public partial class Ability : Node3D
                 melee_hitbox.SetDamage(player_);
                 melee_hitbox.posture_damage = player_.posture_damage.current_value;
                 melee_hitbox.is_critical = false;
-                // GD.Print("Main Hand damage: " + player.main_hand_hitbox.damage);
             }
         }
         if(ranged_hitbox != null)
@@ -185,14 +164,13 @@ public partial class Ability : Node3D
         }        
     }
 
-    public virtual void Execute(Player player) // Default execute
+    public virtual void Execute(Player player_) // Default execute
     {
-        // GD.Print("access ability child");
         ability_finished = false;
         EmitSignal(nameof(AbilityExecuting), this);
     }
 
-    public virtual void FrameCheck(Player player)
+    public virtual void FrameCheck(Player player_)
     {
         if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{

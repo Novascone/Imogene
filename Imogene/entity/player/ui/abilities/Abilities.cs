@@ -65,7 +65,7 @@ public partial class Abilities : Control
 		categories.AbilityReassigned += OnAbilityReassigned;
 	}
 
-    private void OnAbilityReassigned(string cross, string level, string bind, string ability_name, Texture2D icon)
+    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
     {
         GD.Print("Abilities received ability reassignment");
     }
@@ -97,7 +97,7 @@ public partial class Abilities : Control
 		categories.passive = false;
 		categories.new_assignment.old_ability_name = cross_button.ability_name;
 		categories.new_assignment.old_cross = cross_button.cross;
-		categories.new_assignment.old_level = cross_button.level;
+		categories.new_assignment.old_tier = cross_button.tier;
 		categories.new_assignment.old_button_bind = cross_button.button_bind;
 		categories.cross_bind_selected = cross_button;
 		binds.Hide();

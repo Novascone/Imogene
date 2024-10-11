@@ -73,14 +73,14 @@ public partial class Player : Entity
 		Ability hitscan = (Ability)controllers.ability_assigner.LoadAbility(this, "hitscan", "general", "active");
 		Ability dash = (Ability)controllers.ability_assigner.LoadAbility(this, "dash", "general", "active");
 		
-		controllers.ability_assigner.AssignAbility(this, jump, "A", "Right", "Primary");
-		controllers.ability_assigner.AssignAbility(this, slash, "RB", "Left", "Primary");
-		controllers.ability_assigner.AssignAbility(this, effect_test, "RT", "Left", "Primary");
-		controllers.ability_assigner.AssignAbility(this, kick, "LB", "Left", "Primary");
-		controllers.ability_assigner.AssignAbility(this, projectile, "LT", "Left", "Primary");
-		controllers.ability_assigner.AssignAbility(this, whirlwind, "X", "Right", "Primary");
-		controllers.ability_assigner.AssignAbility(this, hitscan, "Y", "Right", "Primary");
-		controllers.ability_assigner.AssignAbility(this, dash, "B", "Right", "Primary");
+		controllers.ability_assigner.AssignAbility(this, jump, "A", Ability.Cross.Right, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, slash, "RB", Ability.Cross.Left, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, effect_test, "RT", Ability.Cross.Left, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, kick, "LB", Ability.Cross.Left, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, projectile, "LT", Ability.Cross.Left, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, whirlwind, "X", Ability.Cross.Right, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, hitscan, "Y", Ability.Cross.Right, Ability.Tier.Primary);
+		controllers.ability_assigner.AssignAbility(this, dash, "B", Ability.Cross.Right, Ability.Tier.Primary);
 
 		camera_rig.TopLevel = true;
 
@@ -166,9 +166,9 @@ public partial class Player : Entity
         controllers.ability_assigner.ClearAbility(this, ability_name_);
     }
 
-    private void HandleAbilityReassigned(string cross_, string level_, string bind_, string ability_name_, Texture2D icon_)
+    private void HandleAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
     {
-        controllers.ability_assigner.ChangeAbilityAssignment(this, cross_, level_, bind_, ability_name_);
+        controllers.ability_assigner.ChangeAbilityAssignment(this, cross_, tier_, bind_, ability_name_);
     }
 
 	private void HandleCrossChanged(string cross_)

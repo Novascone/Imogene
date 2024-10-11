@@ -20,7 +20,7 @@ public partial class Categories : Control
 	// [Signal] public delegate void AbilityReassignedEventHandler(string ability_name, string ability_bind, string cross, string level);
 	[Signal] public delegate void ClearAbilityBindEventHandler(string ability_name);
 	[Signal] public delegate void ClearAbilityIconEventHandler(string ability_name_old, string ability_name_new);
-	[Signal] public delegate void AbilityReassignedEventHandler(string cross, string level, string bind, string ability_name, Texture2D icon);
+	[Signal] public delegate void AbilityReassignedEventHandler(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -57,23 +57,26 @@ public partial class Categories : Control
 
     private void OnAssignedAcceptAccept()
     {
-		GD.Print("Ability " + cross_bind_selected.new_ability_name + " is now assigned to " + cross_bind_selected.button_bind + " On " + cross_bind_selected.cross + " " + cross_bind_selected.level);
+		GD.Print("Ability " + cross_bind_selected.new_ability_name + " is now assigned to " + cross_bind_selected.button_bind + " On " + cross_bind_selected.cross + " " + cross_bind_selected.tier);
 		EmitSignal(nameof(ClearAbilityBind), new_assignment.old_ability_name);
 		EmitSignal(nameof(ClearAbilityIcon), new_assignment.old_ability_name, new_assignment.new_ability_name);
-		EmitSignal(nameof(AbilityReassigned), new_assignment.new_cross, new_assignment.new_level, new_assignment.new_button_bind, new_assignment.new_ability_name, new_assignment.assigned.Icon);
+		EmitSignal(nameof(AbilityReassigned), (int)new_assignment.new_cross, (int)new_assignment.new_tier, new_assignment.new_button_bind, new_assignment.new_ability_name, new_assignment.assigned.Icon);
+		
 		ResetPage();
 		new_assignment.Hide();
 
     }
 
-	private void HandleCategoryButtonDown()
+  
+
+    private void HandleCategoryButtonDown()
     {
-		new_assignment.assigned_label.Text = cross_bind_selected.button_bind + " " + cross_bind_selected.cross + " " + cross_bind_selected.level;
+		new_assignment.assigned_label.Text = cross_bind_selected.button_bind + " " + cross_bind_selected.cross + " " + cross_bind_selected.tier;
 		new_assignment.assigned.Icon = cross_bind_selected.Icon;
 		new_assignment.new_ability_name = cross_bind_selected.ability_name;
 		new_assignment.new_button_bind = cross_bind_selected.button_bind;
 		new_assignment.new_cross = cross_bind_selected.cross;
-		new_assignment.new_level = cross_bind_selected.level;
+		new_assignment.new_tier = cross_bind_selected.tier;
         new_assignment.Show();
     }
 
@@ -86,7 +89,7 @@ public partial class Categories : Control
 		// assigned_accepted.old_button_bind = ability_button.button_bind;
 		cross_bind_selected.new_ability_name = ability_button.ability_name;
 		
-		GD.Print("ability " + new_assignment.new_ability_name + " at bindings " + new_assignment.new_button_bind + " " + new_assignment.new_cross + " " + new_assignment.new_level);
+		GD.Print("ability " + new_assignment.new_ability_name + " at bindings " + new_assignment.new_button_bind + " " + new_assignment.new_cross + " " + new_assignment.new_tier);
     }
 
     

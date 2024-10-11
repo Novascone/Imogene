@@ -5,8 +5,8 @@ public partial class CrossBindButton : Button
 {
 	[Export] public string button_bind;
 	[Export] public Label label;
-	[Export] public string cross;
-	[Export] public string level;
+	[Export] public Ability.Cross cross;
+	[Export] public Ability.Tier tier;
 	[Signal] public delegate void CrossButtonPressedEventHandler(CrossBindButton cross_button);
 	public string ability_name;
 	public string new_ability_name;
