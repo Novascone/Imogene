@@ -64,23 +64,23 @@ public partial class Player : Entity
 		power.current_value = 50;
 		resource.max_value = resource.max_value / 2;
 
-		Ability jump = (Ability)controllers.ability_assigner.LoadAbility(this, "jump", "general", "active");
-		Ability slash = (Ability)controllers.ability_assigner.LoadAbility(this, "slash", "general", "active");
-		Ability effect_test = (Ability)controllers.ability_assigner.LoadAbility(this, "effect_test", "general", "active");
-		Ability kick = (Ability)controllers.ability_assigner.LoadAbility(this, "kick", "general", "active");
-		Ability projectile = (Ability)controllers.ability_assigner.LoadAbility(this, "projectile", "general", "active");
-		Ability whirlwind = (Ability)controllers.ability_assigner.LoadAbility(this, "whirlwind", "brigian", "active");
-		Ability hitscan = (Ability)controllers.ability_assigner.LoadAbility(this, "hitscan", "general", "active");
-		Ability dash = (Ability)controllers.ability_assigner.LoadAbility(this, "dash", "general", "active");
-		
-		controllers.ability_assigner.AssignAbility(this, jump, "A", Ability.Cross.Right, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, slash, "RB", Ability.Cross.Left, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, effect_test, "RT", Ability.Cross.Left, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, kick, "LB", Ability.Cross.Left, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, projectile, "LT", Ability.Cross.Left, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, whirlwind, "X", Ability.Cross.Right, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, hitscan, "Y", Ability.Cross.Right, Ability.Tier.Primary);
-		controllers.ability_assigner.AssignAbility(this, dash, "B", Ability.Cross.Right, Ability.Tier.Primary);
+		Ability jump = (Ability)AbilityAssigner.LoadAbility(this, "jump", "general", "active");
+		Ability slash = (Ability)AbilityAssigner.LoadAbility(this, "slash", "general", "active");
+		Ability effect_test = (Ability)AbilityAssigner.LoadAbility(this, "effect_test", "general", "active");
+		Ability kick = (Ability)AbilityAssigner.LoadAbility(this, "kick", "general", "active");
+		Ability projectile = (Ability)AbilityAssigner.LoadAbility(this, "projectile", "general", "active");
+		Ability whirlwind = (Ability)AbilityAssigner.LoadAbility(this, "whirlwind", "brigian", "active");
+		Ability hitscan = (Ability)AbilityAssigner.LoadAbility(this, "hitscan", "general", "active");
+		Ability dash = (Ability)AbilityAssigner.LoadAbility(this, "dash", "general", "active");
+
+        AbilityAssigner.AssignAbility(this, jump, "A", Ability.Cross.Right, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, slash, "RB", Ability.Cross.Left, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, effect_test, "RT", Ability.Cross.Left, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, kick, "LB", Ability.Cross.Left, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, projectile, "LT", Ability.Cross.Left, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, whirlwind, "X", Ability.Cross.Right, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, hitscan, "Y", Ability.Cross.Right, Ability.Tier.Primary);
+        AbilityAssigner.AssignAbility(this, dash, "B", Ability.Cross.Right, Ability.Tier.Primary);
 
 		camera_rig.TopLevel = true;
 
@@ -90,17 +90,16 @@ public partial class Player : Entity
 		// Entity controller signals
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
-		entity_controllers.status_effect_controller.AbilitiesPrevented += controllers.ability_controller.HandleAbilitiesPrevented;
+		
 
 		// System signals
 		systems.vision_system.SubscribeToAreaSignals(this);
 		systems.interact_system.SubscribeToInteractSignals(this);
-		systems.interact_system.NearInteractable += controllers.ability_controller.OnNearInteractable;
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
 		systems.interact_system.InputPickUp += HandleInputPickUp;
-		systems.targeting_system.RotationForAbilityFinished += controllers.ability_controller.HandleRotationFinished;
 	
 		// Controller signals
+		controllers.ability_controller.Subscribe(this);
 		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
@@ -124,8 +123,8 @@ public partial class Player : Entity
 
 		entity_controllers.stats_controller.SetStats(this);
 		entity_controllers.stats_controller.Update(this);
-		controllers.ability_assigner.GetAbilities(this);
-		controllers.ability_assigner.AssignAbilities(this);
+		// controllers.ability_assigner.GetAbilities(this);
+		// controllers.ability_assigner.AssignAbilities(this);
 
 		// exclude.Add(areas.vision.GetRid());
 		excluded_rids.Add(areas.near.GetRid());
@@ -146,7 +145,7 @@ public partial class Player : Entity
 		controllers.input_controller.SetInput(this);
 		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta_);
 		systems.targeting_system.Target(this);
-		controllers.ability_controller.AbilityFrameCheck(this);
+        AbilityController.AbilityFrameCheck(this);
 		MoveAndSlide();
 		
     }
@@ -163,12 +162,12 @@ public partial class Player : Entity
 
     private void HandleClearAbilityBind(string ability_name_)
     {
-        controllers.ability_assigner.ClearAbility(this, ability_name_);
+        AbilityAssigner.ClearAbility(this, ability_name_);
     }
 
     private void HandleAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
     {
-        controllers.ability_assigner.ChangeAbilityAssignment(this, cross_, tier_, bind_, ability_name_);
+        AbilityAssigner.ChangeAbilityAssignment(this, cross_, tier_, bind_, ability_name_);
     }
 
 	private void HandleCrossChanged(string cross_)
@@ -218,7 +217,7 @@ public partial class Player : Entity
 
 	internal void OnAbilityFinished(Ability ability_)
     {
-        controllers.ability_controller.RemoveFromAbilityList(this, ability_);
+        AbilityController.RemoveFromAbilityList(this, ability_);
 		// systems.targeting_system.rotating_to_soft_target = false;
 		// controllers.movement_controller.movement_input_prevented = false;
     }
@@ -232,6 +231,8 @@ public partial class Player : Entity
 	public override void _ExitTree()
 	{
 		controllers.input_controller.Unsubscribe(this);
+		controllers.ability_controller.Unsubscribe(this);
+		controllers.movement_controller.Unsubscribe(this);
 	}
 
     

@@ -3,121 +3,94 @@ using System;
 
 public partial class AbilityController : Node
 {
-	public bool ability_use_prevented = false;
-    public bool done_rotating = true;
+	public bool ability_use_prevented { get; set; } = false;
+    public bool done_rotating { get; set; } = true;
 
-    [Signal] public delegate void ResourceEffectEventHandler(Player player, float resource_change);
+    [Signal] public delegate void ResourceEffectEventHandler(Player player_, float resource_change_);
     [Signal] public delegate void RotatePlayerEventHandler();
     [Signal] public delegate void ReleaseInputControlEventHandler();
     
-	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		
-	}
-
-	 public void QueueAbility(Player player, Ability ability)
+	public void QueueAbility(Player player_, Ability ability_)
     {
-        if(!player.ui.preventing_movement && !player.ui.capturing_input && !ability_use_prevented)
+        if(!player_.ui.preventing_movement && !player_.ui.capturing_input && !ability_use_prevented)
         {
         
-            if(ability.state == Ability.States.NotQueued)
+            if(ability_.state == Ability.States.NotQueued)
             {   
-                if(CanAfford(player, ability) && CheckCross(player, ability)) // Check cross was here
+                if(CanAfford(player_, ability_) && CheckCross(player_, ability_))
                 {
-                    // GD.Print("queueing ability");
-                    ability.state = Ability.States.Queued;
+                    ability_.state = Ability.States.Queued;
                 }
             }
             
         }
     }
 
-    public void AbilityFrameCheck(Player player)
+    public static void AbilityFrameCheck(Player player_)
     {
-        if(player.ability_in_use != null)
-		{
-			// GD.Print("ability in use" + player.ability_in_use);
-			player.ability_in_use.FrameCheck(player);
-		}
+        player_.ability_in_use?.FrameCheck(player_);
     }
 
-	public void CheckCanUseAbility(Player player, Ability ability)
+	public void CheckCanUseAbility(Player player_, Ability ability_)
     {
-        //GD.Print("Checking can use ability");
-       
-        if(ability.state == Ability.States.Queued)
+        if(ability_.state == Ability.States.Queued)
         {
-            if(!ability.button_held)
+            if(!ability_.button_held)
             {
-                if(ability.rotate_on_soft)
+                if(ability_.rotate_on_soft)
                 {
-                    if(player.systems.targeting_system.enemy_to_soft_target)
+                    if(player_.systems.targeting_system.enemy_to_soft_target)
                     {
-                        //GD.Print("Rotate soft ability");
-                        SoftRotateAbility(player, ability);
-						
+                        SoftRotateAbility(player_, ability_);
                     }
                     else
                     {
-						//GD.Print("Executing");
-                        
-                        ability.Execute(player);
-                        if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-						AddToAbilityList(player, ability);
+                        ability_.Execute(player_);
+                        if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+                        AddToAbilityList(player_, ability_);
                     }
                 }
                 else
                 {
-                    // GD.Print("Execute non rotation");
-					//GD.Print("Executing");
-                    
-                    ability.Execute(player);
-                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-					AddToAbilityList(player, ability);
+                    ability_.Execute(player_);
+                    if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+                    AddToAbilityList(player_, ability_);
                 }
             }
-            else if (ability.button_held)
+            else if (ability_.button_held)
             {
-                if(ability.rotate_on_held)
+                if(ability_.rotate_on_held)
                 {
-                    GD.Print("difference in rotation " + MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1)); 
-					if(player.systems.targeting_system.enemy_pointed_toward != null)
+					if(player_.systems.targeting_system.enemy_pointed_toward != null)
                     {
-                        //GD.Print("Soft targeting enemy while holding down ability");
-                        SoftRotateAbility(player, ability);
+                        SoftRotateAbility(player_, ability_);
                     }
-                    else if(MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
+                    else if(MathF.Round(player_.current_y_rotation - player_.previous_y_rotation, 1) == 0 && player_.systems.targeting_system.enemy_pointed_toward == null)
                     {
-                        GD.Print("Rotating on held");
                         EmitSignal(nameof(ReleaseInputControl));
-                        ability.Execute(player);
-						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-                        AddToAbilityList(player, ability);
+                        ability_.Execute(player_);
+						if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+                        AddToAbilityList(player_, ability_);
                     }
                 }
                 else
                 {
-					//GD.Print("Executing");
-                    ability.Execute(player);
-                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-					AddToAbilityList(player, ability);
+                    ability_.Execute(player_);
+                    if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+                    AddToAbilityList(player_, ability_);
                 }
             }
 
         }
     }
 
-    public bool CheckCross(Player player, Ability ability) // Checks what cross the ability is assigned to
+    public static bool CheckCross(Player player_, Ability ability_) // Checks what cross the ability is assigned to
     {
-        GD.Print("Checking cross for " + ability.Name);
-        GD.Print("primary left selected " + player.l_cross_primary_selected);
-        if(ability.cross == Ability.Cross.Left)
+        if(ability_.cross == Ability.Cross.Left)
 		{
-			if(player.l_cross_primary_selected)
+			if(player_.l_cross_primary_selected)
 			{
-				if(ability.tier == Ability.Tier.Primary)
+				if(ability_.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -128,7 +101,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-				if(ability.tier == Ability.Tier.Secondary)
+				if(ability_.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -138,11 +111,11 @@ public partial class AbilityController : Node
                 }
 			}
 		}
-		else if(ability.cross == Ability.Cross.Right)
+		else if(ability_.cross == Ability.Cross.Right)
 		{
-			if(player.r_cross_primary_selected)
+			if(player_.r_cross_primary_selected)
 			{
-				if(ability.tier == Ability.Tier.Primary)
+				if(ability_.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -153,7 +126,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-                if(ability.tier == Ability.Tier.Secondary)
+                if(ability_.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -167,145 +140,138 @@ public partial class AbilityController : Node
         return false;
     }
 
-	public bool CanAfford(Player player, Ability ability)
+	public static bool CanAfford(Player player_, Ability ability_)
     {
-        if(ability.charges - ability.charges_used >= 0 && ability.charges > 0)
+        if(ability_.charges - ability_.charges_used >= 0 && ability_.charges > 0)
         {
            
-            if(ability.charges - ability.charges_used != 0)
+            if(ability_.charges - ability_.charges_used != 0)
             {
-                //GD.Print("Knock back* Can afford because of charges");
                 return true;
             }
             else
             {
-                //GD.Print("Knock back* Can not afford because of charges");
                 return false;
             }
             
         }
-        else if(player.resource.current_value - ability.resource_change >= 0 || ability.resource_change == 0)
+        else if(player_.resource.current_value - ability_.resource_change >= 0 || ability_.resource_change == 0)
         {
-            if(ability.cooldown_timer != null)
+            if(ability_.cooldown_timer != null)
             {
-                if(ability.cooldown_timer.TimeLeft == 0)
+                if(ability_.cooldown_timer.TimeLeft == 0)
                 {
-                    //GD.Print("Can afford because of cooldown");
                     return true;
                 }
                 else
                 {
-                    //GD.Print("Can't afford because of cooldown");
                     return false;
                 }
             }
             else
             {
-                //GD.Print("Can afford because of resource");
                 return true;
             }
         }
         else
         {
-            //GD.Print("Can't afford because resource cost");
             return false;
         }
     
     }
 
-	public void SoftRotateAbility(Player player, Ability ability)
+	public void SoftRotateAbility(Player player_, Ability ability_)
     {
-        
-        // if(!ability.rotate_on_soft_far && (player.systems.targeting_system.enemy_close || player.systems.targeting_system.enemy_pointed_toward != null))
-        // {
-        
-       
-            if(!player.abilities_in_use_list.Contains(ability))
-            {
-                AddToAbilityList(player, ability);
-                
-                EmitSignal(nameof(RotatePlayer));
-                //GD.Print("Rotating player");
-                done_rotating = false;
-            }
-            // if(ability.button_held)
-            // {
-                //GD.Print("Ability held, done rotating: " + done_rotating);
-            if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
-            {
-                if(ability.button_held)
-                {
-                    
-                    EmitSignal(nameof(RotatePlayer));
-                }
-                
-                ability.Execute(player);
-                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-                
-            }
-            else if(!done_rotating)
-            {
-                // done_rotating = false;
-                EmitSignal(nameof(RotatePlayer));
-            }
-            else
-            {
-                ability.Execute(player);
-                if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
-            }
-                
-    }
-
-	public void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
-    {
-        // GD.Print("adding ability to list");
-        if(!player.abilities_in_use_list.Contains(ability))
+    
+        if(!player_.abilities_in_use_list.Contains(ability_))
         {
-            player.abilities_in_use_list.AddFirst(ability);
-            ability.in_use = true;
+            AddToAbilityList(player_, ability_);
+            
+            EmitSignal(nameof(RotatePlayer));
+
+            done_rotating = false;
         }
 
-        player.ability_in_use = player.abilities_in_use_list.First.Value;
-    }
-
-    public void RemoveFromAbilityList(Player player, Ability ability) // Removes ability from abilities used
-    {
-        // GD.Print("removing ability from list");
-        player.abilities_in_use_list.Remove(ability);
-        if(player.abilities_in_use_list.Count > 0)
+        if(done_rotating && player_.systems.targeting_system.enemy_pointed_toward != null)
         {
-            player.ability_in_use = player.abilities_in_use_list.First.Value;
+            if(ability_.button_held)
+            {
+                
+                EmitSignal(nameof(RotatePlayer));
+            }
+            
+            ability_.Execute(player_);
+            if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+            
+        }
+        else if(!done_rotating)
+        {
+            EmitSignal(nameof(RotatePlayer));
         }
         else
         {
-            player.ability_in_use = null;
+            ability_.Execute(player_);
+            if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
         }
-        ability.in_use = false;
+                
     }
 
-    internal void OnNearInteractable(bool near_interactable)
+	public static void AddToAbilityList(Player player_, Ability ability_) // Adds the passed ability to the list of abilities if it is not already there
     {
-        //GD.Print("got signal from interact system");
-        if(near_interactable == true)
+    
+        if(!player_.abilities_in_use_list.Contains(ability_))
         {
-            ability_use_prevented = true;
+            player_.abilities_in_use_list.AddFirst(ability_);
+            ability_.in_use = true;
+        }
+
+        player_.ability_in_use = player_.abilities_in_use_list.First.Value;
+    }
+
+    public static void RemoveFromAbilityList(Player player_, Ability ability_) // Removes ability from abilities used
+    {
+        player_.abilities_in_use_list.Remove(ability_);
+        if(player_.abilities_in_use_list.Count > 0)
+        {
+            player_.ability_in_use = player_.abilities_in_use_list.First.Value;
         }
         else
         {
-            ability_use_prevented = false;
+            player_.ability_in_use = null;
         }
+        ability_.in_use = false;
     }
 
-    internal void HandleAbilitiesPrevented(bool abilities_prevented)
+    internal void OnNearInteractable(bool near_interactable_)
     {
-        ability_use_prevented = abilities_prevented;
+        ability_use_prevented = near_interactable_;
+    }
+
+    internal void HandleAbilitiesPrevented(bool abilities_prevented_)
+    {
+        ability_use_prevented = abilities_prevented_;
     }
 
 
-    internal void HandleRotationFinished(bool finished)
+    internal void HandleRotationFinished(bool finished_)
     {
-        //GD.Print("Rotation finished in ability controller");
-        done_rotating = finished;
+        done_rotating = finished_;
+    }
+
+    public void Subscribe(Player player_)
+    {
+        player_.entity_controllers.status_effect_controller.AbilitiesPrevented += HandleAbilitiesPrevented;
+
+        player_.systems.interact_system.NearInteractable += OnNearInteractable;
+        player_.systems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
+    }
+
+     public void Unsubscribe(Player player_)
+    {
+        player_.entity_controllers.status_effect_controller.AbilitiesPrevented -= HandleAbilitiesPrevented;
+
+        player_.systems.interact_system.NearInteractable -= OnNearInteractable;
+        player_.systems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
     }
 
    

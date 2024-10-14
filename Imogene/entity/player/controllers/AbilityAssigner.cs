@@ -1,165 +1,64 @@
 using Godot;
 using System;
+using System.Linq;
 // Ability controller
 // Load abilities for the player, and sends the abilities the player has to the UI 
 public partial class AbilityAssigner : Node
 {
-
-	public bool can_use_abilities;
-
-	// Called when the node enters the scene tree for the first time.
-	
-	private CustomSignals _customSignals; // Custom signal instance
-	
-	public override void _Ready()
+	public static void AssignAbility(Player player_, Ability ability_, string bind_, Ability.Cross cross_, Ability.Tier tier_)
 	{
-		
+		ability_.assigned_button = bind_;
+		ability_.cross = cross_;
+		ability_.tier = tier_;
+		player_.ui.AssignAbility(ability_.cross, ability_.tier, ability_.assigned_button, ability_.Name, ability_.icon);
 	}
 
-    public override void _Process(double delta)
+	public static Node LoadAbility(Player player_, string name_, string class_type_, string ability_type_) // Loads an ability from a string
     {
-	
-    }
-
-	
-
-    public void GetAbilities(Player player) // Loads abilities
-	{
-		// foreach(Ability ability in player.abilities)
-		// {
-		// 	LoadAbility(ability);
-		// }
-   	}
-
-	public void AssignAbility(Player player, Ability ability, string bind, Ability.Cross cross, Ability.Tier tier)
-	{
-		ability.assigned_button = bind;
-		ability.cross = cross;
-		ability.tier = tier;
-		player.ui.AssignAbility(ability.cross, ability.tier, ability.assigned_button, ability.Name, ability.icon);
-	}
-
-    private void LoadAbilitiesHelper(Player player, Ability ability) // Adds ability to abilities list
-    {
-       	// Ability new_ability = (Ability)LoadAbility(ability.name, ability.class_type, ability.ability_type);
-		// player.abilities.Add(new_ability);
-		// player.abilities_storage.AddChild(new_ability);
-		// new_ability.GetPlayerInfo(player);
-		// foreach(AbilityCategory ability_category in player.ui.abilities.categories.GetChildren())
-		// {
-		// 	if (ability_category.IsInGroup(ability_resource.type))
-		// 	{
-		// 		ability_category.AddAbility(ability_resource);
-		// 	}
-		// }
-		
-		// _customSignals.EmitSignal(nameof(CustomSignals.AvailableAbilities), ability_resource);
-    }
-
-	public  Node LoadAbility(Player player, string name, string class_type, string ability_type) // Loads an ability from a string
-    {
-        var scene = GD.Load<PackedScene>("res://entity/player/abilities/" + class_type + "/" + ability_type + "/" + name + "/" + name + ".tscn");
+        var scene = GD.Load<PackedScene>("res://entity/player/abilities/" + class_type_ + "/" + ability_type_ + "/" + name_ + "/" + name_ + ".tscn");
         Ability ability = (Ability)scene.Instantiate();
 		
-		player.abilities.AddChild(ability);
-		ability.AbilityPressed += player.OnAbilityPressed;
-		ability.AbilityQueue += player.OnAbilityQueue;
-		ability.AbilityCheck += player.OnAbilityCheck;
-		ability.AbilityReleased += player.OnAbilityReleased;
-		player.controllers.input_controller.AbilitySubscribe(ability);
-		player.controllers.movement_controller.AbilitySubscribe(ability);
+		player_.abilities.AddChild(ability);
+		ability.AbilityPressed += player_.OnAbilityPressed;
+		ability.AbilityQueue += player_.OnAbilityQueue;
+		ability.AbilityCheck += player_.OnAbilityCheck;
+		ability.AbilityReleased += player_.OnAbilityReleased;
+		player_.controllers.input_controller.AbilitySubscribe(ability);
+		player_.controllers.movement_controller.AbilitySubscribe(ability);
 		
-		ability.AbilityFinished += player.OnAbilityFinished;
-		GD.Print("finished subscribing signals to ability controller " + player.controllers.ability_controller.Name);
+		ability.AbilityFinished += player_.OnAbilityFinished;
         return ability;
     }
 
-
-	public void AssignAbilities(Player player)
-	{	
-		
-		// if(!player.test_abilities_assigned)
-		// {
-			// AssignAbilityHelper("RCrossPrimaryRightAssign", player.small_fireball);
-			// AssignAbilityHelper("LCrossPrimaryUpAssign", player.slash);
-			// AssignAbilityHelper("RCrossPrimaryDownAssign", player.jump);
-			// AssignAbilityHelper("LCrossPrimaryRightAssign", player.effects_test);
-			// AssignAbilityHelper("LCrossPrimaryLeftAssign", player.projectile);
-			// AssignAbilityHelper("RCrossPrimaryLeftAssign", player.dash);
-			// AssignAbilityHelper("LCrossPrimaryDownAssign", player.whirlwind);
-			// AssignAbilityHelper("RCrossPrimaryUpAssign", player.kick);
-		// }
-		// player.test_abilities_assigned = true;
-	}
 	
-	 private void AssignAbility(string button_name, Ability ability)
-	{
-			// _customSignals.EmitSignal(nameof(CustomSignals.AbilityAssigned), abilityResource.name, button_name, abilityResource.icon);
-			// player.ui.abilities.AbilityAssigned(ability_resource, button_name);
-			// player.ui.hud.AbilityAssigned(ability_resource, button_name);
-			// GD.Print("hud ability assigned");
-			ability.assigned_button = button_name;
-			// GD.Print("Ability Assigned");
-	}
-
-	// public bool StatusEffectPreventingAbilities()
+	//  private static void AssignAbility_Button(string button_name_, Ability ability_)
 	// {
-	// 	if(player.status_effect_controller.dazed || player.status_effect_controller.frozen || player.status_effect_controller.feared || player.status_effect_controller.hexed || player.status_effect_controller.staggered)
-	// 	{
-	// 		return true;
-	// 	}
-	// 	return false;
+	// 	ability_.assigned_button = button_name_;
 	// }
 
-	public void SubscribeToUI()
-	{
-		// ui.abilities.melee_abilities.AbilityChanged += OnAbilityChanged;
-	}
-
-    // private void OnAbilityChanged(string new_ability, string new_button_assignment)
-    // {
-    //     GD.Print("Got ability changed signal!");
-	// 	GD.Print("new button assignment " + new_button_assignment+ " new ability " + new_ability);
-	// 	// foreach(Ability ability in player.abilities)
-	// 	// {
-	// 	// 	if (ability.Name == new_ability)
-	// 	// 	{
-	// 	// 		ability.useable = true;
-	// 	// 		ability.CheckAssignment(new_button_assignment);
-	// 	// 	}
-	// 	// }
-	// 	// player.ui.abilities.ability_changed = false;
-	// 	// player.ui.abilities.ability_to_change = null;
-	// 	// player.ui.abilities.button_to_bind = null;
-		
-    // }
-
     
-	public void ChangeAbilityAssignment(Player player, Ability.Cross cross, Ability.Tier tier, string bind, string ability_name)
+	public static void ChangeAbilityAssignment(Player player_, Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_)
 	{
-		GD.Print("Changing ability assignment in ability assigner for " + ability_name);
-		foreach(Ability ability in player.abilities.GetChildren())
+		foreach(Ability ability in player_.abilities.GetChildren().Cast<Ability>())
 		{
-			if(ability.Name == ability_name)
+			if(ability.Name == ability_name_)
 			{
-				ability.cross = cross;
-				ability.tier = tier;
-				ability.assigned_button = bind;
-				GD.Print("to " + ability.assigned_button + " on " + ability.cross + " " + ability.tier);
+				ability.cross = cross_;
+				ability.tier = tier_;
+				ability.assigned_button = bind_;
 			}
 		}
 	}
 
-	public void ClearAbility(Player player, string ability_name)
+	public static void ClearAbility(Player player_, string ability_name_)
 	{
-		foreach(Ability ability in player.abilities.GetChildren())
+		foreach(Ability ability in player_.abilities.GetChildren().Cast<Ability>())
 		{
-			if(ability.Name == ability_name)
+			if(ability.Name == ability_name_)
 			{
 				ability.cross = Ability.Cross.None;
 				ability.tier = Ability.Tier.None;
 				ability.assigned_button = "";
-				GD.Print(ability.Name + " Was cleared");
 			}
 		}
 	}

@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" path="res://entity/player/camera/CameraRig.cs" id="1_3fsmm"]
 
-[node name="CameraRig" type="Node3D"]
+[node name="CameraRig" type="Node3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_3fsmm")
+camera = NodePath("Camera")
 
 [node name="Camera" type="Camera3D" parent="." groups=["Camera"]]
 transform = Transform3D(-1, 5.05179e-08, -7.1349e-08, 0, 0.816138, 0.577858, 8.74228e-08, 0.577858, -0.816138, 0, 15, -25)
