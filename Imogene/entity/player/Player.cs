@@ -94,9 +94,9 @@ public partial class Player : Entity
 
 		// System signals
 		systems.vision_system.SubscribeToAreaSignals(this);
-		systems.interact_system.SubscribeToInteractSignals(this);
+		systems.interact_system.Subscribe(this);
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
-		systems.interact_system.InputPickUp += HandleInputPickUp;
+		systems.interact_system.InputPickup += HandleInputPickUp;
 	
 		// Controller signals
 		controllers.ability_controller.Subscribe(this);
@@ -107,7 +107,7 @@ public partial class Player : Entity
 		ui.hud.SubscribeToTargetingSignals(this);
 		ui.hud.SubscribeToInteractSignals(this);
 		ui.inventory.main.DroppingItem += HandleDroppingItem;
-		ui.CapturingInput += systems.interact_system.HandleUICapturingInput;
+		
 		ui.InventoryToggle += HandleInventoryToggle;
 		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
@@ -152,7 +152,7 @@ public partial class Player : Entity
 
     private void HandleInputPickUp(InteractableItem item_)
     {
-        systems.interact_system.PickUpItem(item_, this);
+        systems.interact_system.PickupItem(item_, this);
     }
 
     private void HandleDroppingItem()
@@ -233,6 +233,8 @@ public partial class Player : Entity
 		controllers.input_controller.Unsubscribe(this);
 		controllers.ability_controller.Unsubscribe(this);
 		controllers.movement_controller.Unsubscribe(this);
+
+		systems.interact_system.Unsubscribe(this);
 	}
 
     

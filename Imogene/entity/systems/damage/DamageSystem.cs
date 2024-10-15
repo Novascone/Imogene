@@ -31,16 +31,16 @@ public partial class DamageSystem : Node
 		float mitigated_damage = amount_;
 		mitigated_damage *= 1 - (entity_.armor.current_value / 100);
 
-		if(hitbox_ is MeleeHitbox melee_hitbox)
+		if(hitbox_ is MeleeHitbox _melee_hitbox)
 		{
 			
-			mitigated_damage = MitigateMelee(melee_hitbox, mitigated_damage, entity_);
+			mitigated_damage = MitigateMelee(_melee_hitbox, mitigated_damage, entity_);
 			
 		}
 
-		if(hitbox_ is RangedHitbox ranged_hitbox)
+		if(hitbox_ is RangedHitbox _ranged_hitbox)
 		{
-			mitigated_damage = MitigateRanged(ranged_hitbox, mitigated_damage, entity_);
+			mitigated_damage = MitigateRanged(_ranged_hitbox, mitigated_damage, entity_);
 		}
 
 		
@@ -253,34 +253,33 @@ public partial class DamageSystem : Node
 
     private void OnHurtboxBodyEntered(Node3D body_, Entity entity_)
     {
-        	if(body_ is RangedHitbox _ranged_hitbox)
+		if(body_ is RangedHitbox _ranged_hitbox)
+		{
+			foreach(StatusEffect _status_effect in _ranged_hitbox.effects)
 			{
-				foreach(StatusEffect status_effect in _ranged_hitbox.effects)
-				{
-					
-					EmitSignal(nameof(AddStatusEffect),entity_, status_effect);
-				}
-
-				TakeDamage(entity_, _ranged_hitbox, _ranged_hitbox.damage, _ranged_hitbox.is_critical);
-				EmitSignal(nameof(ChangePosture), entity_, _ranged_hitbox.posture_damage);
 				
+				EmitSignal(nameof(AddStatusEffect),entity_, _status_effect);
 			}
+
+			TakeDamage(entity_, _ranged_hitbox, _ranged_hitbox.damage, _ranged_hitbox.is_critical);
+			EmitSignal(nameof(ChangePosture), entity_, _ranged_hitbox.posture_damage);
+			
+		}
     }
 
     private void OnHurtboxAreaEntered(Node3D area_, Entity entity_)
     {
-         if(area_ is MeleeHitbox melee_hitbox)
+         if(area_ is MeleeHitbox _melee_hitbox)
 		{
-			if(area_ is MeleeHitbox)
+			
+			foreach(StatusEffect _status_effect in _melee_hitbox.effects)
 			{
-				foreach(StatusEffect status_effect in melee_hitbox.effects)
-				{
-					EmitSignal(nameof(AddStatusEffect),entity_, status_effect);
-				}
-				
-				TakeDamage(entity_, melee_hitbox, melee_hitbox.damage, melee_hitbox.is_critical);
-				EmitSignal(nameof(ChangePosture),entity_, melee_hitbox.posture_damage);
+				EmitSignal(nameof(AddStatusEffect),entity_, _status_effect);
 			}
+			
+			TakeDamage(entity_, _melee_hitbox, _melee_hitbox.damage, _melee_hitbox.is_critical);
+			EmitSignal(nameof(ChangePosture),entity_, _melee_hitbox.posture_damage);
+			
 		}
     }
 

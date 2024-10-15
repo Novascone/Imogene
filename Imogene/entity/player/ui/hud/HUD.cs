@@ -50,8 +50,8 @@ public partial class HUD : Control
 	{
 		player.areas.interact.AreaEntered += OnInteractAreaEntered;
 		player.areas.interact.AreaExited += OnInteractAreaExited;
-		player.areas.pick_up_items.BodyEntered += OnPickUpAreaEntered;
-		player.areas.pick_up_items.BodyExited += (body) => OnPickUpAreaExited(body, player);
+		player.areas.pickup_items.BodyEntered += OnPickUpAreaEntered;
+		player.areas.pickup_items.BodyExited += (body) => OnPickUpAreaExited(body, player);
 		player.systems.interact_system.SwitchToNextNearestItem += HandleSwitchToNextItem;
 	}
 

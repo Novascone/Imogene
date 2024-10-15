@@ -8,167 +8,72 @@ using System.Runtime.InteropServices;
 [GlobalClass]
 public partial class InteractSystem : Node3D
 {
-	public bool in_interact_area;
-	public bool left_interact;
-	public bool entered_interact;
-	private bool can_interact;
-	// private InteractableItem item_in_pick_up;
-	private bool inventory_full;
-	Area3D area_interacting;
-
-	[Signal] public delegate void NearInteractableEventHandler(bool near_interactable);
-	[Signal] public delegate void ItemPickedUpEventHandler(ItemData item);
-	[Signal] public delegate void InputPickUpEventHandler(InteractableItem item);
-	[Signal] public delegate void SwitchToNextNearestItemEventHandler(InteractableItem item, bool last_item);
 	[Export] public Array<ItemData> item_types {get; set;} = new Array<ItemData>();
-	public List<InteractableItem> items_in_pick_up = new List<InteractableItem>();
-	InteractableItem next_nearest;
-	InteractableItem pick_up_item;
-	public List<InteractableItem> near_by_items = new List<InteractableItem>();
+	public bool in_interact_area { get; set; } = false;
+	private bool can_interact { get; set; } = true;
+	private bool inventory_full  { get; set; } = false;
+	Area3D area_interacting  { get; set; } = null;
+	InteractableItem pickup_item { get; set; } = null;
+	InteractableItem next_nearest { get; set; } = null;
+	public List<InteractableItem> near_by_items { get; set; } = new List<InteractableItem>();
+	public List<InteractableItem> items_in_pickup { get; set; } = new List<InteractableItem>();
 
-    // public override void _Input(InputEvent @event)
-    // {
-    //     if(@event.IsActionPressed("Interact") && can_interact && items_in_pick_up.Count > 0)
-	// 	{
-	// 		EmitSignal(nameof(InputPickUp), pick_up_item);
-			
-	// 	}
-    // }
-
-
-
-    public void SubscribeToInteractSignals(Player player)
-	{
-		player.areas.interact.AreaEntered += (area) => OnInteractAreaEntered(area, player);
-		player.areas.interact.AreaExited += (area) => OnInteractAreaExited(area, player);
-		player.areas.interact.BodyEntered += (body) => OnObjectEnteredArea(body, player);
-		player.areas.interact.BodyExited += (body) => OnObjectExitedArea(body, player);
-		player.areas.pick_up_items.BodyEntered += (body) => OnObjectEnteredPickUp(body, player);
-		player.areas.pick_up_items.BodyExited += (body) => OnObjectExitedPickUp(body, player);
-		player.ui.inventory.main.InventoryCapacity += HandleInventoryCapacity;
-		player.ui.hud.AcceptHUDInput += OnAcceptHUDInput;
+	[Signal] public delegate void NearInteractableEventHandler(bool near_interactable_);
+	[Signal] public delegate void ItemPickedUpEventHandler(ItemData item_);
+	[Signal] public delegate void InputPickupEventHandler(InteractableItem item_);
+	[Signal] public delegate void SwitchToNextNearestItemEventHandler(InteractableItem item_, bool last_item_);
 	
-		
-	}
 
-    private void OnAcceptHUDInput(Node3D interacting_object)
-    {
-        if(interacting_object is InteractableItem && can_interact && items_in_pick_up.Count > 0)
-		{
-			EmitSignal(nameof(InputPickUp), pick_up_item);
-		}
-    }
-
-
-    private void HandleInventoryCapacity(bool full)
-    {
-		
-        inventory_full = full;
-		foreach(InteractableItem item in near_by_items)
-		{
-			item.GainFocus(full);
-		}
-	
-    }
-
-    private void OnObjectEnteredPickUp(Node3D body, Player player)
-    {
-		if(body is InteractableItem item)
-		{
-			items_in_pick_up.Add(item);
-			if(!item.interact_to_pick_up)
-			{
-				PickUpItem(item, player);
-			}
-			else
-			{
-				pick_up_item = item;
-			}
-		}
-    }
-
-	private void OnObjectExitedPickUp(Node3D body, Player player)
-    {
-		if(body is InteractableItem item)
-		{
-			items_in_pick_up.Remove(item);
-			if(item.interact_to_pick_up)
-			{
-				pick_up_item = next_nearest;
-			}
-		}
-
-    }
-    // public override void _UnhandledInput(InputEvent @event)
-    // {
-    // 	if(@event.IsActionPressed("Interact"))
-    // 	{
-    // 		PickUpNearestItem();
-    // 	}
-    // }
-
-    public void PickUpItem(Node3D item, Player player)
+    public void PickupItem(Node3D item_, Player player_)
 	{
-		GD.Print("pick up item");
-		InteractableItem nearest_item = near_by_items.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
-		if(nearest_item != null)
+
+		InteractableItem _nearest_item = near_by_items.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
+		if(_nearest_item != null)
 		{
-			if(player.ui.inventory.main.slots_filled < player.ui.inventory.main.item_slots_count)
+			if(player_.ui.inventory.main.slots_filled < player_.ui.inventory.main.item_slots_count)
 			{
 				
-				item.QueueFree();
-				items_in_pick_up.Remove((InteractableItem)item);
-				near_by_items.Remove((InteractableItem)item);
-				if(items_in_pick_up.Count > 0)
+				item_.QueueFree();
+				items_in_pickup.Remove((InteractableItem)item_);
+				near_by_items.Remove((InteractableItem)item_);
+				if(items_in_pickup.Count > 0)
 				{
-					next_nearest = items_in_pick_up.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
+					next_nearest = items_in_pickup.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
 
-					pick_up_item = next_nearest;
-					GD.Print("next nearest " + next_nearest.Name);
-					EmitSignal(nameof(SwitchToNextNearestItem), pick_up_item, false);
+					pickup_item = next_nearest;
+					EmitSignal(nameof(SwitchToNextNearestItem), pickup_item, false);
 				}
 				else
 				{
 					next_nearest = null;
-					EmitSignal(nameof(SwitchToNextNearestItem), pick_up_item, true);
+					EmitSignal(nameof(SwitchToNextNearestItem), pickup_item, true);
 				}
-				GD.Print("picking up nearest item");
-				ItemData template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearest_item.SceneFilePath);
-				if(template != null)
+				ItemData _template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == _nearest_item.SceneFilePath);
+				if(_template != null)
 				{
-					GD.Print("Item id: " + item_types.IndexOf(template) +" Item name: " + template.item_name);
-					EmitSignal(nameof(ItemPickedUp), template);
-				}
-				else
-				{
-					GD.PrintErr("Item not found");
+					EmitSignal(nameof(ItemPickedUp), _template);
 				}
 			}
-			else
-			{
-				GD.Print("Inventory full");
-			}
-			
-			
-			// nearest_item.QueueFree();
-			
-			
-			
-			// if(near_by_items.Count == 0)
-			// {
-			// 	EmitSignal(nameof(NearInteractable),false);
-			// }
 		}
-		
 	}
 
-	private void OnInteractAreaExited(Area3D area, Player player)
+
+	private void OnInteractAreaEntered(Area3D area_, Player player_)
+	{
+		
+		if(area_ is InteractableObject)
+		{
+			in_interact_area = true;
+			area_interacting = area_;
+			EmitSignal(nameof(NearInteractable),true);
+		}
+	}
+
+	private void OnInteractAreaExited(Area3D area_, Player player_)
 	{
 
-		
-		if(area is InteractableObject)
+		if(area_ is InteractableObject)
 		{
-			left_interact = true;
 			in_interact_area = false;
 			area_interacting = null;
 			EmitSignal(nameof(NearInteractable),false);
@@ -176,42 +81,104 @@ public partial class InteractSystem : Node3D
 		
 	}
 
-	private void OnInteractAreaEntered(Area3D area, Player player)
+	public void OnObjectEnteredArea(Node3D body_, Player player_)
 	{
 		
-		if(area is InteractableObject)
+		if(body_ is InteractableItem _item)
 		{
-			entered_interact = true;
-			in_interact_area = true;
-			area_interacting = area;
-			EmitSignal(nameof(NearInteractable),true);
+			_item.GainFocus(inventory_full);
+			near_by_items.Add(_item);
 		}
 	}
 
-	public void OnObjectExitedArea(Node3D body, Player player)
+	public void OnObjectExitedArea(Node3D body_, Player player_)
 	{
 		
-		if(body is InteractableItem item && near_by_items.Contains(item))
+		if(body_ is InteractableItem _item && near_by_items.Contains(_item))
 		{
-			// EmitSignal(nameof(NearInteractable),false);
-			item.LoseFocus();
-			near_by_items.Remove(item);
+			_item.LoseFocus();
+			near_by_items.Remove(_item);
 		}
 	}
 
-	public void OnObjectEnteredArea(Node3D body, Player player)
-	{
-		
-		if(body is InteractableItem item)
-		{
-			// EmitSignal(nameof(NearInteractable),true);
-			item.GainFocus(inventory_full);
-			near_by_items.Add(item);
-		}
-	}
 
-    internal void HandleUICapturingInput(bool capturing_input)
+    private void OnObjectEnteredPickup(Node3D body_, Player player_)
     {
-        can_interact = !capturing_input;
+		if(body_ is InteractableItem _item)
+		{
+			items_in_pickup.Add(_item);
+			if(!_item.interact_to_pick_up)
+			{
+				PickupItem(_item, player_);
+			}
+			else
+			{
+				pickup_item = _item;
+			}
+		}
     }
+
+	private void OnObjectExitedPickup(Node3D body_, Player player_)
+    {
+		if(body_ is InteractableItem item)
+		{
+			items_in_pickup.Remove(item);
+			if(item.interact_to_pick_up)
+			{
+				pickup_item = next_nearest;
+			}
+		}
+
+    }
+
+    internal void HandleUICapturingInput(bool capturing_input_)
+    {
+        can_interact = !capturing_input_;
+    }
+
+    private void OnAcceptHUDInput(Node3D interacting_object_)
+    {
+        if(interacting_object_ is InteractableItem && can_interact && items_in_pickup.Count > 0)
+		{
+			EmitSignal(nameof(InputPickup), pickup_item);
+		}
+    }
+
+
+    private void HandleInventoryCapacity(bool full_)
+    {
+		
+        inventory_full = full_;
+		foreach(InteractableItem _item in near_by_items)
+		{
+			_item.GainFocus(full_);
+		}
+	
+    }
+
+	public void Subscribe(Player player_)
+	{
+		player_.areas.interact.AreaEntered += (area_) => OnInteractAreaEntered(area_, player_);
+		player_.areas.interact.AreaExited += (area_) => OnInteractAreaExited(area_, player_);
+		player_.areas.interact.BodyEntered += (body_) => OnObjectEnteredArea(body_, player_);
+		player_.areas.interact.BodyExited += (body_) => OnObjectExitedArea(body_, player_);
+		player_.areas.pickup_items.BodyEntered += (body_) => OnObjectEnteredPickup(body_, player_);
+		player_.areas.pickup_items.BodyExited += (body_) => OnObjectExitedPickup(body_, player_);
+		player_.ui.CapturingInput += HandleUICapturingInput;
+		player_.ui.hud.AcceptHUDInput += OnAcceptHUDInput;
+		player_.ui.inventory.main.InventoryCapacity += HandleInventoryCapacity;
+	
+	}
+
+	public void Unsubscribe(Player player_)
+	{
+		player_.areas.interact.AreaEntered -= (area_) => OnInteractAreaEntered(area_, player_);
+		player_.areas.interact.AreaExited -= (area_) => OnInteractAreaExited(area_, player_);
+		player_.areas.interact.BodyEntered -= (body_) => OnObjectEnteredArea(body_, player_);
+		player_.areas.interact.BodyExited -= (body_) => OnObjectExitedArea(body_, player_);
+		player_.areas.pickup_items.BodyEntered -= (body_) => OnObjectEnteredPickup(body_, player_);
+		player_.areas.pickup_items.BodyExited -= (body_) => OnObjectExitedPickup(body_, player_);
+		player_.ui.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
+		player_.ui.hud.AcceptHUDInput -= OnAcceptHUDInput;
+	}
 }
