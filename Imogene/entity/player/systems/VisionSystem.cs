@@ -4,63 +4,56 @@ using System;
 public partial class VisionSystem : Node
 {
 	
-	public void SubscribeToAreaSignals(Player player)
+	private static void OnBodyEnteredFar(Node3D body_, Player player_)
+    {
+        if(body_ is Enemy _enemy)
+		{
+			player_.systems.targeting_system.EnemyEnteredFar(_enemy);
+		}
+    }
+
+    private static void OnBodyExitedFar(Node3D body_, Player player_)
+    {
+        if(body_ is Enemy _enemy)
+		{
+			player_.systems.targeting_system.EnemyExitedFar(_enemy);
+		}
+    }
+
+	private static void OnBodyEnteredNear(Node3D body_, Player player_)
+    {
+         if(body_ is Enemy _enemy)
+		{
+			player_.systems.targeting_system.EnemyEnteredNear(_enemy);
+		}
+    }
+
+    private static void OnBodyExitedNear(Node3D body_, Player player_)
+    {
+        if(body_ is Enemy _enemy)
+		{
+			player_.systems.targeting_system.EnemyExitedNear(_enemy);
+		}
+    }
+
+	public static void Subscribe(Player player_)
 	{
-		// player.areas.vision.BodyEntered += (body) => OnBodyEnteredPlayerVision(body, player);
-		// player.areas.vision.BodyExited += (body) => OnBodyExitedPlayerVision(body, player);
+		player_.areas.near.BodyEntered += (body_) => OnBodyEnteredNear(body_, player_);
+		player_.areas.near.BodyExited += (body_) => OnBodyExitedNear(body_, player_);
 
-		player.areas.near.BodyEntered += (body) => OnBodyEnteredNear(body, player);
-		player.areas.near.BodyExited += (body) => OnBodyExitedNear(body, player);
-
-		player.areas.far.BodyEntered += (body) => OnBodyEnteredFar(body, player);
-		player.areas.far.BodyExited += (body) => OnBodyExitedFar(body, player);
+		player_.areas.far.BodyEntered += (body_) => OnBodyEnteredFar(body_, player_);
+		player_.areas.far.BodyExited += (body_) => OnBodyExitedFar(body_, player_);
 		
 	}
 
-    private void OnBodyExitedFar(Node3D body, Player player)
-    {
-        if(body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyExitedFar(enemy);
-		}
-    }
+	public static void unsubscribe(Player player_)
+	{
+		player_.areas.near.BodyEntered -= (body_) => OnBodyEnteredNear(body_, player_);
+		player_.areas.near.BodyExited -= (body_) => OnBodyExitedNear(body_, player_);
 
-    private void OnBodyEnteredFar(Node3D body, Player player)
-    {
-        if(body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyEnteredFar(enemy);
-		}
-    }
+		player_.areas.far.BodyEntered -= (body_) => OnBodyEnteredFar(body_, player_);
+		player_.areas.far.BodyExited -= (body_) => OnBodyExitedFar(body_, player_);
+		
+	}
 
-    private void OnBodyExitedNear(Node3D body, Player player)
-    {
-        if(body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyExitedNear(enemy);
-		}
-    }
-
-    private void OnBodyEnteredNear(Node3D body, Player player)
-    {
-         if(body is Enemy enemy)
-		{
-			player.systems.targeting_system.EnemyEnteredNear(enemy);
-		}
-    }
-	// private void OnBodyExitedPlayerVision(Node3D body, Player player)
-    // {
-    //     if (body is Enemy enemy)
-	// 	{
-	// 		player.systems.targeting_system.EnemyExitedVision(enemy);
-	// 	}
-    // }
-
-    // private void OnBodyEnteredPlayerVision(Node3D body, Player player)
-    // {
-    //     if(body is Enemy enemy)
-	// 	{
-	// 		player.systems.targeting_system.EnemyEnteredVision(enemy);
-	// 	}
-    // }
 }

@@ -90,10 +90,10 @@ public partial class Player : Entity
 		// Entity controller signals
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
 		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
-		
 
-		// System signals
-		systems.vision_system.SubscribeToAreaSignals(this);
+
+        // System signals
+        VisionSystem.Subscribe(this);
 		systems.interact_system.Subscribe(this);
 		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
 		systems.interact_system.InputPickup += HandleInputPickUp;
@@ -235,6 +235,7 @@ public partial class Player : Entity
 		controllers.movement_controller.Unsubscribe(this);
 
 		systems.interact_system.Unsubscribe(this);
+        VisionSystem.unsubscribe(this);
 	}
 
     
