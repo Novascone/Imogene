@@ -1,27 +1,17 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class GeneralCategory : Control
 {
-	[Export] public AbilityPage melee;
-	[Export] public AbilityPage ranged;
-	[Export] public AbilityPage defensive;
-	[Export] public AbilityPage movement;
-	[Export] public AbilityPage unique;
-	[Export] public AbilityPage toy;
-	[Export] public Control buttons_container;
-	[Export] public Control buttons;
-	
-	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+	[Export] public AbilityPage melee { get; set; }
+	[Export] public AbilityPage ranged { get; set; }
+	[Export] public AbilityPage defensive { get; set; }
+	[Export] public AbilityPage movement { get; set; }
+	[Export] public AbilityPage unique { get; set; }
+	[Export] public AbilityPage toy { get; set; }
+	[Export] public Control buttons_container { get; set; }
+	[Export] public Control buttons { get; set; }
 
 	public void _on_melee_button_down()
 	{
@@ -61,16 +51,15 @@ public partial class GeneralCategory : Control
 
 	public void ResetPage()
 	{
-		GD.Print("reset general categories");
-		foreach(Control control in GetChildren())
+		foreach(Control _control in GetChildren().Cast<Control>())
 		{
-			if(control is AbilityPage ability_page)
+			if(_control is AbilityPage ability_page)
 			{
 				ability_page.Hide();
 			}
 			else
 			{
-				control.Show();
+				_control.Show();
 			}
 		}
 	}

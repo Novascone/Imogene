@@ -11,10 +11,4 @@ public partial class SlashResistanceStat : UIStat
 		info.tool_tip.Text =  " Slash Resistance {0} \n * Reduces Slash effectiveness on character \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	
 }

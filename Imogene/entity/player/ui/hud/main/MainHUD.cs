@@ -1,33 +1,34 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class MainHUD : Control
 {
-	[Export] public Control useable_1;
-	[Export] public Control useable_2;
-	[Export] public Control useable_3;
-	[Export] public Control useable_4;
-	[Export] public Control posture;
-	[Export] public Control xp;
-	[Export] public HUDHealth health;
-	[Export] public HUDCross l_cross_primary;
-	[Export] public HUDCross l_cross_secondary;
-	[Export] public HUDCross r_cross_primary;
-	[Export] public HUDCross r_cross_secondary;
-	[Export] public HUDResource resource;
+	[Export] public Control useable_1 { get; set; }
+	[Export] public Control useable_2 { get; set; }
+	[Export] public Control useable_3 { get; set; }
+	[Export] public Control useable_4 { get; set; }
+	[Export] public Control posture { get; set; }
+	[Export] public Control xp { get; set; }
+	[Export] public HUDHealth health { get; set; }
+	[Export] public HUDCross l_cross_primary { get; set; }
+	[Export] public HUDCross l_cross_secondary { get; set; }
+	[Export] public HUDCross r_cross_primary { get; set; }
+	[Export] public HUDCross r_cross_secondary { get; set; }
+	[Export] public HUDResource resource { get; set; }
 
-	public bool l_cross_primary_selected = true;
-	public bool r_cross_primary_selected = true;
+	public bool l_cross_primary_selected { get; set; } = true;
+	public bool r_cross_primary_selected { get; set; } = true;
 
-	public string left_up = "RB";
-	public string left_left = "LB";
-	public string left_right = "RT";
-	public string left_down = "LT";
+	public string left_up { get; set; } = "RB";
+	public string left_left { get; set; } = "LB";
+	public string left_right { get; set; } = "RT";
+	public string left_down { get; set; } = "LT";
 
-	public string right_up = "Y";
-	public string right_left = "X";
-	public string right_right = "B";
-	public string right_down = "A";
+	public string right_up { get; set; } = "Y";
+	public string right_left { get; set; } = "X";
+	public string right_right { get; set; } = "B";
+	public string right_down { get; set; } = "A";
 
 
 
@@ -35,56 +36,51 @@ public partial class MainHUD : Control
 	public override void _Ready()
 	{
 		// Hide labels on secondary crosses
-		foreach(Control control in l_cross_secondary.GetChildren())
+		foreach(Control _control in l_cross_secondary.GetChildren().Cast<Control>())
 		{
-			if (control is HUDButton hud_button)
+			if (_control is HUDButton hud_button)
 			{
 				hud_button.label.Hide();
 			}
 		}
 
-		foreach(Control control in r_cross_secondary.GetChildren())
+		foreach(Control _control in r_cross_secondary.GetChildren().Cast<Control>())
 		{
-			if (control is HUDButton hud_button)
+			if (_control is HUDButton hud_button)
 			{
 				hud_button.label.Hide();
 			}
 		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void SwitchCrosses(string cross_) // switches between crosses
 	{
-	}
-
-	public void SwitchCrosses(string cross) // switches between crosses
-	{
-		if(cross == "Left")
+		if(cross_ == "Left")
 		{
-			MoveCrosses(cross);
+			MoveCrosses(cross_);
 			l_cross_primary_selected = !l_cross_primary_selected;
 		}
-		else if(cross == "Right")
+		else if(cross_ == "Right")
 		{
-			MoveCrosses(cross);
+			MoveCrosses(cross_);
 			r_cross_primary_selected = !r_cross_primary_selected;
 		}
 
 	}
 
-	public void UpdateHUDStats(Player player)
+	public void UpdateHUDStats(Player player_)
 	{
 		
-		health.hit_points.MaxValue = player.health.max_value;
-		health.hit_points.Value = player.health.current_value;
-		resource.resource_points.MaxValue = player.resource.max_value;
-		resource.resource_points.Value = player.resource.current_value;
+		health.hit_points.MaxValue = player_.health.max_value;
+		health.hit_points.Value = player_.health.current_value;
+		resource.resource_points.MaxValue = player_.resource.max_value;
+		resource.resource_points.Value = player_.resource.current_value;
 		
 	}
 
-	public void MoveCrosses(string cross) // checks which cross to switch and then changes the positioning and color of the crosses
+	public void MoveCrosses(string cross_) // checks which cross to switch and then changes the positioning and color of the crosses
 	{
-		if(cross == "Left")
+		if(cross_ == "Left")
 		{
 			if(l_cross_primary_selected)
 			{
@@ -127,7 +123,7 @@ public partial class MainHUD : Control
 				l_cross_secondary.ZIndex = 0;
 			}
 		}
-		else if (cross == "Right")
+		else if (cross_ == "Right")
 		{
 			if(r_cross_primary_selected)
 			{
@@ -173,143 +169,139 @@ public partial class MainHUD : Control
 		
 	}
 
-	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon) // Checks the assignment of an ability and then assigns the hud cross button that ability's icon and name
+	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name_, Texture2D icon_) // Checks the assignment of an ability and then assigns the hud cross button that ability's icon and name
 	{
 		if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossUp"){
-			l_cross_primary.up.Icon = icon;
-			l_cross_primary.up.ability_name = ability_name;
+			l_cross_primary.up.Icon = icon_;
+			l_cross_primary.up.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossLeft")
 		{
-			l_cross_primary.left.Icon = icon;
-			l_cross_primary.left.ability_name = ability_name;
+			l_cross_primary.left.Icon = icon_;
+			l_cross_primary.left.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossRight")
 		{
-			l_cross_primary.right.Icon = icon;
-			l_cross_primary.right.ability_name = ability_name;
+			l_cross_primary.right.Icon = icon_;
+			l_cross_primary.right.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LPrimeCrossDown")
 		{
-			l_cross_primary.down.Icon = icon;
-			l_cross_primary.down.ability_name = ability_name;
+			l_cross_primary.down.Icon = icon_;
+			l_cross_primary.down.ability_name = ability_name_;
 		}
 
 		if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossUp"){
-			l_cross_secondary.up.Icon = icon;
-			l_cross_secondary.up.ability_name = ability_name;
+			l_cross_secondary.up.Icon = icon_;
+			l_cross_secondary.up.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossLeft")
 		{
-			l_cross_secondary.left.Icon = icon;
-			l_cross_secondary.left.ability_name = ability_name;
+			l_cross_secondary.left.Icon = icon_;
+			l_cross_secondary.left.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossRight")
 		{
-			l_cross_secondary.right.Icon = icon;
-			l_cross_secondary.right.ability_name = ability_name;
+			l_cross_secondary.right.Icon = icon_;
+			l_cross_secondary.right.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "LSecondCrossDown")
 		{
-			l_cross_secondary.down.Icon = icon;
-			l_cross_secondary.down.ability_name = ability_name;
+			l_cross_secondary.down.Icon = icon_;
+			l_cross_secondary.down.ability_name = ability_name_;
 		}
 
 		if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossUp"){
-			r_cross_primary.up.Icon = icon;
-			r_cross_primary.up.ability_name = ability_name;
+			r_cross_primary.up.Icon = icon_;
+			r_cross_primary.up.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossLeft")
 		{
-			r_cross_primary.left.Icon = icon;
-			r_cross_primary.left.ability_name = ability_name;
+			r_cross_primary.left.Icon = icon_;
+			r_cross_primary.left.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossRight")
 		{
-			r_cross_primary.right.Icon = icon;
-			r_cross_primary.right.ability_name = ability_name;
+			r_cross_primary.right.Icon = icon_;
+			r_cross_primary.right.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RPrimeCrossDown")
 		{
-			r_cross_primary.down.Icon = icon;
-			r_cross_primary.down.ability_name = ability_name;
+			r_cross_primary.down.Icon = icon_;
+			r_cross_primary.down.ability_name = ability_name_;
 		}
 
 		if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossUp"){
-			r_cross_secondary.up.Icon = icon;
-			r_cross_secondary.up.ability_name = ability_name;
+			r_cross_secondary.up.Icon = icon_;
+			r_cross_secondary.up.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossLeft")
 		{
-			r_cross_secondary.left.Icon = icon;
-			r_cross_secondary.left.ability_name = ability_name;
+			r_cross_secondary.left.Icon = icon_;
+			r_cross_secondary.left.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossRight")
 		{
-			r_cross_secondary.right.Icon = icon;
-			r_cross_secondary.right.ability_name = ability_name;
+			r_cross_secondary.right.Icon = icon_;
+			r_cross_secondary.right.ability_name = ability_name_;
 		}
 		else if(CheckAssignment(cross_, tier_, bind) == "RSecondCrossDown")
 		{
-			r_cross_secondary.down.Icon = icon;
-			r_cross_secondary.down.ability_name = ability_name;
+			r_cross_secondary.down.Icon = icon_;
+			r_cross_secondary.down.ability_name = ability_name_;
 		}
 	}
 
-	public void ClearAbility(string ability_name_old, string ability_name_new) // Looks through each cross to find the old and new abilities, and then removes their icon and name
+	public void ClearAbility(string ability_name_old_, string ability_name_new_) // Looks through each cross to find the old and new abilities, and then removes their icon and name
 	{
-		foreach(Control control in l_cross_primary.GetChildren())
+		foreach(Control control in l_cross_primary.GetChildren().Cast<Control>())
 		{
 			if(control is HUDButton hud_button)
 			{
-				if(hud_button.ability_name == ability_name_old || hud_button.ability_name == ability_name_new)
+				if(hud_button.ability_name == ability_name_old_ || hud_button.ability_name == ability_name_new_)
 				{
-					GD.Print("Looking in L Cross " + hud_button.ability_name);
 					hud_button.Icon = null;
 					hud_button.ability_name = "";
 				}
 			}
 		}
 
-		foreach(Control control in l_cross_secondary.GetChildren())
+		foreach(Control _control in l_cross_secondary.GetChildren().Cast<Control>())
 		{
-			if(control is HUDButton hud_button)
+			if(_control is HUDButton hud_button)
 			{
 				
 				
-				if(hud_button.ability_name == ability_name_old || hud_button.ability_name == ability_name_new)
+				if(hud_button.ability_name == ability_name_old_ || hud_button.ability_name == ability_name_new_)
 				{
-					GD.Print("Looking in L Cross " + hud_button.ability_name);
 					hud_button.Icon = null;
 					hud_button.ability_name = "";
 				}
 			}
 		}
 
-		foreach(Control control in r_cross_primary.GetChildren())
+		foreach(Control _control in r_cross_primary.GetChildren().Cast<Control>())
 		{
-			if(control is HUDButton hud_button)
+			if(_control is HUDButton hud_button)
 			{
 				
 				
-				if(hud_button.ability_name == ability_name_old || hud_button.ability_name == ability_name_new)
+				if(hud_button.ability_name == ability_name_old_ || hud_button.ability_name == ability_name_new_)
 				{
-					GD.Print("Looking in L Cross " + hud_button.ability_name);
 					hud_button.Icon = null;
 					hud_button.ability_name = "";
 				}
 			}
 		}
 
-		foreach(Control control in r_cross_secondary.GetChildren())
+		foreach(Control _control in r_cross_secondary.GetChildren().Cast<Control>())
 		{
-			if(control is HUDButton hud_button)
+			if(_control is HUDButton hud_button)
 			{
 				
 				
-				if(hud_button.ability_name == ability_name_old || hud_button.ability_name == ability_name_new)
+				if(hud_button.ability_name == ability_name_old_ || hud_button.ability_name == ability_name_new_)
 				{
-					GD.Print("Looking in L Cross " + hud_button.ability_name);
 					hud_button.Icon = null;
 					hud_button.ability_name = "";
 				}
@@ -317,27 +309,27 @@ public partial class MainHUD : Control
 		}
 	}
 
-	public string CheckAssignment(Ability.Cross cross_, Ability.Tier tier_, string bind) // Checks which button an ability is assigned to
+	public string CheckAssignment(Ability.Cross cross_, Ability.Tier tier_, string bind_) // Checks which button an ability is assigned to
 	{
 		if(cross_ == Ability.Cross.Left)
 		{
 			if(tier_ == Ability.Tier.Primary)
 			{
-				if(bind == left_up)
+				if(bind_ == left_up)
 				{return "LPrimeCrossUp";}
-				else if(bind == left_left){return "LPrimeCrossLeft";}
-				else if(bind == left_right){return "LPrimeCrossRight";}
-				else if(bind == left_down){return "LPrimeCrossDown";}
+				else if(bind_ == left_left){return "LPrimeCrossLeft";}
+				else if(bind_ == left_right){return "LPrimeCrossRight";}
+				else if(bind_ == left_down){return "LPrimeCrossDown";}
 				else return "";
 
 			}
 			else if(tier_ == Ability.Tier.Secondary)
 			{
-				if(bind == left_up)
+				if(bind_ == left_up)
 				{return "LSecondCrossUp";}
-				else if(bind == left_left){return "LSecondCrossLeft";}
-				else if(bind == left_right){return "LSecondCrossRight";}
-				else if(bind == left_down){return "LSecondCrossDown";}
+				else if(bind_ == left_left){return "LSecondCrossLeft";}
+				else if(bind_ == left_right){return "LSecondCrossRight";}
+				else if(bind_ == left_down){return "LSecondCrossDown";}
 				else return "";
 			}
 			else return "";
@@ -346,18 +338,18 @@ public partial class MainHUD : Control
 		{
 			if(tier_ == Ability.Tier.Primary)
 			{
-				if(bind == right_up){return "RPrimeCrossUp";}
-				else if(bind == right_left){return "RPrimeCrossLeft";}
-				else if(bind == right_right){return "RPrimeCrossRight";}
-				else if(bind == right_down){return "RPrimeCrossDown";}
+				if(bind_ == right_up){return "RPrimeCrossUp";}
+				else if(bind_ == right_left){return "RPrimeCrossLeft";}
+				else if(bind_ == right_right){return "RPrimeCrossRight";}
+				else if(bind_ == right_down){return "RPrimeCrossDown";}
 				else return "";
 			}
 			else if(tier_ == Ability.Tier.Secondary)
 			{
-				if(bind == right_up){return "RSecondCrossUp";}
-				else if(bind == right_left){return "RPrimeCrossLeft";}
-				else if(bind == right_right){return "RPrimeCrossRight";}
-				else if(bind == right_down){return "RPrimeCrossDown";}
+				if(bind_ == right_up){return "RSecondCrossUp";}
+				else if(bind_ == right_left){return "RPrimeCrossLeft";}
+				else if(bind_ == right_right){return "RPrimeCrossRight";}
+				else if(bind_ == right_down){return "RPrimeCrossDown";}
 				else return "";
 			}
 			else return "";
@@ -365,9 +357,9 @@ public partial class MainHUD : Control
 		else return "";
 	}
 
-    internal void HandleResourceChange(float incoming_resource_value)
+    internal void HandleResourceChange(float incoming_resource_value_)
     {
         
-		resource.resource_points.Value = incoming_resource_value;
+		resource.resource_points.Value = incoming_resource_value_;
     }
 }

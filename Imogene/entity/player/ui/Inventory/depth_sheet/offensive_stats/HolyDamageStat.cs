@@ -11,8 +11,4 @@ public partial class HolyDamageStat : UIStat
 		info.tool_tip.Text =  " Holy Damage {0} \n * Increases holy damage by multiplier \n * Bonuses obtainable on gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

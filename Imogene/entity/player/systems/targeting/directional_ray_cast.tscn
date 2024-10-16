@@ -3,19 +3,10 @@
 [ext_resource type="Script" path="res://entity/player/systems/targeting/DirectionalRayCast.cs" id="1_fhdq1"]
 [ext_resource type="Script" path="res://entity/player/systems/targeting/TargetingRaycast.cs" id="2_m3y7q"]
 
-[node name="DirectionalRayCast" type="Node3D" node_paths=PackedStringArray("raycast_1", "raycast_2", "raycast_3", "raycast_4", "raycast_5", "raycast_6", "raycast_7", "raycast_8", "raycast_9")]
+[node name="DirectionalRayCast" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 top_level = true
 script = ExtResource("1_fhdq1")
-raycast_1 = NodePath("LevelRayCasts/DirectionalRayCast1")
-raycast_2 = NodePath("LevelRayCasts/DirectionalRayCast6")
-raycast_3 = NodePath("LevelRayCasts/DirectionalRayCast7")
-raycast_4 = NodePath("LevelRayCasts/DirectionalRayCast10")
-raycast_5 = NodePath("LevelRayCasts/DirectionalRayCast11")
-raycast_6 = NodePath("LevelRayCasts/DirectionalRayCast12")
-raycast_7 = NodePath("LevelRayCasts/DirectionalRayCast13")
-raycast_8 = NodePath("LevelRayCasts/DirectionalRayCast14")
-raycast_9 = NodePath("LevelRayCasts/DirectionalRayCast15")
 
 [node name="UpperRayCasts" type="Node3D" parent="."]
 

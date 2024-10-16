@@ -4,10 +4,10 @@ using System;
 public partial class Inventory : Control
 {
 
-	[Export] public MainInventory main;
-	[Export] public DepthSheet depth_sheet;
-	[Export] public Control mats;
-	[Export] public Control temp_buttons;
+	[Export] public MainInventory main { get; set; }
+	[Export] public DepthSheet depth_sheet { get; set; }
+	[Export] public Control mats { get; set; }
+	[Export] public Control temp_buttons { get; set; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -18,13 +18,5 @@ public partial class Inventory : Control
     {
         depth_sheet.Visible = !depth_sheet.Visible;
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-	{
-		
-	}
-	
-
 	
 }

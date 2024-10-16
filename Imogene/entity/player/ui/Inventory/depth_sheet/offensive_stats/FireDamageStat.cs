@@ -10,9 +10,5 @@ public partial class FireDamageStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Fire Damage {0} \n * Increases fire damage by multiplier \n * Bonuses obtainable on gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+	
 }

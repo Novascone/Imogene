@@ -10,11 +10,5 @@ public partial class BluntResistanceStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Blunt Resistance {0} \n * Reduces Blunt effectiveness on character \n * Increased by skills and gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	
 }

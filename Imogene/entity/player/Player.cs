@@ -104,8 +104,7 @@ public partial class Player : Entity
 		controllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		// UI signals
-		ui.hud.SubscribeToTargetingSignals(this);
-		ui.hud.SubscribeToInteractSignals(this);
+		ui.hud.Subscribe(this);
 		ui.inventory.main.DroppingItem += HandleDroppingItem;
 		
 		ui.InventoryToggle += HandleInventoryToggle;

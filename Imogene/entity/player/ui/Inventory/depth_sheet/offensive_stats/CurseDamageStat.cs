@@ -10,9 +10,5 @@ public partial class CurseDamageStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Curse Damage {0} \n * Increases curse damage by multiplier \n * Bonuses obtainable on gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+	
 }

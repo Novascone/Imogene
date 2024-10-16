@@ -11,8 +11,4 @@ public partial class CooldownReductionStat : UIStat
 		info.tool_tip.Text =  " Cooldown reduction {0} \n * Cooldown reduction of all skills ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

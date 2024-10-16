@@ -11,9 +11,4 @@ public partial class WisdomScalerStat : UIStat
 		info.tool_tip.Text =  " Wisdom Scaler {0} \n Increases by one for every 20 wisdom \n * Scales how powerful attacks that scale with wisdom are ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

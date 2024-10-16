@@ -10,10 +10,4 @@ public partial class MaximumHealthStat : UIStat
 		info.tool_tip.Text =  " Maximum Health {0} \n * Your total amount of health, if health is reduced to zero you die ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	
 }

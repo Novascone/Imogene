@@ -10,9 +10,5 @@ public partial class SlashDamageStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Slash Damage {0} \n * Increases slash damage by multiplier \n * Bonuses obtainable on gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+	
 }

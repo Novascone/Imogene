@@ -1,73 +1,67 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class Abilities : Control
 {
-	[Export] public Binds binds;
-	[Export] public Categories categories;
-	[Export] public Passives assigned_passives;
-	
-	public PassiveBindButton passive_button_pressed;
+	[Export] public Binds binds { get; set; }
+	[Export] public Categories categories { get; set; }
+	[Export] public Passives assigned_passives { get; set; }
+	public PassiveBindButton passive_button_pressed { get; set; }
 
 	[Signal] public delegate void AbilitiesClosedEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		// Subscribe to the ButtonDown signal for each cross bind button in each cross
-		foreach(Control control in binds.l_cross_primary_assignment.GetChildren())
+		foreach(Control _control in binds.l_cross_primary_assignment.GetChildren().Cast<Control>())
 		{
-			if(control is CrossBindButton cross_bind)
+			if(_control is CrossBindButton cross_bind)
 			{
-				// cross_bind.CrossButtonPressed += OnCrossBindDown;
 				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
-		foreach(Control control in binds.l_cross_secondary_assignment.GetChildren())
+		foreach(Control _control in binds.l_cross_secondary_assignment.GetChildren().Cast<Control>())
 		{
-			if(control is CrossBindButton cross_bind)
+			if(_control is CrossBindButton cross_bind)
 			{
-				// cross_bind.CrossButtonPressed += OnCrossBindDown;
 				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
-		foreach(Control control in binds.r_cross_primary_assignment.GetChildren())
+		foreach(Control _control in binds.r_cross_primary_assignment.GetChildren().Cast<Control>())
 		{
-			if(control is CrossBindButton cross_bind)
+			if(_control is CrossBindButton cross_bind)
 			{
-				// cross_bind.CrossButtonPressed += OnCrossBindDown;
 				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);			}
 		}
 
-		foreach(Control control in binds.r_cross_secondary_assignment.GetChildren())
+		foreach(Control _control in binds.r_cross_secondary_assignment.GetChildren().Cast<Control>())
 		{
-			if(control is CrossBindButton cross_bind)
+			if(_control is CrossBindButton cross_bind)
 			{
-				// cross_bind.CrossButtonPressed += OnCrossBindDown;
 				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
 			}
 		}
 
-		foreach(Control control in binds.passives.GetChildren())
+		foreach(Control _control in binds.passives.GetChildren().Cast<Control>())
 		{
-			if(control is PassiveBindButton passive_bind_button)
+			if(_control is PassiveBindButton passive_bind_button)
 			{
 				passive_bind_button.PassiveBindButtonPressed += HandlePassiveBindButtonPressed;
 			}
 		}
 
-		// subscribe to the accept and cancel buttons in new assignment
 		categories.new_assignment.accept.ButtonDown += OnNewAssignmentAccept;
 		categories.new_assignment.cancel.ButtonDown += OnNewAssignmentCancel;
 
-		// subscribe to the ability reassigned signal 
 		categories.AbilityReassigned += OnAbilityReassigned;
 	}
 
-    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
+    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
     {
-        GD.Print("Abilities received ability reassignment");
+        
     }
 
     private void OnNewAssignmentCancel()
@@ -81,25 +75,25 @@ public partial class Abilities : Control
 		binds.Show();
     }
 
-    private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button) // If a passive bind button is pressed set the categories to passive, hide binds, show categories
+    private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button_) // If a passive bind button is pressed set the categories to passive, hide binds, show categories
     {
 		categories.passive = true;
 		categories.active = false;
-        passive_button_pressed = passive_bind_button;
+        passive_button_pressed = passive_bind_button_;
 		binds.Hide();
 		categories.Show();
 		
     }
 
-    private void OnCrossBindDown(CrossBindButton cross_button) // When a cross bind button is pressed set categories to active give the new assignment information about the ability on the cross bind button
+    private void OnCrossBindDown(CrossBindButton cross_button_) // When a cross bind button is pressed set categories to active give the new assignment information about the ability on the cross bind button
     {
 		categories.active = true;
 		categories.passive = false;
-		categories.new_assignment.old_ability_name = cross_button.ability_name;
-		categories.new_assignment.old_cross = cross_button.cross;
-		categories.new_assignment.old_tier = cross_button.tier;
-		categories.new_assignment.old_button_bind = cross_button.button_bind;
-		categories.cross_bind_selected = cross_button;
+		categories.new_assignment.old_ability_name = cross_button_.ability_name;
+		categories.new_assignment.old_cross = cross_button_.cross;
+		categories.new_assignment.old_tier = cross_button_.tier;
+		categories.new_assignment.old_button_bind = cross_button_.button_bind;
+		categories.cross_bind_selected = cross_button_;
 		binds.Hide();
 		categories.Show();
 		
@@ -119,8 +113,4 @@ public partial class Abilities : Control
 		categories.Hide();
 	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-	{
-	}
 }

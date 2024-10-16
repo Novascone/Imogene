@@ -11,8 +11,4 @@ public partial class CurseResistanceStat : UIStat
 		info.tool_tip.Text =  " Curse Resistance {0} \n * Reduces curse effectiveness \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

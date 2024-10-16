@@ -1,49 +1,49 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Categories : Control
 {
 
-	[Export] public ClassCategory class_category;
-	[Export] public GeneralCategory general_category;
-	[Export] public Label ability_type_title;
-	[Export] public Control assigned_passives;
-	[Export] public Passives class_passives;
-	[Export] public Passives general_passives;
-	[Export] public Control page_container;
-	[Export] public Assignment new_assignment;
-	public CrossBindButton cross_bind_selected;
-	public bool active;
-	public bool passive;
+	[Export] public ClassCategory class_category { get; set; }
+	[Export] public GeneralCategory general_category { get; set; }
+	[Export] public Label ability_type_title { get; set; }
+	[Export] public Control assigned_passives { get; set; }
+	[Export] public Passives class_passives { get; set; }
+	[Export] public Passives general_passives { get; set; }
+	[Export] public Control page_container { get; set; }
+	[Export] public Assignment new_assignment { get; set; }
+	public CrossBindButton cross_bind_selected { get; set; }
+	public bool active { get; set; } = false;
+	public bool passive { get; set; } = false;
 
-	// [Signal] public delegate void AbilityReassignedEventHandler(string ability_name, string ability_bind, string cross, string level);
-	[Signal] public delegate void ClearAbilityBindEventHandler(string ability_name);
-	[Signal] public delegate void ClearAbilityIconEventHandler(string ability_name_old, string ability_name_new);
-	[Signal] public delegate void AbilityReassignedEventHandler(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon);
+	[Signal] public delegate void ClearAbilityBindEventHandler(string ability_name_);
+	[Signal] public delegate void ClearAbilityIconEventHandler(string ability_name_old_, string ability_name_new_);
+	[Signal] public delegate void AbilityReassignedEventHandler(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach(Button button in class_category.buttons.GetChildren()){button.ButtonDown += HandleCategoryButtonDown;}
-		foreach(Button button in general_category.buttons.GetChildren()){button.ButtonDown += HandleCategoryButtonDown;}
+		foreach(Button _button in class_category.buttons.GetChildren().Cast<Button>()) {_button.ButtonDown += HandleCategoryButtonDown;}
+		foreach(Button _button in general_category.buttons.GetChildren().Cast<Button>()) {_button.ButtonDown += HandleCategoryButtonDown;}
 
-		foreach(AbilityButton ability_button in general_category.melee.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in general_category.ranged.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in general_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in general_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in general_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in general_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton _ability_button in general_category.melee.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in general_category.ranged.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in general_category.defensive.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in general_category.movement.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in general_category.unique.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in general_category.toy.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
 
 
-		foreach(AbilityButton ability_button in class_category.basic.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.kernel.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.defensive.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.mastery.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.movement.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.specialized.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.unique.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
-		foreach(AbilityButton ability_button in class_category.toy.ability_button_container_1.GetChildren()){ability_button.ButtonDown += () => OnAbilityButtonDown(ability_button);}
+		foreach(AbilityButton _ability_button in class_category.basic.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.kernel.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.defensive.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.mastery.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.movement.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.specialized.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.unique.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
+		foreach(AbilityButton _ability_button in class_category.toy.ability_button_container_1.GetChildren().Cast<AbilityButton>()) {_ability_button.ButtonDown += () => OnAbilityButtonDown(_ability_button);}
 
 		new_assignment.accept.ButtonDown += OnAssignedAcceptAccept;
 		new_assignment.cancel.ButtonDown += OnAssignedAcceptCancel;
@@ -57,14 +57,12 @@ public partial class Categories : Control
 
     private void OnAssignedAcceptAccept()
     {
-		GD.Print("Ability " + cross_bind_selected.new_ability_name + " is now assigned to " + cross_bind_selected.button_bind + " On " + cross_bind_selected.cross + " " + cross_bind_selected.tier);
 		EmitSignal(nameof(ClearAbilityBind), new_assignment.old_ability_name);
 		EmitSignal(nameof(ClearAbilityIcon), new_assignment.old_ability_name, new_assignment.new_ability_name);
 		EmitSignal(nameof(AbilityReassigned), (int)new_assignment.new_cross, (int)new_assignment.new_tier, new_assignment.new_button_bind, new_assignment.new_ability_name, new_assignment.assigned.Icon);
 		
 		ResetPage();
 		new_assignment.Hide();
-
     }
 
   
@@ -80,26 +78,13 @@ public partial class Categories : Control
         new_assignment.Show();
     }
 
-    private void OnAbilityButtonDown(AbilityButton ability_button) // When an ability button is pressed, set the icon of the action bar to be assigned to that of the ability button, set the action bar new name to the ability buttons name
+    private void OnAbilityButtonDown(AbilityButton ability_button_) // When an ability button is pressed, set the icon of the action bar to be assigned to that of the ability button, set the action bar new name to the ability buttons name
     {
-        new_assignment.assigned.Icon = ability_button.Icon;
-		new_assignment.new_ability_name = ability_button.ability_name;
-		// assigned_accepted.old_cross = ability_button.cross;
-		// assigned_accepted.old_level = ability_button.level;
-		// assigned_accepted.old_button_bind = ability_button.button_bind;
-		cross_bind_selected.new_ability_name = ability_button.ability_name;
+        new_assignment.assigned.Icon = ability_button_.Icon;
+		new_assignment.new_ability_name = ability_button_.ability_name;
+		cross_bind_selected.new_ability_name = ability_button_.ability_name;
 		
-		GD.Print("ability " + new_assignment.new_ability_name + " at bindings " + new_assignment.new_button_bind + " " + new_assignment.new_cross + " " + new_assignment.new_tier);
     }
-
-    
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-	{
-		
-	}
-
    
     public void _on_general_button_down()
 	{
@@ -144,28 +129,28 @@ public partial class Categories : Control
 
 	public void ResetPage()
 	{
-		foreach(Control control in page_container.GetChildren())
+		foreach(Control _control in page_container.GetChildren().Cast<Control>())
 		{
-			if(control is ClassCategory class_category)
+			if(_control is ClassCategory class_category)
 			{
 				class_category.Hide();
 				class_category.ResetPage();
 			}
-			if(control is GeneralCategory general_category)
+			if(_control is GeneralCategory general_category)
 			{
 				general_category.Hide();
 				general_category.ResetPage();
 			}
-			if(control is Passives passives)
+			if(_control is Passives passives)
 			{
 				passives.Hide();
 				passives.ResetPage();
 			}
-			if(control is ActivePassives active_passives)
+			if(_control is ActivePassives active_passives)
 			{
 				active_passives.Hide();
 			}
-			if(control == new_assignment)
+			if(_control == new_assignment)
 			{
 				new_assignment.Hide();
 			}

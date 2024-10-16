@@ -10,9 +10,4 @@ public partial class PostureRegenerationStat : UIStat
 		info.tool_tip.Text =  " Posture regen {0} \n * Amount of posture regenerated per second \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

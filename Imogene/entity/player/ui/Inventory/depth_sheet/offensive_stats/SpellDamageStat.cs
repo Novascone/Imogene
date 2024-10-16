@@ -11,8 +11,4 @@ public partial class SpellDamageStat : UIStat
 		info.tool_tip.Text =  " Spell Damage {0} \n * Increases spell damage by multiplier \n * Bonuses obtainable on gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

@@ -10,11 +10,5 @@ public partial class BleedResistanceStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Bleed Resistance {0} \n * Reduces bleeding time \n * Increased by skills and gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	
 }

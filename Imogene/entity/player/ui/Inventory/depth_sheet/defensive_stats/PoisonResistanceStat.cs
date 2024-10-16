@@ -11,9 +11,4 @@ public partial class PoisonResistanceStat : UIStat
 		info.tool_tip.Text =  " Poison Resistance {0} \n * Reduces Poisoned time and initial poison damage \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

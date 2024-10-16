@@ -3,18 +3,13 @@ using System;
 
 public partial class BottomButton : Button
 {
-	[Export] public Control info;
-	[Export] public RichTextLabel info_text;
+	[Export] public Control info { get; set; }
+	[Export] public RichTextLabel info_text { get; set; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Text = Name;
 		info_text.Text = Name;
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 	public void _on_focus_entered()
@@ -26,25 +21,19 @@ public partial class BottomButton : Button
 		info.Hide();
 	}
 
-	public void _on_area_2d_area_entered(Area2D area)
+	public void _on_area_2d_area_entered(Area2D area_)
 	{
-		if(area.IsInGroup("cursor"))
+		if(area_.IsInGroup("cursor"))
 		{
 			GrabFocus();
 		}
 	}
 
-	public void _on_area_2d_area_exited(Area2D area)
+	public void _on_area_2d_area_exited(Area2D area_)
 	{
-		if(area.IsInGroup("cursor"))
+		if(area_.IsInGroup("cursor"))
 		{
 			ReleaseFocus();
 		}
 	}
-
-	// public void _on_button_down()
-	// {
-	// 	AcceptEvent();
-	// }
-
 }

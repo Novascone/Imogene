@@ -6,30 +6,19 @@ public partial class HUD : Control
 
 {
 
-	[Export] public EnemyHealth enemy_health;
-	[Export] public MainHUD main;
-	[Export] public InteractBar interact_bar;
-	[Export] public TopRightHUD top_right;
+	[Export] public EnemyHealth enemy_health  { get; set; }
+	[Export] public MainHUD main { get; set; }
+	[Export] public InteractBar interact_bar { get; set; }
+	[Export] public TopRightHUD top_right { get; set; }
+	public JoyButton interact_button { get; set; } = JoyButton.A;
+	public bool in_interact_area  { get; set; } = false;
+	private Node3D object_interacting_with  { get; set; } = null;
 
-	[Signal] public delegate void HUDPreventingInputEventHandler(bool preventing_input);
-	[Signal] public delegate void AcceptHUDInputEventHandler(Node3D interacting_object);
+	[Signal] public delegate void HUDPreventingInputEventHandler(bool preventing_input_);
+	[Signal] public delegate void AcceptHUDInputEventHandler(Node3D interacting_object_);
 
-	public JoyButton interact_button = JoyButton.A;
-
-	public bool in_interact_area;
-	private Node3D object_interacting_with;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	public override void _Input(InputEvent @event) {
-		if(@event is InputEventJoypadButton eventJoypadButton)
+	public override void _Input(InputEvent @event_) {
+		if(@event_ is InputEventJoypadButton eventJoypadButton)
 		{
 			if(in_interact_area && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == interact_button)
 			{
@@ -41,32 +30,35 @@ public partial class HUD : Control
 				AcceptEvent();
 				
 			}
-			
 		}
 	}
 	
-
-	public void SubscribeToInteractSignals(Player player)
+	public void Subscribe(Player player_)
 	{
-		player.areas.interact.AreaEntered += OnInteractAreaEntered;
-		player.areas.interact.AreaExited += OnInteractAreaExited;
-		player.areas.pickup_items.BodyEntered += OnPickUpAreaEntered;
-		player.areas.pickup_items.BodyExited += (body) => OnPickUpAreaExited(body, player);
-		player.systems.interact_system.SwitchToNextNearestItem += HandleSwitchToNextItem;
+		player_.areas.interact.AreaEntered += OnInteractAreaEntered;
+		player_.areas.interact.AreaExited += OnInteractAreaExited;
+		player_.areas.pickup_items.BodyEntered += OnPickUpAreaEntered;
+		player_.areas.pickup_items.BodyExited += (body) => OnPickUpAreaExited(body, player_);
+		player_.systems.interact_system.SwitchToNextNearestItem += HandleSwitchToNextItem;
+		player_.systems.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
+		player_.systems.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
+		player_.systems.targeting_system.EnemyTargeted += HandleEnemyTargeted;
+		player_.systems.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
+		player_.systems.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
+		player_.systems.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
 	}
 
-    private void HandleSwitchToNextItem(InteractableItem item, bool last_item)
+    private void HandleSwitchToNextItem(InteractableItem item_, bool last_item_)
     {
 		
-        object_interacting_with = item;
-		if(!last_item)
+        object_interacting_with = item_;
+		if(!last_item_)
 		{
-			if(item.interact_to_pick_up)
+			if(item_.interact_to_pick_up)
 			{
-				GD.Print("received switch item signal switching to " + item.Name );
 				in_interact_area = true;
 				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
-				interact_bar.interact_object.Text = item.Name;
+				interact_bar.interact_object.Text = item_.Name;
 				interact_bar.Show();
 				EmitSignal(nameof(HUDPreventingInput),true);
 			}
@@ -81,15 +73,13 @@ public partial class HUD : Control
 		}
     }
 
-    private void OnPickUpAreaExited(Node3D body, Player player)
+    private void OnPickUpAreaExited(Node3D body_, Player player_)
     {
 		
-		if(body is InteractableItem item)
+		if(body_ is InteractableItem _item)
 		{
-			// GD.Print("item exited " + item.Name);
-			// GD.Print("item interacting with " + object_interacting_with.Name);
-			
-			if(item == object_interacting_with || item == null)
+
+			if(_item == object_interacting_with || _item == null)
 			{
 				in_interact_area = false;
 				interact_bar.button.Text = interact_button.ToString() + ";";
@@ -102,36 +92,26 @@ public partial class HUD : Control
 		}
     }
 
-    private void OnPickUpAreaEntered(Node3D body)
+    private void OnPickUpAreaEntered(Node3D body_)
     {
-		if(body is InteractableItem item)
+		if(body_ is InteractableItem _item)
 		{
 			
-			if(item.interact_to_pick_up)
+			if(_item.interact_to_pick_up)
 			{
-				object_interacting_with = item;
+				object_interacting_with = _item;
 				in_interact_area = true;
 				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
-				interact_bar.interact_object.Text = body.Name;
+				interact_bar.interact_object.Text = body_.Name;
 				interact_bar.Show();
 				EmitSignal(nameof(HUDPreventingInput),true);
 			}
 		}
     }
 
-    public void SubscribeToTargetingSignals(Player player)
-	{
-		player.systems.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
-		player.systems.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
-		player.systems.targeting_system.EnemyTargeted += HandleEnemyTargeted;
-		player.systems.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
-		player.systems.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
-		player.systems.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
-	}
-
-    private void OnInteractAreaExited(Area3D area)
+    private void OnInteractAreaExited(Area3D area_)
     {
-		if(area is InteractableObject interactable_object)
+		if(area_ is InteractableObject _interactable_object)
 		{	
 			
 			in_interact_area = false;
@@ -139,7 +119,7 @@ public partial class HUD : Control
 			interact_bar.interact_inventory.Hide();
 			interact_bar.Hide(); 
 			EmitSignal(nameof(HUDPreventingInput),false);
-			if(interactable_object == object_interacting_with)
+			if(_interactable_object == object_interacting_with)
 			{
 				object_interacting_with = null;
 			}
@@ -148,16 +128,16 @@ public partial class HUD : Control
 		
     }
 
-    private void OnInteractAreaEntered(Area3D area)
+    private void OnInteractAreaEntered(Area3D area_)
     {
-		if(area is InteractableObject interactable_object)
+		if(area_ is InteractableObject _interactable_object)
 		{
 			in_interact_area = true;
 			interact_bar.button.Text = interact_button.ToString() + ":" + " Interact";
-			interact_bar.interact_object.Text = interactable_object.Name;
+			interact_bar.interact_object.Text = _interactable_object.Name;
 			interact_bar.Show();
 			EmitSignal(nameof(HUDPreventingInput),true);
-			object_interacting_with = interactable_object;
+			object_interacting_with = _interactable_object;
 		}
 		
     }
@@ -177,18 +157,18 @@ public partial class HUD : Control
         enemy_health.EnemyUntargeted();
     }
 
-    private void HandleEnemyTargeted(Enemy enemy)
+    private void HandleEnemyTargeted(Enemy enemy_)
     {
-        enemy_health.EnemyTargeted(enemy);
+        enemy_health.EnemyTargeted(enemy_);
     }
 
-    private void HandleHideSoftTargetIcon(Enemy enemy)
+    private void HandleHideSoftTargetIcon(Enemy enemy_)
     {
-        enemy_health.HideSoftTargetIcon(enemy);
+        enemy_health.HideSoftTargetIcon(enemy_);
     }
 
-    private void HandleShowSoftTargetIcon(Enemy enemy)
+    private void HandleShowSoftTargetIcon(Enemy enemy_)
     {
-        enemy_health.ShowSoftTargetIcon(enemy);
+        enemy_health.ShowSoftTargetIcon(enemy_);
     }
 }

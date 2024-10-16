@@ -3,30 +3,25 @@ using System;
 
 public partial class GenericInventoryButton : Button
 {
-	[Export] public StatInfo info;
-	[Export] public RichTextLabel info_text;
+	[Export] public StatInfo info { get; set; }
+	[Export] public RichTextLabel info_text { get; set; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Text = Name;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void _on_area_2d_area_entered(Area2D area_)
 	{
-	}
-
-	public void _on_area_2d_area_entered(Area2D area)
-	{
-		if (area.IsInGroup("cursor"))
+		if (area_.IsInGroup("cursor"))
 		{
 			GrabFocus();
 		}
 	}
 
-	public void _on_area_2d_area_exited(Area2D area)
+	public void _on_area_2d_area_exited(Area2D area_)
 	{
-		if (area.IsInGroup("cursor"))
+		if (area_.IsInGroup("cursor"))
 		{
 			ReleaseFocus();
 		}
@@ -46,13 +41,4 @@ public partial class GenericInventoryButton : Button
 	{
 		info.tool_tip_container.Hide();
 	}
-	// public override void _GuiInput(InputEvent @event)
-	// {
-	// 	if(@event is InputEventJoypadButton eventJoypadButton)
-	// 	{
-	// 		if(eventJoypadButton.ButtonIndex == JoyButton.A){GD.Print("event accepted"); AcceptEvent();}
-	// 		if(eventJoypadButton.ButtonIndex == JoyButton.B){GD.Print("event accepted"); AcceptEvent();}
-	// 	}
-	// }
-
 }

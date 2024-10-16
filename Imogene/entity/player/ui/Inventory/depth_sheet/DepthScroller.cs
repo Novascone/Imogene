@@ -3,81 +3,52 @@ using System;
 
 public partial class DepthScroller : Control
 {
-	[Export] public Control vbox;
+	[Export] public Control vbox { get; set; }
 
 	// Offense
-	[Export] UIStat physical_melee_power;
-	[Export] UIStat spell_melee_power;
-	[Export] UIStat physical_ranged_power;
-	[Export] UIStat spell_ranged_power;
-	[Export] UIStat wisdom_scaler;
-	[Export] UIStat critical_hit_chance;
-	[Export] UIStat critical_hit_damage;
-	[Export] UIStat attack_speed;
-	[Export] UIStat attack_speed_increase;
-	[Export] UIStat cool_down_reduction;
+	[Export] UIStat physical_melee_power { get; set; }
+	[Export] UIStat spell_melee_power { get; set; }
+	[Export] UIStat physical_ranged_power { get; set; }
+	[Export] UIStat spell_ranged_power { get; set; }
+	[Export] UIStat wisdom_scaler { get; set; }
+	[Export] UIStat critical_hit_chance { get; set; }
+	[Export] UIStat critical_hit_damage { get; set; }
+	[Export] UIStat attack_speed { get; set; }
+	[Export] UIStat attack_speed_increase { get; set; }
+	[Export] UIStat cool_down_reduction { get; set; }
 
 	// Defense
-	[Export] UIStat armor;
-	[Export] UIStat poise;
-	[Export] UIStat block_amount;
-	[Export] UIStat retaliation;
-	[Export] UIStat physical_resistance;
-	[Export] UIStat pierce_resistance;
-	[Export] UIStat slash_resistance;
-	[Export] UIStat blunt_resistance;
-	[Export] UIStat bleed_resistance;
-	[Export] UIStat poison_resistance;
-	[Export] UIStat curse_resistance;
-	[Export] UIStat spell_resistance;
-	[Export] UIStat fire_resistance;
-	[Export] UIStat cold_resistance;
-	[Export] UIStat lightning_resistance;
-	[Export] UIStat holy_resistance;
+	[Export] UIStat armor { get; set; }
+	[Export] UIStat poise { get; set; }
+	[Export] UIStat block_amount { get; set; }
+	[Export] UIStat retaliation { get; set; }
+	[Export] UIStat physical_resistance { get; set; }
+	[Export] UIStat pierce_resistance { get; set; }
+	[Export] UIStat slash_resistance { get; set; }
+	[Export] UIStat blunt_resistance { get; set; }
+	[Export] UIStat bleed_resistance { get; set; }
+	[Export] UIStat poison_resistance { get; set; }
+	[Export] UIStat curse_resistance { get; set; }
+	[Export] UIStat spell_resistance { get; set; }
+	[Export] UIStat fire_resistance { get; set; }
+	[Export] UIStat cold_resistance { get; set; }
+	[Export] UIStat lightning_resistance { get; set; }
+	[Export] UIStat holy_resistance { get; set; }
 
 	// Health
-	[Export] UIStat maximum_health;
-	[Export] UIStat health_bonus;
-	[Export] UIStat health_regeneration;
-	[Export] UIStat health_retaliation;
+	[Export] UIStat maximum_health { get; set; }
+	[Export] UIStat health_bonus { get; set; }
+	[Export] UIStat health_regeneration { get; set; }
+	[Export] UIStat health_retaliation { get; set; }
 
 	// Resource
-	[Export] UIStat maximum_resource;
-	[Export] UIStat resource_regeneration;
-	[Export] UIStat resource_cost_reduction;
-	[Export] UIStat posture_regeneration;
+	[Export] UIStat maximum_resource { get; set; }
+	[Export] UIStat resource_regeneration { get; set; }
+	[Export] UIStat resource_cost_reduction { get; set; }
+	[Export] UIStat posture_regeneration { get; set; }
 
 	// Misc
 
-	[Export] UIStat movement_speed;
+	[Export] UIStat movement_speed { get; set; }
 
-
-
-
-
-
-
-
-
-	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	public void SubScribeToStatSignals(Player player)
-	{
-		// foreach(Control control in vbox.GetChildren())
-		// {
-		// 	if(control is Stat stat)
-		// 	{
-		// 		player.entity_controllers.stats_controller
-		// 	}
-		// }
-	}
 }

@@ -10,10 +10,4 @@ public partial class HealthRetaliationStat : UIStat
 		info.tool_tip.Text =  " Health on Retaliation {0} \n * Amount of health you can regain during retaliation period \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	
 }

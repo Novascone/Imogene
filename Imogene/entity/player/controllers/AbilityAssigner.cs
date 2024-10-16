@@ -29,14 +29,7 @@ public partial class AbilityAssigner : Node
 		ability.AbilityFinished += player_.OnAbilityFinished;
         return ability;
     }
-
 	
-	//  private static void AssignAbility_Button(string button_name_, Ability ability_)
-	// {
-	// 	ability_.assigned_button = button_name_;
-	// }
-
-    
 	public static void ChangeAbilityAssignment(Player player_, Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_)
 	{
 		foreach(Ability ability in player_.abilities.GetChildren().Cast<Ability>())

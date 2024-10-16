@@ -11,9 +11,4 @@ public partial class BlockAmountStat : UIStat
 		info.tool_tip.Text =  " Block amount {0} \n * Amount of damage that can be blocked by weapon/shield ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

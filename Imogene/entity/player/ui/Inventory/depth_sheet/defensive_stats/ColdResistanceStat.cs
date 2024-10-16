@@ -10,10 +10,4 @@ public partial class ColdResistanceStat : UIStat
 		label.Text = SeparateByCapitals(Name);
 		info.tool_tip.Text =  " Cold Resistance {0} \n * Reduces incoming cold damage \n * Increased by skills and gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

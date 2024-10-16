@@ -8,68 +8,54 @@ using System.Threading;
 [GlobalClass]
 public partial class MainInventory : Control
 {
-	[Export] public CharacterOutline character_outline;
-	[Export] public GridContainer items;
-	[Export] public GenericInventoryButton mats;
-	[Export] public BottomButtons bottom_buttons;
+	[Export] public CharacterOutline character_outline { get; set; }
+	[Export] public GridContainer items { get; set; }
+	[Export] public GenericInventoryButton mats { get; set; }
+	[Export] public BottomButtons bottom_buttons { get; set; }
 	[Export] public int item_slots_count { get; set; } = 72;
 	public int slots_filled { get; set; } = 0;
+	public List<ItemSlot> inventory_slots { get; set; } = new();
+	int equipped_slot { get; set; } = -1;
+
+	private Vector3 _drop_position;
 
 	[Signal] public delegate void DroppingItemEventHandler();
-	[Signal] public delegate void InventoryCapacityEventHandler(bool full);
+	[Signal] public delegate void InventoryCapacityEventHandler(bool full_);
 	
-
-	private Vector3 drop_position;
-	public List<ItemSlot> inventory_slots = new List<ItemSlot>();
-	int equipped_slot = -1;
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-
-	}
-
-    public void HandleItemDroppedInto(int from_slot_id, int to_slot_id)
+    public void HandleItemDroppedInto(int from_slot_id_, int to_slot_id)
     {
 		if(equipped_slot != -1)
 		{
-			if(equipped_slot == from_slot_id)
+			if(equipped_slot == from_slot_id_)
 			{
 				equipped_slot = to_slot_id;
 			}
 			else if (equipped_slot == to_slot_id)
 			{
-				equipped_slot = from_slot_id;
+				equipped_slot = from_slot_id_;
 			}
 		}
         var to_slot_item = inventory_slots[to_slot_id].slot_data;
-		var from_slot_item = inventory_slots[from_slot_id].slot_data;
+		var from_slot_item = inventory_slots[from_slot_id_].slot_data;
 
 		inventory_slots[to_slot_id].FillSlot(from_slot_item, equipped_slot == to_slot_id);
-		inventory_slots[from_slot_id].FillSlot(to_slot_item, equipped_slot == from_slot_id);
+		inventory_slots[from_slot_id_].FillSlot(to_slot_item, equipped_slot == from_slot_id_);
 	}
 
-
-    // public override bool _CanDropData(Vector2 atPosition, Variant data)
-    // {
-	// 	GD.Print("Checking can");
-    //     return data.VariantType == Variant.Type.Dictionary && (string)data.AsGodotDictionary()["Type"] == "Item";
-    // }
-
-    public void HandleItemDroppedOutside(int id, ItemData data)
+    public void HandleItemDroppedOutside(int id_, ItemData data_)
     {
-		if(equipped_slot == id)
+		if(equipped_slot == id_)
 		{
 			equipped_slot = -1;
 		}
 		EmitSignal(nameof(DroppingItem));
-		var new_item = inventory_slots[id].slot_data.item_model_prefab.Instantiate() as InteractableItem;
+		var new_item = inventory_slots[id_].slot_data.item_model_prefab.Instantiate() as InteractableItem;
 		new_item.interact_to_pick_up = true;
-		inventory_slots[id].FillSlot(null, false);
+		inventory_slots[id_].FillSlot(null, false);
 		slots_filled -= 1;
 		EmitSignal(nameof(InventoryCapacity), false);
 		GetTree().CurrentScene.AddChild(new_item);
-		new_item.GlobalPosition = drop_position;
+		new_item.GlobalPosition = _drop_position;
     }
 
 	public void GetDropPosition(Player player)
@@ -87,22 +73,22 @@ public partial class MainInventory : Control
 		{
 			y += 1;
 		}
-		drop_position = player.GlobalPosition;
-		drop_position.Y = drop_position.Y * 1.25f;
+		_drop_position = player.GlobalPosition;
+		_drop_position.Y *= 1.25f;
 
-		drop_position = drop_position + new Vector3(x, y, z);
+		_drop_position += new Vector3(x, y, z);
 	}
 
 
-    public void PickUpItem(ItemData item)
+    public void PickUpItem(ItemData item_)
 	{
-		bool found_slot = false;
-		foreach(ItemSlot slot in inventory_slots)
+		bool _found_slot = false;
+		foreach(ItemSlot _slot in inventory_slots)
 		{
-			if(!slot.slot_filled)
+			if(!_slot.slot_filled)
 			{
-				slot.FillSlot(item, false);
-				found_slot = true;
+				_slot.FillSlot(item_, false);
+				_found_slot = true;
 				slots_filled += 1;
 				if(slots_filled == item_slots_count)
 				{
@@ -112,15 +98,10 @@ public partial class MainInventory : Control
 			}
 		}
 
-		if(!found_slot)
+		if(!_found_slot)
 		{
-			GD.Print("can't pick up item");
-		}
-	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		}
 	}
 
 	public void _on_mats_button_down()
@@ -128,22 +109,22 @@ public partial class MainInventory : Control
 		mats.Show();
 	}
 
-    internal void OnItemPickedUp(ItemData item)
+    internal void OnItemPickedUp(ItemData item_)
     {
-        PickUpItem(item);
+        PickUpItem(item_);
     }
 
-    internal void OnItemEquipped(int id)
+    internal void OnItemEquipped(int id_)
     {
         if(equipped_slot != -1)
 		{
 			inventory_slots[equipped_slot].FillSlot(inventory_slots[equipped_slot].slot_data, false);
 		}
 
-		if(id != equipped_slot && inventory_slots[id].slot_data != null)
+		if(id_ != equipped_slot && inventory_slots[id_].slot_data != null)
 		{
-			inventory_slots[id].FillSlot(inventory_slots[id].slot_data, true);
-			equipped_slot = id;
+			inventory_slots[id_].FillSlot(inventory_slots[id_].slot_data, true);
+			equipped_slot = id_;
 		}
     }
 

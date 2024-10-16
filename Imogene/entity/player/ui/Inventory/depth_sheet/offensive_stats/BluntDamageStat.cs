@@ -11,8 +11,4 @@ public partial class BluntDamageStat : UIStat
 		info.tool_tip.Text =  " Blunt Damage {0} \n * Increases blunt damage by multiplier \n * Bonuses obtainable on gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

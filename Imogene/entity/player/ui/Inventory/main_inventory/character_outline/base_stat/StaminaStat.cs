@@ -17,10 +17,5 @@ public partial class StaminaStat : UIStat
 		value.Text = stat_value;
 		info.tool_tip.Text = string.Format(info.tool_tip.Text, stat_value, stat_value, stat_value);
 	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	
 }

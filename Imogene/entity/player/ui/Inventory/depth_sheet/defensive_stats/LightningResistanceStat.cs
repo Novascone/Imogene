@@ -11,9 +11,4 @@ public partial class LightningResistanceStat : UIStat
 		info.tool_tip.Text =  " Lightning Resistance {0} \n * Reduces incoming lightning damage \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

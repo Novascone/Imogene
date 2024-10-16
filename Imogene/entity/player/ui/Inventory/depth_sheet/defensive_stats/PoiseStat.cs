@@ -11,9 +11,4 @@ public partial class PoiseStat : UIStat
 		info.tool_tip.Text =  " Poise {0} \n * Reduces incoming posture damage and increases crowd control resistance ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

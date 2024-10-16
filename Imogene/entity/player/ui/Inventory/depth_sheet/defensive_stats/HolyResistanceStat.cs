@@ -10,11 +10,4 @@ public partial class HolyResistanceStat : UIStat
 		
 		// info.info.Text =  " Holy Resistance {0} \n * Reduces incoming holy damage \n * Increased by skills and gear ";
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	
 }

@@ -11,10 +11,4 @@ public partial class PhysicalResistanceStat : UIStat
 		info.tool_tip.Text =  " Physical Resistance {0} \n * Reduces incoming physical damage \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-
 }

@@ -11,10 +11,4 @@ public partial class AttackSpeedIncreaseStat : UIStat
 		info.tool_tip.Text =  " Attack speed increase {0} \n * Percentage of attack speed \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	
 }

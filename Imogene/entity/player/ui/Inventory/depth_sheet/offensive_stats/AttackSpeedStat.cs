@@ -11,9 +11,4 @@ public partial class AttackSpeedStat : UIStat
 		info.tool_tip.Text =  " Attack speed {0} \n * Based off of weapon speed \n * Increased by skills and gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

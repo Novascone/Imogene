@@ -1,32 +1,20 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class ClassCategory : Control
 {
-	[Export] public AbilityPage basic;
-	[Export] public AbilityPage kernel;
-	[Export] public AbilityPage defensive;
-	[Export] public AbilityPage mastery;
-	[Export] public AbilityPage movement;
-	[Export] public AbilityPage specialized;
-	[Export] public AbilityPage unique;
-	[Export] public AbilityPage toy;
-	[Export] public Control buttons_container;
-	[Export] public Control buttons;
+	[Export] public AbilityPage basic { get; set; }
+	[Export] public AbilityPage kernel  { get; set; }
+	[Export] public AbilityPage defensive  { get; set; }
+	[Export] public AbilityPage mastery  { get; set; }
+	[Export] public AbilityPage movement { get; set; }
+	[Export] public AbilityPage specialized { get; set; }
+	[Export] public AbilityPage unique { get; set; }
+	[Export] public AbilityPage toy { get; set; }
+	[Export] public Control buttons_container { get; set; }
+	[Export] public Control buttons  { get; set; }
 	
-	
-	
-
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 
 	public void _on_basic_button_down()
 	{
@@ -78,16 +66,16 @@ public partial class ClassCategory : Control
 
 	public void ResetPage()
 	{
-		GD.Print("reset class categories");
-		foreach(Control control in GetChildren())
+
+		foreach(Control _control in GetChildren().Cast<Control>())
 		{
-			if(control is AbilityPage ability_page)
+			if(_control is AbilityPage ability_page)
 			{
 				ability_page.Hide();
 			}
 			else
 			{
-				control.Show();
+				_control.Show();
 			}
 		}
 	}

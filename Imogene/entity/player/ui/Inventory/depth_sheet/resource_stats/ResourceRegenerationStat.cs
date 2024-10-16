@@ -7,12 +7,7 @@ public partial class ResourceRegenerationStat : UIStat
 	public override void _Ready()
 	{
 		base._Ready();
-		info.tool_tip.Text =  " Resource regen {0} \n * Amount of resource regenerated per second \n * Increased by skills and gear ";
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		info.tool_tip.Text =  " Resource regeneration {0} \n * Amount of resource regenerated per second \n * Increased by skills and gear ";
 	}
 
 }

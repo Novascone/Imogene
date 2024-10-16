@@ -12,16 +12,11 @@ public partial class DexterityStat : UIStat
 		info.tool_tip.Text =  " Dexterity {0}  \n * Primary stat for ranged damage \n * Increases damage by {1} \n * Increases critical chance by {2}";
 	}
 
-	public override void GetStatInfo(float stat_value_ui)
+	public override void GetStatInfo(float stat_value_ui_)
 	{
-		stat_value = stat_value_ui.ToString();
+		stat_value = stat_value_ui_.ToString();
 		value.Text = stat_value;
 		info.tool_tip.Text = string.Format(info.tool_tip.Text, stat_value, stat_value, stat_value);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 }

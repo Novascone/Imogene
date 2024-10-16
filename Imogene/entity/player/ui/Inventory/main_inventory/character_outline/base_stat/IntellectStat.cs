@@ -11,16 +11,11 @@ public partial class IntellectStat : UIStat
 		info.tool_tip.Text =  "  Intellect {0} \n * main stat for spell damage \n * Increases spell damage by {1} \n * Increases spell hit chance by {2}";
 	}
 
-	public override void GetStatInfo(float stat_value_ui)
+	public override void GetStatInfo(float stat_value_ui_)
 	{
-		stat_value = stat_value_ui.ToString();
+		stat_value = stat_value_ui_.ToString();
 		value.Text = stat_value;
 		info.tool_tip.Text = string.Format(info.tool_tip.Text, stat_value, stat_value, stat_value);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 }

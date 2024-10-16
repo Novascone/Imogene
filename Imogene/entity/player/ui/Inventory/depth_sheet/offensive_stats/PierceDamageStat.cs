@@ -11,8 +11,4 @@ public partial class PierceDamageStat : UIStat
 		info.tool_tip.Text =  " Pierce Damage {0} \n * Increases pierce damage by multiplier \n * Bonuses obtainable on gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

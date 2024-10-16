@@ -3,20 +3,20 @@ using System;
 
 public partial class EnemyHealth : Control
 {
-	[Export] public VBoxContainer vBoxContainer;
-	[Export] public Label name;
-	[Export] public ProgressBar health_bar;
-	[Export] public TextureProgressBar posture_bar;
-	public Enemy targeted_enemy;
+	[Export] public VBoxContainer vBoxContainer { get; set; }
+	[Export] public Label name { get; set; }
+	[Export] public ProgressBar health_bar { get; set; }
+	[Export] public TextureProgressBar posture_bar { get; set; }
+	public Enemy targeted_enemy { get; set; } = null;
 
-	public void EnemyTargeted(Enemy enemy)
+	public void EnemyTargeted(Enemy enemy_)
     {
-		targeted_enemy = enemy;
-        health_bar.MaxValue = enemy.health.max_value;
-		health_bar.Value = enemy.health.current_value;
-		name.Text = enemy.identifier;
-		posture_bar.MaxValue = enemy.posture.max_value;
-		posture_bar.Value = enemy.posture.current_value;
+		targeted_enemy = enemy_;
+        health_bar.MaxValue = enemy_.health.max_value;
+		health_bar.Value = enemy_.health.current_value;
+		name.Text = enemy_.identifier;
+		posture_bar.MaxValue = enemy_.posture.max_value;
+		posture_bar.Value = enemy_.posture.current_value;
 		targeted_enemy.ui.hard_target_icon.Show();
 		targeted_enemy.ui.status_bar.Show();
 		targeted_enemy.ui.soft_target_icon.Show();
@@ -37,36 +37,33 @@ public partial class EnemyHealth : Control
 		
     }
 
-	public void ShowSoftTargetIcon(Enemy enemy)
+	public void ShowSoftTargetIcon(Enemy enemy_)
 	{
-		enemy.ui.soft_target_icon.Show();
+		enemy_.ui.soft_target_icon.Show();
 		
 	}
 
-	public void HideSoftTargetIcon(Enemy enemy)
+	public void HideSoftTargetIcon(Enemy enemy_)
 	{
-		enemy.ui.soft_target_icon.Hide();
+		enemy_.ui.soft_target_icon.Hide();
 	}
 
 
 
-    private void HandleEnemyHealthChangedUI(Enemy enemy, float health)
+    private void HandleEnemyHealthChangedUI(Enemy enemy_, float health_)
     {
-		if(enemy == targeted_enemy)
+		if(enemy_ == targeted_enemy)
 		{
-			// GD.Print("enemy is enemy");
-			health_bar.Value = health;
+			health_bar.Value = health_;
 		}
         
     }
-	private void HandleEnemyPostureChangedUI(Enemy enemy, float posture)
+	private void HandleEnemyPostureChangedUI(Enemy enemy_, float posture_)
     {
-		if(enemy == targeted_enemy)
+		if(enemy_ == targeted_enemy)
 		{
-			// GD.Print("enemy is enemy");
-			posture_bar.Value = posture;
+			posture_bar.Value = posture_;
 		}
-        
-		// GD.Print("enemy max posture from UI " + enemy_posture.MaxValue);
+    
     }
 }

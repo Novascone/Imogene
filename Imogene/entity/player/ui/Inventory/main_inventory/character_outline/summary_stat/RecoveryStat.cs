@@ -10,9 +10,4 @@ public partial class RecoveryStat : UIStat
 		info.tool_tip.Text =  " Recovery {0} \n * The average of health regeneration, resource regeneration, and posture regeneration \n * Calculated by stamina ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 }

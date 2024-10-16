@@ -11,8 +11,4 @@ public partial class PowerStat : UIStat
 		info.tool_tip.Text =  " Power {0} \n * Increases damage by multiplier \n * Bonuses obtainable on gear ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }
