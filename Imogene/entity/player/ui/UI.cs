@@ -4,21 +4,52 @@ using System;
 
 public partial class UI : Control
 {
-	[Export] public HUD hud;
-	[Export] public Inventory inventory;
-	[Export] public Abilities abilities;
-	[Export] public Journal journal;
-	[Export] public UICursor cursor;
+	[Export] public HUD hud { get; set; }
+	[Export] public Inventory inventory { get; set; }
+	[Export] public Abilities abilities { get; set; }
+	[Export] public Journal journal { get; set; }
+	[Export] public UICursor cursor { get; set; }
+
+	public bool preventing_movement { get; set; } = false;
+	public bool capturing_input { get; set; } = false;
+	public Button hovered_button  { get; set; } = null;
 
 	[Signal] public delegate void InventoryToggleEventHandler();
-	[Signal] public delegate void CapturingInputEventHandler(bool capturing_input);
+	[Signal] public delegate void CapturingInputEventHandler(bool capturing_input_);
 
-	public bool preventing_movement;
-	public bool capturing_input;
+	public override void _GuiInput(InputEvent @event_)
+	{
+		
+		if(@event_ is InputEventJoypadButton eventJoypadButton)
+		{
+			if(CheckUIComponentOpen() && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
+			{
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.A)
+			{
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)
+			{
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadDown)
+			{
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadRight)
+			{
+				AcceptEvent();
+			}
+			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadLeft)
+			{
+				AcceptEvent();
+			}
+		}
+		
+	}
 
-	public Button hovered_button;
-
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -40,93 +71,8 @@ public partial class UI : Control
 		
 	}
 
-
-    private void OnHudPreventingInput(bool preventing_input)
-    {
-        if(preventing_input)
-		{
-			capturing_input = true;
-		}
-		else if (!preventing_input)
-		{
-			capturing_input = false;
-		}
-    }
-
-    private void OnClearAbilityIcon(string ability_name_old, string ability_name_new)
-    {
-        abilities.binds.ClearAbility(ability_name_old, ability_name_new);
-		hud.main.ClearAbility(ability_name_old, ability_name_new);
-    }
-
-
-    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
-    {
-		GD.Print("Ability reassigned " + icon);
-        abilities.binds.AssignAbility(cross_, tier_, bind, ability_name, icon);
-		hud.main.AssignAbility(cross_, tier_, bind,ability_name, icon);
-    }
-
-    private void OnAbilitiesClosed()
-    {
-        EmitSignal(nameof(InventoryToggle));
-		preventing_movement = false;
-		if(cursor.Visible)
-		
-		cursor.Visible = !cursor.Visible;
-    }
-
-    private void OnAbilitiesButtonDown()
-    {
-        abilities.Show();
-		inventory.Hide();
-		preventing_movement = true;
-    }
-
-	public override void _GuiInput(InputEvent @event)
-	{
-		
-		if(@event is InputEventJoypadButton eventJoypadButton)
-		{
-			GD.Print("event " + @event);
-			if(CheckUIComponentOpen() && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.A)
-			{
-				GD.Print("event accepted from ui");
-				AcceptEvent();
-			}
-			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadUp)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadDown)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadRight)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-			if(CheckUIComponentOpen()  && eventJoypadButton.ButtonIndex == JoyButton.DpadLeft)
-			{
-				GD.Print("event accepted ");
-				AcceptEvent();
-			}
-		}
-		
-	}
-
-
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+	 // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta_)
 	{
 		if(preventing_movement)
 		{
@@ -173,6 +119,49 @@ public partial class UI : Control
 		
 	}
 
+    private void OnHudPreventingInput(bool preventing_input_)
+    {
+        if(preventing_input_)
+		{
+			capturing_input = true;
+		}
+		else if (!preventing_input_)
+		{
+			capturing_input = false;
+		}
+    }
+
+    private void OnClearAbilityIcon(string ability_name_old_, string ability_name_new_)
+    {
+        abilities.binds.ClearAbility(ability_name_old_, ability_name_new_);
+		hud.main.ClearAbility(ability_name_old_, ability_name_new_);
+    }
+
+
+    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
+    {
+        abilities.binds.AssignAbility(cross_, tier_, bind_, ability_name_, icon_);
+		hud.main.AssignAbility(cross_, tier_, bind_,ability_name_, icon_);
+    }
+
+    private void OnAbilitiesClosed()
+    {
+        EmitSignal(nameof(InventoryToggle));
+		preventing_movement = false;
+		if(cursor.Visible)
+		
+		cursor.Visible = !cursor.Visible;
+    }
+
+    private void OnAbilitiesButtonDown()
+    {
+        abilities.Show();
+		inventory.Hide();
+		preventing_movement = true;
+    }
+
+
+
 	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
 	{
 		hud.main.AssignAbility(cross_, tier_, bind, ability_name, icon);
@@ -206,9 +195,9 @@ public partial class UI : Control
 		}
 	}
 
-    internal void HandleUpdatedStats(Player player)
+    internal void HandleUpdatedStats(Player player_)
     {
-        hud.main.UpdateHUDStats(player);
+        hud.main.UpdateHUDStats(player_);
     }
 
 	public bool CheckUIComponentOpen()

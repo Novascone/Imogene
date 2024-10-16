@@ -3,16 +3,7 @@ using System;
 
 public partial class JournalTab : Node
 {
-	[Export] public Button button;
-	[Export] public string button_title; 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		
-	}
+	[Export] public Button button { get; set; }
+	[Export] public string button_title  { get; set; }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

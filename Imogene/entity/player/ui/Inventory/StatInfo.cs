@@ -3,15 +3,7 @@ using System;
 
 public partial class StatInfo : Control
 {
-	[Export] public RichTextLabel tool_tip;
-	[Export] public Control tool_tip_container;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+	[Export] public RichTextLabel tool_tip { get; set; }
+	[Export] public Control tool_tip_container { get; set; }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

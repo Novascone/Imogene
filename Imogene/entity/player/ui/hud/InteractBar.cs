@@ -7,8 +7,8 @@ public partial class InteractBar : Control
 	[Export] public Label interact_object { get; set; }
 	[Export] public Control interact_inventory { get; set; }
 
-	public void SetInteractText(string object_name)
+	public void SetInteractText(string object_name_)
 	{
-		interact_object.Text = object_name;
+		interact_object.Text = object_name_;
 	}
 }

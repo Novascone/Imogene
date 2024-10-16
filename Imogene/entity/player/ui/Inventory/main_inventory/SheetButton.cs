@@ -10,8 +10,4 @@ public partial class SheetButton : GenericInventoryButton
 		info.tool_tip.Text = "Sheet \n * Click to view depth stats ";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

@@ -3,22 +3,22 @@ using System;
 
 public partial class UICursor : Sprite2D
 {
-	[Export] public ItemSlot item_preview;
-	private Vector2 mouse_pos = Vector2.Zero;
-	private float mouse_max_speed = 30.0f;
-	public ItemSlot hover_over_item_button;
-	public ItemSlot hover_over_button;
+	[Export] public ItemSlot item_preview { get; set; }
+	private Vector2 mouse_pos { get; set; } = Vector2.Zero;
+	private float mouse_max_speed { get; set; } = 30.0f;
+	public ItemSlot hover_over_item_button { get; set; } = null;
+	public ItemSlot hover_over_button { get; set; } = null;
 
-	[Signal] public delegate void ItemDroppedIntoSlotEventHandler(int from_slot_id, int to_slot_id);
-	[Signal] public delegate void ItemDroppedOutSideEventHandler(int slot_id, ItemData data);
+	[Signal] public delegate void ItemDroppedIntoSlotEventHandler(int from_slot_id_, int to_slot_id_);
+	[Signal] public delegate void ItemDroppedOutSideEventHandler(int slot_id_, ItemData data_);
 
-	public override void _Input(InputEvent @event)
+	public override void _Input(InputEvent @event_)
 	{
-		if (@event is InputEventMouseMotion mouseMotion)
+		if (@event_ is InputEventMouseMotion mouseMotion)
 		{
 			mouse_pos = mouseMotion.Position;
 		}
-		if (@event.IsActionPressed("Interact"))
+		if (@event_.IsActionPressed("Interact"))
 		{
 
 			if (hover_over_button != null)
@@ -57,16 +57,6 @@ public partial class UICursor : Sprite2D
 		}
 	}
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public void ControllerCursor() // Control the cursor with the joysticks
 	{
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
@@ -95,12 +85,12 @@ public partial class UICursor : Sprite2D
 		Position = GetViewport().GetMousePosition();
 	}
 
-    internal void OnCursorHovering(ItemSlot item_slot)
+    internal void OnCursorHovering(ItemSlot item_slot_)
     {
-        hover_over_button = item_slot;
+        hover_over_button = item_slot_;
     }
 
-    internal void OnCursorLeft(ItemSlot item_slot)
+    internal void OnCursorLeft(ItemSlot item_slot_)
     {
         hover_over_button = null;
     }

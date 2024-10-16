@@ -122,10 +122,7 @@ public partial class Player : Entity
 
 		entity_controllers.stats_controller.SetStats(this);
 		entity_controllers.stats_controller.Update(this);
-		// controllers.ability_assigner.GetAbilities(this);
-		// controllers.ability_assigner.AssignAbilities(this);
-
-		// exclude.Add(areas.vision.GetRid());
+		
 		excluded_rids.Add(areas.near.GetRid());
 		excluded_rids.Add(areas.far.GetRid());
 		excluded_rids.Add(areas.interact.GetRid());
