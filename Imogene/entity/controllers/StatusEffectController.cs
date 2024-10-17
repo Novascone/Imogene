@@ -31,6 +31,8 @@ public partial class StatusEffectController : Node
 	public Hex hex { get; set; } = new();
 	public Knockback knockback { get; set; } = new();
 	public Bleed bleed { get; set; } = new();
+	public Burn burn { get; set; } = new();
+	public Poison poison { get; set; } = new();
 	
 	public Dictionary<StatusEffect, bool> status_effects  { get; set; } = new Dictionary<StatusEffect, bool>();
 
@@ -55,6 +57,8 @@ public partial class StatusEffectController : Node
 		status_effects[hex] = false;
 		status_effects[knockback] = false;
 		status_effects[bleed] = false;
+		status_effects[burn] = false;
+		status_effects[poison] = false;
 	}
 
 	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity

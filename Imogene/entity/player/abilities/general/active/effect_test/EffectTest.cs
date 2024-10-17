@@ -108,7 +108,7 @@ public partial class EffectTest : Ability
 	{
 		effect_test_hitbox = (EffectTestHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
 		player.surrounding_hitbox.AddChild(effect_test_hitbox);
-		effect = new Bleed();
+		effect = new Poison();
 		effect_test_hitbox.effects.Add(effect);
 		if(effect_test_mesh == null)
 		{

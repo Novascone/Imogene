@@ -67,10 +67,10 @@ public partial class DamageSystem : Node
 		}
 		else if(melee_hitbox_.type == MeleeHitbox.DamageType.Spell)
 		{
-			mitigated_damage_ *= entity_.spell_resistance.current_value;
+			mitigated_damage_ *= 1 - entity_.spell_resistance.current_value;
 			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Fire)
 			{
-				mitigated_damage_ *= entity_.fire_resistance.current_value;
+				mitigated_damage_ *= 1 - entity_.fire_resistance.current_value;
 			}
 			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Cold)
 			{
@@ -93,7 +93,7 @@ public partial class DamageSystem : Node
 			}
 			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Poison)
 			{
-				mitigated_damage_ *= entity_.poison_resistance.current_value;
+				mitigated_damage_ *= 1 - entity_.poison_resistance.current_value;
 			}
 			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Curse)
 			{
