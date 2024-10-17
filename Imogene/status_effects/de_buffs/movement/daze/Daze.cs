@@ -8,25 +8,21 @@ public partial class Daze : StatusEffect
 	{
 		name = "daze";
 		prevents_abilities = true;
-		type = EffectType.debuff;
-		category = EffectCategory.movement;
+		type = EffectType.Debuff;
+		category = EffectCategory.Movement;
 		duration = 5;
 		max_stacks = 1;
 	}
 
-	public override void Apply(Entity entity)
+	public override void Apply(Entity entity_)
 	{
-		base.Apply(entity);
-		CreateTimerIncrementStack(entity);
+		base.Apply(entity_);
+		CreateTimerIncrementStack(entity_);
 	}
 
-	public override void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity_)
     {
-		GD.Print("timer timeout");
-     
-		Remove(entity);
-		
-		GD.Print("current stacks " + current_stacks);
+		Remove(entity_);
     }
 
 	

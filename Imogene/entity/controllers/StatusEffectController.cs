@@ -60,7 +60,7 @@ public partial class StatusEffectController : Node
 		var _effect_to_add = new StatusEffect();
 		_effect_to_add = GetEffect(entity_, effect_, _effect_to_add); // Gets status effect to apply
 		QueueStatusEffect(_effect_to_add); // Checks if ability has been applied
-		if(_effect_to_add.state == StatusEffect.States.queued)
+		if(_effect_to_add.state == StatusEffect.States.Queued)
 		{
 			
 				entity_.status_effects.Add(_effect_to_add); // adds status effect to entities list of effects
@@ -124,11 +124,11 @@ public partial class StatusEffectController : Node
 		
 		if(!effect_.applied)
 		{
-			effect_.state = StatusEffect.States.queued;
+			effect_.state = StatusEffect.States.Queued;
 		}
 		else
 		{
-			effect_.state = StatusEffect.States.not_queued;
+			effect_.state = StatusEffect.States.NotQueued;
 		}
 	}
 
@@ -151,7 +151,7 @@ public partial class StatusEffectController : Node
 		for(int i = entity_.status_effects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
 		{
 			
-			if(entity_.status_effects[i].type == StatusEffect.EffectType.debuff  && entity_.status_effects[i].category == StatusEffect.EffectCategory.movement)
+			if(entity_.status_effects[i].type == StatusEffect.EffectType.Debuff  && entity_.status_effects[i].category == StatusEffect.EffectCategory.Movement)
 			{
 				RemoveStatusEffect(entity_, entity_.status_effects[i]);
 			}

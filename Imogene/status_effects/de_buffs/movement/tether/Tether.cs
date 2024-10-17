@@ -3,26 +3,26 @@ using System;
 
 public partial class Tether : StatusEffect
 {	
-	public PackedScene tether_mesh = ResourceLoader.Load<PackedScene>("res://status_effects/de_buffs/movement/tether/tether_mesh.tscn");
-	public MeshInstance3D tether;
-	public float tether_length = 10f;
+	public PackedScene tether_mesh { get; set; } = ResourceLoader.Load<PackedScene>("res://status_effects/de_buffs/movement/tether/tether_mesh.tscn");
+	public MeshInstance3D tether { get; set; } = null;
+	public float tether_length { get; set; } = 10f;
 	
 	
 	public Tether()
 	{
 		tether = (MeshInstance3D)tether_mesh.Instantiate();
 		name = "tether";
-		type = EffectType.debuff;
-		category = EffectCategory.movement;
+		type = EffectType.Debuff;
+		category = EffectCategory.Movement;
 		duration = 5;
 		max_stacks = 1;
 		
 	
 	}
-	public override void Apply(Entity entity)
+	public override void Apply(Entity entity_)
 	{
-		base.Apply(entity);
-		CreateTimerIncrementStack(entity);
+		base.Apply(entity_);
+		CreateTimerIncrementStack(entity_);
 		AddChild(tether);
 		tether.Show();
 		tether.GlobalPosition = new Vector3(0,0,0);
@@ -31,16 +31,16 @@ public partial class Tether : StatusEffect
 	}
 
 
-	public override void timer_timeout(Entity entity)
+	public override void timer_timeout(Entity entity_)
     {
-		Remove(entity);
+		Remove(entity_);
     }
 
-    public override void Remove(Entity entity)
+    public override void Remove(Entity entity_)
     {
 		if(!removed)
 		{
-			base.Remove(entity);
+			base.Remove(entity_);
 			tether.QueueFree();
 		}
         

@@ -7,66 +7,32 @@ public partial class StatusEffect : Node3D
 	public string name;
 	[Export] public string description { get; set; }
     [Export] public StatusEffectResource resource { get; set; }
-	[Export] public bool alters_speed;
-	[Export] public bool prevents_movement;
-	public bool prevents_input;
-	[Export] public bool prevents_abilities;
-	[Export] public bool adds_additional_effects;
-	public bool removed = false;
+	[Export] public bool alters_speed { get; set; }
+	[Export] public bool prevents_movement { get; set; }
+	public bool prevents_input{ get; set; }
+	[Export] public bool prevents_abilities { get; set; }
+	[Export] public bool adds_additional_effects { get; set; }
+	public bool removed { get; set; } = false;
+	public EffectType type { get; set; } = EffectType.None;
+	public EffectCategory category { get; set; } = EffectCategory.None;
+	public bool applied { get; set; } = false;
+ 	public Timer duration_timer { get; set; } = null;
+	public float duration { get; set; } = 0.0f;
+	public int max_stacks { get; set; } = 0;
+	public int current_stacks { get; set; } = 0;
+	public Entity caster { get; set; } = null;
+	public States state  { get; set; } = States.NotQueued;
+
+	public enum States{ NotQueued, Queued }
+	public enum EffectType { None, Buff, Debuff, Tradeoff }
+
+	public enum EffectCategory { None, Movement, Health, Damage, General }
+
 	[Signal] public delegate void StatusEffectFinishedEventHandler();
-	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect);
-	public EffectType type;
-	
-	public enum EffectType
-	{
-		buff, debuff, tradeoff
-	}
-
-	public EffectCategory category;
-	public enum EffectCategory
-	{
-		movement, health, damage, general
-	}
-	public bool applied;
- 	public Timer duration_timer;
-	public float duration;
-	public int max_stacks;
-	public int current_stacks;
-
-	public Entity caster;
-	
-	public States state;
-
-	public enum States
-    {
-        not_queued,
-        queued
-    }
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		// slow.modification_type = StatModifier.ModificationType.multiply_current;
-		
-		
-		// duration_timer = GetNode<Timer>("DurationTimer");
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	// public override void _PhysicsProcess(double delta)
-	// {
-	// 	if(current_stacks > 0)
-	// 	{
-	// 		applied = true;
-	// 	}
-	// 	else
-	// 	{
-	// 		applied = false;
-	// 	}
-	// }
-
+	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect_);
 	
 
-	public virtual void Apply(Entity entity)
+	public virtual void Apply(Entity entity_)
 	{
 		if(!applied)
 		{
@@ -74,14 +40,11 @@ public partial class StatusEffect : Node3D
 		}
 	}
 
-	public virtual void CreateTimerIncrementStack(Entity entity) // Creates timer and increments stacks
+	public virtual void CreateTimerIncrementStack(Entity entity_) // Creates timer and increments stacks
 	{
-		GD.Print("create timer increment");
 		if(current_stacks == 0)
 		{
-			GD.Print("creating timer");
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
-			GD.Print("setting booleans via apply");
+			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity_);
 			current_stacks += 1;
 		}
 		else if(max_stacks > 1)
@@ -90,41 +53,18 @@ public partial class StatusEffect : Node3D
 		}
 	}
 
-	public virtual void timer_timeout(Entity entity)
+	public virtual void timer_timeout(Entity entity_)
 	{
 
 	}
 
-	public virtual void Remove(Entity entity)
+	public virtual void Remove(Entity entity_)
 	{
-		GD.Print("removing: " + this.name + " in status effect");
 		if(!removed)
 		{
 			removed = true;
 			current_stacks = 0;
 			EmitSignal(nameof(StatusEffectFinished));
 		}
-		
-		
 	}
-
-	
-
-
-	// public void AddStatusEffect(StatusEffect effect)
-	// {
-	// 	if(!entity.status_effects.Contains(effect))
-	// 	{
-	// 		entity.status_effects.Add(effect);
-	// 	}
-	// 	else if (effect.current_stacks < effect.max_stacks)
-	// 	{
-	// 		effect.current_stacks += 1;
-	// 	}
-	// }
-
-	// public void RemoveStatusEffect(StatusEffect effect)
-	// {
-	// 	entity.status_effects.Remove(effect);
-	// }
 }
