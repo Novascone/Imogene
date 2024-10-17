@@ -30,6 +30,7 @@ public partial class StatusEffectController : Node
 	public Stun stun { get; set; } = new();
 	public Hex hex { get; set; } = new();
 	public Knockback knockback { get; set; } = new();
+	public Bleed bleed { get; set; } = new();
 	
 	public Dictionary<StatusEffect, bool> status_effects  { get; set; } = new Dictionary<StatusEffect, bool>();
 
@@ -53,6 +54,7 @@ public partial class StatusEffectController : Node
 		status_effects[stun] = false;
 		status_effects[hex] = false;
 		status_effects[knockback] = false;
+		status_effects[bleed] = false;
 	}
 
 	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity
@@ -141,7 +143,6 @@ public partial class StatusEffectController : Node
 				SetEffectBooleans(effect_);
 			}
 			effect_.Apply(entity_);
-			GD.Print("Adding " + effect_.name);
 		}
 	}
 

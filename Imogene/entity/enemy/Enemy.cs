@@ -119,6 +119,7 @@ public partial class Enemy : Entity
 		armor.current_value = 80;
 		stamina.current_value = 2000;
 		physical_resistance.current_value = 0.10f;
+		bleed_resistance.current_value = 0.5f;
 		slash_resistance.current_value = 3;
 
 

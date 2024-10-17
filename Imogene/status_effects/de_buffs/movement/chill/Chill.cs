@@ -35,8 +35,6 @@ public partial class Chill : StatusEffect
 			else
 			{
 			}
-			
-			
 		}
 		else if(current_stacks == max_stacks - 1 || entity_.status_effects.Contains(freeze))
 		{

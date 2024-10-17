@@ -26,7 +26,7 @@ public partial class DamageSystem : Node
 	[Signal] public delegate void ChangePostureEventHandler(Entity entity_, float posture_damage_);
 
 	
-	public float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
+	public static float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
 	{
 		float mitigated_damage = amount_;
 		mitigated_damage *= 1 - (entity_.armor.current_value / 100);
@@ -47,7 +47,7 @@ public partial class DamageSystem : Node
 		return MathF.Round(mitigated_damage);
 	}
 
-	public float MitigateMelee(MeleeHitbox melee_hitbox_, float mitigated_damage_, Entity entity_)
+	public static float MitigateMelee(MeleeHitbox melee_hitbox_, float mitigated_damage_, Entity entity_)
 	{
 		if(melee_hitbox_.type == MeleeHitbox.DamageType.Physical)
 		{
@@ -89,22 +89,22 @@ public partial class DamageSystem : Node
 		{
 			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Bleed)
 			{
-				mitigated_damage_ *= entity_.poison_resistance.current_value;
+				mitigated_damage_ *= 1 - entity_.bleed_resistance.current_value;
 			}
 			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Poison)
 			{
-				mitigated_damage_ *= entity_.cold_resistance.current_value;
+				mitigated_damage_ *= entity_.poison_resistance.current_value;
 			}
 			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Curse)
 			{
-				mitigated_damage_ *= entity_.lightning_resistance.current_value;
+				mitigated_damage_ *= entity_.curse_resistance.current_value;
 			}
 		}
 
 		return mitigated_damage_;
 	}
 
-	public float MitigateRanged(RangedHitbox ranged_hitbox_, float mitigated_damage_, Entity entity_)
+	public static float MitigateRanged(RangedHitbox ranged_hitbox_, float mitigated_damage_, Entity entity_)
 	{
 		if(ranged_hitbox_.type == RangedHitbox.DamageType.Physical)
 			{
@@ -178,6 +178,7 @@ public partial class DamageSystem : Node
 	{
 		
 		amount_ = DamageMitigation(entity_, hitbox_, amount_);
+		GD.Print("damage amount after mitigation " + amount_);
 		
 		if(entity_.health.current_value - amount_ > 0)
 		{

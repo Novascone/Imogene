@@ -16,7 +16,7 @@ public partial class StatusEffect : Node3D
 	public EffectType type { get; set; } = EffectType.None;
 	public EffectCategory category { get; set; } = EffectCategory.None;
 	public bool applied { get; set; } = false;
- 	public Timer duration_timer { get; set; } = null;
+ 	public SceneTreeTimer duration_timer { get; set; } = null;
 	public float duration { get; set; } = 0.0f;
 	public int max_stacks { get; set; } = 0;
 	public int current_stacks { get; set; } = 0;
@@ -44,7 +44,8 @@ public partial class StatusEffect : Node3D
 	{
 		if(current_stacks == 0)
 		{
-			GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity_);
+			duration_timer = GetTree().CreateTimer(duration);
+			duration_timer.Timeout += () => timer_timeout(entity_);
 			current_stacks += 1;
 		}
 		else if(max_stacks > 1)
