@@ -214,8 +214,7 @@ public partial class Player : Entity
 	internal void OnAbilityFinished(Ability ability_)
     {
         AbilityController.RemoveFromAbilityList(this, ability_);
-		// systems.targeting_system.rotating_to_soft_target = false;
-		// controllers.movement_controller.movement_input_prevented = false;
+	
     }
 
 	public void CameraFollowsPlayer()

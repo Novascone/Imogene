@@ -33,6 +33,7 @@ public partial class TargetingSystem : Node
 	public bool rotating_to_soft_target { get; set; } = false;
 	public bool target_pressed { get; set; } = false;
 	public bool target_released { get; set; } = false;
+	private bool ui_target_signal_emitted { get; set; } = false;
 	public int frames_held { get; set; } = 0;
 	public int held_threshold { get; set; } = 20;
 	public bool targeting { get; set; } = false;
@@ -43,11 +44,13 @@ public partial class TargetingSystem : Node
 	public float max_x_rotation { get; set; }  = 0.4f;
 	public float min_x_rotation { get; set; }  = -0.4f;
 	float facing_similarity { get; set; }  = 0.0f;
+	float current_target_health { get; set; }  = 0.0f;
 	Vector3 direction_to_enemy { get; set; } = Vector3.Zero;
 	
 	[Signal] public delegate void ShowSoftTargetIconEventHandler(Enemy enemy_);
 	[Signal] public delegate void HideSoftTargetIconEventHandler(Enemy enemy_);
 	[Signal] public delegate void PlayerTargetingEventHandler(bool is_targeting_);
+	[Signal] public delegate void TargetHealthChangedEventHandler(Entity entity_, float health_);
 	[Signal] public delegate void EnemyTargetedEventHandler(Enemy enemy_);
 	[Signal] public delegate void EnemyUntargetedEventHandler();
 	[Signal] public delegate void BrightenSoftTargetHUDEventHandler();
@@ -242,6 +245,7 @@ public partial class TargetingSystem : Node
 			{
 				mob_looking_at = null;
 				targeting = false;
+				ui_target_signal_emitted = false;
 				EmitSignal(nameof(PlayerTargeting), targeting);
 			}
 			if (mobs.Count == 1)
@@ -289,20 +293,25 @@ public partial class TargetingSystem : Node
 				{
 					targeting = true;
 					EmitSignal(nameof(PlayerTargeting), targeting);
+					
 					if(mobs_in_order.Count > 0 && enemy_pointed_toward == null && mob_looking_at == null)
 					{
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 						mob_looking_at = mobs_in_order[0];
+						current_target_health = mob_looking_at.health.current_value;
 					}
 					else if (enemy_pointed_toward != null)
 					{
 						mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
 						mob_looking_at = enemy_pointed_toward;
+						current_target_health = mob_looking_at.health.current_value;
 					}
+					
 				}
 				else if(targeting)
 				{
 					targeting = false;
+					ui_target_signal_emitted = false;
 					EmitSignal(nameof(PlayerTargeting), targeting);
 					mob_looking_at = null;
 					EmitSignal(nameof(EnemyUntargeted));
@@ -348,6 +357,7 @@ public partial class TargetingSystem : Node
 
 	public void TargetRight() // Check if there is an enemy to the right and switch to the enemy thats is closest to the current enemy targeted, and to the right of the player
 	{
+		ui_target_signal_emitted = false;
 		if(mobs_in_order_to_right.Count >= 1)
 		{
 			mob_looking_at.targeted = false;
@@ -384,6 +394,7 @@ public partial class TargetingSystem : Node
 
 	public void TargetLeft() // Check if there is an enemy to the left and switch to the enemy thats is closest to the current enemy targeted, and to the left of the player
 	{
+		ui_target_signal_emitted = false;
 		if(mobs_in_order_to_left.Count >= 1)
 		{
 			mob_looking_at.targeted = false;
@@ -420,6 +431,7 @@ public partial class TargetingSystem : Node
 
 	public void HardTargetRotation(Player player_) // Smoothly rotate to hard target
 	{
+		
 		player_.previous_y_rotation = player_.GlobalRotation.Y;
 		if(player_.IsOnFloor())
 		{
@@ -437,7 +449,19 @@ public partial class TargetingSystem : Node
 				player_.GlobalRotation = player_.GlobalRotation with {X = Mathf.LerpAngle(player_.previous_x_rotation, player_.current_x_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
-		EmitSignal(nameof(EnemyTargeted), mob_looking_at);
+		if (!ui_target_signal_emitted)
+		{
+			EmitSignal(nameof(EnemyTargeted), mob_looking_at);
+			ui_target_signal_emitted = true;
+		}
+
+		if(current_target_health != mob_looking_at.health.current_value)
+		{
+			current_target_health = mob_looking_at.health.current_value;
+			EmitSignal(nameof(TargetHealthChanged), mob_looking_at, current_target_health);
+
+		}
+		
 		player_.current_y_rotation = player_.GlobalRotation.Y;
 		if(player_.previous_y_rotation != player_.current_y_rotation)
 		{

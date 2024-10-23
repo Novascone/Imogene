@@ -71,6 +71,7 @@ public partial class Stat : Resource
 	public StatType type { get; set; } = StatType.None;
 	public float base_value { get; set; } = 0.0f;
 	public float current_value { get; set; } = 0.0f;
+	public float handicap_value { get; set; } = 0.0f;
 	public float max_value { get; set; } = 0.0f;
 	
 	public List<StatModifier> modifiers = new List<StatModifier>();

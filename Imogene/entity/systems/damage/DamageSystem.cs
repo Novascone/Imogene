@@ -9,7 +9,7 @@ public partial class DamageSystem : Node
 	// Timers
 	public SceneTreeTimer health_regeneration_timer { get; set; } = null;
 	public float health_tick_duration { get; set; } = 1;
-
+	private bool weak { get; set; } = false;
 	public bool dead { get; set; } = false;
 
 	// Damage numbers parameters
@@ -24,6 +24,8 @@ public partial class DamageSystem : Node
 
 	[Signal] public delegate void AddStatusEffectEventHandler(Entity entity_, StatusEffect status_effect_);
 	[Signal] public delegate void ChangePostureEventHandler(Entity entity_, float posture_damage_);
+	[Signal] public delegate void HealthChangedEventHandler(Entity entity_, float health_);
+	[Signal] public delegate void WeakEventHandler(Entity entity_, bool weak_);
 
 	
 	public static float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
@@ -178,12 +180,18 @@ public partial class DamageSystem : Node
 	{
 		
 		amount_ = DamageMitigation(entity_, hitbox_, amount_);
-		GD.Print("damage amount after mitigation " + amount_);
 		
 		if(entity_.health.current_value - amount_ > 0)
 		{
 			remove_health.value_to_add = -amount_;
 			entity_.health.AddModifier(remove_health);
+
+			if(entity_.health.current_value < (entity_.health.max_value / 2) && !weak)
+			{
+				weak = true;
+				EmitSignal(nameof(Weak), entity_,  weak);
+			}
+			
 
 			if(entity_ is Enemy enemy)
 			{
@@ -212,7 +220,7 @@ public partial class DamageSystem : Node
 
 	private void OnHealthRegenerationTickTimeout(Entity entity_)
     {
-        if(entity_.health.current_value < entity_.health.max_value)
+        if(entity_.health.current_value < entity_.health.max_value && entity_.health.handicap_value == 0)
 		{
 			add_health.modification = StatModifier.ModificationType.AddCurrent;
 			add_health.value_to_add = entity_.health_regeneration.current_value;

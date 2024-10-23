@@ -33,6 +33,9 @@ public partial class StatusEffectController : Node
 	public Bleed bleed { get; set; } = new();
 	public Burn burn { get; set; } = new();
 	public Poison poison { get; set; } = new();
+	public Weak weak { get; set; } = new();
+	public Curse curse { get; set; } = new();
+	public Virulent virulent { get; set; } = new();
 	
 	public Dictionary<StatusEffect, bool> status_effects  { get; set; } = new Dictionary<StatusEffect, bool>();
 
@@ -59,6 +62,9 @@ public partial class StatusEffectController : Node
 		status_effects[bleed] = false;
 		status_effects[burn] = false;
 		status_effects[poison] = false;
+		status_effects[weak] = false;
+		status_effects[curse] = false;
+		status_effects[virulent] = false;
 	}
 
 	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity
@@ -212,6 +218,12 @@ public partial class StatusEffectController : Node
         AddStatusEffect(entity_, effect_);
     }
 
+	private void AddWeak(Entity entity_, bool weak_)
+    {
+		GD.Print("Adding weak");
+        AddStatusEffect(entity_, weak);
+    }
+
     private void HandleStatusEffectFinished(Entity entity_, StatusEffect effect_to_remove_)
     {
 		foreach(StatusEffect _effect in status_effects.Keys)
@@ -233,11 +245,14 @@ public partial class StatusEffectController : Node
 	public void Subscribe(Entity entity_)
 	{
 		entity_.entity_systems.damage_system.AddStatusEffect += AddStatusEffect;
+		entity_.entity_systems.damage_system.Weak += AddWeak;
 	}
 
-	public void Unsubscribe(Entity entity_)
+
+    public void Unsubscribe(Entity entity_)
 	{
 		entity_.entity_systems.damage_system.AddStatusEffect -= AddStatusEffect;
+		entity_.entity_systems.damage_system.Weak -= AddWeak;
 	}
 
 }

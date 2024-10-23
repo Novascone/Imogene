@@ -46,6 +46,7 @@ public partial class HUD : Control
 		player_.systems.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
 		player_.systems.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
 		player_.systems.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
+		enemy_health.Subscribe(player_);
 	}
 
     private void HandleSwitchToNextItem(InteractableItem item_, bool last_item_)
@@ -159,16 +160,17 @@ public partial class HUD : Control
 
     private void HandleEnemyTargeted(Enemy enemy_)
     {
+		GD.Print("Enemy targeted");
         enemy_health.EnemyTargeted(enemy_);
     }
 
     private void HandleHideSoftTargetIcon(Enemy enemy_)
     {
-        enemy_health.HideSoftTargetIcon(enemy_);
+        EnemyHealth.HideSoftTargetIcon(enemy_);
     }
 
     private void HandleShowSoftTargetIcon(Enemy enemy_)
     {
-        enemy_health.ShowSoftTargetIcon(enemy_);
+        EnemyHealth.ShowSoftTargetIcon(enemy_);
     }
 }

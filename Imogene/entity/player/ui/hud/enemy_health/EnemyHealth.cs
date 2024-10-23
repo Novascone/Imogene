@@ -37,20 +37,20 @@ public partial class EnemyHealth : Control
 		
     }
 
-	public void ShowSoftTargetIcon(Enemy enemy_)
+	public static void ShowSoftTargetIcon(Enemy enemy_)
 	{
 		enemy_.ui.soft_target_icon.Show();
 		
 	}
 
-	public void HideSoftTargetIcon(Enemy enemy_)
+	public static void HideSoftTargetIcon(Enemy enemy_)
 	{
 		enemy_.ui.soft_target_icon.Hide();
 	}
 
 
 
-    private void HandleEnemyHealthChangedUI(Enemy enemy_, float health_)
+    public void HandleEnemyHealthChangedUI(Entity enemy_, float health_)
     {
 		if(enemy_ == targeted_enemy)
 		{
@@ -66,4 +66,14 @@ public partial class EnemyHealth : Control
 		}
     
     }
+
+	public void Subscribe(Player player_)
+	{
+		player_.systems.targeting_system.TargetHealthChanged += HandleEnemyHealthChangedUI;
+	}
+	
+	public void UnSubscribe(Player player_)
+	{
+		player_.entity_systems.damage_system.HealthChanged -= HandleEnemyHealthChangedUI;
+	}
 }
