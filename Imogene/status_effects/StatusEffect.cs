@@ -12,6 +12,8 @@ public partial class StatusEffect : Node3D
 	public bool prevents_input{ get; set; }
 	[Export] public bool prevents_abilities { get; set; }
 	[Export] public bool adds_additional_effects { get; set; }
+	[Export] public bool adds_effect_to_additional_entity { get; set; }
+	
 	public bool removed { get; set; } = false;
 	public EffectType type { get; set; } = EffectType.None;
 	public EffectCategory category { get; set; } = EffectCategory.None;
@@ -30,6 +32,7 @@ public partial class StatusEffect : Node3D
 
 	[Signal] public delegate void StatusEffectFinishedEventHandler();
 	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect_);
+	[Signal] public delegate void AddStatusEffectToAdditionalEntityEventHandler(Entity entity_, StatusEffect effect_);
 	
 
 	public virtual void Apply(Entity entity_)
@@ -42,14 +45,17 @@ public partial class StatusEffect : Node3D
 
 	public virtual void CreateTimerIncrementStack(Entity entity_) // Creates timer and increments stacks
 	{
+		
 		if(current_stacks == 0)
 		{
 			duration_timer = GetTree().CreateTimer(duration);
 			duration_timer.Timeout += () => timer_timeout(entity_);
+			GD.Print("incrementing stacks");
 			current_stacks += 1;
 		}
 		else if(max_stacks > 1)
 		{
+			
 			current_stacks += 1;
 		}
 	}
@@ -61,6 +67,7 @@ public partial class StatusEffect : Node3D
 
 	public virtual void Remove(Entity entity_)
 	{
+		GD.Print("removed");
 		if(!removed)
 		{
 			removed = true;

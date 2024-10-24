@@ -3,25 +3,31 @@ using System;
 
 public partial class Virulent : StatusEffect
 {
-	VirulentHitbox hitbox { get; set; } 
-	Poison poison = new();
+	public VirulentHitbox hitbox { get; set; } 
+
+	public Poison main_poison { get; set; } = new ();
+	
 
 	public Virulent()
 	{
 		name = "virulent";
 		type = EffectType.Debuff;
 		category = EffectCategory.Health;
+		adds_additional_effects = true;
+		adds_effect_to_additional_entity = true;
 		max_stacks = 1;
 		duration = 1;
 		hitbox = (VirulentHitbox)ResourceLoader.Load<PackedScene>("res://status_effects/de_buffs/health/virulent/virulent_hitbox.tscn").Instantiate();
+		
 	}
 
     public override void Apply(Entity entity_)
     {
         base.Apply(entity_);
-		EmitSignal(nameof(AddAdditionalStatusEffect), poison);
+		EmitSignal(nameof(AddAdditionalStatusEffect), main_poison);
 		hitbox.root_infected = entity_;
 		entity_.AddChild(hitbox);
+		
 		CreateTimerIncrementStack(entity_);
     }
 
@@ -33,6 +39,14 @@ public partial class Virulent : StatusEffect
 
     public override void Remove(Entity entity_)
     {
+		foreach(Enemy _enemy in hitbox.enemies_to_be_infected)
+		{
+			Poison _infect_poison = new (); 
+			_infect_poison.hitbox.damage *= 0.5f; 
+			GD.Print("enemy to be infected " + _enemy.Name);
+			EmitSignal(nameof(AddStatusEffectToAdditionalEntity), _enemy, _infect_poison);
+			
+		}
         base.Remove(entity_);
 		entity_.RemoveChild(hitbox);
     }

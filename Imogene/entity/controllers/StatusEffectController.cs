@@ -71,16 +71,23 @@ public partial class StatusEffectController : Node
 	{
 		var _effect_to_add = new StatusEffect();
 		_effect_to_add = GetEffect(entity_, effect_, _effect_to_add); // Gets status effect to apply
+		GD.Print("trying to add effect " + _effect_to_add.name);
 		QueueStatusEffect(_effect_to_add); // Checks if ability has been applied
 		if(_effect_to_add.state == StatusEffect.States.Queued)
 		{
 			
 				entity_.status_effects.Add(_effect_to_add); // adds status effect to entities list of effects
+				GD.Print("count of status effects " + entity_.status_effects.Count);
 				AddChild(_effect_to_add); // adds the effect as a child setting all of its _Ready() values
+				
 				_effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity_, _effect_to_add); // Subscribes to effect finished signal
 				if(_effect_to_add.adds_additional_effects)
 				{
 					_effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity_); // subscribes to add additional effect signal
+				}
+				if(_effect_to_add.adds_effect_to_additional_entity)
+				{
+					_effect_to_add.AddStatusEffectToAdditionalEntity += HandleAdditionalEntity;
 				}
 				ApplyStatusEffect(entity_, _effect_to_add);
 				// Sets the variable for what the status effects are preventing or altering
@@ -105,7 +112,13 @@ public partial class StatusEffectController : Node
 		
 	}
 
-	public void RemoveStatusEffect(Entity entity_, StatusEffect effect_)
+    private void HandleAdditionalEntity(Entity entity_, StatusEffect effect_)
+    {
+		GD.Print("Receiving signal to add an effect to " + entity_.Name);
+        AddStatusEffect(entity_, effect_);
+    }
+
+    public void RemoveStatusEffect(Entity entity_, StatusEffect effect_)
 	{
 
 		effect_.StatusEffectFinished -= () => HandleStatusEffectFinished(entity_, effect_); // unSubscribes to effect finished signal
@@ -114,7 +127,7 @@ public partial class StatusEffectController : Node
 			effect_.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity_); // Unsubscribes to add additional effect signal
 		}
 		effect_.QueueFree();
-		entity_.entity_controllers.status_effect_controller.SetEffectBooleans(effect_);
+		// entity_.entity_controllers.status_effect_controller.SetEffectBooleans(effect_);
 		entity_.status_effects.Remove(effect_);
 		if(!effect_.removed)
 		{
@@ -148,11 +161,16 @@ public partial class StatusEffectController : Node
 	{
 		if (effect_.current_stacks < effect_.max_stacks && entity_.status_effects.Contains(effect_))
 		{
-			if(effect_.current_stacks == 0)
-			{
-				SetEffectBooleans(effect_);
-			}
+			// if(effect_.current_stacks == 0)
+			// {
+			// 	SetEffectBooleans(effect_);
+			// }
 			effect_.Apply(entity_);
+			GD.Print("applying status effect");
+		}
+		else
+		{
+			GD.Print("couldn't apply status effect");
 		}
 	}
 
@@ -170,42 +188,37 @@ public partial class StatusEffectController : Node
 		}
 	}
 
-	public void SetEffectBooleans(StatusEffect effect_) // Switches the effect from on to off or off to on in the dictionary
-	{
+	// public void SetEffectBooleans(StatusEffect effect_) // Switches the effect from on to off or off to on in the dictionary
+	// {
 
-		foreach(StatusEffect _status_effect in status_effects.Keys)
-		{
-			if (effect_.GetType() == _status_effect.GetType())
-			{
-				status_effects[_status_effect] = !status_effects[_status_effect];
-			}
-		}
+	// 	foreach(StatusEffect _status_effect in status_effects.Keys)
+	// 	{
+	// 		if (effect_.GetType() == _status_effect.GetType())
+	// 		{
+	// 			status_effects[_status_effect] = !status_effects[_status_effect];
+	// 		}
+	// 	}
 
-	}
+	// }
 
 	// Checks the incoming effect type, if the effect is not on, then a new instance of that effect will be created and returned,
 	// if the effect is on the entities status effects will be searched and the matching effect will be returned
 	public StatusEffect GetEffect(Entity entity_, StatusEffect effect_, StatusEffect effect_to_get_) 
 	{
+		effect_to_get_ = effect_;
 		foreach(StatusEffect _status_effect in status_effects.Keys)
 		{
 			if (effect_.GetType() == _status_effect.GetType())
 			{
-				
-				if(!status_effects[_status_effect])
+			
+				foreach(StatusEffect _applied_effect in entity_.status_effects)
 				{
-					effect_to_get_ = effect_;
-				}
-				else
-				{
-					foreach(StatusEffect applied_effect in entity_.status_effects)
+					if(_applied_effect.GetType() == _status_effect.GetType())
 					{
-						if(applied_effect.GetType() == _status_effect.GetType())
-						{
-							effect_to_get_ = applied_effect;
-						}
+						effect_to_get_ = _applied_effect;
 					}
 				}
+				
 			}
 		}
 		

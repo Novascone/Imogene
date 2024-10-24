@@ -59,6 +59,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 10.2183)
 [node name="TargetDummy2" parent="." instance=ExtResource("1_r7fge")]
 transform = Transform3D(-0.501394, 0, -0.488471, 0, 0.7, 0, 0.488471, 0, -0.501394, -9.44871, 0, -1.12566)
 
+[node name="TargetDummy3" parent="." instance=ExtResource("1_r7fge")]
+transform = Transform3D(-0.501394, 0, -0.488471, 0, 0.7, 0, 0.488471, 0, -0.501394, -9.44871, 0, 5.46498)
+
 [node name="Box" parent="." instance=ExtResource("3_ym8ty")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7585, 0.621105, 16.5805)
 

@@ -1,20 +1,24 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class VirulentHitbox : Area3D
 {
 	public Entity root_infected { get; set; } = null;
-	public Poison poison { get; set; } = new ();
-	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(Entity entity_, StatusEffect status_effect_);
+	public List<Enemy> enemies_to_be_infected = new();
+	
 
 	public void _on_body_entered(Node3D body_)
 	{
-		if(body_ is Enemy enemy && enemy != root_infected)
+		GD.Print("name of body entering virulent area " + body_.Name);
+		if(body_ is Enemy enemy)
 		{
-			poison.hitbox.damage = poison.hitbox.damage / 2;
-			EmitSignal(nameof(AddAdditionalStatusEffect), body_, poison);
-			GD.Print("enemy entered virulent hitbox");
-			
+			if(enemy != root_infected)
+			{
+				// EmitSignal(nameof(AddAdditionalStatusEffect), enemy, infect_poison);
+				enemies_to_be_infected.Add(enemy);
+			}
 		}
+		
 	}
 }

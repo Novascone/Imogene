@@ -23,7 +23,6 @@ public partial class Chill : StatusEffect
 	{
 		
 		base.Apply(entity_);
-		
 		if(current_stacks < max_stacks - 1)
 		{
 						
