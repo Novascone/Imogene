@@ -178,7 +178,7 @@ public partial class DamageSystem : Node
 
 	public void TakeDamage(Entity entity_, Node3D hitbox_, float amount_, bool is_critical_)
 	{
-		
+		GD.Print(entity_.Name + " taking damage");
 		amount_ = DamageMitigation(entity_, hitbox_, amount_);
 		
 		if(entity_.health.current_value - amount_ > 0)

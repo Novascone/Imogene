@@ -7,6 +7,7 @@ public partial class RangedHitbox : RigidBody3D
 	// [Export] public string damage_type { get; set; }
 	[Export] public float damage { get; set; } = 0.0f;
 	[Export] public float posture_damage { get; set; } = 0.0f;
+	public float damage_amp { get; set;} = 1.0f;
 	public List<StatusEffect> effects { get; set; } = new List<StatusEffect>();
 	public bool is_critical { get; set; } = false;
 	public DamageType type { get; set; } = DamageType.None;
@@ -87,6 +88,7 @@ public partial class RangedHitbox : RigidBody3D
 				damage *= entity_.curse_damage.current_value;
 			}
 		}
+		damage *= damage_amp;
 		return damage;
 		
 	}

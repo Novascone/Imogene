@@ -36,8 +36,15 @@ public partial class StatusEffectController : Node
 	public Weak weak { get; set; } = new();
 	public Curse curse { get; set; } = new();
 	public Virulent virulent { get; set; } = new();
+	public Incorrigible incorrigible { get; set; } = new();
+	public Febrile febrile { get; set; } = new();
+	public Reeling reeling { get; set; } = new();
+	public Stagger stagger { get; set; } = new();
+	public Enfeeble enfeeble { get; set; } = new();
+	public Suspend suspend  { get; set; } = new();
+	public Charm charm { get; set; } = new();
 	
-	public Dictionary<StatusEffect, bool> status_effects  { get; set; } = new Dictionary<StatusEffect, bool>();
+	public List<StatusEffect> status_effects  { get; set; } = new List<StatusEffect>();
 
 
 	[Signal] public delegate void AbilitiesPreventedEventHandler(bool abilities_prevented_);
@@ -49,22 +56,30 @@ public partial class StatusEffectController : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		status_effects[slow] = false;
-		status_effects[daze] = false;
-		status_effects[chill] = false;
-		status_effects[freeze] = false;
-		status_effects[fear] = false;
-		status_effects[hamstring] = false;
-		status_effects[tether] = false;
-		status_effects[stun] = false;
-		status_effects[hex] = false;
-		status_effects[knockback] = false;
-		status_effects[bleed] = false;
-		status_effects[burn] = false;
-		status_effects[poison] = false;
-		status_effects[weak] = false;
-		status_effects[curse] = false;
-		status_effects[virulent] = false;
+		status_effects.Add(slow);
+		status_effects.Add(daze);
+		status_effects.Add(chill);
+		status_effects.Add(freeze);
+		status_effects.Add(fear);
+		status_effects.Add(hamstring);
+		status_effects.Add(tether);
+		status_effects.Add(stun);
+		status_effects.Add(hex);
+		status_effects.Add(knockback);
+		status_effects.Add(bleed);
+		status_effects.Add(burn);
+		status_effects.Add(poison);
+		status_effects.Add(weak);
+		status_effects.Add(curse);
+		status_effects.Add(virulent);
+		status_effects.Add(incorrigible);
+		status_effects.Add(febrile);
+		status_effects.Add(reeling);
+		status_effects.Add(stagger);
+		status_effects.Add(enfeeble);
+		status_effects.Add(suspend);
+		status_effects.Add(charm);
+
 	}
 
 	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity
@@ -206,7 +221,7 @@ public partial class StatusEffectController : Node
 	public StatusEffect GetEffect(Entity entity_, StatusEffect effect_, StatusEffect effect_to_get_) 
 	{
 		effect_to_get_ = effect_;
-		foreach(StatusEffect _status_effect in status_effects.Keys)
+		foreach(StatusEffect _status_effect in status_effects)
 		{
 			if (effect_.GetType() == _status_effect.GetType())
 			{
@@ -239,20 +254,24 @@ public partial class StatusEffectController : Node
 
     private void HandleStatusEffectFinished(Entity entity_, StatusEffect effect_to_remove_)
     {
-		foreach(StatusEffect _effect in status_effects.Keys)
-		{
-			if(effect_to_remove_.GetType() == _effect.GetType())
-			{
-				if(status_effects[_effect])
-				{
-					
-					RemoveStatusEffect(entity_, effect_to_remove_);
+
+		RemoveStatusEffect(entity_, effect_to_remove_);
 					effect_to_remove_.StatusEffectFinished -= () => HandleStatusEffectFinished(entity_, effect_to_remove_);
 					if(effect_to_remove_.adds_additional_effects){ effect_to_remove_.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity_);}
+					GD.Print("removed " + effect_to_remove_.name);
+		// foreach(StatusEffect _effect in status_effects)
+		// {
+		// 	if(effect_to_remove_.GetType() == _effect.GetType())
+		// 	{
 				
-				}
-			}
-		}
+					
+		// 			RemoveStatusEffect(entity_, effect_to_remove_);
+		// 			effect_to_remove_.StatusEffectFinished -= () => HandleStatusEffectFinished(entity_, effect_to_remove_);
+		// 			if(effect_to_remove_.adds_additional_effects){ effect_to_remove_.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity_);}
+		// 		GD.Print("removed " + effect_to_remove_.name);
+				
+		// 	}
+		// }
     }
 
 	public void Subscribe(Entity entity_)

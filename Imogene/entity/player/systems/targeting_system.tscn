@@ -8,3 +8,4 @@ script = ExtResource("1_7r4wp")
 ray_cast = NodePath("DirectionalRayCast")
 
 [node name="DirectionalRayCast" parent="." instance=ExtResource("2_hwg6s")]
+visible = false

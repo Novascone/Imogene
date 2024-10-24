@@ -15,6 +15,8 @@ public partial class MeleeHitbox : Area3D
 	[Export] public string effect_2;
 	[Export] public string effect_3;
 
+	public float damage_amp { get; set;} = 1.0f;
+
 	public enum DamageType {None, Physical, Spell, Other}
 	public DamageType type { get; set; } = DamageType.None;
 
@@ -81,6 +83,7 @@ public partial class MeleeHitbox : Area3D
 				damage *= entity_.curse_damage.current_value;
 			}
 		}
+		damage *= damage_amp;
 		return damage;
 	}
 

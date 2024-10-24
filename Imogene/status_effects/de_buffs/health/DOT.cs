@@ -30,6 +30,7 @@ public partial class DOT : StatusEffect
 		else
 		{
 			ticks_used = 0;
+			Remove(entity_);
 		}
     }
 
