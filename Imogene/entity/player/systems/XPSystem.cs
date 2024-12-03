@@ -7,22 +7,22 @@ public partial class XPSystem : Node
 {
 	public int xp_to_level { get; set; } = 0;
 
-	public void GainXP(Entity entity_, float xp_gained_)
+	public void GainXP(Entity entity, float xpGained)
 	{
-		if(entity_ is Player player)
+		if(entity is Player player)
 		{
-			entity_.xp.amount += xp_gained_;
-			LevelUp(entity_);
+			entity.XP.amount += xpGained;
+			LevelUp(entity);
 		}
 	}
 
-	public void LevelUp(Entity entity_)
+	public void LevelUp(Entity entity)
 	{
-		if(entity_ is Player _player)
+		if(entity is Player player)
 		{
-			if( entity_.xp.amount >= xp_to_level)
+			if( entity.XP.amount >= xp_to_level)
 			{
-				entity_.xp.amount -= xp_to_level;
+				entity.XP.amount -= xp_to_level;
 				xp_to_level *= 2;
 			}
 		}

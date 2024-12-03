@@ -42,45 +42,45 @@ public partial class MovementController : Node
     }
 
 
-    public void MovePlayer(Player player_, float input_strength_, double delta_)
+    public void MovePlayer(Player player, float inputStrength, double delta)
 	{
 		
 		if(!climbing)
 		{
-			StandardMovement(player_, input_strength_, delta_);
+			StandardMovement(player, inputStrength, delta);
 		}
 		else
 		{
-			ClimbingMovement(player_);
+			ClimbingMovement(player);
 		}
 	
-		player_.Velocity = player_._velocity;
+		player.Velocity = player.velocity;
 		
 
 		if(movement_tethered)
 		{
-			player_.GlobalPosition = (player_.GlobalPosition - tether_position).LimitLength(movement_from_tether) + tether_position;
+			player.GlobalPosition = (player.GlobalPosition - tether_position).LimitLength(movement_from_tether) + tether_position;
 		}
 
 			
 	}
 
-    private void StandardMovement(Player player_, float input_strength_, double delta_)
+    private void StandardMovement(Player player, float inputStrength, double delta)
     {
 		if(!movement_ability_in_use && !movement_input_prevented)
 		{
-			player_._velocity.X = player_._direction.X * player_.movement_speed.current_value * input_strength_;
-			player_._velocity.Z = player_._direction.Z * player_.movement_speed.current_value * input_strength_;
+			player.velocity.X = player.direction.X * player.MovementSpeed.current_value * inputStrength;
+			player.velocity.Z = player.direction.Z * player.MovementSpeed.current_value * inputStrength;
 			
 		}
 		else if(movement_input_prevented)
 		{
 			
-			player_._velocity = Vector3.Zero with { Y = fall_gravity / 15};
+			player.velocity = Vector3.Zero with { Y = fall_gravity / 15};
 		}
-		if(!player_.IsOnFloor())
+		if(!player.IsOnFloor())
 		{
-			player_._velocity.Y += (float)(SetGravity(player_) * delta_);
+			player.velocity.Y += (float)(SetGravity(player) * delta);
 		}
 
     }
@@ -100,7 +100,7 @@ public partial class MovementController : Node
 
 	
 
-	public void ClimbingMovement(Player player_) // Takes climbing input and moves the character when climbing
+	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
 		
 			// player.direction = Vector3.Zero;
@@ -116,29 +116,29 @@ public partial class MovementController : Node
 			
 		
 
-		ClimbingRotation(player_);
+		ClimbingRotation(player);
 
-		if(player_._direction != Vector3.Zero && climbing)
+		if(player.direction != Vector3.Zero && climbing)
 		{
-			player_.previous_y_rotation = player_.GlobalRotation.Y;
-			player_.current_y_rotation = -(MathF.Atan2(player_.controllers.near_wall.GetCollisionNormal().Z, player_.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
-			if(player_.previous_y_rotation != player_.current_y_rotation)
+			player.PreviousYRotation = player.GlobalRotation.Y;
+			player.CurrentYRotation = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
+			if(player.PreviousYRotation != player.CurrentYRotation)
 			{
-				player_.GlobalRotation = player_.GlobalRotation with {Y = Mathf.LerpAngle(player_.previous_y_rotation, player_.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.PreviousYRotation, player.CurrentYRotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 	}
 
-	public void ClimbingRotation(Player player_) // Sets the rotation of the player when climbing
+	public void ClimbingRotation(Player player) // Sets the rotation of the player when climbing
 	{
-		var rot = -(MathF.Atan2(player_.controllers.near_wall.GetCollisionNormal().Z, player_.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
+		var rot = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 		
 		vertical_climbing_input = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
 		horizontal_climbing_input = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		
 		if(!clambering)
 		{
-			player_._direction = new Vector3(horizontal_climbing_input, vertical_climbing_input, move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+			player.direction = new Vector3(horizontal_climbing_input, vertical_climbing_input, move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 
 		}
 		// player.direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
@@ -147,9 +147,9 @@ public partial class MovementController : Node
 
 	// Signals
 
-    internal void HandleMovementPrevented(bool movement_prevented_) // Listen for signal from StatusEffectController.cs that prevents movement
+    internal void HandleMovementPrevented(bool movementPrevented) // Listen for signal from StatusEffectController.cs that prevents movement
     {
-        movement_input_prevented = movement_prevented_;
+        movement_input_prevented = movementPrevented;
     }
 
 	public void HandleClimbing(bool is_climbing_) // Listen for signal from Jump.cs/AbilityController.cs that lets this script know the player has begun climbing or stopped climbing
@@ -210,14 +210,14 @@ public partial class MovementController : Node
 		}
     }
 
-	public void Subscribe(Player player_)
+	public void Subscribe(Player player)
 	{
-		player_.entity_controllers.status_effect_controller.MovementPrevented += HandleMovementPrevented;
-		player_.entity_controllers.status_effect_controller.Tethered += HandleTethered;
+		player.EntityControllers.status_effect_controller.MovementPrevented += HandleMovementPrevented;
+		player.EntityControllers.status_effect_controller.Tethered += HandleTethered;
 
-		player_.systems.targeting_system.Rotating += HandleRotatePlayer;
+		player.systems.targeting_system.Rotating += HandleRotatePlayer;
 
-		player_.ui.CapturingInput += HandleUICapturingInput;
+		player.ui.CapturingInput += HandleUICapturingInput;
 	}
 
 	public void AbilitySubscribe(Ability ability_)
@@ -227,14 +227,13 @@ public partial class MovementController : Node
 		ability_.MovementAbilityExecuted += OnMovementAbilityExecuted;
 	}
 
-    public void Unsubscribe(Player player_)
+    public void Unsubscribe(Player player)
 	{
-		player_.entity_controllers.status_effect_controller.MovementPrevented -= HandleMovementPrevented;
-		player_.entity_controllers.status_effect_controller.Tethered -= HandleTethered;
+		player.EntityControllers.status_effect_controller.MovementPrevented -= HandleMovementPrevented;
+		player.EntityControllers.status_effect_controller.Tethered -= HandleTethered;
 
-		player_.systems.targeting_system.Rotating -= HandleRotatePlayer;
-
-		player_.ui.CapturingInput -= HandleUICapturingInput;
+		player.systems.targeting_system.Rotating -= HandleRotatePlayer;
+		player.ui.CapturingInput -= HandleUICapturingInput;
 	}
 
 	public void AbilityUnsubscribe(Ability ability_)

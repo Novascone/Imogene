@@ -31,66 +31,66 @@ public partial class AbilityController : Node
         player_.ability_in_use?.FrameCheck(player_);
     }
 
-	public void CheckCanUseAbility(Player player_, Ability ability_)
+	public void CheckCanUseAbility(Player player, Ability ability)
     {
-        if(ability_.state == Ability.States.Queued)
+        if(ability.state == Ability.States.Queued)
         {
-            if(!ability_.button_held)
+            if(!ability.button_held)
             {
-                if(ability_.rotate_on_soft)
+                if(ability.rotate_on_soft)
                 {
-                    if(player_.systems.targeting_system.enemy_to_soft_target)
+                    if(player.systems.targeting_system.enemy_to_soft_target)
                     {
-                        SoftRotateAbility(player_, ability_);
+                        SoftRotateAbility(player, ability);
                     }
                     else
                     {
-                        ability_.Execute(player_);
-                        if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
-                        AddToAbilityList(player_, ability_);
+                        ability.Execute(player);
+                        if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                        AddToAbilityList(player, ability);
                     }
                 }
                 else
                 {
-                    ability_.Execute(player_);
-                    if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
-                    AddToAbilityList(player_, ability_);
+                    ability.Execute(player);
+                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                    AddToAbilityList(player, ability);
                 }
             }
-            else if (ability_.button_held)
+            else if (ability.button_held)
             {
-                if(ability_.rotate_on_held)
+                if(ability.rotate_on_held)
                 {
-					if(player_.systems.targeting_system.enemy_pointed_toward != null)
+					if(player.systems.targeting_system.enemy_pointed_toward != null)
                     {
-                        SoftRotateAbility(player_, ability_);
+                        SoftRotateAbility(player, ability);
                     }
-                    else if(MathF.Round(player_.current_y_rotation - player_.previous_y_rotation, 1) == 0 && player_.systems.targeting_system.enemy_pointed_toward == null)
+                    else if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
                     {
                         EmitSignal(nameof(ReleaseInputControl));
-                        ability_.Execute(player_);
-						if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
-                        AddToAbilityList(player_, ability_);
+                        ability.Execute(player);
+						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                        AddToAbilityList(player, ability);
                     }
                 }
                 else
                 {
-                    ability_.Execute(player_);
-                    if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
-                    AddToAbilityList(player_, ability_);
+                    ability.Execute(player);
+                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                    AddToAbilityList(player, ability);
                 }
             }
 
         }
     }
 
-    public static bool CheckCross(Player player_, Ability ability_) // Checks what cross the ability is assigned to
+    public static bool CheckCross(Player player, Ability ability) // Checks what cross the ability is assigned to
     {
-        if(ability_.cross == Ability.Cross.Left)
+        if(ability.cross == Ability.Cross.Left)
 		{
-			if(player_.l_cross_primary_selected)
+			if(player.l_cross_primary_selected)
 			{
-				if(ability_.tier == Ability.Tier.Primary)
+				if(ability.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -101,7 +101,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-				if(ability_.tier == Ability.Tier.Secondary)
+				if(ability.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -111,11 +111,11 @@ public partial class AbilityController : Node
                 }
 			}
 		}
-		else if(ability_.cross == Ability.Cross.Right)
+		else if(ability.cross == Ability.Cross.Right)
 		{
-			if(player_.r_cross_primary_selected)
+			if(player.r_cross_primary_selected)
 			{
-				if(ability_.tier == Ability.Tier.Primary)
+				if(ability.tier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -126,7 +126,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-                if(ability_.tier == Ability.Tier.Secondary)
+                if(ability.tier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -140,12 +140,12 @@ public partial class AbilityController : Node
         return false;
     }
 
-	public static bool CanAfford(Player player_, Ability ability_)
+	public static bool CanAfford(Player player, Ability ability)
     {
-        if(ability_.charges - ability_.charges_used >= 0 && ability_.charges > 0)
+        if(ability.charges - ability.charges_used >= 0 && ability.charges > 0)
         {
            
-            if(ability_.charges - ability_.charges_used != 0)
+            if(ability.charges - ability.charges_used != 0)
             {
                 return true;
             }
@@ -155,11 +155,11 @@ public partial class AbilityController : Node
             }
             
         }
-        else if(player_.resource.current_value - ability_.resource_change >= 0 || ability_.resource_change == 0)
+        else if(player.Resource.current_value - ability.resource_change >= 0 || ability.resource_change == 0)
         {
-            if(ability_.cooldown_timer != null)
+            if(ability.cooldown_timer != null)
             {
-                if(ability_.cooldown_timer.TimeLeft == 0)
+                if(ability.cooldown_timer.TimeLeft == 0)
                 {
                     return true;
                 }
@@ -180,28 +180,28 @@ public partial class AbilityController : Node
     
     }
 
-	public void SoftRotateAbility(Player player_, Ability ability_)
+	public void SoftRotateAbility(Player player, Ability ability)
     {
     
-        if(!player_.abilities_in_use_list.Contains(ability_))
+        if(!player.abilities_in_use_list.Contains(ability))
         {
-            AddToAbilityList(player_, ability_);
+            AddToAbilityList(player, ability);
             
             EmitSignal(nameof(RotatePlayer));
 
             done_rotating = false;
         }
 
-        if(done_rotating && player_.systems.targeting_system.enemy_pointed_toward != null)
+        if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
         {
-            if(ability_.button_held)
+            if(ability.button_held)
             {
                 
                 EmitSignal(nameof(RotatePlayer));
             }
             
-            ability_.Execute(player_);
-            if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+            ability.Execute(player);
+            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
             
         }
         else if(!done_rotating)
@@ -210,41 +210,41 @@ public partial class AbilityController : Node
         }
         else
         {
-            ability_.Execute(player_);
-            if(ability_.resource_change != 0){EmitSignal(nameof(ResourceEffect), player_, ability_.resource_change);}
+            ability.Execute(player);
+            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
         }
                 
     }
 
-	public static void AddToAbilityList(Player player_, Ability ability_) // Adds the passed ability to the list of abilities if it is not already there
+	public static void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
     
-        if(!player_.abilities_in_use_list.Contains(ability_))
+        if(!player.abilities_in_use_list.Contains(ability))
         {
-            player_.abilities_in_use_list.AddFirst(ability_);
-            ability_.in_use = true;
+            player.abilities_in_use_list.AddFirst(ability);
+            ability.in_use = true;
         }
 
-        player_.ability_in_use = player_.abilities_in_use_list.First.Value;
+        player.ability_in_use = player.abilities_in_use_list.First.Value;
     }
 
-    public static void RemoveFromAbilityList(Player player_, Ability ability_) // Removes ability from abilities used
+    public static void RemoveFromAbilityList(Player player, Ability ability) // Removes ability from abilities used
     {
-        player_.abilities_in_use_list.Remove(ability_);
-        if(player_.abilities_in_use_list.Count > 0)
+        player.abilities_in_use_list.Remove(ability);
+        if(player.abilities_in_use_list.Count > 0)
         {
-            player_.ability_in_use = player_.abilities_in_use_list.First.Value;
+            player.ability_in_use = player.abilities_in_use_list.First.Value;
         }
         else
         {
-            player_.ability_in_use = null;
+            player.ability_in_use = null;
         }
-        ability_.in_use = false;
+        ability.in_use = false;
     }
 
-    internal void OnNearInteractable(bool near_interactable_)
+    internal void OnNearInteractable(bool nearInteractable)
     {
-        ability_use_prevented = near_interactable_;
+        ability_use_prevented = nearInteractable;
     }
 
     internal void HandleAbilitiesPrevented(bool abilities_prevented_)
@@ -258,20 +258,20 @@ public partial class AbilityController : Node
         done_rotating = finished_;
     }
 
-    public void Subscribe(Player player_)
+    public void Subscribe(Player player)
     {
-        player_.entity_controllers.status_effect_controller.AbilitiesPrevented += HandleAbilitiesPrevented;
+        player.EntityControllers.status_effect_controller.AbilitiesPrevented += HandleAbilitiesPrevented;
 
-        player_.systems.interact_system.NearInteractable += OnNearInteractable;
-        player_.systems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
+        player.systems.interact_system.NearInteractable += OnNearInteractable;
+        player.systems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
     }
 
-     public void Unsubscribe(Player player_)
+     public void Unsubscribe(Player player)
     {
-        player_.entity_controllers.status_effect_controller.AbilitiesPrevented -= HandleAbilitiesPrevented;
+        player.EntityControllers.status_effect_controller.AbilitiesPrevented -= HandleAbilitiesPrevented;
 
-        player_.systems.interact_system.NearInteractable -= OnNearInteractable;
-        player_.systems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
+        player.systems.interact_system.NearInteractable -= OnNearInteractable;
+        player.systems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
     }
 
    

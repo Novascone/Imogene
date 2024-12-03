@@ -91,8 +91,8 @@ public partial class StatusEffectController : Node
 		if(_effect_to_add.state == StatusEffect.States.Queued)
 		{
 			
-				entity_.status_effects.Add(_effect_to_add); // adds status effect to entities list of effects
-				GD.Print("count of status effects " + entity_.status_effects.Count);
+				entity_.StatusEffects.Add(_effect_to_add); // adds status effect to entities list of effects
+				GD.Print("count of status effects " + entity_.StatusEffects.Count);
 				AddChild(_effect_to_add); // adds the effect as a child setting all of its _Ready() values
 				
 				_effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity_, _effect_to_add); // Subscribes to effect finished signal
@@ -143,7 +143,7 @@ public partial class StatusEffectController : Node
 		}
 		effect_.QueueFree();
 		// entity_.entity_controllers.status_effect_controller.SetEffectBooleans(effect_);
-		entity_.status_effects.Remove(effect_);
+		entity_.StatusEffects.Remove(effect_);
 		if(!effect_.removed)
 		{
 			effect_.Remove(entity_);
@@ -174,7 +174,7 @@ public partial class StatusEffectController : Node
 
 	public void ApplyStatusEffect(Entity entity_, StatusEffect effect_) // Sets booleans for each status effect, and applies the effect to the entity
 	{
-		if (effect_.current_stacks < effect_.max_stacks && entity_.status_effects.Contains(effect_))
+		if (effect_.current_stacks < effect_.max_stacks && entity_.StatusEffects.Contains(effect_))
 		{
 			// if(effect_.current_stacks == 0)
 			// {
@@ -192,12 +192,12 @@ public partial class StatusEffectController : Node
 	public void RemoveMovementDebuffs(Entity entity_)
 	{
 
-		for(int i = entity_.status_effects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
+		for(int i = entity_.StatusEffects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
 		{
 			
-			if(entity_.status_effects[i].type == StatusEffect.EffectType.Debuff  && entity_.status_effects[i].category == StatusEffect.EffectCategory.Movement)
+			if(entity_.StatusEffects[i].type == StatusEffect.EffectType.Debuff  && entity_.StatusEffects[i].category == StatusEffect.EffectCategory.Movement)
 			{
-				RemoveStatusEffect(entity_, entity_.status_effects[i]);
+				RemoveStatusEffect(entity_, entity_.StatusEffects[i]);
 			}
 			
 		}
@@ -226,7 +226,7 @@ public partial class StatusEffectController : Node
 			if (effect_.GetType() == _status_effect.GetType())
 			{
 			
-				foreach(StatusEffect _applied_effect in entity_.status_effects)
+				foreach(StatusEffect _applied_effect in entity_.StatusEffects)
 				{
 					if(_applied_effect.GetType() == _status_effect.GetType())
 					{
@@ -276,15 +276,15 @@ public partial class StatusEffectController : Node
 
 	public void Subscribe(Entity entity_)
 	{
-		entity_.entity_systems.damage_system.AddStatusEffect += AddStatusEffect;
-		entity_.entity_systems.damage_system.Weak += AddWeak;
+		entity_.EntitySystems.damage_system.AddStatusEffect += AddStatusEffect;
+		entity_.EntitySystems.damage_system.Weak += AddWeak;
 	}
 
 
     public void Unsubscribe(Entity entity_)
 	{
-		entity_.entity_systems.damage_system.AddStatusEffect -= AddStatusEffect;
-		entity_.entity_systems.damage_system.Weak -= AddWeak;
+		entity_.EntitySystems.damage_system.AddStatusEffect -= AddStatusEffect;
+		entity_.EntitySystems.damage_system.Weak -= AddWeak;
 	}
 
 }

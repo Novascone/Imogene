@@ -110,19 +110,15 @@ public partial class Enemy : Entity
 		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
 		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
 
-		ui.health_bar.MaxValue = health.max_value;
-		ui.health_bar.Value = health.current_value;
-		ui.posture_bar.MaxValue = posture.max_value;
+		ui.health_bar.MaxValue = Health.max_value;
+		ui.health_bar.Value = Health.current_value;
+		ui.posture_bar.MaxValue = 0;
 		ui.posture_bar.Value = 0;
 		attacking = false;
-		level.base_value = 1;
-		armor.current_value = 0;
-		stamina.current_value = 2000;
-		physical_resistance.current_value = 0.10f;
-		bleed_resistance.current_value = 0.5f;
-		fire_resistance.current_value = 0.5f;
-		spell_resistance.current_value = 0.1f;
-		slash_resistance.current_value = 3;
+		Level.base_value = 1;
+		Armor.current_value = 0;
+		Stamina.current_value = 2000;
+		
 
 
 
@@ -183,9 +179,9 @@ public partial class Enemy : Entity
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 
-		if (_direction != Vector3.Zero)
+		if (direction != Vector3.Zero)
 		{
-			_direction = _direction.Normalized();
+			direction = direction.Normalized();
 			// Setting the basis property will affect the rotation of the node.
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}
@@ -214,16 +210,16 @@ public partial class Enemy : Entity
 	{
 		if(!entity_in_alert_area)
 		{
-			previous_y_rotation = GlobalRotation.Y;
+			PreviousYRotation = GlobalRotation.Y;
 			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving
 			{
 				LookAt(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
 				
 			}
-			current_y_rotation = GlobalRotation.Y;
-			if(previous_y_rotation != current_y_rotation)
+			CurrentYRotation = GlobalRotation.Y;
+			if(PreviousYRotation != CurrentYRotation)
 			{
-				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(previous_y_rotation, current_y_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+				GlobalRotation = GlobalRotation with {Y = Mathf.LerpAngle(PreviousYRotation, CurrentYRotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 	}

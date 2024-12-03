@@ -10,15 +10,11 @@ public partial class DepthSheet : Control
 
     internal void HandleUpdateStats(Player player_)
     {
-		int i = 0;
+		// int i = 0;
         foreach(Control _control in scroll_container.vbox.GetChildren().Cast<Control>())
 		{
-			if(_control is UIStat ui_stat)
-			{
-				ui_stat.GetStatInfo(player_.entity_controllers.stats_controller.depth_stats[i].base_value);
-				i += 1;
-			}
+			//Needs updated
 		}
-		i = 0;
+		// i = 0;
     }
 }

@@ -31,58 +31,7 @@ public partial class MeleeHitbox : Area3D
 
 	public float SetDamage(Entity entity_)
 	{
-		damage *= 1 + (entity_.power.current_value / 100);
-		if(type == DamageType.Physical)
-		{
-			damage *= entity_.physical_damage.current_value;
-			if(physical_damage_type == PhysicalDamageType.Pierce)
-			{
-				damage *= entity_.blunt_damage.current_value;
-			}
-			if(physical_damage_type == PhysicalDamageType.Slash)
-			{
-				damage *= entity_.slash_damage.current_value;
-			}
-			if(physical_damage_type == PhysicalDamageType.Blunt)
-			{
-				damage *= entity_.blunt_damage.current_value;
-			}
-		}
-		else if(type == DamageType.Spell)
-		{
-			damage *= entity_.spell_damage.current_value;
-			if(spell_damage_type == SpellDamageType.Fire)
-			{
-				damage *= entity_.fire_damage.current_value;
-			}
-			if(spell_damage_type == SpellDamageType.Cold)
-			{
-				damage *= entity_.cold_damage.current_value;
-			}
-			if(spell_damage_type == SpellDamageType.Lightning)
-			{
-				damage *= entity_.lightning_resistance.current_value;
-			}
-			if(spell_damage_type == SpellDamageType.Holy)
-			{
-				damage *= entity_.holy_damage.current_value;
-			}
-		}
-		else if(type == DamageType.Other)
-		{
-			if(other_damage_type == OtherDamageType.Bleed)
-			{
-				damage *= entity_.poison_damage.current_value;
-			}
-			if(other_damage_type == OtherDamageType.Poison)
-			{
-				damage *= entity_.poison_damage.current_value;
-			}
-			if(other_damage_type == OtherDamageType.Curse)
-			{
-				damage *= entity_.curse_damage.current_value;
-			}
-		}
+		
 		damage *= damage_amp;
 		return damage;
 	}

@@ -16,17 +16,17 @@ public partial class Slow : StatusEffect
 		max_stacks = 5;
 	}
 	
-	public override void Apply(Entity entity_)
+	public override void Apply(Entity entity)
 	{
-		base.Apply(entity_);
+		base.Apply(entity);
 		// GD.Print(entity.Name + " Speed before slow " + entity.speed);
 		// GD.Print("Applying slow");
 		
-		CreateTimerIncrementStack(entity_);
+		CreateTimerIncrementStack(entity);
 		
-		if(entity_.movement_speed.current_value >= entity_.movement_speed.base_value || entity_.movement_speed.current_value == entity_.movement_speed.base_value/2.0f)
+		if(entity.MovementSpeed.current_value >= entity.MovementSpeed.base_value || entity.MovementSpeed.current_value == entity.MovementSpeed.base_value/2.0f)
 		{
-			entity_.movement_speed.AddModifier(slow);
+			entity.MovementSpeed.AddModifier(slow);
 		}
 		else
 		{
@@ -34,17 +34,17 @@ public partial class Slow : StatusEffect
 		
 	}
 
-	public override void timer_timeout(Entity entity_)
+	public override void timer_timeout(Entity entity)
     {
 		if(!removed)
 		{
 			if(current_stacks == 1)
 			{
-				Remove(entity_);
+				Remove(entity);
 			}
 			else
 			{
-				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity_);
+				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
 			}
 			if(current_stacks > 0)
 			{
@@ -55,12 +55,12 @@ public partial class Slow : StatusEffect
 		
     }
 
-    public override void Remove(Entity entity_)
+    public override void Remove(Entity entity)
     {
 		if(!removed)
 		{
-			base.Remove(entity_);
-			entity_.movement_speed.RemoveModifier(slow);
+			base.Remove(entity);
+			entity.MovementSpeed.RemoveModifier(slow);
 		}
        
     }

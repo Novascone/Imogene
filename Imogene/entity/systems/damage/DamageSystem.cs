@@ -28,21 +28,21 @@ public partial class DamageSystem : Node
 	[Signal] public delegate void WeakEventHandler(Entity entity_, bool weak_);
 
 	
-	public static float DamageMitigation(Entity entity_, Node3D hitbox_, float amount_)
+	public static float DamageMitigation(Entity entity, Node3D hitbox, float amount)
 	{
-		float mitigated_damage = amount_;
-		mitigated_damage *= 1 - (entity_.armor.current_value / 100);
+		float mitigated_damage = amount;
+		mitigated_damage *= 1 - (entity.Armor.current_value / 100);
 
-		if(hitbox_ is MeleeHitbox _melee_hitbox)
+		if(hitbox is MeleeHitbox _melee_hitbox)
 		{
 			
-			mitigated_damage = MitigateMelee(_melee_hitbox, mitigated_damage, entity_);
+			mitigated_damage = MitigateMelee(_melee_hitbox, mitigated_damage, entity);
 			
 		}
 
-		if(hitbox_ is RangedHitbox _ranged_hitbox)
+		if(hitbox is RangedHitbox _ranged_hitbox)
 		{
-			mitigated_damage = MitigateRanged(_ranged_hitbox, mitigated_damage, entity_);
+			mitigated_damage = MitigateRanged(_ranged_hitbox, mitigated_damage, entity);
 		}
 
 		
@@ -51,160 +51,49 @@ public partial class DamageSystem : Node
 
 	public static float MitigateMelee(MeleeHitbox melee_hitbox_, float mitigated_damage_, Entity entity_)
 	{
-		if(melee_hitbox_.type == MeleeHitbox.DamageType.Physical)
-		{
-			mitigated_damage_ *= entity_.physical_resistance.current_value;
-			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Pierce)
-			{
-				mitigated_damage_ *= entity_.blunt_resistance.current_value;
-			}
-			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Slash)
-			{
-				mitigated_damage_ *= entity_.blunt_resistance.current_value;
-			}
-			if(melee_hitbox_.physical_damage_type == MeleeHitbox.PhysicalDamageType.Blunt)
-			{
-				mitigated_damage_ *= entity_.blunt_resistance.current_value;
-			}
-		}
-		else if(melee_hitbox_.type == MeleeHitbox.DamageType.Spell)
-		{
-			mitigated_damage_ *= 1 - entity_.spell_resistance.current_value;
-			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Fire)
-			{
-				mitigated_damage_ *= 1 - entity_.fire_resistance.current_value;
-			}
-			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Cold)
-			{
-				mitigated_damage_ *= entity_.cold_resistance.current_value;
-			}
-			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Lightning)
-			{
-				mitigated_damage_ *= entity_.lightning_resistance.current_value;
-			}
-			if(melee_hitbox_.spell_damage_type == MeleeHitbox.SpellDamageType.Holy)
-			{
-				mitigated_damage_ *= entity_.holy_resistance.current_value;
-			}
-		}
-		else if(melee_hitbox_.type == MeleeHitbox.DamageType.Other)
-		{
-			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Bleed)
-			{
-				mitigated_damage_ *= 1 - entity_.bleed_resistance.current_value;
-			}
-			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Poison)
-			{
-				mitigated_damage_ *= 1 - entity_.poison_resistance.current_value;
-			}
-			if(melee_hitbox_.other_damage_type == MeleeHitbox.OtherDamageType.Curse)
-			{
-				mitigated_damage_ *= entity_.curse_resistance.current_value;
-			}
-		}
+		
 
 		return mitigated_damage_;
 	}
 
 	public static float MitigateRanged(RangedHitbox ranged_hitbox_, float mitigated_damage_, Entity entity_)
 	{
-		if(ranged_hitbox_.type == RangedHitbox.DamageType.Physical)
-			{
-				mitigated_damage_ *= entity_.physical_resistance.current_value;
-				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Pierce)
-				{
-					mitigated_damage_ *= entity_.blunt_resistance.current_value;
-				}
-				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Slash)
-				{
-					mitigated_damage_ *= entity_.blunt_resistance.current_value;
-				}
-				if(ranged_hitbox_.physical_damage_type == RangedHitbox.PhysicalDamageType.Blunt)
-				{
-					mitigated_damage_ *= entity_.blunt_resistance.current_value;
-				}
-			}
-			else if(ranged_hitbox_.type == RangedHitbox.DamageType.Spell)
-			{
-				mitigated_damage_ *= entity_.spell_resistance.current_value;
-				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Fire)
-				{
-					mitigated_damage_ *= entity_.fire_resistance.current_value;
-				}
-				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Cold)
-				{
-					mitigated_damage_ *= entity_.cold_resistance.current_value;
-				}
-				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Lightning)
-				{
-					mitigated_damage_ *= entity_.lightning_resistance.current_value;
-				}
-				if(ranged_hitbox_.spell_damage_type == RangedHitbox.SpellDamageType.Holy)
-				{
-					mitigated_damage_ *= entity_.holy_resistance.current_value;
-				}
-			}
-			else if(ranged_hitbox_.type == RangedHitbox.DamageType.Other)
-			{
-				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Bleed)
-				{
-					mitigated_damage_ *= entity_.bleed_resistance.current_value;
-				}
-				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Poison)
-				{
-					mitigated_damage_ *= entity_.poison_resistance.current_value;
-				}
-				if(ranged_hitbox_.other_damage_type == RangedHitbox.OtherDamageType.Curse)
-				{
-					mitigated_damage_ *= entity_.curse_resistance.current_value;
-				}
-			}
+		
 
 		return mitigated_damage_;
 	}
 
-	public static bool Critical(Entity entity_)
-	{
-		float random_float = GD.Randf();
-		if(random_float < entity_.critical_hit_chance.current_value)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	
 
-	public void TakeDamage(Entity entity_, Node3D hitbox_, float amount_, bool is_critical_)
+	public void TakeDamage(Entity entity, Node3D hitbox, float amount, bool isCritical)
 	{
-		GD.Print(entity_.Name + " taking damage");
-		amount_ = DamageMitigation(entity_, hitbox_, amount_);
+		GD.Print(entity.Name + " taking damage");
+		amount = DamageMitigation(entity, hitbox, amount);
 		
-		if(entity_.health.current_value - amount_ > 0)
+		if(entity.Health.current_value - amount > 0)
 		{
-			remove_health.value_to_add = -amount_;
-			entity_.health.AddModifier(remove_health);
+			remove_health.value_to_add = -amount;
+			entity.Health.AddModifier(remove_health);
 
-			if(entity_.health.current_value < (entity_.health.max_value / 2) && !weak)
+			if(entity.Health.current_value < (entity.Health.max_value / 2) && !weak)
 			{
 				weak = true;
-				EmitSignal(nameof(Weak), entity_,  weak);
+				EmitSignal(nameof(Weak), entity,  weak);
 			}
 			
 
-			if(entity_ is Enemy enemy)
+			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = enemy.health.current_value;
+				enemy.ui.health_bar.Value = enemy.Health.current_value;
 				damage_number_spawn_point = enemy.head;
-				SpawnDamageNumber(amount_, is_critical_);
+				SpawnDamageNumber(amount, isCritical);
 			}
 			
-			HealthRegeneration(entity_);
+			HealthRegeneration(entity);
 		}
 		else
 		{
-			entity_.health.AddModifier(null_health);
+			entity.Health.AddModifier(null_health);
 			dead = true;
 		}
 	}
@@ -218,31 +107,31 @@ public partial class DamageSystem : Node
 		}
 	}
 
-	private void OnHealthRegenerationTickTimeout(Entity entity_)
+	private void OnHealthRegenerationTickTimeout(Entity entity)
     {
-        if(entity_.health.current_value < entity_.health.max_value && entity_.health.handicap_value == 0)
+        if(entity.Health.current_value < entity.Health.max_value && entity.Health.handicap_value == 0)
 		{
 			add_health.modification = StatModifier.ModificationType.AddCurrent;
-			add_health.value_to_add = entity_.health_regeneration.current_value;
-			entity_.health.AddModifier(add_health);
+			add_health.value_to_add = entity.HealthRegeneration.current_value;
+			entity.Health.AddModifier(add_health);
 			if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
 			{
 				health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-				health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
+				health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity);
 			}
-			if(entity_ is Enemy enemy)
+			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = enemy.health.current_value;
+				enemy.ui.health_bar.Value = enemy.Health.current_value;
 			}
 		}
     }
 
-	 public void SpawnDamageNumber(float value_, bool is_critical_)
+	 public void SpawnDamageNumber(float value, bool isCritical)
 	{
 		DamageNumber3D damage_number = GetDamageNumber();
 		Vector3 position = damage_number_spawn_point.GlobalTransform.Origin;
 		AddChild(damage_number, true);
-		damage_number.SetValuesAndAnimate(value_, is_critical_, position, damage_number_height, damage_number_spread);
+		damage_number.SetValuesAndAnimate(value, isCritical, position, damage_number_height, damage_number_spread);
 	}
 
 	public DamageNumber3D GetDamageNumber()
@@ -292,15 +181,15 @@ public partial class DamageSystem : Node
 		}
     }
 
-	public void Subscribe(Entity entity_)
+	public void Subscribe(Entity entity)
 	{
-		entity_.hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity_);
-		entity_.hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity_);
+		entity.Hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity);
+		entity.Hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity);
 	}
-	public void unsubscribe(Entity entity_)
+	public void unsubscribe(Entity entity)
 	{
-		entity_.hurtbox.AreaEntered -= (area_) => OnHurtboxAreaEntered(area_, entity_);
-		entity_.hurtbox.BodyEntered -= (body_) => OnHurtboxBodyEntered(body_, entity_);
+		entity.Hurtbox.AreaEntered -= (area_) => OnHurtboxAreaEntered(area_, entity);
+		entity.Hurtbox.BodyEntered -= (body_) => OnHurtboxBodyEntered(body_, entity);
 	}
 
 }

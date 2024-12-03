@@ -15,20 +15,20 @@ public partial class Curse : StatusEffect
 
 	[Signal] public delegate void CursedEventHandler(Entity entity_, bool cursed_);
 
-	public override void Apply(Entity entity_)
+	public override void Apply(Entity entity)
 	{
-		base.Apply(entity_);
-		max_health = entity_.health.max_value;
-		entity_.health.current_value = entity_.health.max_value * 0.5f;
-		entity_.health.handicap_value = entity_.health.max_value * 0.5f;
-		EmitSignal(nameof(Cursed), entity_, applied);
+		base.Apply(entity);
+		max_health = entity.Health.max_value;
+		entity.Health.current_value = entity.Health.max_value * 0.5f;
+		entity.Health.handicap_value = entity.Health.max_value * 0.5f;
+		EmitSignal(nameof(Cursed), entity, applied);
 		
 	}
 
-    public override void Remove(Entity entity_)
+    public override void Remove(Entity entity)
     {
-        base.Remove(entity_);
-		EmitSignal(nameof(Cursed), entity_, applied);
-		entity_.health.max_value = max_health;
+        base.Remove(entity);
+		EmitSignal(nameof(Cursed), entity, applied);
+		entity.Health.max_value = max_health;
     }
 }

@@ -19,7 +19,7 @@ public partial class Kick : Ability
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
 		use_timer = GetNode<Timer>("CastTimer");
 		charges = 2;
-		ability_damage_modifier = 0.5f;
+		DamageModifier = 0.5f;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,20 +65,13 @@ public partial class Kick : Ability
 		
 		
 		AddHitbox(player);
-		DealDamage(player, ability_damage_modifier);
-		if(DamageSystem.Critical(player)) // check if the play will crit
-		{
-			kick_hitbox.damage = MathF.Round(player.combined_damage * (1 + player.critical_hit_damage.current_value), 2) / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.posture_damage.current_value * 3; // Set projectile posture damage 
-			kick_hitbox.is_critical = true;
-		}
-		else
-		{
+		DealDamage(player, DamageModifier);
+		
 			
-			kick_hitbox.damage = player.combined_damage  / 2; // Set projectile damage
-			kick_hitbox.posture_damage = player.posture_damage.current_value * 2; // Set projectile posture damage 
-			kick_hitbox.is_critical = false;
-		}
+		kick_hitbox.damage = player.CombinedDamage  / 2; // Set projectile damage
+		kick_hitbox.posture_damage = 0; // Set projectile posture damage 
+		kick_hitbox.is_critical = false;
+		
 		kick_hitbox.type = MeleeHitbox.DamageType.Physical; // Set projectile damage type
 		
 	}

@@ -45,25 +45,25 @@ public partial class CharacterOutline : Control
 
     internal void HandleUpdateStats(Player player_)
     {
-		
-		int i = 0;
-        level.value.Text = player_.entity_controllers.stats_controller.base_stats[i].base_value.ToString();
-		level.GetStatInfo(player_.entity_controllers.stats_controller.base_stats[i].base_value);
-		i += 1;
-		foreach(UIStat ui_stat in base_stats.GetChildren())
-		{
-			ui_stat.GetStatInfo(player_.entity_controllers.stats_controller.base_stats[i].base_value);
-			i += 1;
-		}
-		i = 0;
-		foreach(Control control in summary_stats.GetChildren())
-		{
-			if(control is UIStat ui_stat)
-			{
-				ui_stat.GetStatInfo(player_.entity_controllers.stats_controller.summary_stats[i]);
-				i += 1;
-			}
-		}
+		// Needs updating
+		// int i = 0;
+        // level.value.Text = player_.entity_controllers.stats_controller.base_stats[i].base_value.ToString();
+		// level.GetStatInfo(player_.entity_controllers.stats_controller.base_stats[i].base_value);
+		// i += 1;
+		// foreach(UIStat ui_stat in base_stats.GetChildren())
+		// {
+		// 	ui_stat.GetStatInfo(player_.entity_controllers.stats_controller.base_stats[i].base_value);
+		// 	i += 1;
+		// }
+		// i = 0;
+		// foreach(Control control in summary_stats.GetChildren())
+		// {
+		// 	if(control is UIStat ui_stat)
+		// 	{
+		// 		ui_stat.GetStatInfo(player_.entity_controllers.stats_controller.summary_stats[i]);
+		// 		i += 1;
+		// 	}
+		// }
 
     }
 }

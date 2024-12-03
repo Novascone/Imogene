@@ -9,14 +9,13 @@ public partial class EnemyHealth : Control
 	[Export] public TextureProgressBar posture_bar { get; set; }
 	public Enemy targeted_enemy { get; set; } = null;
 
-	public void EnemyTargeted(Enemy enemy_)
+	public void EnemyTargeted(Enemy enemy)
     {
-		targeted_enemy = enemy_;
-        health_bar.MaxValue = enemy_.health.max_value;
-		health_bar.Value = enemy_.health.current_value;
-		name.Text = enemy_.identifier;
-		posture_bar.MaxValue = enemy_.posture.max_value;
-		posture_bar.Value = enemy_.posture.current_value;
+		targeted_enemy = enemy;
+        health_bar.MaxValue = enemy.Health.max_value;
+		health_bar.Value = enemy.Health.current_value;
+		name.Text = enemy.Identifier;
+	
 		targeted_enemy.ui.hard_target_icon.Show();
 		targeted_enemy.ui.status_bar.Show();
 		targeted_enemy.ui.soft_target_icon.Show();
@@ -72,8 +71,8 @@ public partial class EnemyHealth : Control
 		player_.systems.targeting_system.TargetHealthChanged += HandleEnemyHealthChangedUI;
 	}
 	
-	public void UnSubscribe(Player player_)
+	public void UnSubscribe(Player player)
 	{
-		player_.entity_systems.damage_system.HealthChanged -= HandleEnemyHealthChangedUI;
+		player.EntitySystems.damage_system.HealthChanged -= HandleEnemyHealthChangedUI;
 	}
 }

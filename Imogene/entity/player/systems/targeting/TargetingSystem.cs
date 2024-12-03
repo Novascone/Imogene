@@ -298,13 +298,13 @@ public partial class TargetingSystem : Node
 					{
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 						mob_looking_at = mobs_in_order[0];
-						current_target_health = mob_looking_at.health.current_value;
+						current_target_health = mob_looking_at.Health.current_value;
 					}
 					else if (enemy_pointed_toward != null)
 					{
 						mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
 						mob_looking_at = enemy_pointed_toward;
-						current_target_health = mob_looking_at.health.current_value;
+						current_target_health = mob_looking_at.Health.current_value;
 					}
 					
 				}
@@ -429,24 +429,24 @@ public partial class TargetingSystem : Node
 		}
 	}
 
-	public void HardTargetRotation(Player player_) // Smoothly rotate to hard target
+	public void HardTargetRotation(Player player) // Smoothly rotate to hard target
 	{
 		
-		player_.previous_y_rotation = player_.GlobalRotation.Y;
-		if(player_.IsOnFloor())
+		player.PreviousYRotation = player.GlobalRotation.Y;
+		if(player.IsOnFloor())
 		{
-			player_.LookAt(mob_to_LookAt_pos with {Y = player_.GlobalPosition.Y});
+			player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
 		}
 		else if (!soft_targeting)
 		{
 			// player.previous_x_rotation = player.GlobalRotation.X;
-			player_.previous_x_rotation = Mathf.Clamp(player_.GlobalRotation.X, min_x_rotation, max_x_rotation);
-			player_.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
+			player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
+			player.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
 			// player.current_x_rotation = player.GlobalRotation.X;
-			player_.current_x_rotation = Mathf.Clamp(player_.GlobalRotation.X, min_x_rotation, max_x_rotation);
-			if(player_.previous_x_rotation != player_.current_x_rotation)
+			player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
+			if(player.PreviousXRotation != player.CurrentXRotation)
 			{
-				player_.GlobalRotation = player_.GlobalRotation with {X = Mathf.LerpAngle(player_.previous_x_rotation, player_.current_x_rotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
+				player.GlobalRotation = player.GlobalRotation with {X = Mathf.LerpAngle(player.PreviousXRotation, player.CurrentXRotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
 		if (!ui_target_signal_emitted)
@@ -455,33 +455,33 @@ public partial class TargetingSystem : Node
 			ui_target_signal_emitted = true;
 		}
 
-		if(current_target_health != mob_looking_at.health.current_value)
+		if(current_target_health != mob_looking_at.Health.current_value)
 		{
-			current_target_health = mob_looking_at.health.current_value;
+			current_target_health = mob_looking_at.Health.current_value;
 			EmitSignal(nameof(TargetHealthChanged), mob_looking_at, current_target_health);
 
 		}
 		
-		player_.current_y_rotation = player_.GlobalRotation.Y;
-		if(player_.previous_y_rotation != player_.current_y_rotation)
+		player.CurrentYRotation = player.GlobalRotation.Y;
+		if(player.PreviousYRotation != player.CurrentYRotation)
 		{
-			player_.GlobalRotation = player_.GlobalRotation with {Y = Mathf.LerpAngle(player_.previous_y_rotation, player_.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+			player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.PreviousYRotation, player.CurrentYRotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 		}
 	}
 
-	public void SoftTargetRotation(Player player_)
+	public void SoftTargetRotation(Player player)
 	{
-		if(player_.GlobalRotation.X == -0)
+		if(player.GlobalRotation.X == -0)
 		{
-			player_.previous_x_rotation = 0f;
-			player_.current_x_rotation = 0f;
+			player.PreviousXRotation = 0f;
+			player.CurrentXRotation = 0f;
 		}
 		EmitSignal(nameof(Rotating));
 		if(!targeting)
 		{
 			if(enemy_pointed_toward != null)
 			{
-				direction_to_enemy = player_.GlobalPosition.DirectionTo(enemy_pointed_toward.GlobalPosition);
+				direction_to_enemy = player.GlobalPosition.DirectionTo(enemy_pointed_toward.GlobalPosition);
 				if(mob_looking_at != enemy_pointed_toward)
 				{
 					mob_looking_at = enemy_pointed_toward;
@@ -494,42 +494,42 @@ public partial class TargetingSystem : Node
 				
 				mob_looking_at = nearest_enemy;
 				mob_to_LookAt_pos = nearest_enemy.GlobalPosition;
-				direction_to_enemy = player_.GlobalPosition.DirectionTo(nearest_enemy.GlobalPosition);
+				direction_to_enemy = player.GlobalPosition.DirectionTo(nearest_enemy.GlobalPosition);
 			}
 		}
 		else
 		{
-			direction_to_enemy = player_.GlobalPosition.DirectionTo(mob_looking_at.GlobalPosition);
+			direction_to_enemy = player.GlobalPosition.DirectionTo(mob_looking_at.GlobalPosition);
 		}
 		
 		if(enemy_pointed_toward != null || targeting || mob_looking_at != null)
 		{
-			player_.previous_y_rotation = player_.GlobalRotation.Y;
-			if(player_.IsOnFloor())
+			player.PreviousYRotation = player.GlobalRotation.Y;
+			if(player.IsOnFloor())
 			{
-				player_.LookAt(mob_to_LookAt_pos with {Y = player_.GlobalPosition.Y});
+				player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
 			}
 			else
 			{
-				player_.previous_x_rotation = Mathf.Clamp(player_.GlobalRotation.X, min_x_rotation, max_x_rotation);
-				player_.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
-				player_.current_x_rotation = Mathf.Clamp(player_.GlobalRotation.X, min_x_rotation, max_x_rotation);
+				player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
+				player.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
+				player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
 				
-				if(player_.previous_x_rotation != player_.current_x_rotation)
+				if(player.PreviousXRotation != player.CurrentXRotation)
 				{
-					player_.GlobalRotation = player_.GlobalRotation with {X = Mathf.LerpAngle(player_.previous_x_rotation, player_.current_x_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
+					player.GlobalRotation = player.GlobalRotation with {X = Mathf.LerpAngle(player.PreviousXRotation, player.CurrentXRotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
 				}
 			}
-			player_.current_y_rotation = player_.GlobalRotation.Y;
-			if(player_.previous_y_rotation != player_.current_y_rotation)
+			player.CurrentYRotation = player.GlobalRotation.Y;
+			if(player.PreviousYRotation != player.CurrentYRotation)
 			{
-				player_.GlobalRotation = player_.GlobalRotation with {Y = Mathf.LerpAngle(player_.previous_y_rotation, player_.current_y_rotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
+				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.PreviousYRotation, player.CurrentYRotation, 0.33f)}; // smoothly rotates between the previous angle and the new angle!
 				
 			}
 
 			
-			SetMaxXRotation(player_);
-			SetSimilarity(player_);
+			SetMaxXRotation(player);
+			SetSimilarity(player);
 
 
 			if(enemy_pointed_toward == null && nearest_enemy != null && !targeting)
@@ -538,10 +538,10 @@ public partial class TargetingSystem : Node
 			}
 
 			
-			if(-player_.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && CheckSimilarRotations(player_))
+			if(-player.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && CheckSimilarRotations(player))
 			{
 				EmitSignal(nameof(RotationForAbilityFinished), true);
-				EmitSignal(nameof(RotationForInputFinished), player_);
+				EmitSignal(nameof(RotationForInputFinished), player);
 				rotating_to_soft_target = false;
 				facing_enemy = true;
 
@@ -560,7 +560,7 @@ public partial class TargetingSystem : Node
 		else
 		{
 			EmitSignal(nameof(RotationForAbilityFinished), true);
-			EmitSignal(nameof(RotationForInputFinished), player_);
+			EmitSignal(nameof(RotationForInputFinished), player);
 		}
 		
 	}
@@ -622,29 +622,29 @@ public partial class TargetingSystem : Node
 		}
 	}
 
-	public static bool CheckSimilarRotations(Player player_)
+	public static bool CheckSimilarRotations(Player player)
 	{
-		if(Mathf.IsEqualApprox(MathF.Round(player_.previous_y_rotation - player_.current_y_rotation, 2), 0))
+		if(Mathf.IsEqualApprox(MathF.Round(player.PreviousYRotation - player.CurrentYRotation, 2), 0))
 		{
 			
-			if(Mathf.IsEqualApprox(MathF.Round(player_.previous_x_rotation - player_.current_x_rotation, 2), 0))
+			if(Mathf.IsEqualApprox(MathF.Round(player.PreviousXRotation - player.CurrentXRotation, 2), 0))
 			{
-				player_.previous_x_rotation = 0f;
-				player_.current_x_rotation = 0f;
+				player.PreviousXRotation = 0f;
+				player.CurrentXRotation = 0f;
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void Sort(Player player_) // Sort mobs by distance
+	public void Sort(Player player) // Sort mobs by distance
 	{
-		sorted_mobs = Vector3DictionarySorter.SortByDistance(mobs, player_.GlobalTransform.Origin);
+		sorted_mobs = Vector3DictionarySorter.SortByDistance(mobs, player.GlobalTransform.Origin);
 		mobs_in_order = new List<Enemy>(sorted_mobs.Keys);
 
 		foreach(Enemy enemy in sorted_mobs.Keys)
 		{
-			AssignEnemySide(player_, enemy);
+			AssignEnemySide(player, enemy);
 		}
 		if(mob_looking_at != null) // sort the enemies to the left and right of the player if the player is looking at an enemy
 		{

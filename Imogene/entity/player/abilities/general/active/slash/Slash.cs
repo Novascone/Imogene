@@ -12,7 +12,7 @@ public partial class Slash : Ability
 		
 		rotate_on_soft = true;
 		rotate_on_held = true;
-		ability_damage_modifier = 1;
+		DamageModifier = 1;
     }
 
 

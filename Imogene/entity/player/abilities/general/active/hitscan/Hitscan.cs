@@ -96,7 +96,7 @@ public partial class Hitscan : RangedAbility
 		}
 		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{
-			if(MathF.Round(player.current_y_rotation - player.previous_y_rotation, 1) == 0)
+			if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0)
 			{
 				EmitSignal(nameof(AbilityFinished),this);
 			}
@@ -152,7 +152,7 @@ public partial class Hitscan : RangedAbility
 			
 			if(hurtbox.Owner is Enemy enemy)
 			{
-				enemy.entity_systems.damage_system.TakeDamage(enemy, ranged_hitbox, 10.0f, false);
+				enemy.EntitySystems.damage_system.TakeDamage(enemy, ranged_hitbox, 10.0f, false);
 			}
 			
 		}

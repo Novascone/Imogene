@@ -15,7 +15,7 @@ public partial class Whirlwind : Ability
 		
 		resource_change = -10;
 		rotate_on_soft = false;
-		ability_damage_modifier = 1.25f;
+		DamageModifier = 1.25f;
 	}
 
 	public override void Execute(Player player)
@@ -32,7 +32,7 @@ public partial class Whirlwind : Ability
 		
 		melee_hitbox = whirlwind_hitbox;
 		whirlwind_hitbox.type = MeleeHitbox.DamageType.Physical; // Set projectile damage type		
-		DealDamage(player, ability_damage_modifier);
+		DealDamage(player, DamageModifier);
 	}
 
     public override void FrameCheck(Player player)
@@ -50,7 +50,7 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.resource.current_value + resource_change < 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.Resource.current_value + resource_change < 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			

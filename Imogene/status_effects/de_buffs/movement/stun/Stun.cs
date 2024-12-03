@@ -15,26 +15,26 @@ public partial class Stun : StatusEffect
 		max_stacks = 1;
     }
  
-	public override void Apply(Entity entity_)
+	public override void Apply(Entity entity)
 	{
-		base.Apply(entity_);
-		entity_.movement_speed.AddModifier(stop);
-		CreateTimerIncrementStack(entity_);
+		base.Apply(entity);
+		entity.MovementSpeed.AddModifier(stop);
+		CreateTimerIncrementStack(entity);
 		
 		
 	}
 
-	public override void timer_timeout(Entity entity_)
+	public override void timer_timeout(Entity entity)
     {
-		Remove(entity_);
+		Remove(entity);
     }
 
-    public override void Remove(Entity entity_)
+    public override void Remove(Entity entity)
     {
 		if(!removed)
 		{
-			base.Remove(entity_);
-			entity_.movement_speed.RemoveModifier(stop);
+			base.Remove(entity);
+			entity.MovementSpeed.RemoveModifier(stop);
 		}
         
     }

@@ -14,7 +14,7 @@ public partial class Ability : Node3D
     public States state { get; set; } = States.NotQueued;
     public MeleeHitbox melee_hitbox { get; set; } = null;
     public RangedHitbox ranged_hitbox { get; set; } = null;
-    public float ability_damage_modifier  { get; set; } = 0.0f;
+    public float DamageModifier  { get; set; } = 0.0f;
     public Cross cross { get; set; } = Cross.None;
     public Tier tier { get; set; } = Tier.None;
     public string assigned_button { get; set; } = "";
@@ -110,46 +110,30 @@ public partial class Ability : Node3D
         return button_held;
     }
 
-    public virtual void DealDamage(Player player_, float ability_damage_modifier_)
+    public virtual void DealDamage(Player player, float abilityDamageModifier)
     {
         if(melee_hitbox != null)
         {
-            if(DamageSystem.Critical(player_))
-            {
-                melee_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier);
-                melee_hitbox.SetDamage(player_);
-                melee_hitbox.posture_damage = player_.posture_damage.current_value;
-                melee_hitbox.is_critical = true;
-            }
-            else
-            {
-                melee_hitbox.damage = player_.combined_damage * (1 + ability_damage_modifier);
-                melee_hitbox.SetDamage(player_);
-                melee_hitbox.posture_damage = player_.posture_damage.current_value;
-                melee_hitbox.is_critical = false;
-            }
+           
+            melee_hitbox.damage = player.CombinedDamage * (1 + abilityDamageModifier);
+            melee_hitbox.SetDamage(player);
+            melee_hitbox.posture_damage = 0;
+            melee_hitbox.is_critical = false;
+            
         }
         if(ranged_hitbox != null)
         {
-            if(DamageSystem.Critical(player_)) // check if the play will crit
-		    {
-                ranged_hitbox.damage = MathF.Round(player_.combined_damage * (1 + player_.critical_hit_damage.current_value), 2) * (1 + ability_damage_modifier); // Set projectile damage
-                ranged_hitbox.SetDamage(player_);
-                ranged_hitbox.posture_damage = player_.posture_damage.current_value / 3; // Set projectile posture damage 
-                ranged_hitbox.is_critical = true;
-		    }
-            else
-            {
-                ranged_hitbox.damage = player_.combined_damage * (1 + ability_damage_modifier); // Set projectile damage
-                ranged_hitbox.SetDamage(player_);
-                ranged_hitbox.posture_damage = player_.posture_damage.current_value / 3; // Set projectile posture damage 
-                ranged_hitbox.is_critical = false;
-            }
+           
+            ranged_hitbox.damage = player.CombinedDamage * (1 + abilityDamageModifier); // Set projectile damage
+            ranged_hitbox.SetDamage(player);
+            ranged_hitbox.posture_damage = 0; // Set projectile posture damage 
+            ranged_hitbox.is_critical = false;
+            
         }        
     }
 
  
-    public virtual void FrameCheck(Player player_)
+    public virtual void FrameCheck(Player player)
     {
         if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
 		{

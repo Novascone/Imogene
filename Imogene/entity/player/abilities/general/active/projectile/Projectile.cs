@@ -17,7 +17,7 @@ public partial class Projectile : RangedAbility
 		
 		rotate_on_soft = true;
 		rotate_on_held = true;
-		ability_damage_modifier = 1;
+		DamageModifier = 1;
     }
 
 
@@ -53,7 +53,7 @@ public partial class Projectile : RangedAbility
 		Slow slow = new();
 		projectile.effects.Add(slow);
 		ranged_hitbox = projectile;
-		DealDamage(player, ability_damage_modifier);
+		DealDamage(player, DamageModifier);
 	}
 
 	public void RemoveFromExclusion(Player player, Rid projectile_rid, RangedHitbox projectile) // Remove projectile from exclusion array

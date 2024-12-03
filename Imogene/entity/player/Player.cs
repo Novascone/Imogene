@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 
+
 public partial class Player : Entity
 {
 	[Export] public CameraRig camera_rig { get; set; }
@@ -22,33 +23,33 @@ public partial class Player : Entity
 	public Godot.Collections.Array<Rid> excluded_rids { get; set; } = new Godot.Collections.Array<Rid>();
 
 	
-    public override void _Input(InputEvent @event_)
+    public override void _Input(InputEvent @event)
     {
 		
 		
-        if(@event_.IsActionPressed("one"))
+        if(@event.IsActionPressed("one"))
 		{
 			controllers.movement_controller.movement_input_prevented = !controllers.movement_controller.movement_input_prevented;
 			controllers.input_controller.directional_input_prevented = !controllers.input_controller.directional_input_prevented;
 		}
-		if(@event_.IsActionPressed("two"))
+		if(@event.IsActionPressed("two"))
 		{
 			Chill chill = new();
-			entity_controllers.status_effect_controller.AddStatusEffect(this, chill);
+			EntityControllers.status_effect_controller.AddStatusEffect(this, chill);
 		}
-		if(@event_.IsActionPressed("three"))
+		if(@event.IsActionPressed("three"))
 		{
 			Daze daze = new();
-			entity_controllers.status_effect_controller.AddStatusEffect(this, daze);
+			EntityControllers.status_effect_controller.AddStatusEffect(this, daze);
 		}
-		if(@event_.IsActionPressed("four"))
+		if(@event.IsActionPressed("four"))
 		{
-			entity_controllers.status_effect_controller.RemoveMovementDebuffs(this);
+			EntityControllers.status_effect_controller.RemoveMovementDebuffs(this);
 		}
-		if(@event_.IsActionPressed("five"))
+		if(@event.IsActionPressed("five"))
 		{
 			Tether tether = new();
-			entity_controllers.status_effect_controller.AddStatusEffect(this, tether);
+			EntityControllers.status_effect_controller.AddStatusEffect(this, tether);
 		}
 		
     }
@@ -59,10 +60,10 @@ public partial class Player : Entity
 	{
 		
 		base._Ready();
-		entity_controllers.status_effect_controller.fear_duration = 3;
+		EntityControllers.status_effect_controller.fear_duration = 3;
 		
-		power.current_value = 50;
-		resource.max_value = resource.max_value / 2;
+
+		Resource.max_value = Resource.max_value / 2;
 
 		Ability jump = (Ability)AbilityAssigner.LoadAbility(this, "jump", "general", "active");
 		Ability slash = (Ability)AbilityAssigner.LoadAbility(this, "slash", "general", "active");
@@ -85,11 +86,11 @@ public partial class Player : Entity
 		camera_rig.TopLevel = true;
 
 		// Entity system signals
-		entity_systems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
+		EntitySystems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
 
 		// Entity controller signals
-		entity_controllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
-		entity_controllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
+		EntityControllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
+		EntityControllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
 
 
         // System signals
@@ -113,21 +114,20 @@ public partial class Player : Entity
 		controllers.input_controller.Subscribe(this);
 		controllers.movement_controller.Subscribe(this);
 
-		level.base_value = 4;
-		strength.base_value = 10;
-		dexterity.base_value = 5;
-		vitality.base_value = 20;
-		intellect.base_value = 11;
-		physical_resistance.base_value = 6;
+		Level.base_value = 4;
+		Strength.base_value = 10;
+		Dexterity.base_value = 5;
+		Vitality.base_value = 20;
+		Intellect.base_value = 11;
 
-		entity_controllers.stats_controller.SetStats(this);
-		entity_controllers.stats_controller.Update(this);
+		EntityControllers.stats_controller.SetStats(this);
+		EntityControllers.stats_controller.Update(this);
 		
 		excluded_rids.Add(areas.near.GetRid());
 		excluded_rids.Add(areas.far.GetRid());
 		excluded_rids.Add(areas.interact.GetRid());
-		excluded_rids.Add(hurtbox.GetRid());
-		excluded_rids.Add(main_hand_hitbox.GetRid());
+		excluded_rids.Add(Hurtbox.GetRid());
+		excluded_rids.Add(MainHandHitbox.GetRid());
 		excluded_rids.Add(GetRid());
 
 		

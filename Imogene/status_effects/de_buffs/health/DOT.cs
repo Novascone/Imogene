@@ -19,18 +19,18 @@ public partial class DOT : StatusEffect
 		tick_timer.Timeout += () => timer_timeout(entity_);
 	}
 
-	public override void timer_timeout(Entity entity_)
+	public override void timer_timeout(Entity entity)
     {
-		entity_.entity_systems.damage_system.TakeDamage(entity_, hitbox, hitbox.damage, false);
+		entity.EntitySystems.damage_system.TakeDamage(entity, hitbox, hitbox.damage, false);
 		ticks_used += 1;
 		if (ticks_used < duration)
 		{
-			GetTree().CreateTimer(1).Timeout += () => timer_timeout(entity_);
+			GetTree().CreateTimer(1).Timeout += () => timer_timeout(entity);
 		}
 		else
 		{
 			ticks_used = 0;
-			Remove(entity_);
+			Remove(entity);
 		}
     }
 

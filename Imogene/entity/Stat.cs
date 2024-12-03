@@ -16,51 +16,32 @@ public partial class Stat : Resource
 		None,
 		//Base
 		Strength, Dexterity, Intellect, Vitality, Stamina,
-		Wisdom, Charisma,
+		
 		
 		//Gear
-		MainHandDamage, OffHandDamage, DamageBonus,
-		MainHandAttacksPerSecond, OffHandAttacksPerSecond,
-		AttackSpeedIncrease, HealthBonus,
+		MainHandDamage, OffHandDamage, DamageBonus, HealthBonus,
 		
 		//Movement
 		MovementSpeed, FallSpeed, JumpSpeed,
 		
 		//Offense
-		CriticalHitChance, CriticalHitDamage, PostureDamage,
-		Power, PhysicalDamage, PierceDamage, SlashDamage,
-		BluntDamage, BleedDamage, PoisonDamage, CurseDamage,
-		SpellDamage, FireDamage, ColdDamage, LightningDamage,
-		HolyDamage,
+		
 		
 		//Defense
 		BlockAmount, Retaliation,
-		Armor, Poise, PhysicalResistance, PierceResistance,
-		SlashResistance, BluntResistance, BleedResistance,
-		PoisonResistance, CurseResistance, SpellResistance,
-		FireResistance, ColdResistance, LightningResistance,
-		HolyResistance,
+		Armor,
 
 		//Health
 		Health, HealthOnRetaliation,
 		HealthRegenerationBonus,
 
 		//Resource
-		Resource, Posture, ResourceCostReduction, ResourceRegenerationBonus,
+		Resource, ResourceCostReduction, ResourceRegenerationBonus,
 		CooldownReduction,
 
 		//Level
 		Level,
-
-		//Powers
-		PhysicalMeleePower,
-		SpellMeleePower,
-		PhysicalRangedPower,
-		SpellRangedPower,
-
-		//Wisdom
-		WisdomScaler,
-
+		
 		//Regeneration
 		HealthRegeneration,
 		ResourceRegeneration,

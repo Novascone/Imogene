@@ -168,31 +168,31 @@ public partial class InputController : Node
 		
 	}	
 
-	public void SetInput(Player player_) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
+	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
 		GetInputStrength();
 		if(!directional_input_prevented)
 		{
-			player_._direction.X = 0.0f;
-			player_._direction.Z = 0.0f;
+			player.direction.X = 0.0f;
+			player.direction.Z = 0.0f;
 			if(!climbing)
 			{
-				SetDeadzonedVector(player_);
+				SetDeadzonedVector(player);
 			}
 			else
 			{
-				ClimbingMovement(player_);
+				ClimbingMovement(player);
 			}
 		}
 		
 		CheckDPadInput();
-		LookForward(player_, player_._direction);
+		LookForward(player, player.direction);
 		
 		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
 		
 		if(x_rotation_not_zero)
 		{
-			RotateXBack(player_);
+			RotateXBack(player);
 		}
 		
 	}
@@ -203,7 +203,7 @@ public partial class InputController : Node
 		// GD.Print("Input strength " + input_strength);
 	}
 
-	public void SetDeadzonedVector(Player player_)
+	public void SetDeadzonedVector(Player player)
 	{
 		raw_vector = Input.GetVector("Left", "Right", "Forward", "Backward");
 		deadzoned_vector = raw_vector;
@@ -216,34 +216,34 @@ public partial class InputController : Node
 			
 			deadzoned_vector = deadzoned_vector.Normalized() * ((deadzoned_vector.Length() - deadzone) / (1 - deadzone));
 		}
-		player_._direction.X = -deadzoned_vector.X;
-		player_._direction.Z = -deadzoned_vector.Y;
+		player.direction.X = -deadzoned_vector.X;
+		player.direction.Z = -deadzoned_vector.Y;
 	}
 
 	
-	public void ClimbingMovement(Player player_) // Takes climbing input and moves the character when climbing
+	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
 		{
-			player_._direction = Vector3.Zero;
+			player.direction = Vector3.Zero;
 			
 			if (Input.IsActionPressed("Right"))
 			{
-				player_._direction.X -= 1.0f;	
+				player.direction.X -= 1.0f;	
 				// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
 			}
 			if (Input.IsActionPressed("Left"))
 			{
-				player_._direction.X += 1.0f;
+				player.direction.X += 1.0f;
 				// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
 			}
 			if (Input.IsActionPressed("Backward"))
 			{
-				player_._direction.Y -= 1.0f;
+				player.direction.Y -= 1.0f;
 				// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
 			}
 			if (Input.IsActionPressed("Forward"))
 			{
-				player_._direction.Y += 1.0f;
+				player.direction.Y += 1.0f;
 				// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 			}
 		}
@@ -266,21 +266,21 @@ public partial class InputController : Node
 	}
 
 
-	public void LookForward(Player player_, Vector3 direction_) // Rotates the player character smoothly with lerp
+	public void LookForward(Player player, Vector3 direction_) // Rotates the player character smoothly with lerp
 	{
 		if(!directional_input_prevented)
 		{
 			if(!targeting && !ability_rotating_player && !climbing)
 			{
-				player_.previous_y_rotation = player_.GlobalRotation.Y;
-				if (player_.GlobalTransform.Origin != player_.GlobalPosition + direction_ with {Y = 0}) // looks at direction the player is moving
+				player.PreviousYRotation = player.GlobalRotation.Y;
+				if (player.GlobalTransform.Origin != player.GlobalPosition + direction_ with {Y = 0}) // looks at direction the player is moving
 				{
-					player_.LookAt(player_.GlobalPosition + direction_ with { Y = 0 });
+					player.LookAt(player.GlobalPosition + direction_ with { Y = 0 });
 				}
-				player_.current_y_rotation = player_.GlobalRotation.Y;
-				if(player_.previous_y_rotation != player_.current_y_rotation)
+				player.CurrentYRotation = player.GlobalRotation.Y;
+				if(player.PreviousYRotation != player.CurrentYRotation)
 				{
-					player_.GlobalRotation = player_.GlobalRotation with {Y = Mathf.LerpAngle(player_.previous_y_rotation, player_.current_y_rotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
+					player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.PreviousYRotation, player.CurrentYRotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
 				}
 			}
 		}
@@ -293,8 +293,8 @@ public partial class InputController : Node
 		if(player_.GlobalRotation.X != -0)
 		{
 			// player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f); <-- figure out a way to use this with hard target 
-			player_.previous_x_rotation = 0f;
-			player_.current_x_rotation = 0f;
+			player_.PreviousXRotation = 0f;
+			player_.CurrentXRotation = 0f;
 			
 		}
 		else
@@ -306,18 +306,18 @@ public partial class InputController : Node
 
 	// Signals
 
-	public void Subscribe(Player player_)
+	public void Subscribe(Player player)
 	{
-		player_.entity_controllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
+		player.EntityControllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
 
-		player_.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
-		player_.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player_.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
+		player.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
+		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
 
-		player_.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
-		player_.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
+		player.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
+		player.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
 
-		player_.ui.CapturingInput += HandleUICapturingInput;
+		player.ui.CapturingInput += HandleUICapturingInput;
 	}
 
 	public void AbilitySubscribe(Ability ability_)
@@ -328,25 +328,25 @@ public partial class InputController : Node
 	}
 
 
-    public void Unsubscribe(Player player_)
+    public void Unsubscribe(Player player)
 	{
-		player_.entity_controllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
+		player.EntityControllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
 
-		player_.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
-		player_.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player_.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
+		player.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
+		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
 
-		player_.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
-		player_.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
+		player.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
+		player.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
 
-		player_.ui.CapturingInput -= HandleUICapturingInput;
+		player.ui.CapturingInput -= HandleUICapturingInput;
 	}
 
-	public void AbilityUnsubscribe(Ability ability_)
+	public void AbilityUnsubscribe(Ability ability)
 	{
-		ability_.AbilityExecuting -= OnAbilityExecuting;
-		ability_.AbilityFinished -= OnAbilityFinished;
-		ability_.AbilityReleaseInputControl -= OnAbilityFinished;
+		ability.AbilityExecuting -= OnAbilityExecuting;
+		ability.AbilityFinished -= OnAbilityFinished;
+		ability.AbilityReleaseInputControl -= OnAbilityFinished;
 	}
 
 	private void HandleAbilityRotatingPlayer() // Listens for signal from AbilityController.cs

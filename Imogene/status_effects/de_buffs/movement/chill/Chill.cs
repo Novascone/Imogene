@@ -19,31 +19,31 @@ public partial class Chill : StatusEffect
 		max_stacks = 5;
 	}
 
-	public override void Apply(Entity entity_)
+	public override void Apply(Entity entity)
 	{
 		
-		base.Apply(entity_);
+		base.Apply(entity);
 		if(current_stacks < max_stacks - 1)
 		{
 						
-			CreateTimerIncrementStack(entity_);
-			if(entity_.movement_speed.current_value >= entity_.movement_speed.base_value)
+			CreateTimerIncrementStack(entity);
+			if(entity.MovementSpeed.current_value >= entity.MovementSpeed.base_value)
 			{
-				entity_.movement_speed.AddModifier(slow);
+				entity.MovementSpeed.AddModifier(slow);
 			}
 			else
 			{
 			}
 		}
-		else if(current_stacks == max_stacks - 1 || entity_.status_effects.Contains(freeze))
+		else if(current_stacks == max_stacks - 1 || entity.StatusEffects.Contains(freeze))
 		{
 			removed_by_freeze = true;
-			if(entity_.status_effects.Contains(this))
+			if(entity.StatusEffects.Contains(this))
 			{
-				Remove(entity_);
+				Remove(entity);
 			}
 		
-			entity_.movement_speed.RemoveModifier(slow);
+			entity.MovementSpeed.RemoveModifier(slow);
 			freeze = new();
 			EmitSignal(nameof(AddAdditionalStatusEffect), freeze);
 			current_stacks = 0;
@@ -52,19 +52,19 @@ public partial class Chill : StatusEffect
 		
 	}
 
-	public override void timer_timeout(Entity entity_)
+	public override void timer_timeout(Entity entity)
     {
 		if(!removed)
 		{
-			if(current_stacks == 1 && entity_.status_effects.Contains(this) && !removed_by_freeze)
+			if(current_stacks == 1 && entity.StatusEffects.Contains(this) && !removed_by_freeze)
 			{
-				Remove(entity_);
+				Remove(entity);
 			}
-			else if(current_stacks > 0 && entity_.status_effects.Contains(this))
+			else if(current_stacks > 0 && entity.StatusEffects.Contains(this))
 			{
 				if(current_stacks > 0)
 				{
-					GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity_);
+					GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
 				}
 			}
 			else if(removed_by_freeze)
@@ -82,6 +82,6 @@ public partial class Chill : StatusEffect
     public override void Remove(Entity entity_)
     {
         base.Remove(entity_);
-		entity_.movement_speed.RemoveModifier(slow);		
+		entity_.MovementSpeed.RemoveModifier(slow);		
     }
 }

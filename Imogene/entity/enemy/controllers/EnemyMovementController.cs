@@ -19,9 +19,9 @@ public partial class EnemyMovementController : Node
 		StandardMovement(enemy, delta);
 			
 
-		enemy._velocity.X = enemy._direction.X * enemy.movement_speed.current_value;
-		enemy._velocity.Z = enemy._direction.Z * enemy.movement_speed.current_value;			
-		enemy.Velocity = enemy._velocity;
+		enemy.velocity.X = enemy.direction.X * enemy.MovementSpeed.current_value;
+		enemy.velocity.Z = enemy.direction.Z * enemy.MovementSpeed.current_value;			
+		enemy.Velocity = enemy.velocity;
 			
 	}
 
@@ -36,11 +36,11 @@ public partial class EnemyMovementController : Node
 		if(!enemy.IsOnFloor())
 		{
 		
-			enemy._velocity.Y += (float)(SetGravity(enemy) * delta);
+			enemy.velocity.Y += (float)(SetGravity(enemy) * delta);
 		}
 		else
 		{
-			enemy._velocity.Y = 0;
+			enemy.velocity.Y = 0;
 		}
 		
 		// LookForward(player,player.direction);
@@ -62,7 +62,7 @@ public partial class EnemyMovementController : Node
 	
 	public bool StatusEffectsPreventingMovement(Enemy enemy)
 	{
-		if(enemy.entity_controllers.status_effect_controller.movement_prevented)
+		if(enemy.EntityControllers.status_effect_controller.movement_prevented)
 		{
 			return true;
 		}
@@ -74,7 +74,7 @@ public partial class EnemyMovementController : Node
 
 	public bool StatusEffectsAffectingSpeed(Enemy enemy)
 	{
-		if (enemy.entity_controllers.status_effect_controller.abilities_prevented)
+		if (enemy.EntityControllers.status_effect_controller.abilities_prevented)
 		{
 			return true;
 		}
