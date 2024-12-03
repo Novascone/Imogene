@@ -146,7 +146,7 @@ public partial class Enemy : Entity
 
  
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta_)
 	{
 	
 		ray_origin = controllers.ray_position.GlobalPosition;
@@ -190,7 +190,7 @@ public partial class Enemy : Entity
 		controllers.movement_controller.StatusEffectsPreventingMovement(this);
 		controllers.ability_controller.CheckCanUseAbility(this);
 
-		controllers.movement_controller.MoveEnemy(this, delta);
+		controllers.movement_controller.MoveEnemy(this, delta_);
 		SmoothRotation();
 		LookAtOver();
 		MoveAndSlide();
