@@ -19,9 +19,9 @@ public partial class EnemyMovementController : Node
 		StandardMovement(enemy, delta);
 			
 
-		enemy.velocity.X = enemy.direction.X * enemy.MovementSpeed.current_value;
-		enemy.velocity.Z = enemy.direction.Z * enemy.MovementSpeed.current_value;			
-		enemy.Velocity = enemy.velocity;
+		enemy.VelocityVector.X = enemy.VelocityVector.X * enemy.MovementSpeed.CurrentValue;
+		enemy.VelocityVector.Z = enemy.DirectionVector.Z * enemy.MovementSpeed.CurrentValue;			
+		enemy.Velocity = enemy.VelocityVector;
 			
 	}
 
@@ -36,11 +36,11 @@ public partial class EnemyMovementController : Node
 		if(!enemy.IsOnFloor())
 		{
 		
-			enemy.velocity.Y += (float)(SetGravity(enemy) * delta);
+			enemy.VelocityVector.Y += (float)(SetGravity(enemy) * delta);
 		}
 		else
 		{
-			enemy.velocity.Y = 0;
+			enemy.VelocityVector.Y = 0;
 		}
 		
 		// LookForward(player,player.direction);

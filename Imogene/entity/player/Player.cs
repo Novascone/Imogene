@@ -63,7 +63,7 @@ public partial class Player : Entity
 		EntityControllers.status_effect_controller.fear_duration = 3;
 		
 
-		Resource.max_value = Resource.max_value / 2;
+		Resource.MaxValue = Resource.MaxValue / 2;
 
 		Ability jump = (Ability)AbilityAssigner.LoadAbility(this, "jump", "general", "active");
 		Ability slash = (Ability)AbilityAssigner.LoadAbility(this, "slash", "general", "active");
@@ -114,11 +114,11 @@ public partial class Player : Entity
 		controllers.input_controller.Subscribe(this);
 		controllers.movement_controller.Subscribe(this);
 
-		Level.base_value = 4;
-		Strength.base_value = 10;
-		Dexterity.base_value = 5;
-		Vitality.base_value = 20;
-		Intellect.base_value = 11;
+		Level.BaseValue = 4;
+		Strength.BaseValue = 10;
+		Dexterity.BaseValue = 5;
+		Vitality.BaseValue = 20;
+		Intellect.BaseValue = 11;
 
 		EntityControllers.stats_controller.SetStats(this);
 		EntityControllers.stats_controller.Update(this);

@@ -14,7 +14,7 @@ public partial class Chill : StatusEffect
 		category = EffectCategory.Movement;
 		alters_speed = true;
 		adds_additional_effects = true;
-		slow.mod = -0.6f;
+		slow.Mod = -0.6f;
 		duration = 5;
 		max_stacks = 5;
 	}
@@ -27,7 +27,7 @@ public partial class Chill : StatusEffect
 		{
 						
 			CreateTimerIncrementStack(entity);
-			if(entity.MovementSpeed.current_value >= entity.MovementSpeed.base_value)
+			if(entity.MovementSpeed.CurrentValue >= entity.MovementSpeed.BaseValue)
 			{
 				entity.MovementSpeed.AddModifier(slow);
 			}

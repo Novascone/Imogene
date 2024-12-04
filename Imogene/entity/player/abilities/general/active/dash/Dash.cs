@@ -41,15 +41,15 @@ public partial class Dash : Ability
 		// player.using_movement_ability = true;
 		EmitSignal(nameof(MovementAbilityExecuted), true);
 		dash_timer.Start();
-		if(player.direction != Vector3.Zero) // If the player is moving, dash in that direction
+		if(player.DirectionVector != Vector3.Zero) // If the player is moving, dash in that direction
 		{
-			player.velocity.X = player.direction.X * dash_speed; 
-			player.velocity.Z = player.direction.Z * dash_speed;
+			player.VelocityVector.X = player.DirectionVector.X * dash_speed; 
+			player.VelocityVector.Z = player.DirectionVector.Z * dash_speed;
 		} 
 		else // If the player is not moving dash backwards
 		{
 			// GD.Print("Direction behind player " + player.GlobalTransform.Basis.Z);
-			player.velocity = player.GlobalTransform.Basis.Z * dash_speed;
+			player.VelocityVector = player.GlobalTransform.Basis.Z * dash_speed;
 		}
 		
 		

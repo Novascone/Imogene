@@ -18,9 +18,9 @@ public partial class Curse : StatusEffect
 	public override void Apply(Entity entity)
 	{
 		base.Apply(entity);
-		max_health = entity.Health.max_value;
-		entity.Health.current_value = entity.Health.max_value * 0.5f;
-		entity.Health.handicap_value = entity.Health.max_value * 0.5f;
+		max_health = entity.Health.MaxValue;
+		entity.Health.CurrentValue = entity.Health.MaxValue * 0.5f;
+		entity.Health.HandicapValue = entity.Health.MaxValue * 0.5f;
 		EmitSignal(nameof(Cursed), entity, applied);
 		
 	}
@@ -29,6 +29,6 @@ public partial class Curse : StatusEffect
     {
         base.Remove(entity);
 		EmitSignal(nameof(Cursed), entity, applied);
-		entity.Health.max_value = max_health;
+		entity.Health.MaxValue = max_health;
     }
 }

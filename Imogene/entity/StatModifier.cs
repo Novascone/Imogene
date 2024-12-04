@@ -3,65 +3,65 @@ using System;
 
 public partial class StatModifier : Resource
 {
-	public StatModifier(ModificationType modification_)
+	public StatModifier(ModificationType modification)
 	{
-		modification = modification_;
+		Modification = modification;
 	}
 	public enum ModificationType{ None, AddCurrent, AddBase, MultiplyCurrent, MultiplyBase, Nullify}
-	public ModificationType modification { get; set; } = ModificationType.None;
-	public float value_to_add { get; set; } = 0.0f;
-	public float mod { get; set; } = 0.0f;
+	public ModificationType Modification { get; set; } = ModificationType.None;
+	public float ValueToAdd { get; set; } = 0.0f;
+	public float Mod { get; set; } = 0.0f;
 
 	public void Apply(Stat stat_)
 	{
 		
-		if(modification == ModificationType.AddCurrent)
+		if(Modification == ModificationType.AddCurrent)
 		{
-			if(stat_.current_value + value_to_add <= stat_.max_value || stat_.max_value == 0) // Checks if adding will but the stat over max value
+			if(stat_.CurrentValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0) // Checks if adding will but the stat over max value
 			{
-				stat_.current_value += value_to_add;
+				stat_.CurrentValue += ValueToAdd;
 				stat_.RemoveModifier(this); // Removes the modifier from the stat because additions don't need top be kept track of (this might not make sense)
 			}
 		}
-		if(modification == ModificationType.AddBase)
+		if(Modification == ModificationType.AddBase)
 		{
-			if(stat_.base_value + value_to_add <= stat_.max_value || stat_.max_value == 0)
+			if(stat_.BaseValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0)
 			{
-				stat_.current_value += value_to_add;
+				stat_.CurrentValue += ValueToAdd;
 			}
 		}
-		if(modification == ModificationType.MultiplyCurrent)
+		if(Modification == ModificationType.MultiplyCurrent)
 		{
-			stat_.current_value *= 1 + mod;
+			stat_.CurrentValue *= 1 + Mod;
 		}
-		if(modification == ModificationType.MultiplyBase)
+		if(Modification == ModificationType.MultiplyBase)
 		{
 			
-			stat_.base_value *= 1 + mod;
-			stat_.current_value *= 1 + mod;
+			stat_.BaseValue *= 1 + Mod;
+			stat_.CurrentValue *= 1 + Mod;
 		}
-		if(modification == ModificationType.Nullify)
+		if(Modification == ModificationType.Nullify)
 		{
-			stat_.current_value = 0;
+			stat_.CurrentValue = 0;
 		}
 	}
 	public void Release(Stat stat_)
 	{
-		if(modification == ModificationType.AddBase)
+		if(Modification == ModificationType.AddBase)
 		{
-			if(stat_.base_value + value_to_add <= stat_.max_value || stat_.max_value == 0)
+			if(stat_.BaseValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0)
 			{
-				stat_.base_value -= value_to_add;
+				stat_.BaseValue -= ValueToAdd;
 			}
 			
 		}
-		if(modification == ModificationType.MultiplyCurrent)
+		if(Modification == ModificationType.MultiplyCurrent)
 		{
-			stat_.current_value /= 1 + mod;
+			stat_.CurrentValue /= 1 + Mod;
 		}
-		if(modification == ModificationType.Nullify)
+		if(Modification == ModificationType.Nullify)
 		{
-			stat_.current_value = stat_.base_value;
+			stat_.CurrentValue = stat_.BaseValue;
 		}
 	}
 }

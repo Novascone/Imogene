@@ -110,14 +110,14 @@ public partial class Enemy : Entity
 		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
 		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
 
-		ui.health_bar.MaxValue = Health.max_value;
-		ui.health_bar.Value = Health.current_value;
+		ui.health_bar.MaxValue = Health.MaxValue;
+		ui.health_bar.Value = Health.CurrentValue;
 		ui.posture_bar.MaxValue = 0;
 		ui.posture_bar.Value = 0;
 		attacking = false;
-		Level.base_value = 1;
-		Armor.current_value = 0;
-		Stamina.current_value = 2000;
+		Level.BaseValue = 1;
+		Armor.CurrentValue = 0;
+		Stamina.CurrentValue = 2000;
 		
 
 
@@ -179,9 +179,9 @@ public partial class Enemy : Entity
 		float distance_to_player = GlobalPosition.DistanceTo(player_position);
 		Vector2 blend_direction = Vector2.Zero;
 
-		if (direction != Vector3.Zero)
+		if (DirectionVector != Vector3.Zero)
 		{
-			direction = direction.Normalized();
+			DirectionVector = DirectionVector.Normalized();
 			// Setting the basis property will affect the rotation of the node.
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}

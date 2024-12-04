@@ -12,8 +12,8 @@ public partial class EnemyHealth : Control
 	public void EnemyTargeted(Enemy enemy)
     {
 		targeted_enemy = enemy;
-        health_bar.MaxValue = enemy.Health.max_value;
-		health_bar.Value = enemy.Health.current_value;
+        health_bar.MaxValue = enemy.Health.MaxValue;
+		health_bar.Value = enemy.Health.MaxValue;
 		name.Text = enemy.Identifier;
 	
 		targeted_enemy.ui.hard_target_icon.Show();

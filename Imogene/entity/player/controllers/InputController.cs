@@ -173,8 +173,8 @@ public partial class InputController : Node
 		GetInputStrength();
 		if(!directional_input_prevented)
 		{
-			player.direction.X = 0.0f;
-			player.direction.Z = 0.0f;
+			player.DirectionVector.X = 0.0f;
+			player.DirectionVector.Z = 0.0f;
 			if(!climbing)
 			{
 				SetDeadzonedVector(player);
@@ -186,7 +186,7 @@ public partial class InputController : Node
 		}
 		
 		CheckDPadInput();
-		LookForward(player, player.direction);
+		LookForward(player, player.DirectionVector);
 		
 		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
 		
@@ -216,34 +216,34 @@ public partial class InputController : Node
 			
 			deadzoned_vector = deadzoned_vector.Normalized() * ((deadzoned_vector.Length() - deadzone) / (1 - deadzone));
 		}
-		player.direction.X = -deadzoned_vector.X;
-		player.direction.Z = -deadzoned_vector.Y;
+		player.DirectionVector.X = -deadzoned_vector.X;
+		player.DirectionVector.Z = -deadzoned_vector.Y;
 	}
 
 	
 	public void ClimbingMovement(Player player) // Takes climbing input and moves the character when climbing
 	{
 		{
-			player.direction = Vector3.Zero;
+			player.DirectionVector = Vector3.Zero;
 			
 			if (Input.IsActionPressed("Right"))
 			{
-				player.direction.X -= 1.0f;	
+				player.DirectionVector.X -= 1.0f;	
 				// GD.Print("Action strength right " + Input.GetActionStrength("Right"));	
 			}
 			if (Input.IsActionPressed("Left"))
 			{
-				player.direction.X += 1.0f;
+				player.DirectionVector.X += 1.0f;
 				// GD.Print("Action strength left " + Input.GetActionStrength("Left"));	
 			}
 			if (Input.IsActionPressed("Backward"))
 			{
-				player.direction.Y -= 1.0f;
+				player.DirectionVector.Y -= 1.0f;
 				// GD.Print("Action strength back " + Input.GetActionStrength("Backward"));	
 			}
 			if (Input.IsActionPressed("Forward"))
 			{
-				player.direction.Y += 1.0f;
+				player.DirectionVector.Y += 1.0f;
 				// GD.Print("Action strength forward " + Input.GetActionStrength("Forward"));	
 			}
 		}

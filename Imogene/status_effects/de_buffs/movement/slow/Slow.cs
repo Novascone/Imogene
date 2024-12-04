@@ -11,7 +11,7 @@ public partial class Slow : StatusEffect
 		type = EffectType.Debuff;
 		category = EffectCategory.Movement;
 		alters_speed = true;
-		slow.mod = -0.6f;
+		slow.Mod = -0.6f;
 		duration = 5;
 		max_stacks = 5;
 	}
@@ -24,7 +24,7 @@ public partial class Slow : StatusEffect
 		
 		CreateTimerIncrementStack(entity);
 		
-		if(entity.MovementSpeed.current_value >= entity.MovementSpeed.base_value || entity.MovementSpeed.current_value == entity.MovementSpeed.base_value/2.0f)
+		if(entity.MovementSpeed.CurrentValue >= entity.MovementSpeed.BaseValue || entity.MovementSpeed.CurrentValue == entity.MovementSpeed.BaseValue/2.0f)
 		{
 			entity.MovementSpeed.AddModifier(slow);
 		}

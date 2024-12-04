@@ -31,7 +31,7 @@ public partial class DamageSystem : Node
 	public static float DamageMitigation(Entity entity, Node3D hitbox, float amount)
 	{
 		float mitigated_damage = amount;
-		mitigated_damage *= 1 - (entity.Armor.current_value / 100);
+		mitigated_damage *= 1 - (entity.Armor.CurrentValue / 100);
 
 		if(hitbox is MeleeHitbox _melee_hitbox)
 		{
@@ -70,12 +70,12 @@ public partial class DamageSystem : Node
 		GD.Print(entity.Name + " taking damage");
 		amount = DamageMitigation(entity, hitbox, amount);
 		
-		if(entity.Health.current_value - amount > 0)
+		if(entity.Health.CurrentValue - amount > 0)
 		{
-			remove_health.value_to_add = -amount;
+			remove_health.ValueToAdd = -amount;
 			entity.Health.AddModifier(remove_health);
 
-			if(entity.Health.current_value < (entity.Health.max_value / 2) && !weak)
+			if(entity.Health.CurrentValue < (entity.Health.MaxValue / 2) && !weak)
 			{
 				weak = true;
 				EmitSignal(nameof(Weak), entity,  weak);
@@ -84,7 +84,7 @@ public partial class DamageSystem : Node
 
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = enemy.Health.current_value;
+				enemy.ui.health_bar.Value = enemy.Health.CurrentValue;
 				damage_number_spawn_point = enemy.head;
 				SpawnDamageNumber(amount, isCritical);
 			}
@@ -109,10 +109,10 @@ public partial class DamageSystem : Node
 
 	private void OnHealthRegenerationTickTimeout(Entity entity)
     {
-        if(entity.Health.current_value < entity.Health.max_value && entity.Health.handicap_value == 0)
+        if(entity.Health.CurrentValue < entity.Health.MaxValue && entity.Health.HandicapValue == 0)
 		{
-			add_health.modification = StatModifier.ModificationType.AddCurrent;
-			add_health.value_to_add = entity.HealthRegeneration.current_value;
+			add_health.Modification = StatModifier.ModificationType.AddCurrent;
+			add_health.ValueToAdd = entity.HealthRegeneration.CurrentValue;
 			entity.Health.AddModifier(add_health);
 			if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
 			{
@@ -121,7 +121,7 @@ public partial class DamageSystem : Node
 			}
 			if(entity is Enemy enemy)
 			{
-				enemy.ui.health_bar.Value = enemy.Health.current_value;
+				enemy.ui.health_bar.Value = enemy.Health.CurrentValue;
 			}
 		}
     }

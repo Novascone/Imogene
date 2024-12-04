@@ -298,13 +298,13 @@ public partial class TargetingSystem : Node
 					{
 						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
 						mob_looking_at = mobs_in_order[0];
-						current_target_health = mob_looking_at.Health.current_value;
+						current_target_health = mob_looking_at.Health.CurrentValue;
 					}
 					else if (enemy_pointed_toward != null)
 					{
 						mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
 						mob_looking_at = enemy_pointed_toward;
-						current_target_health = mob_looking_at.Health.current_value;
+						current_target_health = mob_looking_at.Health.CurrentValue;
 					}
 					
 				}
@@ -455,9 +455,9 @@ public partial class TargetingSystem : Node
 			ui_target_signal_emitted = true;
 		}
 
-		if(current_target_health != mob_looking_at.Health.current_value)
+		if(current_target_health != mob_looking_at.Health.CurrentValue)
 		{
-			current_target_health = mob_looking_at.Health.current_value;
+			current_target_health = mob_looking_at.Health.CurrentValue;
 			EmitSignal(nameof(TargetHealthChanged), mob_looking_at, current_target_health);
 
 		}

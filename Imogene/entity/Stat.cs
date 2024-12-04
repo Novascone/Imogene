@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public partial class Stat : Resource
 {
-	public Stat (StatType type_, float value_)
+	public Stat (StatType constructedType, float constructedValue)
 	{
-		type = type_;
-		base_value = value_;
-		current_value = base_value;
+		Type = constructedType;
+		BaseValue = constructedValue;
+		CurrentValue = BaseValue;
 	}
 
 	public enum StatType
@@ -49,33 +49,33 @@ public partial class Stat : Resource
 
 	}
 
-	public StatType type { get; set; } = StatType.None;
-	public float base_value { get; set; } = 0.0f;
-	public float current_value { get; set; } = 0.0f;
-	public float handicap_value { get; set; } = 0.0f;
-	public float max_value { get; set; } = 0.0f;
+	public StatType Type { get; set; } = StatType.None;
+	public float BaseValue { get; set; } = 0.0f;
+	public float CurrentValue { get; set; } = 0.0f;
+	public float HandicapValue { get; set; } = 0.0f;
+	public float MaxValue { get; set; } = 0.0f;
 	
-	public List<StatModifier> modifiers = new List<StatModifier>();
+	public List<StatModifier> modifiers = new();
 
-	public void AddModifier(StatModifier stat_modifier_)
+	public void AddModifier(StatModifier statModifier)
 	{
 	
-		if(!modifiers.Contains(stat_modifier_))
+		if(!modifiers.Contains(statModifier))
 		{
 			
-			modifiers.Add(stat_modifier_);
-			stat_modifier_.Apply(this);
+			modifiers.Add(statModifier);
+			statModifier.Apply(this);
 			PrintModifiers();
 		}
 	}
 
 
-    public void RemoveModifier(StatModifier stat_modifier_)
+    public void RemoveModifier(StatModifier statModifier)
 	{
-		if(modifiers.Contains(stat_modifier_))
+		if(modifiers.Contains(statModifier))
 		{
-			modifiers.Remove(stat_modifier_);
-			stat_modifier_.Release(this);
+			modifiers.Remove(statModifier);
+			statModifier.Release(this);
 			
 		}
 		
@@ -83,14 +83,14 @@ public partial class Stat : Resource
 
 	public void ResetToBase()
 	{
-		current_value = base_value;
+		CurrentValue = BaseValue;
 	}
 
 	public void PrintModifiers()
 	{
-		foreach(StatModifier _modifier in modifiers)
+		foreach(StatModifier modifier in modifiers)
 		{
-			GD.Print("Modifier " + _modifier);
+			GD.Print("Modifier " + modifier);
 		}
 	}
 

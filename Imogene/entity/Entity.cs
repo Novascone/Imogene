@@ -93,23 +93,23 @@ public partial class Entity : CharacterBody3D
 
 	public List<StatusEffect> StatusEffects { get; set; } = new List<StatusEffect>();
 
-	public Vector3 direction = Vector3.Zero; // Direction 
-	public Vector3 position  = Vector3.Zero; // Position 
-	public Vector3 velocity  = Vector3.Zero; // Velocity 
+	public Vector3 DirectionVector = Vector3.Zero; // Direction 
+	public Vector3 PositionVector  = Vector3.Zero; // Position 
+	public Vector3 VelocityVector  = Vector3.Zero; // Velocity 
 
 	
     public override void _Ready()
     {
-		Health.max_value = 200;
-		Health.base_value = Health.max_value;
-		Health.current_value = Health.max_value;
+		Health.MaxValue = 200;
+		Health.BaseValue = Health.MaxValue;
+		Health.CurrentValue = Health.MaxValue;
 
-		Resource.max_value = 200;
-		Resource.base_value = Resource.max_value;
-		Resource.current_value = Resource.max_value/2;
+		Resource.MaxValue = 200;
+		Resource.BaseValue = Resource.MaxValue;
+		Resource.CurrentValue = Resource.MaxValue/2;
 
-		ResourceRegeneration.base_value = 1;
-		ResourceRegeneration.current_value = 1;
+		ResourceRegeneration.BaseValue = 1;
+		ResourceRegeneration.CurrentValue = 1;
 
 		
 

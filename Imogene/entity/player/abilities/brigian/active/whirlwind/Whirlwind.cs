@@ -50,7 +50,7 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.Resource.current_value + resource_change < 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.Resource.CurrentValue + resource_change < 0 && player.ability_in_use == this)
 		{
 			// GD.Print("Remove hit box");
 			

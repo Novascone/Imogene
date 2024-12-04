@@ -155,7 +155,7 @@ public partial class AbilityController : Node
             }
             
         }
-        else if(player.Resource.current_value - ability.resource_change >= 0 || ability.resource_change == 0)
+        else if(player.Resource.CurrentValue - ability.resource_change >= 0 || ability.resource_change == 0)
         {
             if(ability.cooldown_timer != null)
             {

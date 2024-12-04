@@ -31,7 +31,7 @@ public partial class Fear : StatusEffect
     {
 		base.Apply(entity);
         CreateTimerIncrementStack(entity);
-		entity.direction = caster.Transform.Basis.Z * 2;
+		entity.DirectionVector = caster.Transform.Basis.Z * 2;
 	
     }
 
@@ -47,6 +47,6 @@ public partial class Fear : StatusEffect
     public override void Remove(Entity entity)
     {
         base.Remove(entity);
-		entity.direction = Vector3.Zero;
+		entity.DirectionVector = Vector3.Zero;
     }
 }

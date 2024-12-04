@@ -54,7 +54,7 @@ public partial class MovementController : Node
 			ClimbingMovement(player);
 		}
 	
-		player.Velocity = player.velocity;
+		player.Velocity = player.VelocityVector;
 		
 
 		if(movement_tethered)
@@ -69,18 +69,18 @@ public partial class MovementController : Node
     {
 		if(!movement_ability_in_use && !movement_input_prevented)
 		{
-			player.velocity.X = player.direction.X * player.MovementSpeed.current_value * inputStrength;
-			player.velocity.Z = player.direction.Z * player.MovementSpeed.current_value * inputStrength;
+			player.VelocityVector.X = player.DirectionVector.X * player.MovementSpeed.CurrentValue * inputStrength;
+			player.VelocityVector.Z = player.DirectionVector.Z * player.MovementSpeed.CurrentValue * inputStrength;
 			
 		}
 		else if(movement_input_prevented)
 		{
 			
-			player.velocity = Vector3.Zero with { Y = fall_gravity / 15};
+			player.VelocityVector = Vector3.Zero with { Y = fall_gravity / 15};
 		}
 		if(!player.IsOnFloor())
 		{
-			player.velocity.Y += (float)(SetGravity(player) * delta);
+			player.VelocityVector.Y += (float)(SetGravity(player) * delta);
 		}
 
     }
@@ -118,7 +118,7 @@ public partial class MovementController : Node
 
 		ClimbingRotation(player);
 
-		if(player.direction != Vector3.Zero && climbing)
+		if(player.DirectionVector != Vector3.Zero && climbing)
 		{
 			player.PreviousYRotation = player.GlobalRotation.Y;
 			player.CurrentYRotation = -(MathF.Atan2(player.controllers.near_wall.GetCollisionNormal().Z, player.controllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
@@ -138,7 +138,7 @@ public partial class MovementController : Node
 		
 		if(!clambering)
 		{
-			player.direction = new Vector3(horizontal_climbing_input, vertical_climbing_input, move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
+			player.DirectionVector = new Vector3(horizontal_climbing_input, vertical_climbing_input, move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***
 
 		}
 		// player.direction = new Vector3(horizontal_climbing_input, player.vertical_input, player.move_forward_clamber).Rotated(Vector3.Up, rot).Normalized(); // Rotate the input so it is relative to the wall *** Might want to use this for playing animations when targeting an enemy ***

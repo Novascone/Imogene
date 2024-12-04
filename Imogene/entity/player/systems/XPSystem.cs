@@ -11,7 +11,7 @@ public partial class XPSystem : Node
 	{
 		if(entity is Player player)
 		{
-			entity.XP.amount += xpGained;
+			entity.XP.Amount += xpGained;
 			LevelUp(entity);
 		}
 	}
@@ -20,9 +20,9 @@ public partial class XPSystem : Node
 	{
 		if(entity is Player player)
 		{
-			if( entity.XP.amount >= xp_to_level)
+			if( entity.XP.Amount >= xp_to_level)
 			{
-				entity.XP.amount -= xp_to_level;
+				entity.XP.Amount -= xp_to_level;
 				xp_to_level *= 2;
 			}
 		}

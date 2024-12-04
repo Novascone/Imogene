@@ -15,9 +15,9 @@ public partial class ResourceSystem : Node
 
     public void ChangeResource(Player player, float resourceChange)
 	{
-		change_resource.value_to_add = resourceChange;
+		change_resource.ValueToAdd = resourceChange;
 		player.Resource.AddModifier(change_resource);
-		EmitSignal(nameof(ResourceChange), player.Resource.current_value);
+		EmitSignal(nameof(ResourceChange), player.Resource.CurrentValue);
 		ResourceRegeneration(player);
 	}
 
@@ -32,16 +32,16 @@ public partial class ResourceSystem : Node
 
 	private void ResourceTimerTimeout(Player player)
     {
-		if(player.Resource.current_value < player.Resource.max_value)
+		if(player.Resource.CurrentValue < player.Resource.MaxValue)
 		{
 			if(resource_timer == null || resource_timer.TimeLeft == 0)
 			{
 				resource_timer = GetTree().CreateTimer(resource_timer_duration);
 				resource_timer.Timeout += () => ResourceTimerTimeout(player);
 			}
-			change_resource.value_to_add = player.ResourceRegeneration.current_value;
+			change_resource.ValueToAdd = player.ResourceRegeneration.CurrentValue;
 			player.Resource.AddModifier(change_resource);
-			EmitSignal(nameof(ResourceChange), player.Resource.current_value);
+			EmitSignal(nameof(ResourceChange), player.Resource.CurrentValue);
 		}
     }
 

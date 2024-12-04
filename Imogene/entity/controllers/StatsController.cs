@@ -40,7 +40,7 @@ public partial class StatsController : Node
 
 	public void SetDamage(Entity entity_)
 	{
-		entity_.CombinedDamage = entity_.MainHandDamage.base_value  + entity_.OffHandDamage.base_value  + entity_.DamageBonus.base_value ;
+		entity_.CombinedDamage = entity_.MainHandDamage.BaseValue  + entity_.OffHandDamage.BaseValue  + entity_.DamageBonus.BaseValue ;
 		damage_per_second = entity_.CombinedDamage;
 	}
 
@@ -54,8 +54,8 @@ public partial class StatsController : Node
 
 	public void SetScales(Entity entity_)
 	{
-		damage_resistance_level_scale = entity_.Level.base_value * 50;
-		recovery_level_scale = entity_.Level.base_value * 100;
+		damage_resistance_level_scale = entity_.Level.BaseValue * 50;
+		recovery_level_scale = entity_.Level.BaseValue * 100;
 	}
 
 	public void SetDamageResistances(Entity entity_)
@@ -75,14 +75,14 @@ public partial class StatsController : Node
 
 	public void SetResistanceEstimate(Entity entity_)
 	{
-		resistance = entity_.Health.max_value * average_damage_resistance * entity_.Armor.base_value;
+		resistance = entity_.Health.MaxValue * average_damage_resistance * entity_.Armor.BaseValue;
 	}
 
 	
 
 	public void SetRecoveryEstimate(Entity entity_)
 	{
-		recovery = (float) Math.Round((entity_.HealthRegeneration.base_value  + entity_.ResourceRegeneration.base_value ) / 3, 2);
+		recovery = (float) Math.Round((entity_.HealthRegeneration.BaseValue  + entity_.ResourceRegeneration.BaseValue ) / 3, 2);
 	}
 
 	public void SetBaseStats(Entity entity_)
@@ -153,8 +153,8 @@ public partial class StatsController : Node
 
 	public void SetRegenerations(Entity entity_)
 	{
-		entity_.HealthRegeneration.base_value = (float)Math.Round(1 + entity_.Stamina.base_value / recovery_level_scale * entity_.HealthRegeneration.base_value , 2);
-		entity_.ResourceRegeneration.base_value = (float)Math.Round(1 + entity_.Stamina.base_value  / recovery_level_scale * entity_.ResourceRegeneration.base_value , 2);
+		entity_.HealthRegeneration.BaseValue = (float)Math.Round(1 + entity_.Stamina.BaseValue / recovery_level_scale * entity_.HealthRegeneration.BaseValue	 , 2);
+		entity_.ResourceRegeneration.BaseValue = (float)Math.Round(1 + entity_.Stamina.BaseValue  / recovery_level_scale * entity_.ResourceRegeneration.BaseValue , 2);
 	}
 
 	public void Update(Entity entity_) // Updates stats 															*** NEEDS ADDITIONS AND TO CHANGE DAMAGE CALCULATIONS ***
