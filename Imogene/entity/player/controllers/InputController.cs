@@ -310,14 +310,14 @@ public partial class InputController : Node
 	{
 		player.EntityControllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
 
-		player.systems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
-		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
+		player.PlayerSystems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
+		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player.PlayerSystems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
 
-		player.controllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
-		player.controllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
+		player.PlayerControllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
+		player.PlayerControllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
 
-		player.ui.CapturingInput += HandleUICapturingInput;
+		player.PlayerUI.CapturingInput += HandleUICapturingInput;
 	}
 
 	public void AbilitySubscribe(Ability ability_)
@@ -332,14 +332,14 @@ public partial class InputController : Node
 	{
 		player.EntityControllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
 
-		player.systems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
-		player.systems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.systems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
+		player.PlayerSystems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
+		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
+		player.PlayerSystems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
 
-		player.controllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
-		player.controllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
+		player.PlayerControllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
+		player.PlayerControllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
 
-		player.ui.CapturingInput -= HandleUICapturingInput;
+		player.PlayerUI.CapturingInput -= HandleUICapturingInput;
 	}
 
 	public void AbilityUnsubscribe(Ability ability)

@@ -30,7 +30,7 @@ public partial class InteractSystem : Node3D
 		InteractableItem _nearest_item = near_by_items.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
 		if(_nearest_item != null)
 		{
-			if(player_.ui.inventory.main.slots_filled < player_.ui.inventory.main.item_slots_count)
+			if(player_.PlayerUI.inventory.main.slots_filled < player_.PlayerUI.inventory.main.item_slots_count)
 			{
 				
 				item_.QueueFree();
@@ -158,27 +158,27 @@ public partial class InteractSystem : Node3D
 
 	public void Subscribe(Player player_)
 	{
-		player_.areas.interact.AreaEntered += (area_) => OnInteractAreaEntered(area_, player_);
-		player_.areas.interact.AreaExited += (area_) => OnInteractAreaExited(area_, player_);
-		player_.areas.interact.BodyEntered += (body_) => OnObjectEnteredArea(body_, player_);
-		player_.areas.interact.BodyExited += (body_) => OnObjectExitedArea(body_, player_);
-		player_.areas.pickup_items.BodyEntered += (body_) => OnObjectEnteredPickup(body_, player_);
-		player_.areas.pickup_items.BodyExited += (body_) => OnObjectExitedPickup(body_, player_);
-		player_.ui.CapturingInput += HandleUICapturingInput;
-		player_.ui.hud.AcceptHUDInput += OnAcceptHUDInput;
-		player_.ui.inventory.main.InventoryCapacity += HandleInventoryCapacity;
+		player_.PlayerAreas.interact.AreaEntered += (area_) => OnInteractAreaEntered(area_, player_);
+		player_.PlayerAreas.interact.AreaExited += (area_) => OnInteractAreaExited(area_, player_);
+		player_.PlayerAreas.interact.BodyEntered += (body_) => OnObjectEnteredArea(body_, player_);
+		player_.PlayerAreas.interact.BodyExited += (body_) => OnObjectExitedArea(body_, player_);
+		player_.PlayerAreas.pickup_items.BodyEntered += (body_) => OnObjectEnteredPickup(body_, player_);
+		player_.PlayerAreas.pickup_items.BodyExited += (body_) => OnObjectExitedPickup(body_, player_);
+		player_.PlayerUI.CapturingInput += HandleUICapturingInput;
+		player_.PlayerUI.hud.AcceptHUDInput += OnAcceptHUDInput;
+		player_.PlayerUI.inventory.main.InventoryCapacity += HandleInventoryCapacity;
 	
 	}
 
 	public void Unsubscribe(Player player_)
 	{
-		player_.areas.interact.AreaEntered -= (area_) => OnInteractAreaEntered(area_, player_);
-		player_.areas.interact.AreaExited -= (area_) => OnInteractAreaExited(area_, player_);
-		player_.areas.interact.BodyEntered -= (body_) => OnObjectEnteredArea(body_, player_);
-		player_.areas.interact.BodyExited -= (body_) => OnObjectExitedArea(body_, player_);
-		player_.areas.pickup_items.BodyEntered -= (body_) => OnObjectEnteredPickup(body_, player_);
-		player_.areas.pickup_items.BodyExited -= (body_) => OnObjectExitedPickup(body_, player_);
-		player_.ui.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
-		player_.ui.hud.AcceptHUDInput -= OnAcceptHUDInput;
+		player_.PlayerAreas.interact.AreaEntered -= (area_) => OnInteractAreaEntered(area_, player_);
+		player_.PlayerAreas.interact.AreaExited -= (area_) => OnInteractAreaExited(area_, player_);
+		player_.PlayerAreas.interact.BodyEntered -= (body_) => OnObjectEnteredArea(body_, player_);
+		player_.PlayerAreas.interact.BodyExited -= (body_) => OnObjectExitedArea(body_, player_);
+		player_.PlayerAreas.pickup_items.BodyEntered -= (body_) => OnObjectEnteredPickup(body_, player_);
+		player_.PlayerAreas.pickup_items.BodyExited -= (body_) => OnObjectExitedPickup(body_, player_);
+		player_.PlayerUI.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
+		player_.PlayerUI.hud.AcceptHUDInput -= OnAcceptHUDInput;
 	}
 }

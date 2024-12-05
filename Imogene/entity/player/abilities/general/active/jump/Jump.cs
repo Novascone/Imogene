@@ -70,26 +70,26 @@ public partial class Jump : Ability
 
 	public void Climb(Player player) // Checks if player is near wall and sets state to climb if the player presses the climb button
 	{
-		if(player.controllers.near_wall.IsColliding())
+		if(player.PlayerControllers.near_wall.IsColliding())
 		{
-			if(player.controllers.on_wall.IsColliding())
+			if(player.PlayerControllers.on_wall.IsColliding())
 			{
 				// GD.Print(player.near_wall.GetCollider());
-				if(CheckHeld() && !player.controllers.input_controller.climbing)
+				if(CheckHeld() && !player.PlayerControllers.input_controller.climbing)
 				{
 					// GD.Print("setting climbing to true");
-					player.controllers.input_controller.climbing = true;
+					player.PlayerControllers.input_controller.climbing = true;
 				}
-				else if(Input.IsActionJustPressed(assigned_button) && player.controllers.input_controller.climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
+				else if(Input.IsActionJustPressed(assigned_button) && player.PlayerControllers.input_controller.climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
 				{
 					// GD.Print("Setting climbing to false");
-					player.controllers.input_controller.climbing = false;
+					player.PlayerControllers.input_controller.climbing = false;
 				}
 				
 			}
 			else
 			{
-				if(!player.controllers.input_controller.clambering)
+				if(!player.PlayerControllers.input_controller.clambering)
 				{
 					Clamber(player); // If the to ray cast is no longer making contact, clamber
 				}
@@ -97,7 +97,7 @@ public partial class Jump : Ability
 		}
 		else
 		{
-			player.controllers.input_controller.climbing= false;
+			player.PlayerControllers.input_controller.climbing= false;
 		}
 		
 	}
@@ -107,7 +107,7 @@ public partial class Jump : Ability
 		// GD.Print("Player can clamber");
 		if(CheckHeld())
 		{
-			player.controllers.input_controller.clambering = true;
+			player.PlayerControllers.input_controller.clambering = true;
 			var upward_movement = player.GlobalTransform.Origin + new Vector3(0,1.85f,0); // Move the plater up bt 1.85 units
 			var upward_move_time = 0.4; // set how long the tween to take to move upward
 			var upward_tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In); // Create the tween and sets its transition and ease
@@ -133,7 +133,7 @@ public partial class Jump : Ability
 		{
 			// GD.Print("start jumping");
 			// player.tree.Set("parameters/Master/Main/conditions/jumping", true); // Set animation to jumping
-			player.VelocityVector.Y = player.controllers.movement_controller.jump_velocity;
+			player.VelocityVector.Y = player.PlayerControllers.movement_controller.jump_velocity;
 			// GD.Print("Player velocity from jump " + player.velocity.Y);			
 		}
 		else
@@ -163,9 +163,9 @@ public partial class Jump : Ability
 
     public bool CanJump(Player player)
 	{
-		if(player.ability_in_use != null)
+		if(player.AbilityInUse != null)
 		{
-			if(player.ability_in_use.general_ability_type != Ability.GeneralAbilityType.Movement)
+			if(player.AbilityInUse.general_ability_type != Ability.GeneralAbilityType.Movement)
 			{
 				// GD.Print("Can not jump because the ability in use is not movement");
 				return false;

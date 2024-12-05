@@ -8,7 +8,7 @@ public partial class VisionSystem : Node
     {
         if(body_ is Enemy _enemy)
 		{
-			player_.systems.targeting_system.EnemyEnteredFar(_enemy);
+			player_.PlayerSystems.targeting_system.EnemyEnteredFar(_enemy);
 		}
     }
 
@@ -16,7 +16,7 @@ public partial class VisionSystem : Node
     {
         if(body_ is Enemy _enemy)
 		{
-			player_.systems.targeting_system.EnemyExitedFar(_enemy);
+			player_.PlayerSystems.targeting_system.EnemyExitedFar(_enemy);
 		}
     }
 
@@ -24,7 +24,7 @@ public partial class VisionSystem : Node
     {
          if(body_ is Enemy _enemy)
 		{
-			player_.systems.targeting_system.EnemyEnteredNear(_enemy);
+			player_.PlayerSystems.targeting_system.EnemyEnteredNear(_enemy);
 		}
     }
 
@@ -32,27 +32,27 @@ public partial class VisionSystem : Node
     {
         if(body_ is Enemy _enemy)
 		{
-			player_.systems.targeting_system.EnemyExitedNear(_enemy);
+			player_.PlayerSystems.targeting_system.EnemyExitedNear(_enemy);
 		}
     }
 
 	public static void Subscribe(Player player_)
 	{
-		player_.areas.near.BodyEntered += (body_) => OnBodyEnteredNear(body_, player_);
-		player_.areas.near.BodyExited += (body_) => OnBodyExitedNear(body_, player_);
+		player_.PlayerAreas.near.BodyEntered += (body_) => OnBodyEnteredNear(body_, player_);
+		player_.PlayerAreas.near.BodyExited += (body_) => OnBodyExitedNear(body_, player_);
 
-		player_.areas.far.BodyEntered += (body_) => OnBodyEnteredFar(body_, player_);
-		player_.areas.far.BodyExited += (body_) => OnBodyExitedFar(body_, player_);
+		player_.PlayerAreas.far.BodyEntered += (body_) => OnBodyEnteredFar(body_, player_);
+		player_.PlayerAreas.far.BodyExited += (body_) => OnBodyExitedFar(body_, player_);
 		
 	}
 
 	public static void unsubscribe(Player player_)
 	{
-		player_.areas.near.BodyEntered -= (body_) => OnBodyEnteredNear(body_, player_);
-		player_.areas.near.BodyExited -= (body_) => OnBodyExitedNear(body_, player_);
+		player_.PlayerAreas.near.BodyEntered -= (body_) => OnBodyEnteredNear(body_, player_);
+		player_.PlayerAreas.near.BodyExited -= (body_) => OnBodyExitedNear(body_, player_);
 
-		player_.areas.far.BodyEntered -= (body_) => OnBodyEnteredFar(body_, player_);
-		player_.areas.far.BodyExited -= (body_) => OnBodyExitedFar(body_, player_);
+		player_.PlayerAreas.far.BodyEntered -= (body_) => OnBodyEnteredFar(body_, player_);
+		player_.PlayerAreas.far.BodyExited -= (body_) => OnBodyExitedFar(body_, player_);
 		
 	}
 

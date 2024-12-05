@@ -7,20 +7,20 @@ using System.Runtime.Intrinsics.Arm;
 
 public partial class Player : Entity
 {
-	[Export] public CameraRig camera_rig { get; set; }
-	[Export] public Marker3D cast_point { get; set; }
-	[Export] public Node3D surrounding_hitbox { get; set; }
-	[Export] public UI ui { get; set; }
-	[Export] public Areas areas { get; set; }
-	[Export] public Controllers controllers { get; set; }
-	[Export] public Systems systems { get; set; }
-	[Export] public Node abilities  { get; set; }
-	public Ability ability_in_use  { get; set; } = null; // The ability that the player is currently using
-	public LinkedList<Ability> abilities_in_use_list = new();
-	public bool l_cross_primary_selected { get; set; } = true; // Bool that tracks which left cross the player is using 
-	public bool r_cross_primary_selected { get; set; } = true;  // Bool that tracks which right cross the player is using 
+	[Export] public CameraRig PlayerCameraRig { get; set; }
+	[Export] public Marker3D CastPoint { get; set; }
+	[Export] public Node3D SurroundingHitbox { get; set; }
+	[Export] public UI PlayerUI { get; set; }
+	[Export] public Areas PlayerAreas { get; set; }
+	[Export] public Controllers PlayerControllers { get; set; }
+	[Export] public Systems PlayerSystems { get; set; }
+	[Export] public Node Abilities  { get; set; }
+	public Ability AbilityInUse  { get; set; } = null; // The ability that the player is currently using
+	public LinkedList<Ability> AbilitiesInUseList = new();
+	public bool LCrossPrimarySelected { get; set; } = true; // Bool that tracks which left cross the player is using 
+	public bool RCossPrimarySelected { get; set; } = true;  // Bool that tracks which right cross the player is using 
 	
-	public Godot.Collections.Array<Rid> excluded_rids { get; set; } = new Godot.Collections.Array<Rid>();
+	public Godot.Collections.Array<Rid> ExcludedRIDs { get; set; } = new Godot.Collections.Array<Rid>();
 
 	
     public override void _Input(InputEvent @event)
@@ -29,8 +29,8 @@ public partial class Player : Entity
 		
         if(@event.IsActionPressed("one"))
 		{
-			controllers.movement_controller.movement_input_prevented = !controllers.movement_controller.movement_input_prevented;
-			controllers.input_controller.directional_input_prevented = !controllers.input_controller.directional_input_prevented;
+			PlayerControllers.movement_controller.movement_input_prevented = !PlayerControllers.movement_controller.movement_input_prevented;
+			PlayerControllers.input_controller.directional_input_prevented = !PlayerControllers.input_controller.directional_input_prevented;
 		}
 		if(@event.IsActionPressed("two"))
 		{
@@ -83,36 +83,36 @@ public partial class Player : Entity
         AbilityAssigner.AssignAbility(this, hitscan, "Y", Ability.Cross.Right, Ability.Tier.Primary);
         AbilityAssigner.AssignAbility(this, dash, "B", Ability.Cross.Right, Ability.Tier.Primary);
 
-		camera_rig.TopLevel = true;
+		PlayerCameraRig.TopLevel = true;
 
 		// Entity system signals
-		EntitySystems.resource_system.ResourceChange += ui.hud.main.HandleResourceChange;
+		EntitySystems.resource_system.ResourceChange += PlayerUI.hud.main.HandleResourceChange;
 
 		// Entity controller signals
-		EntityControllers.stats_controller.UpdateStats += ui.inventory.depth_sheet.HandleUpdateStats;
-		EntityControllers.stats_controller.UpdateStats += ui.inventory.main.character_outline.HandleUpdateStats;
+		EntityControllers.stats_controller.UpdateStats += PlayerUI.inventory.depth_sheet.HandleUpdateStats;
+		EntityControllers.stats_controller.UpdateStats += PlayerUI.inventory.main.character_outline.HandleUpdateStats;
 
 
         // System signals
         VisionSystem.Subscribe(this);
-		systems.interact_system.Subscribe(this);
-		systems.interact_system.ItemPickedUp += ui.inventory.main.OnItemPickedUp;
-		systems.interact_system.InputPickup += HandleInputPickUp;
+		PlayerSystems.interact_system.Subscribe(this);
+		PlayerSystems.interact_system.ItemPickedUp += PlayerUI.inventory.main.OnItemPickedUp;
+		PlayerSystems.interact_system.InputPickup += HandleInputPickUp;
 	
 		// Controller signals
-		controllers.ability_controller.Subscribe(this);
-		controllers.ability_controller.RotatePlayer += systems.targeting_system.HandleRotatePlayer;
-		controllers.input_controller.CrossChanged += HandleCrossChanged;
+		PlayerControllers.ability_controller.Subscribe(this);
+		PlayerControllers.ability_controller.RotatePlayer += PlayerSystems.targeting_system.HandleRotatePlayer;
+		PlayerControllers.input_controller.CrossChanged += HandleCrossChanged;
 
 		// UI signals
-		ui.hud.Subscribe(this);
-		ui.inventory.main.DroppingItem += HandleDroppingItem;
+		PlayerUI.hud.Subscribe(this);
+		PlayerUI.inventory.main.DroppingItem += HandleDroppingItem;
 		
-		ui.InventoryToggle += HandleInventoryToggle;
-		ui.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
-		ui.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
-		controllers.input_controller.Subscribe(this);
-		controllers.movement_controller.Subscribe(this);
+		PlayerUI.InventoryToggle += HandleInventoryToggle;
+		PlayerUI.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
+		PlayerUI.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+		PlayerControllers.input_controller.Subscribe(this);
+		PlayerControllers.movement_controller.Subscribe(this);
 
 		Level.BaseValue = 4;
 		Strength.BaseValue = 10;
@@ -123,61 +123,61 @@ public partial class Player : Entity
 		EntityControllers.stats_controller.SetStats(this);
 		EntityControllers.stats_controller.Update(this);
 		
-		excluded_rids.Add(areas.near.GetRid());
-		excluded_rids.Add(areas.far.GetRid());
-		excluded_rids.Add(areas.interact.GetRid());
-		excluded_rids.Add(Hurtbox.GetRid());
-		excluded_rids.Add(MainHandHitbox.GetRid());
-		excluded_rids.Add(GetRid());
+		ExcludedRIDs.Add(PlayerAreas.near.GetRid());
+		ExcludedRIDs.Add(PlayerAreas.far.GetRid());
+		ExcludedRIDs.Add(PlayerAreas.interact.GetRid());
+		ExcludedRIDs.Add(Hurtbox.GetRid());
+		ExcludedRIDs.Add(MainHandHitbox.GetRid());
+		ExcludedRIDs.Add(GetRid());
 
 		
 	}
 
-    public override void _PhysicsProcess(double delta_)
+    public override void _PhysicsProcess(double delta)
     {
 	
 		CameraFollowsPlayer();
-		systems.targeting_system.ray_cast.FollowPlayer(this);
-		controllers.input_controller.SetInput(this);
-		controllers.movement_controller.MovePlayer(this, controllers.input_controller.input_strength, delta_);
-		systems.targeting_system.Target(this);
+		PlayerSystems.targeting_system.ray_cast.FollowPlayer(this);
+		PlayerControllers.input_controller.SetInput(this);
+		PlayerControllers.movement_controller.MovePlayer(this, PlayerControllers.input_controller.input_strength, delta);
+		PlayerSystems.targeting_system.Target(this);
         AbilityController.AbilityFrameCheck(this);
 		MoveAndSlide();
 		
     }
 
-    private void HandleInputPickUp(InteractableItem item_)
+    private void HandleInputPickUp(InteractableItem item)
     {
-        systems.interact_system.PickupItem(item_, this);
+        PlayerSystems.interact_system.PickupItem(item, this);
     }
 
     private void HandleDroppingItem()
     {
-        ui.inventory.main.GetDropPosition(this);
+        PlayerUI.inventory.main.GetDropPosition(this);
     }
 
-    private void HandleClearAbilityBind(string ability_name_)
+    private void HandleClearAbilityBind(string abilityName)
     {
-        AbilityAssigner.ClearAbility(this, ability_name_);
+        AbilityAssigner.ClearAbility(this, abilityName);
     }
 
-    private void HandleAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
+    private void HandleAbilityReassigned(Ability.Cross cross, Ability.Tier tier, string bind, string abilityName, Texture2D icon)
     {
-        AbilityAssigner.ChangeAbilityAssignment(this, cross_, tier_, bind_, ability_name_);
+        AbilityAssigner.ChangeAbilityAssignment(this, cross, tier, bind, abilityName);
     }
 
-	private void HandleCrossChanged(string cross_)
+	private void HandleCrossChanged(string cross)
     {
-		if(!ui.preventing_movement)
+		if(!PlayerUI.preventing_movement)
 		{
-			ui.SwitchCrosses(cross_);
-			if(cross_ == "Left")
+			PlayerUI.SwitchCrosses(cross);
+			if(cross == "Left")
 			{
-				l_cross_primary_selected = !l_cross_primary_selected;
+				LCrossPrimarySelected = !LCrossPrimarySelected;
 			}
-			else if(cross_ == "Right")
+			else if(cross == "Right")
 			{
-				r_cross_primary_selected = !r_cross_primary_selected;
+				RCossPrimarySelected = !RCossPrimarySelected;
 			}
 		}
 		
@@ -185,51 +185,51 @@ public partial class Player : Entity
 
 	private void HandleInventoryToggle()
     {
-		camera_rig.Zoom();
+		PlayerCameraRig.Zoom();
     }
 
-	 internal void OnAbilityPressed(Ability ability_)
+	 internal void OnAbilityPressed(Ability ability)
     {
-		controllers.ability_controller.QueueAbility(this, ability_);
-		controllers.ability_controller.CheckCanUseAbility(this, ability_);
+		PlayerControllers.ability_controller.QueueAbility(this, ability);
+		PlayerControllers.ability_controller.CheckCanUseAbility(this, ability);
     }
 
-	internal void OnAbilityQueue(Ability ability_)
-    {
-		
-        controllers.ability_controller.QueueAbility(this, ability_);
-    }
-
-    internal void OnAbilityCheck(Ability ability_)
+	internal void OnAbilityQueue(Ability ability)
     {
 		
-        controllers.ability_controller.CheckCanUseAbility(this, ability_);
+        PlayerControllers.ability_controller.QueueAbility(this, ability);
     }
 
-	internal void OnAbilityReleased(Ability ability_)
+    internal void OnAbilityCheck(Ability ability)
+    {
+		
+        PlayerControllers.ability_controller.CheckCanUseAbility(this, ability);
+    }
+
+	internal void OnAbilityReleased(Ability ability)
     {
         
     }
 
-	internal void OnAbilityFinished(Ability ability_)
+	internal void OnAbilityFinished(Ability ability)
     {
-        AbilityController.RemoveFromAbilityList(this, ability_);
+        AbilityController.RemoveFromAbilityList(this, ability);
 	
     }
 
 	public void CameraFollowsPlayer()
 	{
 		Vector3  camera_position = GlobalPosition;
-		camera_rig.GlobalPosition = camera_position;	
+		PlayerCameraRig.GlobalPosition = camera_position;	
 	}
 
 	public override void _ExitTree()
 	{
-		controllers.input_controller.Unsubscribe(this);
-		controllers.ability_controller.Unsubscribe(this);
-		controllers.movement_controller.Unsubscribe(this);
+		PlayerControllers.input_controller.Unsubscribe(this);
+		PlayerControllers.ability_controller.Unsubscribe(this);
+		PlayerControllers.movement_controller.Unsubscribe(this);
 
-		systems.interact_system.Unsubscribe(this);
+		PlayerSystems.interact_system.Unsubscribe(this);
         VisionSystem.unsubscribe(this);
 	}
 

@@ -68,7 +68,7 @@ public partial class EnemyHealth : Control
 
 	public void Subscribe(Player player_)
 	{
-		player_.systems.targeting_system.TargetHealthChanged += HandleEnemyHealthChangedUI;
+		player_.PlayerSystems.targeting_system.TargetHealthChanged += HandleEnemyHealthChangedUI;
 	}
 	
 	public void UnSubscribe(Player player)

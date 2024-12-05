@@ -3507,18 +3507,18 @@ nodes/PlayerState/position = Vector2(860, 240)
 nodes/output/position = Vector2(1180, 400)
 node_connections = [&"output", 0, &"Master"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_rig", "cast_point", "surrounding_hitbox", "ui", "areas", "controllers", "systems", "abilities", "Armature", "MainHandHitbox", "Hurtbox", "EntitySystems", "EntityControllers")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("PlayerCameraRig", "CastPoint", "SurroundingHitbox", "PlayerUI", "PlayerAreas", "PlayerControllers", "PlayerSystems", "Abilities", "Armature", "MainHandHitbox", "Hurtbox", "EntitySystems", "EntityControllers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
 collision_mask = 6
 script = ExtResource("1_hynii")
-camera_rig = NodePath("CameraRig")
-cast_point = NodePath("Character_GameRig/Skeleton3D/MainHand/CastPoint")
-surrounding_hitbox = NodePath("Character_GameRig/Skeleton3D/Chest/ChestSlot/SurroundingHitbox")
-ui = NodePath("UI/NewUI")
-areas = NodePath("Areas")
-controllers = NodePath("Controllers")
-systems = NodePath("Systems")
-abilities = NodePath("Abilities")
+PlayerCameraRig = NodePath("CameraRig")
+CastPoint = NodePath("Character_GameRig/Skeleton3D/MainHand/CastPoint")
+SurroundingHitbox = NodePath("Character_GameRig/Skeleton3D/Chest/ChestSlot/SurroundingHitbox")
+PlayerUI = NodePath("UI/NewUI")
+PlayerAreas = NodePath("Areas")
+PlayerControllers = NodePath("Controllers")
+PlayerSystems = NodePath("Systems")
+Abilities = NodePath("Abilities")
 Armature = NodePath("Character_GameRig")
 MainHandHitbox = NodePath("Character_GameRig/Skeleton3D/MainHand/MainHandSlot/Weapon/Hitbox")
 Hurtbox = NodePath("Character_GameRig/Skeleton3D/Chest/ChestSlot/Hurtbox")

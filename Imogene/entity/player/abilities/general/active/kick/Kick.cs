@@ -97,12 +97,12 @@ public partial class Kick : Ability
     public void AddHitbox(Player player)
 	{
 		kick_hitbox = (KickHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
-		player.surrounding_hitbox.AddChild(kick_hitbox);
+		player.SurroundingHitbox.AddChild(kick_hitbox);
 		if(kick_mesh == null)
 		{
 			// GD.Print("Add mesh");
 			kick_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
-			player.surrounding_hitbox.AddChild(kick_mesh);
+			player.SurroundingHitbox.AddChild(kick_mesh);
 		}
 	}
 

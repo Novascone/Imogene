@@ -50,7 +50,7 @@ public partial class Whirlwind : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.Resource.CurrentValue + resource_change < 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.Resource.CurrentValue + resource_change < 0 && player.AbilityInUse == this)
 		{
 			// GD.Print("Remove hit box");
 			
@@ -63,12 +63,12 @@ public partial class Whirlwind : Ability
     public void AddHitbox(Player player)
 	{
 		whirlwind_hitbox = (WhirlwindHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
-		player.surrounding_hitbox.AddChild(whirlwind_hitbox);
+		player.SurroundingHitbox.AddChild(whirlwind_hitbox);
 		if(whirlwind_mesh == null)
 		{
 			// GD.Print("Add mesh");
 			whirlwind_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
-			player.surrounding_hitbox.AddChild(whirlwind_mesh);
+			player.SurroundingHitbox.AddChild(whirlwind_mesh);
 		}
 	}
 
@@ -87,7 +87,7 @@ public partial class Whirlwind : Ability
 		// GD.Print("remove mesh");
 		if(whirlwind_mesh != null)
 		{
-			player.surrounding_hitbox.RemoveChild(whirlwind_mesh);
+			player.SurroundingHitbox.RemoveChild(whirlwind_mesh);
 			whirlwind_mesh = null;
 		}
 		

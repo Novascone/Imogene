@@ -13,7 +13,7 @@ public partial class RangedAbility : Ability
 		var new_intersection = PhysicsRayQueryParameters3D.Create(ray_origin, ray_end); // Create a raycast
 		new_intersection.CollisionMask = 16; // Set the collision mask of the raycast 16 -> mask 5
 		new_intersection.CollideWithAreas = true; // Set the raycast to collide with areas
-		new_intersection.Exclude = player_.excluded_rids; // Add the player exclude to the array of exclusions
+		new_intersection.Exclude = player_.ExcludedRIDs; // Add the player exclude to the array of exclusions
 		var intersection = GetWorld3D().DirectSpaceState.IntersectRay(new_intersection); // Get raycast intersection
 
 		if(intersection.Count > 0)

@@ -12,7 +12,7 @@ public partial class AbilityController : Node
     
 	public void QueueAbility(Player player_, Ability ability_)
     {
-        if(!player_.ui.preventing_movement && !player_.ui.capturing_input && !ability_use_prevented)
+        if(!player_.PlayerUI.preventing_movement && !player_.PlayerUI.capturing_input && !ability_use_prevented)
         {
         
             if(ability_.state == Ability.States.NotQueued)
@@ -28,7 +28,7 @@ public partial class AbilityController : Node
 
     public static void AbilityFrameCheck(Player player_)
     {
-        player_.ability_in_use?.FrameCheck(player_);
+        player_.AbilityInUse?.FrameCheck(player_);
     }
 
 	public void CheckCanUseAbility(Player player, Ability ability)
@@ -39,7 +39,7 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_soft)
                 {
-                    if(player.systems.targeting_system.enemy_to_soft_target)
+                    if(player.PlayerSystems.targeting_system.enemy_to_soft_target)
                     {
                         SoftRotateAbility(player, ability);
                     }
@@ -61,11 +61,11 @@ public partial class AbilityController : Node
             {
                 if(ability.rotate_on_held)
                 {
-					if(player.systems.targeting_system.enemy_pointed_toward != null)
+					if(player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
                     {
                         SoftRotateAbility(player, ability);
                     }
-                    else if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0 && player.systems.targeting_system.enemy_pointed_toward == null)
+                    else if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0 && player.PlayerSystems.targeting_system.enemy_pointed_toward == null)
                     {
                         EmitSignal(nameof(ReleaseInputControl));
                         ability.Execute(player);
@@ -88,7 +88,7 @@ public partial class AbilityController : Node
     {
         if(ability.cross == Ability.Cross.Left)
 		{
-			if(player.l_cross_primary_selected)
+			if(player.LCrossPrimarySelected)
 			{
 				if(ability.tier == Ability.Tier.Primary)
 				{
@@ -113,7 +113,7 @@ public partial class AbilityController : Node
 		}
 		else if(ability.cross == Ability.Cross.Right)
 		{
-			if(player.r_cross_primary_selected)
+			if(player.RCossPrimarySelected)
 			{
 				if(ability.tier == Ability.Tier.Primary)
 				{
@@ -183,7 +183,7 @@ public partial class AbilityController : Node
 	public void SoftRotateAbility(Player player, Ability ability)
     {
     
-        if(!player.abilities_in_use_list.Contains(ability))
+        if(!player.AbilitiesInUseList.Contains(ability))
         {
             AddToAbilityList(player, ability);
             
@@ -192,7 +192,7 @@ public partial class AbilityController : Node
             done_rotating = false;
         }
 
-        if(done_rotating && player.systems.targeting_system.enemy_pointed_toward != null)
+        if(done_rotating && player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
         {
             if(ability.button_held)
             {
@@ -219,25 +219,25 @@ public partial class AbilityController : Node
 	public static void AddToAbilityList(Player player, Ability ability) // Adds the passed ability to the list of abilities if it is not already there
     {
     
-        if(!player.abilities_in_use_list.Contains(ability))
+        if(!player.AbilitiesInUseList.Contains(ability))
         {
-            player.abilities_in_use_list.AddFirst(ability);
+            player.AbilitiesInUseList.AddFirst(ability);
             ability.in_use = true;
         }
 
-        player.ability_in_use = player.abilities_in_use_list.First.Value;
+        player.AbilityInUse = player.AbilitiesInUseList.First.Value;
     }
 
     public static void RemoveFromAbilityList(Player player, Ability ability) // Removes ability from abilities used
     {
-        player.abilities_in_use_list.Remove(ability);
-        if(player.abilities_in_use_list.Count > 0)
+        player.AbilitiesInUseList.Remove(ability);
+        if(player.AbilitiesInUseList.Count > 0)
         {
-            player.ability_in_use = player.abilities_in_use_list.First.Value;
+            player.AbilityInUse = player.AbilitiesInUseList.First.Value;
         }
         else
         {
-            player.ability_in_use = null;
+            player.AbilityInUse = null;
         }
         ability.in_use = false;
     }
@@ -262,16 +262,16 @@ public partial class AbilityController : Node
     {
         player.EntityControllers.status_effect_controller.AbilitiesPrevented += HandleAbilitiesPrevented;
 
-        player.systems.interact_system.NearInteractable += OnNearInteractable;
-        player.systems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
+        player.PlayerSystems.interact_system.NearInteractable += OnNearInteractable;
+        player.PlayerSystems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
     }
 
      public void Unsubscribe(Player player)
     {
         player.EntityControllers.status_effect_controller.AbilitiesPrevented -= HandleAbilitiesPrevented;
 
-        player.systems.interact_system.NearInteractable -= OnNearInteractable;
-        player.systems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
+        player.PlayerSystems.interact_system.NearInteractable -= OnNearInteractable;
+        player.PlayerSystems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
     }
 
    

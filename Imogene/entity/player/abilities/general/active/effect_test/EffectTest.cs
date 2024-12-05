@@ -94,7 +94,7 @@ public partial class EffectTest : Ability
 		{
 			EmitSignal(nameof(AbilityCheck),this);
 		}		
-		if(Input.IsActionJustReleased(assigned_button) || player.Resource.CurrentValue + resource_change <= 0 && player.ability_in_use == this)
+		if(Input.IsActionJustReleased(assigned_button) || player.Resource.CurrentValue + resource_change <= 0 && player.AbilityInUse == this)
 		{
 			// GD.Print("Remove hit box");
 			RemoveHitbox(player);
@@ -107,14 +107,14 @@ public partial class EffectTest : Ability
     public void AddHitbox(Player player)
 	{
 		effect_test_hitbox = (EffectTestHitbox)hitbox_to_load.Instantiate(); // Instantiate the projectile
-		player.surrounding_hitbox.AddChild(effect_test_hitbox);
+		player.SurroundingHitbox.AddChild(effect_test_hitbox);
 		effect = new Virulent();
 		effect_test_hitbox.effects.Add(effect);
 		if(effect_test_mesh == null)
 		{
 			// GD.Print("Add mesh");
 			effect_test_mesh = (MeshInstance3D)mesh_to_load.Instantiate();
-			player.surrounding_hitbox.AddChild(effect_test_mesh);
+			player.SurroundingHitbox.AddChild(effect_test_mesh);
 		}
 	}
 
@@ -135,7 +135,7 @@ public partial class EffectTest : Ability
 		// GD.Print("remove mesh");
 		if(effect_test_mesh != null)
 		{
-			player.surrounding_hitbox.RemoveChild(effect_test_mesh);
+			player.SurroundingHitbox.RemoveChild(effect_test_mesh);
 			effect_test_mesh = null;
 		}
 		
