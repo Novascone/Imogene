@@ -10,8 +10,8 @@ public partial class Slash : Ability
 	public override void _Ready()
 	{
 		
-		rotate_on_soft = true;
-		rotate_on_held = true;
+		RotateOnSoft = true;
+		RotateOnHeld = true;
 		DamageModifier = 1;
     }
 
@@ -20,9 +20,9 @@ public partial class Slash : Ability
 	{
 		base.Execute(player);
 		GD.Print("Execute slash");
-		if(use_timer.TimeLeft == 0)
+		if(UseTimer.TimeLeft == 0)
 		{
-			use_timer.Start();
+			UseTimer.Start();
 			
 		}
 	}
@@ -30,10 +30,10 @@ public partial class Slash : Ability
 
 	public void _on_swing_timer_timeout()
 	{
-		if(button_released && !ability_finished)
+		if(ButtonReleased && !AbilityExecuted)
 		{
 			EmitSignal(nameof(AbilityFinished),this);
-			ability_finished = true;
+			AbilityExecuted = true;
 		}
 	}
 

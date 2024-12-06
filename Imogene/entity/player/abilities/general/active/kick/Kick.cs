@@ -14,11 +14,11 @@ public partial class Kick : Ability
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		melee_hitbox = kick_hitbox;
+		MeleeHitbox = kick_hitbox;
 		charge_timer_1 = GetNode<Timer>("ChargeTimer1");
 		charge_timer_2 = GetNode<Timer>("ChargeTimer2");
-		use_timer = GetNode<Timer>("CastTimer");
-		charges = 2;
+		UseTimer = GetNode<Timer>("CastTimer");
+		Charges = 2;
 		DamageModifier = 0.5f;
 	}
 
@@ -52,8 +52,8 @@ public partial class Kick : Ability
 	public override void Execute(Player player)
 	{
 		base.Execute(player);
-		charges_used += 1;
-		use_timer.Start();
+		ChargesUsed += 1;
+		UseTimer.Start();
 		if(charge_timer_1.TimeLeft == 0)
 		{
 			charge_timer_1.Start();
@@ -80,7 +80,7 @@ public partial class Kick : Ability
     {
         if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
-			if(use_timer. TimeLeft == 0)
+			if(UseTimer. TimeLeft == 0)
 			{
 				EmitSignal(nameof(AbilityQueue), this);
 				EmitSignal(nameof(AbilityCheck), this);
@@ -88,7 +88,7 @@ public partial class Kick : Ability
 			
 		
 		}
-		if(use_timer.TimeLeft == 0)
+		if(UseTimer.TimeLeft == 0)
 		{
 			EmitSignal(nameof(AbilityCheck), player, this);
 		}
@@ -130,10 +130,10 @@ public partial class Kick : Ability
 	public void _on_charge_timer_1_timeout()
 	{
 		
-		if(charges_used > 0)
+		if(ChargesUsed > 0)
 		{
 			// GD.Print("charge refilled");
-			charges_used -= 1;
+			ChargesUsed -= 1;
 		}
 		
 	}
@@ -141,10 +141,10 @@ public partial class Kick : Ability
 	public void _on_charge_timer_2_timeout()
 	{
 		
-		if(charges_used > 0)
+		if(ChargesUsed > 0)
 		{
 			// GD.Print("charge refilled");
-			charges_used -= 1;
+			ChargesUsed -= 1;
 		}
 		
 	}

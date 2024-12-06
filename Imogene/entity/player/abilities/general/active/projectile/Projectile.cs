@@ -15,8 +15,8 @@ public partial class Projectile : RangedAbility
 	public override void _Ready()
 	{
 		
-		rotate_on_soft = true;
-		rotate_on_held = true;
+		RotateOnSoft = true;
+		RotateOnHeld = true;
 		DamageModifier = 1;
     }
 
@@ -27,9 +27,9 @@ public partial class Projectile : RangedAbility
 		GD.Print("Execute projectile");
 		
 		
-		if(use_timer.TimeLeft == 0)
+		if(UseTimer.TimeLeft == 0)
 		{
-			use_timer.Start();
+			UseTimer.Start();
 			Vector3 collision = GetRayCastCollision(player); // Get the collision from the player to whats in front of it
 			LaunchProjectile(player, collision); // Shoot projectile from cast point to the player collision point
 		}
@@ -52,7 +52,7 @@ public partial class Projectile : RangedAbility
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 		Slow slow = new();
 		projectile.effects.Add(slow);
-		ranged_hitbox = projectile;
+		RangedHitbox = projectile;
 		DealDamage(player, DamageModifier);
 	}
 
@@ -63,10 +63,10 @@ public partial class Projectile : RangedAbility
 
 	public void _on_cast_timer_timeout() // Remove ability from list and allow player movement
 	{
-		if(button_released && !ability_finished)
+		if(ButtonReleased && !AbilityExecuted)
 		{
 			EmitSignal(nameof(AbilityFinished),this);
-			ability_finished = true;
+			AbilityExecuted = true;
 		}
 		EmitSignal(nameof(AbilityReleaseInputControl),this);
 		

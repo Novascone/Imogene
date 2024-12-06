@@ -20,8 +20,8 @@ public partial class Roll : Ability
 		roll_timer = GetNode<Timer>("RollTimer");
 		
 		_customSignals = _customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		rotate_on_soft = false;
-		general_ability_type = GeneralAbilityType.Movement;
+		RotateOnSoft = false;
+		AbilityGeneralType = GeneralAbilityType.Movement;
 		// _customSignals.PlayerInfo += HandlePlayerInfo;
 		// _customSignals.AnimationFinished += HandleAnimationFinished;
 		// _customSignals.AbilityAssigned += HandleAbilityAssigned;

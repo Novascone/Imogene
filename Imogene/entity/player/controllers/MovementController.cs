@@ -190,7 +190,7 @@ public partial class MovementController : Node
 	 internal void OnAbilityExecuting(Ability ability_) // Listen to signal from individual player ability that lets this script know that it is executing
     {
         movement_input_prevented = true;
-		if(ability_.general_ability_type == Ability.GeneralAbilityType.Movement)
+		if(ability_.AbilityGeneralType == Ability.GeneralAbilityType.Movement)
 		{
 			movement_ability_in_use = true;
 		}
@@ -204,7 +204,7 @@ public partial class MovementController : Node
     internal void OnAbilityFinished(Ability ability_) // Listen to signal from individual player ability that lets this script know that it has finished
     {
         movement_input_prevented = false;
-		if(ability_.general_ability_type == Ability.GeneralAbilityType.Movement)
+		if(ability_.AbilityGeneralType == Ability.GeneralAbilityType.Movement)
 		{
 			movement_ability_in_use = false;
 		}

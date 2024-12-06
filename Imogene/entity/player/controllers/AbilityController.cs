@@ -15,11 +15,11 @@ public partial class AbilityController : Node
         if(!player_.PlayerUI.preventing_movement && !player_.PlayerUI.capturing_input && !ability_use_prevented)
         {
         
-            if(ability_.state == Ability.States.NotQueued)
+            if(ability_.State == Ability.States.NotQueued)
             {   
                 if(CanAfford(player_, ability_) && CheckCross(player_, ability_))
                 {
-                    ability_.state = Ability.States.Queued;
+                    ability_.State = Ability.States.Queued;
                 }
             }
             
@@ -33,11 +33,11 @@ public partial class AbilityController : Node
 
 	public void CheckCanUseAbility(Player player, Ability ability)
     {
-        if(ability.state == Ability.States.Queued)
+        if(ability.State == Ability.States.Queued)
         {
-            if(!ability.button_held)
+            if(!ability.ButtonHeld)
             {
-                if(ability.rotate_on_soft)
+                if(ability.RotateOnSoft)
                 {
                     if(player.PlayerSystems.targeting_system.enemy_to_soft_target)
                     {
@@ -46,20 +46,20 @@ public partial class AbilityController : Node
                     else
                     {
                         ability.Execute(player);
-                        if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                        if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
                         AddToAbilityList(player, ability);
                     }
                 }
                 else
                 {
                     ability.Execute(player);
-                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                    if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
                     AddToAbilityList(player, ability);
                 }
             }
-            else if (ability.button_held)
+            else if (ability.ButtonHeld)
             {
-                if(ability.rotate_on_held)
+                if(ability.RotateOnHeld)
                 {
 					if(player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
                     {
@@ -69,14 +69,14 @@ public partial class AbilityController : Node
                     {
                         EmitSignal(nameof(ReleaseInputControl));
                         ability.Execute(player);
-						if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+						if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
                         AddToAbilityList(player, ability);
                     }
                 }
                 else
                 {
                     ability.Execute(player);
-                    if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+                    if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
                     AddToAbilityList(player, ability);
                 }
             }
@@ -86,11 +86,11 @@ public partial class AbilityController : Node
 
     public static bool CheckCross(Player player, Ability ability) // Checks what cross the ability is assigned to
     {
-        if(ability.cross == Ability.Cross.Left)
+        if(ability.AbilityCross == Ability.Cross.Left)
 		{
 			if(player.LCrossPrimarySelected)
 			{
-				if(ability.tier == Ability.Tier.Primary)
+				if(ability.AbilityTier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -101,7 +101,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-				if(ability.tier == Ability.Tier.Secondary)
+				if(ability.AbilityTier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -111,11 +111,11 @@ public partial class AbilityController : Node
                 }
 			}
 		}
-		else if(ability.cross == Ability.Cross.Right)
+		else if(ability.AbilityCross == Ability.Cross.Right)
 		{
 			if(player.RCossPrimarySelected)
 			{
-				if(ability.tier == Ability.Tier.Primary)
+				if(ability.AbilityTier == Ability.Tier.Primary)
 				{
 					return true;
 				}
@@ -126,7 +126,7 @@ public partial class AbilityController : Node
 			}
 			else
 			{
-                if(ability.tier == Ability.Tier.Secondary)
+                if(ability.AbilityTier == Ability.Tier.Secondary)
                 {
                     return true;
                 }
@@ -142,10 +142,10 @@ public partial class AbilityController : Node
 
 	public static bool CanAfford(Player player, Ability ability)
     {
-        if(ability.charges - ability.charges_used >= 0 && ability.charges > 0)
+        if(ability.Charges - ability.ChargesUsed >= 0 && ability.Charges > 0)
         {
            
-            if(ability.charges - ability.charges_used != 0)
+            if(ability.Charges - ability.ChargesUsed != 0)
             {
                 return true;
             }
@@ -155,11 +155,11 @@ public partial class AbilityController : Node
             }
             
         }
-        else if(player.Resource.CurrentValue - ability.resource_change >= 0 || ability.resource_change == 0)
+        else if(player.Resource.CurrentValue - ability.ResourceChange >= 0 || ability.ResourceChange == 0)
         {
-            if(ability.cooldown_timer != null)
+            if(ability.CooldownTimer != null)
             {
-                if(ability.cooldown_timer.TimeLeft == 0)
+                if(ability.CooldownTimer.TimeLeft == 0)
                 {
                     return true;
                 }
@@ -194,14 +194,14 @@ public partial class AbilityController : Node
 
         if(done_rotating && player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
         {
-            if(ability.button_held)
+            if(ability.ButtonHeld)
             {
                 
                 EmitSignal(nameof(RotatePlayer));
             }
             
             ability.Execute(player);
-            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+            if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
             
         }
         else if(!done_rotating)
@@ -211,7 +211,7 @@ public partial class AbilityController : Node
         else
         {
             ability.Execute(player);
-            if(ability.resource_change != 0){EmitSignal(nameof(ResourceEffect), player, ability.resource_change);}
+            if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
         }
                 
     }
@@ -222,7 +222,7 @@ public partial class AbilityController : Node
         if(!player.AbilitiesInUseList.Contains(ability))
         {
             player.AbilitiesInUseList.AddFirst(ability);
-            ability.in_use = true;
+            ability.InUse = true;
         }
 
         player.AbilityInUse = player.AbilitiesInUseList.First.Value;
@@ -239,7 +239,7 @@ public partial class AbilityController : Node
         {
             player.AbilityInUse = null;
         }
-        ability.in_use = false;
+        ability.InUse = false;
     }
 
     internal void OnNearInteractable(bool nearInteractable)

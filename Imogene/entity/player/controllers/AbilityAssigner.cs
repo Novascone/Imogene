@@ -7,10 +7,10 @@ public partial class AbilityAssigner : Node
 {
 	public static void AssignAbility(Player player_, Ability ability_, string bind_, Ability.Cross cross_, Ability.Tier tier_)
 	{
-		ability_.assigned_button = bind_;
-		ability_.cross = cross_;
-		ability_.tier = tier_;
-		player_.PlayerUI.AssignAbility(ability_.cross, ability_.tier, ability_.assigned_button, ability_.Name, ability_.icon);
+		ability_.AssignedButton = bind_;
+		ability_.AbilityCross = cross_;
+		ability_.AbilityTier = tier_;
+		player_.PlayerUI.AssignAbility(ability_.AbilityCross, ability_.AbilityTier, ability_.AssignedButton, ability_.Name, ability_.Icon);
 	}
 
 	public static Node LoadAbility(Player player_, string name_, string class_type_, string ability_type_) // Loads an ability from a string
@@ -36,9 +36,9 @@ public partial class AbilityAssigner : Node
 		{
 			if(ability.Name == ability_name_)
 			{
-				ability.cross = cross_;
-				ability.tier = tier_;
-				ability.assigned_button = bind_;
+				ability.AbilityCross = cross_;
+				ability.AbilityTier = tier_;
+				ability.AssignedButton = bind_;
 			}
 		}
 	}
@@ -49,9 +49,9 @@ public partial class AbilityAssigner : Node
 		{
 			if(ability.Name == ability_name_)
 			{
-				ability.cross = Ability.Cross.None;
-				ability.tier = Ability.Tier.None;
-				ability.assigned_button = "";
+				ability.AbilityCross = Ability.Cross.None;
+				ability.AbilityTier = Ability.Tier.None;
+				ability.AssignedButton = "";
 			}
 		}
 	}

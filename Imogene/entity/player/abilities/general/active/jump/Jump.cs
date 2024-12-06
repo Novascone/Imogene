@@ -12,9 +12,9 @@ public partial class Jump : Ability
     {
 		coyote_timer = GetNode<Timer>("Coyote"); // Timer for coyote jump
 		clamber = GetNode<Timer>("Clamber");
-		rotate_on_soft = false;
+		RotateOnSoft = false;
 		clamber.Timeout += OnClamberTimeout;
-		general_ability_type = GeneralAbilityType.Movement;
+		AbilityGeneralType = GeneralAbilityType.Movement;
 		// stop_movement_input = false;
     }
 
@@ -80,7 +80,7 @@ public partial class Jump : Ability
 					// GD.Print("setting climbing to true");
 					player.PlayerControllers.input_controller.climbing = true;
 				}
-				else if(Input.IsActionJustPressed(assigned_button) && player.PlayerControllers.input_controller.climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
+				else if(Input.IsActionJustPressed(AssignedButton) && player.PlayerControllers.input_controller.climbing) // If the player pushes the button assigned to jump while climbing, stop climbing
 				{
 					// GD.Print("Setting climbing to false");
 					player.PlayerControllers.input_controller.climbing = false;
@@ -165,7 +165,7 @@ public partial class Jump : Ability
 	{
 		if(player.AbilityInUse != null)
 		{
-			if(player.AbilityInUse.general_ability_type != Ability.GeneralAbilityType.Movement)
+			if(player.AbilityInUse.AbilityGeneralType != Ability.GeneralAbilityType.Movement)
 			{
 				// GD.Print("Can not jump because the ability in use is not movement");
 				return false;

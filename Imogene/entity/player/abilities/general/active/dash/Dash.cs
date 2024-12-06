@@ -35,8 +35,8 @@ public partial class Dash : Ability
 
     public override void Execute(Player player)
     {
-		state = States.NotQueued;
-        ability_finished = false;
+		State = States.NotQueued;
+        AbilityExecuted = false;
         // base.Execute(player);
 		// player.using_movement_ability = true;
 		EmitSignal(nameof(MovementAbilityExecuted), true);

@@ -12,8 +12,8 @@ public partial class Hitscan : RangedAbility
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		rotate_on_soft = true;
-		rotate_on_held = true;
+		RotateOnSoft = true;
+		RotateOnHeld = true;
 		
 	}
 
@@ -53,7 +53,7 @@ public partial class Hitscan : RangedAbility
 	public override void Execute(Player player)
 	{
 		// GD.Print("Casting");
-		use_timer.Start();
+		UseTimer.Start();
 		Vector3 collision = GetRayCastCollision(player); // Get collision point of raycast from player to object in from of them or 
 		HitscanCollision(player, collision); // Create a raycast from cast point to player collision
 	}
@@ -94,7 +94,7 @@ public partial class Hitscan : RangedAbility
 			// player.controllers.movement_controller.rotation_only = true;
 			GD.Print("player can only rotate");
 		}
-		if(Input.IsActionJustReleased(assigned_button)) // Allow the player to move fully if the button is released
+		if(Input.IsActionJustReleased(AssignedButton)) // Allow the player to move fully if the button is released
 		{
 			if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0)
 			{
@@ -103,19 +103,19 @@ public partial class Hitscan : RangedAbility
 			
 			// player.controllers.movement_controller.rotation_only = false;
 		}
-		if(Input.IsActionJustPressed(assigned_button) && state == States.NotQueued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
+		if(Input.IsActionJustPressed(AssignedButton) && State == States.NotQueued) // if the button assigned to this ability is pressed, and the ability is not queued, queue the ability
 		{
 			EmitSignal(nameof(AbilityQueue), player, this);
 		}
 		else if (CheckHeld()) // If the button is held check cast timer, queue ability, and check if it can be used
 		{
-			if(use_timer.TimeLeft == 0)
+			if(UseTimer.TimeLeft == 0)
 			{
 				EmitSignal(nameof(AbilityQueue), player, this);
 				EmitSignal(nameof(AbilityCheck), player, this);
 			}		
 		}
-		if(use_timer.TimeLeft == 0) // If not held check if ability can be used
+		if(UseTimer.TimeLeft == 0) // If not held check if ability can be used
 		{
 			EmitSignal(nameof(AbilityCheck), player, this);
 		}			
@@ -152,7 +152,7 @@ public partial class Hitscan : RangedAbility
 			
 			if(hurtbox.Owner is Enemy enemy)
 			{
-				enemy.EntitySystems.damage_system.TakeDamage(enemy, ranged_hitbox, 10.0f, false);
+				enemy.EntitySystems.damage_system.TakeDamage(enemy, RangedHitbox, 10.0f, false);
 			}
 			
 		}
@@ -160,7 +160,7 @@ public partial class Hitscan : RangedAbility
 
 	public void _on_cast_timer_timeout()
 	{
-		if(button_released)
+		if(ButtonReleased)
 		{
 			EmitSignal(nameof(AbilityFinished), this);
 		}
