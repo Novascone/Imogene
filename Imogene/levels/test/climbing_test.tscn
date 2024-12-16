@@ -1,8 +1,8 @@
 [gd_scene load_steps=19 format=3 uid="uid://bceqvbbwwyv54"]
 
-[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://entity/player/player.tscn" id="1_c64ih"]
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://Entity/Player/player.tscn" id="1_c64ih"]
 [ext_resource type="Shader" path="res://shaders/cutoff.gdshader" id="2_ty484"]
-[ext_resource type="Script" path="res://effects/CutGeometry.cs" id="3_h3qfx"]
+[ext_resource type="Script" path="res://Effects/CutGeometry.cs" id="3_h3qfx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_cftuu"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)

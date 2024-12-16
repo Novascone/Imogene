@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://djsdkytrejoj0"]
+
+[ext_resource type="Script" path="res://Entity/Player/Abilities/Brigian/Active/Whirlwind/WhirlwindHitbox.cs" id="1_fire3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_val6l"]
+height = 11.0073
+radius = 9.62156
+
+[node name="WhirlwindHitbox" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_fire3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_val6l")

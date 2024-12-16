@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dyq21ybgcn7fh"]
+
+[ext_resource type="Texture2D" uid="uid://k828utbi1wj2" path="res://images/icons/fireball_icon.png" id="1_d83mf"]
+[ext_resource type="Script" path="res://Entity/Player/Abilities/AbilityResourceScripts/AbilityResource.cs" id="2_axl0l"]
+
+[resource]
+script = ExtResource("2_axl0l")
+id = 0
+class_type = "General"
+ability_type = "Active"
+name = "SmallFireball"
+description = "Launch a small fireball at the enemy"
+ability_path = ""
+icon = ExtResource("1_d83mf")
+type = "ranged"

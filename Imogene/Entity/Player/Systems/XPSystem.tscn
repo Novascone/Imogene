@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0hvqneb5hisk"]
+
+[ext_resource type="Script" path="res://Entity/Player/Systems/XPSystem.cs" id="1_yg8mf"]
+
+[node name="XPSystem" type="Node"]
+script = ExtResource("1_yg8mf")

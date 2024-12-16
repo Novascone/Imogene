@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct07s1yunm3bp"]
+
+[ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/Projectile/Projectile.cs" id="1_ixdky"]
+[ext_resource type="PackedScene" uid="uid://cdhbhcfmpougy" path="res://Entity/Player/Abilities/General/Active/Projectile/ProjectileToLoad.tscn" id="2_lbqbt"]
+
+[node name="Projectile" type="Node3D" node_paths=PackedStringArray("UseTimer")]
+top_level = true
+script = ExtResource("1_ixdky")
+projectile_to_load = ExtResource("2_lbqbt")
+UseTimer = NodePath("CastTimer")
+
+[node name="CastTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]

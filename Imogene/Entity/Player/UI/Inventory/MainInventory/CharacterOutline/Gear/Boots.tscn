@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtusg3pgw01fl"]
+
+[ext_resource type="Script" path="res://Entity/Player/UI/Inventory/MainInventory/CharacterOutline/Gear/GearInfo.cs" id="1_0vwft"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dy5q8"]
+size = Vector2(77.5, 79)
+
+[node name="Boots" type="Button" node_paths=PackedStringArray("info")]
+custom_minimum_size = Vector2(90, 90)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+focus_neighbor_left = NodePath("../../Column1/MainHand")
+focus_neighbor_top = NodePath("../Pants")
+focus_neighbor_right = NodePath("../../OffHand")
+script = ExtResource("1_0vwft")
+info = NodePath("Info")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(45.25, 44)
+shape = SubResource("RectangleShape2D_dy5q8")
+
+[node name="Info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -18.5
+offset_top = -13.0
+offset_right = 21.5
+offset_bottom = 27.0
+grow_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_top = -40.0
+offset_right = 37.5
+offset_bottom = -5.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Info/PanelContainer"]
+layout_mode = 2
+text = "Boots"
+horizontal_alignment = 1
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

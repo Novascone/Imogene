@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://dem7n4e5trdw4"]
+
+[ext_resource type="Script" path="res://Entity/Player/UI/Inventory/ItemSlot.cs" id="1_2e685"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym1ry"]
+bg_color = Color(0.704439, 0.704844, 0.596137, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phr8x"]
+size = Vector2(40.5, 39)
+
+[node name="ItemSlot" type="Button" node_paths=PackedStringArray("slot_icon", "interact_area", "equipped_highlight")]
+custom_minimum_size = Vector2(45, 45)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2e685")
+slot_icon = NodePath("TextureRect")
+interact_area = NodePath("Area2D")
+equipped_highlight = NodePath("EquipedHighlight")
+
+[node name="EquipedHighlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 44.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ym1ry")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(23, 22)
+shape = SubResource("RectangleShape2D_phr8x")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

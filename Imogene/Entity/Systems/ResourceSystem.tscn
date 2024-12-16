@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d8nqngnt1qcc"]
+
+[ext_resource type="Script" path="res://Entity/Systems/ResourceSystem.cs" id="1_l11un"]
+
+[node name="ResourceSystem" type="Node" node_paths=PackedStringArray("posture_regen_timer", "resource_regen_timer")]
+script = ExtResource("1_l11un")
+posture_regen_timer = NodePath("PostureRegenTimer")
+resource_regen_timer = NodePath("ResourceRegenTimer")
+
+[node name="ResourceRegenTimer" type="Timer" parent="."]
+
+[node name="PostureRegenTimer" type="Timer" parent="."]

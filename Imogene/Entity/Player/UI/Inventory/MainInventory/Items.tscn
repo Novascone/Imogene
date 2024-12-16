@@ -1,0 +1,298 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq07pugqwxxgg"]
+
+[ext_resource type="PackedScene" uid="uid://dem7n4e5trdw4" path="res://Entity/Player/UI/Inventory/MainInventory/ItemSlot.tscn" id="1_5dk4o"]
+
+[node name="Items" type="GridContainer"]
+custom_minimum_size = Vector2(612, 306)
+offset_right = 612.0
+offset_bottom = 306.0
+size_flags_horizontal = 4
+columns = 12
+
+[node name="ItemSlot1" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 1
+
+[node name="ItemSlot2" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 2
+
+[node name="ItemSlot3" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 3
+
+[node name="ItemSlot4" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 4
+
+[node name="ItemSlot5" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 5
+
+[node name="ItemSlot6" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 6
+
+[node name="ItemSlot7" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 7
+
+[node name="ItemSlot8" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 8
+
+[node name="ItemSlot9" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 9
+
+[node name="ItemSlot10" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 10
+
+[node name="ItemSlot11" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 11
+
+[node name="ItemSlot12" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 12
+
+[node name="ItemSlot13" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 13
+
+[node name="ItemSlot14" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 14
+
+[node name="ItemSlot15" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 15
+
+[node name="ItemSlot16" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 16
+
+[node name="ItemSlot17" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 17
+
+[node name="ItemSlot18" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 18
+
+[node name="ItemSlot19" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 19
+
+[node name="ItemSlot20" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 20
+
+[node name="ItemSlot21" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 21
+
+[node name="ItemSlot22" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 22
+
+[node name="ItemSlot23" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 23
+
+[node name="ItemSlot24" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 24
+
+[node name="ItemSlot25" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 25
+
+[node name="ItemSlot26" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 26
+
+[node name="ItemSlot27" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 27
+
+[node name="ItemSlot28" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 28
+
+[node name="ItemSlot29" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 29
+
+[node name="ItemSlot30" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 30
+
+[node name="ItemSlot31" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 31
+
+[node name="ItemSlot32" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 32
+
+[node name="ItemSlot33" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 33
+
+[node name="ItemSlot34" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 34
+
+[node name="ItemSlot35" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 35
+
+[node name="ItemSlot36" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 36
+
+[node name="ItemSlot37" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 37
+
+[node name="ItemSlot38" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 38
+
+[node name="ItemSlot39" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 39
+
+[node name="ItemSlot40" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 40
+
+[node name="ItemSlot41" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 41
+
+[node name="ItemSlot42" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 42
+
+[node name="ItemSlot43" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 43
+
+[node name="ItemSlot44" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 44
+
+[node name="ItemSlot45" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 45
+
+[node name="ItemSlot46" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 46
+
+[node name="ItemSlot47" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 47
+
+[node name="ItemSlot48" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 48
+
+[node name="ItemSlot49" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 49
+
+[node name="ItemSlot50" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 50
+
+[node name="ItemSlot51" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 51
+
+[node name="ItemSlot52" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 52
+
+[node name="ItemSlot53" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 53
+
+[node name="ItemSlot54" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 54
+
+[node name="ItemSlot55" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 55
+
+[node name="ItemSlot56" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 56
+
+[node name="ItemSlot57" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 57
+
+[node name="ItemSlot58" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 58
+
+[node name="ItemSlot59" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 59
+
+[node name="ItemSlot60" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 60
+
+[node name="ItemSlot61" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 61
+
+[node name="ItemSlot62" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 62
+
+[node name="ItemSlot63" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 63
+
+[node name="ItemSlot64" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 64
+
+[node name="ItemSlot65" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 65
+
+[node name="ItemSlot66" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 66
+
+[node name="ItemSlot67" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 67
+
+[node name="ItemSlot68" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 68
+
+[node name="ItemSlot69" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 69
+
+[node name="ItemSlot70" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 70
+
+[node name="ItemSlot71" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 71
+
+[node name="ItemSlot72" parent="." instance=ExtResource("1_5dk4o")]
+layout_mode = 2
+inventory_slot_id = 72

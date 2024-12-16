@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8tbjm2xaynn5"]
+
+[ext_resource type="Script" path="res://Entity/Player/Controllers/AbilityAssigner.cs" id="1_tijr1"]
+[ext_resource type="Script" path="res://Entity/Systems/Damage/DamageSystem.cs" id="2_wothy"]
+[ext_resource type="Script" path="res://Entity/Systems/ResourceSystem.cs" id="3_2ysmn"]
+
+[node name="Systems" type="Node"]
+script = ExtResource("1_tijr1")
+
+[node name="DamageSystem" type="Node" parent="."]
+script = ExtResource("2_wothy")
+
+[node name="DoTTimer" type="Timer" parent="DamageSystem"]
+
+[node name="SlowTimer" type="Timer" parent="DamageSystem"]
+
+[node name="StunTimer" type="Timer" parent="DamageSystem"]
+
+[node name="HealthRegenTimer" type="Timer" parent="DamageSystem"]
+
+[node name="ResourceSystem" type="Node" parent="."]
+script = ExtResource("3_2ysmn")
+
+[node name="ResourceRegenTimer" type="Timer" parent="ResourceSystem"]
+
+[node name="PostureRegenTimer" type="Timer" parent="ResourceSystem"]
+
+[node name="CastTimer" type="Timer" parent="."]

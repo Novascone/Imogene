@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b02njwvptdrdb" path="res://interactive/box.tscn" id="1_4rjct"]
 [ext_resource type="PackedScene" uid="uid://vp0i61gx8dng" path="res://props/platform.tscn" id="4_atlgh"]
-[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://entity/player/player.tscn" id="4_j8e3h"]
+[ext_resource type="PackedScene" uid="uid://cjc6loq5wgnn4" path="res://Entity/Player/player.tscn" id="4_j8e3h"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eyji4"]
 vertices = PackedVector3Array(-19.3001, 0.491906, -15.1712, -19.3001, 0.491906, 15.0788, 19.1999, 0.491906, 15.0788, 19.1999, 0.491906, -15.1712)

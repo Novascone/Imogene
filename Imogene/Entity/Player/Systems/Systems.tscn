@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://nxu401tbmgw3"]
+
+[ext_resource type="Script" path="res://Entity/Player/Systems/Systems.cs" id="1_0yxmj"]
+[ext_resource type="PackedScene" uid="uid://b0rm1tmnu6soc" path="res://Entity/Player/Systems/InteractSystems.tscn" id="2_iij12"]
+[ext_resource type="PackedScene" uid="uid://0hvqneb5hisk" path="res://Entity/Player/Systems/XPSystem.tscn" id="3_6wqvb"]
+[ext_resource type="PackedScene" uid="uid://c8rwto7s7kjhv" path="res://Entity/Player/Systems/VisionSystem.tscn" id="4_8g0mp"]
+[ext_resource type="PackedScene" uid="uid://r40vsjeix5rc" path="res://Entity/Player/Systems/TargetingSystem.tscn" id="5_u4vbc"]
+
+[node name="Systems" type="Node3D" node_paths=PackedStringArray("vision_system", "interact_system", "targeting_system", "xp_system")]
+script = ExtResource("1_0yxmj")
+vision_system = NodePath("VisionSystem")
+interact_system = NodePath("InteractSystem")
+targeting_system = NodePath("TargetingSystem")
+xp_system = NodePath("XPSystem")
+
+[node name="InteractSystem" parent="." instance=ExtResource("2_iij12")]
+
+[node name="XPSystem" parent="." instance=ExtResource("3_6wqvb")]
+
+[node name="VisionSystem" parent="." instance=ExtResource("4_8g0mp")]
+
+[node name="TargetingSystem" parent="." instance=ExtResource("5_u4vbc")]

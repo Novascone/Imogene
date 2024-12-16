@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://nu8ipwp3ykox"]
-
-[ext_resource type="Script" path="res://entity/player/controllers/MovementController.cs" id="1_33rl4"]
-
-[node name="MovementController" type="Node"]
-script = ExtResource("1_33rl4")

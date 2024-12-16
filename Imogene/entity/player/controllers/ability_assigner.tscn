@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfctyyhexl1xg"]
-
-[ext_resource type="Script" path="res://entity/player/controllers/AbilityAssigner.cs" id="1_fp1d7"]
-
-[node name="AbilityAssigner" type="Node"]
-script = ExtResource("1_fp1d7")

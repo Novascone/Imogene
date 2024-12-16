@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://city4owfc4mdq"]
 
-[ext_resource type="Script" path="res://entity/player/camera/CameraRig.cs" id="1_2lyyp"]
+[ext_resource type="Script" path="res://Entity/Player/Camera/CameraRig.cs" id="1_2lyyp"]
 [ext_resource type="PackedScene" path="res://scenes/entities/herd_enemy_organized.tscn" id="2_rq2vc"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_llvl6"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=3 uid="uid://cusy717oxhhlo"]
 
 [ext_resource type="Shader" path="res://shaders/transparency.gdshader" id="1_11u1r"]
-[ext_resource type="Script" path="res://effects/Dissolve.cs" id="2_513lm"]
-[ext_resource type="Script" path="res://effects/RayCastDissolve.cs" id="34_y6jhv"]
+[ext_resource type="Script" path="res://Effects/Dissolve.cs" id="2_513lm"]
+[ext_resource type="Script" path="res://Effects/RayCastDissolve.cs" id="34_y6jhv"]
 [ext_resource type="PackedScene" uid="uid://dt8weibfv80xk" path="res://levels/test/wall.tscn" id="35_a2g8h"]
-[ext_resource type="Script" path="res://effects/DissolveCollisionItem.cs" id="35_u8p7x"]
+[ext_resource type="Script" path="res://Effects/DissolveCollisionItem.cs" id="35_u8p7x"]
 [ext_resource type="Shader" path="res://shaders/instance_transparency.gdshader" id="36_yei1j"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_yh5vh"]

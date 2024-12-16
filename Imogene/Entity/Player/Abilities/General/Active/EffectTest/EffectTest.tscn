@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqq2mv3q40w58"]
+
+[ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/EffectTest/EffectTest.cs" id="1_qknds"]
+[ext_resource type="PackedScene" uid="uid://lgu3vtdut02x" path="res://Entity/Player/Abilities/General/Active/EffectTest/EffectTestHitbox.tscn" id="2_o3fu7"]
+[ext_resource type="PackedScene" uid="uid://csxwuf8nwpjdw" path="res://Entity/Player/Abilities/General/Active/EffectTest/EffectTestMesh.tscn" id="3_e66ax"]
+
+[node name="EffectTest" type="Node3D" node_paths=PackedStringArray("DurationTimer")]
+script = ExtResource("1_qknds")
+DurationTimer = NodePath("DurationTimer")
+HitboxToLoad = ExtResource("2_o3fu7")
+MeshToLoad = ExtResource("3_e66ax")
+
+[node name="DurationTimer" type="Timer" parent="."]

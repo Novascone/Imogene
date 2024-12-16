@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://br1lm3qgxi0jb"]
-
-[ext_resource type="Script" path="res://entity/controllers/StatusEffectController.cs" id="1_021xw"]
-
-[node name="StatusEffectController" type="Node"]
-script = ExtResource("1_021xw")

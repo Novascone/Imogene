@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5espcc1s6xmk"]
+
+[ext_resource type="Script" path="res://Entity/Player/UI/Abilities/ActivePassives.cs" id="1_8pry4"]
+[ext_resource type="PackedScene" uid="uid://7py5yrnfrye5" path="res://Entity/Player/UI/Abilities/ActivePassiveSlot.tscn" id="1_uwds6"]
+
+[node name="AssignedPassives" type="VBoxContainer" node_paths=PackedStringArray("active_passive_1", "active_passive_2", "active_passive_3", "active_passive_4", "active_passive_5", "active_passive_6")]
+offset_right = 565.0
+offset_bottom = 109.0
+script = ExtResource("1_8pry4")
+active_passive_1 = NodePath("HBoxContainer/ActivePassiveSlot1")
+active_passive_2 = NodePath("HBoxContainer/ActivePassiveSlot2")
+active_passive_3 = NodePath("HBoxContainer/ActivePassiveSlot3")
+active_passive_4 = NodePath("HBoxContainer/ActivePassiveSlot4")
+active_passive_5 = NodePath("HBoxContainer/ActivePassiveSlot5")
+active_passive_6 = NodePath("HBoxContainer/ActivePassiveSlot6")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Assigned Passives"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="ActivePassiveSlot1" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot2" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot3" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot4" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot5" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2
+
+[node name="ActivePassiveSlot6" parent="HBoxContainer" instance=ExtResource("1_uwds6")]
+layout_mode = 2

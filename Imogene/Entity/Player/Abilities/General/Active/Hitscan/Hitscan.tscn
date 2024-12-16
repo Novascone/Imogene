@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr6yeyvn2n78f"]
+
+[ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/Hitscan/Hitscan.cs" id="1_cxw8o"]
+
+[node name="Hitscan" type="Node3D" node_paths=PackedStringArray("UseTimer")]
+script = ExtResource("1_cxw8o")
+UseTimer = NodePath("CastTimer")
+
+[node name="CastTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
