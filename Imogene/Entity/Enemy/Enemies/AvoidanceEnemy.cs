@@ -23,24 +23,24 @@ public partial class AvoidanceEnemy : Enemy
 		base._PhysicsProcess(delta);
 		if(Velocity > Vector3.Zero )
 		{
-			blend_direction.Y = 1; // Sets animation to walk
+			BlendDirection.Y = 1; // Sets animation to walk
 		}
 		if(Velocity.IsEqualApprox(Vector3.Zero))
 		{
-			blend_direction.Y = 0;
+			BlendDirection.Y = 0;
 		}
 		if(chaser != null) 
 		{
 			if(GlobalPosition.DistanceTo(chaser.GlobalPosition) < 5)
 			{
 				running_away_from_chaser = true;
-				max_speed = 8;
+				MaxSpeed = 8;
 				
 			}
 			else if (GlobalPosition.DistanceTo(chaser.GlobalPosition) > 15)
 			{
 				running_away_from_chaser = false;
-				max_speed = 4;
+				MaxSpeed = 4;
 			
 			}
 			GD.Print("Distance from chaser " + GlobalPosition.DistanceTo(chaser.GlobalPosition));
@@ -48,17 +48,17 @@ public partial class AvoidanceEnemy : Enemy
 		if(can_see_center && GlobalPosition.DistanceTo(center_position) < 2 && !running_away_from_chaser) // If the entity is under the center stop moving
 		{
 			GD.Print("Stop moving");
-			_targetVelocity = Vector3.Zero;
-			Velocity = _targetVelocity;
-			blend_direction = Vector2.Zero;
-			GD.Print(blend_direction);
+			TargetVelocity = Vector3.Zero;
+			Velocity = TargetVelocity;
+			BlendDirection = Vector2.Zero;
+			GD.Print(BlendDirection);
 		}
 		else
 		{
-			_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
-			Velocity = Velocity.Lerp(_targetVelocity, steer_force);
+			TargetVelocity = ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * MaxSpeed;
+			Velocity = Velocity.Lerp(TargetVelocity, SteerForce);
 		}
-		tree.Set("parameters/IW/blend_position", blend_direction);
+		Tree.Set("parameters/IW/blend_position", BlendDirection);
 		MoveAndSlide();
 	}
 

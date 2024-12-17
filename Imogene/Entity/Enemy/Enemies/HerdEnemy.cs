@@ -29,11 +29,11 @@ public partial class HerdEnemy : Enemy
 		
 		if(Velocity > Vector3.Zero )
 		{
-			blend_direction.Y = 1; // Sets animation to walk
+			BlendDirection.Y = 1; // Sets animation to walk
 		}
 		if(Velocity.IsEqualApprox(Vector3.Zero))
 		{
-			blend_direction.Y = 0;
+			BlendDirection.Y = 0;
 		}
 		if(herd_mate_position != Vector3.Zero)
 		{
@@ -57,9 +57,9 @@ public partial class HerdEnemy : Enemy
 			// }
 			
 		}
-		_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
-		Velocity = Velocity.Lerp(_targetVelocity, steer_force);
-		tree.Set("parameters/IW/blend_position", blend_direction);
+		TargetVelocity = ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * MaxSpeed;
+		Velocity = Velocity.Lerp(TargetVelocity, SteerForce);
+		Tree.Set("parameters/IW/blend_position", BlendDirection);
 		MoveAndSlide();
 	}
 

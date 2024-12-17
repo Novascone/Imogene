@@ -123,7 +123,7 @@ public partial class TargetingSystem : Node
 		{
 			if(soft_target_on && !targeting)
 			{
-				enemy_pointed_toward.soft_target = true;
+				enemy_pointed_toward.SoftTarget = true;
 				EmitSignal(nameof(ShowSoftTargetIcon), enemy_pointed_toward);
 				if(mobs_in_order.Count > 1)
 				{
@@ -131,9 +131,9 @@ public partial class TargetingSystem : Node
 					{
 						if(_enemy != enemy_pointed_toward)
 						{
-							if(_enemy.ui.soft_target_icon.Visible)
+							if(_enemy.UI.soft_target_icon.Visible)
 							{
-								_enemy.soft_target = false;
+								_enemy.SoftTarget = false;
 								EmitSignal(nameof(HideSoftTargetIcon), _enemy);
 							}
 							
@@ -145,7 +145,7 @@ public partial class TargetingSystem : Node
 		else if(enemy_near)
 		{
 			nearest_enemy = mobs_in_order[0];
-			nearest_enemy.soft_target = true;
+			nearest_enemy.SoftTarget = true;
 			
 			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
 			
@@ -155,9 +155,9 @@ public partial class TargetingSystem : Node
 				{
 					if(_enemy != nearest_enemy)
 					{
-						if(_enemy.ui.soft_target_icon.Visible)
+						if(_enemy.UI.soft_target_icon.Visible)
 						{
-							_enemy.soft_target = false;
+							_enemy.SoftTarget = false;
 							EmitSignal(nameof(HideSoftTargetIcon), _enemy);
 						}
 						
@@ -189,7 +189,7 @@ public partial class TargetingSystem : Node
 					EmitSignal(nameof(DimSoftTargetHUD));
 					if(nearest_enemy != null)
 					{
-						if(nearest_enemy.ui.soft_target_icon.Visible)
+						if(nearest_enemy.UI.soft_target_icon.Visible)
 						{
 							EmitSignal(nameof(HideSoftTargetIcon), nearest_enemy);
 						}
@@ -208,21 +208,21 @@ public partial class TargetingSystem : Node
 	public void EnemyEnteredNear(Enemy enemy_) // Called when enemy enters the small soft target zone
 	{
 		
-		enemy_.in_soft_target_small = true;
+		enemy_.InSoftTargetSmall = true;
 		enemy_near = true;
 	}
 
 	public void EnemyExitedNear(Enemy enemy_) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
 	{
 		
-		enemy_.in_soft_target_small = false;
-		enemy_.soft_target = false;
+		enemy_.InSoftTargetSmall = false;
+		enemy_.SoftTarget = false;
 		EmitSignal(nameof(HideSoftTargetIcon), enemy_);
 		var mobs_in_small = 0;
 
 		foreach(Enemy _enemy_in_mobs in mobs.Keys)
 		{
-			if(_enemy_in_mobs.in_soft_target_small)
+			if(_enemy_in_mobs.InSoftTargetSmall)
 			{
 				mobs_in_small += 1;
 			}
@@ -236,7 +236,7 @@ public partial class TargetingSystem : Node
 
 	public void EnemyEnteredFar(Enemy enemy_) // Called when enemy enters the large soft zone, adds enemy to the dictionary of enemies
 	{
-		enemy_.in_soft_target_large = true;
+		enemy_.InSoftTargetLarge = true;
 		enemy_far = true;
 		Vector3 enemy_position = enemy_.GlobalTransform.Origin;
 		if(!mobs.ContainsKey(enemy_))
@@ -247,7 +247,7 @@ public partial class TargetingSystem : Node
 
 	public void EnemyExitedFar(Enemy enemy_) // Called when enemy exits the large soft zone, removes enemy from dictionary, and clears it if it's the last mob
 	{
-		enemy_.soft_target = false;
+		enemy_.SoftTarget = false;
 		if(enemy_.IsInGroup("enemy")) 
 		{
 			if(enemy_ == mob_looking_at)
@@ -272,7 +272,7 @@ public partial class TargetingSystem : Node
 
 			foreach(Enemy _enemy_in_mobs in mobs.Keys)
 			{
-				if(_enemy_in_mobs.in_soft_target_small)
+				if(_enemy_in_mobs.InSoftTargetSmall)
 				{
 					mobs_in_large += 1;
 				}
@@ -330,7 +330,7 @@ public partial class TargetingSystem : Node
 		}
 		if (frames_held > held_threshold && enemy_near)
 		{
-			nearest_enemy.soft_target = false;
+			nearest_enemy.SoftTarget = false;
 			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
 		}
 		
@@ -369,7 +369,7 @@ public partial class TargetingSystem : Node
 		ui_target_signal_emitted = false;
 		if(mobs_in_order_to_right.Count >= 1)
 		{
-			mob_looking_at.targeted = false;
+			mob_looking_at.Targeted = false;
 			EmitSignal(nameof(EnemyUntargeted));
 			if(mobs_in_order_to_right.Contains(mob_looking_at))
 			{
@@ -379,14 +379,14 @@ public partial class TargetingSystem : Node
 					{
 						mob_to_LookAt_pos = mobs_in_order_to_right[mobs_in_order_to_right.IndexOf(mob_looking_at) + 1].GlobalPosition;
 						mob_looking_at = mobs_in_order_to_right[mobs_in_order_to_right.IndexOf(mob_looking_at) + 1];
-						mob_looking_at.targeted = true;
+						mob_looking_at.Targeted = true;
 					}
 				}
 				else
 				{
 					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
 					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.targeted = true;
+					mob_looking_at.Targeted = true;
 				}
 			}
 			else
@@ -395,7 +395,7 @@ public partial class TargetingSystem : Node
 				{
 					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
 					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.targeted = true;
+					mob_looking_at.Targeted = true;
 				}
 			}
 		}
@@ -406,7 +406,7 @@ public partial class TargetingSystem : Node
 		ui_target_signal_emitted = false;
 		if(mobs_in_order_to_left.Count >= 1)
 		{
-			mob_looking_at.targeted = false;
+			mob_looking_at.Targeted = false;
 			EmitSignal(nameof(EnemyUntargeted));
 			if(mobs_in_order_to_left.Contains(mob_looking_at))
 			{
@@ -416,14 +416,14 @@ public partial class TargetingSystem : Node
 					{
 						mob_to_LookAt_pos = mobs_in_order_to_left[mobs_in_order_to_left.IndexOf(mob_looking_at) + 1].GlobalPosition;
 						mob_looking_at = mobs_in_order_to_left[mobs_in_order_to_left.IndexOf(mob_looking_at) + 1];
-						mob_looking_at.targeted = true;
+						mob_looking_at.Targeted = true;
 					}
 				}
 				else
 				{
 					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
 					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.targeted = true;
+					mob_looking_at.Targeted = true;
 				}
 			}
 			else
@@ -432,7 +432,7 @@ public partial class TargetingSystem : Node
 				{
 					mob_to_LookAt_pos = mobs_in_order_to_left[0].GlobalPosition;
 					mob_looking_at = mobs_in_order_to_left[0];
-					mob_looking_at.targeted = true;
+					mob_looking_at.Targeted = true;
 				}
 			}
 		}

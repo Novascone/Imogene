@@ -10,92 +10,92 @@ public partial class Enemy : Entity
 
 	
 
-	[Export] public int max_speed = 4; // How fast the entity will move 
-	[Export] public float steer_force = 0.02f; // How fast the entity turns
+	[Export] public int MaxSpeed = 4; // How fast the entity will move 
+	[Export] public float SteerForce = 0.02f; // How fast the entity turns
 	
 	// Movement variables
-	public Vector3 _targetVelocity = Vector3.Zero;
+	public Vector3 TargetVelocity = Vector3.Zero;
 	[Export] public int FallAcceleration { get; set; } = 75;
 	
-	[Export] EnemyAreas areas;
-	[Export] public BoneAttachment3D head;
+	[Export] EnemyAreas Areas;
+	[Export] public BoneAttachment3D Head;
 	
 	// Ray cast variables
-	[Export] public int look_ahead = 5; // How far the rays will project
-	[Export] public int direction_lines_mag = 5;
-	[Export] public int direction_line_mag = 7;
-	[Export] public int num_rays = 16;
+	[Export] public int LookAhead = 5; // How far the rays will project
+	[Export] public int DirectionLinesMag = 5;
+	[Export] public int DirectionLineMag = 7;
+	[Export] public int NumRays = 16;
 
-	[Export] public EnemyDebug debug;
-	[Export] public AnimationTree tree;
-	[Export] public NavigationAgent3D navigation_agent; 
-	[Export] public EnemyControllers controllers;
+	[Export] public EnemyDebug Debug;
+	[Export] public AnimationTree Tree;
+	[Export] public NavigationAgent3D NavigationAgent; 
+	[Export] public EnemyControllers EnemyControllers;
 	// UI
-	[Export] public EnemyUI ui;
+	[Export] public EnemyUI UI;
 	
 
-	public Vector3 chosen_dir = Vector3.Zero; // Direction the entity has chosen
+	public Vector3 ChosenDir = Vector3.Zero; // Direction the entity has chosen
 
 	// Mob variables
-	public bool player_seen = false; 
-	public Player player_in_alert;
-	private float attack_dist = 2.5f;
-	private Label3D damage_label; 
-	private AnimationPlayer damage_numbers;
+	public bool PlayerSeen = false; 
+	public Player PlayerInAlert;
+	private float AttackDist = 2.5f;
+	private Label3D DamageLabel; 
+	private AnimationPlayer DamageNumbers;
 
-	public Vector3 ray_origin;
-	public StandardMaterial3D collision_lines_material = new StandardMaterial3D();
-	public StandardMaterial3D ray_lines_material = new StandardMaterial3D();
-	public StandardMaterial3D direction_line_material = new StandardMaterial3D();
-	public StandardMaterial3D direction_moving_line_material = new StandardMaterial3D();
-	public Vector3[] ray_directions; // Directions the rays will be cast in
-	public float[] interest; // Interest weight, how interested the entity is in moving toward a location
-	public float[] danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
-	public Node3D collider;
+	public Vector3 RayOrigin;
+	public StandardMaterial3D CollisionLinesMaterial = new();
+	public StandardMaterial3D RayLinesMaterial = new();
+	public StandardMaterial3D DirectionLineMaterial = new();
+	public StandardMaterial3D DirectionMovingLineMaterial = new();
+	public Vector3[] RayDirections; // Directions the rays will be cast in
+	public float[] Interest; // Interest weight, how interested the entity is in moving toward a location
+	public float[] Danger; // Is the object a given array collided with "dangerous" meaning that the entity wants to avoid it
+	public Node3D Collider;
 
 
 	// Enemy animation
 	
-	public Vector2 blend_direction = Vector2.Zero;
+	public Vector2 BlendDirection = Vector2.Zero;
 
 	// Navigation variables
 
-	private List<Marker3D> waypoints = new List<Marker3D>(); 
+	private readonly List<Marker3D> Waypoints = new(); 
 	private int waypointIndex; 
 
 	//Player variables
-	private Vector3 player_position; // Position of player
-	private float incoming_damage;
+	private Vector3 _playerPosition; // Position of player
+	private float _incomingDamage;
 	
 	// Signal variables
 	private CustomSignals _customSignals;
-	private Vector3 camera_position; // Position of camera
+	private Vector3 CameraPosition; // Position of camera
 
 
 	
-	public bool entity_in_alert_area;
+	public bool EntityInAlertArea;
 
 	// Place for entity to look
-	public Vector3 look_at_position;
+	public Vector3 LookAtPosition;
 
 	// Switch variable
-	public bool switch_to_state2;
+	public bool SwitchToState2;
 
-	public bool in_soft_target_small;
-	public bool in_soft_target_large;
-	public bool soft_target;
-	public bool in_player_vision;
+	public bool InSoftTargetSmall;
+	public bool InSoftTargetLarge;
+	public bool SoftTarget;
+	public bool InPlayerVision;
 
-	public bool attacking { get; set; } = false; // Boolean to keep track of if the entity is attacking
-	public bool targeted { get; set; } = false;
+	public bool Attacking { get; set; } = false; // Boolean to keep track of if the entity is attacking
+	public bool Targeted { get; set; } = false;
 
-	public float jump_height = 10;
-	public float jump_time_to_peak = 2f;
-	public float jump_time_to_decent = 1.9f;
+	public float JumpHeight = 10;
+	public float JumpTimeToPeak = 2f;
+	public float JumpTimeToDecent = 1.9f;
 
-	public float jump_velocity ;
-	public float jump_gravity;
-	public float fall_gravity;
+	public float JumpVelocity ;
+	public float JumpGravity;
+	public float FallGravity;
 
 
 
@@ -106,15 +106,15 @@ public partial class Enemy : Entity
 		
 		base._Ready();
 
-		jump_velocity = (float)(2.0 * jump_height / jump_time_to_peak);
-		jump_gravity = (float)(-2.0 * jump_height / jump_time_to_peak * jump_time_to_peak);
-		fall_gravity = (float)(-2.0 * jump_height / jump_time_to_decent * jump_time_to_decent);
+		JumpVelocity = (float)(2.0 * JumpHeight / JumpTimeToPeak);
+		JumpGravity = (float)(-2.0 * JumpHeight / JumpTimeToPeak * JumpTimeToPeak);
+		FallGravity = (float)(-2.0 * JumpHeight / JumpTimeToDecent * JumpTimeToDecent);
 
-		ui.health_bar.MaxValue = Health.MaxValue;
-		ui.health_bar.Value = Health.CurrentValue;
-		ui.posture_bar.MaxValue = 0;
-		ui.posture_bar.Value = 0;
-		attacking = false;
+		UI.health_bar.MaxValue = Health.MaxValue;
+		UI.health_bar.Value = Health.CurrentValue;
+		UI.posture_bar.MaxValue = 0;
+		UI.posture_bar.Value = 0;
+		Attacking = false;
 		Level.BaseValue = 1;
 		Armor.CurrentValue = 0;
 		Stamina.CurrentValue = 2000;
@@ -122,49 +122,49 @@ public partial class Enemy : Entity
 
 
 
-		areas.alert.BodyEntered += OnAlertAreaBodyEntered;
-		areas.alert.AreaEntered += OnAlertAreaEntered;
-		areas.alert.BodyExited += OnAlertAreaBodyExited;
+		Areas.alert.BodyEntered += OnAlertAreaBodyEntered;
+		Areas.alert.AreaEntered += OnAlertAreaEntered;
+		Areas.alert.BodyExited += OnAlertAreaBodyExited;
 
 		
-		Array.Resize(ref interest, num_rays);
-		Array.Resize(ref danger, num_rays);
-		Array.Resize(ref ray_directions, num_rays);
+		Array.Resize(ref Interest, NumRays);
+		Array.Resize(ref Danger, NumRays);
+		Array.Resize(ref RayDirections, NumRays);
 
-		for( int i = 0; i < num_rays; i++)
+		for( int i = 0; i < NumRays; i++)
 		{
-			float angle = i * 2 * MathF.PI / num_rays; // <-- circle divided into number of rays
-			ray_directions[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
+			float angle = i * 2 * MathF.PI / NumRays; // <-- circle divided into number of rays
+			RayDirections[i] = Vector3.Forward.Rotated(GlobalTransform.Basis.Y.Normalized(), angle); // <-- set the ray directions
 			// GD.Print(ray_directions[i]);
 		}
 	}
 
     private void HandleFinishedCircling()
     {
-        controllers.state_machine.current_state.Exit("ForwardState");
+        EnemyControllers.state_machine.current_state.Exit("ForwardState");
     }
 
  
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(double delta_)
+    public override void _PhysicsProcess(double delta)
 	{
 	
-		ray_origin = controllers.ray_position.GlobalPosition;
-		if(debug.collision_lines.Mesh is ImmediateMesh collision_lines_mesh)
+		RayOrigin = EnemyControllers.ray_position.GlobalPosition;
+		if(Debug.collision_lines.Mesh is ImmediateMesh collisionLinesMesh)
 		{
-			collision_lines_mesh.ClearSurfaces();
+			collisionLinesMesh.ClearSurfaces();
 		}
-		if(debug.ray_lines.Mesh is ImmediateMesh ray_lines_mesh)
+		if(Debug.ray_lines.Mesh is ImmediateMesh rayLinesMesh)
 		{
-			ray_lines_mesh.ClearSurfaces();
+			rayLinesMesh.ClearSurfaces();
 		}
-		if(debug.direction_lines.Mesh is ImmediateMesh direction_lines_mesh)
+		if(Debug.direction_lines.Mesh is ImmediateMesh directionLinesMesh)
 		{
-			direction_lines_mesh.ClearSurfaces();
+			directionLinesMesh.ClearSurfaces();
 		}
-		if(debug.direction_moving_line.Mesh is ImmediateMesh direction_moving_line_mesh)
+		if(Debug.direction_moving_line.Mesh is ImmediateMesh directionMovingLineMesh)
 		{
-			direction_moving_line_mesh.ClearSurfaces();
+			directionMovingLineMesh.ClearSurfaces();
 		}
 
 		// if (Input.IsActionJustPressed("one"))
@@ -176,7 +176,7 @@ public partial class Enemy : Entity
 		// 	state_machine.current_state.Exit("HerdState");
 		// }
 	
-		float distance_to_player = GlobalPosition.DistanceTo(player_position);
+		float distance_to_player = GlobalPosition.DistanceTo(_playerPosition);
 		Vector2 blend_direction = Vector2.Zero;
 
 		if (DirectionVector != Vector3.Zero)
@@ -186,11 +186,11 @@ public partial class Enemy : Entity
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}
 
-		controllers.movement_controller.StatusEffectsAffectingSpeed(this);
-		controllers.movement_controller.StatusEffectsPreventingMovement(this);
-		controllers.ability_controller.CheckCanUseAbility(this);
+		EnemyControllers.movement_controller.StatusEffectsAffectingSpeed(this);
+		EnemyControllers.movement_controller.StatusEffectsPreventingMovement(this);
+		EnemyControllers.ability_controller.CheckCanUseAbility(this);
 
-		controllers.movement_controller.MoveEnemy(this, delta_);
+		EnemyControllers.movement_controller.MoveEnemy(this, delta);
 		SmoothRotation();
 		LookAtOver();
 		MoveAndSlide();
@@ -208,12 +208,12 @@ public partial class Enemy : Entity
 
 	public void SmoothRotation() // Rotates the player character smoothly with lerp
 	{
-		if(!entity_in_alert_area)
+		if(!EntityInAlertArea)
 		{
 			PreviousYRotation = GlobalRotation.Y;
-			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving
+			if (!GlobalTransform.Origin.IsEqualApprox(GlobalPosition + ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y))) // looks at direction the player is moving
 			{
-				LookAt(GlobalPosition + chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
+				LookAt(GlobalPosition + ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y));
 				
 			}
 			CurrentYRotation = GlobalRotation.Y;
@@ -232,7 +232,7 @@ public partial class Enemy : Entity
 		if(area.IsInGroup("player")) 
 		{
 			// currentState = States.Chasing;
-			player_seen = true;
+			PlayerSeen = true;
 			// GD.Print("Player Entered Alert");
 		}
     }
@@ -242,8 +242,8 @@ public partial class Enemy : Entity
 		if(body is Player player) 
 		{
 			// currentState = States.Chasing;
-			player_seen = true;
-			player_in_alert = player;
+			PlayerSeen = true;
+			PlayerInAlert = player;
 			GD.Print("Player Entered Alert");
 		}
 		
@@ -253,20 +253,20 @@ public partial class Enemy : Entity
     {
 		if(body is Player player)
 		{
-			player_seen = false;
-			player_in_alert = null;
+			PlayerSeen = false;
+			PlayerInAlert = null;
 		}
     }
 
-	public void SetRayCastLines(MeshInstance3D meshInstance3D, Vector3 ray_target)
+	public void SetRayCastLines(MeshInstance3D meshInstance3D, Vector3 rayTarget)
 	{
-		if(meshInstance3D.Mesh is ImmediateMesh ray_lines_mesh)
+		if(meshInstance3D.Mesh is ImmediateMesh rayLinesMesh)
 		{
-			ray_lines_mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, ray_lines_material);
-			ray_lines_material.EmissionEnabled = true;
-			ray_lines_mesh.SurfaceAddVertex(ToLocal(ray_origin));
-			ray_lines_mesh.SurfaceAddVertex(ToLocal(ray_target));
-			ray_lines_mesh.SurfaceEnd();
+			rayLinesMesh.SurfaceBegin(Mesh.PrimitiveType.Lines, RayLinesMaterial);
+			RayLinesMaterial.EmissionEnabled = true;
+			rayLinesMesh.SurfaceAddVertex(ToLocal(RayOrigin));
+			rayLinesMesh.SurfaceAddVertex(ToLocal(rayTarget));
+			rayLinesMesh.SurfaceEnd();
 		}
 			
 	}
@@ -274,46 +274,46 @@ public partial class Enemy : Entity
 	// Lines representing when the ray cast makes contact with an object
 	public void SetCollisionLines(MeshInstance3D meshInstance3D, Godot.Collections.Dictionary result)
 	{
-		if(meshInstance3D.Mesh is ImmediateMesh collision_lines_mesh)
+		if(meshInstance3D.Mesh is ImmediateMesh collisionLinesMesh)
 		{
 			
-			collision_lines_mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, collision_lines_material);
-			collision_lines_material.EmissionEnabled = true;
-			collision_lines_material.Emission = Colors.Red;
-			collision_lines_material.AlbedoColor = Colors.Red;
-			collision_lines_mesh.SurfaceAddVertex(ToLocal(ray_origin));
-			collision_lines_mesh.SurfaceAddVertex(ToLocal(result["position"].AsVector3()));
-			collision_lines_mesh.SurfaceEnd();
+			collisionLinesMesh.SurfaceBegin(Mesh.PrimitiveType.Lines, CollisionLinesMaterial);
+			CollisionLinesMaterial.EmissionEnabled = true;
+			CollisionLinesMaterial.Emission = Colors.Red;
+			CollisionLinesMaterial.AlbedoColor = Colors.Red;
+			collisionLinesMesh.SurfaceAddVertex(ToLocal(RayOrigin));
+			collisionLinesMesh.SurfaceAddVertex(ToLocal(result["position"].AsVector3()));
+			collisionLinesMesh.SurfaceEnd();
 		}
 	}
 
 	// Lines representing the weight of which direction the entity will move
 	public void SetDirectionLines(MeshInstance3D meshInstance3D, Vector3 directions)
 	{
-		if(meshInstance3D.Mesh is ImmediateMesh direction_lines_mesh)
+		if(meshInstance3D.Mesh is ImmediateMesh directionLinesMesh)
 		{
-			direction_lines_mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, direction_line_material);
-			direction_line_material.EmissionEnabled = true;
-			direction_line_material.Emission = Colors.Yellow;
-			direction_line_material.AlbedoColor = Colors.Yellow;
-			direction_lines_mesh.SurfaceAddVertex(ToLocal(ray_origin));
-			direction_lines_mesh.SurfaceAddVertex(ToLocal(ray_origin + directions.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)));
-			direction_lines_mesh.SurfaceEnd();
+			directionLinesMesh.SurfaceBegin(Mesh.PrimitiveType.Lines, DirectionLineMaterial);
+			DirectionLineMaterial.EmissionEnabled = true;
+			DirectionLineMaterial.Emission = Colors.Yellow;
+			DirectionLineMaterial.AlbedoColor = Colors.Yellow;
+			directionLinesMesh.SurfaceAddVertex(ToLocal(RayOrigin));
+			directionLinesMesh.SurfaceAddVertex(ToLocal(RayOrigin + directions.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)));
+			directionLinesMesh.SurfaceEnd();
 		}
 	}
 
 	// Line representing the direction the entity is moving
 	public void SetDirectionMovingLine(MeshInstance3D meshInstance3D, Vector3 direction)
 	{
-		if(meshInstance3D.Mesh is ImmediateMesh direction_moving_line_mesh)
+		if(meshInstance3D.Mesh is ImmediateMesh directionMovingLineMesh)
 		{
-			direction_moving_line_mesh.SurfaceBegin(Mesh.PrimitiveType.Lines, direction_moving_line_material);
-			direction_moving_line_material.EmissionEnabled = true;
-			direction_moving_line_material.Emission = Colors.Green;
-			direction_moving_line_material.AlbedoColor = Colors.Green;
-			direction_moving_line_mesh.SurfaceAddVertex(ToLocal(ray_origin));
-			direction_moving_line_mesh.SurfaceAddVertex(ToLocal(ray_origin + direction.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)));
-			direction_moving_line_mesh.SurfaceEnd();
+			directionMovingLineMesh.SurfaceBegin(Mesh.PrimitiveType.Lines, DirectionLineMaterial);
+			DirectionLineMaterial.EmissionEnabled = true;
+			DirectionLineMaterial.Emission = Colors.Green;
+			DirectionLineMaterial.AlbedoColor = Colors.Green;
+			directionMovingLineMesh.SurfaceAddVertex(ToLocal(RayOrigin));
+			directionMovingLineMesh.SurfaceAddVertex(ToLocal(RayOrigin + direction.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)));
+			directionMovingLineMesh.SurfaceEnd();
 		}
 	}
 }

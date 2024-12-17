@@ -15,39 +15,39 @@ public partial class CirclingEnemy : Enemy
 	{
 		if(Velocity > Vector3.Zero )
 		{
-			blend_direction.Y = 1; // Sets animation to walk
+			BlendDirection.Y = 1; // Sets animation to walk
 		}
 		if(Velocity.IsEqualApprox(Vector3.Zero))
 		{
-			blend_direction.Y = 0;
+			BlendDirection.Y = 0;
 		}
-		if(entity_in_alert_area)
+		if(EntityInAlertArea)
 		{
 			
 			// target_ability.Execute(this);
-			look_at_position = box_position;
-			LookAt(look_at_position with {Y = GlobalPosition.Y});
+			LookAtPosition = box_position;
+			LookAt(LookAtPosition with {Y = GlobalPosition.Y});
 			
 		}
 		else
 		{
-			entity_in_alert_area = false;
+			EntityInAlertArea = false;
 			// Sets the animation to walk forward when not targeting
-			if(chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)
+			if(ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) != Vector3.Zero)
 			{
-				blend_direction.X = 0;
-				blend_direction.Y = 1;
+				BlendDirection.X = 0;
+				BlendDirection.Y = 1;
 				// GD.Print("Normal: ", blend_direction);
 			}
 			else
 			{
-				blend_direction.X = Mathf.Lerp(blend_direction.X, 0, 0.1f);
-				blend_direction.Y = Mathf.Lerp(blend_direction.Y, 0, 0.1f);
+				BlendDirection.X = Mathf.Lerp(BlendDirection.X, 0, 0.1f);
+				BlendDirection.Y = Mathf.Lerp(BlendDirection.Y, 0, 0.1f);
 			}
 		}
-		_targetVelocity = chosen_dir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * max_speed;
-		Velocity = Velocity.Lerp(_targetVelocity, steer_force);
-		tree.Set("parameters/IW/blend_position", blend_direction);
+		TargetVelocity = ChosenDir.Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y) * MaxSpeed;
+		Velocity = Velocity.Lerp(TargetVelocity, SteerForce);
+		Tree.Set("parameters/IW/blend_position", BlendDirection);
 		MoveAndSlide();
 	}
 
@@ -57,7 +57,7 @@ public partial class CirclingEnemy : Enemy
 		if(area.IsInGroup("RotateBox"))
 		{
 			GD.Print("In contact with rotate box");
-			entity_in_alert_area = true;
+			EntityInAlertArea = true;
 			box_position = area.GlobalPosition;
 		}
     }

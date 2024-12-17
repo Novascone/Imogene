@@ -51,11 +51,11 @@ public partial class EnemyMovementController : Node
 		if(enemy.Velocity.Y > 0)
 		{
 
-			return enemy.jump_gravity;
+			return enemy.JumpGravity;
 		}
 		else
 		{
-			return enemy.fall_gravity;
+			return enemy.FallGravity;
 		}
 	}
 
