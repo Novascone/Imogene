@@ -118,7 +118,7 @@ public partial class Entity : CharacterBody3D
 
         EntitySystems.damage_system.Subscribe(this);
 		EntitySystems.resource_system.Subscribe(this);
-		EntityControllers.status_effect_controller.Subscribe(this);
+		EntityControllers.EntityStatusEffectsController.Subscribe(this);
 		
 
     }

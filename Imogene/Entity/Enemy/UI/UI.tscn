@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://c1fqv3fphkrr5"]
 
-[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="1_l7hxc"]
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://Images/UI/Textures/posture.png" id="1_l7hxc"]
 [ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_fax0t"]
-[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="3_lhut7"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://Images/Icons/soft_target.png" id="3_lhut7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shoep"]
 bg_color = Color(0, 0, 0, 0.501961)

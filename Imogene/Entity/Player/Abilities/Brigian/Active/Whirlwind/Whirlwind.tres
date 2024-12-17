@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://b0j0jfn6pqckj"]
 
-[ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://images/icons/whirlwind_icon.png" id="1_lypko"]
+[ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://Images/Icons/whirlwind_icon.png" id="1_lypko"]
 [ext_resource type="Script" path="res://Entity/Player/Abilities/AbilityResourceScripts/AbilityResource.cs" id="2_eik2e"]
 
 [resource]

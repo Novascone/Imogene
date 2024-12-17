@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdbkcefjslg7v"]
 
-[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="1_b4h8h"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://Images/Icons/soft_target.png" id="1_b4h8h"]
 
 [node name="SubViewPortContainer" type="SubViewportContainer"]
 anchors_preset = 15

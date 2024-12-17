@@ -19,7 +19,7 @@ public partial class EnemyAbilityController : Node
 
 	public bool StatusEffectPreventingAbilities(Enemy enemy)
 	{
-		if(enemy.EntityControllers.status_effect_controller.abilities_prevented)
+		if(enemy.EntityControllers.EntityStatusEffectsController.EntityAbilitiesPrevented)
 		{
 			return true;
 		}

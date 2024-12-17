@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwte326qeanqt"]
 
 [ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/Bash/Bash.cs" id="1_1to8c"]
-[ext_resource type="Texture2D" uid="uid://g3wphfxhd2m5" path="res://images/icons/bash_icon.png" id="2_qetsd"]
+[ext_resource type="Texture2D" uid="uid://g3wphfxhd2m5" path="res://Images/Icons/bash_icon.png" id="2_qetsd"]
 
 [node name="Bash" type="Node3D"]
 script = ExtResource("1_1to8c")

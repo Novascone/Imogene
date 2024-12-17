@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://tc6t72t7b5mb"]
 
 [ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/Jump/Jump.cs" id="1_r4xrr"]
-[ext_resource type="Texture2D" uid="uid://bocyxacihqyse" path="res://images/icons/jump_icon.png" id="2_nqigy"]
+[ext_resource type="Texture2D" uid="uid://bocyxacihqyse" path="res://Images/Icons/jump_icon.png" id="2_nqigy"]
 
 [node name="Jump" type="Node3D"]
 script = ExtResource("1_r4xrr")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://dt8weibfv80xk"]
+
+[ext_resource type="Script" path="res://Effects/DissolveCollisionItem.cs" id="1_458db"]
+[ext_resource type="Shader" path="res://Shaders/instance_transparency.gdshader" id="2_8uvcp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wgu1v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w0whk"]
+render_priority = 0
+shader = ExtResource("2_8uvcp")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kcux2"]
+size = Vector3(6.47034, 5.23267, 0.284058)
+
+[node name="Wall" type="StaticBody3D"]
+script = ExtResource("1_458db")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(6.61515, 0, 0, 0, 5.4314, 0, 0, 0, 0.203986, 0, 0, 0)
+mesh = SubResource("BoxMesh_wgu1v")
+surface_material_override/0 = SubResource("ShaderMaterial_w0whk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0131226, -0.0543213, -0.0170288)
+shape = SubResource("BoxShape3D_kcux2")

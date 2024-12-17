@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2ijp7lt3dvqb"]
-
-[ext_resource type="Script" path="res://status_effects/de_buffs/movement/fear/Fear.cs" id="1_yor5n"]
-[ext_resource type="Resource" uid="uid://mrl2d0fr1at6" path="res://status_effects/de_buffs/movement/fear/Fear.tres" id="2_0je0c"]
-
-[node name="Fear" type="Node3D"]
-script = ExtResource("1_yor5n")
-resource = ExtResource("2_0je0c")
-alters_speed = true

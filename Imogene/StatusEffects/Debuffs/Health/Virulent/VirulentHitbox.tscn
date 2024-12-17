@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg2bv6sfvix7k"]
+
+[ext_resource type="Script" path="res://StatusEffects/Debuffs/Health/Virulent/VirulentHitbox.cs" id="1_f6i1p"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c6xi3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmbnu"]
+transparency = 1
+albedo_color = Color(0.301961, 0.709804, 0.376471, 0.454902)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mcm45"]
+height = 18.641
+radius = 17.7135
+
+[node name="VirulentHitbox" type="Area3D"]
+collision_mask = 3
+script = ExtResource("1_f6i1p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(35.8037, 0, 0, 0, 10.4112, 0, 0, 0, 35.4451, 0, 0, 0)
+mesh = SubResource("CylinderMesh_c6xi3")
+surface_material_override/0 = SubResource("StandardMaterial3D_rmbnu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_mcm45")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

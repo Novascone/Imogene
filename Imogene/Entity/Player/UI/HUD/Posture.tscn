@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxepayivi603r"]
 
-[ext_resource type="Texture2D" uid="uid://dw7f1a0i3aq2" path="res://images/UI/Posture_Bar.png" id="1_riw5x"]
+[ext_resource type="Texture2D" uid="uid://dw7f1a0i3aq2" path="res://Images/UI/Posture_Bar.png" id="1_riw5x"]
 
 [node name="Posture" type="PanelContainer"]
 custom_minimum_size = Vector2(500, 15)

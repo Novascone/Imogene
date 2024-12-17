@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://4g7ro4et2y7n"]
 
 [ext_resource type="Script" path="res://Entity/Player/Abilities/General/Active/Kick/Kick.cs" id="1_owx1m"]
-[ext_resource type="Texture2D" uid="uid://c3um0tppyqpa7" path="res://images/icons/kick_icon.png" id="2_kmty5"]
+[ext_resource type="Texture2D" uid="uid://c3um0tppyqpa7" path="res://Images/Icons/kick_icon.png" id="2_kmty5"]
 [ext_resource type="PackedScene" uid="uid://ctnpdc67bk5gr" path="res://Entity/Player/Abilities/General/Active/Kick/KickHitbox.tscn" id="2_slpge"]
 [ext_resource type="PackedScene" uid="uid://bkym2jry33jjs" path="res://Entity/Player/Abilities/General/Active/Kick/KickMesh.tscn" id="3_wsn53"]
 

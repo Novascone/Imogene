@@ -358,7 +358,7 @@ public partial class InputController : Node
 
 	public void Subscribe(Player player)
 	{
-		player.EntityControllers.status_effect_controller.InputPrevented += HandleStatusEffectPreventingInput;
+		player.EntityControllers.EntityStatusEffectsController.InputPrevented += HandleStatusEffectPreventingInput;
 
 		player.PlayerSystems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
 		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
@@ -380,7 +380,7 @@ public partial class InputController : Node
 
     public void Unsubscribe(Player player)
 	{
-		player.EntityControllers.status_effect_controller.InputPrevented -= HandleStatusEffectPreventingInput;
+		player.EntityControllers.EntityStatusEffectsController.InputPrevented -= HandleStatusEffectPreventingInput;
 
 		player.PlayerSystems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
 		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;

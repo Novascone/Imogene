@@ -212,8 +212,8 @@ public partial class MovementController : Node
 
 	public void Subscribe(Player player)
 	{
-		player.EntityControllers.status_effect_controller.MovementPrevented += HandleMovementPrevented;
-		player.EntityControllers.status_effect_controller.Tethered += HandleTethered;
+		player.EntityControllers.EntityStatusEffectsController.MovementPrevented += HandleMovementPrevented;
+		player.EntityControllers.EntityStatusEffectsController.Tethered += HandleTethered;
 
 		player.PlayerSystems.targeting_system.Rotating += HandleRotatePlayer;
 
@@ -229,8 +229,8 @@ public partial class MovementController : Node
 
     public void Unsubscribe(Player player)
 	{
-		player.EntityControllers.status_effect_controller.MovementPrevented -= HandleMovementPrevented;
-		player.EntityControllers.status_effect_controller.Tethered -= HandleTethered;
+		player.EntityControllers.EntityStatusEffectsController.MovementPrevented -= HandleMovementPrevented;
+		player.EntityControllers.EntityStatusEffectsController.Tethered -= HandleTethered;
 
 		player.PlayerSystems.targeting_system.Rotating -= HandleRotatePlayer;
 		player.PlayerUI.CapturingInput -= HandleUICapturingInput;

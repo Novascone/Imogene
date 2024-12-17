@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cl2ybmgii70wf"]
 
 [ext_resource type="Script" path="res://Entity/Player/UI/HUD/TopRight/TopRightHUD.cs" id="1_a5ay4"]
-[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://images/icons/soft_target.png" id="2_2prhk"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://Images/Icons/soft_target.png" id="2_2prhk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xewhd"]
 

@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bu5fd68d3ahh0"]
-
-[ext_resource type="Script" path="res://status_effects/StatusEffect.cs" id="1_b5qyw"]
-
-[node name="BaseStatusEffect" type="Node3D"]
-script = ExtResource("1_b5qyw")
-
-[node name="DurationTimer" type="Timer" parent="."]
-one_shot = true

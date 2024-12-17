@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b3s2coq504hnp"]
 
 [ext_resource type="Script" path="res://Entity/Player/Abilities/Brigian/Active/Whirlwind/Whirlwind.cs" id="1_oegyt"]
-[ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://images/icons/whirlwind_icon.png" id="2_7kg35"]
+[ext_resource type="Texture2D" uid="uid://b0qvht8dj7c10" path="res://Images/Icons/whirlwind_icon.png" id="2_7kg35"]
 [ext_resource type="PackedScene" uid="uid://djsdkytrejoj0" path="res://Entity/Player/Abilities/Brigian/Active/Whirlwind/WhirlwindHitbox.tscn" id="2_w3hli"]
 [ext_resource type="PackedScene" uid="uid://by8ni4t30bap" path="res://Entity/Player/Abilities/Brigian/Active/Whirlwind/WhirlwindMesh.tscn" id="3_suli4"]
 

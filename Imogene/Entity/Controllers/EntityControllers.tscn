@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://so6yd7758k1a" path="res://Entity/Controllers/StatsController.tscn" id="2_fgoq0"]
 [ext_resource type="PackedScene" uid="uid://br1lm3qgxi0jb" path="res://Entity/Controllers/StatusEffectController.tscn" id="3_3b0jy"]
 
-[node name="EntityControllers" type="Node" node_paths=PackedStringArray("stats_controller", "status_effect_controller")]
+[node name="EntityControllers" type="Node" node_paths=PackedStringArray("EntityStatsController", "EntityStatusEffectsController")]
 script = ExtResource("1_xj2ru")
-stats_controller = NodePath("StatsController")
-status_effect_controller = NodePath("StatusEffectController")
+EntityStatsController = NodePath("StatsController")
+EntityStatusEffectsController = NodePath("StatusEffectController")
 
 [node name="StatsController" parent="." instance=ExtResource("2_fgoq0")]
 

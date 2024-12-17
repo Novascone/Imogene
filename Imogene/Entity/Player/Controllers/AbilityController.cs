@@ -260,7 +260,7 @@ public partial class AbilityController : Node
 
     public void Subscribe(Player player)
     {
-        player.EntityControllers.status_effect_controller.AbilitiesPrevented += HandleAbilitiesPrevented;
+        player.EntityControllers.EntityStatusEffectsController.AbilitiesPrevented += HandleAbilitiesPrevented;
 
         player.PlayerSystems.interact_system.NearInteractable += OnNearInteractable;
         player.PlayerSystems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
@@ -268,7 +268,7 @@ public partial class AbilityController : Node
 
      public void Unsubscribe(Player player)
     {
-        player.EntityControllers.status_effect_controller.AbilitiesPrevented -= HandleAbilitiesPrevented;
+        player.EntityControllers.EntityStatusEffectsController.AbilitiesPrevented -= HandleAbilitiesPrevented;
 
         player.PlayerSystems.interact_system.NearInteractable -= OnNearInteractable;
         player.PlayerSystems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;

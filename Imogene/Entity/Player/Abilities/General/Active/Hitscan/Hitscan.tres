@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cb2txsfg88bc3"]
 
-[ext_resource type="Texture2D" uid="uid://cdevi0u2qlhth" path="res://images/icons/hit_scan.png" id="1_3t5w0"]
+[ext_resource type="Texture2D" uid="uid://cdevi0u2qlhth" path="res://Images/Icons/hit_scan.png" id="1_3t5w0"]
 [ext_resource type="Script" path="res://Entity/Player/Abilities/AbilityResourceScripts/AbilityResource.cs" id="2_q3jj4"]
 
 [resource]

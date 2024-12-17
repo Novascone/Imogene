@@ -35,21 +35,21 @@ public partial class Player : Entity
 		if(@event.IsActionPressed("two"))
 		{
 			Chill chill = new();
-			EntityControllers.status_effect_controller.AddStatusEffect(this, chill);
+			EntityControllers.EntityStatusEffectsController.AddStatusEffect(this, chill);
 		}
 		if(@event.IsActionPressed("three"))
 		{
 			Daze daze = new();
-			EntityControllers.status_effect_controller.AddStatusEffect(this, daze);
+			EntityControllers.EntityStatusEffectsController.AddStatusEffect(this, daze);
 		}
 		if(@event.IsActionPressed("four"))
 		{
-			EntityControllers.status_effect_controller.RemoveMovementDebuffs(this);
+			EntityControllers.EntityStatusEffectsController.RemoveMovementDebuffs(this);
 		}
 		if(@event.IsActionPressed("five"))
 		{
 			Tether tether = new();
-			EntityControllers.status_effect_controller.AddStatusEffect(this, tether);
+			EntityControllers.EntityStatusEffectsController.AddStatusEffect(this, tether);
 		}
 		
     }
@@ -60,7 +60,7 @@ public partial class Player : Entity
 	{
 		
 		base._Ready();
-		EntityControllers.status_effect_controller.fear_duration = 3;
+		EntityControllers.EntityStatusEffectsController.EntityFearDuration = 3;
 		
 
 		Resource.MaxValue = Resource.MaxValue / 2;
@@ -89,8 +89,8 @@ public partial class Player : Entity
 		EntitySystems.resource_system.ResourceChange += PlayerUI.hud.main.HandleResourceChange;
 
 		// Entity controller signals
-		EntityControllers.stats_controller.UpdateStats += PlayerUI.inventory.depth_sheet.HandleUpdateStats;
-		EntityControllers.stats_controller.UpdateStats += PlayerUI.inventory.main.character_outline.HandleUpdateStats;
+		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.inventory.depth_sheet.HandleUpdateStats;
+		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.inventory.main.character_outline.HandleUpdateStats;
 
 
         // System signals
@@ -120,8 +120,8 @@ public partial class Player : Entity
 		Vitality.BaseValue = 20;
 		Intellect.BaseValue = 11;
 
-		EntityControllers.stats_controller.SetStats(this);
-		EntityControllers.stats_controller.Update(this);
+		EntityControllers.EntityStatsController.SetStats(this);
+		EntityControllers.EntityStatsController.Update(this);
 		
 		ExcludedRIDs.Add(PlayerAreas.near.GetRid());
 		ExcludedRIDs.Add(PlayerAreas.far.GetRid());

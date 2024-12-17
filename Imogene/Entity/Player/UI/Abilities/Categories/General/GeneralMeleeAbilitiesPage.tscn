@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://Entity/Player/UI/Abilities/Categories/AbilityPage.cs" id="1_r5piw"]
 [ext_resource type="PackedScene" uid="uid://2mvabkkp3f02" path="res://Entity/Player/UI/Abilities/Categories/AbilityButton.tscn" id="2_au2ti"]
-[ext_resource type="Texture2D" uid="uid://bdxbifpl5u8m3" path="res://images/icons/slash_icon.png" id="3_10idu"]
+[ext_resource type="Texture2D" uid="uid://bdxbifpl5u8m3" path="res://Images/Icons/slash_icon.png" id="3_10idu"]
 [ext_resource type="PackedScene" uid="uid://ch578n7k1cxb6" path="res://Entity/Player/UI/Abilities/Categories/AbilityModifierButton.tscn" id="3_gappn"]
-[ext_resource type="Texture2D" uid="uid://c3um0tppyqpa7" path="res://images/icons/kick_icon.png" id="4_x0qs2"]
-[ext_resource type="Texture2D" uid="uid://fo2qebveymtf" path="res://images/icons/effects_test_icon.png" id="5_r23ul"]
+[ext_resource type="Texture2D" uid="uid://c3um0tppyqpa7" path="res://Images/Icons/kick_icon.png" id="4_x0qs2"]
+[ext_resource type="Texture2D" uid="uid://fo2qebveymtf" path="res://Images/Icons/effects_test_icon.png" id="5_r23ul"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a83tb"]
 

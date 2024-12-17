@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://chaxkssvhmyew"]
+
+[ext_resource type="Script" path="res://StatusEffects/Debuffs/Movement/Stun/Stun.cs" id="1_14ogh"]
+[ext_resource type="Resource" uid="uid://4qocptd7l5m7" path="res://StatusEffects/Debuffs/Movement/Stun/Stun.tres" id="2_78ltu"]
+
+[node name="Stun" type="Node3D"]
+script = ExtResource("1_14ogh")
+resource = ExtResource("2_78ltu")

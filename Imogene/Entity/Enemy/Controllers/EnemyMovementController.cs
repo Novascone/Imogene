@@ -62,7 +62,7 @@ public partial class EnemyMovementController : Node
 	
 	public bool StatusEffectsPreventingMovement(Enemy enemy)
 	{
-		if(enemy.EntityControllers.status_effect_controller.movement_prevented)
+		if(enemy.EntityControllers.EntityStatusEffectsController.EntityMovementPrevented)
 		{
 			return true;
 		}
@@ -74,7 +74,7 @@ public partial class EnemyMovementController : Node
 
 	public bool StatusEffectsAffectingSpeed(Enemy enemy)
 	{
-		if (enemy.EntityControllers.status_effect_controller.abilities_prevented)
+		if (enemy.EntityControllers.EntityStatusEffectsController.EntityAbilitiesPrevented)
 		{
 			return true;
 		}

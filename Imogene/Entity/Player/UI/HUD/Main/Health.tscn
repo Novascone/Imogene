@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dd7p7bmo27kl3"]
 
 [ext_resource type="Script" path="res://Entity/Player/UI/HUD/Health/HUDHealth.cs" id="1_ti641"]
-[ext_resource type="Texture2D" uid="uid://bg5i3lilkmdlq" path="res://images/UI/Health_Bar.png" id="2_ymmx0"]
+[ext_resource type="Texture2D" uid="uid://bg5i3lilkmdlq" path="res://Images/UI/Health_Bar.png" id="2_ymmx0"]
 [ext_resource type="PackedScene" uid="uid://b2dntfmfswshm" path="res://Entity/Player/UI/HUD/Health/HealthMovementDebuffs.tscn" id="3_ksb10"]
 [ext_resource type="PackedScene" uid="uid://7uth5jo0nvxt" path="res://Entity/Player/UI/HUD/Health/HealthMovementBuffs.tscn" id="4_ldnyw"]
 

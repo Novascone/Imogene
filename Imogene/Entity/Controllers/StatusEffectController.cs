@@ -9,112 +9,112 @@ public partial class StatusEffectController : Node
 	
 
 	
-	public bool movement_prevented { get; set; } = false;
-	public bool input_prevented { get; set; } = false;
-	public bool speed_altered { get; set; } = false;
-	public bool abilities_prevented  { get; set; } = false;
-	public bool tethered { get; set; } = false;
-	public int fear_duration { get; set; } = 5;
+	public bool EntityMovementPrevented { get; set; } = false;
+	public bool EntityInputPrevented { get; set; } = false;
+	public bool EntitySpeedAltered { get; set; } = false;
+	public bool EntityAbilitiesPrevented  { get; set; } = false;
+	public bool EntityTethered { get; set; } = false;
+	public int EntityFearDuration  { get; set; } = 5;
 	// Movement
 
 	// Buffs
 	
 	// De-buffs
-	public Slow slow { get; set; } = new();
-	public Daze daze { get; set; } = new();
-	public Chill chill { get; set; } = new();
-	public Freeze freeze { get; set; } = new();
-	public Fear fear { get; set; } = new();
-	public Hamstring hamstring { get; set; } = new();
-	public Tether tether { get; set; } = new();
-	public Stun stun { get; set; } = new();
-	public Hex hex { get; set; } = new();
-	public Knockback knockback { get; set; } = new();
-	public Bleed bleed { get; set; } = new();
-	public Burn burn { get; set; } = new();
-	public Poison poison { get; set; } = new();
-	public Weak weak { get; set; } = new();
-	public Curse curse { get; set; } = new();
-	public Virulent virulent { get; set; } = new();
-	public Incorrigible incorrigible { get; set; } = new();
-	public Febrile febrile { get; set; } = new();
-	public Reeling reeling { get; set; } = new();
-	public Stagger stagger { get; set; } = new();
-	public Enfeeble enfeeble { get; set; } = new();
-	public Suspend suspend  { get; set; } = new();
-	public Charm charm { get; set; } = new();
+	public Slow SlowEffect { get; set; } = new();
+	public Daze DazeEffect { get; set; } = new();
+	public Chill ChillEffect { get; set; } = new();
+	public Freeze FreezeEffect { get; set; } = new();
+	public Fear FearEffect { get; set; } = new();
+	public Hamstring HamstringEffect { get; set; } = new();
+	public Tether TetherEffect { get; set; } = new();
+	public Stun StunEffect { get; set; } = new();
+	public Hex HexEffect { get; set; } = new();
+	public Knockback KnockbackEffect { get; set; } = new();
+	public Bleed BleedEffect { get; set; } = new();
+	public Burn BurnEffect { get; set; } = new();
+	public Poison PoisonEffect { get; set; } = new();
+	public Weak WeakEffect { get; set; } = new();
+	public Curse CurseEffect { get; set; } = new();
+	public Virulent VirulentEffect { get; set; } = new();
+	public Incorrigible IncorrigibleEffect { get; set; } = new();
+	public Febrile FebrileEffect { get; set; } = new();
+	public Reeling ReelingEffect { get; set; } = new();
+	public Stagger StaggerEffect { get; set; } = new();
+	public Enfeeble EnfeebleEffect { get; set; } = new();
+	public Suspend SuspendEffect  { get; set; } = new();
+	public Charm CharmEffect { get; set; } = new();
 	
-	public List<StatusEffect> status_effects  { get; set; } = new List<StatusEffect>();
+	public List<StatusEffect> StatusEffects  { get; set; } = new List<StatusEffect>();
 
 
-	[Signal] public delegate void AbilitiesPreventedEventHandler(bool abilities_prevented_);
-	[Signal] public delegate void MovementPreventedEventHandler(bool movement_prevented_);
-	[Signal] public delegate void InputPreventedEventHandler(bool input_prevented_);
-	[Signal] public delegate void SpeedAlteredEventHandler(bool speed_altered_);
-	[Signal] public delegate void TetheredEventHandler(Entity entity_, MeshInstance3D tether_, bool tethered_, float tether_length_);
+	[Signal] public delegate void AbilitiesPreventedEventHandler(bool abilitiesPrevented);
+	[Signal] public delegate void MovementPreventedEventHandler(bool movementPrevented);
+	[Signal] public delegate void InputPreventedEventHandler(bool inputPrevented);
+	[Signal] public delegate void SpeedAlteredEventHandler(bool speedAltered);
+	[Signal] public delegate void TetheredEventHandler(Entity entity, MeshInstance3D tether, bool tethered, float tetherLength);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		status_effects.Add(slow);
-		status_effects.Add(daze);
-		status_effects.Add(chill);
-		status_effects.Add(freeze);
-		status_effects.Add(fear);
-		status_effects.Add(hamstring);
-		status_effects.Add(tether);
-		status_effects.Add(stun);
-		status_effects.Add(hex);
-		status_effects.Add(knockback);
-		status_effects.Add(bleed);
-		status_effects.Add(burn);
-		status_effects.Add(poison);
-		status_effects.Add(weak);
-		status_effects.Add(curse);
-		status_effects.Add(virulent);
-		status_effects.Add(incorrigible);
-		status_effects.Add(febrile);
-		status_effects.Add(reeling);
-		status_effects.Add(stagger);
-		status_effects.Add(enfeeble);
-		status_effects.Add(suspend);
-		status_effects.Add(charm);
+		StatusEffects.Add(SlowEffect);
+		StatusEffects.Add(DazeEffect);
+		StatusEffects.Add(ChillEffect);
+		StatusEffects.Add(FreezeEffect);
+		StatusEffects.Add(FearEffect);
+		StatusEffects.Add(HamstringEffect);
+		StatusEffects.Add(TetherEffect);
+		StatusEffects.Add(StunEffect);
+		StatusEffects.Add(HexEffect);
+		StatusEffects.Add(KnockbackEffect);
+		StatusEffects.Add(BleedEffect);
+		StatusEffects.Add(BurnEffect);
+		StatusEffects.Add(PoisonEffect);
+		StatusEffects.Add(WeakEffect);
+		StatusEffects.Add(CurseEffect);
+		StatusEffects.Add(VirulentEffect);
+		StatusEffects.Add(IncorrigibleEffect);
+		StatusEffects.Add(FebrileEffect);
+		StatusEffects.Add(ReelingEffect);
+		StatusEffects.Add(StaggerEffect);
+		StatusEffects.Add(EnfeebleEffect);
+		StatusEffects.Add(SuspendEffect);
+		StatusEffects.Add(CharmEffect);
 
 	}
 
-	public void AddStatusEffect(Entity entity_, StatusEffect effect_) // Adds status effect to entity
+	public void AddStatusEffect(Entity entity, StatusEffect effect) // Adds status effect to entity
 	{
-		var _effect_to_add = new StatusEffect();
-		_effect_to_add = GetEffect(entity_, effect_, _effect_to_add); // Gets status effect to apply
-		GD.Print("trying to add effect " + _effect_to_add.name);
-		QueueStatusEffect(_effect_to_add); // Checks if ability has been applied
-		if(_effect_to_add.state == StatusEffect.States.Queued)
+		var effectToAdd = new StatusEffect();
+		effectToAdd = GetEffect(entity, effect, effectToAdd); // Gets status effect to apply
+		GD.Print("trying to add effect " + effectToAdd.name);
+		QueueStatusEffect(effectToAdd); // Checks if ability has been applied
+		if(effectToAdd.state == StatusEffect.States.Queued)
 		{
 			
-				entity_.StatusEffects.Add(_effect_to_add); // adds status effect to entities list of effects
-				GD.Print("count of status effects " + entity_.StatusEffects.Count);
-				AddChild(_effect_to_add); // adds the effect as a child setting all of its _Ready() values
+				entity.StatusEffects.Add(effectToAdd); // adds status effect to entities list of effects
+				GD.Print("count of status effects " + entity.StatusEffects.Count);
+				AddChild(effectToAdd); // adds the effect as a child setting all of its _Ready() values
 				
-				_effect_to_add.StatusEffectFinished += () => HandleStatusEffectFinished(entity_, _effect_to_add); // Subscribes to effect finished signal
-				if(_effect_to_add.adds_additional_effects)
+				effectToAdd.StatusEffectFinished += () => HandleStatusEffectFinished(entity, effectToAdd); // Subscribes to effect finished signal
+				if(effectToAdd.adds_additional_effects)
 				{
-					_effect_to_add.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity_); // subscribes to add additional effect signal
+					effectToAdd.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity); // subscribes to add additional effect signal
 				}
-				if(_effect_to_add.adds_effect_to_additional_entity)
+				if(effectToAdd.adds_effect_to_additional_entity)
 				{
-					_effect_to_add.AddStatusEffectToAdditionalEntity += HandleAdditionalEntity;
+					effectToAdd.AddStatusEffectToAdditionalEntity += HandleAdditionalEntity;
 				}
-				ApplyStatusEffect(entity_, _effect_to_add);
+				ApplyStatusEffect(entity, effectToAdd);
 				// Sets the variable for what the status effects are preventing or altering
-				if(_effect_to_add.prevents_movement){ movement_prevented = true; EmitSignal(nameof(MovementPrevented), movement_prevented);}
-				if(_effect_to_add.prevents_input){ input_prevented = true; EmitSignal(nameof(InputPrevented), input_prevented);}
-				if(_effect_to_add.alters_speed){ speed_altered = true; }
-				if(_effect_to_add.prevents_abilities){ abilities_prevented = true; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
-				if(_effect_to_add.name == "tether")
+				if(effectToAdd.prevents_movement){ EntityMovementPrevented = true; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
+				if(effectToAdd.prevents_input){ EntityInputPrevented = true; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
+				if(effectToAdd.alters_speed){ EntitySpeedAltered = true; }
+				if(effectToAdd.prevents_abilities){ EntityAbilitiesPrevented = true; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
+				if(effectToAdd.name == "tether")
 				{
-					tethered = true;
-					Tether tether_effect = (Tether)_effect_to_add;
-					EmitSignal(nameof(Tethered),entity_, tether_effect.tether, tethered, tether_effect.tether_length);
+					EntityTethered = true;
+					Tether tether_effect = (Tether)effectToAdd;
+					EmitSignal(nameof(Tethered),entity, tether_effect.tether, EntityTethered, tether_effect.tether_length);
 				
 				}
 			// }
@@ -122,65 +122,65 @@ public partial class StatusEffectController : Node
 		}
 		else
 		{
-			ApplyStatusEffect(entity_, _effect_to_add);
+			ApplyStatusEffect(entity, effectToAdd);
 		}
 		
 	}
 
-    private void HandleAdditionalEntity(Entity entity_, StatusEffect effect_)
+    private void HandleAdditionalEntity(Entity entity, StatusEffect effect)
     {
-		GD.Print("Receiving signal to add an effect to " + entity_.Name);
-        AddStatusEffect(entity_, effect_);
+		GD.Print("Receiving signal to add an effect to " + entity.Name);
+        AddStatusEffect(entity, effect);
     }
 
-    public void RemoveStatusEffect(Entity entity_, StatusEffect effect_)
+    public void RemoveStatusEffect(Entity entity, StatusEffect effect)
 	{
 
-		effect_.StatusEffectFinished -= () => HandleStatusEffectFinished(entity_, effect_); // unSubscribes to effect finished signal
-		if(effect_.adds_additional_effects)
+		effect.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effect); // unSubscribes to effect finished signal
+		if(effect.adds_additional_effects)
 		{
-			effect_.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity_); // Unsubscribes to add additional effect signal
+			effect.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity); // Unsubscribes to add additional effect signal
 		}
-		effect_.QueueFree();
+		effect.QueueFree();
 		// entity_.entity_controllers.status_effect_controller.SetEffectBooleans(effect_);
-		entity_.StatusEffects.Remove(effect_);
-		if(!effect_.removed)
+		entity.StatusEffects.Remove(effect);
+		if(!effect.removed)
 		{
-			effect_.Remove(entity_);
+			effect.Remove(entity);
 		}
 		
-		if(effect_.prevents_movement == true){ movement_prevented = false; EmitSignal(nameof(MovementPrevented), movement_prevented);}
-		if(effect_.prevents_input){ input_prevented = false; EmitSignal(nameof(InputPrevented), input_prevented);}
-		if(effect_.alters_speed){ speed_altered = false; }
-		if(effect_.prevents_abilities){ abilities_prevented = false; EmitSignal(nameof(AbilitiesPrevented), abilities_prevented);}
-		if(effect_.name == "tether"){ tethered = false; EmitSignal(nameof(Tethered),entity_, tether.tether, tethered);;}
+		if(effect.prevents_movement == true){ EntityMovementPrevented = false; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
+		if(effect.prevents_input){ EntityInputPrevented = false; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
+		if(effect.alters_speed){ EntitySpeedAltered = false; }
+		if(effect.prevents_abilities){ EntityAbilitiesPrevented = false; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
+		if(effect.name == "tether"){ EntityTethered = false; EmitSignal(nameof(Tethered),entity, TetherEffect.tether, EntityTethered);;}
 		
 	}
 
 	// Queues effect if it hasn't been instantiated, because .prevents_movement, and .alters speed wont be set,
 	// if the effect has been instantiated it will check those properties and wont queue if a similar effect is active
-	public void QueueStatusEffect(StatusEffect effect_) 
+	public void QueueStatusEffect(StatusEffect effect) 
 	{
 		
-		if(!effect_.applied)
+		if(!effect.applied)
 		{
-			effect_.state = StatusEffect.States.Queued;
+			effect.state = StatusEffect.States.Queued;
 		}
 		else
 		{
-			effect_.state = StatusEffect.States.NotQueued;
+			effect.state = StatusEffect.States.NotQueued;
 		}
 	}
 
-	public void ApplyStatusEffect(Entity entity_, StatusEffect effect_) // Sets booleans for each status effect, and applies the effect to the entity
+	public void ApplyStatusEffect(Entity entity, StatusEffect effect) // Sets booleans for each status effect, and applies the effect to the entity
 	{
-		if (effect_.current_stacks < effect_.max_stacks && entity_.StatusEffects.Contains(effect_))
+		if (effect.current_stacks < effect.max_stacks && entity.StatusEffects.Contains(effect))
 		{
 			// if(effect_.current_stacks == 0)
 			// {
 			// 	SetEffectBooleans(effect_);
 			// }
-			effect_.Apply(entity_);
+			effect.Apply(entity);
 			GD.Print("applying status effect");
 		}
 		else
@@ -189,15 +189,15 @@ public partial class StatusEffectController : Node
 		}
 	}
 
-	public void RemoveMovementDebuffs(Entity entity_)
+	public void RemoveMovementDebuffs(Entity entity)
 	{
 
-		for(int i = entity_.StatusEffects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
+		for(int i = entity.StatusEffects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
 		{
 			
-			if(entity_.StatusEffects[i].type == StatusEffect.EffectType.Debuff  && entity_.StatusEffects[i].category == StatusEffect.EffectCategory.Movement)
+			if(entity.StatusEffects[i].type == StatusEffect.EffectType.Debuff  && entity.StatusEffects[i].category == StatusEffect.EffectCategory.Movement)
 			{
-				RemoveStatusEffect(entity_, entity_.StatusEffects[i]);
+				RemoveStatusEffect(entity, entity.StatusEffects[i]);
 			}
 			
 		}
@@ -218,47 +218,47 @@ public partial class StatusEffectController : Node
 
 	// Checks the incoming effect type, if the effect is not on, then a new instance of that effect will be created and returned,
 	// if the effect is on the entities status effects will be searched and the matching effect will be returned
-	public StatusEffect GetEffect(Entity entity_, StatusEffect effect_, StatusEffect effect_to_get_) 
+	public StatusEffect GetEffect(Entity entity, StatusEffect effect, StatusEffect effectToGet) 
 	{
-		effect_to_get_ = effect_;
-		foreach(StatusEffect _status_effect in status_effects)
+		effectToGet = effect;
+		foreach(StatusEffect statusEffect in StatusEffects)
 		{
-			if (effect_.GetType() == _status_effect.GetType())
+			if (effect.GetType() == statusEffect.GetType())
 			{
 			
-				foreach(StatusEffect _applied_effect in entity_.StatusEffects)
+				foreach(StatusEffect appliedEffect in entity.StatusEffects)
 				{
-					if(_applied_effect.GetType() == _status_effect.GetType())
+					if(appliedEffect.GetType() == statusEffect.GetType())
 					{
-						effect_to_get_ = _applied_effect;
+						effectToGet = appliedEffect;
 					}
 				}
 				
 			}
 		}
 		
-		return effect_to_get_;
+		return effectToGet;
 	}
 
 	// Handlers for signals from the status effects
-	private void HandleAdditionalStatusEffect(StatusEffect effect_, Entity entity_)
+	private void HandleAdditionalStatusEffect(StatusEffect effect, Entity entity)
     {
-        AddStatusEffect(entity_, effect_);
+        AddStatusEffect(entity, effect);
     }
 
-	private void AddWeak(Entity entity_, bool weak_)
+	private void AddWeak(Entity entity, bool weak)
     {
 		GD.Print("Adding weak");
-        AddStatusEffect(entity_, weak);
+        AddStatusEffect(entity, WeakEffect);
     }
 
-    private void HandleStatusEffectFinished(Entity entity_, StatusEffect effect_to_remove_)
+    private void HandleStatusEffectFinished(Entity entity, StatusEffect effectToRemove)
     {
 
-		RemoveStatusEffect(entity_, effect_to_remove_);
-					effect_to_remove_.StatusEffectFinished -= () => HandleStatusEffectFinished(entity_, effect_to_remove_);
-					if(effect_to_remove_.adds_additional_effects){ effect_to_remove_.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity_);}
-					GD.Print("removed " + effect_to_remove_.name);
+		RemoveStatusEffect(entity, effectToRemove);
+					effectToRemove.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effectToRemove);
+					if(effectToRemove.adds_additional_effects){ effectToRemove.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
+					GD.Print("removed " + effectToRemove.name);
 		// foreach(StatusEffect _effect in status_effects)
 		// {
 		// 	if(effect_to_remove_.GetType() == _effect.GetType())
@@ -274,17 +274,17 @@ public partial class StatusEffectController : Node
 		// }
     }
 
-	public void Subscribe(Entity entity_)
+	public void Subscribe(Entity entity)
 	{
-		entity_.EntitySystems.damage_system.AddStatusEffect += AddStatusEffect;
-		entity_.EntitySystems.damage_system.Weak += AddWeak;
+		entity.EntitySystems.damage_system.AddStatusEffect += AddStatusEffect;
+		entity.EntitySystems.damage_system.Weak += AddWeak;
 	}
 
 
-    public void Unsubscribe(Entity entity_)
+    public void Unsubscribe(Entity entity)
 	{
-		entity_.EntitySystems.damage_system.AddStatusEffect -= AddStatusEffect;
-		entity_.EntitySystems.damage_system.Weak -= AddWeak;
+		entity.EntitySystems.damage_system.AddStatusEffect -= AddStatusEffect;
+		entity.EntitySystems.damage_system.Weak -= AddWeak;
 	}
 
 }

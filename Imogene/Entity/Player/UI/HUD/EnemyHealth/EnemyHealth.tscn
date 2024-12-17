@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhoyscwvfrkr"]
 
 [ext_resource type="Script" path="res://Entity/Player/UI/HUD/EnemyHealth/EnemyHealth.cs" id="1_koiku"]
-[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://images/UI/Textures/posture.png" id="2_8gygh"]
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://Images/UI/Textures/posture.png" id="2_8gygh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wh7s"]
 bg_color = Color(0, 0, 0, 0.501961)
