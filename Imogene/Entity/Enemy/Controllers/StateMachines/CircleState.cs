@@ -11,7 +11,7 @@ public partial class CircleState: State
 	{
         base._Ready();
         circle_timer = GetNode<Timer>("CircleTimer");
-        name = "CircleState";
+        StateName = "CircleState";
 	}
   
     public override void _PhysicsProcess(double delta)
@@ -36,7 +36,7 @@ public partial class CircleState: State
 
     public override  void Enter(Enemy enemy)
     {
-        enemy = fsm.enemy;
+        enemy = FSM.Enemy;
         if (enemy is CirclingEnemy this_enemy)
         {
             enemy = this_enemy;
@@ -52,7 +52,7 @@ public partial class CircleState: State
     public override void SetInterest(Enemy enemy)
     {
         enemy.NavigationAgent.TargetPosition = circling_enemy.box_position;
-        target_position_1 = enemy.NavigationAgent.GetNextPathPosition();
+        TargetPosition1 = enemy.NavigationAgent.GetNextPathPosition();
 
         for(int i = 0; i < enemy.NumRays; i++)
             {
@@ -60,7 +60,7 @@ public partial class CircleState: State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.Transform.Basis.X + enemy.GlobalPosition.DirectionTo(target_position_1)); 
+                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.Transform.Basis.X + enemy.GlobalPosition.DirectionTo(TargetPosition1)); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 enemy.Interest[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
@@ -83,8 +83,8 @@ public partial class CircleState: State
 			// *************** Comment/ Uncomment for test behavior ***************
 			if(result.Count > 0)
 			{
-				collider = (Node3D)result["collider"];
-				enemy.SetCollisionLines(enemy.Debug.collision_lines, result);
+				Collider = (Node3D)result["collider"];
+				enemy.SetCollisionLines(enemy.Debug.CollisionLines, result);
 				enemy.Danger[i] = 1.0f;	
 			}
 			else
@@ -117,14 +117,14 @@ public partial class CircleState: State
 			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			enemy.SetDirectionLines(enemy.Debug.direction_lines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
+			enemy.SetDirectionLines(enemy.Debug.DirectionLines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
 		}
 
 		// Normalize the chosen direction
 		enemy.ChosenDir = enemy.ChosenDir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		enemy.SetDirectionMovingLine(enemy.Debug.direction_moving_line, enemy.ChosenDir * enemy.DirectionLineMag);
+		enemy.SetDirectionMovingLine(enemy.Debug.MovingLine, enemy.ChosenDir * enemy.DirectionLineMag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}

@@ -35,17 +35,17 @@ public partial class HUD : Control
 	
 	public void Subscribe(Player player_)
 	{
-		player_.PlayerAreas.interact.AreaEntered += OnInteractAreaEntered;
-		player_.PlayerAreas.interact.AreaExited += OnInteractAreaExited;
-		player_.PlayerAreas.pickup_items.BodyEntered += OnPickUpAreaEntered;
-		player_.PlayerAreas.pickup_items.BodyExited += (body) => OnPickUpAreaExited(body, player_);
-		player_.PlayerSystems.interact_system.SwitchToNextNearestItem += HandleSwitchToNextItem;
-		player_.PlayerSystems.targeting_system.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
-		player_.PlayerSystems.targeting_system.HideSoftTargetIcon += HandleHideSoftTargetIcon;
-		player_.PlayerSystems.targeting_system.EnemyTargeted += HandleEnemyTargeted;
-		player_.PlayerSystems.targeting_system.EnemyUntargeted += HandleEnemyUntargeted;
-		player_.PlayerSystems.targeting_system.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
-		player_.PlayerSystems.targeting_system.DimSoftTargetHUD += HandleDimSoftTargetHUD;
+		player_.PlayerAreas.Interact.AreaEntered += OnInteractAreaEntered;
+		player_.PlayerAreas.Interact.AreaExited += OnInteractAreaExited;
+		player_.PlayerAreas.PickUpItems.BodyEntered += OnPickUpAreaEntered;
+		player_.PlayerAreas.PickUpItems.BodyExited += (body) => OnPickUpAreaExited(body, player_);
+		player_.PlayerSystems.InteractSystem.SwitchToNextNearestItem += HandleSwitchToNextItem;
+		player_.PlayerSystems.TargetingSystem.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
+		player_.PlayerSystems.TargetingSystem.HideSoftTargetIcon += HandleHideSoftTargetIcon;
+		player_.PlayerSystems.TargetingSystem.EnemyTargeted += HandleEnemyTargeted;
+		player_.PlayerSystems.TargetingSystem.EnemyUntargeted += HandleEnemyUntargeted;
+		player_.PlayerSystems.TargetingSystem.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
+		player_.PlayerSystems.TargetingSystem.DimSoftTargetHUD += HandleDimSoftTargetHUD;
 		enemy_health.Subscribe(player_);
 	}
 

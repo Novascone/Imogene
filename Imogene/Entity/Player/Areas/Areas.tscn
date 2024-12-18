@@ -15,12 +15,12 @@ points = PackedVector3Array(0, 0, 0, 1, 0.5, -1, -1, 0.5, -1, 0, 0, 0, 1, 0, -1,
 radius = 1.32123
 height = 4.20473
 
-[node name="Areas" type="Node3D" node_paths=PackedStringArray("interact", "pickup_items", "near", "far")]
+[node name="Areas" type="Node3D" node_paths=PackedStringArray("Interact", "PickUpItems", "Near", "Far")]
 script = ExtResource("1_5qt5j")
-interact = NodePath("Interact")
-pickup_items = NodePath("PickupItems")
-near = NodePath("Near")
-far = NodePath("Far")
+Interact = NodePath("Interact")
+PickUpItems = NodePath("PickupItems")
+Near = NodePath("Near")
+Far = NodePath("Far")
 
 [node name="Vision" type="Area3D" parent="."]
 transform = Transform3D(20.2, 0, 0, 0, 20.2, 0, 0, 0, 20.2, 0, 0, 0)

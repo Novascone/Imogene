@@ -4,12 +4,12 @@ using System.Net.Mime;
 
 public partial class State : Node3D
 {
-	public StateMachine fsm;
-	public string name;
+	public StateMachine FSM;
+	public string StateName;
 	// public ContextSteering entity;
-	public Vector3 target_position_1;
-	public Vector3 target_position_2;
-	public Node3D collider;
+	public Vector3 TargetPosition1;
+	public Vector3 TargetPosition2;
+	public Node3D Collider;
 	public CustomSignals _customSignals; // Custom signal instance
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -43,9 +43,9 @@ public partial class State : Node3D
 		
 	}
 
-	public virtual void Exit(string next_state)
+	public virtual void Exit(string nextState)
 	{
-		fsm.ChangeTo(next_state);
+		FSM.ChangeTo(nextState);
 	}
 
 

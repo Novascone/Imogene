@@ -121,7 +121,7 @@ public partial class MovementController : Node
 		if(player.DirectionVector != Vector3.Zero && Climbing)
 		{
 			player.PreviousYRotation = player.GlobalRotation.Y;
-			player.CurrentYRotation = -(MathF.Atan2(player.PlayerControllers.near_wall.GetCollisionNormal().Z, player.PlayerControllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
+			player.CurrentYRotation = -(MathF.Atan2(player.PlayerControllers.NearWall.GetCollisionNormal().Z, player.PlayerControllers.NearWall.GetCollisionNormal().X) - MathF.PI/2); // Set the player y rotation to the rotation needed to face the wall
 			if(player.PreviousYRotation != player.CurrentYRotation)
 			{
 				player.GlobalRotation = player.GlobalRotation with {Y = Mathf.LerpAngle(player.PreviousYRotation, player.CurrentYRotation, 0.15f)}; // smoothly rotates between the previous angle and the new angle!
@@ -131,7 +131,7 @@ public partial class MovementController : Node
 
 	public void ClimbingRotation(Player player) // Sets the rotation of the player when climbing
 	{
-		var rot = -(MathF.Atan2(player.PlayerControllers.near_wall.GetCollisionNormal().Z, player.PlayerControllers.near_wall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
+		var rot = -(MathF.Atan2(player.PlayerControllers.NearWall.GetCollisionNormal().Z, player.PlayerControllers.NearWall.GetCollisionNormal().X) - MathF.PI/2); // Get the angle of rotation needed to face the object climbing
 		
 		VerticalClimbingInput = Input.GetActionStrength("Forward") - Input.GetActionStrength("Backward");
 		HorizontalClimbingInput = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
@@ -215,7 +215,7 @@ public partial class MovementController : Node
 		player.EntityControllers.EntityStatusEffectsController.MovementPrevented += HandleMovementPrevented;
 		player.EntityControllers.EntityStatusEffectsController.Tethered += HandleTethered;
 
-		player.PlayerSystems.targeting_system.Rotating += HandleRotatePlayer;
+		player.PlayerSystems.TargetingSystem.Rotating += HandleRotatePlayer;
 
 		player.PlayerUI.CapturingInput += HandleUICapturingInput;
 	}
@@ -232,7 +232,7 @@ public partial class MovementController : Node
 		player.EntityControllers.EntityStatusEffectsController.MovementPrevented -= HandleMovementPrevented;
 		player.EntityControllers.EntityStatusEffectsController.Tethered -= HandleTethered;
 
-		player.PlayerSystems.targeting_system.Rotating -= HandleRotatePlayer;
+		player.PlayerSystems.TargetingSystem.Rotating -= HandleRotatePlayer;
 		player.PlayerUI.CapturingInput -= HandleUICapturingInput;
 	}
 

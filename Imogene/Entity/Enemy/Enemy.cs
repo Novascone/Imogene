@@ -110,10 +110,10 @@ public partial class Enemy : Entity
 		JumpGravity = (float)(-2.0 * JumpHeight / JumpTimeToPeak * JumpTimeToPeak);
 		FallGravity = (float)(-2.0 * JumpHeight / JumpTimeToDecent * JumpTimeToDecent);
 
-		UI.health_bar.MaxValue = Health.MaxValue;
-		UI.health_bar.Value = Health.CurrentValue;
-		UI.posture_bar.MaxValue = 0;
-		UI.posture_bar.Value = 0;
+		UI.HealthBar.MaxValue = Health.MaxValue;
+		UI.HealthBar.Value = Health.CurrentValue;
+		UI.PostureBar.MaxValue = 0;
+		UI.PostureBar.Value = 0;
 		Attacking = false;
 		Level.BaseValue = 1;
 		Armor.CurrentValue = 0;
@@ -122,9 +122,9 @@ public partial class Enemy : Entity
 
 
 
-		Areas.alert.BodyEntered += OnAlertAreaBodyEntered;
-		Areas.alert.AreaEntered += OnAlertAreaEntered;
-		Areas.alert.BodyExited += OnAlertAreaBodyExited;
+		Areas.Alert.BodyEntered += OnAlertAreaBodyEntered;
+		Areas.Alert.AreaEntered += OnAlertAreaEntered;
+		Areas.Alert.BodyExited += OnAlertAreaBodyExited;
 
 		
 		Array.Resize(ref Interest, NumRays);
@@ -141,7 +141,7 @@ public partial class Enemy : Entity
 
     private void HandleFinishedCircling()
     {
-        EnemyControllers.state_machine.current_state.Exit("ForwardState");
+        EnemyControllers.StateMachine.CurrentState.Exit("ForwardState");
     }
 
  
@@ -149,20 +149,20 @@ public partial class Enemy : Entity
     public override void _PhysicsProcess(double delta)
 	{
 	
-		RayOrigin = EnemyControllers.ray_position.GlobalPosition;
-		if(Debug.collision_lines.Mesh is ImmediateMesh collisionLinesMesh)
+		RayOrigin = EnemyControllers.RayPosition.GlobalPosition;
+		if(Debug.CollisionLines.Mesh is ImmediateMesh collisionLinesMesh)
 		{
 			collisionLinesMesh.ClearSurfaces();
 		}
-		if(Debug.ray_lines.Mesh is ImmediateMesh rayLinesMesh)
+		if(Debug.RayLines.Mesh is ImmediateMesh rayLinesMesh)
 		{
 			rayLinesMesh.ClearSurfaces();
 		}
-		if(Debug.direction_lines.Mesh is ImmediateMesh directionLinesMesh)
+		if(Debug.DirectionLines.Mesh is ImmediateMesh directionLinesMesh)
 		{
 			directionLinesMesh.ClearSurfaces();
 		}
-		if(Debug.direction_moving_line.Mesh is ImmediateMesh directionMovingLineMesh)
+		if(Debug.MovingLine.Mesh is ImmediateMesh directionMovingLineMesh)
 		{
 			directionMovingLineMesh.ClearSurfaces();
 		}
@@ -186,11 +186,11 @@ public partial class Enemy : Entity
 			// GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(look_at_position);
 		}
 
-		EnemyControllers.movement_controller.StatusEffectsAffectingSpeed(this);
-		EnemyControllers.movement_controller.StatusEffectsPreventingMovement(this);
-		EnemyControllers.ability_controller.CheckCanUseAbility(this);
+		EnemyControllers.MovementController.StatusEffectsAffectingSpeed(this);
+		EnemyControllers.MovementController.StatusEffectsPreventingMovement(this);
+		EnemyControllers.AbilityController.CheckCanUseAbility(this);
 
-		EnemyControllers.movement_controller.MoveEnemy(this, delta);
+		EnemyControllers.MovementController.MoveEnemy(this, delta);
 		SmoothRotation();
 		LookAtOver();
 		MoveAndSlide();

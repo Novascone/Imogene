@@ -3,23 +3,23 @@ using System;
 
 public partial class CameraRig : Node3D
 {
-	[Export] public Camera3D camera { get; set; }
-	private int default_camera_size { get; set; } = 21;
-	private int zoom_camera_size { get; set; } = 10;
-	private bool zoomed { get; set; } = false;
+	[Export] public Camera3D Camera { get; set; }
+	private int DefaultCameraSize { get; set; } = 21;
+	private int ZoomCameraSize { get; set; } = 10;
+	private bool Zoomed { get; set; } = false;
 
 	public void Zoom()
 	{
-		if(!zoomed)
+		if(!Zoomed)
 		{
-			camera.Size = zoom_camera_size;
-			zoomed = true;
+			Camera.Size = ZoomCameraSize;
+			Zoomed = true;
 		}
-		else if (zoomed)
+		else if (Zoomed)
 		{
 
-			camera.Size = default_camera_size;
-			zoomed = false;
+			Camera.Size = DefaultCameraSize;
+			Zoomed = false;
 
 		}
 	}

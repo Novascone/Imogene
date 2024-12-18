@@ -7,18 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://btmrg2xyvcy1q" path="res://Images/Icons/potion_icon.png" id="5_queyo"]
 [ext_resource type="PackedScene" uid="uid://uscnijrrbfei" path="res://Interactive/ItemTestSphere.tscn" id="6_ulukb"]
 
-[sub_resource type="Resource" id="Resource_5xma1"]
+[sub_resource type="Resource" id="Resource_xmrb8"]
 script = ExtResource("4_kuu1a")
 item_name = "Test Cube"
 icon = ExtResource("2_w0pjq")
 item_model_prefab = ExtResource("3_vmfa2")
 
-[sub_resource type="Resource" id="Resource_woac4"]
+[sub_resource type="Resource" id="Resource_wmls2"]
 script = ExtResource("4_kuu1a")
-item_name = "Test Shpere"
+item_name = "Test Sphere"
 icon = ExtResource("5_queyo")
 item_model_prefab = ExtResource("6_ulukb")
 
 [node name="InteractSystem" type="Node3D"]
 script = ExtResource("1_dv1bd")
-item_types = [SubResource("Resource_5xma1"), SubResource("Resource_woac4")]
+ItemTypes = [SubResource("Resource_xmrb8"), SubResource("Resource_wmls2")]

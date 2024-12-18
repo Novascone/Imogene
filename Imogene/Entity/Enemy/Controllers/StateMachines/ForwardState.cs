@@ -10,7 +10,7 @@ public partial class ForwardState : State
    public override void _Ready()
 	{
       base._Ready();
-      name = "ForwardState";
+      StateName = "ForwardState";
 	}
    
    public void SwitchState(Enemy enemy)
@@ -28,7 +28,7 @@ public partial class ForwardState : State
 
    public override  void Enter(Enemy enemy)
    {
-      enemy = fsm.enemy;
+      enemy = FSM.Enemy;
       GD.Print("Enemy set");
       GD.Print(enemy.Name);
       
@@ -45,7 +45,7 @@ public partial class ForwardState : State
    public override void SetInterest(Enemy enemy)
    {
         enemy.NavigationAgent.TargetPosition = Vector3.Forward;
-        target_position_1 = enemy.NavigationAgent.GetNextPathPosition();
+        TargetPosition1 = enemy.NavigationAgent.GetNextPathPosition();
         
 
          for(int i = 0; i < enemy.NumRays; i++)
@@ -54,7 +54,7 @@ public partial class ForwardState : State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(target_position_1.Normalized()); 
+                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(TargetPosition1.Normalized()); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 enemy.Interest[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
@@ -77,8 +77,8 @@ public partial class ForwardState : State
          // *************** Comment/ Uncomment for test behavior ***************
          if(result.Count > 0)
          {
-            collider = (Node3D)result["collider"];
-            enemy.SetCollisionLines(enemy.Debug.collision_lines, result);
+            Collider = (Node3D)result["collider"];
+            enemy.SetCollisionLines(enemy.Debug.CollisionLines, result);
             enemy.Danger[i] = 1.0f;	
          }
          else
@@ -111,14 +111,14 @@ public partial class ForwardState : State
 			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			enemy.SetDirectionLines(enemy.Debug.direction_lines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
+			enemy.SetDirectionLines(enemy.Debug.DirectionLines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
 		}
 
 		// Normalize the chosen direction
 		enemy.ChosenDir = enemy.ChosenDir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		enemy.SetDirectionMovingLine(enemy.Debug.direction_moving_line, enemy.ChosenDir * enemy.DirectionLineMag);
+		enemy.SetDirectionMovingLine(enemy.Debug.MovingLine, enemy.ChosenDir * enemy.DirectionLineMag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}

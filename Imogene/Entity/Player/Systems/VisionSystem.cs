@@ -4,55 +4,55 @@ using System;
 public partial class VisionSystem : Node
 {
 	
-	private static void OnBodyEnteredFar(Node3D body_, Player player_)
+	private static void OnBodyEnteredFar(Node3D body, Player player)
     {
-        if(body_ is Enemy _enemy)
+        if(body is Enemy enemy)
 		{
-			player_.PlayerSystems.targeting_system.EnemyEnteredFar(_enemy);
+			player.PlayerSystems.TargetingSystem.EnemyEnteredFar(enemy);
 		}
     }
 
-    private static void OnBodyExitedFar(Node3D body_, Player player_)
+    private static void OnBodyExitedFar(Node3D body, Player player)
     {
-        if(body_ is Enemy _enemy)
+        if(body is Enemy enemy)
 		{
-			player_.PlayerSystems.targeting_system.EnemyExitedFar(_enemy);
+			player.PlayerSystems.TargetingSystem.EnemyExitedFar(enemy);
 		}
     }
 
-	private static void OnBodyEnteredNear(Node3D body_, Player player_)
+	private static void OnBodyEnteredNear(Node3D body, Player player)
     {
-         if(body_ is Enemy _enemy)
+         if(body is Enemy enemy)
 		{
-			player_.PlayerSystems.targeting_system.EnemyEnteredNear(_enemy);
+			player.PlayerSystems.TargetingSystem.EnemyEnteredNear(enemy);
 		}
     }
 
-    private static void OnBodyExitedNear(Node3D body_, Player player_)
+    private static void OnBodyExitedNear(Node3D body, Player player)
     {
-        if(body_ is Enemy _enemy)
+        if(body is Enemy enemy)
 		{
-			player_.PlayerSystems.targeting_system.EnemyExitedNear(_enemy);
+			player.PlayerSystems.TargetingSystem.EnemyExitedNear(enemy);
 		}
     }
 
-	public static void Subscribe(Player player_)
+	public static void Subscribe(Player player)
 	{
-		player_.PlayerAreas.near.BodyEntered += (body_) => OnBodyEnteredNear(body_, player_);
-		player_.PlayerAreas.near.BodyExited += (body_) => OnBodyExitedNear(body_, player_);
+		player.PlayerAreas.Near.BodyEntered += (body) => OnBodyEnteredNear(body, player);
+		player.PlayerAreas.Near.BodyExited += (body) => OnBodyExitedNear(body, player);
 
-		player_.PlayerAreas.far.BodyEntered += (body_) => OnBodyEnteredFar(body_, player_);
-		player_.PlayerAreas.far.BodyExited += (body_) => OnBodyExitedFar(body_, player_);
+		player.PlayerAreas.Far.BodyEntered += (body) => OnBodyEnteredFar(body, player);
+		player.PlayerAreas.Far.BodyExited += (body) => OnBodyExitedFar(body, player);
 		
 	}
 
-	public static void unsubscribe(Player player_)
+	public static void unsubscribe(Player player)
 	{
-		player_.PlayerAreas.near.BodyEntered -= (body_) => OnBodyEnteredNear(body_, player_);
-		player_.PlayerAreas.near.BodyExited -= (body_) => OnBodyExitedNear(body_, player_);
+		player.PlayerAreas.Near.BodyEntered -= (body) => OnBodyEnteredNear(body, player);
+		player.PlayerAreas.Near.BodyExited -= (body) => OnBodyExitedNear(body, player);
 
-		player_.PlayerAreas.far.BodyEntered -= (body_) => OnBodyEnteredFar(body_, player_);
-		player_.PlayerAreas.far.BodyExited -= (body_) => OnBodyExitedFar(body_, player_);
+		player.PlayerAreas.Far.BodyEntered -= (body) => OnBodyEnteredFar(body, player);
+		player.PlayerAreas.Far.BodyExited -= (body) => OnBodyExitedFar(body, player);
 		
 	}
 

@@ -29,8 +29,8 @@ public partial class Player : Entity
 		
         if(@event.IsActionPressed("one"))
 		{
-			PlayerControllers.movement_controller.MovementInputPrevented = !PlayerControllers.movement_controller.MovementInputPrevented;
-			PlayerControllers.input_controller.directional_input_prevented = !PlayerControllers.input_controller.directional_input_prevented;
+			PlayerControllers.MovementController.MovementInputPrevented = !PlayerControllers.MovementController.MovementInputPrevented;
+			PlayerControllers.InputController.DirectionalInputPrevented = !PlayerControllers.InputController.DirectionalInputPrevented;
 		}
 		if(@event.IsActionPressed("two"))
 		{
@@ -95,14 +95,14 @@ public partial class Player : Entity
 
         // System signals
         VisionSystem.Subscribe(this);
-		PlayerSystems.interact_system.Subscribe(this);
-		PlayerSystems.interact_system.ItemPickedUp += PlayerUI.inventory.main.OnItemPickedUp;
-		PlayerSystems.interact_system.InputPickup += HandleInputPickUp;
+		PlayerSystems.InteractSystem.Subscribe(this);
+		PlayerSystems.InteractSystem.ItemPickedUp += PlayerUI.inventory.main.OnItemPickedUp;
+		PlayerSystems.InteractSystem.InputPickup += HandleInputPickUp;
 	
 		// Controller signals
-		PlayerControllers.ability_controller.Subscribe(this);
-		PlayerControllers.ability_controller.RotatePlayer += PlayerSystems.targeting_system.HandleRotatePlayer;
-		PlayerControllers.input_controller.CrossChanged += HandleCrossChanged;
+		PlayerControllers.AbilityController.Subscribe(this);
+		PlayerControllers.AbilityController.RotatePlayer += PlayerSystems.TargetingSystem.HandleRotatePlayer;
+		PlayerControllers.InputController.CrossChanged += HandleCrossChanged;
 
 		// UI signals
 		PlayerUI.hud.Subscribe(this);
@@ -111,8 +111,8 @@ public partial class Player : Entity
 		PlayerUI.InventoryToggle += HandleInventoryToggle;
 		PlayerUI.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
 		PlayerUI.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
-		PlayerControllers.input_controller.Subscribe(this);
-		PlayerControllers.movement_controller.Subscribe(this);
+		PlayerControllers.InputController.Subscribe(this);
+		PlayerControllers.MovementController.Subscribe(this);
 
 		Level.BaseValue = 4;
 		Strength.BaseValue = 10;
@@ -123,9 +123,9 @@ public partial class Player : Entity
 		EntityControllers.EntityStatsController.SetStats(this);
 		EntityControllers.EntityStatsController.Update(this);
 		
-		ExcludedRIDs.Add(PlayerAreas.near.GetRid());
-		ExcludedRIDs.Add(PlayerAreas.far.GetRid());
-		ExcludedRIDs.Add(PlayerAreas.interact.GetRid());
+		ExcludedRIDs.Add(PlayerAreas.Near.GetRid());
+		ExcludedRIDs.Add(PlayerAreas.Far.GetRid());
+		ExcludedRIDs.Add(PlayerAreas.Interact.GetRid());
 		ExcludedRIDs.Add(Hurtbox.GetRid());
 		ExcludedRIDs.Add(MainHandHitbox.GetRid());
 		ExcludedRIDs.Add(GetRid());
@@ -137,10 +137,10 @@ public partial class Player : Entity
     {
 	
 		CameraFollowsPlayer();
-		PlayerSystems.targeting_system.ray_cast.FollowPlayer(this);
-		PlayerControllers.input_controller.SetInput(this);
-		PlayerControllers.movement_controller.MovePlayer(this, PlayerControllers.input_controller.LeftInputStrength, delta);
-		PlayerSystems.targeting_system.Target(this);
+		PlayerSystems.TargetingSystem.RayCast.FollowPlayer(this);
+		PlayerControllers.InputController.SetInput(this);
+		PlayerControllers.MovementController.MovePlayer(this, PlayerControllers.InputController.LeftInputStrength, delta);
+		PlayerSystems.TargetingSystem.Target(this);
         AbilityController.AbilityFrameCheck(this);
 		MoveAndSlide();
 		
@@ -148,7 +148,7 @@ public partial class Player : Entity
 
     private void HandleInputPickUp(InteractableItem item)
     {
-        PlayerSystems.interact_system.PickupItem(item, this);
+        PlayerSystems.InteractSystem.PickupItem(item, this);
     }
 
     private void HandleDroppingItem()
@@ -190,20 +190,20 @@ public partial class Player : Entity
 
 	 internal void OnAbilityPressed(Ability ability)
     {
-		PlayerControllers.ability_controller.QueueAbility(this, ability);
-		PlayerControllers.ability_controller.CheckCanUseAbility(this, ability);
+		PlayerControllers.AbilityController.QueueAbility(this, ability);
+		PlayerControllers.AbilityController.CheckCanUseAbility(this, ability);
     }
 
 	internal void OnAbilityQueue(Ability ability)
     {
 		
-        PlayerControllers.ability_controller.QueueAbility(this, ability);
+        PlayerControllers.AbilityController.QueueAbility(this, ability);
     }
 
     internal void OnAbilityCheck(Ability ability)
     {
 		
-        PlayerControllers.ability_controller.CheckCanUseAbility(this, ability);
+        PlayerControllers.AbilityController.CheckCanUseAbility(this, ability);
     }
 
 	internal void OnAbilityReleased(Ability ability)
@@ -225,11 +225,11 @@ public partial class Player : Entity
 
 	public override void _ExitTree()
 	{
-		PlayerControllers.input_controller.Unsubscribe(this);
-		PlayerControllers.ability_controller.Unsubscribe(this);
-		PlayerControllers.movement_controller.Unsubscribe(this);
+		PlayerControllers.InputController.Unsubscribe(this);
+		PlayerControllers.AbilityController.Unsubscribe(this);
+		PlayerControllers.MovementController.Unsubscribe(this);
 
-		PlayerSystems.interact_system.Unsubscribe(this);
+		PlayerSystems.InteractSystem.Unsubscribe(this);
         VisionSystem.unsubscribe(this);
 	}
 

@@ -4,9 +4,9 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vwsrl"]
 
-[node name="Areas" type="Node3D" node_paths=PackedStringArray("alert")]
+[node name="Areas" type="Node3D" node_paths=PackedStringArray("Alert")]
 script = ExtResource("1_81lxv")
-alert = NodePath("Alert")
+Alert = NodePath("Alert")
 
 [node name="Alert" type="Area3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 1, 0)

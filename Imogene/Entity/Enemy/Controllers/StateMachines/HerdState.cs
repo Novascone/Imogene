@@ -12,7 +12,7 @@ public partial class HerdState : State
 	{
 		base._Ready();
 		
-        name = "HerdState";
+        StateName = "HerdState";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -72,7 +72,7 @@ public partial class HerdState : State
 
 	public override  void Enter(Enemy enemy)
     {
-        enemy = fsm.enemy;
+        enemy = FSM.Enemy;
 		if (enemy is HerdEnemy this_enemy)
 		{
 			enemy = this_enemy;
@@ -92,7 +92,7 @@ public partial class HerdState : State
         // target_position = entity.navigation_agent.GetNextPathPosition();
 
 		// ******************************************** Set up interest point ************************************************************************
-		target_position_1 = herd_enemy.interest_position;
+		TargetPosition1 = herd_enemy.interest_position;
 
         for(int i = 0; i < herd_enemy.NumRays; i++)
             {
@@ -100,7 +100,7 @@ public partial class HerdState : State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // The interest in moving away from the object
-                var d = herd_enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), herd_enemy.Rotation.Y).Dot(herd_enemy.GlobalPosition.DirectionTo(target_position_1).Normalized()); 
+                var d = herd_enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), herd_enemy.Rotation.Y).Dot(herd_enemy.GlobalPosition.DirectionTo(TargetPosition1).Normalized()); 
 				d *= 1.2f; // Making the entity more interested in running away from the chaser than moving toward the center
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 interest_to_interest_point[i] = MathF.Max(0, d);
@@ -114,7 +114,7 @@ public partial class HerdState : State
         // entity.navigation_agent.TargetPosition = 
 
 		// ************************************* Set herd_mate position ***********************************************************
-        target_position_2 = herd_enemy.herd_mate_position;
+        TargetPosition2 = herd_enemy.herd_mate_position;
 
         for(int i = 0; i < enemy. NumRays; i++)
             {
@@ -122,7 +122,7 @@ public partial class HerdState : State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.GlobalPosition.DirectionTo(target_position_2).Normalized()); 
+                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.GlobalPosition.DirectionTo(TargetPosition2).Normalized()); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 interest_to_herd[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
@@ -145,8 +145,8 @@ public partial class HerdState : State
 			// *************** Comment/ Uncomment for test behavior ***************
 			if(result.Count > 0)
 			{
-				collider = (Node3D)result["collider"];
-				enemy.SetCollisionLines(enemy.Debug.collision_lines, result);
+				Collider = (Node3D)result["collider"];
+				enemy.SetCollisionLines(enemy.Debug.CollisionLines, result);
 				
 				enemy.Danger[i] = 5.0f;	
 			}
@@ -182,14 +182,14 @@ public partial class HerdState : State
 			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			enemy.SetDirectionLines(enemy.Debug.direction_lines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
+			enemy.SetDirectionLines(enemy.Debug.DirectionLines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
 		}
 
 		// Normalize the chosen direction
 		enemy.ChosenDir = enemy.ChosenDir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		enemy.SetDirectionMovingLine(enemy.Debug.direction_moving_line, enemy.ChosenDir * enemy.DirectionLineMag);
+		enemy.SetDirectionMovingLine(enemy.Debug.MovingLine, enemy.ChosenDir * enemy.DirectionLineMag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}

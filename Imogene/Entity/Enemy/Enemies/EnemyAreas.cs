@@ -3,7 +3,7 @@ using System;
 
 public partial class EnemyAreas : Node
 {
-	[Export] public Area3D alert;
+	[Export] public Area3D Alert;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

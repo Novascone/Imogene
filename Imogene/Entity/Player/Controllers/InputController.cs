@@ -6,7 +6,7 @@ public partial class InputController : Node
 	// Input variables
 	public float LeftInputStrength { get; set; } = 0.0f;
 	public float RightInputStrength { get; set; } = 0.0f;
-	public float deadzone { get; set; } = 0.25f;
+	public float Deadzone { get; set; } = 0.25f;
 	public Vector2 DirectionRawVector { get; set; } = Vector2.Zero;
 	public Vector2 AimRawVector { get; set; } = Vector2.Zero;
 	public Vector2 DirectionDeadzonedVector { get; set; } = Vector2.Zero;
@@ -14,141 +14,141 @@ public partial class InputController : Node
 	
 
 	// Checking bools
-	public bool directional_input_prevented { get; set; } = false;
-	public bool targeting { get; set; }  = false;
-	public bool ability_rotating_player { get; set; }  = false;
-	public bool abilities_prevented { get; set; } = false;
-	public bool climbing { get; set; } = false;
-	public bool clambering { get; set; } = false;
+	public bool DirectionalInputPrevented { get; set; } = false;
+	public bool Targeting { get; set; }  = false;
+	public bool AbilityRotatingPlayer { get; set; }  = false;
+	public bool AbilitiesPrevented { get; set; } = false;
+	public bool Climbing { get; set; } = false;
+	public bool Clambering { get; set; } = false;
 
 	// D-Pad properties
-	public bool d_pad_right_pressed = false;
+	public bool DPadRightPressed = false;
 
-	private bool _d_pad_right_released = false;
-	public bool d_pad_right_released
+	private bool _dPadRightReleased = false;
+	public bool DPadRightReleased
 	{
-		get => _d_pad_right_released;
+		get => DPadRightReleased;
 		set
 		{
-			_d_pad_right_released = value;
-			if(d_pad_right_released)
+			_dPadRightReleased = value;
+			if(DPadRightReleased)
 			{
-				if(d_pad_frames_held < switch_weapon_threshold)
+				if(DPadFramesHeld < SwitchWeaponsThreshold)
 				{
 					EmitSignal(nameof(CrossChanged),"Right");
-					_d_pad_right_released = false;
-					d_pad_frames_held = 0;
+					_dPadRightReleased = false;
+					DPadFramesHeld = 0;
 				}
-				else if(d_pad_frames_held >= switch_weapon_threshold && d_pad_frames_held < sheath_weapon_threshold)
+				else if(DPadFramesHeld >= SwitchWeaponsThreshold && DPadFramesHeld < SheathWeaponThreshold)
 				{
 					GD.Print("Switch main-hand");
-					_d_pad_right_released = false;
-					d_pad_frames_held = 0;
+					_dPadRightReleased = false;
+					DPadFramesHeld = 0;
 				}
 				else
 				{
-					_d_pad_right_released = false;
-					d_pad_frames_held = 0;
+					_dPadRightReleased = false;
+					DPadFramesHeld = 0;
 				}
 			}
 		}
 	}
 
-	public bool d_pad_left_pressed { get; set; }= false;
+	public bool DPadLeftPressed { get; set; }= false;
 	
-	private bool _d_pad_left_released = false;
-	public bool d_pad_left_released
+	private bool _dPadLeftReleased = false;
+	public bool DPadLeftReleased
 	{
-		get => _d_pad_left_released;
+		get => _dPadLeftReleased;
 		set
 		{
-			_d_pad_left_released = value;
-			if(d_pad_left_released)
+			_dPadLeftReleased = value;
+			if(DPadLeftReleased)
 			{
-				if(d_pad_frames_held < switch_weapon_threshold)
+				if(DPadFramesHeld < SwitchWeaponsThreshold)
 				{
 					EmitSignal(nameof(CrossChanged),"Left");
-					_d_pad_left_released = false;
-					d_pad_frames_held = 0;
+					_dPadLeftReleased = false;
+					DPadFramesHeld = 0;
 				}
-				else if(d_pad_frames_held >= switch_weapon_threshold && d_pad_frames_held < sheath_weapon_threshold)
+				else if(DPadFramesHeld >= SwitchWeaponsThreshold && DPadFramesHeld < SheathWeaponThreshold)
 				{
 					GD.Print("Switch off-hand");
-					_d_pad_left_released = false;
-					d_pad_frames_held = 0;
+					_dPadLeftReleased = false;
+					DPadFramesHeld = 0;
 				}
 				else
 				{
-					_d_pad_left_released = false;
-					d_pad_frames_held = 0;
+					_dPadLeftReleased = false;
+					DPadFramesHeld = 0;
 				}
 			}
 		}
 	}
 	
-	private bool _d_pad_up_pressed = false;
-	public bool d_pad_up_pressed
+	private bool _dPadUpPressed = false;
+	public bool DPadUpPressed
 	{
-		get => _d_pad_up_pressed;
+		get => _dPadUpPressed;
 		set
 		{
-			_d_pad_up_pressed = value;
-			if(d_pad_up_pressed)
+			_dPadUpPressed = value;
+			if(DPadUpPressed)
 			{
 				GD.Print("D-Pad up pressed");
 				EmitSignal(nameof(UsableChanged));	
-				_d_pad_up_pressed = false;
+				_dPadUpPressed = false;
 			}
 			
 		}
 	}
 
-	public bool d_pad_up_released { get; set; } = false;
+	public bool DPadUpReleased { get; set; } = false;
 	
-	private bool _d_pad_down_pressed = false;
-	public bool d_pad_down_pressed
+	private bool _dPadDownPressed = false;
+	public bool DPadDownPressed
 	{
-		get => _d_pad_down_pressed;
+		get => _dPadDownPressed;
 		set
 		{
-			_d_pad_down_pressed = value;
-			if(d_pad_down_pressed)
+			_dPadDownPressed = value;
+			if(DPadDownPressed)
 			{
 				GD.Print("D-Pad down pressed");
 				EmitSignal(nameof(UsableUsed));
-				_d_pad_down_pressed = false;
+				_dPadDownPressed = false;
 			}
 		}
 	}
 
-	public bool d_pad_down_released { get; set; } = false;
+	public bool DPadDownReleased { get; set; } = false;
 
-	public int d_pad_frames_held { get; set; } = 0;
+	public int DPadFramesHeld { get; set; } = 0;
 
-	public int switch_weapon_threshold { get; set; } = 20;
-	public int sheath_weapon_threshold { get; set; } = 60;
+	public int SwitchWeaponsThreshold { get; set; } = 20;
+	public int SheathWeaponThreshold { get; set; } = 60;
 
 	// Rotation variables
-	public bool x_rotation_not_zero { get; set; } = false;
-	public float max_x_rotation { get; set; } = 0.3f;
-	public float min_x_rotation { get; set; } = -0.3f;
+	public bool XRotationNotZero { get; set; } = false;
+	public float MaxXRotation { get; set; } = 0.3f;
+	public float MinXRotation { get; set; } = -0.3f;
 
 	// Signals
-	[Signal] public delegate void CrossChangedEventHandler(string cross_);
+	[Signal] public delegate void CrossChangedEventHandler(string cross);
 	[Signal] public delegate void UsableChangedEventHandler();
 	[Signal] public delegate void UsableUsedEventHandler();
 
 	public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
         
-		if(@event_.IsActionPressed("D-PadLeft")) {d_pad_left_pressed = true; d_pad_left_released = false;}
-		if(@event_.IsActionReleased("D-PadLeft")) {d_pad_left_pressed = false; d_pad_left_released = true;}
-		if(@event_.IsActionPressed("D-PadRight")){d_pad_right_pressed = true; d_pad_right_released = false;}
-		if(@event_.IsActionReleased("D-PadRight")){d_pad_right_pressed = false; d_pad_right_released = true;}
-		if(@event_.IsActionPressed("D-PadUp")){d_pad_up_pressed = true; d_pad_up_released = false;}
-		if(@event_.IsActionReleased("D-PadUp")){d_pad_up_pressed = false; d_pad_up_released = true;}
-		if(@event_.IsActionPressed("D-PadDown")){d_pad_down_pressed = true; d_pad_down_released = false;}
-		if(@event_.IsActionReleased("D-PadDown")){d_pad_down_pressed = false;d_pad_down_released = true;}
+		if(@event_.IsActionPressed("D-PadLeft")) {DPadLeftPressed = true; DPadLeftReleased = false;}
+		if(@event_.IsActionReleased("D-PadLeft")) {DPadLeftPressed = false; DPadLeftReleased = true;}
+		if(@event_.IsActionPressed("D-PadRight")){DPadRightPressed = true; DPadRightReleased = false;}
+		if(@event_.IsActionReleased("D-PadRight")){DPadRightPressed = false; DPadRightReleased = true;}
+		if(@event_.IsActionPressed("D-PadUp")){DPadUpPressed = true; DPadUpReleased = false;}
+		if(@event_.IsActionReleased("D-PadUp")){DPadUpPressed = false; DPadUpReleased = true;}
+		if(@event_.IsActionPressed("D-PadDown")){DPadDownPressed = true; DPadDownReleased = false;}
+		if(@event_.IsActionReleased("D-PadDown")){DPadDownPressed = false;DPadDownReleased = true;}
 		// if(@event.IsActionPressed("one"))
 		// {
 		// 	player.damage_system.TakeDamage("Physical", 10, false);
@@ -173,11 +173,11 @@ public partial class InputController : Node
 	public void SetInput(Player player) // Basic movement controller, takes the input and gives the player direction, also changes speed based on the strength of the input
 	{
 		GetInputStrength();
-		if(!directional_input_prevented)
+		if(!DirectionalInputPrevented)
 		{
 			player.DirectionVector.X = 0.0f;
 			player.DirectionVector.Z = 0.0f;
-			if(!climbing)
+			if(!Climbing)
 			{
 				SetDeadzonedDirectionVector(player);
 				SetDeadzonedAimVector(player);
@@ -202,7 +202,7 @@ public partial class InputController : Node
 		
 		// player.GlobalRotation = player.GlobalRotation with {X = (float)Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation)};
 		
-		if(x_rotation_not_zero)
+		if(XRotationNotZero)
 		{
 			RotateXBack(player);
 		}
@@ -220,14 +220,14 @@ public partial class InputController : Node
 	{
 		DirectionRawVector = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward");
 		DirectionDeadzonedVector = DirectionRawVector;
-		if(DirectionDeadzonedVector.Length() < deadzone)
+		if(DirectionDeadzonedVector.Length() < Deadzone)
 		{
 			DirectionDeadzonedVector = Vector2.Zero;
 		}
 		else
 		{
 			
-			DirectionDeadzonedVector = DirectionDeadzonedVector.Normalized() * ((DirectionDeadzonedVector.Length() - deadzone) / (1 - deadzone));
+			DirectionDeadzonedVector = DirectionDeadzonedVector.Normalized() * ((DirectionDeadzonedVector.Length() - Deadzone) / (1 - Deadzone));
 		}
 		player.DirectionVector.X = -DirectionDeadzonedVector.X;
 		player.DirectionVector.Z = -DirectionDeadzonedVector.Y;
@@ -237,14 +237,14 @@ public partial class InputController : Node
 	{
 		AimRawVector = Input.GetVector("AimLeft", "AimRight", "AimForward", "AimBackward");
 		AimDeadzonedVector = AimRawVector;
-		if(AimDeadzonedVector.Length() < deadzone)
+		if(AimDeadzonedVector.Length() < Deadzone)
 		{
 			AimDeadzonedVector = Vector2.Zero;
 		}
 		else
 		{
 			
-			AimDeadzonedVector = AimDeadzonedVector.Normalized() * ((AimDeadzonedVector.Length() - deadzone) / (1 - deadzone));
+			AimDeadzonedVector = AimDeadzonedVector.Normalized() * ((AimDeadzonedVector.Length() - Deadzone) / (1 - Deadzone));
 		}
 		player.AimVector.X = -AimDeadzonedVector.X;
 		player.AimVector.Z = -AimDeadzonedVector.Y;
@@ -282,13 +282,13 @@ public partial class InputController : Node
 	public void CheckDPadInput()
 	{
 
-		if(!abilities_prevented)
+		if(!AbilitiesPrevented)
 		{
-			if(d_pad_left_pressed || d_pad_right_pressed)
+			if(DPadLeftPressed || DPadRightPressed)
 			{
-				d_pad_frames_held += 1;
+				DPadFramesHeld += 1;
 			}
-			if(d_pad_frames_held >= sheath_weapon_threshold)
+			if(DPadFramesHeld >= SheathWeaponThreshold)
 			{
 				GD.Print("Sheath weapons");
 			}
@@ -296,16 +296,16 @@ public partial class InputController : Node
 	}
 
 
-	public void LookForward(Player player, Vector3 direction_) // Rotates the player character smoothly with lerp
+	public void LookForward(Player player, Vector3 direction) // Rotates the player character smoothly with lerp
 	{
-		if(!directional_input_prevented)
+		if(!DirectionalInputPrevented)
 		{
-			if(!targeting && !ability_rotating_player && !climbing)
+			if(!Targeting && !AbilityRotatingPlayer && !Climbing)
 			{
 				player.PreviousYRotation = player.GlobalRotation.Y;
-				if (player.GlobalTransform.Origin != player.GlobalPosition + direction_ with {Y = 0}) // looks at direction the player is moving
+				if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
 				{
-					player.LookAt(player.GlobalPosition + direction_ with { Y = 0 });
+					player.LookAt(player.GlobalPosition + direction with { Y = 0 });
 				}
 				player.CurrentYRotation = player.GlobalRotation.Y;
 				if(player.PreviousYRotation != player.CurrentYRotation)
@@ -316,16 +316,16 @@ public partial class InputController : Node
 		}
 	}
 
-	public void Aim(Player player, Vector3 direction_)
+	public void Aim(Player player, Vector3 direction)
 	{
-		if(!directional_input_prevented)
+		if(!DirectionalInputPrevented)
 		{
-			if(!targeting && !ability_rotating_player && !climbing)
+			if(!Targeting && !AbilityRotatingPlayer && !Climbing)
 			{
 				player.PreviousYRotation = player.GlobalRotation.Y;
-				if (player.GlobalTransform.Origin != player.GlobalPosition + direction_ with {Y = 0}) // looks at direction the player is moving
+				if (player.GlobalTransform.Origin != player.GlobalPosition + direction with {Y = 0}) // looks at direction the player is moving
 				{
-					player.LookAt(player.GlobalPosition + direction_ with { Y = 0 });
+					player.LookAt(player.GlobalPosition + direction with { Y = 0 });
 				}
 				player.CurrentYRotation = player.GlobalRotation.Y;
 				if(player.PreviousYRotation != player.CurrentYRotation)
@@ -337,19 +337,19 @@ public partial class InputController : Node
 	}
 
 
-	public void RotateXBack(Player player_)
+	public void RotateXBack(Player player)
 	{
 		
-		if(player_.GlobalRotation.X != -0)
+		if(player.GlobalRotation.X != -0)
 		{
 			// player.GlobalRotation = player.GlobalRotation.Lerp(player.GlobalRotation with {X = -0}, 0.2f); <-- figure out a way to use this with hard target 
-			player_.PreviousXRotation = 0f;
-			player_.CurrentXRotation = 0f;
+			player.PreviousXRotation = 0f;
+			player.CurrentXRotation = 0f;
 			
 		}
 		else
 		{
-			x_rotation_not_zero = false;
+			XRotationNotZero = false;
 		}
 	}
 
@@ -360,21 +360,21 @@ public partial class InputController : Node
 	{
 		player.EntityControllers.EntityStatusEffectsController.InputPrevented += HandleStatusEffectPreventingInput;
 
-		player.PlayerSystems.targeting_system.RotationForInputFinished += HandleTargetingRotationFinished;
-		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.PlayerSystems.targeting_system.Rotating += HandleTargetingSystemRotatingPlayer;
+		player.PlayerSystems.TargetingSystem.RotationForInputFinished += HandleTargetingRotationFinished;
+		player.PlayerSystems.TargetingSystem.PlayerTargeting += HandlePlayerTargeting;
+		player.PlayerSystems.TargetingSystem.Rotating += HandleTargetingSystemRotatingPlayer;
 
-		player.PlayerControllers.ability_controller.ReleaseInputControl += HandleAbilityReleaseInputControl;
-		player.PlayerControllers.ability_controller.RotatePlayer += HandleAbilityRotatingPlayer;
+		player.PlayerControllers.AbilityController.ReleaseInputControl += HandleAbilityReleaseInputControl;
+		player.PlayerControllers.AbilityController.RotatePlayer += HandleAbilityRotatingPlayer;
 
 		player.PlayerUI.CapturingInput += HandleUICapturingInput;
 	}
 
-	public void AbilitySubscribe(Ability ability_)
+	public void AbilitySubscribe(Ability ability)
 	{
-		ability_.AbilityExecuting += OnAbilityExecuting;
-		ability_.AbilityFinished += OnAbilityFinished;
-		ability_.AbilityReleaseInputControl += OnAbilityFinished;
+		ability.AbilityExecuting += OnAbilityExecuting;
+		ability.AbilityFinished += OnAbilityFinished;
+		ability.AbilityReleaseInputControl += OnAbilityFinished;
 	}
 
 
@@ -382,12 +382,12 @@ public partial class InputController : Node
 	{
 		player.EntityControllers.EntityStatusEffectsController.InputPrevented -= HandleStatusEffectPreventingInput;
 
-		player.PlayerSystems.targeting_system.RotationForInputFinished -= HandleTargetingRotationFinished;
-		player.PlayerSystems.targeting_system.PlayerTargeting += HandlePlayerTargeting;
-		player.PlayerSystems.targeting_system.Rotating -= HandleTargetingSystemRotatingPlayer;
+		player.PlayerSystems.TargetingSystem.RotationForInputFinished -= HandleTargetingRotationFinished;
+		player.PlayerSystems.TargetingSystem.PlayerTargeting += HandlePlayerTargeting;
+		player.PlayerSystems.TargetingSystem.Rotating -= HandleTargetingSystemRotatingPlayer;
 
-		player.PlayerControllers.ability_controller.ReleaseInputControl -= HandleAbilityReleaseInputControl;
-		player.PlayerControllers.ability_controller.RotatePlayer -= HandleAbilityRotatingPlayer;
+		player.PlayerControllers.AbilityController.ReleaseInputControl -= HandleAbilityReleaseInputControl;
+		player.PlayerControllers.AbilityController.RotatePlayer -= HandleAbilityRotatingPlayer;
 
 		player.PlayerUI.CapturingInput -= HandleUICapturingInput;
 	}
@@ -401,53 +401,53 @@ public partial class InputController : Node
 
 	private void HandleAbilityRotatingPlayer() // Listens for signal from AbilityController.cs
     {
-        ability_rotating_player = true;
+        AbilityRotatingPlayer = true;
     }
 
-	private void HandlePlayerTargeting(bool targeting_) // Listens for player targeting signal from TargetingSystem.cs
+	private void HandlePlayerTargeting(bool targeting) // Listens for player targeting signal from TargetingSystem.cs
     {
-        targeting = targeting_;
+        Targeting = targeting;
     }
 	 public void HandleTargetingSystemRotatingPlayer() // Listens for signal from TargetingSystem.cs
     {
-        directional_input_prevented = true;
+        DirectionalInputPrevented = true;
     }
-	 public void HandleTargetingRotationFinished(Player player_) // Listens for a signal from TargetingSystem.cs
+	 public void HandleTargetingRotationFinished(Player player) // Listens for a signal from TargetingSystem.cs
     {
-		if(player_.GlobalRotation.X != -0)
+		if(player.GlobalRotation.X != -0)
 		{
-			x_rotation_not_zero = true;
+			XRotationNotZero = true;
 		}
-		ability_rotating_player = false;
+		AbilityRotatingPlayer = false;
     }
 
-    public void HandleStatusEffectPreventingInput(bool input_prevented_) // Listens for signal from StatusEffectController.cs 
+    public void HandleStatusEffectPreventingInput(bool InputPrevented) // Listens for signal from StatusEffectController.cs 
     {
-        directional_input_prevented = input_prevented_;
+        DirectionalInputPrevented = InputPrevented;
     }
 
-	public void OnAbilityExecuting(Ability ability_) // Listens for a signal emitted from one of the players abilities
+	public void OnAbilityExecuting(Ability ability) // Listens for a signal emitted from one of the players abilities
     {
-        directional_input_prevented = true;
+        DirectionalInputPrevented = true;
     }
 
-    public void OnAbilityFinished(Ability ability_) // Listens for a signal emitted from one of the players abilities
+    public void OnAbilityFinished(Ability ability) // Listens for a signal emitted from one of the players abilities
     {
-		directional_input_prevented = false;
+		DirectionalInputPrevented = false;
     }
 	
     public void HandleAbilityReleaseInputControl() // Listens for a signal emitted from AbilityController.cs
     {
-        directional_input_prevented = false;
+        DirectionalInputPrevented = false;
     }
 
-    public void HandleUICapturingInput(bool capturing_input_) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
+    public void HandleUICapturingInput(bool capturingInput) // This method listens for a signal emitted in the UI script (NewUI.cs) when the UI is preventing movement
     {
-        directional_input_prevented = capturing_input_;
+        DirectionalInputPrevented = capturingInput;
     }
 
-	public void HandleAbilitiesPrevented(bool abilities_prevented_) // Not yet implemented
+	public void HandleAbilitiesPrevented(bool abilitiesPrevented) // Not yet implemented
 	{
-		abilities_prevented = abilities_prevented_;
+		AbilitiesPrevented = abilitiesPrevented;
 	}
 }

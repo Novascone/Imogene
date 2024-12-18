@@ -8,7 +8,7 @@ public partial class InitialState : State
    public override void _Ready()
 	{
       base._Ready();
-      name = "InitialState";
+      StateName = "InitialState";
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -18,7 +18,7 @@ public partial class InitialState : State
 
    public void CheckIfEnemy(Enemy enemy)
    {
-       if(fsm.enemy is not null)
+       if(FSM.Enemy is not null)
         {
             // if(enemy.player_seen)
             // {

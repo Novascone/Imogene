@@ -9,132 +9,132 @@ using System.Runtime.CompilerServices;
 public partial class TargetingSystem : Node
 {
 
-	[Export] public DirectionalRayCast ray_cast { get; set; }
+	[Export] public DirectionalRayCast RayCast { get; set; }
 
 	// Enemies
-	public bool enemy_near  { get; set; } = false;
-	public bool enemy_far { get; set; } = false;
-	public bool facing_enemy { get; set; } = false;
-	public Enemy nearest_enemy { get; set; } = null;
-	public Enemy enemy_pointed_toward { get; set; } = null;
-	public	Dictionary<Enemy, Vector3> mobs { get; set; } = new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
-	public Dictionary<Enemy,Vector3> sorted_mobs { get; set; } = new Dictionary<Enemy, Vector3>(); // Sorted Dictionary of mob positions
-	public List<Enemy> mobs_in_order { get; set; } = new List<Enemy> (); // List of mobs in order
-	public Dictionary<Enemy, Vector3> mobs_to_left { get; set; } = new();
-	public Dictionary<Enemy,Vector3> sorted_left { get; set; } = new Dictionary<Enemy, Vector3> ();
-	public List<Enemy> mobs_in_order_to_left { get; set; } = new List<Enemy> ();
-	public Dictionary<Enemy, Vector3> mobs_to_right { get; set; } = new Dictionary<Enemy, Vector3>();
-	public Dictionary<Enemy,Vector3> sorted_right { get; set; } = new Dictionary<Enemy, Vector3> ();
-	public List<Enemy> mobs_in_order_to_right { get; set; } = new List<Enemy> ();
-	public Enemy mob_looking_at { get; set; } = null;
-	public Vector3 mob_to_LookAt_pos { get; set; } = Vector3.Zero; // Position of the mob that the player wants to face 
+	public bool EnemyNear  { get; set; } = false;
+	public bool EnemyFar { get; set; } = false;
+	public bool FacingEnemy { get; set; } = false;
+	public Enemy NearestEnemy { get; set; } = null;
+	public Enemy EnemyPointedToward { get; set; } = null;
+	public	Dictionary<Enemy, Vector3> Mobs { get; set; } = new Dictionary<Enemy, Vector3>();  // Dictionary of mob positions
+	public Dictionary<Enemy,Vector3> SortedMobs { get; set; } = new Dictionary<Enemy, Vector3>(); // Sorted Dictionary of mob positions
+	public List<Enemy> MobsInOrder { get; set; } = new List<Enemy> (); // List of mobs in order
+	public Dictionary<Enemy, Vector3> MobsToLeft { get; set; } = new();
+	public Dictionary<Enemy,Vector3> SortedLeft { get; set; } = new Dictionary<Enemy, Vector3> ();
+	public List<Enemy> MobsInOrderToLeft { get; set; } = new List<Enemy> ();
+	public Dictionary<Enemy, Vector3> MobsToRight { get; set; } = new Dictionary<Enemy, Vector3>();
+	public Dictionary<Enemy,Vector3> SortedRight { get; set; } = new Dictionary<Enemy, Vector3> ();
+	public List<Enemy> MobsInOrderToRight { get; set; } = new List<Enemy> ();
+	public Enemy MobLookingAt { get; set; } = null;
+	public Vector3 MobToLookAtPosition { get; set; } = Vector3.Zero; // Position of the mob that the player wants to face 
 
 	// Targeting
-	public bool rotating_to_soft_target { get; set; } = false;
-	public bool target_pressed { get; set; } = false;
-	public bool target_released { get; set; } = false;
-	private bool ui_target_signal_emitted { get; set; } = false;
-	public int frames_held { get; set; } = 0;
-	public int held_threshold { get; set; } = 20;
-	public bool targeting { get; set; } = false;
-	public bool soft_target_on { get; set; } = true;
-	public bool player_rotating { get; set; } = false;
-	public bool soft_targeting { get; set; } = false;
-	public bool enemy_to_soft_target { get; set; } = false;
-	public float max_x_rotation { get; set; }  = 0.4f;
-	public float min_x_rotation { get; set; }  = -0.4f;
-	float facing_similarity { get; set; }  = 0.0f;
-	float current_target_health { get; set; }  = 0.0f;
-	Vector3 direction_to_enemy { get; set; } = Vector3.Zero;
+	public bool RotatingToSoftTarget { get; set; } = false;
+	public bool TargetPressed { get; set; } = false;
+	public bool TargetReleased { get; set; } = false;
+	private bool UITargetSignalEmitted { get; set; } = false;
+	public int FramesHeld { get; set; } = 0;
+	public int HeldThreshold { get; set; } = 20;
+	public bool Targeting { get; set; } = false;
+	public bool SoftTargetOn { get; set; } = true;
+	public bool PlayerRotating { get; set; } = false;
+	public bool SoftTargeting { get; set; } = false;
+	public bool EnemyToSoftTarget { get; set; } = false;
+	public float MaxXRotation { get; set; }  = 0.4f;
+	public float MinXRotation { get; set; }  = -0.4f;
+	float FacingSimilarity { get; set; }  = 0.0f;
+	float CurrentTargetHealth { get; set; }  = 0.0f;
+	Vector3 DirectionToEnemy { get; set; } = Vector3.Zero;
 	
-	[Signal] public delegate void ShowSoftTargetIconEventHandler(Enemy enemy_);
-	[Signal] public delegate void HideSoftTargetIconEventHandler(Enemy enemy_);
-	[Signal] public delegate void PlayerTargetingEventHandler(bool is_targeting_);
-	[Signal] public delegate void TargetHealthChangedEventHandler(Entity entity_, float health_);
-	[Signal] public delegate void EnemyTargetedEventHandler(Enemy enemy_);
+	[Signal] public delegate void ShowSoftTargetIconEventHandler(Enemy enemy);
+	[Signal] public delegate void HideSoftTargetIconEventHandler(Enemy enemy);
+	[Signal] public delegate void PlayerTargetingEventHandler(bool isTargeting);
+	[Signal] public delegate void TargetHealthChangedEventHandler(Entity entity, float health);
+	[Signal] public delegate void EnemyTargetedEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyUntargetedEventHandler();
 	[Signal] public delegate void BrightenSoftTargetHUDEventHandler();
 	[Signal] public delegate void DimSoftTargetHUDEventHandler();
 	[Signal] public delegate void RotatingEventHandler();
-	[Signal] public delegate void RotationForAbilityFinishedEventHandler(bool finished_);
-	[Signal] public delegate void RotationForInputFinishedEventHandler(Player player_);
+	[Signal] public delegate void RotationForAbilityFinishedEventHandler(bool finished);
+	[Signal] public delegate void RotationForInputFinishedEventHandler(Player player);
 
 	public override void _Ready()
 	{
-		ray_cast.RemoveSoftTargetIcon += HandleRemoveSoftTargetIcon;
+		RayCast.RemoveSoftTargetIcon += HandleRemoveSoftTargetIcon;
 	}
 
 
-	public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
-		if(@event_.IsActionPressed("RS"))
+		if(@event.IsActionPressed("RS"))
 		{
-			target_pressed = true;
-			target_released = false;
+			TargetPressed = true;
+			TargetReleased = false;
 		}
-		if(@event_.IsActionReleased("RS"))
+		if(@event.IsActionReleased("RS"))
 		{
-			target_pressed = false;
-			target_released = true;
+			TargetPressed = false;
+			TargetReleased = true;
 		}
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public void Target(Player player_)
+    public void Target(Player player)
 	{
 		
-		if(mob_looking_at != null && enemy_pointed_toward != null)
+		if(MobLookingAt != null && EnemyPointedToward != null)
 		{
-			if(mob_looking_at != enemy_pointed_toward)
+			if(MobLookingAt != EnemyPointedToward)
 			{
 				EmitSignal(nameof(RotationForAbilityFinished),false);
 			}
 		}
 
-		if(mob_looking_at != null)
+		if(MobLookingAt != null)
 		{
 		}
 	
-		ray_cast.GetInputStrength();
-		if(ray_cast.AimInputStrength <= 0)
+		RayCast.GetInputStrength();
+		if(RayCast.AimInputStrength <= 0)
 		{
-			ray_cast.SetTargetingRayCastDirection();
+			RayCast.SetTargetingRayCastDirection();
 		}
 		else
 		{
-			ray_cast.SetTargetingRayCastAim();
+			RayCast.SetTargetingRayCastAim();
 		}
 		
-		ray_cast.GetRayCastCollisions();
-		enemy_pointed_toward = ray_cast.GetEnemyWithMostCollisions();
+		RayCast.GetRayCastCollisions();
+		EnemyPointedToward = RayCast.GetEnemyWithMostCollisions();
 		
 		EnemyCheck();
 		SoftTargetToggle();
 		
-		if(!rotating_to_soft_target) // If player is not rotation toward the soft target
+		if(!RotatingToSoftTarget) // If player is not rotation toward the soft target
 		{
-			Sort(player_); // sorts the enemies by position
+			Sort(player); // sorts the enemies by position
 		}
-		else if(rotating_to_soft_target)
+		else if(RotatingToSoftTarget)
 		{
-			SoftTargetRotation(player_);
+			SoftTargetRotation(player);
 		}
-		if(enemy_pointed_toward != null)
+		if(EnemyPointedToward != null)
 		{
-			if(soft_target_on && !targeting)
+			if(SoftTargetOn && !Targeting)
 			{
-				enemy_pointed_toward.SoftTarget = true;
-				EmitSignal(nameof(ShowSoftTargetIcon), enemy_pointed_toward);
-				if(mobs_in_order.Count > 1)
+				EnemyPointedToward.SoftTarget = true;
+				EmitSignal(nameof(ShowSoftTargetIcon), EnemyPointedToward);
+				if(MobsInOrder.Count > 1)
 				{
-					foreach(Enemy _enemy in mobs_in_order)
+					foreach(Enemy enemy in MobsInOrder)
 					{
-						if(_enemy != enemy_pointed_toward)
+						if(enemy != EnemyPointedToward)
 						{
-							if(_enemy.UI.soft_target_icon.Visible)
+							if(enemy.UI.SoftTargetIcon.Visible)
 							{
-								_enemy.SoftTarget = false;
-								EmitSignal(nameof(HideSoftTargetIcon), _enemy);
+								enemy.SoftTarget = false;
+								EmitSignal(nameof(HideSoftTargetIcon), enemy);
 							}
 							
 						}
@@ -142,23 +142,23 @@ public partial class TargetingSystem : Node
 				}
 			}
 		}
-		else if(enemy_near)
+		else if(EnemyNear)
 		{
-			nearest_enemy = mobs_in_order[0];
-			nearest_enemy.SoftTarget = true;
+			NearestEnemy = MobsInOrder[0];
+			NearestEnemy.SoftTarget = true;
 			
-			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
+			EmitSignal(nameof(ShowSoftTargetIcon), NearestEnemy);
 			
-			if(mobs_in_order.Count > 1)
+			if(MobsInOrder.Count > 1)
 			{
-				foreach(Enemy _enemy in mobs_in_order)
+				foreach(Enemy enemy in MobsInOrder)
 				{
-					if(_enemy != nearest_enemy)
+					if(enemy != NearestEnemy)
 					{
-						if(_enemy.UI.soft_target_icon.Visible)
+						if(enemy.UI.SoftTargetIcon.Visible)
 						{
-							_enemy.SoftTarget = false;
-							EmitSignal(nameof(HideSoftTargetIcon), _enemy);
+							enemy.SoftTarget = false;
+							EmitSignal(nameof(HideSoftTargetIcon), enemy);
 						}
 						
 					}
@@ -166,32 +166,32 @@ public partial class TargetingSystem : Node
 			}
 		}
 
-		LookAtEnemy(player_);
+		LookAtEnemy(player);
 	
 	}
 
 	public void SoftTargetToggle()
 	{
-		if(target_pressed)
+		if(TargetPressed)
 		{
-			frames_held += 1;
+			FramesHeld += 1;
 		}
-		else if(target_released)
+		else if(TargetReleased)
 		{
-			if(frames_held > 0)
+			if(FramesHeld > 0)
 			{
 			}
-			if(frames_held >= held_threshold)
+			if(FramesHeld >= HeldThreshold)
 			{
-				soft_target_on = !soft_target_on;
-				if(!soft_target_on)
+				SoftTargetOn = !SoftTargetOn;
+				if(!SoftTargetOn)
 				{
 					EmitSignal(nameof(DimSoftTargetHUD));
-					if(nearest_enemy != null)
+					if(NearestEnemy != null)
 					{
-						if(nearest_enemy.UI.soft_target_icon.Visible)
+						if(NearestEnemy.UI.SoftTargetIcon.Visible)
 						{
-							EmitSignal(nameof(HideSoftTargetIcon), nearest_enemy);
+							EmitSignal(nameof(HideSoftTargetIcon), NearestEnemy);
 						}
 					}
 				}
@@ -201,92 +201,91 @@ public partial class TargetingSystem : Node
 				}
 			}
 			
-			frames_held = 0;
+			FramesHeld = 0;
 		}
 	}
 
-	public void EnemyEnteredNear(Enemy enemy_) // Called when enemy enters the small soft target zone
+	public void EnemyEnteredNear(Enemy enemy) // Called when enemy enters the small soft target zone
+	{
+		enemy.InSoftTargetSmall = true;
+		EnemyNear = true;
+	}
+
+	public void EnemyExitedNear(Enemy enemy) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
 	{
 		
-		enemy_.InSoftTargetSmall = true;
-		enemy_near = true;
-	}
+		enemy.InSoftTargetSmall = false;
+		enemy.SoftTarget = false;
+		EmitSignal(nameof(HideSoftTargetIcon), enemy);
+		var mobsInSmall = 0;
 
-	public void EnemyExitedNear(Enemy enemy_) // Called when enemy exits the small soft target zone, checks to see if anymore enemies remain in the small soft zone
-	{
-		
-		enemy_.InSoftTargetSmall = false;
-		enemy_.SoftTarget = false;
-		EmitSignal(nameof(HideSoftTargetIcon), enemy_);
-		var mobs_in_small = 0;
-
-		foreach(Enemy _enemy_in_mobs in mobs.Keys)
+		foreach(Enemy enemyInMobs in Mobs.Keys)
 		{
-			if(_enemy_in_mobs.InSoftTargetSmall)
+			if(enemyInMobs.InSoftTargetSmall)
 			{
-				mobs_in_small += 1;
+				mobsInSmall += 1;
 			}
 		}
-		if(mobs_in_small == 0)
+		if(mobsInSmall == 0)
 		{
-			enemy_near = false;
-			nearest_enemy = null;
+			EnemyNear = false;
+			NearestEnemy = null;
 		}
 	}
 
-	public void EnemyEnteredFar(Enemy enemy_) // Called when enemy enters the large soft zone, adds enemy to the dictionary of enemies
+	public void EnemyEnteredFar(Enemy enemy) // Called when enemy enters the large soft zone, adds enemy to the dictionary of enemies
 	{
-		enemy_.InSoftTargetLarge = true;
-		enemy_far = true;
-		Vector3 enemy_position = enemy_.GlobalTransform.Origin;
-		if(!mobs.ContainsKey(enemy_))
+		enemy.InSoftTargetLarge = true;
+		EnemyFar = true;
+		Vector3 enemyPosition = enemy.GlobalTransform.Origin;
+		if(!Mobs.ContainsKey(enemy))
 		{
-			mobs.Add(enemy_, enemy_position); // adds mob to list and how close it is to the player
+			Mobs.Add(enemy, enemyPosition); // adds mob to list and how close it is to the player
 		}
 	}
 
-	public void EnemyExitedFar(Enemy enemy_) // Called when enemy exits the large soft zone, removes enemy from dictionary, and clears it if it's the last mob
+	public void EnemyExitedFar(Enemy enemy) // Called when enemy exits the large soft zone, removes enemy from dictionary, and clears it if it's the last mob
 	{
-		enemy_.SoftTarget = false;
-		if(enemy_.IsInGroup("enemy")) 
+		enemy.SoftTarget = false;
+		if(enemy.IsInGroup("enemy")) 
 		{
-			if(enemy_ == mob_looking_at)
+			if(enemy == MobLookingAt)
 			{
-				mob_looking_at = null;
-				targeting = false;
-				ui_target_signal_emitted = false;
-				EmitSignal(nameof(PlayerTargeting), targeting);
+				MobLookingAt = null;
+				Targeting = false;
+				UITargetSignalEmitted = false;
+				EmitSignal(nameof(PlayerTargeting), Targeting);
 			}
-			if (mobs.Count == 1)
+			if (Mobs.Count == 1)
 			{
-				mobs.Remove(enemy_);
-				sorted_mobs.Clear();
-				mobs_in_order.Clear();
-				enemy_far = false;
+				Mobs.Remove(enemy);
+				SortedMobs.Clear();
+				MobsInOrder.Clear();
+				EnemyFar = false;
 			}
-			else if(mobs.Count > 0)
+			else if(Mobs.Count > 0)
 			{
-				mobs.Remove(enemy_);
+				Mobs.Remove(enemy);
 			}
-			var mobs_in_large = 0;
+			var mobsInLarge = 0;
 
-			foreach(Enemy _enemy_in_mobs in mobs.Keys)
+			foreach(Enemy enemyInMobs in Mobs.Keys)
 			{
-				if(_enemy_in_mobs.InSoftTargetSmall)
+				if(enemyInMobs.InSoftTargetSmall)
 				{
-					mobs_in_large += 1;
+					mobsInLarge += 1;
 				}
 			}
-			if(mobs_in_large == 0)
+			if(mobsInLarge == 0)
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
-				EmitSignal(nameof(HideSoftTargetIcon), enemy_);
-				enemy_near = false;
-				nearest_enemy = null;
+				EmitSignal(nameof(HideSoftTargetIcon), enemy);
+				EnemyNear = false;
+				NearestEnemy = null;
 			}
 			{
 				// player.ui.hud.enemy_health.SetSoftTargetIcon(enemy);
-				EmitSignal(nameof(HideSoftTargetIcon), enemy_);
+				EmitSignal(nameof(HideSoftTargetIcon), enemy);
 			}
 		}
 	}
@@ -294,61 +293,61 @@ public partial class TargetingSystem : Node
 	public void EnemyCheck() // Emits signal when enemy is targeted/ untargeted
 	{
 		
-		if(frames_held > 1)
+		if(FramesHeld > 1)
 		{
-			if(frames_held < held_threshold && target_released)
+			if(FramesHeld < HeldThreshold && TargetReleased)
 			{
-				if((!targeting && enemy_far) || (!targeting && enemy_pointed_toward != null)) // has player look at the closest enemy when targeting
+				if((!Targeting && EnemyFar) || (!Targeting && EnemyPointedToward != null)) // has player look at the closest enemy when targeting
 				{
-					targeting = true;
-					EmitSignal(nameof(PlayerTargeting), targeting);
+					Targeting = true;
+					EmitSignal(nameof(PlayerTargeting), Targeting);
 					
-					if(mobs_in_order.Count > 0 && enemy_pointed_toward == null && mob_looking_at == null)
+					if(MobsInOrder.Count > 0 && EnemyPointedToward == null && MobLookingAt == null)
 					{
-						mob_to_LookAt_pos = mobs_in_order[0].GlobalPosition;
-						mob_looking_at = mobs_in_order[0];
-						current_target_health = mob_looking_at.Health.CurrentValue;
+						MobToLookAtPosition = MobsInOrder[0].GlobalPosition;
+						MobLookingAt = MobsInOrder[0];
+						CurrentTargetHealth = MobLookingAt.Health.CurrentValue;
 					}
-					else if (enemy_pointed_toward != null)
+					else if (EnemyPointedToward != null)
 					{
-						mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
-						mob_looking_at = enemy_pointed_toward;
-						current_target_health = mob_looking_at.Health.CurrentValue;
+						MobToLookAtPosition = EnemyPointedToward.GlobalPosition;
+						MobLookingAt = EnemyPointedToward;
+						CurrentTargetHealth = MobLookingAt.Health.CurrentValue;
 					}
 					
 				}
-				else if(targeting)
+				else if(Targeting)
 				{
-					targeting = false;
-					ui_target_signal_emitted = false;
-					EmitSignal(nameof(PlayerTargeting), targeting);
-					mob_looking_at = null;
+					Targeting = false;
+					UITargetSignalEmitted = false;
+					EmitSignal(nameof(PlayerTargeting), Targeting);
+					MobLookingAt = null;
 					EmitSignal(nameof(EnemyUntargeted));
 				}
 				
 			}
 		}
-		if (frames_held > held_threshold && enemy_near)
+		if (FramesHeld > HeldThreshold && EnemyNear)
 		{
-			nearest_enemy.SoftTarget = false;
-			EmitSignal(nameof(ShowSoftTargetIcon), nearest_enemy);
+			NearestEnemy.SoftTarget = false;
+			EmitSignal(nameof(ShowSoftTargetIcon), NearestEnemy);
 		}
 		
-		if(enemy_near || enemy_pointed_toward != null || targeting)
+		if(EnemyNear || EnemyPointedToward != null || Targeting)
 		{
-			enemy_to_soft_target = true;
+			EnemyToSoftTarget = true;
 		}
 		else
 		{
-			enemy_to_soft_target = false;
+			EnemyToSoftTarget = false;
 		}
 		
 		
 	}
 
-	public void LookAtEnemy(Player player_) // Look at enemy and switch between enemies
+	public void LookAtEnemy(Player player) // Look at enemy and switch between enemies
 	{
-		if(targeting && mobs_in_order.Count > 0)
+		if(Targeting && MobsInOrder.Count > 0)
 		{
 			if(Input.IsActionJustPressed("RS+"))
 			{
@@ -359,43 +358,43 @@ public partial class TargetingSystem : Node
 				TargetLeft();
 			}
 			
-			HardTargetRotation(player_);
+			HardTargetRotation(player);
 		}
 
 	}
 
 	public void TargetRight() // Check if there is an enemy to the right and switch to the enemy thats is closest to the current enemy targeted, and to the right of the player
 	{
-		ui_target_signal_emitted = false;
-		if(mobs_in_order_to_right.Count >= 1)
+		UITargetSignalEmitted = false;
+		if(MobsInOrderToRight.Count >= 1)
 		{
-			mob_looking_at.Targeted = false;
+			MobLookingAt.Targeted = false;
 			EmitSignal(nameof(EnemyUntargeted));
-			if(mobs_in_order_to_right.Contains(mob_looking_at))
+			if(MobsInOrderToRight.Contains(MobLookingAt))
 			{
-				if(mob_looking_at == mobs_in_order_to_right[0])
+				if(MobLookingAt == MobsInOrderToRight[0])
 				{
-					if(mobs_in_order_to_right.Count >= mobs_in_order_to_right.IndexOf(mob_looking_at) + 2)
+					if(MobsInOrderToRight.Count >= MobsInOrderToRight.IndexOf(MobLookingAt) + 2)
 					{
-						mob_to_LookAt_pos = mobs_in_order_to_right[mobs_in_order_to_right.IndexOf(mob_looking_at) + 1].GlobalPosition;
-						mob_looking_at = mobs_in_order_to_right[mobs_in_order_to_right.IndexOf(mob_looking_at) + 1];
-						mob_looking_at.Targeted = true;
+						MobToLookAtPosition = MobsInOrderToRight[MobsInOrderToRight.IndexOf(MobLookingAt) + 1].GlobalPosition;
+						MobLookingAt = MobsInOrderToRight[MobsInOrderToRight.IndexOf(MobLookingAt) + 1];
+						MobLookingAt.Targeted = true;
 					}
 				}
 				else
 				{
-					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
-					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.Targeted = true;
+					MobToLookAtPosition = MobsInOrderToRight[0].GlobalPosition;
+					MobLookingAt = MobsInOrderToRight[0];
+					MobLookingAt.Targeted = true;
 				}
 			}
 			else
 			{
-				if(mobs_in_order_to_right.Count >= mobs_in_order_to_right.IndexOf(mob_looking_at) + 1)
+				if(MobsInOrderToRight.Count >= MobsInOrderToRight.IndexOf(MobLookingAt) + 1)
 				{
-					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
-					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.Targeted = true;
+					MobToLookAtPosition = MobsInOrderToRight[0].GlobalPosition;
+					MobLookingAt = MobsInOrderToRight[0];
+					MobLookingAt.Targeted = true;
 				}
 			}
 		}
@@ -403,36 +402,36 @@ public partial class TargetingSystem : Node
 
 	public void TargetLeft() // Check if there is an enemy to the left and switch to the enemy thats is closest to the current enemy targeted, and to the left of the player
 	{
-		ui_target_signal_emitted = false;
-		if(mobs_in_order_to_left.Count >= 1)
+		UITargetSignalEmitted = false;
+		if(MobsInOrderToLeft.Count >= 1)
 		{
-			mob_looking_at.Targeted = false;
+			MobLookingAt.Targeted = false;
 			EmitSignal(nameof(EnemyUntargeted));
-			if(mobs_in_order_to_left.Contains(mob_looking_at))
+			if(MobsInOrderToLeft.Contains(MobLookingAt))
 			{
-				if(mob_looking_at == mobs_in_order_to_left[0])
+				if(MobLookingAt == MobsInOrderToLeft[0])
 				{
-					if(mobs_in_order_to_left.Count >= mobs_in_order_to_left.IndexOf(mob_looking_at) + 2)
+					if(MobsInOrderToLeft.Count >= MobsInOrderToLeft.IndexOf(MobLookingAt) + 2)
 					{
-						mob_to_LookAt_pos = mobs_in_order_to_left[mobs_in_order_to_left.IndexOf(mob_looking_at) + 1].GlobalPosition;
-						mob_looking_at = mobs_in_order_to_left[mobs_in_order_to_left.IndexOf(mob_looking_at) + 1];
-						mob_looking_at.Targeted = true;
+						MobToLookAtPosition = MobsInOrderToLeft[MobsInOrderToLeft.IndexOf(MobLookingAt) + 1].GlobalPosition;
+						MobLookingAt = MobsInOrderToLeft[MobsInOrderToLeft.IndexOf(MobLookingAt) + 1];
+						MobLookingAt.Targeted = true;
 					}
 				}
 				else
 				{
-					mob_to_LookAt_pos = mobs_in_order_to_right[0].GlobalPosition;
-					mob_looking_at = mobs_in_order_to_right[0];
-					mob_looking_at.Targeted = true;
+					MobToLookAtPosition = MobsInOrderToLeft[0].GlobalPosition;
+					MobLookingAt = MobsInOrderToLeft[0];
+					MobLookingAt.Targeted = true;
 				}
 			}
 			else
 			{
-				if(mobs_in_order_to_left.Count >= mobs_in_order_to_left.IndexOf(mob_looking_at) + 1)
+				if(MobsInOrderToLeft.Count >= MobsInOrderToLeft.IndexOf(MobLookingAt) + 1)
 				{
-					mob_to_LookAt_pos = mobs_in_order_to_left[0].GlobalPosition;
-					mob_looking_at = mobs_in_order_to_left[0];
-					mob_looking_at.Targeted = true;
+					MobToLookAtPosition = MobsInOrderToLeft[0].GlobalPosition;
+					MobLookingAt = MobsInOrderToLeft[0];
+					MobLookingAt.Targeted = true;
 				}
 			}
 		}
@@ -444,30 +443,30 @@ public partial class TargetingSystem : Node
 		player.PreviousYRotation = player.GlobalRotation.Y;
 		if(player.IsOnFloor())
 		{
-			player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
+			player.LookAt(MobToLookAtPosition with {Y = player.GlobalPosition.Y});
 		}
-		else if (!soft_targeting)
+		else if (!SoftTargeting)
 		{
 			// player.previous_x_rotation = player.GlobalRotation.X;
-			player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
-			player.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
+			player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, MinXRotation, MaxXRotation);
+			player.LookAt(MobToLookAtPosition with {Y = MobLookingAt.GlobalPosition.Y});
 			// player.current_x_rotation = player.GlobalRotation.X;
-			player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
+			player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, MinXRotation, MaxXRotation);
 			if(player.PreviousXRotation != player.CurrentXRotation)
 			{
 				player.GlobalRotation = player.GlobalRotation with {X = Mathf.LerpAngle(player.PreviousXRotation, player.CurrentXRotation, 0.2f)}; // smoothly rotates between the previous angle and the new angle!
 			}
 		}
-		if (!ui_target_signal_emitted)
+		if (!UITargetSignalEmitted)
 		{
-			EmitSignal(nameof(EnemyTargeted), mob_looking_at);
-			ui_target_signal_emitted = true;
+			EmitSignal(nameof(EnemyTargeted), MobLookingAt);
+			UITargetSignalEmitted = true;
 		}
 
-		if(current_target_health != mob_looking_at.Health.CurrentValue)
+		if(CurrentTargetHealth != MobLookingAt.Health.CurrentValue)
 		{
-			current_target_health = mob_looking_at.Health.CurrentValue;
-			EmitSignal(nameof(TargetHealthChanged), mob_looking_at, current_target_health);
+			CurrentTargetHealth = MobLookingAt.Health.CurrentValue;
+			EmitSignal(nameof(TargetHealthChanged), MobLookingAt, CurrentTargetHealth);
 
 		}
 		
@@ -486,43 +485,43 @@ public partial class TargetingSystem : Node
 			player.CurrentXRotation = 0f;
 		}
 		EmitSignal(nameof(Rotating));
-		if(!targeting)
+		if(!Targeting)
 		{
-			if(enemy_pointed_toward != null)
+			if(EnemyPointedToward != null)
 			{
-				direction_to_enemy = player.GlobalPosition.DirectionTo(enemy_pointed_toward.GlobalPosition);
-				if(mob_looking_at != enemy_pointed_toward)
+				DirectionToEnemy = player.GlobalPosition.DirectionTo(EnemyPointedToward.GlobalPosition);
+				if(MobLookingAt != EnemyPointedToward)
 				{
-					mob_looking_at = enemy_pointed_toward;
-					mob_to_LookAt_pos = enemy_pointed_toward.GlobalPosition;
+					MobLookingAt = EnemyPointedToward;
+					MobToLookAtPosition = EnemyPointedToward.GlobalPosition;
 				}
 
 			}
-			else if(enemy_near && (ray_cast.DirectionInputStrength < 0.25f || ray_cast.AimInputStrength < 0.25f))
+			else if(EnemyNear && (RayCast.DirectionInputStrength < 0.25f || RayCast.AimInputStrength < 0.25f))
 			{
 				
-				mob_looking_at = nearest_enemy;
-				mob_to_LookAt_pos = nearest_enemy.GlobalPosition;
-				direction_to_enemy = player.GlobalPosition.DirectionTo(nearest_enemy.GlobalPosition);
+				MobLookingAt = NearestEnemy;
+				MobToLookAtPosition = NearestEnemy.GlobalPosition;
+				DirectionToEnemy = player.GlobalPosition.DirectionTo(NearestEnemy.GlobalPosition);
 			}
 		}
 		else
 		{
-			direction_to_enemy = player.GlobalPosition.DirectionTo(mob_looking_at.GlobalPosition);
+			DirectionToEnemy = player.GlobalPosition.DirectionTo(MobLookingAt.GlobalPosition);
 		}
 		
-		if(enemy_pointed_toward != null || targeting || mob_looking_at != null)
+		if(EnemyPointedToward != null || Targeting || MobLookingAt != null)
 		{
 			player.PreviousYRotation = player.GlobalRotation.Y;
 			if(player.IsOnFloor())
 			{
-				player.LookAt(mob_to_LookAt_pos with {Y = player.GlobalPosition.Y});
+				player.LookAt(MobToLookAtPosition with {Y = player.GlobalPosition.Y});
 			}
 			else
 			{
-				player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
-				player.LookAt(mob_to_LookAt_pos with {Y = mob_looking_at.GlobalPosition.Y});
-				player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, min_x_rotation, max_x_rotation);
+				player.PreviousXRotation = Mathf.Clamp(player.GlobalRotation.X, MinXRotation, MaxXRotation);
+				player.LookAt(MobToLookAtPosition with {Y = MobLookingAt.GlobalPosition.Y});
+				player.CurrentXRotation = Mathf.Clamp(player.GlobalRotation.X, MinXRotation, MaxXRotation);
 				
 				if(player.PreviousXRotation != player.CurrentXRotation)
 				{
@@ -541,28 +540,28 @@ public partial class TargetingSystem : Node
 			SetSimilarity(player);
 
 
-			if(enemy_pointed_toward == null && nearest_enemy != null && !targeting)
+			if(EnemyPointedToward == null && NearestEnemy != null && !Targeting)
 			{
-				ray_cast.LookAt(nearest_enemy.GlobalPosition with {Y = ray_cast.GlobalPosition.Y});
+				RayCast.LookAt(NearestEnemy.GlobalPosition with {Y = RayCast.GlobalPosition.Y});
 			}
 
 			
-			if(-player.GlobalBasis.Z.Dot(direction_to_enemy) > facing_similarity && CheckSimilarRotations(player))
+			if(-player.GlobalBasis.Z.Dot(DirectionToEnemy) > FacingSimilarity && CheckSimilarRotations(player))
 			{
 				EmitSignal(nameof(RotationForAbilityFinished), true);
 				EmitSignal(nameof(RotationForInputFinished), player);
-				rotating_to_soft_target = false;
-				facing_enemy = true;
+				RotatingToSoftTarget = false;
+				FacingEnemy = true;
 
-				if(!targeting)
+				if(!Targeting)
 				{
-					mob_looking_at = null;
+					MobLookingAt = null;
 				}
 				
 			}
 			else
 			{
-				facing_enemy = false;
+				FacingEnemy = false;
 				EmitSignal(nameof(RotationForAbilityFinished), false);
 			}
 		}
@@ -574,58 +573,57 @@ public partial class TargetingSystem : Node
 		
 	}
 
-	public void SetMaxXRotation(Player player_)
+	public void SetMaxXRotation(Player player)
 	{
-		if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 13)
+		if(player.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) > 13)
 		{
-			min_x_rotation = -0.5f;
-			
+			MinXRotation = -0.5f;
 		}
-		else if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 13 && player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 9)
+		else if(player.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) < 13 && player.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) > 9)
 		{
-			min_x_rotation = -0.7f;
+			MinXRotation = -0.7f;
 		}
-		else if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 9)
+		else if(player.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) < 9)
 		{
-			min_x_rotation = -1f;
+			MinXRotation = -1f;
 		}
 	}
 
 	public void SetSimilarity(Player player_)
 	{
-		if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 10)
+		if(player_.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) > 10)
 		{
 			if(player_.IsOnFloor())
 			{
-				facing_similarity = 0.98f;
+				FacingSimilarity = 0.98f;
 			}
 			else
 			{
-				facing_similarity = 0.75f;
+				FacingSimilarity = 0.75f;
 			}
 			
 		}
-		else if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 10 && player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) > 6)
+		else if(player_.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) < 10 && player_.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) > 6)
 		{
 			if(player_.IsOnFloor())
 			{
-				facing_similarity = 0.7f;
+				FacingSimilarity = 0.7f;
 			}
 			else
 			{
-				facing_similarity = 0.6f;
+				FacingSimilarity = 0.6f;
 			}
 			
 		}
-		else if(player_.GlobalPosition.DistanceTo(mob_looking_at.GlobalPosition) < 6)
+		else if(player_.GlobalPosition.DistanceTo(MobLookingAt.GlobalPosition) < 6)
 		{
 			if(player_.IsOnFloor())
 			{
-				facing_similarity = 0.6f;
+				FacingSimilarity = 0.6f;
 			}
 			else
 			{
-				facing_similarity = 0.5f;
+				FacingSimilarity = 0.5f;
 			}
 			
 		}
@@ -648,70 +646,70 @@ public partial class TargetingSystem : Node
 
 	public void Sort(Player player) // Sort mobs by distance
 	{
-		sorted_mobs = Vector3DictionarySorter.SortByDistance(mobs, player.GlobalTransform.Origin);
-		mobs_in_order = new List<Enemy>(sorted_mobs.Keys);
+		SortedMobs = Vector3DictionarySorter.SortByDistance(Mobs, player.GlobalTransform.Origin);
+		MobsInOrder = new List<Enemy>(SortedMobs.Keys);
 
-		foreach(Enemy enemy in sorted_mobs.Keys)
+		foreach(Enemy enemy in SortedMobs.Keys)
 		{
 			AssignEnemySide(player, enemy);
 		}
-		if(mob_looking_at != null) // sort the enemies to the left and right of the player if the player is looking at an enemy
+		if(MobLookingAt != null) // sort the enemies to the left and right of the player if the player is looking at an enemy
 		{
-			sorted_right = Vector3DictionarySorter.SortByDistance(mobs_to_right, mob_looking_at.GlobalTransform.Origin);
-			mobs_in_order_to_right = new List<Enemy>(sorted_right.Keys);
-			sorted_left = Vector3DictionarySorter.SortByDistance(mobs_to_left, mob_looking_at.GlobalTransform.Origin);
-			mobs_in_order_to_left = new List<Enemy>(sorted_left.Keys);
+			SortedRight = Vector3DictionarySorter.SortByDistance(MobsToRight, MobLookingAt.GlobalTransform.Origin);
+			MobsInOrderToRight = new List<Enemy>(SortedRight.Keys);
+			SortedLeft = Vector3DictionarySorter.SortByDistance(MobsToLeft, MobLookingAt.GlobalTransform.Origin);
+			MobsInOrderToLeft = new List<Enemy>(SortedLeft.Keys);
 		}
 	}
 
-	public void AssignEnemySide(Player player_, Enemy enemy_) // Determine if an enemy is to the left or right of the player
+	public void AssignEnemySide(Player player, Enemy enemy) // Determine if an enemy is to the left or right of the player
 	{
-		Vector3 enemy_position = enemy_.GlobalTransform.Origin;
-		var angle_between_player_and_enemy = Mathf.RadToDeg(-(-player_.Transform.Basis.X.AngleTo(player_.GlobalPosition.DirectionTo(enemy_.GlobalPosition))));
-		if(angle_between_player_and_enemy >= 0 && angle_between_player_and_enemy < 90)
+		Vector3 enemyPosition = enemy.GlobalTransform.Origin;
+		var angleBetweenPlayerAndEnemy = Mathf.RadToDeg(-(-player.Transform.Basis.X.AngleTo(player.GlobalPosition.DirectionTo(enemy.GlobalPosition))));
+		if(angleBetweenPlayerAndEnemy >= 0 && angleBetweenPlayerAndEnemy < 90)
 		{
 			
-			if(!mobs_to_right.ContainsKey(enemy_))
+			if(!MobsToRight.ContainsKey(enemy))
 			{
-				mobs_to_right.Add(enemy_, enemy_position);
+				MobsToRight.Add(enemy, enemyPosition);
 			}
-			if(mobs_to_left.ContainsKey(enemy_))
+			if(MobsToLeft.ContainsKey(enemy))
 			{
-				mobs_to_left.Remove(enemy_);
+				MobsToLeft.Remove(enemy);
 			}
 		}
-		else if (angle_between_player_and_enemy >= 90 && angle_between_player_and_enemy < 180)
+		else if (angleBetweenPlayerAndEnemy >= 90 && angleBetweenPlayerAndEnemy < 180)
 		{
-			if(!mobs_to_left.ContainsKey(enemy_))
+			if(!MobsToLeft.ContainsKey(enemy))
 			{
-				mobs_to_left.Add(enemy_, enemy_position);
+				MobsToLeft.Add(enemy, enemyPosition);
 			}
-			if(mobs_to_right.ContainsKey(enemy_))
+			if(MobsToRight.ContainsKey(enemy))
 			{
-				mobs_to_right.Remove(enemy_);
+				MobsToRight.Remove(enemy);
 			}
 		}
 		else
 		{
-			if(mobs_to_right.ContainsKey(enemy_))                                                                                                                                                                                                                                    
+			if(MobsToRight.ContainsKey(enemy))                                                                                                                                                                                                                                    
 			{
-				mobs_to_right.Remove(enemy_);
+				MobsToRight.Remove(enemy);
 			}
-			if(mobs_to_left.ContainsKey(enemy_))
+			if(MobsToLeft.ContainsKey(enemy))
 			{
-				mobs_to_left.Remove(enemy_);
+				MobsToLeft.Remove(enemy);
 			}
 		}
 	}
 
     internal void HandleRotatePlayer()
     {
-        rotating_to_soft_target = true;
+        RotatingToSoftTarget = true;
     }
 
-	private void HandleRemoveSoftTargetIcon(Enemy enemy_)
+	private void HandleRemoveSoftTargetIcon(Enemy enemy)
     {
-        EmitSignal(nameof(HideSoftTargetIcon), enemy_);
+        EmitSignal(nameof(HideSoftTargetIcon), enemy);
     }
 
     

@@ -58,7 +58,7 @@ public partial class ResourceSystem : Node
 	{
 		if(entity_ is Player _player)
 		{
-			_player.PlayerControllers.ability_controller.ResourceEffect += HandleResourceEffect;
+			_player.PlayerControllers.AbilityController.ResourceEffect += HandleResourceEffect;
 		}
 		
 	}
@@ -67,7 +67,7 @@ public partial class ResourceSystem : Node
 	{
 		if(entity_ is Player _player)
 		{
-			_player.PlayerControllers.ability_controller.ResourceEffect -= HandleResourceEffect;
+			_player.PlayerControllers.AbilityController.ResourceEffect -= HandleResourceEffect;
 		}
 		
 	}

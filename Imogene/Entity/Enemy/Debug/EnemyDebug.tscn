@@ -4,13 +4,13 @@
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_c4inu"]
 
-[node name="Debug" type="Node3D" node_paths=PackedStringArray("collision_lines", "ray_lines", "direction_lines", "direction_moving_line")]
+[node name="Debug" type="Node3D" node_paths=PackedStringArray("CollisionLines", "RayLines", "DirectionLines", "MovingLine")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2852, 0)
 script = ExtResource("1_iah5g")
-collision_lines = NodePath("CollisionLines")
-ray_lines = NodePath("RayLines")
-direction_lines = NodePath("DirectionLines")
-direction_moving_line = NodePath("DirectionMovingLine")
+CollisionLines = NodePath("CollisionLines")
+RayLines = NodePath("RayLines")
+DirectionLines = NodePath("DirectionLines")
+MovingLine = NodePath("DirectionMovingLine")
 
 [node name="CollisionLines" type="MeshInstance3D" parent="."]
 mesh = SubResource("ImmediateMesh_c4inu")

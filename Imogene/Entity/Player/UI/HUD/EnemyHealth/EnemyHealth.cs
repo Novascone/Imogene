@@ -16,9 +16,9 @@ public partial class EnemyHealth : Control
 		health_bar.Value = enemy.Health.MaxValue;
 		name.Text = enemy.Identifier;
 	
-		targeted_enemy.UI.hard_target_icon.Show();
-		targeted_enemy.UI.status_bar.Show();
-		targeted_enemy.UI.soft_target_icon.Show();
+		targeted_enemy.UI.HardTargetIcon.Show();
+		targeted_enemy.UI.StatusBar.Show();
+		targeted_enemy.UI.SoftTargetIcon.Show();
 		
 		Show();
     }
@@ -27,9 +27,9 @@ public partial class EnemyHealth : Control
         Hide();
 		if(targeted_enemy != null)
 		{
-			targeted_enemy.UI.hard_target_icon.Hide();
-			targeted_enemy.UI.status_bar.Hide();
-			targeted_enemy.UI.soft_target_icon.Hide();
+			targeted_enemy.UI.HardTargetIcon.Hide();
+			targeted_enemy.UI.StatusBar.Hide();
+			targeted_enemy.UI.SoftTargetIcon.Hide();
 			targeted_enemy.Targeted = false;
 			targeted_enemy = null;
 		}
@@ -38,13 +38,13 @@ public partial class EnemyHealth : Control
 
 	public static void ShowSoftTargetIcon(Enemy enemy_)
 	{
-		enemy_.UI.soft_target_icon.Show();
+		enemy_.UI.SoftTargetIcon.Show();
 		
 	}
 
 	public static void HideSoftTargetIcon(Enemy enemy_)
 	{
-		enemy_.UI.soft_target_icon.Hide();
+		enemy_.UI.SoftTargetIcon.Hide();
 	}
 
 
@@ -68,7 +68,7 @@ public partial class EnemyHealth : Control
 
 	public void Subscribe(Player player_)
 	{
-		player_.PlayerSystems.targeting_system.TargetHealthChanged += HandleEnemyHealthChangedUI;
+		player_.PlayerSystems.TargetingSystem.TargetHealthChanged += HandleEnemyHealthChangedUI;
 	}
 	
 	public void UnSubscribe(Player player)

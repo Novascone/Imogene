@@ -84,7 +84,7 @@ public partial class DamageSystem : Node
 
 			if(entity is Enemy enemy)
 			{
-				enemy.UI.health_bar.Value = enemy.Health.CurrentValue;
+				enemy.UI.HealthBar.Value = enemy.Health.CurrentValue;
 				damage_number_spawn_point = enemy.Head;
 				SpawnDamageNumber(amount, isCritical);
 			}
@@ -121,7 +121,7 @@ public partial class DamageSystem : Node
 			}
 			if(entity is Enemy enemy)
 			{
-				enemy.UI.health_bar.Value = enemy.Health.CurrentValue;
+				enemy.UI.HealthBar.Value = enemy.Health.CurrentValue;
 			}
 		}
     }

@@ -5,38 +5,38 @@ using System.Linq;
 
 public partial class StateMachine : Node3D
 {
-	public State current_state;
-	public Enemy enemy;
+	public State CurrentState;
+	public Enemy Enemy;
 	// public ContextSteering this_entity_context;
 	public List<string> history = new List<string>();
 	public Dictionary<string, State> states = new Dictionary<string, State>();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach(State state in GetChildren())
+		foreach(State state in GetChildren().Cast<State>())
 		{
-			state.fsm = this;
+			state.FSM = this;
 			// GD.Print("state " + state.name + " set");
-			states[state.name] = state;
+			states[state.StateName] = state;
 
-			if(current_state != null)
+			if(CurrentState != null)
 			{
 				RemoveChild(state);
 			}
 			else
 			{
-				current_state = state;
+				CurrentState = state;
 			}
 		}
-		current_state.Enter(enemy);
+		CurrentState.Enter(Enemy);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public void ChangeTo(string state_name)
+	public void ChangeTo(string stateName)
 	{
 		// GD.Print("State machine changing");
-		history.Add(current_state.name);
-		SetState(state_name);
+		history.Add(CurrentState.StateName);
+		SetState(stateName);
 	}
 
 	public void Back()
@@ -48,12 +48,12 @@ public partial class StateMachine : Node3D
 		}
 	}
 
-	public void SetState(string state_name)
+	public void SetState(string stateName)
 	{
-		RemoveChild(current_state);
-		current_state = states[state_name];
-		AddChild(current_state);
-		current_state.Enter(enemy);
+		RemoveChild(CurrentState);
+		CurrentState = states[stateName];
+		AddChild(CurrentState);
+		CurrentState.Enter(Enemy);
 	}
 	
 

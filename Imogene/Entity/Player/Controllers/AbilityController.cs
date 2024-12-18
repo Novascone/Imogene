@@ -3,32 +3,32 @@ using System;
 
 public partial class AbilityController : Node
 {
-	public bool ability_use_prevented { get; set; } = false;
-    public bool done_rotating { get; set; } = true;
+	public bool AbilityUsePrevented { get; set; } = false;
+    public bool DoneRotating { get; set; } = true;
 
-    [Signal] public delegate void ResourceEffectEventHandler(Player player_, float resource_change_);
+    [Signal] public delegate void ResourceEffectEventHandler(Player player, float resourceChange);
     [Signal] public delegate void RotatePlayerEventHandler();
     [Signal] public delegate void ReleaseInputControlEventHandler();
     
-	public void QueueAbility(Player player_, Ability ability_)
+	public void QueueAbility(Player player, Ability ability)
     {
-        if(!player_.PlayerUI.preventing_movement && !player_.PlayerUI.capturing_input && !ability_use_prevented)
+        if(!player.PlayerUI.preventing_movement && !player.PlayerUI.capturing_input && !AbilityUsePrevented)
         {
         
-            if(ability_.State == Ability.States.NotQueued)
+            if(ability.State == Ability.States.NotQueued)
             {   
-                if(CanAfford(player_, ability_) && CheckCross(player_, ability_))
+                if(CanAfford(player, ability) && CheckCross(player, ability))
                 {
-                    ability_.State = Ability.States.Queued;
+                    ability.State = Ability.States.Queued;
                 }
             }
             
         }
     }
 
-    public static void AbilityFrameCheck(Player player_)
+    public static void AbilityFrameCheck(Player player)
     {
-        player_.AbilityInUse?.FrameCheck(player_);
+        player.AbilityInUse?.FrameCheck(player);
     }
 
 	public void CheckCanUseAbility(Player player, Ability ability)
@@ -39,7 +39,7 @@ public partial class AbilityController : Node
             {
                 if(ability.RotateOnSoft)
                 {
-                    if(player.PlayerSystems.targeting_system.enemy_to_soft_target)
+                    if(player.PlayerSystems.TargetingSystem.EnemyToSoftTarget)
                     {
                         SoftRotateAbility(player, ability);
                     }
@@ -61,11 +61,11 @@ public partial class AbilityController : Node
             {
                 if(ability.RotateOnHeld)
                 {
-					if(player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
+					if(player.PlayerSystems.TargetingSystem.EnemyPointedToward != null)
                     {
                         SoftRotateAbility(player, ability);
                     }
-                    else if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0 && player.PlayerSystems.targeting_system.enemy_pointed_toward == null)
+                    else if(MathF.Round(player.CurrentYRotation - player.PreviousYRotation, 1) == 0 && player.PlayerSystems.TargetingSystem.EnemyPointedToward == null)
                     {
                         EmitSignal(nameof(ReleaseInputControl));
                         ability.Execute(player);
@@ -189,10 +189,10 @@ public partial class AbilityController : Node
             
             EmitSignal(nameof(RotatePlayer));
 
-            done_rotating = false;
+            DoneRotating = false;
         }
 
-        if(done_rotating && player.PlayerSystems.targeting_system.enemy_pointed_toward != null)
+        if(DoneRotating && player.PlayerSystems.TargetingSystem.EnemyPointedToward != null)
         {
             if(ability.ButtonHeld)
             {
@@ -204,7 +204,7 @@ public partial class AbilityController : Node
             if(ability.ResourceChange != 0){EmitSignal(nameof(ResourceEffect), player, ability.ResourceChange);}
             
         }
-        else if(!done_rotating)
+        else if(!DoneRotating)
         {
             EmitSignal(nameof(RotatePlayer));
         }
@@ -244,34 +244,34 @@ public partial class AbilityController : Node
 
     internal void OnNearInteractable(bool nearInteractable)
     {
-        ability_use_prevented = nearInteractable;
+        AbilityUsePrevented = nearInteractable;
     }
 
-    internal void HandleAbilitiesPrevented(bool abilities_prevented_)
+    internal void HandleAbilitiesPrevented(bool abilitiesPrevented)
     {
-        ability_use_prevented = abilities_prevented_;
+        AbilityUsePrevented = abilitiesPrevented;
     }
 
 
-    internal void HandleRotationFinished(bool finished_)
+    internal void HandleRotationFinished(bool finished)
     {
-        done_rotating = finished_;
+        DoneRotating = finished;
     }
 
     public void Subscribe(Player player)
     {
         player.EntityControllers.EntityStatusEffectsController.AbilitiesPrevented += HandleAbilitiesPrevented;
 
-        player.PlayerSystems.interact_system.NearInteractable += OnNearInteractable;
-        player.PlayerSystems.targeting_system.RotationForAbilityFinished += HandleRotationFinished;
+        player.PlayerSystems.InteractSystem.NearInteractable += OnNearInteractable;
+        player.PlayerSystems.TargetingSystem.RotationForAbilityFinished += HandleRotationFinished;
     }
 
      public void Unsubscribe(Player player)
     {
         player.EntityControllers.EntityStatusEffectsController.AbilitiesPrevented -= HandleAbilitiesPrevented;
 
-        player.PlayerSystems.interact_system.NearInteractable -= OnNearInteractable;
-        player.PlayerSystems.targeting_system.RotationForAbilityFinished -= HandleRotationFinished;
+        player.PlayerSystems.InteractSystem.NearInteractable -= OnNearInteractable;
+        player.PlayerSystems.TargetingSystem.RotationForAbilityFinished -= HandleRotationFinished;
     }
 
    

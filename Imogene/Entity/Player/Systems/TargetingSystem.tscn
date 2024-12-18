@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Entity/Player/Systems/Targeting/TargetingSystem.cs" id="1_jan8m"]
 [ext_resource type="PackedScene" uid="uid://cf2y7myghl30p" path="res://Entity/Player/Systems/Targeting/DirectionalRayCast.tscn" id="2_pokn3"]
 
-[node name="TargetingSystem" type="Node3D" node_paths=PackedStringArray("ray_cast")]
+[node name="TargetingSystem" type="Node3D" node_paths=PackedStringArray("RayCast")]
 script = ExtResource("1_jan8m")
-ray_cast = NodePath("DirectionalRayCast")
+RayCast = NodePath("DirectionalRayCast")
 
 [node name="DirectionalRayCast" parent="." instance=ExtResource("2_pokn3")]
 visible = false

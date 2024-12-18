@@ -8,15 +8,15 @@
 [ext_resource type="Script" path="res://Entity/Player/Controllers/EquipmentController.cs" id="6_4o8dn"]
 [ext_resource type="Script" path="res://Entity/Player/Controllers/AnimationController.cs" id="8_v723f"]
 
-[node name="Controllers" type="Node3D" node_paths=PackedStringArray("input_controller", "movement_controller", "ability_assigner", "ability_controller", "equipment_controller", "near_wall", "on_wall")]
+[node name="Controllers" type="Node3D" node_paths=PackedStringArray("InputController", "MovementController", "AbilityAssigner", "AbilityController", "EquipmentController", "NearWall", "OnWall")]
 script = ExtResource("1_tbsx8")
-input_controller = NodePath("InputController")
-movement_controller = NodePath("MovementController")
-ability_assigner = NodePath("AbilityAssigner")
-ability_controller = NodePath("AbilityController")
-equipment_controller = NodePath("EquipmentController")
-near_wall = NodePath("WallCheck/NearWall")
-on_wall = NodePath("WallCheck/OnWall")
+InputController = NodePath("InputController")
+MovementController = NodePath("MovementController")
+AbilityAssigner = NodePath("AbilityAssigner")
+AbilityController = NodePath("AbilityController")
+EquipmentController = NodePath("EquipmentController")
+NearWall = NodePath("WallCheck/NearWall")
+OnWall = NodePath("WallCheck/OnWall")
 
 [node name="InputController" parent="." instance=ExtResource("2_qrjtm")]
 

@@ -5,49 +5,49 @@ using System.Linq;
 // Load abilities for the player, and sends the abilities the player has to the UI 
 public partial class AbilityAssigner : Node
 {
-	public static void AssignAbility(Player player_, Ability ability_, string bind_, Ability.Cross cross_, Ability.Tier tier_)
+	public static void AssignAbility(Player player, Ability ability, string bind, Ability.Cross cross, Ability.Tier tier)
 	{
-		ability_.AssignedButton = bind_;
-		ability_.AbilityCross = cross_;
-		ability_.AbilityTier = tier_;
-		player_.PlayerUI.AssignAbility(ability_.AbilityCross, ability_.AbilityTier, ability_.AssignedButton, ability_.Name, ability_.Icon);
+		ability.AssignedButton = bind;
+		ability.AbilityCross = cross;
+		ability.AbilityTier = tier;
+		player.PlayerUI.AssignAbility(ability.AbilityCross, ability.AbilityTier, ability.AssignedButton, ability.Name, ability.Icon);
 	}
 
-	public static Node LoadAbility(Player player_, string name_, string class_type_, string ability_type_) // Loads an ability from a string
+	public static Node LoadAbility(Player player, string name, string classType, string abilityType) // Loads an ability from a string
     {
-        var scene = GD.Load<PackedScene>("res://Entity/Player/Abilities/" + class_type_ + "/" + ability_type_ + "/" + name_ + "/" + name_ + ".tscn");
+        var scene = GD.Load<PackedScene>("res://Entity/Player/Abilities/" + classType + "/" + abilityType + "/" + name + "/" + name + ".tscn");
         Ability ability = (Ability)scene.Instantiate();
 		
-		player_.Abilities.AddChild(ability);
-		ability.AbilityPressed += player_.OnAbilityPressed;
-		ability.AbilityQueue += player_.OnAbilityQueue;
-		ability.AbilityCheck += player_.OnAbilityCheck;
-		ability.AbilityReleased += player_.OnAbilityReleased;
-		player_.PlayerControllers.input_controller.AbilitySubscribe(ability);
-		player_.PlayerControllers.movement_controller.AbilitySubscribe(ability);
+		player.Abilities.AddChild(ability);
+		ability.AbilityPressed += player.OnAbilityPressed;
+		ability.AbilityQueue += player.OnAbilityQueue;
+		ability.AbilityCheck += player.OnAbilityCheck;
+		ability.AbilityReleased += player.OnAbilityReleased;
+		player.PlayerControllers.InputController.AbilitySubscribe(ability);
+		player.PlayerControllers.MovementController.AbilitySubscribe(ability);
 		
-		ability.AbilityFinished += player_.OnAbilityFinished;
+		ability.AbilityFinished += player.OnAbilityFinished;
         return ability;
     }
 	
-	public static void ChangeAbilityAssignment(Player player_, Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_)
+	public static void ChangeAbilityAssignment(Player player, Ability.Cross cross, Ability.Tier tier, string bind, string abilityName)
 	{
-		foreach(Ability ability in player_.Abilities.GetChildren().Cast<Ability>())
+		foreach(Ability ability in player.Abilities.GetChildren().Cast<Ability>())
 		{
-			if(ability.Name == ability_name_)
+			if(ability.Name == abilityName)
 			{
-				ability.AbilityCross = cross_;
-				ability.AbilityTier = tier_;
-				ability.AssignedButton = bind_;
+				ability.AbilityCross = cross;
+				ability.AbilityTier = tier;
+				ability.AssignedButton = bind;
 			}
 		}
 	}
 
-	public static void ClearAbility(Player player_, string ability_name_)
+	public static void ClearAbility(Player player, string abilityName)
 	{
-		foreach(Ability ability in player_.Abilities.GetChildren().Cast<Ability>())
+		foreach(Ability ability in player.Abilities.GetChildren().Cast<Ability>())
 		{
-			if(ability.Name == ability_name_)
+			if(ability.Name == abilityName)
 			{
 				ability.AbilityCross = Ability.Cross.None;
 				ability.AbilityTier = Ability.Tier.None;

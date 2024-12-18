@@ -5,7 +5,7 @@ using System;
 
 public partial class XPSystem : Node
 {
-	public int xp_to_level { get; set; } = 0;
+	public int XPToLevel { get; set; } = 0;
 
 	public void GainXP(Entity entity, float xpGained)
 	{
@@ -20,10 +20,10 @@ public partial class XPSystem : Node
 	{
 		if(entity is Player player)
 		{
-			if( entity.XP.Amount >= xp_to_level)
+			if( entity.XP.Amount >= XPToLevel)
 			{
-				entity.XP.Amount -= xp_to_level;
-				xp_to_level *= 2;
+				entity.XP.Amount -= XPToLevel;
+				XPToLevel *= 2;
 			}
 		}
 	}

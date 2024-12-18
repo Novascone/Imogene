@@ -10,7 +10,7 @@ public partial class AvoidanceInterestsState : State
 	{
         base._Ready();
 		
-        name = "AvoidanceInterestsState";
+        StateName = "AvoidanceInterestsState";
 	}
   
     public override void _PhysicsProcess(double delta)
@@ -57,7 +57,7 @@ public partial class AvoidanceInterestsState : State
 
     public override  void Enter(Enemy enemy)
     {
-        enemy = fsm.enemy;
+        enemy = FSM.Enemy;
 
 		if (enemy is AvoidanceEnemy this_enemy)
 		{
@@ -77,7 +77,7 @@ public partial class AvoidanceInterestsState : State
 		GD.Print("Setting interest away from object");
         // entity.navigation_agent.TargetPosition = entity.box_position;
         // target_position = entity.navigation_agent.GetNextPathPosition();
-		target_position_2 = avoidance_enemy.chaser.GlobalPosition;
+		TargetPosition2 = avoidance_enemy.chaser.GlobalPosition;
 
         for(int i = 0; i < enemy.NumRays; i++)
             {
@@ -85,7 +85,7 @@ public partial class AvoidanceInterestsState : State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // The interest in moving away from the object
-                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(-1 * enemy.GlobalPosition.DirectionTo(target_position_2).Normalized()); 
+                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(-1 * enemy.GlobalPosition.DirectionTo(TargetPosition2).Normalized()); 
 				d *= 1.2f; // Making the entity more interested in running away from the chaser than moving toward the center
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 interest_away_from_object[i] = MathF.Max(0, d);
@@ -96,7 +96,7 @@ public partial class AvoidanceInterestsState : State
     {
 		GD.Print("Setting interest to center");
         // entity.navigation_agent.TargetPosition = 
-        target_position_1 = avoidance_enemy.center_position;
+        TargetPosition1 = avoidance_enemy.center_position;
 
         for(int i = 0; i < enemy.NumRays; i++)
             {
@@ -104,7 +104,7 @@ public partial class AvoidanceInterestsState : State
 
                 // Get the dot product of ray directions (rotated with the player hence the .Rotated(GlobalTransform.Basis.Y.Normalized(), Rotation.Y)) and the direction the entity wants to move
                 // (in this case along the vector between Transform.Basis.X and the vector from this entity to the object in contact with)
-                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.GlobalPosition.DirectionTo(target_position_1).Normalized()); 
+                var d = enemy.RayDirections[i].Rotated(enemy.GlobalTransform.Basis.Y.Normalized(), enemy.Rotation.Y).Dot(enemy.GlobalPosition.DirectionTo(TargetPosition1).Normalized()); 
                 // If d is less that zero, replace it with 0 in the interest array, this is to ignore weight in the opposite direction the entity wants to go
                 interest_to_center[i] = MathF.Max(0, d);
                 // GD.Print(interest[i]);
@@ -138,8 +138,8 @@ public partial class AvoidanceInterestsState : State
 			// *************** Comment/ Uncomment for test behavior ***************
 			if(result.Count > 0)
 			{
-				collider = (Node3D)result["collider"];
-				enemy.SetCollisionLines(enemy.Debug.collision_lines, result);
+				Collider = (Node3D)result["collider"];
+				enemy.SetCollisionLines(enemy.Debug.CollisionLines, result);
 				
 				enemy.Danger[i] = 5.0f;	
 			}
@@ -175,14 +175,14 @@ public partial class AvoidanceInterestsState : State
 			// GD.Print("Interest[i] " + interest[i]);
 
 			// Uncomment to show lines the represent the weight of the directions the entity can move in
-			enemy.SetDirectionLines(enemy.Debug.direction_lines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
+			enemy.SetDirectionLines(enemy.Debug.DirectionLines, enemy.RayDirections[i] * enemy.Interest[i] * enemy.DirectionLinesMag);
 		}
 
 		// Normalize the chosen direction
 		enemy.ChosenDir = enemy.ChosenDir.Normalized();
 
 		// Uncomment to show a line representing the direction the entity is moving in
-		enemy.SetDirectionMovingLine(enemy.Debug.direction_moving_line, enemy.ChosenDir * enemy.DirectionLineMag);
+		enemy.SetDirectionMovingLine(enemy.Debug.MovingLine, enemy.ChosenDir * enemy.DirectionLineMag);
 
 		// GD.Print("chosen dir " + chosen_dir);
 	}

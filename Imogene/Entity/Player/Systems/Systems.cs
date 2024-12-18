@@ -3,9 +3,9 @@ using System;
 
 public partial class Systems : Node
 {	
-	[Export] public VisionSystem vision_system;
-	[Export] public InteractSystem interact_system;
-	[Export] public TargetingSystem targeting_system;
-	[Export] public XPSystem xp_system;
+	[Export] public VisionSystem VisionSystem;
+	[Export] public InteractSystem InteractSystem;
+	[Export] public TargetingSystem TargetingSystem;
+	[Export] public XPSystem XPSystem;
 	
 }

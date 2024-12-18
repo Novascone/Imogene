@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://dbsyi56otiq3r"]
 
-[ext_resource type="Script" path="res://Entity/Enemy/Enemies/EnemyUI.cs" id="1_1io7f"]
-[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://Images/UI/Textures/posture.png" id="1_d0sav"]
-[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="2_x6o4y"]
-[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://Images/Icons/soft_target.png" id="3_1tmdh"]
+[ext_resource type="Script" path="res://Entity/Enemy/Enemies/EnemyUI.cs" id="1_kviw3"]
+[ext_resource type="Texture2D" uid="uid://dnaellpukgsh6" path="res://Images/UI/Textures/posture.png" id="2_gu6ny"]
+[ext_resource type="Texture2D" uid="uid://dxguhoiuxbx0e" path="res://icon.svg" id="3_2exlg"]
+[ext_resource type="Texture2D" uid="uid://xwsagxw47iaf" path="res://Images/Icons/soft_target.png" id="4_1aybq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shoep"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -20,13 +20,13 @@ viewport_path = NodePath("HardTargetIconSubViewport")
 [sub_resource type="ViewportTexture" id="ViewportTexture_0e77r"]
 viewport_path = NodePath("SoftTargetSubViewport")
 
-[node name="UI" type="Node3D" node_paths=PackedStringArray("status_bar", "hard_target_icon", "soft_target_icon", "health_bar", "posture_bar")]
-script = ExtResource("1_1io7f")
-status_bar = NodePath("StatusBar")
-hard_target_icon = NodePath("HardTargetIcon")
-soft_target_icon = NodePath("SoftTargetIcon")
-health_bar = NodePath("HealthBarSubViewport/VBoxContainer/HealthBar")
-posture_bar = NodePath("HealthBarSubViewport/VBoxContainer/PostureBar")
+[node name="UI" type="Node3D" node_paths=PackedStringArray("StatusBar", "HardTargetIcon", "SoftTargetIcon", "HealthBar", "PostureBar")]
+script = ExtResource("1_kviw3")
+StatusBar = NodePath("StatusBar")
+HardTargetIcon = NodePath("HardTargetIcon")
+SoftTargetIcon = NodePath("SoftTargetIcon")
+HealthBar = NodePath("HealthBarSubViewport/VBoxContainer/HealthBar")
+PostureBar = NodePath("HealthBarSubViewport/VBoxContainer/PostureBar")
 
 [node name="HealthBarSubViewport" type="SubViewport" parent="."]
 transparent_bg = true
@@ -66,7 +66,7 @@ size_flags_vertical = 0
 value = 100.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_progress = ExtResource("1_d0sav")
+texture_progress = ExtResource("2_gu6ny")
 
 [node name="StatusBar" type="Sprite3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.28259, 0)
@@ -91,7 +91,7 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_x6o4y")
+texture = ExtResource("3_2exlg")
 expand_mode = 1
 
 [node name="HardTargetIcon" type="Sprite3D" parent="."]
@@ -118,7 +118,7 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_1tmdh")
+texture = ExtResource("4_1aybq")
 expand_mode = 1
 
 [node name="SoftTargetIcon" type="Sprite3D" parent="."]

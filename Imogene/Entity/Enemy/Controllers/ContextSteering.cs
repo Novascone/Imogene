@@ -176,7 +176,7 @@ public partial class ContextSteering : CharacterBody3D
 
     private void HandleFinishedCircling()
     {
-        ContextStateMachine.current_state.Exit("State2");
+        ContextStateMachine.CurrentState.Exit("State2");
     }
 
 
@@ -241,11 +241,11 @@ public partial class ContextSteering : CharacterBody3D
 
 		if (Input.IsActionJustPressed("A"))
 		{
-			ContextStateMachine.current_state.Exit("State4");
+			ContextStateMachine.CurrentState.Exit("State4");
 		}
 		if (Input.IsActionJustPressed("B"))
 		{
-			ContextStateMachine.current_state.Exit("State5");
+			ContextStateMachine.CurrentState.Exit("State5");
 		}
 		
 		// We check for each move input and update the direction accordingly.
@@ -446,12 +446,12 @@ public partial class ContextSteering : CharacterBody3D
 		// *************** comment/uncomment for test behavior ***************
 
 		// // ******** make state machine controlled **********
-		if(ContextStateMachine.current_state.name == "State3")
+		if(ContextStateMachine.CurrentState.StateName == "State3")
 		{
 			
 			SetObjectInterest();
 		}
-		else if (ContextStateMachine.current_state.name == "State2")
+		else if (ContextStateMachine.CurrentState.StateName == "State2")
 		{
 			
 			SetDefaultInterest();

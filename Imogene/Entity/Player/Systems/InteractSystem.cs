@@ -8,177 +8,178 @@ using System.Runtime.InteropServices;
 [GlobalClass]
 public partial class InteractSystem : Node3D
 {
-	[Export] public Array<ItemData> item_types {get; set;} = new Array<ItemData>();
-	public bool in_interact_area { get; set; } = false;
-	private bool can_interact { get; set; } = true;
-	private bool inventory_full  { get; set; } = false;
-	Area3D area_interacting  { get; set; } = null;
-	InteractableItem pickup_item { get; set; } = null;
-	InteractableItem next_nearest { get; set; } = null;
-	public List<InteractableItem> near_by_items { get; set; } = new List<InteractableItem>();
-	public List<InteractableItem> items_in_pickup { get; set; } = new List<InteractableItem>();
+	[Export] public Array<ItemData> ItemTypes {get; set;} = new Array<ItemData>();
+	public bool InInteractArea { get; set; } = false;
+	private bool CanInteract { get; set; } = true;
+	private bool InventoryFull  { get; set; } = false;
+	Area3D AreaInteracting  { get; set; } = null;
+	InteractableItem PickUpItem { get; set; } = null;
+	InteractableItem NextNearest { get; set; } = null;
+	public List<InteractableItem> NearByItems { get; set; } = new List<InteractableItem>();
+	public List<InteractableItem> ItemsInPickup { get; set; } = new List<InteractableItem>();
 
-	[Signal] public delegate void NearInteractableEventHandler(bool near_interactable_);
-	[Signal] public delegate void ItemPickedUpEventHandler(ItemData item_);
-	[Signal] public delegate void InputPickupEventHandler(InteractableItem item_);
-	[Signal] public delegate void SwitchToNextNearestItemEventHandler(InteractableItem item_, bool last_item_);
+	[Signal] public delegate void NearInteractableEventHandler(bool nearInteractable);
+	[Signal] public delegate void ItemPickedUpEventHandler(ItemData item);
+	[Signal] public delegate void InputPickupEventHandler(InteractableItem item);
+	[Signal] public delegate void SwitchToNextNearestItemEventHandler(InteractableItem item, bool lastItem);
 	
 
-    public void PickupItem(Node3D item_, Player player_)
+    public void PickupItem(Node3D item, Player player)
 	{
-
-		InteractableItem _nearest_item = near_by_items.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
-		if(_nearest_item != null)
+		GD.Print("Picking up item");
+		InteractableItem nearestItem = NearByItems.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
+		if(nearestItem != null)
 		{
-			if(player_.PlayerUI.inventory.main.slots_filled < player_.PlayerUI.inventory.main.item_slots_count)
+			if(player.PlayerUI.inventory.main.slots_filled < player.PlayerUI.inventory.main.item_slots_count)
 			{
 				
-				item_.QueueFree();
-				items_in_pickup.Remove((InteractableItem)item_);
-				near_by_items.Remove((InteractableItem)item_);
-				if(items_in_pickup.Count > 0)
+				item.QueueFree();
+				ItemsInPickup.Remove((InteractableItem)item);
+				NearByItems.Remove((InteractableItem)item);
+				if(ItemsInPickup.Count > 0)
 				{
-					next_nearest = items_in_pickup.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
+					NextNearest = ItemsInPickup.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
 
-					pickup_item = next_nearest;
-					EmitSignal(nameof(SwitchToNextNearestItem), pickup_item, false);
+					PickUpItem = NextNearest;
+					EmitSignal(nameof(SwitchToNextNearestItem), PickUpItem, false);
 				}
 				else
 				{
-					next_nearest = null;
-					EmitSignal(nameof(SwitchToNextNearestItem), pickup_item, true);
+					NextNearest = null;
+					EmitSignal(nameof(SwitchToNextNearestItem), PickUpItem, true);
 				}
-				ItemData _template = item_types.FirstOrDefault(X => X.item_model_prefab.ResourcePath == _nearest_item.SceneFilePath);
-				if(_template != null)
+				ItemData template = ItemTypes.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearestItem.SceneFilePath);
+				if(template != null)
 				{
-					EmitSignal(nameof(ItemPickedUp), _template);
+					EmitSignal(nameof(ItemPickedUp), template);
+					GD.Print("Emit picking up item signal");
 				}
 			}
 		}
 	}
 
 
-	private void OnInteractAreaEntered(Area3D area_, Player player_)
+	private void OnInteractAreaEntered(Area3D area, Player player)
 	{
 		
-		if(area_ is InteractableObject)
+		if(area is InteractableObject)
 		{
-			in_interact_area = true;
-			area_interacting = area_;
+			InInteractArea = true;
+			AreaInteracting = area;
 			EmitSignal(nameof(NearInteractable),true);
 		}
 	}
 
-	private void OnInteractAreaExited(Area3D area_, Player player_)
+	private void OnInteractAreaExited(Area3D area, Player player)
 	{
 
-		if(area_ is InteractableObject)
+		if(area is InteractableObject)
 		{
-			in_interact_area = false;
-			area_interacting = null;
-			EmitSignal(nameof(NearInteractable),false);
+			InInteractArea = false;
+			AreaInteracting = null;
+			EmitSignal(nameof(NearInteractable), false);
 		}
 		
 	}
 
-	public void OnObjectEnteredArea(Node3D body_, Player player_)
+	public void OnObjectEnteredArea(Node3D body, Player player)
 	{
 		
-		if(body_ is InteractableItem _item)
+		if(body is InteractableItem item)
 		{
-			_item.GainFocus(inventory_full);
-			near_by_items.Add(_item);
+			item.GainFocus(InventoryFull);
+			NearByItems.Add(item);
 		}
 	}
 
-	public void OnObjectExitedArea(Node3D body_, Player player_)
+	public void OnObjectExitedArea(Node3D body, Player player)
 	{
 		
-		if(body_ is InteractableItem _item && near_by_items.Contains(_item))
+		if(body is InteractableItem item && NearByItems.Contains(item))
 		{
-			_item.LoseFocus();
-			near_by_items.Remove(_item);
+			item.LoseFocus();
+			NearByItems.Remove(item);
 		}
 	}
 
 
-    private void OnObjectEnteredPickup(Node3D body_, Player player_)
+    private void OnObjectEnteredPickup(Node3D body, Player player)
     {
-		if(body_ is InteractableItem _item)
+		if(body is InteractableItem item)
 		{
-			items_in_pickup.Add(_item);
-			if(!_item.interact_to_pick_up)
+			ItemsInPickup.Add(item);
+			if(!item.interact_to_pick_up)
 			{
-				PickupItem(_item, player_);
+				PickupItem(item, player);
 			}
 			else
 			{
-				pickup_item = _item;
+				PickUpItem = item;
 			}
 		}
     }
 
-	private void OnObjectExitedPickup(Node3D body_, Player player_)
+	private void OnObjectExitedPickup(Node3D body, Player player)
     {
-		if(body_ is InteractableItem item)
+		if(body is InteractableItem item)
 		{
-			items_in_pickup.Remove(item);
+			ItemsInPickup.Remove(item);
 			if(item.interact_to_pick_up)
 			{
-				pickup_item = next_nearest;
+				PickUpItem = NextNearest;
 			}
 		}
 
     }
 
-    internal void HandleUICapturingInput(bool capturing_input_)
+    internal void HandleUICapturingInput(bool capturingInput)
     {
-        can_interact = !capturing_input_;
+        CanInteract = !capturingInput;
     }
 
-    private void OnAcceptHUDInput(Node3D interacting_object_)
+    private void OnAcceptHUDInput(Node3D interactingObject)
     {
-        if(interacting_object_ is InteractableItem && can_interact && items_in_pickup.Count > 0)
+        if(interactingObject is InteractableItem && CanInteract && ItemsInPickup.Count > 0)
 		{
-			EmitSignal(nameof(InputPickup), pickup_item);
+			EmitSignal(nameof(InputPickup), PickUpItem);
 		}
     }
 
 
-    private void HandleInventoryCapacity(bool full_)
+    private void HandleInventoryCapacity(bool full)
     {
 		
-        inventory_full = full_;
-		foreach(InteractableItem _item in near_by_items)
+        InventoryFull = full;
+		foreach(InteractableItem item in NearByItems)
 		{
-			_item.GainFocus(full_);
+			item.GainFocus(full);
 		}
 	
     }
 
-	public void Subscribe(Player player_)
+	public void Subscribe(Player player)
 	{
-		player_.PlayerAreas.interact.AreaEntered += (area_) => OnInteractAreaEntered(area_, player_);
-		player_.PlayerAreas.interact.AreaExited += (area_) => OnInteractAreaExited(area_, player_);
-		player_.PlayerAreas.interact.BodyEntered += (body_) => OnObjectEnteredArea(body_, player_);
-		player_.PlayerAreas.interact.BodyExited += (body_) => OnObjectExitedArea(body_, player_);
-		player_.PlayerAreas.pickup_items.BodyEntered += (body_) => OnObjectEnteredPickup(body_, player_);
-		player_.PlayerAreas.pickup_items.BodyExited += (body_) => OnObjectExitedPickup(body_, player_);
-		player_.PlayerUI.CapturingInput += HandleUICapturingInput;
-		player_.PlayerUI.hud.AcceptHUDInput += OnAcceptHUDInput;
-		player_.PlayerUI.inventory.main.InventoryCapacity += HandleInventoryCapacity;
+		player.PlayerAreas.Interact.AreaEntered += (area) => OnInteractAreaEntered(area, player);
+		player.PlayerAreas.Interact.AreaExited += (area) => OnInteractAreaExited(area, player);
+		player.PlayerAreas.Interact.BodyEntered += (body) => OnObjectEnteredArea(body, player);
+		player.PlayerAreas.Interact.BodyExited += (body) => OnObjectExitedArea(body, player);
+		player.PlayerAreas.PickUpItems.BodyEntered += (body) => OnObjectEnteredPickup(body, player);
+		player.PlayerAreas.PickUpItems.BodyExited += (body) => OnObjectExitedPickup(body, player);
+		player.PlayerUI.CapturingInput += HandleUICapturingInput;
+		player.PlayerUI.hud.AcceptHUDInput += OnAcceptHUDInput;
+		player.PlayerUI.inventory.main.InventoryCapacity += HandleInventoryCapacity;
 	
 	}
 
-	public void Unsubscribe(Player player_)
+	public void Unsubscribe(Player player)
 	{
-		player_.PlayerAreas.interact.AreaEntered -= (area_) => OnInteractAreaEntered(area_, player_);
-		player_.PlayerAreas.interact.AreaExited -= (area_) => OnInteractAreaExited(area_, player_);
-		player_.PlayerAreas.interact.BodyEntered -= (body_) => OnObjectEnteredArea(body_, player_);
-		player_.PlayerAreas.interact.BodyExited -= (body_) => OnObjectExitedArea(body_, player_);
-		player_.PlayerAreas.pickup_items.BodyEntered -= (body_) => OnObjectEnteredPickup(body_, player_);
-		player_.PlayerAreas.pickup_items.BodyExited -= (body_) => OnObjectExitedPickup(body_, player_);
-		player_.PlayerUI.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
-		player_.PlayerUI.hud.AcceptHUDInput -= OnAcceptHUDInput;
+		player.PlayerAreas.Interact.AreaEntered -= (area) => OnInteractAreaEntered(area, player);
+		player.PlayerAreas.Interact.AreaExited -= (area) => OnInteractAreaExited(area, player);
+		player.PlayerAreas.Interact.BodyEntered -= (body) => OnObjectEnteredArea(body, player);
+		player.PlayerAreas.Interact.BodyExited -= (body) => OnObjectExitedArea(body, player);
+		player.PlayerAreas.PickUpItems.BodyEntered -= (body) => OnObjectEnteredPickup(body, player);
+		player.PlayerAreas.PickUpItems.BodyExited -= (body) => OnObjectExitedPickup(body, player);
+		player.PlayerUI.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
+		player.PlayerUI.hud.AcceptHUDInput -= OnAcceptHUDInput;
 	}
 }

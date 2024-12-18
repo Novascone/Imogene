@@ -5,7 +5,7 @@ using System;
 public partial class EnemyAbilityController : Node
 {
 
-	public bool can_use_abilities;
+	public bool CanUseAbilities;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -30,12 +30,12 @@ public partial class EnemyAbilityController : Node
 	{
 		if(StatusEffectPreventingAbilities(enemy))
 		{
-			can_use_abilities = false;
+			CanUseAbilities = false;
 			// GD.Print("enemy can not use abilities because of a status effect");
 		}
 		else
 		{
-			can_use_abilities = true;
+			CanUseAbilities = true;
 		}
 	}
 }

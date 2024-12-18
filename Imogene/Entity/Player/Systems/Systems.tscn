@@ -6,12 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://c8rwto7s7kjhv" path="res://Entity/Player/Systems/VisionSystem.tscn" id="4_8g0mp"]
 [ext_resource type="PackedScene" uid="uid://r40vsjeix5rc" path="res://Entity/Player/Systems/TargetingSystem.tscn" id="5_u4vbc"]
 
-[node name="Systems" type="Node3D" node_paths=PackedStringArray("vision_system", "interact_system", "targeting_system", "xp_system")]
+[node name="Systems" type="Node3D" node_paths=PackedStringArray("VisionSystem", "InteractSystem", "TargetingSystem", "XPSystem")]
 script = ExtResource("1_0yxmj")
-vision_system = NodePath("VisionSystem")
-interact_system = NodePath("InteractSystem")
-targeting_system = NodePath("TargetingSystem")
-xp_system = NodePath("XPSystem")
+VisionSystem = NodePath("VisionSystem")
+InteractSystem = NodePath("InteractSystem")
+TargetingSystem = NodePath("TargetingSystem")
+XPSystem = NodePath("XPSystem")
 
 [node name="InteractSystem" parent="." instance=ExtResource("2_iij12")]
 
