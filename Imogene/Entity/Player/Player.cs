@@ -86,17 +86,17 @@ public partial class Player : Entity
 		PlayerCameraRig.TopLevel = true;
 
 		// Entity system signals
-		EntitySystems.resource_system.ResourceChange += PlayerUI.hud.main.HandleResourceChange;
+		EntitySystems.resource_system.ResourceChange += PlayerUI.HUD.Main.HandleResourceChange;
 
 		// Entity controller signals
-		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.inventory.depth_sheet.HandleUpdateStats;
-		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.inventory.main.character_outline.HandleUpdateStats;
+		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.Inventory.depth_sheet.HandleUpdateStats;
+		EntityControllers.EntityStatsController.UpdateStats += PlayerUI.Inventory.main.character_outline.HandleUpdateStats;
 
 
         // System signals
         VisionSystem.Subscribe(this);
 		PlayerSystems.InteractSystem.Subscribe(this);
-		PlayerSystems.InteractSystem.ItemPickedUp += PlayerUI.inventory.main.OnItemPickedUp;
+		PlayerSystems.InteractSystem.ItemPickedUp += PlayerUI.Inventory.main.OnItemPickedUp;
 		PlayerSystems.InteractSystem.InputPickup += HandleInputPickUp;
 	
 		// Controller signals
@@ -105,12 +105,12 @@ public partial class Player : Entity
 		PlayerControllers.InputController.CrossChanged += HandleCrossChanged;
 
 		// UI signals
-		PlayerUI.hud.Subscribe(this);
-		PlayerUI.inventory.main.DroppingItem += HandleDroppingItem;
+		PlayerUI.HUD.Subscribe(this);
+		PlayerUI.Inventory.main.DroppingItem += HandleDroppingItem;
 		
 		PlayerUI.InventoryToggle += HandleInventoryToggle;
-		PlayerUI.abilities.categories.ClearAbilityBind += HandleClearAbilityBind;
-		PlayerUI.abilities.categories.AbilityReassigned += HandleAbilityReassigned;
+		PlayerUI.Abilities.Categories.ClearAbilityBind += HandleClearAbilityBind;
+		PlayerUI.Abilities.Categories.AbilityReassigned += HandleAbilityReassigned;
 		PlayerControllers.InputController.Subscribe(this);
 		PlayerControllers.MovementController.Subscribe(this);
 
@@ -153,7 +153,7 @@ public partial class Player : Entity
 
     private void HandleDroppingItem()
     {
-        PlayerUI.inventory.main.GetDropPosition(this);
+        PlayerUI.Inventory.main.GetDropPosition(this);
     }
 
     private void HandleClearAbilityBind(string abilityName)
@@ -168,7 +168,7 @@ public partial class Player : Entity
 
 	private void HandleCrossChanged(string cross)
     {
-		if(!PlayerUI.preventing_movement)
+		if(!PlayerUI.UIPreventingMovement)
 		{
 			PlayerUI.SwitchCrosses(cross);
 			if(cross == "Left")

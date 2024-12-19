@@ -51,7 +51,7 @@ public partial class Projectile : RangedAbility
 		// Set projectile damage type
 		projectile.LinearVelocity = cast_direction * projectile_velocity; // Set projectile velocity
 		Slow slow = new();
-		projectile.effects.Add(slow);
+		projectile.Effects.Add(slow);
 		RangedHitbox = projectile;
 		DealDamage(player, DamageModifier);
 	}

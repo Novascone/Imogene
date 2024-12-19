@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dke068oqxby8u" path="res://Entity/Player/UI/HUD/InteractBar.tscn" id="4_7yqre"]
 [ext_resource type="PackedScene" uid="uid://dhoyscwvfrkr" path="res://Entity/Player/UI/HUD/EnemyHealth/EnemyHealth.tscn" id="7_j1xyr"]
 
-[node name="NewHUD" type="Control" node_paths=PackedStringArray("enemy_health", "main", "interact_bar", "top_right")]
+[node name="HUD" type="Control" node_paths=PackedStringArray("EnemyHealth", "Main", "InteractBar", "TopRight")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,15 +16,15 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_tocw1")
-enemy_health = NodePath("NewEnemyHealth")
-main = NodePath("VBoxContainer/Main")
-interact_bar = NodePath("VBoxContainer/InteractBar")
-top_right = NodePath("TopRightHUD")
+EnemyHealth = NodePath("EnemyHealth")
+Main = NodePath("VBoxContainer/Main")
+InteractBar = NodePath("VBoxContainer/InteractBar")
+TopRight = NodePath("TopRightHUD")
 
 [node name="TopRightHUD" parent="." instance=ExtResource("3_vvsen")]
 layout_mode = 1
 
-[node name="NewEnemyHealth" parent="." instance=ExtResource("7_j1xyr")]
+[node name="EnemyHealth" parent="." instance=ExtResource("7_j1xyr")]
 visible = false
 layout_mode = 2
 anchors_preset = 0

@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y3424"]
 size = Vector2(144, 29)
 
-[node name="NewAbilites" type="PanelContainer" node_paths=PackedStringArray("binds", "categories")]
+[node name="NewAbilites" type="PanelContainer" node_paths=PackedStringArray("Binds", "Categories", "AssignedPassives")]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -17,8 +17,9 @@ offset_right = 510.0
 offset_bottom = 810.0
 grow_horizontal = 2
 script = ExtResource("1_k050e")
-binds = NodePath("VBoxContainer/AbilityBinds/Binds")
-categories = NodePath("VBoxContainer/Categories")
+Binds = NodePath("VBoxContainer/AbilityBinds/Binds")
+Categories = NodePath("VBoxContainer/Categories")
+AssignedPassives = NodePath("VBoxContainer/Passives")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -117,4 +118,4 @@ position = Vector2(75, 16.5)
 shape = SubResource("RectangleShape2D_y3424")
 
 [connection signal="button_down" from="VBoxContainer/AbilityBinds/Close/Close" to="VBoxContainer/AbilityBinds/Binds" method="_on_close_button_down"]
-[connection signal="button_down" from="VBoxContainer/Close/Close" to="." method="_on_close_button_down"]
+[connection signal="button_down" from="VBoxContainer/Close/Close" to="." method="OnCloseButtonDown"]

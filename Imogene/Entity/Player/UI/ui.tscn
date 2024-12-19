@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://da4nvcq8l4mqw" path="res://Entity/Player/UI/Inventory/inventory.tscn" id="3_6wxf8"]
 [ext_resource type="PackedScene" uid="uid://ey6wymo6kewe" path="res://Entity/Player/UI/Abilities/Abilities.tscn" id="4_77sew"]
 [ext_resource type="PackedScene" uid="uid://cgp7cnnm5irxa" path="res://Entity/Player/UI/Journal/Journal.tscn" id="4_cu10v"]
-[ext_resource type="PackedScene" uid="uid://juocam0bru5p" path="res://Entity/Player/UI/cursor_sprite.tscn" id="6_ejrbb"]
+[ext_resource type="PackedScene" uid="uid://juocam0bru5p" path="res://Entity/Player/UI/CursorSprite.tscn" id="6_ejrbb"]
 
-[node name="NewUI" type="Control" node_paths=PackedStringArray("hud", "inventory", "abilities", "journal", "cursor")]
+[node name="NewUI" type="Control" node_paths=PackedStringArray("HUD", "Inventory", "Abilities", "Journal", "Cursor")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,11 +16,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_1860t")
-hud = NodePath("NewHUD")
-inventory = NodePath("NewInventory")
-abilities = NodePath("NewAbilities")
-journal = NodePath("NewJournal")
-cursor = NodePath("Cursor/CursorSprite")
+HUD = NodePath("NewHUD")
+Inventory = NodePath("NewInventory")
+Abilities = NodePath("NewAbilities")
+Journal = NodePath("NewJournal")
+Cursor = NodePath("Cursor/CursorSprite")
 
 [node name="NewHUD" parent="." instance=ExtResource("2_xds4q")]
 layout_mode = 2

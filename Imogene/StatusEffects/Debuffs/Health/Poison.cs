@@ -10,8 +10,8 @@ public partial class Poison : DOT
 		category = EffectCategory.Health;
 		duration = 15;
 		max_stacks = 1;
-		hitbox.damage = 8;
-		hitbox.type = MeleeHitbox.DamageType.Other;
-		hitbox.other_damage_type = MeleeHitbox.OtherDamageType.Poison;
+		hitbox.Damage = 8;
+		hitbox.Type = MeleeHitbox.DamageType.Other;
+		hitbox.OtherDamage = MeleeHitbox.OtherDamageType.Poison;
 	}
 }

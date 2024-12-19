@@ -27,7 +27,7 @@ public partial class InputController : Node
 	private bool _dPadRightReleased = false;
 	public bool DPadRightReleased
 	{
-		get => DPadRightReleased;
+		get => _dPadRightReleased;
 		set
 		{
 			_dPadRightReleased = value;
@@ -138,17 +138,19 @@ public partial class InputController : Node
 	[Signal] public delegate void UsableChangedEventHandler();
 	[Signal] public delegate void UsableUsedEventHandler();
 
-	public override void _UnhandledInput(InputEvent @event_) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
+	public override void _UnhandledInput(InputEvent @event) // Makes ability input unhandled so that the  UI can capture the input before it reaches the ability, this disables abilities from being used when interacting with the UI
 	{
         
-		if(@event_.IsActionPressed("D-PadLeft")) {DPadLeftPressed = true; DPadLeftReleased = false;}
-		if(@event_.IsActionReleased("D-PadLeft")) {DPadLeftPressed = false; DPadLeftReleased = true;}
-		if(@event_.IsActionPressed("D-PadRight")){DPadRightPressed = true; DPadRightReleased = false;}
-		if(@event_.IsActionReleased("D-PadRight")){DPadRightPressed = false; DPadRightReleased = true;}
-		if(@event_.IsActionPressed("D-PadUp")){DPadUpPressed = true; DPadUpReleased = false;}
-		if(@event_.IsActionReleased("D-PadUp")){DPadUpPressed = false; DPadUpReleased = true;}
-		if(@event_.IsActionPressed("D-PadDown")){DPadDownPressed = true; DPadDownReleased = false;}
-		if(@event_.IsActionReleased("D-PadDown")){DPadDownPressed = false;DPadDownReleased = true;}
+		if(@event.IsActionPressed("D-PadLeft")) {DPadLeftPressed = true; DPadLeftReleased = false;}
+		if(@event.IsActionReleased("D-PadLeft")) {DPadLeftPressed = false; DPadLeftReleased = true;}
+		if(@event.IsActionPressed("D-PadRight")){DPadRightPressed = true; DPadRightReleased = false;}
+		if(@event.IsActionReleased("D-PadRight")){DPadRightPressed = false; DPadRightReleased = true;}
+		if(@event.IsActionPressed("D-PadUp")){DPadUpPressed = true; DPadUpReleased = false;}
+		if(@event.IsActionReleased("D-PadUp")){DPadUpPressed = false; DPadUpReleased = true;}
+		if(@event.IsActionPressed("D-PadDown")){DPadDownPressed = true; DPadDownReleased = false;}
+		if(@event.IsActionReleased("D-PadDown")){DPadDownPressed = false;DPadDownReleased = true;}
+
+		
 		// if(@event.IsActionPressed("one"))
 		// {
 		// 	player.damage_system.TakeDamage("Physical", 10, false);

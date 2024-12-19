@@ -6,171 +6,171 @@ public partial class HUD : Control
 
 {
 
-	[Export] public EnemyHealth enemy_health  { get; set; }
-	[Export] public MainHUD main { get; set; }
-	[Export] public InteractBar interact_bar { get; set; }
-	[Export] public TopRightHUD top_right { get; set; }
-	public JoyButton interact_button { get; set; } = JoyButton.A;
-	public bool in_interact_area  { get; set; } = false;
-	private Node3D object_interacting_with  { get; set; } = null;
+	[Export] public EnemyHealth EnemyHealth  { get; set; }
+	[Export] public MainHUD Main { get; set; }
+	[Export] public InteractBar InteractBar { get; set; }
+	[Export] public TopRightHUD TopRight { get; set; }
+	public JoyButton InteractButton { get; set; } = JoyButton.A;
+	public bool InInteractArea  { get; set; } = false;
+	private Node3D ObjectInteractingWith  { get; set; } = null;
 
-	[Signal] public delegate void HUDPreventingInputEventHandler(bool preventing_input_);
-	[Signal] public delegate void AcceptHUDInputEventHandler(Node3D interacting_object_);
+	[Signal] public delegate void HUDPreventingInputEventHandler(bool preventingInput);
+	[Signal] public delegate void AcceptHUDInputEventHandler(Node3D interactingObject);
 
-	public override void _Input(InputEvent @event_) {
-		if(@event_ is InputEventJoypadButton eventJoypadButton)
+	public override void _Input(InputEvent @event) {
+		if(@event is InputEventJoypadButton eventJoypadButton)
 		{
-			if(in_interact_area && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == interact_button)
+			if(InInteractArea && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == InteractButton)
 			{
-				if(object_interacting_with is InteractableObject)
+				if(ObjectInteractingWith is InteractableObject)
 				{
-					interact_bar.interact_inventory.Visible = !interact_bar.interact_inventory.Visible;
+					InteractBar.InteractInventory.Visible = !InteractBar.InteractInventory.Visible;
 				}
-				EmitSignal(nameof(AcceptHUDInput), object_interacting_with);
+				EmitSignal(nameof(AcceptHUDInput), ObjectInteractingWith);
 				AcceptEvent();
 				
 			}
 		}
 	}
 	
-	public void Subscribe(Player player_)
+	public void Subscribe(Player player)
 	{
-		player_.PlayerAreas.Interact.AreaEntered += OnInteractAreaEntered;
-		player_.PlayerAreas.Interact.AreaExited += OnInteractAreaExited;
-		player_.PlayerAreas.PickUpItems.BodyEntered += OnPickUpAreaEntered;
-		player_.PlayerAreas.PickUpItems.BodyExited += (body) => OnPickUpAreaExited(body, player_);
-		player_.PlayerSystems.InteractSystem.SwitchToNextNearestItem += HandleSwitchToNextItem;
-		player_.PlayerSystems.TargetingSystem.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
-		player_.PlayerSystems.TargetingSystem.HideSoftTargetIcon += HandleHideSoftTargetIcon;
-		player_.PlayerSystems.TargetingSystem.EnemyTargeted += HandleEnemyTargeted;
-		player_.PlayerSystems.TargetingSystem.EnemyUntargeted += HandleEnemyUntargeted;
-		player_.PlayerSystems.TargetingSystem.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
-		player_.PlayerSystems.TargetingSystem.DimSoftTargetHUD += HandleDimSoftTargetHUD;
-		enemy_health.Subscribe(player_);
+		player.PlayerAreas.Interact.AreaEntered += OnInteractAreaEntered;
+		player.PlayerAreas.Interact.AreaExited += OnInteractAreaExited;
+		player.PlayerAreas.PickUpItems.BodyEntered += OnPickUpAreaEntered;
+		player.PlayerAreas.PickUpItems.BodyExited += (body) => OnPickUpAreaExited(body, player);
+		player.PlayerSystems.InteractSystem.SwitchToNextNearestItem += HandleSwitchToNextItem;
+		player.PlayerSystems.TargetingSystem.ShowSoftTargetIcon += HandleShowSoftTargetIcon;
+		player.PlayerSystems.TargetingSystem.HideSoftTargetIcon += HandleHideSoftTargetIcon;
+		player.PlayerSystems.TargetingSystem.EnemyTargeted += HandleEnemyTargeted;
+		player.PlayerSystems.TargetingSystem.EnemyUntargeted += HandleEnemyUntargeted;
+		player.PlayerSystems.TargetingSystem.BrightenSoftTargetHUD += HandleBrightenSoftTargetHUD;
+		player.PlayerSystems.TargetingSystem.DimSoftTargetHUD += HandleDimSoftTargetHUD;
+		EnemyHealth.Subscribe(player);
 	}
 
-    private void HandleSwitchToNextItem(InteractableItem item_, bool last_item_)
+    private void HandleSwitchToNextItem(InteractableItem item, bool lastItem)
     {
 		
-        object_interacting_with = item_;
-		if(!last_item_)
+        ObjectInteractingWith = item;
+		if(!lastItem)
 		{
-			if(item_.interact_to_pick_up)
+			if(item.interact_to_pick_up)
 			{
-				in_interact_area = true;
-				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
-				interact_bar.interact_object.Text = item_.Name;
-				interact_bar.Show();
+				InInteractArea = true;
+				InteractBar.Button.Text = InteractButton.ToString() + ":" + " Pick Up";
+				InteractBar.InteractObject.Text = item.Name;
+				InteractBar.Show();
 				EmitSignal(nameof(HUDPreventingInput),true);
 			}
 		}
 		else
 		{
-			in_interact_area = false;
-			interact_bar.button.Text = interact_button.ToString() + ";";
-			interact_bar.interact_inventory.Hide();
-			interact_bar.Hide(); 
+			InInteractArea = false;
+			InteractBar.Button.Text = InteractButton.ToString() + ";";
+			InteractBar.InteractInventory.Hide();
+			InteractBar.Hide(); 
 			EmitSignal(nameof(HUDPreventingInput),false);
 		}
     }
 
-    private void OnPickUpAreaExited(Node3D body_, Player player_)
+    private void OnPickUpAreaExited(Node3D body, Player player)
     {
 		
-		if(body_ is InteractableItem _item)
+		if(body is InteractableItem item)
 		{
 
-			if(_item == object_interacting_with || _item == null)
+			if(item == ObjectInteractingWith || item == null)
 			{
-				in_interact_area = false;
-				interact_bar.button.Text = interact_button.ToString() + ";";
-				interact_bar.interact_inventory.Hide();
-				interact_bar.Hide(); 
+				InInteractArea = false;
+				InteractBar.Button.Text = InteractButton.ToString() + ";";
+				InteractBar.InteractInventory.Hide();
+				InteractBar.Hide(); 
 				EmitSignal(nameof(HUDPreventingInput),false);
-				object_interacting_with = null;
+				ObjectInteractingWith = null;
 			}
 			
 		}
     }
 
-    private void OnPickUpAreaEntered(Node3D body_)
+    private void OnPickUpAreaEntered(Node3D body)
     {
-		if(body_ is InteractableItem _item)
+		if(body is InteractableItem item)
 		{
 			
-			if(_item.interact_to_pick_up)
+			if(item.interact_to_pick_up)
 			{
-				object_interacting_with = _item;
-				in_interact_area = true;
-				interact_bar.button.Text = interact_button.ToString() + ":" + " Pick Up";
-				interact_bar.interact_object.Text = body_.Name;
-				interact_bar.Show();
+				ObjectInteractingWith = item;
+				InInteractArea = true;
+				InteractBar.Button.Text = InteractButton.ToString() + ":" + " Pick Up";
+				InteractBar.InteractObject.Text = body.Name;
+				InteractBar.Show();
 				EmitSignal(nameof(HUDPreventingInput),true);
 			}
 		}
     }
 
-    private void OnInteractAreaExited(Area3D area_)
+    private void OnInteractAreaExited(Area3D area)
     {
-		if(area_ is InteractableObject _interactable_object)
+		if(area is InteractableObject interactableObject)
 		{	
 			
-			in_interact_area = false;
-			interact_bar.button.Text = interact_button.ToString() + ";";
-			interact_bar.interact_inventory.Hide();
-			interact_bar.Hide(); 
+			InInteractArea = false;
+			InteractBar.Button.Text = InteractButton.ToString() + ";";
+			InteractBar.InteractInventory.Hide();
+			InteractBar.Hide(); 
 			EmitSignal(nameof(HUDPreventingInput),false);
-			if(_interactable_object == object_interacting_with)
+			if(interactableObject == ObjectInteractingWith)
 			{
-				object_interacting_with = null;
+				ObjectInteractingWith = null;
 			}
 			
 		}
 		
     }
 
-    private void OnInteractAreaEntered(Area3D area_)
+    private void OnInteractAreaEntered(Area3D area)
     {
-		if(area_ is InteractableObject _interactable_object)
+		if(area is InteractableObject interactableObject)
 		{
-			in_interact_area = true;
-			interact_bar.button.Text = interact_button.ToString() + ":" + " Interact";
-			interact_bar.interact_object.Text = _interactable_object.Name;
-			interact_bar.Show();
+			InInteractArea = true;
+			InteractBar.Button.Text = InteractButton.ToString() + ":" + " Interact";
+			InteractBar.InteractObject.Text = interactableObject.Name;
+			InteractBar.Show();
 			EmitSignal(nameof(HUDPreventingInput),true);
-			object_interacting_with = _interactable_object;
+			ObjectInteractingWith = interactableObject;
 		}
 		
     }
 
     private void HandleDimSoftTargetHUD()
     {
-        top_right.DimSoftTargetIndicator();
+        TopRight.DimSoftTargetIndicator();
     }
 
     private void HandleBrightenSoftTargetHUD()
     {
-        top_right.BrightenSoftTargetIndicator();
+        TopRight.BrightenSoftTargetIndicator();
     }
 
     private void HandleEnemyUntargeted()
     {
-        enemy_health.EnemyUntargeted();
+        EnemyHealth.EnemyUntargeted();
     }
 
-    private void HandleEnemyTargeted(Enemy enemy_)
+    private void HandleEnemyTargeted(Enemy enemy)
     {
 		GD.Print("Enemy targeted");
-        enemy_health.EnemyTargeted(enemy_);
+        EnemyHealth.EnemyTargeted(enemy);
     }
 
-    private void HandleHideSoftTargetIcon(Enemy enemy_)
+    private void HandleHideSoftTargetIcon(Enemy enemy)
     {
-        EnemyHealth.HideSoftTargetIcon(enemy_);
+        EnemyHealth.HideSoftTargetIcon(enemy);
     }
 
-    private void HandleShowSoftTargetIcon(Enemy enemy_)
+    private void HandleShowSoftTargetIcon(Enemy enemy)
     {
-        EnemyHealth.ShowSoftTargetIcon(enemy_);
+        EnemyHealth.ShowSoftTargetIcon(enemy);
     }
 }

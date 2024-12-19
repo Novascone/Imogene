@@ -3,10 +3,9 @@
 [ext_resource type="Script" path="res://Entity/Systems/Damage/DamageSystem.cs" id="1_y4f82"]
 [ext_resource type="PackedScene" uid="uid://cu3kwlcsswp1o" path="res://MISCUI/DamageNumber3D.tscn" id="2_gwfjj"]
 
-[node name="DamageSystem" type="Node" node_paths=PackedStringArray("health_regen_timer")]
+[node name="DamageSystem" type="Node"]
 script = ExtResource("1_y4f82")
-health_regen_timer = NodePath("HealthRegenTimer")
-damage_number_3d_template = ExtResource("2_gwfjj")
+DamageNumber3DTemplate = ExtResource("2_gwfjj")
 
 [node name="DoTTimer" type="Timer" parent="."]
 

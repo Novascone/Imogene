@@ -5,15 +5,15 @@ using System.Collections.Generic;
 public partial class RangedHitbox : RigidBody3D
 {
 	// [Export] public string damage_type { get; set; }
-	[Export] public float damage { get; set; } = 0.0f;
-	[Export] public float posture_damage { get; set; } = 0.0f;
-	public float damage_amp { get; set;} = 1.0f;
-	public List<StatusEffect> effects { get; set; } = new List<StatusEffect>();
-	public bool is_critical { get; set; } = false;
-	public DamageType type { get; set; } = DamageType.None;
-	public PhysicalDamageType physical_damage_type { get; set; } = PhysicalDamageType.None;
-	public SpellDamageType spell_damage_type { get; set; } = SpellDamageType.None;
-	public OtherDamageType other_damage_type { get; set; } = OtherDamageType.None;
+	[Export] public float Damage { get; set; } = 0.0f;
+	[Export] public float PostureDamage { get; set; } = 0.0f;
+	public float DamageAmp { get; set;} = 1.0f;
+	public List<StatusEffect> Effects { get; set; } = new List<StatusEffect>();
+	public bool IsCritical { get; set; } = false;
+	public DamageType Type { get; set; } = DamageType.None;
+	public PhysicalDamageType PhysicalDamage { get; set; } = PhysicalDamageType.None;
+	public SpellDamageType SpellDamage { get; set; } = SpellDamageType.None;
+	public OtherDamageType OtherDamage { get; set; } = OtherDamageType.None;
 	
 
 	public enum DamageType {None, Physical, Spell, Other}
@@ -23,21 +23,21 @@ public partial class RangedHitbox : RigidBody3D
 
    
 
-	public void _on_body_entered(Node3D body_)
+	public void OnBodyEntered(Node3D body)
 	{
-		// GD.Print("body entered " + body.Name);
+
 		QueueFree();
 	}
 
-	public void _on_despawn_timeout()
+	public void OnDespawnTimeout()
 	{
 		QueueFree();
 	}
 
-	public float SetDamage(Entity entity_)
+	public float SetDamage(Entity entity)
 	{
-		damage *= damage_amp;
-		return damage;
+		Damage *= DamageAmp;
+		return Damage;
 		
 	}
 }

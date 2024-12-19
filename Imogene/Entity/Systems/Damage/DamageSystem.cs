@@ -7,60 +7,60 @@ using System.Diagnostics;
 public partial class DamageSystem : Node
 {
 	// Timers
-	public SceneTreeTimer health_regeneration_timer { get; set; } = null;
-	public float health_tick_duration { get; set; } = 1;
-	private bool weak { get; set; } = false;
-	public bool dead { get; set; } = false;
+	public SceneTreeTimer HealthRegenerationTimer { get; set; } = null;
+	public float HealthTickDuration { get; set; } = 1;
+	private bool EntityWeak { get; set; } = false;
+	public bool Dead { get; set; } = false;
 
 	// Damage numbers parameters
-	private Node3D damage_number_spawn_point { get; set; } = null;
-	private float damage_number_spread { get; set; } = 90;
-	private float damage_number_height { get; set; } = 60;
-	[Export] PackedScene damage_number_3d_template { get; set; }
-	private Queue<DamageNumber3D> damage_number_3d_pool { get; set; } = new Queue<DamageNumber3D>();
-	private StatModifier add_health { get; set; } = new(StatModifier.ModificationType.AddCurrent);
-	private StatModifier remove_health { get; set; } =  new(StatModifier.ModificationType.AddCurrent);
-	private StatModifier null_health { get; set; } = new(StatModifier.ModificationType.Nullify);
+	private Node3D DamageNumberSpawnPoint { get; set; } = null;
+	private float DamageNumberSpread { get; set; } = 90;
+	private float DamageNumberHeight { get; set; } = 60;
+	[Export] PackedScene DamageNumber3DTemplate { get; set; }
+	private Queue<DamageNumber3D> DamageNumber3DPool { get; set; } = new Queue<DamageNumber3D>();
+	private StatModifier AddHealth { get; set; } = new(StatModifier.ModificationType.AddCurrent);
+	private StatModifier RemoveHealth { get; set; } =  new(StatModifier.ModificationType.AddCurrent);
+	private StatModifier NullHealth { get; set; } = new(StatModifier.ModificationType.Nullify);
 
-	[Signal] public delegate void AddStatusEffectEventHandler(Entity entity_, StatusEffect status_effect_);
-	[Signal] public delegate void ChangePostureEventHandler(Entity entity_, float posture_damage_);
-	[Signal] public delegate void HealthChangedEventHandler(Entity entity_, float health_);
-	[Signal] public delegate void WeakEventHandler(Entity entity_, bool weak_);
+	[Signal] public delegate void AddStatusEffectEventHandler(Entity entity, StatusEffect statusEffect);
+	[Signal] public delegate void ChangePostureEventHandler(Entity entity, float postureDamage);
+	[Signal] public delegate void HealthChangedEventHandler(Entity entity, float health);
+	[Signal] public delegate void WeakEventHandler(Entity entity, bool weak);
 
 	
 	public static float DamageMitigation(Entity entity, Node3D hitbox, float amount)
 	{
-		float mitigated_damage = amount;
-		mitigated_damage *= 1 - (entity.Armor.CurrentValue / 100);
+		float mitigatedDamage = amount;
+		mitigatedDamage *= 1 - (entity.Armor.CurrentValue / 100);
 
-		if(hitbox is MeleeHitbox _melee_hitbox)
+		if(hitbox is MeleeHitbox meleeHitbox)
 		{
 			
-			mitigated_damage = MitigateMelee(_melee_hitbox, mitigated_damage, entity);
+			mitigatedDamage = MitigateMelee(meleeHitbox, mitigatedDamage, entity);
 			
 		}
 
-		if(hitbox is RangedHitbox _ranged_hitbox)
+		if(hitbox is RangedHitbox rangedHitbox)
 		{
-			mitigated_damage = MitigateRanged(_ranged_hitbox, mitigated_damage, entity);
+			mitigatedDamage = MitigateRanged(rangedHitbox, mitigatedDamage, entity);
 		}
 
 		
-		return MathF.Round(mitigated_damage);
+		return MathF.Round(mitigatedDamage);
 	}
 
-	public static float MitigateMelee(MeleeHitbox melee_hitbox_, float mitigated_damage_, Entity entity_)
+	public static float MitigateMelee(MeleeHitbox meleeHitbox, float mitigatedDamage, Entity entity)
 	{
 		
 
-		return mitigated_damage_;
+		return mitigatedDamage;
 	}
 
-	public static float MitigateRanged(RangedHitbox ranged_hitbox_, float mitigated_damage_, Entity entity_)
+	public static float MitigateRanged(RangedHitbox rangedHitbox, float mitigatedDamage, Entity entity)
 	{
 		
 
-		return mitigated_damage_;
+		return mitigatedDamage;
 	}
 
 	
@@ -72,20 +72,20 @@ public partial class DamageSystem : Node
 		
 		if(entity.Health.CurrentValue - amount > 0)
 		{
-			remove_health.ValueToAdd = -amount;
-			entity.Health.AddModifier(remove_health);
+			RemoveHealth.ValueToAdd = -amount;
+			entity.Health.AddModifier(RemoveHealth);
 
-			if(entity.Health.CurrentValue < (entity.Health.MaxValue / 2) && !weak)
+			if(entity.Health.CurrentValue < (entity.Health.MaxValue / 2) && !EntityWeak)
 			{
-				weak = true;
-				EmitSignal(nameof(Weak), entity,  weak);
+				EntityWeak = true;
+				EmitSignal(nameof(Weak), entity,  EntityWeak);
 			}
 			
 
 			if(entity is Enemy enemy)
 			{
 				enemy.UI.HealthBar.Value = enemy.Health.CurrentValue;
-				damage_number_spawn_point = enemy.Head;
+				DamageNumberSpawnPoint = enemy.Head;
 				SpawnDamageNumber(amount, isCritical);
 			}
 			
@@ -93,17 +93,17 @@ public partial class DamageSystem : Node
 		}
 		else
 		{
-			entity.Health.AddModifier(null_health);
-			dead = true;
+			entity.Health.AddModifier(NullHealth);
+			Dead = true;
 		}
 	}
 
-	public void HealthRegeneration(Entity entity_)
+	public void HealthRegeneration(Entity entity)
 	{
-		if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
+		if(HealthRegenerationTimer == null || HealthRegenerationTimer.TimeLeft == 0)
 		{
-			health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-			health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity_);
+			HealthRegenerationTimer = GetTree().CreateTimer(HealthTickDuration);
+			HealthRegenerationTimer.Timeout += () => OnHealthRegenerationTickTimeout(entity);
 		}
 	}
 
@@ -111,13 +111,13 @@ public partial class DamageSystem : Node
     {
         if(entity.Health.CurrentValue < entity.Health.MaxValue && entity.Health.HandicapValue == 0)
 		{
-			add_health.Modification = StatModifier.ModificationType.AddCurrent;
-			add_health.ValueToAdd = entity.HealthRegeneration.CurrentValue;
-			entity.Health.AddModifier(add_health);
-			if(health_regeneration_timer == null || health_regeneration_timer.TimeLeft == 0)
+			AddHealth.Modification = StatModifier.ModificationType.AddCurrent;
+			AddHealth.ValueToAdd = entity.HealthRegeneration.CurrentValue;
+			entity.Health.AddModifier(AddHealth);
+			if(HealthRegenerationTimer == null || HealthRegenerationTimer.TimeLeft == 0)
 			{
-				health_regeneration_timer = GetTree().CreateTimer(health_tick_duration);
-				health_regeneration_timer.Timeout += () => OnHealthRegenerationTickTimeout(entity);
+				HealthRegenerationTimer = GetTree().CreateTimer(HealthTickDuration);
+				HealthRegenerationTimer.Timeout += () => OnHealthRegenerationTickTimeout(entity);
 			}
 			if(entity is Enemy enemy)
 			{
@@ -128,68 +128,68 @@ public partial class DamageSystem : Node
 
 	 public void SpawnDamageNumber(float value, bool isCritical)
 	{
-		DamageNumber3D damage_number = GetDamageNumber();
-		Vector3 position = damage_number_spawn_point.GlobalTransform.Origin;
-		AddChild(damage_number, true);
-		damage_number.SetValuesAndAnimate(value, isCritical, position, damage_number_height, damage_number_spread);
+		DamageNumber3D damageNumber = GetDamageNumber();
+		Vector3 position = DamageNumberSpawnPoint.GlobalTransform.Origin;
+		AddChild(damageNumber, true);
+		damageNumber.SetValuesAndAnimate(value, isCritical, position, DamageNumberHeight, DamageNumberSpread);
 	}
 
 	public DamageNumber3D GetDamageNumber()
 	{
-		if(damage_number_3d_pool.Count > 0)
+		if(DamageNumber3DPool.Count > 0)
 		{
-			return damage_number_3d_pool.Dequeue();
+			return DamageNumber3DPool.Dequeue();
 		}
 
 		else
 		{
-			DamageNumber3D new_damage_number = (DamageNumber3D)damage_number_3d_template.Instantiate();
-			new_damage_number.TreeExiting += () => damage_number_3d_pool.Enqueue(new_damage_number);
-			return new_damage_number;
+			DamageNumber3D newDamageNumber = (DamageNumber3D)DamageNumber3DTemplate.Instantiate();
+			newDamageNumber.TreeExiting += () => DamageNumber3DPool.Enqueue(newDamageNumber);
+			return newDamageNumber;
 		}
 	}
 
-    private void OnHurtboxBodyEntered(Node3D body_, Entity entity_)
+    private void OnHurtboxBodyEntered(Node3D body, Entity entity)
     {
-		if(body_ is RangedHitbox _ranged_hitbox)
+		if(body is RangedHitbox rangedHitbox)
 		{
-			foreach(StatusEffect _status_effect in _ranged_hitbox.effects)
+			foreach(StatusEffect statusEffect in rangedHitbox.Effects)
 			{
 				
-				EmitSignal(nameof(AddStatusEffect),entity_, _status_effect);
+				EmitSignal(nameof(AddStatusEffect),entity, statusEffect);
 			}
 
-			TakeDamage(entity_, _ranged_hitbox, _ranged_hitbox.damage, _ranged_hitbox.is_critical);
-			EmitSignal(nameof(ChangePosture), entity_, _ranged_hitbox.posture_damage);
+			TakeDamage(entity, rangedHitbox, rangedHitbox.Damage, rangedHitbox.IsCritical);
+			EmitSignal(nameof(ChangePosture), entity, rangedHitbox.PostureDamage);
 			
 		}
     }
 
-    private void OnHurtboxAreaEntered(Node3D area_, Entity entity_)
+    private void OnHurtboxAreaEntered(Node3D area, Entity entity)
     {
-         if(area_ is MeleeHitbox _melee_hitbox)
+         if(area is MeleeHitbox meleeHitbox)
 		{
 			
-			foreach(StatusEffect _status_effect in _melee_hitbox.effects)
+			foreach(StatusEffect statusEffect in meleeHitbox.Effects)
 			{
-				EmitSignal(nameof(AddStatusEffect),entity_, _status_effect);
+				EmitSignal(nameof(AddStatusEffect),entity, statusEffect);
 			}
 			
-			TakeDamage(entity_, _melee_hitbox, _melee_hitbox.damage, _melee_hitbox.is_critical);
-			EmitSignal(nameof(ChangePosture),entity_, _melee_hitbox.posture_damage);
+			TakeDamage(entity, meleeHitbox, meleeHitbox.Damage, meleeHitbox.IsCritical);
+			EmitSignal(nameof(ChangePosture),entity, meleeHitbox.PostureDamage);
 			
 		}
     }
 
 	public void Subscribe(Entity entity)
 	{
-		entity.Hurtbox.AreaEntered += (area_) => OnHurtboxAreaEntered(area_, entity);
-		entity.Hurtbox.BodyEntered += (body_) => OnHurtboxBodyEntered(body_, entity);
+		entity.Hurtbox.AreaEntered += (area) => OnHurtboxAreaEntered(area, entity);
+		entity.Hurtbox.BodyEntered += (body) => OnHurtboxBodyEntered(body, entity);
 	}
 	public void unsubscribe(Entity entity)
 	{
-		entity.Hurtbox.AreaEntered -= (area_) => OnHurtboxAreaEntered(area_, entity);
-		entity.Hurtbox.BodyEntered -= (body_) => OnHurtboxBodyEntered(body_, entity);
+		entity.Hurtbox.AreaEntered -= (area) => OnHurtboxAreaEntered(area, entity);
+		entity.Hurtbox.BodyEntered -= (body) => OnHurtboxBodyEntered(body, entity);
 	}
 
 }

@@ -109,7 +109,7 @@ public partial class EffectTest : Ability
 		EffectTestHitbox = (EffectTestHitbox)HitboxToLoad.Instantiate(); // Instantiate the projectile
 		player.SurroundingHitbox.AddChild(EffectTestHitbox);
 		Effect = new Virulent();
-		EffectTestHitbox.effects.Add(Effect);
+		EffectTestHitbox.Effects.Add(Effect);
 		if(EffectTestMesh == null)
 		{
 			// GD.Print("Add mesh");

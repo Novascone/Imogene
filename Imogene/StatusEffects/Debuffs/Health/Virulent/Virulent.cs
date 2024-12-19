@@ -42,7 +42,7 @@ public partial class Virulent : StatusEffect
 		foreach(Enemy _enemy in hitbox.enemies_to_be_infected)
 		{
 			Poison _infect_poison = new (); 
-			_infect_poison.hitbox.damage *= 0.5f; 
+			_infect_poison.hitbox.Damage *= 0.5f; 
 			GD.Print("enemy to be infected " + _enemy.Name);
 			EmitSignal(nameof(AddStatusEffectToAdditionalEntity), _enemy, _infect_poison);
 			

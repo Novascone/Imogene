@@ -3,16 +3,16 @@
 [ext_resource type="Script" path="res://Entity/Player/UI/Abilities/ActivePassives.cs" id="1_8pry4"]
 [ext_resource type="PackedScene" uid="uid://7py5yrnfrye5" path="res://Entity/Player/UI/Abilities/ActivePassiveSlot.tscn" id="1_uwds6"]
 
-[node name="AssignedPassives" type="VBoxContainer" node_paths=PackedStringArray("active_passive_1", "active_passive_2", "active_passive_3", "active_passive_4", "active_passive_5", "active_passive_6")]
+[node name="AssignedPassives" type="VBoxContainer" node_paths=PackedStringArray("ActivePassive1", "ActivePassive2", "ActivePassive3", "ActivePassive4", "ActivePassive5", "ActivePassive6")]
 offset_right = 565.0
 offset_bottom = 109.0
 script = ExtResource("1_8pry4")
-active_passive_1 = NodePath("HBoxContainer/ActivePassiveSlot1")
-active_passive_2 = NodePath("HBoxContainer/ActivePassiveSlot2")
-active_passive_3 = NodePath("HBoxContainer/ActivePassiveSlot3")
-active_passive_4 = NodePath("HBoxContainer/ActivePassiveSlot4")
-active_passive_5 = NodePath("HBoxContainer/ActivePassiveSlot5")
-active_passive_6 = NodePath("HBoxContainer/ActivePassiveSlot6")
+ActivePassive1 = NodePath("HBoxContainer/ActivePassiveSlot1")
+ActivePassive2 = NodePath("HBoxContainer/ActivePassiveSlot2")
+ActivePassive3 = NodePath("HBoxContainer/ActivePassiveSlot3")
+ActivePassive4 = NodePath("HBoxContainer/ActivePassiveSlot4")
+ActivePassive5 = NodePath("HBoxContainer/ActivePassiveSlot5")
+ActivePassive6 = NodePath("HBoxContainer/ActivePassiveSlot6")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2

@@ -12,7 +12,7 @@ public partial class AbilityController : Node
     
 	public void QueueAbility(Player player, Ability ability)
     {
-        if(!player.PlayerUI.preventing_movement && !player.PlayerUI.capturing_input && !AbilityUsePrevented)
+        if(!player.PlayerUI.UIPreventingMovement && !player.PlayerUI.UICapturingInput && !AbilityUsePrevented)
         {
         
             if(ability.State == Ability.States.NotQueued)

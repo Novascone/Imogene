@@ -4,62 +4,63 @@ using System.Linq;
 
 public partial class Abilities : Control
 {
-	[Export] public Binds binds { get; set; }
-	[Export] public Categories categories { get; set; }
-	[Export] public Passives assigned_passives { get; set; }
-	public PassiveBindButton passive_button_pressed { get; set; }
+	[Export] public Binds Binds { get; set; }
+	[Export] public Categories Categories { get; set; }
+	[Export] public Passives AssignedPassives { get; set; }
+	public PassiveBindButton PassiveButtonPressed { get; set; }
 
 	[Signal] public delegate void AbilitiesClosedEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		// Subscribe to the ButtonDown signal for each cross bind button in each cross
-		foreach(Control _control in binds.l_cross_primary_assignment.GetChildren().Cast<Control>())
+		foreach(Control control in Binds.l_cross_primary_assignment.GetChildren().Cast<Control>())
 		{
-			if(_control is CrossBindButton cross_bind)
+			if(control is CrossBindButton crossBind)
 			{
-				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
+				crossBind.ButtonDown += () => OnCrossBindDown(crossBind);
 			}
 		}
 
-		foreach(Control _control in binds.l_cross_secondary_assignment.GetChildren().Cast<Control>())
+		foreach(Control control in Binds.l_cross_secondary_assignment.GetChildren().Cast<Control>())
 		{
-			if(_control is CrossBindButton cross_bind)
+			if(control is CrossBindButton crossBind)
 			{
-				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
+				crossBind.ButtonDown += () => OnCrossBindDown(crossBind);
 			}
 		}
 
-		foreach(Control _control in binds.r_cross_primary_assignment.GetChildren().Cast<Control>())
+		foreach(Control control in Binds.r_cross_primary_assignment.GetChildren().Cast<Control>())
 		{
-			if(_control is CrossBindButton cross_bind)
+			if(control is CrossBindButton crossBind)
 			{
-				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);			}
-		}
-
-		foreach(Control _control in binds.r_cross_secondary_assignment.GetChildren().Cast<Control>())
-		{
-			if(_control is CrossBindButton cross_bind)
-			{
-				cross_bind.ButtonDown += () => OnCrossBindDown(cross_bind);
+				crossBind.ButtonDown += () => OnCrossBindDown(crossBind);		
 			}
 		}
 
-		foreach(Control _control in binds.passives.GetChildren().Cast<Control>())
+		foreach(Control control in Binds.r_cross_secondary_assignment.GetChildren().Cast<Control>())
 		{
-			if(_control is PassiveBindButton passive_bind_button)
+			if(control is CrossBindButton crossBind)
 			{
-				passive_bind_button.PassiveBindButtonPressed += HandlePassiveBindButtonPressed;
+				crossBind.ButtonDown += () => OnCrossBindDown(crossBind);
 			}
 		}
 
-		categories.new_assignment.accept.ButtonDown += OnNewAssignmentAccept;
-		categories.new_assignment.cancel.ButtonDown += OnNewAssignmentCancel;
+		foreach(Control control in Binds.passives.GetChildren().Cast<Control>())
+		{
+			if(control is PassiveBindButton passiveBindButton)
+			{
+				passiveBindButton.PassiveBindButtonPressed += HandlePassiveBindButtonPressed;
+			}
+		}
 
-		categories.AbilityReassigned += OnAbilityReassigned;
+		Categories.new_assignment.accept.ButtonDown += OnNewAssignmentAccept;
+		Categories.new_assignment.cancel.ButtonDown += OnNewAssignmentCancel;
+
+		Categories.AbilityReassigned += OnAbilityReassigned;
 	}
 
-    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
+    private void OnAbilityReassigned(Ability.Cross cross, Ability.Tier tier, string bind, string abilityName, Texture2D icon)
     {
         
     }
@@ -71,46 +72,46 @@ public partial class Abilities : Control
 
     private void OnNewAssignmentAccept()
     {
-		categories.Hide();
-		binds.Show();
+		Categories.Hide();
+		Binds.Show();
     }
 
-    private void HandlePassiveBindButtonPressed(PassiveBindButton passive_bind_button_) // If a passive bind button is pressed set the categories to passive, hide binds, show categories
+    private void HandlePassiveBindButtonPressed(PassiveBindButton passiveBindButton) // If a passive bind button is pressed set the categories to passive, hide binds, show categories
     {
-		categories.passive = true;
-		categories.active = false;
-        passive_button_pressed = passive_bind_button_;
-		binds.Hide();
-		categories.Show();
+		Categories.passive = true;
+		Categories.active = false;
+        PassiveButtonPressed = passiveBindButton;
+		Binds.Hide();
+		Categories.Show();
 		
     }
 
-    private void OnCrossBindDown(CrossBindButton cross_button_) // When a cross bind button is pressed set categories to active give the new assignment information about the ability on the cross bind button
+    private void OnCrossBindDown(CrossBindButton crossButton) // When a cross bind button is pressed set categories to active give the new assignment information about the ability on the cross bind button
     {
-		categories.active = true;
-		categories.passive = false;
-		categories.new_assignment.old_ability_name = cross_button_.ability_name;
-		categories.new_assignment.old_cross = cross_button_.cross;
-		categories.new_assignment.old_tier = cross_button_.tier;
-		categories.new_assignment.old_button_bind = cross_button_.button_bind;
-		categories.cross_bind_selected = cross_button_;
-		binds.Hide();
-		categories.Show();
+		Categories.active = true;
+		Categories.passive = false;
+		Categories.new_assignment.old_ability_name = crossButton.ability_name;
+		Categories.new_assignment.old_cross = crossButton.cross;
+		Categories.new_assignment.old_tier = crossButton.tier;
+		Categories.new_assignment.old_button_bind = crossButton.button_bind;
+		Categories.cross_bind_selected = crossButton;
+		Binds.Hide();
+		Categories.Show();
 		
     }
 
-	public void _on_close_button_down() // Reset page and child pages, hide this page
+	public void OnCloseButtonDown() // Reset page and child pages, hide this page
 	{
 		ResetPage();
-		categories.ResetPage();
+		Categories.ResetPage();
 		Hide();
 		EmitSignal(nameof(AbilitiesClosed));
 	}
 
 	public void ResetPage() // Reset this page
 	{
-		binds.Show();
-		categories.Hide();
+		Binds.Show();
+		Categories.Hide();
 	}
 
 }

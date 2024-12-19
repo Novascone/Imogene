@@ -10,8 +10,8 @@ public partial class Burn : DOT
 		category = EffectCategory.Health;
 		duration = 5;
 		max_stacks = 1;
-		hitbox.damage = 20;
-		hitbox.type = MeleeHitbox.DamageType.Spell;
-		hitbox.spell_damage_type = MeleeHitbox.SpellDamageType.Fire;
+		hitbox.Damage = 20;
+		hitbox.Type = MeleeHitbox.DamageType.Spell;
+		hitbox.SpellDamage = MeleeHitbox.SpellDamageType.Fire;
 	}
 }

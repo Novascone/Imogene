@@ -1,26 +1,27 @@
 using Godot;
 using GodotPlugins.Game;
 using System;
+using System.Linq;
 
 public partial class UI : Control
 {
-	[Export] public HUD hud { get; set; }
-	[Export] public Inventory inventory { get; set; }
-	[Export] public Abilities abilities { get; set; }
-	[Export] public Journal journal { get; set; }
-	[Export] public UICursor cursor { get; set; }
+	[Export] public HUD HUD { get; set; }
+	[Export] public Inventory Inventory { get; set; }
+	[Export] public Abilities Abilities { get; set; }
+	[Export] public Journal Journal { get; set; }
+	[Export] public UICursor Cursor { get; set; }
 
-	public bool preventing_movement { get; set; } = false;
-	public bool capturing_input { get; set; } = false;
-	public Button hovered_button  { get; set; } = null;
+	public bool UIPreventingMovement { get; set; } = false;
+	public bool UICapturingInput { get; set; } = false;
+	public Button HoveredButton  { get; set; } = null;
 
 	[Signal] public delegate void InventoryToggleEventHandler();
-	[Signal] public delegate void CapturingInputEventHandler(bool capturing_input_);
+	[Signal] public delegate void CapturingInputEventHandler(bool capturingInput);
 
-	public override void _GuiInput(InputEvent @event_)
+	public override void _GuiInput(InputEvent @event)
 	{
 		
-		if(@event_ is InputEventJoypadButton eventJoypadButton)
+		if(@event is InputEventJoypadButton eventJoypadButton)
 		{
 			if(CheckUIComponentOpen() && eventJoypadButton.Pressed && eventJoypadButton.ButtonIndex == JoyButton.B)
 			{
@@ -53,130 +54,130 @@ public partial class UI : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		inventory.main.bottom_buttons.abilities.ButtonDown += OnAbilitiesButtonDown;
-		abilities.AbilitiesClosed += OnAbilitiesClosed;
-		abilities.categories.AbilityReassigned += OnAbilityReassigned;
-		abilities.categories.ClearAbilityIcon += OnClearAbilityIcon;
-		hud.HUDPreventingInput += OnHudPreventingInput;
-		cursor.ItemDroppedIntoSlot += inventory.main.HandleItemDroppedInto;
-		cursor.ItemDroppedOutSide += inventory.main.HandleItemDroppedOutside;
-		foreach(ItemSlot item_slot in inventory.main.items.GetChildren())
+		Inventory.main.bottom_buttons.abilities.ButtonDown += OnAbilitiesButtonDown;
+		Abilities.AbilitiesClosed += OnAbilitiesClosed;
+		Abilities.Categories.AbilityReassigned += OnAbilityReassigned;
+		Abilities.Categories.ClearAbilityIcon += OnClearAbilityIcon;
+		HUD.HUDPreventingInput += OnHudPreventingInput;
+		Cursor.ItemDroppedIntoSlot += Inventory.main.HandleItemDroppedInto;
+		Cursor.ItemDroppedOutSide += Inventory.main.HandleItemDroppedOutside;
+		foreach(ItemSlot itemSlot in Inventory.main.items.GetChildren().Cast<ItemSlot>())
 		{
-			item_slot.CursorHovering += cursor.OnCursorHovering;
-			item_slot.CursorLeft += cursor.OnCursorLeft;
-			item_slot.ItemEquipped += inventory.main.OnItemEquipped;
-			item_slot.inventory_slot_id -= 1;
-			inventory.main.inventory_slots.Add(item_slot);
+			itemSlot.CursorHovering += Cursor.OnCursorHovering;
+			itemSlot.CursorLeft += Cursor.OnCursorLeft;
+			itemSlot.ItemEquipped += Inventory.main.OnItemEquipped;
+			itemSlot.inventory_slot_id -= 1;
+			Inventory.main.inventory_slots.Add(itemSlot);
 		}
 		
 	}
 
 	 // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta_)
+    public override void _Process(double delta)
 	{
-		if(preventing_movement)
+		if(UIPreventingMovement)
 		{
-			cursor.ControllerCursor();
+			Cursor.ControllerCursor();
 		}
 		
 		if(Input.IsActionJustPressed("Inventory"))
 		{
-			preventing_movement = !preventing_movement;
-			EmitSignal(nameof(CapturingInput), preventing_movement);
-			if(!CheckUIComponentOpen() && !cursor.Visible || CheckUIComponentOpen()  && cursor.Visible )
+			UIPreventingMovement = !UIPreventingMovement;
+			EmitSignal(nameof(CapturingInput), UIPreventingMovement);
+			if(!CheckUIComponentOpen() && !Cursor.Visible || CheckUIComponentOpen()  && Cursor.Visible )
 			{
-				cursor.Visible = !cursor.Visible;
+				Cursor.Visible = !Cursor.Visible;
 			}
-			if(!abilities.Visible)
+			if(!Abilities.Visible)
 			{
-				inventory.Visible = !inventory.Visible;
-				if(inventory.depth_sheet.Visible)
+				Inventory.Visible = !Inventory.Visible;
+				if(Inventory.depth_sheet.Visible)
 				{
-					inventory.depth_sheet.Visible = !inventory.depth_sheet.Visible;
+					Inventory.depth_sheet.Visible = !Inventory.depth_sheet.Visible;
 				}
 			}
-			if(abilities.Visible)
+			if(Abilities.Visible)
 			{
-				abilities.ResetPage();
-				abilities.Visible = !abilities.Visible;
+				Abilities.ResetPage();
+				Abilities.Visible = !Abilities.Visible;
 			}
 			
 			
 			EmitSignal(nameof(InventoryToggle));
 		}
 
-		if(preventing_movement)
+		if(UIPreventingMovement)
 		{
 			if(Input.IsActionJustPressed("CursorUp") || Input.IsActionJustPressed("CursorDown") || Input.IsActionJustPressed("CursorLeft") || Input.IsActionJustPressed("CursorRight"))
 			{
-				cursor.Show();
+				Cursor.Show();
 			}
 		}
 		if(Input.IsActionJustPressed("D-PadUp") || Input.IsActionJustPressed("D-PadDown") || Input.IsActionJustPressed("D-PadLeft") || Input.IsActionJustPressed("D-PadRight"))
 		{
-			cursor.Hide();
+			Cursor.Hide();
 		}
 		
 	}
 
-    private void OnHudPreventingInput(bool preventing_input_)
+    private void OnHudPreventingInput(bool preventingInput)
     {
-        if(preventing_input_)
+        if(preventingInput)
 		{
-			capturing_input = true;
+			UICapturingInput = true;
 		}
-		else if (!preventing_input_)
+		else if (!preventingInput)
 		{
-			capturing_input = false;
+			UICapturingInput = false;
 		}
     }
 
-    private void OnClearAbilityIcon(string ability_name_old_, string ability_name_new_)
+    private void OnClearAbilityIcon(string abilityNameOld, string abilityNameNew)
     {
-        abilities.binds.ClearAbility(ability_name_old_, ability_name_new_);
-		hud.main.ClearAbility(ability_name_old_, ability_name_new_);
+        Abilities.Binds.ClearAbility(abilityNameOld, abilityNameNew);
+		HUD.Main.ClearAbility(abilityNameOld, abilityNameNew);
     }
 
 
-    private void OnAbilityReassigned(Ability.Cross cross_, Ability.Tier tier_, string bind_, string ability_name_, Texture2D icon_)
+    private void OnAbilityReassigned(Ability.Cross cross, Ability.Tier tier, string bind, string abilityName, Texture2D icon)
     {
-        abilities.binds.AssignAbility(cross_, tier_, bind_, ability_name_, icon_);
-		hud.main.AssignAbility(cross_, tier_, bind_,ability_name_, icon_);
+        Abilities.Binds.AssignAbility(cross, tier, bind, abilityName, icon);
+		HUD.Main.AssignAbility(cross, tier, bind,abilityName, icon);
     }
 
     private void OnAbilitiesClosed()
     {
         EmitSignal(nameof(InventoryToggle));
-		preventing_movement = false;
-		if(cursor.Visible)
+		UIPreventingMovement = false;
+		if(Cursor.Visible)
 		
-		cursor.Visible = !cursor.Visible;
+		Cursor.Visible = !Cursor.Visible;
     }
 
     private void OnAbilitiesButtonDown()
     {
-        abilities.Show();
-		inventory.Hide();
-		preventing_movement = true;
+        Abilities.Show();
+		Inventory.Hide();
+		UIPreventingMovement = true;
     }
 
 
 
-	public void AssignAbility(Ability.Cross cross_, Ability.Tier tier_, string bind, string ability_name, Texture2D icon)
+	public void AssignAbility(Ability.Cross cross, Ability.Tier tier, string bind, string abilityName, Texture2D icon)
 	{
-		hud.main.AssignAbility(cross_, tier_, bind, ability_name, icon);
-		abilities.binds.AssignAbility(cross_, tier_, bind, ability_name, icon);
+		HUD.Main.AssignAbility(cross, tier, bind, abilityName, icon);
+		Abilities.Binds.AssignAbility(cross, tier, bind, abilityName, icon);
 	}
 
 	public void SwitchCrosses(string cross)
 	{
-		hud.main.SwitchCrosses(cross);
+		HUD.Main.SwitchCrosses(cross);
 	}
 
 	public void UIElementOpen()
 	{
 		
-		foreach(Control control in GetChildren())
+		foreach(Control control in GetChildren().Cast<Control>())
 		{
 			if(control.IsInGroup("prevents_movement"))
 			{
@@ -184,36 +185,36 @@ public partial class UI : Control
 				if(control.Visible)
 				{
 					GD.Print("UI preventing movement ");
-					preventing_movement = true;
+					UIPreventingMovement = true;
 				}
-				else if(!preventing_movement)
+				else if(!UIPreventingMovement)
 				{
 					GD.Print("UI not preventing movement ");
-					preventing_movement = false;
+					UIPreventingMovement = false;
 				}
 			}
 		}
 	}
 
-    internal void HandleUpdatedStats(Player player_)
+    internal void HandleUpdatedStats(Player player)
     {
-        hud.main.UpdateHUDStats(player_);
+        HUD.Main.UpdateHUDStats(player);
     }
 
 	public bool CheckUIComponentOpen()
 	{
-		foreach(Control control in GetChildren())
+		foreach(Control control in GetChildren().Cast<Control>())
 		{
-			if(control.Name != "Cursor" && control != hud)
+			if(control.Name != "Cursor" && control != HUD)
 			{
 				if(control.Visible)
 				{
 					return true;
 				}
 			}
-			else if(control == hud)
+			else if(control == HUD)
 			{
-				if(hud.interact_bar.Visible)
+				if(HUD.InteractBar.Visible)
 				{
 					return true;
 				}

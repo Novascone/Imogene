@@ -68,11 +68,11 @@ public partial class Kick : Ability
 		DealDamage(player, DamageModifier);
 		
 			
-		kick_hitbox.damage = player.CombinedDamage  / 2; // Set projectile damage
-		kick_hitbox.posture_damage = 0; // Set projectile posture damage 
-		kick_hitbox.is_critical = false;
+		kick_hitbox.Damage = player.CombinedDamage  / 2; // Set projectile damage
+		kick_hitbox.PostureDamage = 0; // Set projectile posture damage 
+		kick_hitbox.IsCritical = false;
 		
-		kick_hitbox.type = MeleeHitbox.DamageType.Physical; // Set projectile damage type
+		kick_hitbox.Type = MeleeHitbox.DamageType.Physical; // Set projectile damage type
 		
 	}
 

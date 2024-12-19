@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" path="res://Entity/Player/UI/HUD/InteractBar.cs" id="1_xycvt"]
 
-[node name="InteractBar" type="MarginContainer" node_paths=PackedStringArray("button", "interact_object", "interact_inventory")]
+[node name="InteractBar" type="MarginContainer" node_paths=PackedStringArray("Button", "InteractObject", "InteractInventory")]
 offset_right = 200.0
 offset_bottom = 229.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_xycvt")
-button = NodePath("VBoxContainer/VBoxContainer/PanelContainer/Button")
-interact_object = NodePath("VBoxContainer/VBoxContainer/PanelContainer2/Object")
-interact_inventory = NodePath("VBoxContainer/InteractInventory")
+Button = NodePath("VBoxContainer/VBoxContainer/PanelContainer/Button")
+InteractObject = NodePath("VBoxContainer/VBoxContainer/PanelContainer2/Object")
+InteractInventory = NodePath("VBoxContainer/InteractInventory")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

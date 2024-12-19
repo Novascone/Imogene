@@ -3,6 +3,6 @@ using System;
 
 public partial class AbilityBinds : Control
 {
-	[Export] public Control binds { get; set;}
+	[Export] public Control Binds { get; set;}
 	
 }

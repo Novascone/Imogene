@@ -11,8 +11,8 @@ public partial class Bleed : DOT
 		category = EffectCategory.Health;
 		duration = 10;
 		max_stacks = 1;
-		hitbox.damage = 10;
-		hitbox.type = MeleeHitbox.DamageType.Other;
-		hitbox.other_damage_type = MeleeHitbox.OtherDamageType.Bleed;
+		hitbox.Damage = 10;
+		hitbox.Type = MeleeHitbox.DamageType.Other;
+		hitbox.OtherDamage = MeleeHitbox.OtherDamageType.Bleed;
 	}
 }

@@ -21,7 +21,7 @@ public partial class DOT : StatusEffect
 
 	public override void timer_timeout(Entity entity)
     {
-		entity.EntitySystems.damage_system.TakeDamage(entity, hitbox, hitbox.damage, false);
+		entity.EntitySystems.damage_system.TakeDamage(entity, hitbox, hitbox.Damage, false);
 		ticks_used += 1;
 		if (ticks_used < duration)
 		{

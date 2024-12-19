@@ -115,19 +115,19 @@ public partial class Ability : Node3D
         if(MeleeHitbox != null)
         {
            
-            MeleeHitbox.damage = player.CombinedDamage * (1 + abilityDamageModifier);
+            MeleeHitbox.Damage = player.CombinedDamage * (1 + abilityDamageModifier);
             MeleeHitbox.SetDamage(player);
-            MeleeHitbox.posture_damage = 0;
-            MeleeHitbox.is_critical = false;
+            MeleeHitbox.PostureDamage = 0;
+            MeleeHitbox.IsCritical = false;
             
         }
         if(RangedHitbox != null)
         {
            
-            RangedHitbox.damage = player.CombinedDamage * (1 + abilityDamageModifier); // Set projectile damage
+            RangedHitbox.Damage = player.CombinedDamage * (1 + abilityDamageModifier); // Set projectile damage
             RangedHitbox.SetDamage(player);
-            RangedHitbox.posture_damage = 0; // Set projectile posture damage 
-            RangedHitbox.is_critical = false;
+            RangedHitbox.PostureDamage = 0; // Set projectile posture damage 
+            RangedHitbox.IsCritical = false;
             
         }        
     }

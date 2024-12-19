@@ -31,7 +31,7 @@ public partial class Whirlwind : Ability
 		}
 		
 		MeleeHitbox = whirlwind_hitbox;
-		whirlwind_hitbox.type = MeleeHitbox.DamageType.Physical; // Set projectile damage type		
+		whirlwind_hitbox.Type = MeleeHitbox.DamageType.Physical; // Set projectile damage type		
 		DealDamage(player, DamageModifier);
 	}
 

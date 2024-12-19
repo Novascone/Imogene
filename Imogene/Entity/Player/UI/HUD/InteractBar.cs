@@ -3,12 +3,12 @@ using System;
 
 public partial class InteractBar : Control
 {
-	[Export] public Label button { get; set; }
-	[Export] public Label interact_object { get; set; }
-	[Export] public Control interact_inventory { get; set; }
+	[Export] public Label Button { get; set; }
+	[Export] public Label InteractObject { get; set; }
+	[Export] public Control InteractInventory { get; set; }
 
-	public void SetInteractText(string object_name_)
+	public void SetInteractText(string objectName)
 	{
-		interact_object.Text = object_name_;
+		InteractObject.Text = objectName;
 	}
 }

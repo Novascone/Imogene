@@ -30,7 +30,7 @@ public partial class InteractSystem : Node3D
 		InteractableItem nearestItem = NearByItems.OrderBy(X => X.GlobalPosition.DistanceTo(GlobalPosition)).FirstOrDefault();
 		if(nearestItem != null)
 		{
-			if(player.PlayerUI.inventory.main.slots_filled < player.PlayerUI.inventory.main.item_slots_count)
+			if(player.PlayerUI.Inventory.main.slots_filled < player.PlayerUI.Inventory.main.item_slots_count)
 			{
 				
 				item.QueueFree();
@@ -166,8 +166,8 @@ public partial class InteractSystem : Node3D
 		player.PlayerAreas.PickUpItems.BodyEntered += (body) => OnObjectEnteredPickup(body, player);
 		player.PlayerAreas.PickUpItems.BodyExited += (body) => OnObjectExitedPickup(body, player);
 		player.PlayerUI.CapturingInput += HandleUICapturingInput;
-		player.PlayerUI.hud.AcceptHUDInput += OnAcceptHUDInput;
-		player.PlayerUI.inventory.main.InventoryCapacity += HandleInventoryCapacity;
+		player.PlayerUI.HUD.AcceptHUDInput += OnAcceptHUDInput;
+		player.PlayerUI.Inventory.main.InventoryCapacity += HandleInventoryCapacity;
 	
 	}
 
@@ -179,7 +179,7 @@ public partial class InteractSystem : Node3D
 		player.PlayerAreas.Interact.BodyExited -= (body) => OnObjectExitedArea(body, player);
 		player.PlayerAreas.PickUpItems.BodyEntered -= (body) => OnObjectEnteredPickup(body, player);
 		player.PlayerAreas.PickUpItems.BodyExited -= (body) => OnObjectExitedPickup(body, player);
-		player.PlayerUI.inventory.main.InventoryCapacity -= HandleInventoryCapacity;
-		player.PlayerUI.hud.AcceptHUDInput -= OnAcceptHUDInput;
+		player.PlayerUI.Inventory.main.InventoryCapacity -= HandleInventoryCapacity;
+		player.PlayerUI.HUD.AcceptHUDInput -= OnAcceptHUDInput;
 	}
 }
