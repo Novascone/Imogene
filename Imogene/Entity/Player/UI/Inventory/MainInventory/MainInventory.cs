@@ -49,8 +49,8 @@ public partial class MainInventory : Control
 			equipped_slot = -1;
 		}
 		EmitSignal(nameof(DroppingItem));
-		var new_item = inventory_slots[id_].slot_data.item_model_prefab.Instantiate() as InteractableItem;
-		new_item.interact_to_pick_up = true;
+		var new_item = inventory_slots[id_].slot_data.ItemModelPrefab.Instantiate() as InteractableItem;
+		new_item.InteractToPickUp = true;
 		inventory_slots[id_].FillSlot(null, false);
 		slots_filled -= 1;
 		EmitSignal(nameof(InventoryCapacity), false);

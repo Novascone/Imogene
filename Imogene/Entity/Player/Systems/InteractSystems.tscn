@@ -9,15 +9,15 @@
 
 [sub_resource type="Resource" id="Resource_xmrb8"]
 script = ExtResource("4_kuu1a")
-item_name = "Test Cube"
-icon = ExtResource("2_w0pjq")
-item_model_prefab = ExtResource("3_vmfa2")
+ItemName = "TestCube"
+Icon = ExtResource("2_w0pjq")
+ItemModelPrefab = ExtResource("3_vmfa2")
 
 [sub_resource type="Resource" id="Resource_wmls2"]
 script = ExtResource("4_kuu1a")
-item_name = "Test Sphere"
-icon = ExtResource("5_queyo")
-item_model_prefab = ExtResource("6_ulukb")
+ItemName = "TestSphere"
+Icon = ExtResource("5_queyo")
+ItemModelPrefab = ExtResource("6_ulukb")
 
 [node name="InteractSystem" type="Node3D"]
 script = ExtResource("1_dv1bd")

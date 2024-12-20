@@ -43,12 +43,12 @@ emission_energy_multiplier = 7.82
 [sub_resource type="BoxShape3D" id="BoxShape3D_cwnyv"]
 size = Vector3(0.548424, 0.567989, 0.545044)
 
-[node name="ItemTestCube" type="RigidBody3D" node_paths=PackedStringArray("item_highlight_mesh_white", "item_highlight_mesh_red")]
+[node name="ItemTestCube" type="RigidBody3D" node_paths=PackedStringArray("ItemHighlightMeshWhite", "ItemHighlightMeshRed")]
 collision_layer = 64
 collision_mask = 68
 script = ExtResource("1_gd6qn")
-item_highlight_mesh_white = NodePath("MeshInstance3D/WhiteOutline")
-item_highlight_mesh_red = NodePath("MeshInstance3D/RedOutline")
+ItemHighlightMeshWhite = NodePath("MeshInstance3D/WhiteOutline")
+ItemHighlightMeshRed = NodePath("MeshInstance3D/RedOutline")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

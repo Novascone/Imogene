@@ -5,13 +5,13 @@ public partial class Poison : DOT
 {
 	public Poison()
 	{
-		name = "poison";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		duration = 15;
-		max_stacks = 1;
-		hitbox.Damage = 8;
-		hitbox.Type = MeleeHitbox.DamageType.Other;
-		hitbox.OtherDamage = MeleeHitbox.OtherDamageType.Poison;
+		EffectName = "poison";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		Duration = 15;
+		MaxStacks = 1;
+		Hitbox.Damage = 8;
+		Hitbox.Type = MeleeHitbox.DamageType.Other;
+		Hitbox.OtherDamage = MeleeHitbox.OtherDamageType.Poison;
 	}
 }

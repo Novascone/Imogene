@@ -5,9 +5,9 @@ public partial class Incorrigible : StatusEffect
 {
 	public Incorrigible()
 	{
-		name = "incorrigible";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		max_stacks = 1;
+		EffectName = "incorrigible";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		MaxStacks = 1;
 	}
 }

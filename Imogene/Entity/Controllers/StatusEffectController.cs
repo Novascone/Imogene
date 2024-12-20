@@ -86,9 +86,9 @@ public partial class StatusEffectController : Node
 	{
 		var effectToAdd = new StatusEffect();
 		effectToAdd = GetEffect(entity, effect, effectToAdd); // Gets status effect to apply
-		GD.Print("trying to add effect " + effectToAdd.name);
+		GD.Print("trying to add effect " + effectToAdd.EffectName);
 		QueueStatusEffect(effectToAdd); // Checks if ability has been applied
-		if(effectToAdd.state == StatusEffect.States.Queued)
+		if(effectToAdd.State == StatusEffect.States.Queued)
 		{
 			
 				entity.StatusEffects.Add(effectToAdd); // adds status effect to entities list of effects
@@ -96,25 +96,25 @@ public partial class StatusEffectController : Node
 				AddChild(effectToAdd); // adds the effect as a child setting all of its _Ready() values
 				
 				effectToAdd.StatusEffectFinished += () => HandleStatusEffectFinished(entity, effectToAdd); // Subscribes to effect finished signal
-				if(effectToAdd.adds_additional_effects)
+				if(effectToAdd.AddsAdditionalEffects)
 				{
 					effectToAdd.AddAdditionalStatusEffect += (effect) => HandleAdditionalStatusEffect(effect, entity); // subscribes to add additional effect signal
 				}
-				if(effectToAdd.adds_effect_to_additional_entity)
+				if(effectToAdd.AddsEffectToAdditionalEntity)
 				{
 					effectToAdd.AddStatusEffectToAdditionalEntity += HandleAdditionalEntity;
 				}
 				ApplyStatusEffect(entity, effectToAdd);
 				// Sets the variable for what the status effects are preventing or altering
-				if(effectToAdd.prevents_movement){ EntityMovementPrevented = true; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
-				if(effectToAdd.prevents_input){ EntityInputPrevented = true; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
-				if(effectToAdd.alters_speed){ EntitySpeedAltered = true; }
-				if(effectToAdd.prevents_abilities){ EntityAbilitiesPrevented = true; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
-				if(effectToAdd.name == "tether")
+				if(effectToAdd.PreventsMovement){ EntityMovementPrevented = true; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
+				if(effectToAdd.PreventsInput){ EntityInputPrevented = true; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
+				if(effectToAdd.AltersSpeed){ EntitySpeedAltered = true; }
+				if(effectToAdd.PreventsAbilities){ EntityAbilitiesPrevented = true; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
+				if(effectToAdd.EffectName == "tether")
 				{
 					EntityTethered = true;
 					Tether tether_effect = (Tether)effectToAdd;
-					EmitSignal(nameof(Tethered),entity, tether_effect.tether, EntityTethered, tether_effect.tether_length);
+					EmitSignal(nameof(Tethered),entity, tether_effect.TetherMesh, EntityTethered, tether_effect.TetherScene);
 				
 				}
 			// }
@@ -137,23 +137,23 @@ public partial class StatusEffectController : Node
 	{
 
 		effect.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effect); // unSubscribes to effect finished signal
-		if(effect.adds_additional_effects)
+		if(effect.AddsAdditionalEffects)
 		{
 			effect.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity); // Unsubscribes to add additional effect signal
 		}
 		effect.QueueFree();
 		// entity_.entity_controllers.status_effect_controller.SetEffectBooleans(effect_);
 		entity.StatusEffects.Remove(effect);
-		if(!effect.removed)
+		if(!effect.Removed)
 		{
 			effect.Remove(entity);
 		}
 		
-		if(effect.prevents_movement == true){ EntityMovementPrevented = false; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
-		if(effect.prevents_input){ EntityInputPrevented = false; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
-		if(effect.alters_speed){ EntitySpeedAltered = false; }
-		if(effect.prevents_abilities){ EntityAbilitiesPrevented = false; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
-		if(effect.name == "tether"){ EntityTethered = false; EmitSignal(nameof(Tethered),entity, TetherEffect.tether, EntityTethered);;}
+		if(effect.PreventsMovement == true){ EntityMovementPrevented = false; EmitSignal(nameof(MovementPrevented), EntityMovementPrevented);}
+		if(effect.PreventsInput){ EntityInputPrevented = false; EmitSignal(nameof(InputPrevented), EntityInputPrevented);}
+		if(effect.AltersSpeed){ EntitySpeedAltered = false; }
+		if(effect.PreventsAbilities){ EntityAbilitiesPrevented = false; EmitSignal(nameof(AbilitiesPrevented), EntityAbilitiesPrevented);}
+		if(effect.EffectName == "tether"){ EntityTethered = false; EmitSignal(nameof(Tethered),entity, TetherEffect.TetherMesh, EntityTethered);;}
 		
 	}
 
@@ -162,19 +162,19 @@ public partial class StatusEffectController : Node
 	public void QueueStatusEffect(StatusEffect effect) 
 	{
 		
-		if(!effect.applied)
+		if(!effect.Applied)
 		{
-			effect.state = StatusEffect.States.Queued;
+			effect.State = StatusEffect.States.Queued;
 		}
 		else
 		{
-			effect.state = StatusEffect.States.NotQueued;
+			effect.State = StatusEffect.States.NotQueued;
 		}
 	}
 
 	public void ApplyStatusEffect(Entity entity, StatusEffect effect) // Sets booleans for each status effect, and applies the effect to the entity
 	{
-		if (effect.current_stacks < effect.max_stacks && entity.StatusEffects.Contains(effect))
+		if (effect.CurrentStacks < effect.MaxStacks && entity.StatusEffects.Contains(effect))
 		{
 			// if(effect_.current_stacks == 0)
 			// {
@@ -195,7 +195,7 @@ public partial class StatusEffectController : Node
 		for(int i = entity.StatusEffects.Count - 1; i >= 0 ; i--) // Iterates list in reverse so that the position of i is not disrupted
 		{
 			
-			if(entity.StatusEffects[i].type == StatusEffect.EffectType.Debuff  && entity.StatusEffects[i].category == StatusEffect.EffectCategory.Movement)
+			if(entity.StatusEffects[i].Type == StatusEffect.EffectType.Debuff  && entity.StatusEffects[i].Category == StatusEffect.EffectCategory.Movement)
 			{
 				RemoveStatusEffect(entity, entity.StatusEffects[i]);
 			}
@@ -257,8 +257,8 @@ public partial class StatusEffectController : Node
 
 		RemoveStatusEffect(entity, effectToRemove);
 					effectToRemove.StatusEffectFinished -= () => HandleStatusEffectFinished(entity, effectToRemove);
-					if(effectToRemove.adds_additional_effects){ effectToRemove.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
-					GD.Print("removed " + effectToRemove.name);
+					if(effectToRemove.AddsAdditionalEffects){ effectToRemove.AddAdditionalStatusEffect -= (effect) => HandleAdditionalStatusEffect(effect, entity);}
+					GD.Print("removed " + effectToRemove.EffectName);
 		// foreach(StatusEffect _effect in status_effects)
 		// {
 		// 	if(effect_to_remove_.GetType() == _effect.GetType())

@@ -7,23 +7,23 @@ public partial class Fear : StatusEffect
 
 	public Fear()
 	{
-		prevents_input = true;
-		name = "fear";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		duration = 5;
-		max_stacks = 1;
+		PreventsInput = true;
+		EffectName = "fear";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		Duration = 5;
+		MaxStacks = 1;
 	}
 
 	public Fear(Entity entity)
 	{
-		prevents_input = true;
-		caster = entity;
-		name = "fear";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		duration = entity.EntityControllers.EntityStatusEffectsController.EntityFearDuration;
-		max_stacks = 1;
+		PreventsInput = true;
+		Caster = entity;
+		EffectName = "fear";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		Duration = entity.EntityControllers.EntityStatusEffectsController.EntityFearDuration;
+		MaxStacks = 1;
 	}
 	
 
@@ -31,15 +31,15 @@ public partial class Fear : StatusEffect
     {
 		base.Apply(entity);
         CreateTimerIncrementStack(entity);
-		entity.DirectionVector = caster.Transform.Basis.Z * 2;
+		entity.DirectionVector = Caster.Transform.Basis.Z * 2;
 	
     }
 
-    public override void timer_timeout(Entity entity_)
+    public override void TimerTimeout(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
-			 Remove(entity_);
+			 Remove(entity);
 		}
       
     }

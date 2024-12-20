@@ -5,9 +5,9 @@ public partial class Stagger : StatusEffect
 {
 	public Stagger()
 	{
-		name = "stagger";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		max_stacks = 1;
+		EffectName = "stagger";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		MaxStacks = 1;
 	}
 }

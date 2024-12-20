@@ -5,9 +5,9 @@ public partial class Febrile : StatusEffect
 {
 	public Febrile()
 	{
-		name = "febrile";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		max_stacks = 1;
+		EffectName = "febrile";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		MaxStacks = 1;
 	}
 }

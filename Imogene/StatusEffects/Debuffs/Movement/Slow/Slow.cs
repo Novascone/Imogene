@@ -3,17 +3,17 @@ using System;
 
 public partial class Slow : StatusEffect
 {
-	public StatModifier slow = new(StatModifier.ModificationType.MultiplyCurrent);
+	public StatModifier SlowModifier = new(StatModifier.ModificationType.MultiplyCurrent);
 
 	public Slow()
 	{
-		name = "slow";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		alters_speed = true;
-		slow.Mod = -0.6f;
-		duration = 5;
-		max_stacks = 5;
+		EffectName = "slow";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		AltersSpeed = true;
+		SlowModifier.Mod = -0.6f;
+		Duration = 5;
+		MaxStacks = 5;
 	}
 	
 	public override void Apply(Entity entity)
@@ -26,7 +26,7 @@ public partial class Slow : StatusEffect
 		
 		if(entity.MovementSpeed.CurrentValue >= entity.MovementSpeed.BaseValue || entity.MovementSpeed.CurrentValue == entity.MovementSpeed.BaseValue/2.0f)
 		{
-			entity.MovementSpeed.AddModifier(slow);
+			entity.MovementSpeed.AddModifier(SlowModifier);
 		}
 		else
 		{
@@ -34,21 +34,21 @@ public partial class Slow : StatusEffect
 		
 	}
 
-	public override void timer_timeout(Entity entity)
+	public override void TimerTimeout(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
-			if(current_stacks == 1)
+			if(CurrentStacks == 1)
 			{
 				Remove(entity);
 			}
 			else
 			{
-				GetTree().CreateTimer(duration).Timeout += () => timer_timeout(entity);
+				GetTree().CreateTimer(Duration).Timeout += () => TimerTimeout(entity);
 			}
-			if(current_stacks > 0)
+			if(CurrentStacks > 0)
 			{
-				current_stacks -= 1;
+				CurrentStacks -= 1;
 			}
 			
 		}
@@ -57,10 +57,10 @@ public partial class Slow : StatusEffect
 
     public override void Remove(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
 			base.Remove(entity);
-			entity.MovementSpeed.RemoveModifier(slow);
+			entity.MovementSpeed.RemoveModifier(SlowModifier);
 		}
        
     }

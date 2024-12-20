@@ -6,12 +6,12 @@ public partial class Hamstring : StatusEffect
 	public StatModifier stop { set; get; }= new(StatModifier.ModificationType.Nullify);
 	public Hamstring()
 	{
-		name = "hamstrung";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		prevents_movement = true;
-		duration = 5;
-		max_stacks = 1;
+		EffectName = "hamstrung";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		PreventsMovement = true;
+		Duration = 5;
+		MaxStacks = 1;
 	}
 	public override void Apply(Entity entity)
 	{
@@ -22,14 +22,14 @@ public partial class Hamstring : StatusEffect
 		
 	}
 
-	public override void timer_timeout(Entity entity)
+	public override void TimerTimeout(Entity entity)
     {
 		Remove(entity);
     }
 
     public override void Remove(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
 			base.Remove(entity);
 			entity.MovementSpeed.RemoveModifier(stop);

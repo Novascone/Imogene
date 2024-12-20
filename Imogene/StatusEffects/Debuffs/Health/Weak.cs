@@ -5,9 +5,9 @@ public partial class Weak : StatusEffect
 {
 	public Weak()
 	{
-		name = "weak";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		max_stacks = 1;
+		EffectName = "weak";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		MaxStacks = 1;
 	}
 }

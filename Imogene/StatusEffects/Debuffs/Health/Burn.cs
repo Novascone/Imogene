@@ -5,13 +5,13 @@ public partial class Burn : DOT
 {
 	public Burn()
 	{
-		name = "burn";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		duration = 5;
-		max_stacks = 1;
-		hitbox.Damage = 20;
-		hitbox.Type = MeleeHitbox.DamageType.Spell;
-		hitbox.SpellDamage = MeleeHitbox.SpellDamageType.Fire;
+		EffectName = "burn";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		Duration = 5;
+		MaxStacks = 1;
+		Hitbox.Damage = 20;
+		Hitbox.Type = MeleeHitbox.DamageType.Spell;
+		Hitbox.SpellDamage = MeleeHitbox.SpellDamageType.Fire;
 	}
 }

@@ -35,7 +35,7 @@ public partial class ItemSlot : Button
 		if(slot_data != null)
 		{
 			slot_filled = true;
-			slot_icon.Texture = data_.icon;
+			slot_icon.Texture = data_.Icon;
 		}
 		else
 		{

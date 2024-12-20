@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 public partial class VirulentHitbox : Area3D
 {
-	public Entity root_infected { get; set; } = null;
-	public List<Enemy> enemies_to_be_infected = new();
+	public Entity RootInfected { get; set; } = null;
+	public List<Enemy> EnemiesToBeInfected = new();
 	
 
-	public void _on_body_entered(Node3D body_)
+	public void _on_body_entered(Node3D body)
 	{
-		GD.Print("name of body entering virulent area " + body_.Name);
-		if(body_ is Enemy enemy)
+		GD.Print("name of body entering virulent area " + body.Name);
+		if(body is Enemy enemy)
 		{
-			if(enemy != root_infected)
+			if(enemy != RootInfected)
 			{
 				// EmitSignal(nameof(AddAdditionalStatusEffect), enemy, infect_poison);
-				enemies_to_be_infected.Add(enemy);
+				EnemiesToBeInfected.Add(enemy);
 			}
 		}
 		

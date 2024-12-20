@@ -55,7 +55,7 @@ public partial class HUD : Control
         ObjectInteractingWith = item;
 		if(!lastItem)
 		{
-			if(item.interact_to_pick_up)
+			if(item.InteractToPickUp)
 			{
 				InInteractArea = true;
 				InteractBar.Button.Text = InteractButton.ToString() + ":" + " Pick Up";
@@ -98,7 +98,7 @@ public partial class HUD : Control
 		if(body is InteractableItem item)
 		{
 			
-			if(item.interact_to_pick_up)
+			if(item.InteractToPickUp)
 			{
 				ObjectInteractingWith = item;
 				InInteractArea = true;

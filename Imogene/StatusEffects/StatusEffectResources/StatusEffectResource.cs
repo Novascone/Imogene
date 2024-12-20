@@ -3,17 +3,17 @@ using System;
 
 public partial class StatusEffectResource : Resource
 {
-	[Export] public int id { get; set; }
-    [Export] public string name { get; set; }
-    [Export] public string description { get; set; }
-    [Export] public string ability_path { get; set; }
-    [Export] public Texture2D icon { get; set; }
-    [Export] public string type;
-    [Export] public bool prevents_movement;
-    [Export] public bool alters_speed;
-    [Export] public PackedScene modifier_1;
-    [Export] public PackedScene modifier_2;
-    [Export] public PackedScene modifier_3;
-    [Export] public PackedScene modifier_4;
-    [Export] public PackedScene modifier_5;
+	[Export] public int ID { get; set; }
+    [Export] public string Name { get; set; }
+    [Export] public string Description { get; set; }
+    [Export] public string AbilityPath { get; set; }
+    [Export] public Texture2D Icon { get; set; }
+    [Export] public string Type;
+    [Export] public bool PreventsMovement;
+    [Export] public bool AltersSpeed;
+    [Export] public PackedScene Modifier1;
+    [Export] public PackedScene Modifier2;
+    [Export] public PackedScene Modifier3;
+    [Export] public PackedScene Modifier4;
+    [Export] public PackedScene Modifier5;
 }

@@ -5,15 +5,15 @@ public partial class Suspend : StatusEffect
 {
 	public Suspend()
 	{
-		name = "suspend";
-		type = EffectType.Debuff;
-		category = EffectCategory.Damage;
-		max_stacks = 1;
+		EffectName = "suspend";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Damage;
+		MaxStacks = 1;
 	}
 
-    public override void Apply(Entity entity_)
+    public override void Apply(Entity entity)
     {
-        base.Apply(entity_);
+        base.Apply(entity);
 
 		// entity_.
     }

@@ -12,56 +12,56 @@ public partial class StatModifier : Resource
 	public float ValueToAdd { get; set; } = 0.0f;
 	public float Mod { get; set; } = 0.0f;
 
-	public void Apply(Stat stat_)
+	public void Apply(Stat stat)
 	{
 		
 		if(Modification == ModificationType.AddCurrent)
 		{
-			if(stat_.CurrentValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0) // Checks if adding will but the stat over max value
+			if(stat.CurrentValue + ValueToAdd <= stat.MaxValue || stat.MaxValue == 0) // Checks if adding will but the stat over max value
 			{
-				stat_.CurrentValue += ValueToAdd;
-				stat_.RemoveModifier(this); // Removes the modifier from the stat because additions don't need top be kept track of (this might not make sense)
+				stat.CurrentValue += ValueToAdd;
+				stat.RemoveModifier(this); // Removes the modifier from the stat because additions don't need top be kept track of (this might not make sense)
 			}
 		}
 		if(Modification == ModificationType.AddBase)
 		{
-			if(stat_.BaseValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0)
+			if(stat.BaseValue + ValueToAdd <= stat.MaxValue || stat.MaxValue == 0)
 			{
-				stat_.CurrentValue += ValueToAdd;
+				stat.CurrentValue += ValueToAdd;
 			}
 		}
 		if(Modification == ModificationType.MultiplyCurrent)
 		{
-			stat_.CurrentValue *= 1 + Mod;
+			stat.CurrentValue *= 1 + Mod;
 		}
 		if(Modification == ModificationType.MultiplyBase)
 		{
 			
-			stat_.BaseValue *= 1 + Mod;
-			stat_.CurrentValue *= 1 + Mod;
+			stat.BaseValue *= 1 + Mod;
+			stat.CurrentValue *= 1 + Mod;
 		}
 		if(Modification == ModificationType.Nullify)
 		{
-			stat_.CurrentValue = 0;
+			stat.CurrentValue = 0;
 		}
 	}
-	public void Release(Stat stat_)
+	public void Release(Stat stat)
 	{
 		if(Modification == ModificationType.AddBase)
 		{
-			if(stat_.BaseValue + ValueToAdd <= stat_.MaxValue || stat_.MaxValue == 0)
+			if(stat.BaseValue + ValueToAdd <= stat.MaxValue || stat.MaxValue == 0)
 			{
-				stat_.BaseValue -= ValueToAdd;
+				stat.BaseValue -= ValueToAdd;
 			}
 			
 		}
 		if(Modification == ModificationType.MultiplyCurrent)
 		{
-			stat_.CurrentValue /= 1 + Mod;
+			stat.CurrentValue /= 1 + Mod;
 		}
 		if(Modification == ModificationType.Nullify)
 		{
-			stat_.CurrentValue = stat_.BaseValue;
+			stat.CurrentValue = stat.BaseValue;
 		}
 	}
 }

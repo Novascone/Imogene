@@ -48,7 +48,7 @@ public partial class InteractSystem : Node3D
 					NextNearest = null;
 					EmitSignal(nameof(SwitchToNextNearestItem), PickUpItem, true);
 				}
-				ItemData template = ItemTypes.FirstOrDefault(X => X.item_model_prefab.ResourcePath == nearestItem.SceneFilePath);
+				ItemData template = ItemTypes.FirstOrDefault(X => X.ItemModelPrefab.ResourcePath == nearestItem.SceneFilePath);
 				if(template != null)
 				{
 					EmitSignal(nameof(ItemPickedUp), template);
@@ -108,7 +108,7 @@ public partial class InteractSystem : Node3D
 		if(body is InteractableItem item)
 		{
 			ItemsInPickup.Add(item);
-			if(!item.interact_to_pick_up)
+			if(!item.InteractToPickUp)
 			{
 				PickupItem(item, player);
 			}
@@ -124,7 +124,7 @@ public partial class InteractSystem : Node3D
 		if(body is InteractableItem item)
 		{
 			ItemsInPickup.Remove(item);
-			if(item.interact_to_pick_up)
+			if(item.InteractToPickUp)
 			{
 				PickUpItem = NextNearest;
 			}

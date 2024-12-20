@@ -25,7 +25,6 @@ public partial class RangedHitbox : RigidBody3D
 
 	public void OnBodyEntered(Node3D body)
 	{
-
 		QueueFree();
 	}
 

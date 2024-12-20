@@ -5,9 +5,9 @@ public partial class Enfeeble : StatusEffect
 {
 	public Enfeeble()
 	{
-		name = "enfeeble";
-		type = EffectType.Debuff;
-		category = EffectCategory.Damage;
-		max_stacks = 1;
+		EffectName = "enfeeble";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Damage;
+		MaxStacks = 1;
 	}
 }

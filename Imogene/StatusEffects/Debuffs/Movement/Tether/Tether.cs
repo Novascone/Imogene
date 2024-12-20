@@ -3,45 +3,45 @@ using System;
 
 public partial class Tether : StatusEffect
 {	
-	public PackedScene tether_mesh { get; set; } = ResourceLoader.Load<PackedScene>("res://StatusEffects/Debuffs/Movement/Tether/TetherMesh.tscn");
-	public MeshInstance3D tether { get; set; } = null;
-	public float tether_length { get; set; } = 10f;
+	public PackedScene TetherScene { get; set; } = ResourceLoader.Load<PackedScene>("res://StatusEffects/Debuffs/Movement/Tether/TetherMesh.tscn");
+	public MeshInstance3D TetherMesh { get; set; } = null;
+	public float TetherLength { get; set; } = 10f;
 	
 	
 	public Tether()
 	{
-		tether = (MeshInstance3D)tether_mesh.Instantiate();
-		name = "tether";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		duration = 5;
-		max_stacks = 1;
+		TetherMesh = (MeshInstance3D)TetherScene.Instantiate();
+		EffectName = "tether";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		Duration = 5;
+		MaxStacks = 1;
 		
 	
 	}
-	public override void Apply(Entity entity_)
+	public override void Apply(Entity entity)
 	{
-		base.Apply(entity_);
-		CreateTimerIncrementStack(entity_);
-		AddChild(tether);
-		tether.Show();
-		tether.GlobalPosition = new Vector3(0,0,0);
+		base.Apply(entity);
+		CreateTimerIncrementStack(entity);
+		AddChild(TetherMesh);
+		TetherMesh.Show();
+		TetherMesh.GlobalPosition = new Vector3(0,0,0);
 		
 		
 	}
 
 
-	public override void timer_timeout(Entity entity_)
+	public override void TimerTimeout(Entity entity)
     {
-		Remove(entity_);
+		Remove(entity);
     }
 
-    public override void Remove(Entity entity_)
+    public override void Remove(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
-			base.Remove(entity_);
-			tether.QueueFree();
+			base.Remove(entity);
+			TetherMesh.QueueFree();
 		}
         
     }

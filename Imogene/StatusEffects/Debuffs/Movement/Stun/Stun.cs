@@ -3,38 +3,38 @@ using System;
 
 public partial class Stun : StatusEffect
 {
-	public StatModifier stop { get; set; } = new(StatModifier.ModificationType.Nullify);
+	public StatModifier Stop { get; set; } = new(StatModifier.ModificationType.Nullify);
 	public Stun()
     {
-		name = "stun";
-		type = EffectType.Debuff;
-		category = EffectCategory.Movement;
-		prevents_movement = true;
-		prevents_input = true;
-		duration = 5;
-		max_stacks = 1;
+		EffectName = "stun";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Movement;
+		PreventsMovement = true;
+		PreventsInput = true;
+		Duration = 5;
+		MaxStacks = 1;
     }
  
 	public override void Apply(Entity entity)
 	{
 		base.Apply(entity);
-		entity.MovementSpeed.AddModifier(stop);
+		entity.MovementSpeed.AddModifier(Stop);
 		CreateTimerIncrementStack(entity);
 		
 		
 	}
 
-	public override void timer_timeout(Entity entity)
+	public override void TimerTimeout(Entity entity)
     {
 		Remove(entity);
     }
 
     public override void Remove(Entity entity)
     {
-		if(!removed)
+		if(!Removed)
 		{
 			base.Remove(entity);
-			entity.MovementSpeed.RemoveModifier(stop);
+			entity.MovementSpeed.RemoveModifier(Stop);
 		}
         
     }

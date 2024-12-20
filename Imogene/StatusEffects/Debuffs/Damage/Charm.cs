@@ -5,9 +5,9 @@ public partial class Charm: StatusEffect
 {
 	public Charm()
 	{
-		name = "charm";
-		type = EffectType.Debuff;
-		category = EffectCategory.Damage;
-		max_stacks = 1;
+		EffectName = "charm";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Damage;
+		MaxStacks = 1;
 	}
 }

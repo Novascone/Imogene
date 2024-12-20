@@ -3,51 +3,51 @@ using System;
 
 public partial class Virulent : StatusEffect
 {
-	public VirulentHitbox hitbox { get; set; } 
+	public VirulentHitbox Hitbox { get; set; } 
 
-	public Poison main_poison { get; set; } = new ();
+	public Poison MainPoison { get; set; } = new ();
 	
 
 	public Virulent()
 	{
-		name = "virulent";
-		type = EffectType.Debuff;
-		category = EffectCategory.Health;
-		adds_additional_effects = true;
-		adds_effect_to_additional_entity = true;
-		max_stacks = 1;
-		duration = 1;
-		hitbox = (VirulentHitbox)ResourceLoader.Load<PackedScene>("res://StatusEffects/Debuffs/Health/Virulent/VirulentHitbox.tscn").Instantiate();
+		EffectName = "virulent";
+		Type = EffectType.Debuff;
+		Category = EffectCategory.Health;
+		AddsAdditionalEffects = true;
+		AddsEffectToAdditionalEntity = true;
+		MaxStacks = 1;
+		Duration = 1;
+		Hitbox = (VirulentHitbox)ResourceLoader.Load<PackedScene>("res://StatusEffects/Debuffs/Health/Virulent/VirulentHitbox.tscn").Instantiate();
 		
 	}
 
-    public override void Apply(Entity entity_)
+    public override void Apply(Entity entity)
     {
-        base.Apply(entity_);
-		EmitSignal(nameof(AddAdditionalStatusEffect), main_poison);
-		hitbox.root_infected = entity_;
-		entity_.AddChild(hitbox);
+        base.Apply(entity);
+		EmitSignal(nameof(AddAdditionalStatusEffect), MainPoison);
+		Hitbox.RootInfected = entity;
+		entity.AddChild(Hitbox);
 		
-		CreateTimerIncrementStack(entity_);
+		CreateTimerIncrementStack(entity);
     }
 
-    public override void timer_timeout(Entity entity_)
+    public override void TimerTimeout(Entity entity)
     {
-        base.timer_timeout(entity_);
-		Remove(entity_);
+        base.TimerTimeout(entity);
+		Remove(entity);
     }
 
-    public override void Remove(Entity entity_)
+    public override void Remove(Entity entity)
     {
-		foreach(Enemy _enemy in hitbox.enemies_to_be_infected)
+		foreach(Enemy enemy in Hitbox.EnemiesToBeInfected)
 		{
-			Poison _infect_poison = new (); 
-			_infect_poison.hitbox.Damage *= 0.5f; 
-			GD.Print("enemy to be infected " + _enemy.Name);
-			EmitSignal(nameof(AddStatusEffectToAdditionalEntity), _enemy, _infect_poison);
+			Poison infectPoison = new (); 
+			infectPoison.Hitbox.Damage *= 0.5f; 
+			GD.Print("enemy to be infected " + enemy.Name);
+			EmitSignal(nameof(AddStatusEffectToAdditionalEntity), enemy, infectPoison);
 			
 		}
-        base.Remove(entity_);
-		entity_.RemoveChild(hitbox);
+        base.Remove(entity);
+		entity.RemoveChild(Hitbox);
     }
 }

@@ -4,26 +4,26 @@ using System.Runtime.CompilerServices;
 
 public partial class StatusEffect : Node3D
 {
-	public string name;
-	[Export] public string description { get; set; }
-    [Export] public StatusEffectResource resource { get; set; }
-	[Export] public bool alters_speed { get; set; }
-	[Export] public bool prevents_movement { get; set; }
-	public bool prevents_input{ get; set; }
-	[Export] public bool prevents_abilities { get; set; }
-	[Export] public bool adds_additional_effects { get; set; }
-	[Export] public bool adds_effect_to_additional_entity { get; set; }
+	public string EffectName;
+	[Export] public string Description { get; set; }
+    [Export] public StatusEffectResource Resource { get; set; }
+	[Export] public bool AltersSpeed { get; set; }
+	[Export] public bool PreventsMovement { get; set; }
+	public bool PreventsInput{ get; set; }
+	[Export] public bool PreventsAbilities { get; set; }
+	[Export] public bool AddsAdditionalEffects { get; set; }
+	[Export] public bool AddsEffectToAdditionalEntity { get; set; }
 	
-	public bool removed { get; set; } = false;
-	public EffectType type { get; set; } = EffectType.None;
-	public EffectCategory category { get; set; } = EffectCategory.None;
-	public bool applied { get; set; } = false;
- 	public SceneTreeTimer duration_timer { get; set; } = null;
-	public float duration { get; set; } = 0.0f;
-	public int max_stacks { get; set; } = 0;
-	public int current_stacks { get; set; } = 0;
-	public Entity caster { get; set; } = null;
-	public States state  { get; set; } = States.NotQueued;
+	public bool Removed { get; set; } = false;
+	public EffectType Type { get; set; } = EffectType.None;
+	public EffectCategory Category { get; set; } = EffectCategory.None;
+	public bool Applied { get; set; } = false;
+ 	public SceneTreeTimer DurationTimer { get; set; } = null;
+	public float Duration { get; set; } = 0.0f;
+	public int MaxStacks { get; set; } = 0;
+	public int CurrentStacks { get; set; } = 0;
+	public Entity Caster { get; set; } = null;
+	public States State  { get; set; } = States.NotQueued;
 
 	public enum States{ NotQueued, Queued }
 	public enum EffectType { None, Buff, Debuff, Tradeoff }
@@ -31,47 +31,47 @@ public partial class StatusEffect : Node3D
 	public enum EffectCategory { None, Movement, Health, Damage, General }
 
 	[Signal] public delegate void StatusEffectFinishedEventHandler();
-	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect_);
-	[Signal] public delegate void AddStatusEffectToAdditionalEntityEventHandler(Entity entity_, StatusEffect effect_);
+	[Signal] public delegate void AddAdditionalStatusEffectEventHandler(StatusEffect effect);
+	[Signal] public delegate void AddStatusEffectToAdditionalEntityEventHandler(Entity entity, StatusEffect effect);
 	
 
-	public virtual void Apply(Entity entity_)
+	public virtual void Apply(Entity entity)
 	{
-		if(!applied)
+		if(!Applied)
 		{
-			applied = true;
+			Applied = true;
 		}
 	}
 
-	public virtual void CreateTimerIncrementStack(Entity entity_) // Creates timer and increments stacks
+	public virtual void CreateTimerIncrementStack(Entity entity) // Creates timer and increments stacks
 	{
 		
-		if(current_stacks == 0)
+		if(CurrentStacks == 0)
 		{
-			duration_timer = GetTree().CreateTimer(duration);
-			duration_timer.Timeout += () => timer_timeout(entity_);
+			DurationTimer = GetTree().CreateTimer(Duration);
+			DurationTimer.Timeout += () => TimerTimeout(entity);
 			GD.Print("incrementing stacks");
-			current_stacks += 1;
+			CurrentStacks += 1;
 		}
-		else if(max_stacks > 1)
+		else if(MaxStacks > 1)
 		{
 			
-			current_stacks += 1;
+			CurrentStacks += 1;
 		}
 	}
 
-	public virtual void timer_timeout(Entity entity_)
+	public virtual void TimerTimeout(Entity entity)
 	{
 
 	}
 
-	public virtual void Remove(Entity entity_)
+	public virtual void Remove(Entity entity)
 	{
 		GD.Print("removed");
-		if(!removed)
+		if(!Removed)
 		{
-			removed = true;
-			current_stacks = 0;
+			Removed = true;
+			CurrentStacks = 0;
 			EmitSignal(nameof(StatusEffectFinished));
 		}
 	}
